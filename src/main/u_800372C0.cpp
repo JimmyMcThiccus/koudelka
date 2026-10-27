@@ -77,7 +77,19 @@ INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037688);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800376D0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037834);
+EXTERN_C void func_80037834(void *p)
+{
+    A2VObj0 *q = AT(p, A2VObj0 *, 0x14);
+    if (q) {
+        q->v04(3);
+        AT(p, void *, 0x14) = 0;
+    }
+    if (AT(p, void *, 0x1C)) {
+        func_800A0D0C(AT(p, void *, 0x1C));
+        AT(p, void *, 0x1C) = 0;
+    }
+    func_800376D0(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800378A8);
 

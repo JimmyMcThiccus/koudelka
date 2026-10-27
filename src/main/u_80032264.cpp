@@ -35,7 +35,15 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_8003292C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032A10);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032A9C);
+EXTERN_C int func_80032A9C(S_Rgb *s, S_Rgb *a, S_Rgb *b, S_Rgb *c, S_Rgb *d)
+{
+    S_Rgb t = *s;
+    *a = t;
+    *b = t;
+    *c = t;
+    *d = t;
+    return 1;
+}
 
 EXTERN_C void func_80032B14(S_Rgb *a, S_Rgb *b)
 {

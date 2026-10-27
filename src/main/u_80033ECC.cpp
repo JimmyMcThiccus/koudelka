@@ -92,7 +92,15 @@ EXTERN_C S_Prim *func_80034AF4(S_Prim *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034B0C);
+EXTERN_C int func_80034B0C(S_Rgb *s, S_Rgb *a, S_Rgb *b, S_Rgb *c, S_Rgb *d)
+{
+    S_Rgb t = *s;
+    *a = t;
+    *b = t;
+    *c = t;
+    *d = t;
+    return 1;
+}
 
 EXTERN_C void func_80034B84(S_A2_Flags *p, int on)
 {
@@ -151,7 +159,16 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034F54);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800351A4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003525C);
+EXTERN_C void func_8003525C(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80011F5C;
+    AT(p, void **, 0) = D_80011F74;
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    func_80035304(p, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C int func_800352D4()
 {

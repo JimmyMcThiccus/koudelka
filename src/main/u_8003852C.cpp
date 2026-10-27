@@ -260,7 +260,10 @@ EXTERN_C void *func_800399D4(void *p, int vb, int a, int b)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039A14);
+C_80039A14_def::C_80039A14_def() : vt(D_800126F4), m4(0x1000), unk24(0), unk28(0)
+{
+    func_8001AA28(&s2C, 6);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039A88);
 
@@ -524,11 +527,31 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B68C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B780);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B834);
+EXTERN_C MATRIX *func_8003B834(MATRIX *a, MATRIX *b)
+{
+    int i;
+    for (i = 0; i < 3; i++) {
+        int j;
+        for (j = 0; j < 3; j++)
+            a->m[i][j] += b->m[i][j];
+        a->t[i] += b->t[i];
+    }
+    return a;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B8AC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B960);
+EXTERN_C MATRIX *func_8003B960(MATRIX *a, MATRIX *b)
+{
+    int i;
+    for (i = 0; i < 3; i++) {
+        int j;
+        for (j = 0; j < 3; j++)
+            a->m[i][j] -= b->m[i][j];
+        a->t[i] -= b->t[i];
+    }
+    return a;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B9D8);
 
@@ -652,7 +675,13 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003C0D0);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003C1E4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003C270);
+EXTERN_C int func_8003C270(void *p, void *a)
+{
+    if (AT(p, void *, 0x48))
+        return func_8003C908(AT(p, void *, 0x48), a);
+    AT(p, void *, 0x48) = func_8003C5A8(operator new(0x1C), a ? (char *)a + 8 : 0, 0, 0);
+    return 1;
+}
 
 EXTERN_C void func_8003C2E4(void *p)
 {
