@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a2/a2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032264);
 
@@ -58,7 +59,12 @@ EXTERN_C int func_80032D54()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032D5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032EB0);
+EXTERN_C void func_80032EB0(S_A2_Node4 *n)
+{
+    if (D_800AC844.unk8)
+        n->unk4 = D_800AC844.unk8;
+    D_800AC844.unk8 = n;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032ED4);
 
@@ -70,9 +76,15 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800338A4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033D34);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033D7C);
+EXTERN_C void func_80033D7C(void *p)
+{
+    func_8003488C(p ? (char *)p + 0x34 : 0);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033DAC);
+EXTERN_C void func_80033DAC(void *p)
+{
+    func_800348E4(p ? (char *)p + 0x34 : 0);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033DDC);
 

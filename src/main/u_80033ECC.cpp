@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a2/a2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80033ECC);
 
@@ -31,7 +32,11 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034710);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003479C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034854);
+EXTERN_C void func_80034854(void *p, void *q)
+{
+    AT(p, int, 0) = AT(q, int, 0);
+    func_80034EBC(p ? (char *)p + 4 : 0, (char *)q + 4);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003488C);
 
@@ -62,7 +67,11 @@ EXTERN_C S_Prim *func_80034AF4(S_Prim *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034B0C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034B84);
+EXTERN_C void func_80034B84(S_A2_Flags *p, int on)
+{
+    unsigned char v = p->f;
+    if (on) p->f = v | 2; else p->f = v & ~2;
+}
 
 EXTERN_C S_80034BA8 *func_80034BA8(S_80034BA8 *p, int v)
 {
@@ -144,9 +153,15 @@ EXTERN_C int func_800358D4(S_800358D4 *p)
     return p->unk1C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800358E0);
+EXTERN_C void func_800358E0(void *p)
+{
+    func_8001AA68(p ? (char *)p + 8 : 0, 0);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035910);
+EXTERN_C void func_80035910(void *p)
+{
+    func_8001AB50(p ? (char *)p + 8 : 0, 0);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035940);
 
@@ -154,7 +169,12 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003598C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035A28);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035AB0);
+EXTERN_C void func_80035AB0(void *p, int a)
+{
+    AT(p, void **, 0) = D_80012154;
+    if (a & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_80035AE4()
 {
@@ -167,7 +187,12 @@ EXTERN_C int func_80035AEC()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035AF4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035B28);
+EXTERN_C void func_80035B28(void *p, int a)
+{
+    AT(p, void **, 0) = D_800121AC;
+    if (a & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_80035B5C()
 {
@@ -181,7 +206,12 @@ EXTERN_C void func_80035BF0()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035BF8);
+EXTERN_C void func_80035BF8()
+{
+    CdInit();
+    func_80035CD8();
+    func_800375E4();
+}
 
 EXTERN_C void func_80035C28()
 {

@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a2/a2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003852C);
 
@@ -201,9 +202,15 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A414);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A454);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A490);
+EXTERN_C void func_8003A490(void *p, int a)
+{
+    func_80019C68(p ? AT(p, void *, 0) : 0, a);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A4C0);
+EXTERN_C void func_8003A4C0(void *p, int a)
+{
+    func_80019CFC(p ? AT(p, void *, 0) : 0, a);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A4F0);
 
@@ -211,7 +218,10 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A538);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A574);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A624);
+EXTERN_C Item *func_8003A624(void *p, int a)
+{
+    return func_80019F64(p ? AT(p, List *, 0) : 0, a);
+}
 
 EXTERN_C void func_8003A654(void *p, int a)
 {
@@ -232,7 +242,13 @@ EXTERN_C void *func_8003A6FC(S_8003A6F4 *p)
     return &p->unk2C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A704);
+EXTERN_C int func_8003A704(void *p, int a)
+{
+    void **q = AT(p, void **, 0x28);
+    if (q)
+        return func_80019C24(*q, a);
+    return 0;
+}
 
 EXTERN_C int func_8003A738(S_8003A6F4 *p)
 {
@@ -328,7 +344,11 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BC50);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BC84);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BCB0);
+EXTERN_C void func_8003BCB0(short *m, int i, short *v)
+{
+    m += i * 3;
+    m[0] = v[0]; m[1] = v[1]; m[2] = v[2];
+}
 
 EXTERN_C void func_8003BCE0(MATRIX *m, int i, SVECTOR *v)
 {

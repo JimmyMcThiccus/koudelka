@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a2/a2.h"
 
 EXTERN_C int func_800372C0(S_800372C0 *p)
 {
@@ -31,15 +32,32 @@ INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800373F8);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037440);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800374F4);
+EXTERN_C void func_800374F4(void *p)
+{
+    if (!AT(p, signed char, 0x37))
+        func_800361C8(p);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037524);
+EXTERN_C void func_80037524(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37))
+        func_80036364(p, a);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037554);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037584);
+EXTERN_C void func_80037584(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37))
+        func_80036554(p, a);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800375B4);
+EXTERN_C int func_800375B4(void *p)
+{
+    if (AT(p, signed char, 0x37))
+        return 0;
+    return func_80036850(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800375E4);
 
