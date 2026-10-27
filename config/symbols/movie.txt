@@ -56,3 +56,6 @@ D_800B7654 = 0x800B7654; // force_not_migration:True
 D_800B7F8C = 0x800B7F8C; // force_not_migration:True
 D_800B7D6C = 0x800B7D6C; // force_not_migration:True
 D_800B7D78 = 0x800B7D78; // force_not_migration:True
+D_800B867C = 0x800B867C; // force_not_migration:True
+D_800B8698 = 0x800B8698; // force_not_migration:True
+D_800B80C4 = 0x800B80C4; // force_not_migration:True
