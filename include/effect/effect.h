@@ -204,6 +204,9 @@ EXTERN_C int D_800E5844[];
 
 EXTERN_C void *D_800E5848[];
 
+/* EXE globals */
+EXTERN_C void *D_800B4ED8[];
+
 inline void key_init(Key *self, short id)
 {
     self->vptr = D_800D6188;

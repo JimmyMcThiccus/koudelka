@@ -584,7 +584,16 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DABA8);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DAC88);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DAD28);
+EXTERN_C void func_800DAD28(void *self)
+{
+    if (FIELD_AT(self, signed char, 0x160)) {
+        void *p = FIELD_AT(self, void *, 0x130);
+        if (p) {
+            VtEntry *vt = FIELD_AT(p, VtEntry *, 0x28);
+            vt[3].pfn((char *)p + vt[3].delta, FIELD_AT(self, short, 0x148));
+        }
+    }
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DAD80);
 
@@ -605,8 +614,6 @@ EXTERN_C void func_800DAE48(void *self, SubNode *node)
 }
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DAE98);
-
-EXTERN_C void *D_800B4ED8[];
 
 EXTERN_C void func_800DAFD4(void *self)
 {
@@ -838,7 +845,17 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DD6F8);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DD7A8);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DD878);
+EXTERN_C void func_800E1090(void *p, void *arg);
+EXTERN_C void func_800E1304(void *p, void *arg);
+
+EXTERN_C void func_800DD878(void *self)
+{
+    void *p;
+    for (p = FIELD_AT(self, void *, 0x4); p; p = FIELD_AT(p, void *, 0x4)) {
+        func_800E1090(p, FIELD_AT(self, void *, 0x28));
+        func_800E1304(p, FIELD_AT(self, void *, 0x28));
+    }
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DD8D8);
 
@@ -1137,7 +1154,15 @@ EXTERN_C int func_800DF1D4(void *self)
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DF1DC);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DF27C);
+EXTERN_C void func_800DF27C(void *self, unsigned char *rgb)
+{
+    Poly *p;
+    FIELD_AT(self, unsigned char, 0x34) = rgb[0];
+    FIELD_AT(self, unsigned char, 0x35) = rgb[1];
+    FIELD_AT(self, unsigned char, 0x36) = rgb[2];
+    p = (Poly *)((char *)self + 0x8);
+    p->vptr[10].pfn((char *)p + p->vptr[10].delta, rgb[3]);
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DF2D8);
 
@@ -1283,7 +1308,16 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E21B8);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E22E0);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E2348);
+EXTERN_C char D_800B4C48[];
+EXTERN_C void func_80025444(void *a, void *b, int c);
+
+EXTERN_C void func_800E2348(void *self)
+{
+    Poly *p;
+    func_80025444(D_800B4C48, FIELD_AT(self, void *, 0x28), FIELD_AT(self, short, 0x78));
+    p = FIELD_AT(self, Poly *, 0x28);
+    ((void (*)(void *))p->vptr[3].pfn)((char *)p + p->vptr[3].delta);
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E23A0);
 
@@ -1570,7 +1604,24 @@ EXTERN_C void func_800E4050(void *self, int value)
     FIELD_AT(self, int, 0x0) = value;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E4058);
+EXTERN_C void *func_800E4058(void *self, void *other)
+{
+    FIELD_AT(self, char, 0x0) = 0;
+    FIELD_AT(self, char, 0x1) = 0;
+    FIELD_AT(self, char, 0x2) = 0;
+    FIELD_AT(self, short, 0x4) = 0;
+    FIELD_AT(self, short, 0x6) = 0;
+    FIELD_AT(self, int, 0x8) = 0;
+    FIELD_AT(self, int, 0xC) = 0;
+    if (other) {
+        FIELD_AT(self, char, 0x0) = FIELD_AT(other, char, 0x0);
+        FIELD_AT(self, char, 0x1) = FIELD_AT(other, char, 0x1);
+        FIELD_AT(self, short, 0x4) = FIELD_AT(other, short, 0x4);
+        FIELD_AT(self, char, 0x2) = FIELD_AT(other, char, 0x2);
+        FIELD_AT(self, short, 0x6) = FIELD_AT(other, short, 0x6);
+    }
+    return self;
+}
 
 EXTERN_C void func_800E40BC(void *self, int flags)
 {
@@ -1666,7 +1717,17 @@ EXTERN_C void func_800E42B0(void *self, int flags)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E42F4);
+EXTERN_C void *func_800A0D2C(int size);
+EXTERN_C void func_80025CE0(void *dst, void *src, int size);
+EXTERN_C void func_8008ECB4(void *p);
+
+EXTERN_C char *func_800E42F4(void *self, char *data)
+{
+    FIELD_AT(self, void *, 0x0) = func_800A0D2C(FIELD_AT(data, int, 0x8));
+    func_80025CE0(FIELD_AT(self, void *, 0x0), data, FIELD_AT(data, int, 0x8));
+    func_8008ECB4(FIELD_AT(self, void *, 0x0));
+    return data + FIELD_AT(data, int, 0x8);
+}
 
 EXTERN_C void *func_8008D1F4(void *data, int arg);
 EXTERN_C void func_8008C928(int arg);
