@@ -140,18 +140,40 @@ struct S_800BDC70 {
     short n;
 };
 
-struct Rgb16 {
-    unsigned char r, g, b;
-    char pad;
-    short x, y;
-    char pad2[2];
-    short s;
-    char pad3[4];
+struct Rgb {
+    unsigned char r, g, b, cd;
 };
 
+struct Int2 {
+    int v[2];
+};
+
+struct Body12 {
+    union {
+        Rgb c;
+        int w;
+    } col;
+    short x, y;
+    short pad, s;
+};
+
+struct E12 {
+    int hdr;
+    Int2 b;
+};
+
+struct E16 {
+    int hdr;
+    Body12 b;
+};
+
+// double-buffered: D_800B4CF0 selects the current entry
 struct S_800C2D5C {
-    char pad[0x28];
-    Rgb16 e[1];
+    char pad[8];
+    short state;
+    short pad2;
+    E12 a[2];
+    E16 e[2];
 };
 
 struct N_800C08FC {
