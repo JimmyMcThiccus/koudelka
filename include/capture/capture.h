@@ -59,4 +59,59 @@ struct S_800C1D00 {
     ShortQuad q1;
 };
 
+struct S_800BCDA4 {
+    char pad[0x118];
+    void *list1[4];
+    void *list0[4];
+    short n1;
+    short n0;
+};
+
+struct S_800BD5D0 {
+    char pad[0x30];
+    int list[4];
+    short n;
+};
+
+struct S_800BF6E8 {
+    char pad[0xA];
+    short n;
+    char pad2[0x8];
+    int *ptr;
+    int i;
+};
+
+struct Block60 {
+    int w[24];
+};
+
+struct S_800C1D58 {
+    char pad[0xFC];
+    Block60 b0;
+    Block60 b1;
+};
+
+// ring buffer of words
+struct S_800BA17C {
+    int pad;
+    int *buf;
+    int value;
+    int mask;
+    int wr;
+    int rd;
+};
+
+struct ShortPair {
+    short a, b;
+};
+
+struct S_800BF62C {
+    char pad[0xA];
+    short n;
+    char pad2[0x4];
+    ShortPair *list;
+    char pad3[0x8];
+    int count;
+};
+
 #endif
