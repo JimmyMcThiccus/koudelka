@@ -355,4 +355,23 @@ struct C_800BDD00 : B_800B72BC {
     C_800BDD00();
 };
 
+struct Desc_800C1E7C {
+    int a, b;
+    unsigned char c, d;
+    short e, n;
+};
+
+struct C_800C1E7C {
+    void *vt;
+    int f4;
+    int f8, fC;
+    unsigned char f10, f11;
+    short f12, n;
+    char pad16[2];
+    void *list;
+    int f1C;
+    C_800C1E7C(Desc_800C1E7C *d);
+};
+
+
 #endif
