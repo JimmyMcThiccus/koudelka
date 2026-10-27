@@ -455,7 +455,31 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BC3B0);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BC650);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BCCC0);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_80010300[];
+EXTERN_C char D_800102D0[];
+EXTERN_C char *D_800A4578[];
+EXTERN_C void func_800232A0(void *, void *);
+EXTERN_C char *func_8001CA10(int);
+EXTERN_C void func_8001EFE4(void *, void *);
+EXTERN_C int func_800BCCC0(char *p, unsigned char *in)
+{
+    char *o;
+    if (~in[0x1A] & 8) {
+        func_800232A0(D_800A4578[0] + 0x154, p);
+        o = func_8001CA10(0x14);
+        *(char **)o = D_80010178;
+        *(int *)(o + 4) = 0;
+        *(char **)o = D_80010300;
+        *(short *)(o + 8) = 2;
+        *(short *)(o + 0xA) = 2;
+        *(int *)(o + 0x10) = 5001;
+        *(void **)(o + 0xC) = 0;
+        *(char **)o = D_800102D0;
+        func_8001EFE4(*(void **)(p + 0x108), o);
+    }
+    return 1;
+}
 
 EXTERN_C int func_800BCD60() { return 1; }
 
