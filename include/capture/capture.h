@@ -19,6 +19,8 @@ struct ObjSlot {
     VObject *obj;
 };
 
+EXTERN_C void func_800198E0(void *, int, int);
+
 struct IntPair {
     int a, b;
 };
@@ -247,6 +249,40 @@ struct B_800B86F0 {
 struct C_800BA258 : B_800B86F0 {
     S_800BA17C ring;
     C_800BA258(int size, int bits, char *mem);
+};
+
+// small vector with inline storage; same layout as S_800186B0 in the EXE
+struct Vec_800BF80C {
+    void *p;
+    int n;
+    void *data;
+    int buf[1];
+    void init()
+    {
+        data = buf;
+        p = buf;
+        func_800198E0(data, 0x10, 0);
+        n = 0;
+    }
+};
+
+struct C_800BFE58 {
+    void *vt;
+    char pad[0x88];
+    void *vt2;
+    C_800BFE58(int a);
+};
+
+struct C_800BFC28 : C_800BFE58 {
+    C_800BFC28(int a);
+};
+
+struct C_800BF80C : C_800BFC28 {
+    char pad2[0x5E0 - 0x90];
+    Vec_800BF80C v;
+    char pad3[0x600 - 0x5E0 - 0x10];
+    int f600;
+    C_800BF80C(int a);
 };
 
 #endif
