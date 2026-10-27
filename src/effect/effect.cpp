@@ -1,72 +1,219 @@
 #include "common.h"
+#include "effect/effect.h"
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D67CC);
+EXTERN_C void func_8001A610(IdNode *self, int flags);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D67F4);
+EXTERN_C void func_800D67CC(IdNode *self, int flags)
+{
+    self->vptr = D_800D5DB0;
+    func_8001A610(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6848);
+EXTERN_C IdNode *func_800D67F4(IdNode *self, short id)
+{
+    IdNode *found = 0;
+    if (self->id == id)
+        return self;
+    if (self->next)
+        found = func_800D67F4(self->next, id);
+    return found;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6854);
+EXTERN_C int func_800D6848(IdNode *self)
+{
+    return self->id;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D687C);
+EXTERN_C IdNode *func_800D6854(IdNode *self, short id)
+{
+    self->vptr = D_80010178;
+    self->next = 0;
+    self->vptr = D_800D5DB0;
+    self->id = id;
+    return self;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D68B0);
+EXTERN_C void func_800D687C(Cond *self, int flags)
+{
+    self->vptr = D_800D5F20;
+    if (flags & 1)
+        operator delete(self);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D68D8);
+EXTERN_C void func_800D68B0(CondMin *self, int flags)
+{
+    self->vptr = D_800D5EC8;
+    func_800D687C(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D68F0);
+EXTERN_C int func_800D68D8(CondMin *self, short value)
+{
+    return value >= self->min;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6918);
+EXTERN_C void func_800D68F0(Cond *self, int flags)
+{
+    self->vptr = D_800D5E70;
+    func_800D687C(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D692C);
+EXTERN_C int func_800D6918(Cond *self)
+{
+    return FIELD_AT(self->owner, short, 0x10) != 0;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6954);
+EXTERN_C void func_800D692C(Cond *self, int flags)
+{
+    self->vptr = D_800D5E18;
+    func_800D687C(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6970);
+EXTERN_C int func_800D6954(Cond *self)
+{
+    return FIELD_AT(self->owner, short, 0x10) == 2;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D69C0);
+EXTERN_C void func_800D6970(CondList *self, int flags)
+{
+    self->vptr = D_800D5DC0;
+    func_80019920(self->ref.list, 0);
+    func_800D687C(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6A38);
+EXTERN_C void func_800D69C0(CondList *self, CondEntry *src)
+{
+    CondEntry *entry = new CondEntry(*src);
+    List *l = list_of(&self->ref);
+    func_80019A6C(l, entry, l->count);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6A58);
+EXTERN_C void func_800D6A8C(ListRef *ref);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6A8C);
+EXTERN_C void func_800D6A38(CondList *self)
+{
+    func_800D6A8C(&self->ref);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6B0C);
+EXTERN_C CondEntry *func_800D6A58(CondList *self, int index)
+{
+    return (CondEntry *)func_80019F64(list_of(&self->ref), index);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6B2C);
+EXTERN_C void func_800D6A8C(ListRef *ref)
+{
+    int i;
+    while ((i = list_of(ref)->count) != 0) {
+        i--;
+        delete (CondEntry *)func_80019F64(list_of(ref), i);
+        func_80019C68(list_of(ref), i);
+    }
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6B34);
+EXTERN_C int func_800D6B0C(CondList *self)
+{
+    return list_of(&self->ref)->count;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6B3C);
+EXTERN_C int func_800D6B2C(Cond *self)
+{
+    return 1;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6B94);
+EXTERN_C int func_800D6B34(Cond *self)
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6BBC);
+EXTERN_C CondList *func_800D6B3C(CondList *self, short id, void *owner)
+{
+    self->vptr = D_800D5F20;
+    self->id = id;
+    self->owner = owner;
+    self->vptr = D_800D5DC0;
+    self->ref.list = &self->list;
+    func_800198E0(&self->list, 0x10, 0);
+    return self;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6BE4);
+EXTERN_C Cond *func_800D6B94(Cond *self, short id, void *owner)
+{
+    self->vptr = D_800D5F20;
+    self->owner = owner;
+    self->id = id;
+    self->vptr = D_800D5E18;
+    return self;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6BF0);
+EXTERN_C Cond *func_800D6BBC(Cond *self, short id, void *owner)
+{
+    self->vptr = D_800D5F20;
+    self->owner = owner;
+    self->id = id;
+    self->vptr = D_800D5E70;
+    return self;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6BFC);
+EXTERN_C int func_800D6BE4(CondMin *self)
+{
+    return self->min;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C28);
+EXTERN_C void func_800D6BF0(CondMin *self, CondMin *other)
+{
+    self->min = other->min;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C34);
+EXTERN_C CondMin *func_800D6BFC(CondMin *self, short id, short min, void *owner)
+{
+    self->vptr = D_800D5F20;
+    self->owner = owner;
+    self->id = id;
+    self->vptr = D_800D5EC8;
+    self->min = min;
+    return self;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C3C);
+EXTERN_C int func_800D6C28(Cond *self)
+{
+    return self->id;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C44);
+EXTERN_C int func_800D6C34(Cond *self)
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C4C);
+EXTERN_C int func_800D6C3C(Cond *self)
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C54);
+EXTERN_C int func_800D6C44(Cond *self)
+{
+    return 0;
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C5C);
+EXTERN_C void func_800D6C4C(Cond *self)
+{
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C64);
+EXTERN_C void func_800D6C54(Cond *self)
+{
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C6C);
+EXTERN_C void func_800D6C5C(Cond *self)
+{
+}
+
+EXTERN_C int func_800D6C64(Cond *self)
+{
+    return 0;
+}
+
+EXTERN_C void *func_800D6C6C(Cond *self)
+{
+    return self->owner;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6C78);
 
