@@ -36,7 +36,7 @@ The last line must be `functional check: OK`.
 
    ```powershell
    .venv/Scripts/python.exe tools/try_compile.py scratch_c/f.cpp func_XXXXXXXX
-   # overlays: add --asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --cflags "-O2 -G0"
+   # overlays: add --asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --as-G 0
    ```
 
    Done means `0 differing instructions`.
@@ -74,6 +74,25 @@ under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs
   If you need a change in one of these (a build fix, a flag override, a shared type), describe it in your final
   report. Don't make it yourself.
 - **Generated, never edit:** `asm/`, `build/`, `build.ninja`.
+
+## Globals in overlays
+
+Overlays were compiled with `-G8` and assembled with `-G0` (`{ cflags = "-O2 -G8", as_G = 0 }`), so `$gp` is never
+used. How a global is declared decides which of two retail forms comes out:
+
+| Declared as | Retail form | Example |
+|---|---|---|
+| a small object (≤ 8 bytes: `int`, a pointer) | assembler macro: `lui $dst; lw $dst, %lo(sym)($dst)` (the loaded register is the temporary) | CAPTURE `func_800B9E10` |
+| an incomplete array (`int D_X[];`, used as `D_X[0]`) or a struct > 8 bytes | GCC splits the address itself: `lui $v0; lw $dst, %lo(sym)($v0)` (another register is the temporary) | BATTLE `func_800BE390` |
+
+Try the other declaration whenever only the temporary register differs.
+
+**Data you define** in an overlay `.cpp`: anything ≤ 8 bytes goes to `.sdata` under `-G8`, which moves it out of
+place. Keep such data as `INCLUDE_RODATA`, or define it as part of an aggregate larger than 8 bytes (e.g. the whole
+overlay header as one struct).
+
+After a build, `tools/func_diff.py <target>` lists the functions that no longer match retail, which helps when the
+matching check fails.
 
 ## Names and types
 
