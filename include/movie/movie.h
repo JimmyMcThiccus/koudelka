@@ -531,4 +531,11 @@ EXTERN_C u8 func_80035C30(s32);
 EXTERN_C s32 func_8009C9E0();
 EXTERN_C s32 func_8001D25C(void*, void*);
 
+struct Unk800B9208V { virtual void v1(s32); };
+struct Unk800B9208L { s32 x0, x4; };
+struct Unk800B9208G { Unk800B9208L* x0; };
+struct Unk800B9208S { virtual void v1(); virtual void v2(); virtual void v3(); };
+EXTERN_C Unk800B9208G D_800AC854;
+EXTERN_C Unk800B9208V* func_80019C68(Unk800B9208L*, s32);
+
 #endif /* MOVIE_H */

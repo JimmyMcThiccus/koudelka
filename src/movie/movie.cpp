@@ -23,7 +23,7 @@ EXTERN_C s32 func_800B9060(Unk800B9060B* p) { switch (p->x35) { case 0: func_800
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B914C);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B9208);
+EXTERN_C void func_800B9208(void* a, u8 b) { Unk800B9208S* s = (Unk800B9208S*)D_800B4D0C[0]; if (s != a) return; s->v3(); if (func_80035C30(b)) return; Unk800B9208G* g = &D_800AC854; if ((g ? g->x0 : 0)->x4) func_80019C68(g ? g->x0 : 0, 0)->v1(0); }
 
 EXTERN_C s32 func_800B92B8(Unk800B93D8T* p, s32 a, s32 b) { if (D_800B4D0C[0] || func_80035C30(func_8009C9C0())) return 0; p->x24 = a; p->x28 = b; p->x4->x0 = 0; p->x3A = 0x10; p->x30 = -1; p->x36 = 0; p->x35 = func_8009C9E0() != 9 ? 3 : 9; char* d = D_800A4544; if (func_8001D25C(d, p ? (char*)p + 8 : 0) == 0) { void* q = p ? (char*)p + 8 : 0; Unk800B92B8T* n = (Unk800B92B8T*)operator new(0x14); *(void* volatile*)&n->x0 = D_80010178; n->x0 = D_80010338; n->x4 = 0; n->x8 = q; n->xC = 0x80; n->x10 = 0; func_8001D150(d, n); } D_800B4D0C[0] = p; return 1; }
 
