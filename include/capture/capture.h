@@ -138,9 +138,11 @@ struct S_800BDC70 {
 
 struct Rgb16 {
     unsigned char r, g, b;
-    char pad[7];
+    char pad;
+    short x, y;
+    char pad2[2];
     short s;
-    char pad2[4];
+    char pad3[4];
 };
 
 struct S_800C2D5C {
@@ -205,6 +207,13 @@ struct N_800BE6D8 {
     int pad;
     N_800BE6D8 *next;
     VObject obj;
+};
+
+struct N_800BE8E0 {
+    int pad;
+    N_800BE8E0 *next;
+    char pad2[4];
+    char data[1];
 };
 
 #endif
