@@ -754,7 +754,20 @@ EXTERN_C void func_800BF4B8(Unk_800BF4B8* p, int a) {
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800BF520);
+EXTERN_C void func_800BF520(Unk_800BF520* p, int a) {
+    Unk_800BF520_o* o = (Unk_800BF520_o*)operator new(0x20C);
+    o->vtbl = D_80010178;
+    o->unk4 = 0;
+    o->vtbl = D_800106EC;
+    o->unk8 = 0;
+    o->unkA = 0;
+    o->vtbl = D_80010624;
+    func_80021F48(o, a);
+    VAt<0x10>* g = (VAt<0x10>*)D_800B4C38[0];
+    p->unkC = o;
+    g->vf00(o);
+    p->unkA = p->unkC->unk8;
+}
 
 EXTERN_C int func_800BF5D8(Unk_800BF488* p) {
     int r;
@@ -1446,7 +1459,17 @@ EXTERN_C void func_800C5734(char* p) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C57C4);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C5928);
+EXTERN_C void func_800C5928(char* p, int a) {
+    if (a == 1) {
+        unsigned int i;
+        for (i = 0; i < 4; i++) {
+            func_8006897C(p + 0xD8, i + 1, 0);
+            func_80054094(&((Unk_800C5734*)p)->unk68[i], func_80068A5C(p + 0xD8) != 0);
+        }
+        func_80054CE4(p);
+    }
+    func_80056D60(p, a);
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C59D8);
 
@@ -1609,7 +1632,18 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800C7A7C);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C7DE4);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C7EC8);
+EXTERN_C void func_800C7EC8(Unk_800C7EC8* p, void* a) {
+    if (p->unk8) {
+        VAt0* o;
+        Unk_800BFB64_node* n;
+        func_8005C088(p, a, 1);
+        o = func_800D35F8(operator new(0x738), p->unkC, p->unk44, p->unk1C);
+        o->vf11(D_800B4C98);
+        n = first(p->unk30);
+        func_80019A6C(n, (int)o, n->unk4);
+        func_8002DA94(a, p->unk30);
+    }
+}
 
 EXTERN_C void func_800C7F80(Unk_800C7F80* p) {
     func_8002A210(p);
@@ -1689,11 +1723,42 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800C89BC);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C8AC0);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C8F34);
+EXTERN_C int func_800C8F34(Unk_800C8F34* p, Unk_FlagArg* q) {
+    if (p->unk6C) {
+        int f = q->unk18;
+        func_8001FC78((int)q, 0, 0);
+        if (((Unk_800C8F34_g*)D_800B4DD0[0])->unk120->unk18 & f) {
+            if (p->unk4B4) {
+                func_8002B27C(D_800A4578[0], p->unk4B4);
+                p->unk4B4 = 0;
+            } else {
+                p->vf02();
+            }
+        }
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C8FE8);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C9424);
+EXTERN_C void func_800C9424(Unk_800C9424p* p) {
+    int idx = p->unk4B8;
+    VAt<0x2C>* t = p->unk4B4;
+    VAt<0x2C>* o = p->unk4B0;
+    int k = 2;
+    Unk_Short2 v;
+    if (t) {
+        idx = p->unk4BC;
+        k = 1;
+        o = t;
+    }
+    func_80054054(&v, &((Unk_800C9424*)p)->unk70[idx]);
+    v.x -= 4;
+    v.y += 4;
+    func_80063BE4(o);
+    func_80063B14(o, &v, k);
+    o->vf03();
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C94D4);
 
@@ -2183,7 +2248,13 @@ EXTERN_C unsigned char func_800D05FC(Unk_800D05FC* p) { return p->unk38; }
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D0608);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D0704);
+EXTERN_C void func_800D0704(Unk_800D0704* p, int a) {
+    if (p->unk8) {
+        p->vf04();
+        p->vf03();
+        ((VAt0*)func_80019F64(first2(p->unk30), 0))->vf11(a);
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D07B8);
 
@@ -2917,7 +2988,17 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800DF37C);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DF4F4);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DF604);
+EXTERN_C void func_800DF604(Unk_800DF604* p, Unk_W4 a, int b) {
+    Unk_800DF604_o* o = p->unkC;
+    if (o) {
+        o->unk34 = a;
+        func_80039DD8(o);
+        Unk_Short4v v(0, (b & 7) << 9, 0, 0);
+        o = p->unkC;
+        o->unk2C = v;
+        func_80039DD8(o);
+    }
+}
 
 EXTERN_C Unk_800DF6B4_obj* func_800DF6B4(Unk_800DF6B4* p) {
     Unk_800DF6B4_obj* o = p->unk4;
