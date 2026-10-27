@@ -1,1 +1,10 @@
 // capture overlay symbols
+__10C_800BF560ssc = 0x800BF560; // type:func
+__10S_800BA17CiiPc = 0x800B9F20; // type:func
+__10C_800BA258iiPc = 0x800BA258; // type:func
+__10C_800BFE58i = 0x800BFE58; // type:func
+__10C_800BFC28i = 0x800BFC28; // type:func
+__10C_800BF80Ci = 0x800BF80C; // type:func
+__10C_800BDEB0i = 0x800BDEB0; // type:func
+__10C_800BDD00 = 0x800BDD00; // type:func
+__10C_800C1E7CP13Desc_800C1E7C = 0x800C1E7C; // type:func
