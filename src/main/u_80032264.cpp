@@ -13,7 +13,17 @@ EXTERN_C void func_800322C8(void *p, int a)
     func_8001D024(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032334);
+EXTERN_C void *func_80032334(void *p)
+{
+    void *g;
+    AT(p, void **, 0) = D_80011E74;
+    AT(p, int, 8) = 0;
+    AT(p, int, 4) = 0;
+    AT(p, int, 0xC) = 0;
+    g = D_800A4544;
+    func_8001D150(g, new S_A2_X40(p));
+    return p;
+}
 
 EXTERN_C void func_800323C0(S_800323C0 *p, S_800323C0_Node *n)
 {
@@ -33,7 +43,17 @@ EXTERN_C int func_80032920(S_80032920 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_8003292C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032A10);
+EXTERN_C void func_80032A10(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80011DBC;
+    AT(p, void **, 0) = D_80011E24;
+    AT(p, void **, 8) = D_80011D04;
+    AT(p, void **, 0) = D_80011D6C;
+    AT(p, void **, 8) = D_80011AAC;
+    AT(p, void **, 0) = D_80011B14;
+    func_800198AC((char *)p + 8, 0);
+    func_8001A610(p, flags);
+}
 
 EXTERN_C int func_80032A9C(S_Rgb *s, S_Rgb *a, S_Rgb *b, S_Rgb *c, S_Rgb *d)
 {
@@ -133,4 +153,13 @@ EXTERN_C void func_80033DDC()
     func_8001D024(&D_800AC844, 2);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033E40);
+EXTERN_C void func_80033E40()
+{
+    void *g;
+    AT(&D_800AC844, void **, 0) = D_80011F44;
+    AT(&D_800AC844, int, 8) = 0;
+    AT(&D_800AC844, int, 4) = 0;
+    AT(&D_800AC844, int, 0xC) = 0;
+    g = D_800A4544;
+    func_8001D150(g, new S_A2_X40(&D_800AC844));
+}
