@@ -571,4 +571,122 @@ EXTERN_C int D_800B4D0C;
 EXTERN_C int D_800B4D5C;
 EXTERN_C int D_800B4D60;
 
+typedef struct S_8003ECFC {
+    char pad0[0x100];
+    int unk100;
+    int unk104;
+} S_8003ECFC;
+
+typedef struct S_80034BB4 {
+    char pad0[0x3];
+    unsigned char unk3;
+} S_80034BB4;
+
+typedef struct S_80034F40 {
+    char pad0[0x6];
+    unsigned short unk6;
+} S_80034F40;
+
+typedef struct S_8001F1BC {
+    char pad0[0x94];
+    unsigned short unk94;
+} S_8001F1BC;
+
+/* Something whose unk4 is read through a pointer. */
+typedef struct S_Link4 {
+    int unk0;
+    int unk4;
+} S_Link4;
+
+typedef struct S_800399B0 {
+    S_Link4 *unk0;
+    int unk4;
+} S_800399B0;
+
+typedef struct S_800549B0 {
+    char pad0[0x1C];
+    int unk1C;
+} S_800549B0;
+
+typedef struct S_800372C0 {
+    int unk0;
+    S_Link4 *unk4;
+    char pad8[0x24];
+    int unk2C;
+} S_800372C0;
+
+typedef struct S_800391DC_14 {
+    char pad0[0x14];
+    int unk14;
+} S_800391DC_14;
+
+typedef struct S_800391DC {
+    char pad0[0x48];
+    S_800391DC_14 *unk48;
+    char pad4C[0x18];
+    short unk64;
+} S_800391DC;
+
+typedef struct S_8001FCA4 {
+    int unk0;
+    int unk4;
+    S_Link4 *unk8;
+} S_8001FCA4;
+
+typedef struct S_80040294 {
+    char pad0[0x28];
+    int unk28;
+} S_80040294;
+
+typedef struct S_8004580C {
+    char pad0[0xF8];
+    int unkF8[1];
+} S_8004580C;
+
+typedef struct S_8003BEA0 {
+    short unk0;
+    short unk2;
+    short unk4;
+} S_8003BEA0;
+
+typedef struct S_80025CC8 {
+    unsigned char unk0;
+    unsigned char unk1;
+} S_80025CC8;
+
+typedef struct S_8002EBF0 {
+    short unk0;
+    short unk2;
+} S_8002EBF0;
+
+typedef struct S_80041CB8 {
+    int unk0;
+    int unk4;
+} S_80041CB8;
+
+/* An object whose first word is its vtable. */
+typedef struct S_Vobj {
+    void **vtbl;
+} S_Vobj;
+
+/* 8-byte entries in the scratchpad. */
+typedef struct S_1F800010 {
+    int unk0;
+    int unk4;
+} S_1F800010;
+
+EXTERN_C short D_800B4C50;
+EXTERN_C short D_800B4C52;
+EXTERN_C int D_800B4D00;
+EXTERN_C int D_800B4D2C;
+EXTERN_C int D_800B4D30;
+EXTERN_C unsigned char D_800AC809[];
+EXTERN_C S_1F800010 D_1F800010[];
+EXTERN_C void *D_80010198[];
+EXTERN_C void *D_800101E8[];
+EXTERN_C void *D_80010348[];
+EXTERN_C void *D_800103E0[];
+EXTERN_C void *D_800103F8[];
+EXTERN_C void *D_80011FE4[];
+
 #endif

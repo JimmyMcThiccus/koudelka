@@ -297,7 +297,11 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001A970);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001AA28);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001AA54);
+EXTERN_C S_Vobj *func_8001AA54(S_Vobj *p)
+{
+    p->vtbl = D_80010198;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001AA68);
 
@@ -343,7 +347,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001B26C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001B2D8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001B300);
+EXTERN_C int func_8001B300(char *a, char *b)
+{
+    return a + 8 < b;
+}
 
 EXTERN_C int func_8001B30C(S_8001B30C *p)
 {
@@ -432,7 +439,11 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001BE9C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001C2AC);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001C2D0);
+EXTERN_C S_Vobj *func_8001C2D0(S_Vobj *p)
+{
+    p->vtbl = D_800101E8;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001C2E4);
 
@@ -622,7 +633,11 @@ EXTERN_C int func_8001D678(S_8001D62C *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001D684);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001D6B4);
+EXTERN_C S_Vobj *func_8001D6B4(S_Vobj *p)
+{
+    p->vtbl = D_80010348;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001D6C8);
 
@@ -691,7 +706,11 @@ EXTERN_C int func_8001E2EC(S_8001E23C *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001E2F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001E330);
+EXTERN_C S_Vobj *func_8001E330(S_Vobj *p)
+{
+    p->vtbl = D_800103E0;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001E344);
 
@@ -746,9 +765,18 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001F134);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001F15C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001F1A8);
+EXTERN_C S_Vobj *func_8001F1A8(S_Vobj *p)
+{
+    p->vtbl = D_800103F8;
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001F1BC);
+EXTERN_C unsigned short func_8001F1BC(S_8001F1BC *p, int v)
+{
+    unsigned short old = p->unk94;
+    p->unk94 = v;
+    return old;
+}
 
 EXTERN_C int func_8001F1CC(S_8001F1CC *p)
 {
@@ -827,7 +855,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001FC38);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001FC78);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8001FCA4);
+EXTERN_C int func_8001FCA4(S_8001FCA4 *p)
+{
+    return p->unk8->unk4;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8001FCB8);
 
@@ -867,11 +898,20 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8001FFDC);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80020000);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80020020);
+EXTERN_C int func_80020020(S_8001FFD0 *p)
+{
+    return (p->unk12 >> 3) & 1;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80020034);
+EXTERN_C int func_80020034(S_8001FFD0 *p)
+{
+    return (p->unk12 >> 2) & 1;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80020048);
+EXTERN_C int func_80020048(S_8001FFD0 *p)
+{
+    return (p->unk12 >> 1) & 1;
+}
 
 EXTERN_C int func_8002005C(S_8001FFD0 *p)
 {
@@ -1479,7 +1519,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80025B44);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80025BE0);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80025C50);
+EXTERN_C void func_80025C50(unsigned short *a, unsigned short *b)
+{
+    *a = *b;
+}
 
 EXTERN_C S_80025C5C *func_80025C5C(S_80025C5C *p, int v)
 {
@@ -1510,11 +1553,23 @@ EXTERN_C void *func_80025CA4(void *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80025CAC);
+EXTERN_C void func_80025CAC(unsigned short *a, unsigned short *b)
+{
+    *a = *b;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80025CB8);
+EXTERN_C unsigned short *func_80025CB8(unsigned short *a, unsigned short *b)
+{
+    *a = *b;
+    return a;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80025CC8);
+EXTERN_C S_80025CC8 *func_80025CC8(S_80025CC8 *p, int a, int b)
+{
+    p->unk0 = a;
+    p->unk1 = b;
+    return p;
+}
 
 EXTERN_C void *func_80025CD8(void *p)
 {
@@ -1564,7 +1619,11 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8002758C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80027754);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800278D8);
+EXTERN_C void func_800278D8()
+{
+    D_800B4C50 = -1;
+    D_800B4C52 = -1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800278EC);
 
@@ -2114,7 +2173,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8002E5B0);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002E5D0);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002E5F0);
+EXTERN_C int func_8002E5F0()
+{
+    return D_800AC809[0] != 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002E600);
 
@@ -2204,7 +2266,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8002EAF4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002EB68);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002EBF0);
+EXTERN_C S_8002EBF0 *func_8002EBF0(S_8002EBF0 *p)
+{
+    p->unk0 = 0;
+    p->unk2 = 0;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002EC00);
 
@@ -2322,11 +2389,22 @@ EXTERN_C int func_8002F550()
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F558);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F580);
+EXTERN_C int func_8002F580(unsigned int a)
+{
+    return (a >> 5) & 3;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F58C);
+EXTERN_C int func_8002F58C(int a, int b)
+{
+    return (a & 0xFF9F) | ((b & 3) << 5);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F5A0);
+EXTERN_C int func_8002F5A0(int v)
+{
+    int old = D_800B4D00;
+    D_800B4D00 = v;
+    return old;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F5B0);
 
@@ -2356,7 +2434,10 @@ EXTERN_C void func_8002F8D8()
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F8E0);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F8F8);
+EXTERN_C int func_8002F8F8(int *p, int i)
+{
+    return p[i];
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8002F90C);
 
@@ -2465,7 +2546,10 @@ EXTERN_C int func_80030B4C(S_80030B4C *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80030B58);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80030BF0);
+EXTERN_C int func_80030BF0(int a)
+{
+    return (a + 1) & 3;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80030BFC);
 
@@ -2615,9 +2699,15 @@ EXTERN_C S_80034BA8 *func_80034BA8(S_80034BA8 *p, int v)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80034BB4);
+EXTERN_C int func_80034BB4(S_80034BB4 *p)
+{
+    return (p->unk3 >> 1) & 1;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80034BC8);
+EXTERN_C void func_80034BC8(int *a, int *b)
+{
+    *a = *b;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80034BD4);
 
@@ -2625,7 +2715,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80034EBC);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80034F24);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80034F40);
+EXTERN_C int func_80034F40(S_80034F40 *p)
+{
+    return (p->unk6 >> 5) & 3;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80034F54);
 
@@ -2648,7 +2741,11 @@ EXTERN_C void func_800352E8(S_800352DC *p, int v)
     p->unk4 = v;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800352F0);
+EXTERN_C S_Vobj *func_800352F0(S_Vobj *p)
+{
+    p->vtbl = D_80011FE4;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80035304);
 
@@ -2856,7 +2953,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80037264);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8003728C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800372C0);
+EXTERN_C int func_800372C0(S_800372C0 *p)
+{
+    return p->unk2C + p->unk4->unk4;
+}
 
 EXTERN_C int func_800372D4(S_80037258 *p)
 {
@@ -2870,7 +2970,10 @@ EXTERN_C int func_80037380()
     return D_800B4D0C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8003738C);
+EXTERN_C int func_8003738C(void *p, int a)
+{
+    return (a & 0x1D) != 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80037398);
 
@@ -3018,7 +3121,11 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8003906C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8003912C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800391DC);
+EXTERN_C void func_800391DC(S_800391DC *p, int a, int b)
+{
+    p->unk64 = b;
+    p->unk48->unk14 = a;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800391EC);
 
@@ -3057,7 +3164,10 @@ EXTERN_C int func_800399A4(S_800399A4 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800399B0);
+EXTERN_C void func_800399B0(S_800399B0 *p)
+{
+    p->unk4 = p->unk0->unk4;
+}
 
 EXTERN_C void func_800399C4(S_800399A4 *p)
 {
@@ -3224,7 +3334,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8003BE68);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8003BE84);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8003BEA0);
+EXTERN_C S_8003BEA0 *func_8003BEA0(S_8003BEA0 *p, int i)
+{
+    return &p[i];
+}
 
 EXTERN_C void *func_8003BEB4(void *p)
 {
@@ -3371,7 +3484,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8003EBD4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8003ECE4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8003ECFC);
+EXTERN_C void func_8003ECFC(S_8003ECFC *p, int a, int b)
+{
+    p->unk100 = a;
+    if (b)
+        p->unk104 = b;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8003ED10);
 
@@ -3448,7 +3566,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800401F0);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004025C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80040294);
+EXTERN_C int func_80040294(S_80040294 *p, short a)
+{
+    return p->unk28 + a * 16;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800402A8);
 
@@ -3518,7 +3639,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800419D0);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800419F4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80041B44);
+EXTERN_C int func_80041B44(int a)
+{
+    D_800B4D30 = 0;
+    D_800B4D2C = a;
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80041B54);
 
@@ -3530,7 +3656,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80041C50);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80041C88);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80041CB8);
+EXTERN_C S_80041CB8 *func_80041CB8(S_80041CB8 *p)
+{
+    p->unk4 = 0;
+    p->unk0 = 1;
+    return p;
+}
 
 EXTERN_C int func_80041CCC(S_80041CCC *p)
 {
@@ -3747,7 +3878,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8004561C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800456F4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8004580C);
+EXTERN_C void func_8004580C(S_8004580C *p, int v, int i)
+{
+    p->unkF8[i] = v;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004581C);
 
@@ -3865,7 +3999,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80049594);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800495D8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80049618);
+EXTERN_C S_1F800010 *func_80049618(void *p, int i)
+{
+    return &D_1F800010[i];
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004962C);
 
@@ -4020,7 +4157,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8004AE24);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004AE8C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8004AEA8);
+EXTERN_C int func_8004AEA8(S_80034F40 *p)
+{
+    return (p->unk6 >> 5) & 3;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004AEBC);
 
@@ -4239,7 +4379,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8004D040);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004D0F4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8004D1A0);
+EXTERN_C int func_8004D1A0(void *p, int a)
+{
+    return (a + 1) & 3;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8004D1AC);
 
@@ -4810,9 +4953,15 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80054950);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80054980);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800549B0);
+EXTERN_C int func_800549B0(S_800549B0 *p, int a)
+{
+    return p->unk1C == a;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800549C4);
+EXTERN_C int func_800549C4(S_800549B0 *p, int a)
+{
+    return p->unk1C != a;
+}
 
 EXTERN_C int func_800549D8(S_800549D8 *p)
 {
