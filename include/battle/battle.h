@@ -555,4 +555,14 @@ struct T_D2670 { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; 
 struct T_D4290 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; };
 struct T_D51FC { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; char pad5C[0x2228]; char f2284[0x50]; char f22D4[0x1C]; char f22F0[4]; };
 
+EXTERN_C int func_800392C8(void *p);
+struct T_CF9CC_q { char pad[0x1B8]; void *f1B8; };
+struct T_CF9CC { char pad[0xA0]; T_CF9CC_q *fA0; };
+inline void mk_vec(T_VEC *u, int x, int y, int z) { u->x = x; u->y = y; u->z = z; u->w = 0; }
+EXTERN_C int rand();
+EXTERN_C void func_800C5D84(void *p, int a);
+struct T_CF2D0_r { char pad[0x94C]; unsigned char b94C; unsigned char b94D; };
+struct T_CF2D0_g { char pad[0x33C]; int f33C; char pad340[8]; int f348; int f34C[1]; };
+struct T_CF2D0 { char pad[0x7DC]; short s7DC; };
+
 #endif /* BATTLE_BATTLE_H */
