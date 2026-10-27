@@ -3849,7 +3849,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800549FC);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80054A04);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80054A2C);
+EXTERN_C void func_80053964(void *self);
+
+EXTERN_C void func_80054A2C(void *self)
+{
+    func_80053964(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80054A4C);
 
@@ -3897,7 +3902,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80054F30);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80054F5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80054FC0);
+EXTERN_C void func_800550FC(void *self, int b);
+
+EXTERN_C void func_80054FC0(void *self)
+{
+    func_800550FC(self, 0);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80054FE0);
 
@@ -3921,7 +3931,14 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800557A0);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800557C8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80055838);
+EXTERN_C void *D_800B4D84;
+
+EXTERN_C int func_80055838(int value)
+{
+    int old = FIELD_AT(D_800B4D84, int, 0x44E8);
+    FIELD_AT(D_800B4D84, int, 0x44E8) = value;
+    return old;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005584C);
 
@@ -3940,6 +3957,7 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80055F98);
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800560E4);
 
 EXTERN_C int D_800B4D98;
+
 EXTERN_C int func_8005618C(void)
 {
     return D_800B4D98 == 0;
@@ -3978,7 +3996,13 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80056DCC);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80056E0C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80056F9C);
+EXTERN_C void func_8005717C(void *self);
+
+EXTERN_C void func_80056F9C(void *self)
+{
+    FIELD_AT(self, int, 0xA0) = 0;
+    func_8005717C(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80056FBC);
 
@@ -4008,7 +4032,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80057C7C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80057F20);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80057FEC);
+EXTERN_C void func_80059B5C(void *p);
+
+EXTERN_C void func_80057FEC(void *self)
+{
+    func_80059B5C((char *)self + 0x5C);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005800C);
 
@@ -4050,7 +4079,14 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80058C5C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80058D98);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80058EE8);
+EXTERN_C void func_80058EE8(void *self, int lo, int hi)
+{
+    if (lo >= hi) {
+        FIELD_AT(self, int, 0x38) = lo;
+        FIELD_AT(self, int, 0x3C) = hi;
+        FIELD_AT(self, int, 0x40) = hi;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80058F08);
 
@@ -4079,7 +4115,12 @@ EXTERN_C int func_8005992C(void *self)
     return FIELD_AT(self, int, 0x4);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80059938);
+EXTERN_C void func_8001A610(void *self);
+
+EXTERN_C void func_80059938(void *self)
+{
+    func_8001A610(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80059958);
 
@@ -4166,9 +4207,19 @@ EXTERN_C void func_8005BF48(void)
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005BF50);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005BFA4);
+EXTERN_C void func_8005C1E8(void *self);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005BFC4);
+EXTERN_C void func_8005BFA4(void *self)
+{
+    func_8005C1E8(self);
+}
+
+EXTERN_C void func_8005C088(void *self, int b, int c);
+
+EXTERN_C void func_8005BFC4(void *self, int b)
+{
+    func_8005C088(self, b, 1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005BFE4);
 
@@ -4206,7 +4257,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8005C968);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005CA4C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005CB68);
+EXTERN_C void func_8005F120(void *self);
+
+EXTERN_C void func_8005CB68(void *self)
+{
+    func_8005F120(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005CB88);
 
@@ -4236,11 +4292,21 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D3B8);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D624);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D734);
+EXTERN_C void func_8005D228(void *self);
+
+EXTERN_C void func_8005D734(void *self)
+{
+    func_8005D228(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D754);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D8A4);
+EXTERN_C void func_8005F120(void *self);
+
+EXTERN_C void func_8005D8A4(void *self)
+{
+    func_8005F120(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005D8C4);
 
@@ -4268,7 +4334,12 @@ EXTERN_C void func_8005E244(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005E24C);
+EXTERN_C void func_8005F120(void *self);
+
+EXTERN_C void func_8005E24C(void *self)
+{
+    func_8005F120(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005E26C);
 
@@ -4288,7 +4359,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8005EDF4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005EF58);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F090);
+EXTERN_C void func_8005F120(void *self);
+
+EXTERN_C void func_8005F090(void *self)
+{
+    func_8005F120(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F0B0);
 
@@ -4313,7 +4389,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F1EC);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F214);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F238);
+EXTERN_C void *func_8005F238(void *self)
+{
+    FIELD_AT(self, int, 0x4) = 0;
+    FIELD_AT(self, int, 0x0) = 0;
+    return self;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F248);
 
@@ -4329,6 +4410,7 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F3E0);
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8005F440);
 
 EXTERN_C int D_800B4DC4;
+
 EXTERN_C int func_8005F470(void)
 {
     return D_800B4DC4 != 0;
@@ -4364,13 +4446,27 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80060154);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80060188);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800601C8);
+EXTERN_C void *func_800601C8(void *self)
+{
+    FIELD_AT(self, char, 0x1) = 0;
+    FIELD_AT(self, char, 0x0) = 0;
+    return self;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800601D8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80060200);
+EXTERN_C void *func_80060200(void *self, void *src)
+{
+    FIELD_AT(self, char, 0x0) = FIELD_AT(src, char, 0x0);
+    FIELD_AT(self, char, 0x1) = FIELD_AT(src, char, 0x1);
+    return self;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80060218);
+EXTERN_C void func_80060218(void *self, void *src)
+{
+    FIELD_AT(self, char, 0x0) = FIELD_AT(src, char, 0x0);
+    FIELD_AT(self, char, 0x1) = FIELD_AT(src, char, 0x1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80060230);
 
@@ -4530,11 +4626,21 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80062160);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80062188);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800621F8);
+EXTERN_C void *func_800621F8(void *self)
+{
+    void *r = 0;
+    if (FIELD_AT(self, signed char, 0xA0) != 0) {
+        r = (char *)self + 0xA0;
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80062214);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80062238);
+EXTERN_C int func_80062238(void *self, unsigned int bit)
+{
+    return ((((signed char *)self + 0x1F9)[bit >> 3] >> (bit & 7)) ^ 1) & 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80062258);
 
@@ -4567,6 +4673,7 @@ EXTERN_C void * func_80062834(void *self)
 }
 
 EXTERN_C int D_800B4E34;
+
 EXTERN_C int func_8006283C(void)
 {
     return D_800B4E34;
@@ -4655,7 +4762,12 @@ EXTERN_C void func_800646D4(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800646DC);
+EXTERN_C void func_8005F120(void *self);
+
+EXTERN_C void func_800646DC(void *self)
+{
+    func_8005F120(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800646FC);
 
@@ -4718,7 +4830,15 @@ EXTERN_C void * func_80066358(void *self)
     return (char *)self + 0xB8;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80066360);
+struct Word_80066360 {
+    char b[4];
+};
+
+EXTERN_C void func_80066360(void *self, Word_80066360 *src)
+{
+    FIELD_AT(self, Word_80066360, 0xB8) = *src;
+    FIELD_AT(self, int, 0xBC) = 1;
+}
 
 EXTERN_C void * func_80066380(void *self)
 {
@@ -4825,7 +4945,14 @@ EXTERN_C int func_80066D20(void *self)
     return FIELD_AT(self, int, 0x48);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80066D2C);
+EXTERN_C char D_800154B4[];
+
+EXTERN_C void *func_80066D2C(void *self, int b)
+{
+    FIELD_AT(self, void *, 0x0) = D_800154B4;
+    FIELD_AT(self, int, 0x4) = b;
+    return self;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80066D44);
 
@@ -4966,7 +5093,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800697A4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80069914);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80069958);
+EXTERN_C void func_80054FE0(void *self);
+
+EXTERN_C void func_80069958(void *self)
+{
+    func_80054FE0(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80069978);
 
@@ -4985,7 +5117,20 @@ EXTERN_C int func_8006A040(void *self)
     return FIELD_AT(self, int, 0x1C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006A04C);
+struct Word_8006A04C {
+    char b[4];
+};
+
+// A field copy returned by value; the FIELD cast form calls memcpy instead.
+struct Obj_8006A04C {
+    char pad[0x20];
+    Word_8006A04C w;
+};
+
+EXTERN_C Word_8006A04C func_8006A04C(Obj_8006A04C *self)
+{
+    return self->w;
+}
 
 EXTERN_C int func_8006A06C(void *self)
 {
@@ -5105,7 +5250,13 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8006B690);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006B740);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006B7B8);
+EXTERN_C void func_8006B7B8(void *self)
+{
+    if (FIELD_AT(self, int, 0x274) != 0) {
+        FIELD_AT(self, int, 0x270) = 0;
+        FIELD_AT(self, int, 0x274) = 0;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006B7D8);
 
@@ -5225,6 +5376,7 @@ EXTERN_C void * func_8006BF8C(void *self)
 }
 
 EXTERN_C int D_800B4ED8;
+
 EXTERN_C int func_8006BF94(void)
 {
     return D_800B4ED8;
@@ -5251,12 +5403,14 @@ EXTERN_C int func_8006BFC0(void *self)
 }
 
 EXTERN_C int D_800B4ED4;
+
 EXTERN_C void func_8006BFCC(void *self)
 {
     FIELD_AT(self, int, 0x28C) = D_800B4ED4;
 }
 
 EXTERN_C int D_800B4ED0;
+
 EXTERN_C int func_8006BFD8(void)
 {
     return D_800B4ED0;
@@ -5289,7 +5443,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8006C77C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006C8D8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006C93C);
+EXTERN_C void func_8002EEFC(void *self);
+
+EXTERN_C void func_8006C93C(void *self)
+{
+    func_8002EEFC(self);
+}
 
 INCLUDE_RODATA("asm/main/nonmatchings/game", D_80015C0C);
 
@@ -5377,7 +5536,13 @@ EXTERN_C void func_8006F0EC(void *self)
     FIELD_AT(self, int, 0x0) = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006F0F4);
+EXTERN_C void func_8006F0F4(void *self, int b, int c, int d, int e)
+{
+    FIELD_AT(self, int, 0x94) = b;
+    FIELD_AT(self, int, 0x98) = c;
+    FIELD_AT(self, int, 0x9C) = d;
+    FIELD_AT(self, int, 0xA0) = e;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006F10C);
 
@@ -5450,7 +5615,13 @@ EXTERN_C void func_8006FE08(void *self, int b, int c, int d)
     FIELD_AT(self, int, 0x24) = d;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FE14);
+EXTERN_C void func_8006FE14(void *self, int b, int c, int d, int e, int f)
+{
+    FIELD_AT(self, int, 0x20) = c;
+    FIELD_AT(self, int, 0x24) = d;
+    FIELD_AT(self, int, 0x28) = e;
+    FIELD_AT(self, int, 0x2C) = f;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FE30);
 
@@ -5469,7 +5640,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FE6C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FEA4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FEDC);
+EXTERN_C int func_8006FEDC(void)
+{
+    return D_800AF410.state;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8006FEEC);
 
@@ -5488,9 +5662,15 @@ EXTERN_C int func_8007027C(void)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80070284);
+EXTERN_C int func_80070284(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x3C), int, 0xC);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80070298);
+EXTERN_C int func_80070298(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x3C), int, 0x10);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800702AC);
 
@@ -5506,7 +5686,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8007049C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800704F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80070554);
+EXTERN_C int func_80070554(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x3C), int, 0x30);
+}
 
 INCLUDE_RODATA("asm/main/nonmatchings/game", D_80015FD0);
 
@@ -5597,21 +5780,46 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8007192C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80071A40);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80071A74);
+EXTERN_C void func_80076EF8(void *self);
+
+EXTERN_C void func_80071A74(void *self)
+{
+    func_80076EF8(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80071A94);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80071AC4);
+EXTERN_C void func_800751AC(void *self);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80071AE4);
+EXTERN_C void func_80071AC4(void *self)
+{
+    func_800751AC(self);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80071B04);
+EXTERN_C void func_8007505C(void *self);
+
+EXTERN_C void func_80071AE4(void *self)
+{
+    func_8007505C(self);
+}
+
+EXTERN_C void func_80074F78(void *self);
+
+EXTERN_C void func_80071B04(void *self)
+{
+    func_80074F78(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80071B24);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80071BDC);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80071C24);
+EXTERN_C void func_80074E44(void *self);
+
+EXTERN_C void func_80071C24(void *self)
+{
+    func_80074E44(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80071C44);
 
@@ -5875,7 +6083,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80075E50);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80075EC8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80075FB4);
+EXTERN_C void func_80075EC8(void *self, int b);
+
+EXTERN_C void func_80075FB4(void *self)
+{
+    func_80075EC8(self, 1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80075FD4);
 
@@ -5885,7 +6098,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80076370);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007669C);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800766D8);
+EXTERN_C void func_80076370(void *self);
+
+EXTERN_C void func_800766D8(void *self)
+{
+    func_80076370(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800766F8);
 
@@ -5926,7 +6144,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_800771D4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80077210);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80077234);
+EXTERN_C void func_80075448(void *self);
+
+EXTERN_C void func_80077234(void *self)
+{
+    func_80075448(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80077254);
 
@@ -5951,9 +6174,19 @@ EXTERN_C void func_80077640(void *self)
     FIELD_AT(self, int, 0x4) = FIELD_AT(self, int, 0x0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007764C);
+EXTERN_C void func_800751AC(void *self);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007766C);
+EXTERN_C void func_8007764C(void *self)
+{
+    func_800751AC(self);
+}
+
+EXTERN_C void func_8007505C(void *self);
+
+EXTERN_C void func_8007766C(void *self)
+{
+    func_8007505C(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007768C);
 
@@ -6101,7 +6334,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80079168);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800792C8);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800797FC);
+EXTERN_C void func_8007A1F4(void *self, int b);
+
+EXTERN_C void func_800797FC(void *self)
+{
+    func_8007A1F4(self, 0);
+}
 
 EXTERN_C void func_8007981C(void)
 {
@@ -6123,7 +6361,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80079918);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80079ABC);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80079C18);
+EXTERN_C void func_8007A1F4(void *self, int b);
+
+EXTERN_C void func_80079C18(void *self)
+{
+    func_8007A1F4(self, 1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80079C38);
 
@@ -6297,9 +6540,19 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8007C6A8);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007C7B0);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007C9A4);
+EXTERN_C void func_8007DEE8(void *self, int b);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007C9C4);
+EXTERN_C void func_8007C9A4(void *self)
+{
+    func_8007DEE8(self, 3);
+}
+
+EXTERN_C void func_8007DEE8(void *self, int b);
+
+EXTERN_C void func_8007C9C4(void *self)
+{
+    func_8007DEE8(self, 2);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007C9E4);
 
@@ -6388,7 +6641,10 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F55C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F580);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F5A4);
+EXTERN_C int func_8007F5A4(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x328), int, 0x240);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F5B8);
 
@@ -6408,7 +6664,12 @@ EXTERN_C void func_8007F894(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F89C);
+EXTERN_C void func_8007A1F4(void *self, int b);
+
+EXTERN_C void func_8007F89C(void *self)
+{
+    func_8007A1F4(self, 2);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007F8BC);
 
@@ -6443,7 +6704,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8007FE4C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8007FF58);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080110);
+EXTERN_C void func_8007FE4C(void *self, int b, int c);
+
+EXTERN_C void func_80080110(void *self, int b)
+{
+    func_8007FE4C(self, b, 1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080130);
 
@@ -6498,7 +6764,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80080C40);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080C64);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080C90);
+EXTERN_C void func_800DFB10(void *p);
+
+EXTERN_C void func_80080C90(void *self)
+{
+    func_800DFB10((char *)self + 0x4B0);
+}
 
 EXTERN_C int func_80080CB0(void *self)
 {
@@ -6529,11 +6800,22 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80080D74);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080D94);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080E28);
+EXTERN_C int func_80080E28(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x328), int, 0x150);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080E3C);
+EXTERN_C int func_80080E3C(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, void *, 0x328), int, 0x14C);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080E50);
+EXTERN_C void func_80080828(void *self);
+
+EXTERN_C void func_80080E50(void *self)
+{
+    func_80080828(self);
+}
 
 EXTERN_C int func_80080E70(void *self)
 {
@@ -6549,7 +6831,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80080E88);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080EB4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80080ED8);
+EXTERN_C void func_8001A610(void *self);
+
+EXTERN_C void func_80080ED8(void *self)
+{
+    func_8001A610(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080EF8);
 
@@ -6569,7 +6856,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80080FC4);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80080FF0);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80081014);
+EXTERN_C void func_8001A610(void *self);
+
+EXTERN_C void func_80081014(void *self)
+{
+    func_8001A610(self);
+}
 
 EXTERN_C void func_80081034(void *self, int b, int c)
 {
@@ -6671,6 +6963,7 @@ EXTERN_C int func_80081530(void *self)
 INCLUDE_ASM("asm/main/nonmatchings/game", func_8008153C);
 
 EXTERN_C char D_800AFA58[];
+
 EXTERN_C void * func_80081558(void)
 {
     return D_800AFA58;
@@ -6684,6 +6977,7 @@ EXTERN_C int func_80081564(void *self)
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80081570);
 
 EXTERN_C char D_800AFA64[];
+
 EXTERN_C void * func_8008158C(void)
 {
     return D_800AFA64;
@@ -6764,7 +7058,12 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_80082260);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800822A4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800822B4);
+EXTERN_C void func_800817C8(void *self);
+
+EXTERN_C void func_800822B4(void *self)
+{
+    func_800817C8(self);
+}
 
 EXTERN_C int func_800822D4(void *self)
 {
@@ -6795,7 +7094,12 @@ EXTERN_C int func_80082398(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800823A4);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_80082450);
+EXTERN_C void func_80074E44(void *self);
+
+EXTERN_C void func_80082450(void *self)
+{
+    func_80074E44(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80082470);
 
@@ -6863,11 +7167,28 @@ INCLUDE_ASM("asm/main/nonmatchings/game", func_8008316C);
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80083268);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800832B0);
+EXTERN_C void func_80083310(void *self);
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800832D0);
+EXTERN_C void func_800832B0(void *self)
+{
+    FIELD_AT(self, char, 0x8E) = 0;
+    func_80083310(self);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800832F0);
+EXTERN_C void func_80083310(void *self);
+
+EXTERN_C void func_800832D0(void *self)
+{
+    FIELD_AT(self, char, 0x99) = 0;
+    func_80083310(self);
+}
+
+EXTERN_C void func_80083310(void *self);
+
+EXTERN_C void func_800832F0(void *self)
+{
+    func_80083310(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_80083310);
 
@@ -6932,7 +7253,12 @@ EXTERN_C void func_800840D0(void *self, int b)
     FIELD_AT(self, char, 0x9) = b;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/game", func_800840D8);
+EXTERN_C void func_8001A610(void *self);
+
+EXTERN_C void func_800840D8(void *self)
+{
+    func_8001A610(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/game", func_800840F8);
 
