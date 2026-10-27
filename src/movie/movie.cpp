@@ -255,7 +255,7 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BF918);
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BFA58);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C01C4);
+EXTERN_C s32 func_800C01C4(Unk800C01C4* p, Unk800C01C4B* q) { s32 hit; func_8001FC78(q, 0, 0); hit = 0; if (func_80054D78(func_800550BC(p)) && p->x18C == 3) hit = q->x18 == 0x4000; if (hit) { D_800B4D90[0] = 1; for (s32 i = 0; i < 15; i++) p->x278[i].v3(); void** h = &p->x1C; func_80019D40(h ? *h : 0); p->x74 = 0; p->x18C = 1; func_8005549C(7, p, 0, -1); } return 1; }
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7778);
 
@@ -393,7 +393,7 @@ EXTERN_C void func_800C3E10(Unk800C3E10* p, void* b) { func_80025CE0(p->x54, b, 
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C3E38);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C3F68);
+EXTERN_C s32 func_800C3F68(Unk800C3F68* p) { u32 i = 0; while (p->x30 == -1 && i < 60) { Unk800C3F68E* e = func_8001ED2C(D_800B4C18[0], 2, 1); if (e) { if (e->xA == 4 && e->xC) e->xC->v1(3); e->v2(); } i++; } TestEvent(D_800CBA9C[0]); TestEvent(D_800CBAA0[0]); TestEvent(D_800CBAA4[0]); TestEvent(D_800CBAA8[0]); s32 r = p->x30; p->x30 = -1; return r; }
 
 EXTERN_C void func_800C407C(Unk800C407C* p) { p->x48 = p->x44->d; p->x4C = p->x44->e; p->x54 = (char*)p->x44->rows; p->x5C = p->x54 + p->x50 * 128; }
 
@@ -571,7 +571,7 @@ EXTERN_C void func_800C8594(Unk800C8594* p, Unk800C8594Q d) { s32 i = D_800B4CF0
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C8674);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C8894);
+EXTERN_C void func_800C8894(Unk800C8894* p, Unk800C8894B* q) { if (q) { s32 c = D_800B4CF0[0]; Unk800C8894UV uv; s32 u; p->x10[c].tpage = q->x1C; if (q->xC == 0) u = q->x10 & 0x3F; else if (q->xC->v3()) u = (q->x10 << 1) & 0x7F; else u = q->x10 << 2; Unk800C8894_set(&uv, u, q->x12); p->x10[c].u0 = uv.u; p->x10[c].v0 = uv.v; p->x60 = *(u16*)&uv; p->x10[c].clut = q->xC->x8; func_8005F1D8(p); } }
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C899C);
 

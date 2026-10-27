@@ -500,4 +500,28 @@ struct Unk800BE3B4T { void* x0; s32 x4; void* x8; s16 xC; s32 x10; };
 struct Unk800BE3B4V { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); };
 struct Unk800BE3B4 : Unk800BE3B4V { char pad[0x50 - 4]; char x50[8]; s16 x58; char p1[0x5E - 0x5A]; s16 x5E, x60, x62, x64; char p3[0x6C - 0x66]; s16 x6C, x6E; };
 
+struct Unk800C8894UV { u8 u, v; };
+struct Unk800C8894C { virtual void v1(); virtual void v2(); virtual s32 v3(); };
+struct Unk800C8894CC : Unk800C8894C { u16 x4; u16 x6; u16 x8; };
+struct Unk800C8894B { char pad[0xC]; Unk800C8894CC* xC; s16 x10, x12; char p2[0x1C - 0x14]; u16 x1C; };
+struct Unk800C8894 { char pad[0x10]; POLY_FT4 x10[2]; u16 x60; };
+inline void Unk800C8894_set(Unk800C8894UV* t, s32 u, s32 v) { t->u = u; t->v = v; }
+
+struct Unk800C01C4OB { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800C01C4O : Unk800C01C4OB { char p2[0x254 - 0x1C]; };
+struct Unk800C01C4 { char pad[0x1C]; void* x1C; char p1[0x74 - 0x20]; s32 x74; char p2[0x18C - 0x78]; s32 x18C; char p3[0x278 - 0x190]; Unk800C01C4O x278[15]; };
+struct Unk800C01C4B { char pad[0x18]; u16 x18; };
+EXTERN_C void* func_800550BC(void*);
+EXTERN_C s32 func_80054D78(void*);
+EXTERN_C s32 D_800B4D90[];
+EXTERN_C void func_80019D40(void*);
+
+struct Unk800C3F68X { virtual void v1(s32); };
+struct Unk800C3F68EV { virtual void v1(); virtual void v2(); };
+struct Unk800C3F68E : Unk800C3F68EV { u16 x4, x6, x8, xA; Unk800C3F68X* xC; };
+struct Unk800C3F68 { char pad[0x30]; s32 x30; };
+EXTERN_C void* D_800B4C18[];
+EXTERN_C Unk800C3F68E* func_8001ED2C(void*, s32, s32);
+EXTERN_C s32 TestEvent(s32);
+
 #endif /* MOVIE_H */
