@@ -1,1 +1,2 @@
 // field overlay symbols
+__10C_800BD220ssSc = 0x800BD220; // type:func
