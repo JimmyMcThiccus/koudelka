@@ -9,6 +9,13 @@ struct GlobalWord {
     int pad[2];
 };
 
+struct GameMode_800AF410 {
+    int state;
+    int pad[2];
+};
+
+EXTERN_C GameMode_800AF410 D_800AF410;
+
 EXTERN_C GlobalWord D_800AF470;
 EXTERN_C GlobalWord D_800AFA70;
 EXTERN_C GlobalWord D_800B1A68;
