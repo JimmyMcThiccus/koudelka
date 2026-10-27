@@ -3,6 +3,22 @@
 
 // Layouts are partial: only the fields the decompiled code touches are named.
 
+// GCC 2.x vtable entry
+struct VtblEntry {
+    short delta;
+    short index;
+    void *pfn;
+};
+
+struct VObject {
+    VtblEntry *vt;
+};
+
+struct ObjSlot {
+    int pad;
+    VObject *obj;
+};
+
 struct IntPair {
     int a, b;
 };
@@ -112,6 +128,12 @@ struct S_800BF62C {
     ShortPair *list;
     char pad3[0x8];
     int count;
+};
+
+struct S_800BDC70 {
+    char pad[0x48];
+    int list[4];
+    short n;
 };
 
 #endif
