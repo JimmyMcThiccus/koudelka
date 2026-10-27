@@ -29,6 +29,16 @@ typedef struct {
     unsigned char r3, g3, b3, p3; short x3, y3; unsigned char u3, v3; unsigned short pad3;
 } POLY_GT4;
 
+typedef struct { int tag; unsigned char r0, g0, b0, code; short x0, y0; short w, h; } TILE;
+
+/* Generic polymorphic objects: VAt<N> has its vptr at offset N, VAt0 at 0. Slots
+   take (...) so any int/pointer arguments pass; returns are int. A class that
+   re-declares a slot makes calls load the vptr before adjusting `this`. */
+#define VSLOTS10(a) virtual int vf##a##0(...); virtual int vf##a##1(...); virtual int vf##a##2(...);     virtual int vf##a##3(...); virtual int vf##a##4(...); virtual int vf##a##5(...); virtual int vf##a##6(...);     virtual int vf##a##7(...); virtual int vf##a##8(...); virtual int vf##a##9(...);
+#define VSLOTS VSLOTS10(0) VSLOTS10(1) VSLOTS10(2) VSLOTS10(3) VSLOTS10(4)
+template <int N> struct VAt { char vpad[N]; VSLOTS };
+struct VAt0 { VSLOTS };
+
 /* vtables */
 EXTERN_C char D_80010178[];
 EXTERN_C char D_800B6DF4[];
@@ -337,5 +347,38 @@ EXTERN_C void func_800D9C84(void*, int);
 EXTERN_C void func_800D9E4C(void*);
 EXTERN_C void func_800E6EF0(void*);
 EXTERN_C void func_800E75BC();
+
+/* round 2 */
+struct Unk_800CAD68_m : Unk_Pair, Unk_800BFB64_list { };
+EXTERN_C int func_8005409C(void*);
+struct Unk_Short2 { short x, y; };
+struct Unk_800C9D90_sub : Unk_Pad50, VAt<8> { virtual int vf02(...); };
+struct Unk_800C9D90 { char pad0[0x64]; Unk_800C9D90_sub* unk64; };
+struct Unk_800BB1BC : VAt0 { char pad4[4]; short unk8; char padA[0x1E]; TILE unk28[2]; };
+struct Unk_800BB1BC_arg { char pad0[8]; unsigned short unk8; };
+struct Unk_800BFA54 { void* vtbl; char pad4[0x88]; void* unk8C; char pad90[0x68]; void* unkF8; char padFC[0x514]; void* unk610; };
+EXTERN_C char D_800B706C[];
+EXTERN_C char D_800B7054[];
+EXTERN_C char D_800B7084[];
+struct Unk_800DF6F0_obj : Unk_Deletable { int unk4; };
+struct Unk_800DF6F0 { int unk0; Unk_800DF6F0_obj* unk4; };
+inline Unk_800DF6F0_obj* head(Unk_800DF6F0* p) { return p->unk4; }
+struct Unk_800E6A5C { char pad0[0x50]; int unk50; char pad54[0x55]; signed char unkA9; };
+struct Unk_800C4F50 { char pad0[0x28]; SPRT unk28[2]; TILE unk50[2]; };
+struct Unk_800E9D04 { char pad0[0x10]; SPRT unk10[0x90]; };
+struct Unk_800DF938_obj { void* vtbl; int unk4; int unk8; int unkC; };
+EXTERN_C char D_800171B0[];
+EXTERN_C void func_8001A678(void*, void*);
+struct Unk_800CE7AC : Unk_Pad50, VAt<8> { };
+EXTERN_C void func_80055624(void*, int);
+EXTERN_C void func_80062160(void*);
+struct Unk_800D8CA4 { char pad0[0x6C]; void* unk6C; void* unk70; int unk74; };
+struct Unk_800D90E8 : VAt<0x2C> { char pad30[8]; unsigned char unk38; };
+EXTERN_C void* func_80019F64(void*, int);
+struct Unk_800E4228_sub { int unk0; int unk4; };
+struct Unk_800E4228 { int unk0; Unk_800E4228_sub* unk4; char pad8[0x2C]; int unk34; };
+EXTERN_C void func_800356F4();
+EXTERN_C int close(int);
+struct Unk_800D4BFC { char pad0[0x28]; SPRT unk28[4]; };
 
 #endif /* FIELD_FIELD_H */
