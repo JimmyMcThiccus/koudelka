@@ -109,12 +109,14 @@ struct S_800C1D58 {
 
 // ring buffer of words
 struct S_800BA17C {
-    int pad;
+    char *base;
     int *buf;
     int value;
     int mask;
     int wr;
     int rd;
+    int last;
+    S_800BA17C(int size, int bits, char *mem);
 };
 
 struct ShortPair {
@@ -228,6 +230,23 @@ struct C_800BF560 {
     char f20;
     int f24;
     C_800BF560(short a, short n, char c);
+};
+
+EXTERN_C char D_800B6DF4[];
+
+struct B_800B86F0 {
+    void *vt;
+    int f4, f8, fC;
+    B_800B86F0()
+    {
+        vt = D_800B6DF4;
+        f8 = 0;
+        fC = 0;
+    }
+};
+struct C_800BA258 : B_800B86F0 {
+    S_800BA17C ring;
+    C_800BA258(int size, int bits, char *mem);
 };
 
 #endif

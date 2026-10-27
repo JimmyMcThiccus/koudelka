@@ -197,7 +197,24 @@ EXTERN_C char *func_800B9EA0(char *p) { return p + 0x7C; }
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9EA8);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9F20);
+EXTERN_C void *func_800A0D2C(int);
+S_800BA17C::S_800BA17C(int size, int bits, char *mem)
+{
+    int n;
+    if (!mem)
+        base = (char *)func_800A0D2C(size);
+    else
+        base = mem;
+    n = 1 << bits;
+    value = (int)base;
+    buf = (int *)func_800A0D2C(n * 4);
+    mask = n - 1;
+    rd = 0;
+    wr = 0;
+    buf[0] = 0;
+    last = mask;
+    buf[last] = (int)(base + size);
+}
 
 EXTERN_C void func_800A0D0C(void *);
 EXTERN_C void func_800B9FCC(void *self, int in_chrg)
@@ -244,7 +261,12 @@ EXTERN_C int func_800BA17C(S_800BA17C *p)
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BA1BC);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BA258);
+EXTERN_C char D_800B6DF4[];
+EXTERN_C char D_800B6F8C[];
+C_800BA258::C_800BA258(int size, int bits, char *mem) : ring(size, bits, mem)
+{
+    vt = D_800B6F8C;
+}
 
 EXTERN_C char D_800B6F8C[];
 EXTERN_C void func_800B9FCC(void *, int);

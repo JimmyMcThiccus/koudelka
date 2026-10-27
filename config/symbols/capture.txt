@@ -1,2 +1,4 @@
 // capture overlay symbols
 __10C_800BF560ssc = 0x800BF560; // type:func
+__10S_800BA17CiiPc = 0x800B9F20; // type:func
+__10C_800BA258iiPc = 0x800BA258; // type:func
