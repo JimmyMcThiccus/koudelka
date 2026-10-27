@@ -185,11 +185,6 @@ EXTERN_C void func_800550BC(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_800550FC);
 
-struct Sub_80055330 {
-    char pad[0x104];
-    short v;
-};
-
 EXTERN_C void func_80055330(int a)
 {
     char *o = (char *)D_800B4D84;
@@ -311,7 +306,20 @@ EXTERN_C void func_80055F0C(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055F98);
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_800560E4);
+EXTERN_C int func_800560E4(int a)
+{
+    char *h = (char *)&D_800AE620;
+    char *v;
+    List *l;
+    VObj<0x18> *o;
+    if ((h ? *(List **)h : 0)->count == 0) {
+        return 0;
+    }
+    v = h ? h + 8 : 0;
+    l = v ? *(List **)v : 0;
+    o = l->count ? ((VObj<0x18> **)*(void **)l)[l->count - 1] : 0;
+    return o->v06(a);
+}
 
 EXTERN_C int func_8005618C(void)
 {

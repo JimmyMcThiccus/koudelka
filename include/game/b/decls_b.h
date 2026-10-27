@@ -117,7 +117,7 @@ EXTERN_C short D_800B4DA8;
 EXTERN_C short D_800B4DAA;
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_80059B5C(void *p);
+EXTERN_C void func_80059B5C(void *p, int b);
 
 /* from u_80056E0C.cpp */
 EXTERN_C void func_80059C54(void *self, int b, int c);
@@ -2379,5 +2379,42 @@ static inline void *iter_next_B(Iter_B *it)
 {
     return it->i < it->l->count ? ((void **)it->l->pad)[it->i++] : 0;
 }
+
+/* the sub-object at Tgt_80072970 + 0x154 */
+struct Sub_80055330 {
+    char pad[0x104];
+    short v;
+};
+
+EXTERN_C void func_80059F0C(void *self, int b);
+EXTERN_C void func_8005A784(void *self, int b);
+EXTERN_C void func_80055624(void *self, int b);
+EXTERN_C int func_80053874(void *self);
+EXTERN_C void func_80053848(void *self);
+EXTERN_C void func_8005BF04(void *self, int b, int c);
+EXTERN_C void func_80098E10(void *self);
+EXTERN_C void func_80059800(void *self, int a, int b, int c, int d);
+EXTERN_C void func_80059888(void *self, int b);
+EXTERN_C void func_80059790(void *self);
+EXTERN_C void func_8005B378(void *self, int b);
+EXTERN_C VObj<0x2C> *func_80063E18(void *self, int a, int b, int c);
+
+EXTERN_C char D_800147A0[];
+EXTERN_C char D_80014B00[];
+struct Pool_8005F50C {
+    void *vt;
+    int a4;
+    unsigned int n;
+    int *data;
+    int a10;
+};
+
+struct E36_8005C968 {
+    int w[9];
+};
+
+struct E12_8005DFE8 {
+    int w[3];
+};
 
 #endif /* GAME_B_DECLS_B_H */

@@ -121,7 +121,14 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800638A8);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800639F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063B14);
+EXTERN_C void func_80063B14(void *self, short *v, unsigned short c)
+{
+    VObj<0x2C> *o = func_80063E18(__builtin_new(0x44), 1, c, 2);
+    o->v07(v[0], v[1]);
+    ((VObj<0x2C> *)self)->v29(o, -1);
+    o->v03();
+    ((VObj<0x2C> *)self)->v27();
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063BE4);
 
