@@ -1,1 +1,3 @@
 // effect overlay symbols
+__10C_800DD34CiiPsi = 0x800DD34C; // type:func
+__10C_800E0384s = 0x800E0384; // type:func
