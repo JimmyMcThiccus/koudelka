@@ -545,4 +545,68 @@ EXTERN_C Unk800B9208V* func_80019C68(Unk800B9208L*, s32);
 
 struct Unk800C40B8 { char pad[0x50]; s32 x50; s32 x54; s32 x58; };
 
+/* func_800BA498 */
+struct Unk800BA498E { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800BA498 { void* x0; char pad[0x30 - 4]; RECT x30; };
+EXTERN_C void* func_80038654(void*, void*, s32);
+EXTERN_C void func_800BA5A4();
+EXTERN_C void func_800388FC();
+EXTERN_C void func_8002EBF0();
+EXTERN_C void func_8002EC00();
+EXTERN_C void func_800BA534(Unk800BA534*);
+EXTERN_C void func_8002ECE8();
+EXTERN_C void func_8002EC38();
+EXTERN_C void func_80038834();
+EXTERN_C void func_80038898();
+EXTERN_C void func_8002EABC();
+EXTERN_C void func_8002EAC4();
+EXTERN_C void func_80038764();
+EXTERN_C void func_80038938();
+EXTERN_C void func_80038978();
+EXTERN_C void func_8002EB68();
+EXTERN_C void func_8002EC18();
+EXTERN_C void func_8002EC30();
+EXTERN_C void func_8002EC40();
+EXTERN_C void func_8002EC90();
+EXTERN_C void func_8002ECE0();
+
+/* func_800B9640 */
+EXTERN_C char D_80012154[], D_8001201C[], D_80012034[];
+/* stream object ctor (in_chrg form): StreamStat is the virtual base at 0x4C, x4 its pointer */
+struct Unk800B9640 { void* x0; StreamStat* x4; void* x8; void* xC; char x10[0x28 - 0x10]; s32 x28, x2C; char p2[0x3C - 0x30]; s32 x3C, x40, x44; char p3[0x4C - 0x48]; StreamStat x4C; };
+// func_800198E0 (list ctor) really returns its this: the call must be a call_value (result unused) for the
+// trailing stores to go through $v0, hence the cast below; declaring it `void* func_800198E0(void*, s32, s32)` in movie.h would also work.
+
+/* func_800B9B14 */
+/* GCC 2.x vtable entry: call pfn with this + delta */
+struct Unk800B9B14E { s16 delta; s16 index; void (*pfn)(); };
+EXTERN_C void func_800B9CF8(void*);
+EXTERN_C void func_800B9B48(Unk800B9B48*, Unk800B9B48Q*);
+EXTERN_C Unk800B9C34* func_800B9C34(Unk800B9C34*);
+EXTERN_C Unk800B9C48* func_800B9C48(Unk800B9C48*);
+EXTERN_C void func_800B9C64(char*, RECT*);
+EXTERN_C void func_800BA534(Unk800BA534*);
+EXTERN_C void func_8002ECE8();
+EXTERN_C void func_8002EC38();
+EXTERN_C void func_80038834();
+EXTERN_C void func_80038898();
+EXTERN_C void func_8002EABC();
+EXTERN_C void func_8002EAC4();
+EXTERN_C void func_80038764();
+EXTERN_C void func_80038938();
+EXTERN_C void func_80038978();
+EXTERN_C void func_8002EB68();
+EXTERN_C void func_8002EC18();
+EXTERN_C void func_8002EC30();
+EXTERN_C void func_8002EC40();
+EXTERN_C void func_8002EC90();
+EXTERN_C void func_8002ECE0();
+// the EXE functions above are declared `()` only to take their address in the vtable; if another landed function
+// declares one with parameters, drop it here. func_800BA498 (base ctor) returns this, as movie.h already says.
+
+/* func_800C2F90 */
+struct Unk800C2F90B { s16 x0; s16 x2; s32 x4; };
+struct Unk800C2F90 { s32 x0; Unk800C2F90B* x4; char p2[0x34 - 8]; s32 x34; char p3[0x44 - 0x38]; void* x44; char p4[0x50 - 0x48]; s32 x50; };
+// storing D_800CBA94 through a local pointer makes the MEM non-"in struct", so GCC lets the p->x loads move above it
+
 #endif /* MOVIE_H */

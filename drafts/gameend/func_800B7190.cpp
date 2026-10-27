@@ -11,8 +11,8 @@
 //    life 2, 53 loop insns) into s6/s7, so the frame saves s0-s7 instead of s0-s5.
 //    Retail keeps them in the loop, which needs a higher insn count or unsplit
 //    addresses (-mno-split-addresses stops the hoisting but changes other code).
-//    Round 2 measurements (-dL): move_movables' threshold starts at 29 with a call in
-//    the loop and drops by 3 per insn moved; a lui/addiu pair (savings 2, life 2) moves
+//    Round 2 (-dL, and GCC 2.8.1 loop.c): threshold = (loop_has_call ? 1 : 2) * (1 +
+//    n_non_fixed_regs) = 29 here, and move_movables does `threshold -= 3` per insn moved; a lui/addiu pair (savings 2, life 2) moves
 //    when 4*T >= loop insns. Retail moved the D_80010178 pair only (cse2 then turned it
 //    into `s5 = s1`), so its loop had ~93-115 RTL insns at loop time vs 54 here.
 //    EXE func_8005FC78 shows the same thing (2 of 3 vtable pairs hoisted in a loop of
