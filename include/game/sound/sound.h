@@ -83,6 +83,12 @@ struct Byte_800B1A9F {
 
 EXTERN_C Byte_800B1A9F D_800B1A9F;
 
+struct Slot_80093D8C {
+    short idx;
+    char pad2[2];
+    short prio;
+};
+
 EXTERN_C void func_80094990();
 EXTERN_C void func_800949A0();
 EXTERN_C void func_8008C7B4(int a, int b, int c, int d, int e);
@@ -111,5 +117,15 @@ EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
 EXTERN_C long SpuSetNoiseClock(long n_clock);
 EXTERN_C void func_8008E1B4(void *t);
 EXTERN_C void func_8009482C(int a, int b);
+EXTERN_C void func_80093E80(Slot_80093D8C *s);
+EXTERN_C void func_80093EE0(Slot_80093D8C *s);
+EXTERN_C void *func_8008E360(int a);
+EXTERN_C void func_8008E590(void *p, int a, int b);
+EXTERN_C void func_8008CE18(int a, int b, int c, int d);
+EXTERN_C void func_8008BE08(char *p);
+EXTERN_C void func_8008CFD4(void);
+EXTERN_C void func_8008D038(int v, short *out, int side);
+EXTERN_C void func_80093A80(void *drv, int bits);
+EXTERN_C void func_800A0800(int a, int b);
 
 #endif /* GAME_SOUND_SOUND_H */
