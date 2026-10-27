@@ -14,3 +14,5 @@ __10C_800BD0A8iissss = 0x800BD0A8; // type:func
 __10C_800C23F8 = 0x800C23F8; // type:func
 __10C_800B9470iiii = 0x800B9470; // type:func
 __10C_800C21E0 = 0x800C21E0; // type:func
+__10C_800B94FCis = 0x800B94FC; // type:func
+__10C_800BA3E4is = 0x800BA3E4; // type:func
