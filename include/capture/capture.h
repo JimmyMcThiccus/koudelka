@@ -154,7 +154,8 @@ struct Body12 {
         int w;
     } col;
     short x, y;
-    short pad, s;
+    unsigned char p8, p9;
+    short s;
 };
 
 struct E12 {
@@ -305,6 +306,18 @@ struct C_800BF80C : C_800BFC28 {
     char pad3[0x600 - 0x5E0 - 0x10];
     int f600;
     C_800BF80C(int a);
+};
+
+struct N_800C24D0 {
+    int pad;
+    N_800C24D0 *next;
+};
+
+struct N_800C0820 {
+    int pad;
+    N_800C0820 *next;
+    char pad2[4];
+    int val;
 };
 
 #endif
