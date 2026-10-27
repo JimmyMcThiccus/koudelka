@@ -7,8 +7,8 @@ The areas don't overlap, so their branches merge cleanly.
 
 | Area | Source | Range | Your symbols | Your headers |
 |---|---|---|---|---|
-| `main_a` | `src/main/game.cpp` | functions `0x800186B0`–`0x80054A2C` (1,712) | `config/symbols/main_a.txt` | `include/game/a/` |
-| `main_b` | `src/main/game.cpp` | functions `0x80054A2C`–`0x80094910` (1,561) | `config/symbols/main_b.txt` | `include/game/b/` |
+| `main_a` | `src/main/main_a.cpp` | functions `0x800186B0`–`0x80054A2C` (1,712) | `config/symbols/main_a.txt` | `include/game/a/` |
+| `main_b` | `src/main/main_b.cpp` | functions `0x80054A2C`–`0x80094910` (1,561) | `config/symbols/main_b.txt` | `include/game/b/` |
 | `field` | `src/field/field.cpp` | all (930 entries) | `config/symbols/field.txt` | `include/field/` |
 | `battle` | `src/battle/battle.cpp` | all (568) | `config/symbols/battle.txt` | `include/battle/` |
 | `effect` | `src/effect/effect.cpp` | all (418) | `config/symbols/effect.txt` | `include/effect/` |

@@ -44,7 +44,7 @@ py -3.14 -m venv .venv
 ```
 
 `configure.py --no-split` skips re-splitting; after that, `.venv/Scripts/ninja.exe` builds incrementally (about 3 s
-after an edit to `game.cpp`). Re-split after you decompile a function, so its `.s` moves from `nonmatchings/` to
+after an edit to a source file). Re-split after you decompile a function, so its `.s` moves from `nonmatchings/` to
 `matchings/`.
 
 ### Sources
@@ -53,7 +53,7 @@ Game code is C++ (vtables, `__builtin_new`), so every target's code is a `.cpp` 
 
 | Target | Source | Kept as assembly |
 |---|---|---|
-| `SLUS_010.51` | `src/main/game.cpp`: `0x800186B0`–`0x80094910`, game rodata `0x800100C0`–`0x80017F60` | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
+| `SLUS_010.51` | `src/main/main_a.cpp` (`0x800186B0`–`0x80054A2C`, rodata from `0x800100C0`) and `src/main/main_b.cpp` (`0x80054A2C`–`0x80094910`, rodata from `0x80013940`), split at a real file boundary | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
 | each overlay | `src/<overlay>/<overlay>.cpp`: all of its code and leading rodata | trailing `.data` |
 
 splat writes these files once, with one `INCLUDE_ASM` / `INCLUDE_RODATA` line per function and rodata symbol, in
@@ -198,7 +198,8 @@ of the same code, for checking function boundaries and comparing code across bui
 
 `.ctors` (`0x80010000`, 27 entries) and `.dtors` (`0x8001006C`, 22 entries) list each source file's
 `_GLOBAL_$I$`/`$D$` function. GCC emits that function at the end of the file, so these entries mark real file
-boundaries inside `game.cpp`. That's useful when splitting it into proper files later. `func_8001C2AC` (a
+boundaries in the EXE. `main_a.cpp`/`main_b.cpp` are split at one of them (`func_80054A04`); the rest are where
+further splits go. `func_8001C2AC` (a
 constructor right after a tail call) is declared in `config/symbols/main.txt`, so the table holds a symbol rather
 than a raw address.
 
