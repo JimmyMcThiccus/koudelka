@@ -60,8 +60,8 @@ struct Unk800BA50C { char pad[0x30]; Unk800BA50CR x30; };
 struct Unk800C5B30 { char pad[0x58]; s32 x58; };
 EXTERN_C void func_80054FE0(void*);
 
-struct Unk800C3E10 { char pad[0x50]; s32 x50, x54; };
-EXTERN_C void func_80025CE0(s32, s32, s32);
+struct Unk800C3E10 { char pad[0x50]; s32 x50; void* x54; };
+EXTERN_C void func_80025CE0(void*, void*, s32);
 
 EXTERN_C void func_8001FC78(s32, s32, s32);
 
@@ -98,7 +98,7 @@ struct Unk800BA3F8 { char pad[8]; s16 x8; char pad2[0x40-0xA]; s16 x40, x42; };
 
 struct Unk800BE568 { char pad[0x64]; s16 x64; char pad2[0x6E-0x66]; s16 x6E; };
 
-EXTERN_C void func_8003546C(void*);
+EXTERN_C void func_8003546C(void*, void*);
 
 EXTERN_C void func_800386B8(void*);
 
@@ -240,5 +240,27 @@ struct Unk800C2CE4B { s32 x0, x4; };
 struct Unk800C2CE4 { s32 x0; Unk800C2CE4B* x4; char pad[0x34 - 8]; s32 x34; };
 EXTERN_C void func_800356F4(void*);
 EXTERN_C int close(int);
+
+struct Unk800B8F74B { s32 x0, x4; };
+struct Unk800B8F74 { s32 x0; Unk800B8F74B* x4; char p2[0x40 - 8]; char* x40; };
+
+struct Unk800BDE40B { virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800BDE40 { char pad[0x44]; Unk800BDE40B* x44; s32 x48; };
+EXTERN_C void func_800BDADC(void*, s32);
+EXTERN_C void func_8001AA68(void*, s32);
+
+struct Unk800C98EC { char pad[0x28]; SPRT x28[4]; };
+struct Unk800C98ECB { char pad[5]; u8 x5, x6, x7; };
+
+struct Unk800BE584V { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(s32, s32); };
+struct Unk800BE584 : Unk800BE584V { char pad[0x5A - 4]; s16 x5A, x5C; };
+
+struct Unk800B9704 { void* x0; s32 x4; void* x8; };
+EXTERN_C char D_800B6F34[], D_800B6F4C[], D_80012294[], D_80012224[];
+EXTERN_C void func_80035304(void*, s32);
+
+struct Unk800BDDC8 { char pad[0x20]; s16 x20; char p2[0x44 - 0x22]; void* x44; char p3[0x50 - 0x48]; void* x50; };
+EXTERN_C void* func_800A0D2C(s32);
+EXTERN_C void func_800B93D8(void*, s32, s32, s32);
 
 #endif /* MOVIE_H */
