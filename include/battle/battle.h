@@ -1,12 +1,6 @@
 #ifndef BATTLE_BATTLE_H
 #define BATTLE_BATTLE_H
 
-/* BATTLE.BIN reaches every global with lui/%lo and never uses $gp, so it was
-   probably built with -G0. Under the project's -G8, small externs would go
-   through $gp; giving their declarations an explicit .data section keeps the
-   lui access. No storage is defined. */
-#define LUI_DATA __attribute__((section(".data")))
-
 /* Struct names are the address of the first function seen using them. Field
    names are offsets until their meaning is known. */
 
@@ -218,8 +212,8 @@ EXTERN_C T_CE044_10 *func_800CE00C(T_CE044 *p);
 EXTERN_C T_CE044_10 *func_800CE044(T_CE044 *p);
 EXTERN_C T_CE044_10 *func_800CE090(T_CE044 *p);
 
-EXTERN_C int D_800D5D78 LUI_DATA;
-EXTERN_C int D_800D5D7C LUI_DATA;
+EXTERN_C int D_800D5D78;
+EXTERN_C int D_800D5D7C;
 
 struct T_VObj8 { VTable *vtbl; int f4; signed char b8; char pad9; short sA; int fC; };
 struct T_D0404 { char pad[0x54]; int f54; int f58[3]; int f64; int f68; int f6C; int f70; };
@@ -271,7 +265,7 @@ struct T_VEC { int x, y, z, w; };
 struct T_D2F54 { char pad[0x50]; char f50[0xFC]; int f14C; int f150; int f154; };
 struct T_D596C { char pad[0x20]; int f20; };
 struct T_4DD0 { char pad[0x1F6]; short s1F6; };
-EXTERN_C T_4DD0 *D_800B4DD0 LUI_DATA;
+EXTERN_C T_4DD0 *D_800B4DD0;
 EXTERN_C void func_80019A6C(List *l, int a, int n);
 EXTERN_C void *func_800751AC(void *p);
 EXTERN_C void func_8007669C(void *p, int a, int b);
@@ -404,9 +398,9 @@ struct T_BE390 { char pad[0x26C]; int f26C; char pad270[8]; int f278; };
 struct T_D0C90 { char pad[0x68]; int f68; };
 struct T_CA710 { char pad[0x864]; int f864; char pad868[0xEC]; unsigned char b954; };
 struct T_AF470 { char pad[0x384]; T_B9268 *f384; };
-EXTERN_C T_BE390 *D_800B4ED8 LUI_DATA;
-EXTERN_C int D_800D5D80 LUI_DATA;
-EXTERN_C T_AF470 *D_800AF470 LUI_DATA;
+EXTERN_C T_BE390 *D_800B4ED8;
+EXTERN_C int D_800D5D80;
+EXTERN_C T_AF470 *D_800AF470;
 EXTERN_C void func_8006B850(void *p);
 EXTERN_C void func_8006B740(void *p, int a);
 EXTERN_C void func_8006B7D8(void *p, int a);
