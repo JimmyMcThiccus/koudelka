@@ -280,11 +280,19 @@ struct Vec_800BF80C {
     int n;
     void *data;
     int buf[1];
-    void init()
+    Vec_800BF80C() {}
+    Vec_800BF80C(int cap)
     {
         data = buf;
         p = buf;
-        func_800198E0(data, 0x10, 0);
+        func_800198E0(data, cap, 0);
+        n = 0;
+    }
+    void init(int cap)
+    {
+        data = buf;
+        p = buf;
+        func_800198E0(data, cap, 0);
         n = 0;
     }
 };
@@ -307,6 +315,14 @@ struct C_800BF80C : C_800BFC28 {
     int f600;
     C_800BF80C(int a);
 };
+
+struct C_800BDEB0 : C_800BF80C {
+    int f604, f608, f60C, f610, f614;
+    int pad618[2];
+    int f620, f624, f628, f62C, f630, f634, f638;
+    C_800BDEB0(int a);
+};
+
 
 struct N_800C24D0 {
     int pad;

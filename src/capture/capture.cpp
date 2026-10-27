@@ -187,7 +187,24 @@ EXTERN_C int func_800B9C60() { return -1; }
 
 EXTERN_C int func_800B9C68() { return 0; }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9C70);
+EXTERN_C void func_800370D0(void *);
+EXTERN_C void func_8001AA28(void *, int);
+EXTERN_C void func_800B9C70(S_800B9E74 *p)
+{
+    int i;
+    VObject *o;
+    VtblEntry *e;
+    func_800370D0(p);
+    for (i = 0; i < 16; i++) {
+        o = (VObject *)p->slot[i];
+        if (o) {
+            // o->~T() (virtual destructor, slot 1, no delete)
+            e = &o->vt[1];
+            ((void (*)(void *, int))e->pfn)((char *)o + e->delta, 0);
+        }
+    }
+    func_8001AA28(p->slot, 16);
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9CF4);
 
@@ -503,7 +520,27 @@ EXTERN_C void func_800BDE9C() {}
 
 EXTERN_C void func_800BDEA4(char *p) { *(int *)(p + 0x144) = *(int *)(p + 0x140); }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BDEB0);
+EXTERN_C char D_800B7334[];
+EXTERN_C char D_800B734C[];
+EXTERN_C int D_800C3210[];
+C_800BDEB0::C_800BDEB0(int a) : C_800BF80C(a)
+{
+    vt2 = D_800B7334;
+    vt = D_800B734C;
+    D_800C3210[0] = (int)this;
+    f604 = 0;
+    f608 = 0;
+    f60C = 1;
+    f610 = 0;
+    f614 = 1;
+    f624 = 0;
+    f628 = 0;
+    f62C = 0;
+    f630 = 0;
+    f620 = a;
+    f634 = 0;
+    f638 = 0;
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BDF38);
 
@@ -970,7 +1007,7 @@ C_800BF80C::C_800BF80C(int a) : C_800BFC28(a)
 {
     vt2 = D_800B7374;
     vt = D_800B738C;
-    v.init();
+    v.init(0x10);
     f600 = 0;
 }
 
@@ -1461,9 +1498,29 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2B28);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2BD0);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2C4C);
+EXTERN_C int D_800B4CF0[];
+EXTERN_C void func_800C2BD0(S_800C2D5C *);
+EXTERN_C void func_800C2C4C(S_800C2D5C *p, unsigned char *c)
+{
+    if (p->state == 1)
+        func_800C2BD0(p);
+    p->e[D_800B4CF0[0]].b.col.c.r = c[5];
+    p->e[D_800B4CF0[0]].b.col.c.g = c[6];
+    p->e[D_800B4CF0[0]].b.col.c.b = c[7];
+    p->state = 2;
+}
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2CD4);
+EXTERN_C int D_800B4CF0[];
+EXTERN_C void func_800C2BD0(S_800C2D5C *);
+EXTERN_C void func_800C2CD4(S_800C2D5C *p, unsigned char *c)
+{
+    if (p->state == 1)
+        func_800C2BD0(p);
+    p->e[D_800B4CF0[0]].b.col.c.r = c[0];
+    p->e[D_800B4CF0[0]].b.col.c.g = c[1];
+    p->e[D_800B4CF0[0]].b.col.c.b = c[2];
+    p->state = 2;
+}
 
 EXTERN_C int D_800B4CF0[];
 EXTERN_C void func_800C2D5C(S_800C2D5C *p, unsigned char *out)
@@ -1518,7 +1575,23 @@ EXTERN_C char *func_800C2F6C(char *p)
     return p;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2F9C);
+EXTERN_C char D_800B757C[];
+EXTERN_C void func_80024FEC(void *, int);
+EXTERN_C void func_8001A610(void *, int);
+EXTERN_C void func_800C2F9C(char *p, int in_chrg)
+{
+    *(char **)p = D_800B757C;
+    if (*(void **)(p + 0xC)) {
+        func_80024FEC(*(void **)(p + 0xC), 0);
+        VObject *o = *(VObject **)(p + 0xC);
+        if (o) {
+            // delete o (virtual destructor, slot 1)
+            VtblEntry *e = &o->vt[1];
+            ((void (*)(void *, int))e->pfn)((char *)o + e->delta, 3);
+        }
+    }
+    func_8001A610(p, in_chrg);
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C301C);
 
