@@ -138,7 +138,6 @@ struct T_D5740 { char pad[0x20]; int f20; char pad24[0x48]; signed char b6C[1]; 
 struct T_BC420 { char pad[0x4C0]; Holder h4C0; };
 struct T_B9268 { char pad[0x4D0]; void *f4D0; char pad4D4[0x80]; void *f554; void *f558; };
 struct T_BC270 { int pad0; void *f4; };
-struct T_CEC00 { char pad[0x90C]; void *f90C; };
 struct T_CFF44 { SVec2 f0; int f4; };
 struct T_CFFB4 { SVec2 f0; int f4; short s8; };
 struct T_C1A44 { int pad[3]; VTable *vtblC; };
@@ -241,5 +240,24 @@ EXTERN_C void func_80055330(int a);
 EXTERN_C void func_8005549C(int a, void *p, int b, int c);
 EXTERN_C void func_80055624(void *p, int a);
 EXTERN_C void func_8006323C(void *p);
+
+struct T_BBC7C { VTable *vtbl; int f4; int f8; int fC; int f10; int f14; };
+struct T_C59EC { int pad0; char f4[4]; };
+struct T_Grids { char pad[0x2C8]; signed char b2C8[7][5]; char pad2EB[0x95]; char b380[7][5]; char b3A3[7][5]; };
+/* List node with a vtable after its links (GCC 2.x puts the vptr after the first fields). */
+struct T_Node {
+    T_Node *next;
+    T_Node *prev;
+    virtual void m1(int a);
+};
+struct T_C5AD0 { char pad[0xA0]; void *fA0; char fA4[4]; };
+EXTERN_C VTable D_800B706C[], D_800B7154[];
+EXTERN_C void *func_80085B28(void *p, int a);
+EXTERN_C void func_80075004(void *a, void *b);
+EXTERN_C T_VObj *func_800BC094(T_VObj *p, int a, int b);
+EXTERN_C void *func_800C1A6C(void *p);
+EXTERN_C int func_800C5A30(void *p, void *q);
+EXTERN_C void func_800CADDC(void *p, int a);
+EXTERN_C void func_800C54D8(void *p, void *q);
 
 #endif /* BATTLE_BATTLE_H */
