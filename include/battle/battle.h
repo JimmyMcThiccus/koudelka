@@ -27,6 +27,13 @@ struct S_800BA418_60 {
     int f8;
     char padC[0x54];
 };
+struct S_800BA6B4;
+struct S_800BA418_3E8 {
+    int f0;
+    S_800BA6B4 *f4;
+    int f8;
+    int fC;
+};
 struct S_800BA418_3FC {
     int f0;
     S_800BA418_3FC *f4;
@@ -44,7 +51,7 @@ struct S_800BA418_41C {
 struct S_800BA418 {
     char pad0[0x100];
     char b100;
-    char b101;
+    signed char b101;
     char pad102[2];
     S_800BA418_60 f104;
     S_800BA418_60 f164;
@@ -58,7 +65,7 @@ struct S_800BA418 {
     char pad28E[0x14C];
     short s3DA;
     char pad3DC[0xC];
-    char f3E8[0x10];
+    S_800BA418_3E8 f3E8;
     char f3F8[4];
     struct S_800BA418_3FC *f3FC;
     char pad400[0x1C];
@@ -158,7 +165,9 @@ struct T_C1340 {
     short s480;
     char pad482[0x2C];
     char b4AE;
-    char pad4AF[0x21];
+    char pad4AF[0xE];
+    signed char b4BD;
+    char pad4BE[0x12];
     int f4D0;
     char pad4D4[0x38];
     short s50C;
@@ -196,6 +205,7 @@ EXTERN_C void func_800766D8(void *p);
 EXTERN_C void *func_800787B4();
 
 /* BATTLE functions */
+EXTERN_C signed char func_800BA6D0(struct S_800BA6B4 *p);
 EXTERN_C int func_800B9654(void *p);
 EXTERN_C void func_800BB118(T_BB118 *p, int *t);
 EXTERN_C void func_800BBC04(T_BB118 *p, int *t);
@@ -350,7 +360,8 @@ struct T_D0130 { char pad[0x10]; T_D0130_e e[16]; };
 EXTERN_C void *func_8003912C(void *p, int a);
 EXTERN_C void func_8003A150(T_BFB18_t *t, void *x, int a);
 EXTERN_C void func_800C3FF4(void *p, int a, T_BFB18_t *t, int b, int c);
-EXTERN_C void func_800C5E1C(void *p, int a, int b);
+struct T_C5E1C;
+EXTERN_C struct T_C1340 *func_800C5E1C(T_C5E1C *p, int a, int b);
 EXTERN_C T_V0 *func_8003BEF8(void *p);
 EXTERN_C void *func_800BBD60(void *p);
 EXTERN_C T_BC3B4_item *func_80019F64(List *l, int i);
@@ -381,5 +392,12 @@ struct T_D24E8_B {
     virtual void v4(SVec2C v);
 };
 struct T_D24E8 : T_D24E8_B { char pad1C[0x40]; int f5C; };
+
+struct T_C5E1C { char pad0[0x14]; T_C1340 *f14[7][5]; void *fA0; char fA4[0x334]; T_CE044 f3D8; };
+EXTERN_C void func_80085A58(void *p);
+EXTERN_C void func_800CDF64(T_CE044 *p, int i);
+EXTERN_C int func_800CE110(T_CE044 *p, int key);
+inline bool node_used(S_800D00B8 *l) { return l->fC == 1; }
+inline bool in_grid(int a, int b) { if (a < 0 || b < 0 || a >= 5 || b >= 7) return false; return true; }
 
 #endif /* BATTLE_BATTLE_H */
