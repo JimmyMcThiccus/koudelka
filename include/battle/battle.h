@@ -400,4 +400,19 @@ EXTERN_C int func_800CE110(T_CE044 *p, int key);
 inline bool node_used(S_800D00B8 *l) { return l->fC == 1; }
 inline bool in_grid(int a, int b) { if (a < 0 || b < 0 || a >= 5 || b >= 7) return false; return true; }
 
+struct T_BE390 { char pad[0x26C]; int f26C; char pad270[8]; int f278; };
+struct T_D0C90 { char pad[0x68]; int f68; };
+struct T_CA710 { char pad[0x864]; int f864; char pad868[0xEC]; unsigned char b954; };
+struct T_AF470 { char pad[0x384]; T_B9268 *f384; };
+EXTERN_C T_BE390 *D_800B4ED8 LUI_DATA;
+EXTERN_C int D_800D5D80 LUI_DATA;
+EXTERN_C T_AF470 *D_800AF470 LUI_DATA;
+EXTERN_C void func_8006B850(void *p);
+EXTERN_C void func_8006B740(void *p, int a);
+EXTERN_C void func_8006B7D8(void *p, int a);
+EXTERN_C void func_8006B814(void *p, int a);
+EXTERN_C void func_80062280(void *p, int a);
+EXTERN_C void func_8006323C(void *p);
+EXTERN_C int func_800B9268(T_B9268 *p, int *t);
+
 #endif /* BATTLE_BATTLE_H */
