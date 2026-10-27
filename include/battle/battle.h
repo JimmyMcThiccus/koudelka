@@ -836,4 +836,13 @@ EXTERN_C void func_800557C8(void *p, int a, int b);
 EXTERN_C void func_8006897C(void *p, int a, int b);
 struct T_D20E0 { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; char pad5C[0x2220]; int f227C; T_D3ED0_vb v2280; };
 
+struct T_D5074_x { char pad[0x1A]; char b1A; };
+struct T_D5074_s { char pad[0x550]; T_D5074_x *f550; int f554; int f558; int f55C; };
+struct T_D5074_B { int pad[2]; T_D5074_s *items[3]; };
+struct T_D5074_D : T_D0390_A, T_D5074_B {};
+struct T_D5074_G { char pad[0x328]; T_D5074_D *f328; };
+struct T_D5074 : T_D2598_b { int f1C; int f20; char pad24[0x38]; int f5C; char pad60[0x221C]; int f227C; int f2280; };
+EXTERN_C T_D5074_x *func_80061164(void *p, int a);
+EXTERN_C void func_8008B150(void *s, void *x, int a, int b, int c);
+
 #endif /* BATTLE_BATTLE_H */
