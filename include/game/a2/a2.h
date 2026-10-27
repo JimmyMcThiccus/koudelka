@@ -290,4 +290,27 @@ EXTERN_C void *D_800127E4[];
 EXTERN_C int D_800B4D28;
 struct S_A2_X1 : S_A2_X0 { void *p8; short sC; int u10; S_A2_X1(void *p) { vt = D_80010338; p8 = p; sC = 0x80; u10 = 1; } };
 struct S_A2_Pt2 { short x, y; };
+
+/* Inlined iterator step (out of line: func_80039960). */
+inline void *a2_next(S_A2_Iter *p)
+{
+    void *r;
+    S_A2_Arr *a = p->arr;
+    int i = p->i;
+    if (i < a->n) {
+        r = a->items[i];
+        p->i = i + 1;
+    } else
+        r = 0;
+    return r;
+}
+
+EXTERN_C void *func_8002EB68(void *p);
+EXTERN_C void func_8002EE9C(void *p, int a);
+EXTERN_C void func_800787B4();
+EXTERN_C void func_8008316C(void *p);
+EXTERN_C void *D_80010160[];
+EXTERN_C void *D_8001265C[];
+EXTERN_C void *D_800126DC[];
+EXTERN_C int func_8003906C(void *p, short a, short b);
 #endif /* GAME_A2_A2_H */

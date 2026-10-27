@@ -263,7 +263,24 @@ EXTERN_C void func_8003FC48(void *p)
     AT(p, int, 0x114) = func_80041C18((int *)((char *)p + 0x1C0)) - AT(p, int, 0xF8);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003FC84);
+EXTERN_C void func_8003FC84(void *p)
+{
+    void *o;
+    if (!AT(p, unsigned char, 0x120))
+        AT(p, int, 0xF8) = func_80041C18((int *)((char *)p + 0x1C0)) - AT(p, int, 0x114);
+    AT(p, short, 0x1D8) = 1;
+    AT(p, int, 0x1C8) = AT(p, int, 0xF8);
+    o = func_8001CA10(0x14);
+    AT(o, void **, 0) = D_80010178;
+    AT(o, int, 4) = 0;
+    AT(o, void **, 0) = D_80010300;
+    AT(o, short, 8) = 2;
+    AT(o, short, 0xA) = 0xC;
+    AT(o, int, 0x10) = 0;
+    AT(o, int, 0xC) = 0;
+    AT(o, void **, 0) = D_800102D0;
+    func_8001EFE4(p, o);
+}
 
 EXTERN_C S_A2_V4 func_8003FD30(S_A2_V4 *a, S_A2_V4 *b) return r
 {
@@ -527,7 +544,25 @@ EXTERN_C int func_80041CCC(S_80041CCC *p)
     return p->unk0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80041CD8);
+EXTERN_C void func_80041CD8(void *p)
+{
+    if (AT(p, void *, 4)) {
+        int a = AT(p, int, 0xC);
+        int b = AT(p, int, 0x10);
+        unsigned short s = AT(p, unsigned short, 8);
+        void *o = func_8001CA10(0x14);
+        AT(o, void **, 0) = D_80010178;
+        AT(o, int, 4) = 0;
+        AT(o, void **, 0) = D_80010300;
+        AT(o, short, 8) = 3;
+        AT(o, void **, 0) = D_800102D0;
+        AT(o, short, 0xA) = s;
+        AT(o, int, 0x10) = a;
+        AT(o, int, 0xC) = b;
+        func_8001EFE4(AT(p, void *, 4), o);
+    }
+    AT(p, char, 0x14) = 1;
+}
 
 EXTERN_C void func_80041D84(void *p)
 {
@@ -821,7 +856,24 @@ EXTERN_C int func_80043DE8()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80043DF0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80044590);
+EXTERN_C void func_80044590(void *p)
+{
+    if (!AT(p, short, 0x214)) {
+        void *o = func_8001CA10(0x14);
+        AT(o, void **, 0) = D_80010178;
+        AT(o, int, 4) = 0;
+        AT(o, void **, 0) = D_80010300;
+        AT(o, short, 8) = 2;
+        AT(o, short, 0xA) = 8;
+        AT(o, int, 0x10) = 5;
+        AT(o, int, 0xC) = 0;
+        AT(o, void **, 0) = D_800102D0;
+        func_8001EFE4(p, o);
+    } else {
+        func_800787B4();
+        func_8008316C(p ? (char *)p + 0x2A0 : 0);
+    }
+}
 
 EXTERN_C S_A2_V4 func_8004463C(S_A2_V4 *a, S_A2_V4 *b) return r
 {
