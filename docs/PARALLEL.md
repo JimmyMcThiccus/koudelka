@@ -3,22 +3,27 @@
 Several sessions can decompile at once, each in its own git worktree and branch and each owning one **area**.
 The areas don't overlap, so their branches merge cleanly.
 
-## Areas
+## Areas (round 2)
 
-| Area | Source | Range | Your symbols | Your headers |
+The EXE's game code is split into 29 source units, one per original source file where the `.ctors` table marks
+one: `src/main/u_<start address>.cpp`, plus `main_a.cpp`, `main_b.cpp` and `sound.cpp`. An area is a set of whole
+units, so two sessions never edit the same file.
+
+| Area | Units (`src/...`) | Functions left | Your symbols | Your headers |
 |---|---|---|---|---|
-| `main_a` | `src/main/main_a.cpp` | functions `0x800186B0`–`0x80054A2C` (1,712) | `config/symbols/main_a.txt` | `include/game/a/` |
-| `main_b` | `src/main/main_b.cpp` | functions `0x80054A2C`–`0x8008B6B0` | `config/symbols/main_b.txt` | `include/game/b/` |
-| `sound` | `src/main/sound.cpp` | functions `0x8008B6B0`–`0x80094910` (the sound driver, PsyQ 4.1) | `config/symbols/sound.txt` | `include/game/sound/` (it also uses `include/game/b/sound.h`) |
-| `field` | `src/field/field.cpp` | all (930 entries) | `config/symbols/field.txt` | `include/field/` |
-| `battle` | `src/battle/battle.cpp` | all (568) | `config/symbols/battle.txt` | `include/battle/` |
-| `effect` | `src/effect/effect.cpp` | all (418) | `config/symbols/effect.txt` | `include/effect/` |
-| `capture` | `src/capture/capture.cpp` | all (330) | `config/symbols/capture.txt` | `include/capture/` |
-| `movie` | `src/movie/movie.cpp` | all (364) | `config/symbols/movie.txt` | `include/movie/` |
-| `gameend` | `src/gameend/gameend.cpp` | all (16) | `config/symbols/gameend.txt` | `include/gameend/` |
+| `main_a1` | `main/main_a.cpp`, `main/u_80018B88` … `main/u_8002ED44.cpp` (16 units, `0x800186B0`–`0x80032264`) | 548 | `config/symbols/main_a.txt` | `include/game/a/` |
+| `main_a2` | `main/u_80032264` … `main/u_8003C510.cpp` (5 units, `0x80032264`–`0x80054A2C`) | 549 | `config/symbols/main_a2.txt` | `include/game/a2/` |
+| `main_b` | `main/main_b.cpp`, `main/u_80056E0C` … `main/u_80082174.cpp` (7 units, `0x80054A2C`–`0x8008B6B0`) | 552 | `config/symbols/main_b.txt` | `include/game/b/` |
+| `sound` | `main/sound.cpp` (the sound driver: PsyQ 4.1, `0x8008B6B0`–`0x80094910`) | 180 | `config/symbols/sound.txt` | `include/game/sound/` |
+| `field` | `field/field.cpp` | 468 | `config/symbols/field.txt` | `include/field/` |
+| `battle` | `battle/battle.cpp` | 283 | `config/symbols/battle.txt` | `include/battle/` |
+| `effect_capture` | `effect/effect.cpp`, `capture/capture.cpp` | 138 + 86 | `effect.txt`, `capture.txt` | `include/effect/`, `include/capture/` |
+| `movie_gameend` | `movie/movie.cpp`, `gameend/gameend.cpp` | 135 (28 are Sony library code: leave them) + 1 | `movie.txt`, `gameend.txt` | `include/movie/`, `include/gameend/` |
 
-The `main_a` / `main_b` split sits at a real source-file boundary: `func_80054A04` is a static constructor (the
-last function of its file), and the next file starts at `0x80054A2C`.
+Headers outside your folder are **read-only** for you, including ones your units already include: `main_a2`
+reads `include/game/a/`, and `sound` reads `include/game/b/`. Put new declarations in your own folder and include
+that header from your units. Use `--unit` with the unit file a function lives in (see "The loop"); the unit
+boundaries are the `[0x..., cpp, u_...]` lines in `config/slus_010.51.yaml`.
 
 ## Setup (once per worktree)
 
@@ -77,6 +82,18 @@ under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs
   If you need a change in one of these (a build fix, a flag override, a shared type), describe it in your final
   report. Don't make it yourself.
 - **Generated, never edit:** `asm/`, `build/`, `build.ninja`.
+
+## Rodata hazards
+
+- **Data a decompiled function uses by name.** splat moves rodata that only one function uses into that function's
+  `.s`. Once the function is decompiled its `.s` isn't built, so that data disappears and the link fails with
+  `undefined reference to D_XXXXXXXX`. Fix it in **your** symbols file: `D_XXXXXXXX = 0xXXXXXXXX;
+  // force_not_migration:True`, then re-split. (For the EXE, the existing ones are in
+  `config/symbols/main_keep_rodata.txt`.)
+- **Rodata the compiler emits** (a `switch` jump table, a string literal). It goes into your unit's `.rodata`. If
+  that unit has no rodata segment in the yaml, or its rodata start isn't 8-aligned, the table lands in the wrong
+  place and the matching check fails. Don't change the yaml: leave the function as a draft and say so in your
+  report.
 
 ## Globals in overlays
 

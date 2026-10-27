@@ -53,7 +53,7 @@ Game code is C++ (vtables, `__builtin_new`), so every target's code is a `.cpp` 
 
 | Target | Source | Kept as assembly |
 |---|---|---|
-| `SLUS_010.51` | `src/main/main_a.cpp` (`0x800186B0`–`0x80054A2C`, rodata from `0x800100C0`), `src/main/main_b.cpp` (`0x80054A2C`–`0x8008B6B0`, rodata from `0x80013940`), `src/main/sound.cpp` (the sound driver, `0x8008B6B0`–`0x80094910`, PsyQ 4.1) | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
+| `SLUS_010.51` | 29 units in `src/main/`, one per original source file the `.ctors` table marks: `main_a.cpp`, `main_b.cpp`, `u_<start>.cpp`, and `sound.cpp` (the sound driver, `0x8008B6B0`–`0x80094910`, PsyQ 4.1). Only the 10 units whose jump tables must sit with their code have a rodata segment | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
 | each overlay | `src/<overlay>/<overlay>.cpp`: all of its code and leading rodata | trailing `.data` |
 
 splat writes these files once, with one `INCLUDE_ASM` / `INCLUDE_RODATA` line per function and rodata symbol, in
@@ -116,6 +116,7 @@ exactly there, so the EXE has **no room to grow**. A decompiled function may be 
 | `tools/func_diff.py` | list the functions of a built image that differ from retail |
 | `tools/split_unit.py` | split a source file in two at a function start (yaml, source, paired rodata) |
 | `tools/resync_rodata.py` | re-place `INCLUDE_RODATA` lines after a change in what splat migrates |
+| `tools/hoist_decls.py` | move units' inline declarations into one shared header (used after splitting) |
 | `tools/check.py` | pad to retail size, compare SHA-1 |
 
 Tools in `bin/` (git-ignored):

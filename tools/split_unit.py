@@ -149,7 +149,14 @@ def main():
         return int(m.group(1), 16) if m else None
     for new_line in filter(None, [ro_line, code_line]):
         r = rom_of(new_line)
+        kind = ".rodata" if new_line is ro_line else None
         idx = None
+        # The tail takes over the head's rodata start: the head then owns none, so replace its line.
+        if kind:
+            same = [j for j, l in enumerate(ylines) if rom_of(l) == r and ", .rodata, " in l]
+            if same:
+                ylines[same[0]] = new_line
+                continue
         for j, l in enumerate(ylines):
             lr = rom_of(l)
             if lr is not None and lr > r and re.match(r"\s{6}- \[", l):

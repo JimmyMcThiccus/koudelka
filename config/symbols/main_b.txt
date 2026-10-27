@@ -1,4 +1,4 @@
-// main_b: names for functions/data in src/main/main_b.cpp 0x80054A2C-0x80094910 (owned by the main_b session).
+// main_b: names for functions/data in src/main/main_b.cpp, u_80056E0C.cpp ... u_80082174.cpp (0x80054A2C-0x8008B6B0).
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
 // vtable used by func_800756F8; keep it out of that function's .s so decompiling it does not drop the data.
 D_80016808 = 0x80016808; // force_not_migration:True

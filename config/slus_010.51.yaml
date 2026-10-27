@@ -15,8 +15,10 @@ options:
   symbol_addrs_path:
     - config/symbols/main.txt
     - config/symbols/main_a.txt
+    - config/symbols/main_a2.txt
     - config/symbols/main_b.txt
     - config/symbols/sound.txt
+    - config/symbols/main_keep_rodata.txt
   undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.main.txt
   undefined_syms_auto_path: build/linkers/undefined_syms_auto.main.txt
 
@@ -56,14 +58,49 @@ segments:
       # .ctors / .dtors: one entry per C++ translation unit with static objects. Each entry is that
       # unit's _GLOBAL_$I$/$D$ function, emitted at the end of the unit, so they mark file boundaries.
       - [0x800, rodata, ctors]
-      - [0x8C0, .rodata, main_a] # 0x800100C0: main_a's rodata, migrated into its functions
-      - [0x4140, .rodata, main_b] # 0x80013940: main_b's rodata (no interleaving with main_a's)
+      # Game rodata: a segment only for units whose jump tables (or decompiled functions' literals)
+      # must sit with their code; shared rodata is reached by global symbol from any unit.
+      - [0x8C0, .rodata, u_8001C2D0] # 0x800100C0
+      - [0xBF8, .rodata, u_8001F1A8] # 0x800103F8
+      - [0xFB4, .rodata, u_80020B70] # 0x800107B4
+      - [0x2AAC, .rodata, u_80033ECC] # 0x800122AC
+      - [0x2C3C, .rodata, u_800372C0] # 0x8001243C
+      - [0x3234, .rodata, u_8003C510] # 0x80012A34
+      - [0x5468, .rodata, u_800658E0] # 0x80014C68: 8-aligned so func_8006F630's compiled jump table keeps its offset (first jtbl 0x80015484)
+      - [0x6CA8, .rodata, u_80071A74] # 0x800164A8
+      - [0x7F68, .rodata, u_80082174] # 0x80017768
       - [0x874C, .rodata, sound] # 0x80017F4C: the sound driver's rodata (jtbl_80017F4C)
       - [0x8760, rodata, psyq] # 0x80017F60: library rodata ("$Id: sys.c ...")
-      # Game code, split at a real file boundary: func_80054A04 is a static constructor, the last
-      # function of its file. More splits will follow at the other .ctors boundaries.
+      # Game code: one unit per original source file, split after each .ctors entry (a static
+      # constructor, emitted at the end of its file). Units are named by their first function.
       - [0x8EB0, cpp, main_a] # 0x800186B0 -> src/main/main_a.cpp
+      - [0x9388, cpp, u_80018B88]
+      - [0x9C9C, cpp, u_8001949C]
+      - [0xA06C, cpp, u_8001986C]
+      - [0xCAD0, cpp, u_8001C2D0]
+      - [0xE5F4, cpp, u_8001DDF4]
+      - [0xF9A8, cpp, u_8001F1A8]
+      - [0x10B68, cpp, u_80020368]
+      - [0x11370, cpp, u_80020B70]
+      - [0x16054, cpp, u_80025854]
+      - [0x180EC, cpp, u_800278EC]
+      - [0x18C28, cpp, u_80028428]
+      - [0x1A3BC, cpp, u_80029BBC]
+      - [0x1D10C, cpp, u_8002C90C]
+      - [0x1E6D8, cpp, u_8002DED8]
+      - [0x1F544, cpp, u_8002ED44]
+      - [0x22A64, cpp, u_80032264]
+      - [0x246CC, cpp, u_80033ECC]
+      - [0x27AC0, cpp, u_800372C0]
+      - [0x28D2C, cpp, u_8003852C]
+      - [0x2CD10, cpp, u_8003C510]
       - [0x4522C, cpp, main_b] # 0x80054A2C -> src/main/main_b.cpp
+      - [0x4760C, cpp, u_80056E0C]
+      - [0x4FA38, cpp, u_8005F238]
+      - [0x52E10, cpp, u_80062610]
+      - [0x560E0, cpp, u_800658E0]
+      - [0x62274, cpp, u_80071A74]
+      - [0x72974, cpp, u_80082174]
       # Sound driver (next to "Programmed by Hidenori Suzuki"): GCC 2.7.2 / PsyQ 4.1, no $gp. It starts after
       # func_8008B630 (the last 4.4-only function) and by 0x8008C4B8 (the first 4.1-only one).
       - [0x7BEB0, cpp, sound] # 0x8008B6B0 -> src/main/sound.cpp

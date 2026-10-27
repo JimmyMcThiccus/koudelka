@@ -15,6 +15,7 @@ options:
   symbol_addrs_path:
     - config/symbols/main.txt
     - config/symbols/main_a.txt
+    - config/symbols/main_a2.txt
     - config/symbols/main_b.txt
     - config/symbols/sound.txt
     - config/symbols/battle.txt

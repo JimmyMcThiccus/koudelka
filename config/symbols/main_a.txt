@@ -1,4 +1,4 @@
-// main_a: names for functions/data in src/main/main_a.cpp 0x800186B0-0x80054A2C (owned by the main_a session).
+// main_a1: names for functions/data in src/main/main_a.cpp, u_80018B88.cpp ... u_8002ED44.cpp (0x800186B0-0x80032264).
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
 // Own function (prologue at 0x800518A8); after the main_a/main_b split splat took it for an alternate entry of func_800515F4.
 func_800518A8 = 0x800518A8; // type:func
