@@ -565,7 +565,6 @@ typedef struct S_800549D8 {
     int unk24;
 } S_800549D8;
 
-EXTERN_C int D_800B4C18;
 EXTERN_C short D_800B4C70;
 EXTERN_C int D_800B4D0C;
 EXTERN_C int D_800B4D5C;
@@ -591,6 +590,9 @@ typedef struct S_8001F1BC {
     char pad0[0x94];
     unsigned short unk94;
 } S_8001F1BC;
+
+EXTERN_C S_8001F1BC *D_800B4C18;
+EXTERN_C S_8001F1BC *D_800B4C1C;
 
 /* Something whose unk4 is read through a pointer. */
 typedef struct S_Link4 {
@@ -689,26 +691,26 @@ EXTERN_C void *D_800103E0[];
 EXTERN_C void *D_800103F8[];
 EXTERN_C void *D_80011FE4[];
 
-EXTERN_C void func_800198AC(void *p);
-EXTERN_C void func_8001A610(void *p);
-EXTERN_C void func_8001A678(void *p);
-EXTERN_C void func_8001A6A8(void *p);
-EXTERN_C void func_8001D024(void *p);
-EXTERN_C void func_8001DEB8(void *p);
-EXTERN_C void func_80020DB0(void *p);
-EXTERN_C void func_80026138(void *p);
-EXTERN_C void func_80028DC4(void *p);
-EXTERN_C void func_8002D8AC(void *p);
-EXTERN_C void func_8002DA94(void *p);
-EXTERN_C void func_8002DC34(void *p);
-EXTERN_C void func_8002DD34(void *p);
-EXTERN_C void func_8002EE9C(void *p);
-EXTERN_C void func_8002EEFC(void *p);
-EXTERN_C void func_8003950C(void *p);
-EXTERN_C void func_80039610(void *p);
-EXTERN_C void func_80039710(void *p);
-EXTERN_C void func_80039824(void *p);
-EXTERN_C void func_8003BEC4(void *p);
+EXTERN_C void func_800198AC(void *p, int a);
+EXTERN_C void func_8001A610(void *p, int a);
+EXTERN_C void func_8001A678(void *p, int a);
+EXTERN_C void func_8001A6A8(void *p, int a);
+EXTERN_C void func_8001D024(void *p, int a);
+EXTERN_C void func_8001DEB8(void *p, int a);
+EXTERN_C void func_80020DB0(void *p, int a);
+EXTERN_C void func_80026138(void *p, int a);
+EXTERN_C void func_80028DC4(void *p, int a);
+EXTERN_C void func_8002D8AC(void *p, int a);
+EXTERN_C void func_8002DA94(void *p, int a);
+EXTERN_C void func_8002DC34(void *p, int a, int b);
+EXTERN_C void func_8002DD34(void *p, int a);
+EXTERN_C void func_8002EE9C(void *p, int a);
+EXTERN_C void func_8002EEFC(void *p, int a);
+EXTERN_C void func_8003950C(void *p, int a);
+EXTERN_C void func_80039610(void *p, int a);
+EXTERN_C void func_80039710(void *p, int a);
+EXTERN_C void func_80039824(void *p, int a);
+EXTERN_C void func_8003BEC4(void *p, int a);
 
 /* A 4-byte value copied with lwl/lwr, so byte-aligned: an RGB+code colour, probably. */
 typedef struct S_Rgb {
@@ -948,10 +950,253 @@ EXTERN_C void *D_80011384[];
 EXTERN_C void *D_80011B5C[];
 EXTERN_C void *D_80013B00[];
 EXTERN_C void func_80019A6C(void *p, int a, int b);
-EXTERN_C void func_8001F094(void *p);
+EXTERN_C void func_8001F094(void *p, int a);
 EXTERN_C void func_8003C320(void *p, int a);
 EXTERN_C void PadEnableCom(int a);
 EXTERN_C void PadStopCom();
 EXTERN_C void PadStartCom();
+
+/* Global objects whose layout isn't known yet; incomplete types keep their lui access. */
+struct Obj_800AC57C;
+struct Obj_800AC6A8;
+struct Obj_800AC820;
+struct Obj_800AC86C;
+struct Obj_800B4C00;
+struct Obj_800B4C10;
+struct Obj_800B4C48;
+struct Obj_800B4D1C;
+struct Obj_800B4D64;
+
+EXTERN_C Holder D_800A451C;
+EXTERN_C Holder D_800AC688;
+EXTERN_C Holder D_800AC6C4;
+EXTERN_C Holder D_800AC710;
+EXTERN_C Holder D_800AC854;
+EXTERN_C Obj_800AC57C D_800AC57C;
+EXTERN_C Obj_800AC6A8 D_800AC6A8;
+EXTERN_C Obj_800AC820 D_800AC820;
+EXTERN_C Obj_800AC86C D_800AC86C;
+EXTERN_C Obj_800B4C00 D_800B4C00;
+EXTERN_C Obj_800B4C10 D_800B4C10;
+EXTERN_C Obj_800B4C48 D_800B4C48;
+EXTERN_C Obj_800B4D1C D_800B4D1C;
+EXTERN_C Obj_800B4D64 D_800B4D64;
+EXTERN_C void *D_800B4C04;
+EXTERN_C int D_800B4C40;
+
+EXTERN_C void *D_800100C0[];
+EXTERN_C void *D_800102B0[];
+EXTERN_C void *D_80010300[];
+EXTERN_C void *D_800104A8[];
+EXTERN_C void *D_800106EC[];
+EXTERN_C void *D_80010734[];
+EXTERN_C void *D_800107C8[];
+EXTERN_C void *D_800110F4[];
+EXTERN_C void *D_800111BC[];
+EXTERN_C void *D_800118DC[];
+EXTERN_C void *D_80011A44[];
+EXTERN_C void *D_800127FC[];
+EXTERN_C void *D_80012CF8[];
+EXTERN_C void *D_80012DE8[];
+EXTERN_C void *D_80012F50[];
+EXTERN_C void *D_800130B0[];
+EXTERN_C void *D_80013280[];
+EXTERN_C void *D_80013370[];
+EXTERN_C void *D_800134D8[];
+EXTERN_C void *D_80013638[];
+
+/* PsyQ libgte */
+typedef struct MATRIX {
+    short m[3][3];
+    int t[3];
+} MATRIX;
+
+typedef struct SVECTOR {
+    short vx, vy, vz, pad;
+} SVECTOR;
+
+EXTERN_C MATRIX *MulMatrix(MATRIX *m0, MATRIX *m1);
+EXTERN_C MATRIX *CompMatrix(MATRIX *m0, MATRIX *m1, MATRIX *m2);
+
+EXTERN_C void func_80018788(Holder *h);
+EXTERN_C void func_80018840(Holder *h);
+EXTERN_C void func_800188D4(Holder *h);
+EXTERN_C void func_80018970(Holder *h);
+EXTERN_C void func_80019158(S_800A4534 *p);
+EXTERN_C void func_80019648(void *p);
+EXTERN_C void func_80019920(List *l, int flags);
+EXTERN_C void func_80019C68(void *p, int a);
+EXTERN_C void *func_8001ACDC(void *p);
+EXTERN_C void func_8001A8F0(void *p, int a, int b);
+EXTERN_C void func_8001B0C0(void *p, void *q);
+EXTERN_C void func_8001D7B0(void *p);
+EXTERN_C void func_80020734(void *p, int a, void *b, int c);
+EXTERN_C void func_800208D4(void *p);
+EXTERN_C void func_80020948(void *p);
+EXTERN_C void func_800252F8(void *p);
+EXTERN_C void func_80028710(void *p, void *q);
+EXTERN_C void func_8002A064(void *p, int a, int b);
+EXTERN_C void func_8002DB50(void *p, int a);
+EXTERN_C void func_80037688(void *p);
+EXTERN_C void func_8003C510(void *p);
+EXTERN_C short func_8003E658(void *p, int a);
+EXTERN_C void func_80040718(void *p);
+EXTERN_C void func_80043DF0(void *p);
+EXTERN_C void func_8004C314(void *p, char *q);
+EXTERN_C void func_8004F9E4(void *p, char *q);
+EXTERN_C void func_80053BCC(void *p, void *q, int a);
+EXTERN_C int func_800A1B9C();
+EXTERN_C S_Vobj *func_8001C2D0(S_Vobj *p);
+
+typedef struct S_80018E5C {
+    void **vtbl;
+    int unk4;
+    int unk8;
+    char padC[0x7C];
+    int unk88;
+} S_80018E5C;
+
+typedef struct S_Vobj4 {
+    void **vtbl;
+    int unk4;
+    int unk8;
+    int unkC;
+} S_Vobj4;
+
+typedef struct S_Vobj4h {
+    void **vtbl;
+    int unk4;
+    short unk8;
+    short unkA;
+} S_Vobj4h;
+
+typedef struct S_8001A080 {
+    int *unk0;
+    int unk4;
+} S_8001A080;
+
+typedef struct S_8001FC78 {
+    int unk0;
+    int unk4;
+    void *unk8;
+} S_8001FC78;
+
+typedef struct S_8002972C {
+    void **vtbl;
+    unsigned char unk4;
+    unsigned char unk5;
+    unsigned char unk6;
+    unsigned char unk7;
+} S_8002972C;
+
+typedef struct S_8002AD0C {
+    short unk0;
+    short unk2;
+} S_8002AD0C;
+
+typedef struct S_8002ED6C {
+    int unk0;
+    int unk4;
+} S_8002ED6C;
+
+typedef struct S_80034924_A {
+    int unk0;
+    int unk4;
+    int unk8;
+    int unkC;
+    int unk10;
+} S_80034924_A;
+
+typedef struct S_80034924_B {
+    char pad0[0xC];
+    int unkC;
+    char pad10[0x4];
+    int unk14;
+    char pad18[0x4];
+    int unk1C;
+    char pad20[0x4];
+    int unk24;
+} S_80034924_B;
+
+typedef struct S_8003D358 {
+    char pad0[0xC];
+    short unkC;
+    S_Rgb unkE;
+} S_8003D358;
+
+typedef struct S_8003E170 {
+    char pad0[0x13C];
+    int unk13C;
+} S_8003E170;
+
+typedef struct S_800419D0 {
+    int unk0;
+    int unk4;
+    char pad8[0x8];
+    short unk10;
+    short unk12;
+    short unk14;
+} S_800419D0;
+
+typedef struct S_80041E28 {
+    void **vtbl;
+    int unk4;
+    int unk8;
+    int unkC;
+    int unk10;
+    unsigned char unk14;
+} S_80041E28;
+
+typedef struct S_8004377C {
+    char pad0[0xF8];
+    int unkF8;
+    char padFC[0x1E];
+    short unk11A;
+    short unk11C;
+    char pad11E[0x2];
+    unsigned char unk120;
+    char pad121[0x17];
+    int unk138;
+    char pad13C[0xE4];
+    short unk220;
+} S_8004377C;
+
+typedef struct S_80043D94_V {
+    int unk0, unk4, unk8, unkC;
+} S_80043D94_V;
+
+typedef struct S_80043D94 {
+    char pad0[0x284];
+    S_80043D94_V unk284;
+} S_80043D94;
+
+typedef struct S_80043DC0 {
+    char pad0[0x20C];
+    int unk20C;
+    char pad210[0x5C];
+    short unk26C;
+    short unk26E;
+    short unk270;
+} S_80043DC0;
+
+typedef struct S_80044740 {
+    int unk0;
+    void *unk4;
+} S_80044740;
+
+typedef struct S_80045C88 {
+    char pad0[0x1C];
+    int unk1C[10];
+    short unk44;
+} S_80045C88;
+
+typedef struct S_80051A7C {
+    char pad0[0xFC];
+    unsigned short unkFC;
+    char padFE[0x6];
+    int unk104;
+    char pad108[0x1C];
+    short unk124;
+} S_80051A7C;
 
 #endif
