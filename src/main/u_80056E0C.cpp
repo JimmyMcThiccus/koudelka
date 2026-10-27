@@ -488,7 +488,30 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005A518);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005A62C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005A784);
+EXTERN_C void func_8005A784(void *self, int b)
+{
+    if (FIELD_AT(self, int, 0x8) != 0 && (FIELD_AT(self, char *, 0x30) ? *FIELD_AT(self, List **, 0x30) : 0)->count == 5) {
+        char t1[8];
+        char t2[8];
+        unsigned char k = b;
+        char *v;
+        VObj0 *o;
+        func_8002972C(t1, k, k, k, 1);
+        v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+        func_80019F64(v ? *(void **)v : 0, 0)->v11(t1);
+        func_8002972C(t2, k * 2 - 1, k * 2 - 1, k * 2 - 1, 1);
+        v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+        o = func_80019F64(v ? *(void **)v : 0, 1);
+        func_800536F0(o, t2);
+        o->v06();
+        v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+        o = func_80019F64(v ? *(void **)v : 0, 3);
+        func_80059888(o, (int)t2);
+        o->v06();
+        func_800198AC(t2, 2);
+        func_800198AC(t1, 2);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005A934);
 
@@ -790,7 +813,35 @@ EXTERN_C void func_8005D8A4(void *self, int flags)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005D8C4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005D9D4);
+EXTERN_C void func_8005D9D4(void *self, int b)
+{
+    if (FIELD_AT(self, int, 0x8) != 0) {
+        char *h = FIELD_AT(self, char *, 0x30);
+        if ((h ? *(List **)h : 0)->count == 1) {
+            unsigned int c = b;
+            if (c >= 0x100) {
+                char *v = h ? h + 8 : 0;
+                List *l = v ? *(List **)v : 0;
+                VObj0 *o = l->count ? **(VObj0 ***)l : 0;
+                o->v11(&D_800B4C98);
+                v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+                l = v ? *(List **)v : 0;
+                func_8005DEA4(l->count ? **(void ***)l : 0, 0);
+            } else {
+                char t[8];
+                char *v;
+                List *l;
+                VObj0 *o;
+                func_8002972C(t, c, c, c, 1);
+                v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+                l = v ? *(List **)v : 0;
+                o = l->count ? **(VObj0 ***)l : 0;
+                o->v11(t);
+                func_800198AC(t, 2);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005DB68);
 

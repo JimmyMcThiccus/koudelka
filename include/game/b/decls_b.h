@@ -2461,4 +2461,15 @@ EXTERN_C int func_80043700(void *self, int a, void *b, int c);
 EXTERN_C void func_80055330(int a);
 EXTERN_C int func_80043700(void *self, int a, void *b, int c);
 
+EXTERN_C void func_80055A9C(void *self);
+EXTERN_C void *func_8001EB60(void *self, int b);
+EXTERN_C void *func_8001ED2C(void *self, void *b, int c);
+EXTERN_C void *D_800B4D80;
+EXTERN_C void func_80055D78(void *self);
+EXTERN_C int func_80055F98(char *x);
+EXTERN_C void func_80038654(void *self, void *b, int c);
+
+EXTERN_C void func_8005DEA4(void *self, int b);
+EXTERN_C void func_800536F0(void *self, void *b);
+
 #endif /* GAME_B_DECLS_B_H */
