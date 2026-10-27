@@ -1,9 +1,14 @@
 // PsyQ 4.6 library functions, named by ghidra_psx_ldr signatures
 // Header of whichever overlay is loaded in the shared slot (id word, entry table).
 ovl_header = 0x800B6DF0; // absolute:True
+// Static constructor listed in the .ctors table; follows a tail call, so splat would merge it into the previous function.
+func_8001C2AC = 0x8001C2AC; // type:func
 main = 0x800195BC; // type:func
-printf = 0x8001988C; // type:func
-puts = 0x8001989C; // type:func
+printf = 0x8001988C; // type:func size:0x8
+// 8 bytes of nop padding after printf and puts; declared so every re-split emits them
+func_80019894 = 0x80019894; // type:func size:0x8
+puts = 0x8001989C; // type:func size:0x8
+func_800198A4 = 0x800198A4; // type:func size:0x8
 SsGetMute = 0x8006B5AC; // type:func
 LoadExec = 0x80094910; // type:func
 _bu_init = 0x80094920; // type:func

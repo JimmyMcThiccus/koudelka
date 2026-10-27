@@ -23,7 +23,9 @@ options:
   ld_bss_is_noload: true
   use_legacy_include_asm: false
   asm_jtbl_label_macro: jlabel
-  create_c_files: false
+  create_c_files: true # only creates missing files; never overwrites src/
+  auto_decompile_empty_functions: false # keep them INCLUDE_ASM: a .cpp body would mangle the name
+  disassemble_all: true # decompiled functions keep a reference .s in asm/<target>/matchings/
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
@@ -48,8 +50,13 @@ segments:
     # bss_size from the segment's ROM end (0x800B5000, after the zero padding).
     bss_size: 0x1DF0
     subsegments:
-      - [0x800, rodata]
-      - [0x8EB0, asm] # 0x800186B0
+      # .ctors / .dtors: one entry per C++ translation unit with static objects. Each entry is that
+      # unit's _GLOBAL_$I$/$D$ function, emitted at the end of the unit, so they mark file boundaries.
+      - [0x800, rodata, ctors]
+      - [0x8C0, .rodata, game] # 0x800100C0: game rodata, migrated into game.cpp's functions
+      - [0x8760, rodata, psyq] # 0x80017F60: library rodata ("$Id: sys.c ...")
+      - [0x8EB0, cpp, game] # 0x800186B0: game code -> src/main/game.cpp
+      - [0x85110, asm, psyq] # 0x80094910: PsyQ 4.6 libraries (LoadExec ...), kept as asm
       - [0x94D14, data] # 0x800A4514
       - [0xA53FC, sdata] # 0x800B4BFC = $gp
       - { start: 0xA56E8, type: bss, vram: 0x800B4EE8 }

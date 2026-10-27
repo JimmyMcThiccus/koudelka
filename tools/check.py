@@ -4,7 +4,9 @@ The EXE's text size is rounded up to 0x800, so the linked image is padded with
 zeros to the retail length before hashing. On mismatch, reports the first
 differing offset.
 
-Usage: python check.py <built.bin> <retail_size> <retail_sha1>
+Usage: python check.py <built.bin> <retail_size> <retail_sha1> [stamp]
+Writes the stamp file on success (ninja runs without a shell on Windows, so
+the stamp can't be a separate `&&` command).
 """
 import hashlib
 import sys
@@ -20,6 +22,8 @@ def main():
     got = hashlib.sha1(data).hexdigest()
     if got == want:
         print(f"check: OK {path} {got}")
+        if len(sys.argv) > 4:
+            open(sys.argv[4], "w").write("ok")
         return 0
     print(f"check: FAIL {path} sha1 {got}, want {want}")
     return 1

@@ -1,6 +1,7 @@
 """Compile one C function and compare it with the retail bytes.
 
-Pipeline: CC1PSX.EXE, or CC1PLPSX.EXE for .cpp/.cc (from a PsyQ dir) -> maspsx -> GNU as. The function's
+Pipeline: CC1PSX.EXE, or CC1PLPSX.EXE for .cpp/.cc (from a PsyQ dir) -> maspsx
+(tools/maspsx_extern.py) -> GNU as. The function's
 retail size and ROM offset come from its splat .s file. Relocated fields
 (jal targets, %hi/%lo immediates) are masked before comparing.
 
@@ -61,7 +62,7 @@ def main():
         # them a native path (Git Bash exports TMPDIR as /c/...).
         subprocess.run(cc, check=True, env={**os.environ, "TMPDIR": str(tmp)})
         # maspsx reads stdin whenever it isn't a tty, so feed the file through it (else it blocks).
-        mas = subprocess.run([sys.executable, str(ROOT / "bin/maspsx/maspsx.py"), f"--aspsx-version={a.aspsx}",
+        mas = subprocess.run([sys.executable, str(ROOT / "tools/maspsx_extern.py"), f"--aspsx-version={a.aspsx}",
                               *gflag], input=s1.read_text(), capture_output=True, text=True, check=True)
         s2.write_text(mas.stdout)
         subprocess.run([str(BIN / "mips-ps2-decompals-as.exe"), "-EL", "-march=r3000", "-mtune=r3000",

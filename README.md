@@ -17,8 +17,9 @@ raw 2336-byte sectors (subheader + data), so no audio or video data is lost.
 ## Building
 
 The goal is a **functionally identical** build: one that behaves like retail, not one that matches it byte for
-byte. The build splits each target with splat, reassembles and relinks it with GNU binutils, and extracts a flat
-binary. Today, from assembly only, all seven targets also come out byte-identical.
+byte. The build splits each target with splat, compiles the game code from `src/` with the original compiler
+(PsyQ 4.4), assembles the rest, relinks with GNU binutils and extracts a flat binary. Today all seven targets also
+come out byte-identical.
 
 Two modes (`configure.py --mode`):
 
@@ -42,16 +43,75 @@ py -3.14 -m venv .venv
 .venv/Scripts/python.exe configure.py
 ```
 
-`configure.py --no-split` skips re-splitting; after that, `.venv/Scripts/ninja.exe` builds incrementally.
+`configure.py --no-split` skips re-splitting; after that, `.venv/Scripts/ninja.exe` builds incrementally (about 3 s
+after an edit to `game.cpp`). Re-split after you decompile a function, so its `.s` moves from `nonmatchings/` to
+`matchings/`.
+
+### Sources
+
+Game code is C++ (vtables, `__builtin_new`), so every target's code is a `.cpp` file:
+
+| Target | Source | Kept as assembly |
+|---|---|---|
+| `SLUS_010.51` | `src/main/game.cpp`: `0x800186B0`–`0x80094910`, game rodata `0x800100C0`–`0x80017F60` | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
+| each overlay | `src/<overlay>/<overlay>.cpp`: all of its code and leading rodata | trailing `.data` |
+
+splat writes these files once, with one `INCLUDE_ASM` / `INCLUDE_RODATA` line per function and rodata symbol, in
+address order. It never overwrites them; delete one to regenerate it. Functions and rodata used by only one function
+(jump tables, strings) live in `asm/<target>/nonmatchings/<file>/`.
+
+`tools/cc.py` compiles each source:
+1. `CPPPSX.EXE`, with the defines `CCPSX.EXE` passes
+2. `CC1PLPSX.EXE` (or `CC1PSX.EXE` for `.c`)
+3. `tools/maspsx_extern.py`
+4. GNU `as`
+
+It also writes a depfile. Flags come from `config/toolchain.toml`: `-O2 -G8`, with per-file overrides under
+`[compiler.overrides]`.
+
+Two things are specific to this compiler:
+- **`INCLUDE_ASM` order.** With `-G8`, `CC1PLPSX` outputs every function after all top-level `asm` statements.
+  `include/common.h` therefore wraps each include in a dummy `__maspsx_include_asm_hack_*` function, which maspsx
+  strips. Without it, decompiled functions drift away from their neighbours.
+- **Small externs use `$gp`.** GCC declares them as `.extern sym, size`. ASPSX reached those through `$gp`: retail
+  shares `$gp` variables between source files. Plain maspsx doesn't do this, so `tools/maspsx_extern.py` adds it.
+
+### Decompiling a function
+
+1. Check it on its own:
+
+   ```powershell
+   .venv/Scripts/python.exe tools/try_compile.py my.cpp func_XXXXXXXX
+   ```
+
+   This diffs it against retail; reference asm comes from `nonmatchings/` or `matchings/`. For an overlay, add
+   `--asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN`.
+2. Replace the function's `INCLUDE_ASM(...)` line in the `.cpp` with the code.
+   - Wrap free functions, and the asm functions they call, in `EXTERN_C` (`include/common.h`), so names stay
+     `func_XXXXXXXX`.
+   - Member functions get mangled names; add those to `config/symbols/` instead.
+   - Declare globals as `EXTERN_C` with their retail names rather than defining new ones. Defining a variable adds
+     storage, and the EXE must not grow.
+3. Re-split and build: `configure.py` (functional) or `configure.py --mode matching`.
+
+In functional mode the EXE must still fit: its BSS has to end by `0x800B6DF0`, where the overlays load. Retail ends
+exactly there, so the EXE has **no room to grow**. A decompiled function may be the same size or smaller.
 
 | Path | What |
 |---|---|
 | `config/<target>.yaml` | splat config per target (EXE + six overlays), with the retail SHA-1 |
+| `config/toolchain.toml` | compiler (PsyQ 4.4), ASPSX version, cflags, per-file overrides, archive hashes |
+| `src/` | game sources (`INCLUDE_ASM` + decompiled code) |
+| `include/common.h` | `INCLUDE_ASM`/`INCLUDE_RODATA` (maspsx ordering hack), `EXTERN_C` |
+| `tests/compiler/` | the three functions that pin the compiler |
 | `config/symbols/*.txt` | symbol names; `main.txt` holds the 526 PsyQ functions Ghidra's signatures found |
 | `config/symbols/main_absolute.ld` | absolute symbols for the EXE link (`ovl_header` = the overlay slot) |
 | `config/pins.txt` | overlay entry points that must not move in a functional build |
 | `asm/`, `build/` | generated, git-ignored (they contain game-derived bytes) |
-| `include/` | splat's assembler macros |
+| `include/` | splat's assembler macros (generated) and `common.h` |
+| `tools/cc.py` | the C/C++ compile pipeline |
+| `tools/maspsx_extern.py` | maspsx, plus `$gp` for small `.extern` symbols |
+| `tools/try_compile.py` | compile one function and diff it against retail |
 | `tools/check.py` | pad to retail size, compare SHA-1 |
 
 Tools in `bin/` (git-ignored):
@@ -60,10 +120,10 @@ Tools in `bin/` (git-ignored):
 |---|---|---|
 | binutils 2.40 (`mips-ps2-decompals-*`) | decompals/binutils-mips-ps2-decompals v0.10 (copied from the Shadow Hearts project) | zip `2bb5904e…6198c` |
 | objdiff 3.8.3 | encounter/objdiff (copied from the Shadow Hearts project) | see that project's `config/toolchain.toml` |
-| PsyQ 4.6 binaries | `https://github.com/mkst/esa/releases/download/psyq-binaries/psyq4.6.tar.gz` | `635603e09a452c9c2923492fea8b8eb051959dd94f240933b88e94866814b894` |
+| PsyQ 3.6–4.6 binaries | `https://github.com/mkst/esa/releases/download/psyq-binaries/psyq<v>.tar.gz`, into `bin/psyq<v>/` | per version in `config/toolchain.toml` |
 | maspsx @ 4ffa8b5 | `https://github.com/mkst/maspsx/archive/4ffa8b5106f9780d5d4aa7609f184949433ddbbc.zip` | `ef60294812d9e4bf6f97ccac973102ebedcc233b8afbccab770be6eac104713c` |
 
-The PsyQ 4.6 `CC1PSX.EXE` reports `GNU C version 2.95.2 19991024 BUILD 4.0.0030 (PSX)`. It has not been run yet.
+The build uses `bin/psyq4.4`; the other versions are only for compiler comparisons.
 
 ## Targets
 
@@ -133,6 +193,14 @@ in the demos:
 
 The runs of `@`–`O` characters in both demos are 4bpp image data, not text. Demo 2 is still useful as a second build
 of the same code, for checking function boundaries and comparing code across builds.
+
+## C++ translation units
+
+`.ctors` (`0x80010000`, 27 entries) and `.dtors` (`0x8001006C`, 22 entries) list each source file's
+`_GLOBAL_$I$`/`$D$` function. GCC emits that function at the end of the file, so these entries mark real file
+boundaries inside `game.cpp`. That's useful when splitting it into proper files later. `func_8001C2AC` (a
+constructor right after a tail call) is declared in `config/symbols/main.txt`, so the table holds a symbol rather
+than a raw address.
 
 ## Data files of note
 

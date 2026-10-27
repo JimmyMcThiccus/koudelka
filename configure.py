@@ -18,6 +18,7 @@ import argparse
 import os
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 import ninja_syntax
@@ -34,6 +35,14 @@ DEPENDS["effect"] = ["slus_010.51", "battle"]  # EFFECT loads directly after BAT
 
 AS_FLAGS = "-EL -march=r3000 -mtune=r3000 -mabi=32 -no-pad-sections -G0 -Iinclude"
 LD_FLAGS = "-EL --no-check-sections -nostdlib"
+
+with open(ROOT / "config" / "toolchain.toml", "rb") as f:
+    COMPILER = tomllib.load(f)["compiler"]
+
+
+def cflags_for(src):
+    """Default cflags, or a per-file override from [compiler.overrides] in config/toolchain.toml."""
+    return COMPILER.get("overrides", {}).get(src, COMPILER["cflags"])
 
 
 def load(target):
@@ -63,12 +72,14 @@ def write_ninja(mode):
     n.variable("python", PY.replace("\\", "/"))
     n.variable("nm", f"{BINUTILS}nm.exe")
     n.rule("as", f"{BINUTILS}as.exe {AS_FLAGS} -o $out $in", description="as $in")
+    n.rule("cc", f"$python tools/cc.py --psyq {COMPILER['psyq']} --aspsx {COMPILER['aspsx']} "
+                 f"--cflags \"$cflags\" -Iinclude -o $out $in",
+           description="cc $in", depfile="$out.d", deps="gcc")
     n.rule("ld", f"{BINUTILS}ld.exe {LD_FLAGS} -T $ldscript $externs -Map $map -o $out",
            description="ld $out")
     n.rule("objcopy", f"{BINUTILS}objcopy.exe -O binary $in $out", description="objcopy $out")
     n.rule("extern", "$python tools/extern_syms.py $nm $out $undefs --defined $in", description="extern $out")
-    n.rule("check", "$python tools/check.py $in $size $sha1 && $python -c \"open(r'$out','w').write('ok')\"",
-           description="check $in")
+    n.rule("check", "$python tools/check.py $in $size $sha1 $out", description="check $in")
     n.rule("functional", "$python tools/functional_check.py $nm $out", description="functional check")
 
     checks = []
@@ -79,10 +90,17 @@ def write_ninja(mode):
         objs = []
         for s in sorted((ROOT / opt["asm_path"]).rglob("*.s")):
             rel = s.relative_to(ROOT).as_posix()
-            if "/nonmatchings/" in rel:
+            if "/nonmatchings/" in rel or "/matchings/" in rel:  # INCLUDE_ASM targets / reference only
                 continue
             o = f"build/{rel}.o"
             n.build(o, "as", rel, implicit=["include/macro.inc"])
+            objs.append(o)
+        src_dir = ROOT / opt["src_path"]
+        for s in sorted(p for p in src_dir.rglob("*") if p.suffix in (".c", ".cpp")) if src_dir.exists() else []:
+            rel = s.relative_to(ROOT).as_posix()
+            o = f"build/{rel}.o"
+            n.build(o, "cc", rel, implicit=["tools/cc.py", "config/toolchain.toml"],
+                    variables={"cflags": cflags_for(rel)})
             objs.append(o)
         elf = opt["elf_path"]
         undefs = [opt["undefined_syms_auto_path"], opt["undefined_funcs_auto_path"]]

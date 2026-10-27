@@ -11,6 +11,9 @@ cc1plus = "CC1PLPSX.EXE"  # C++
 aspsx = "2.79"            # maspsx --aspsx-version; the tests don't constrain it, so 4.4's own ASPSX
 cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files reach globals with lui (-G0, or large objects)
 
+[compiler.overrides]
+# "src/<path>" = "<cflags>" for files built with other flags (e.g. "-O2 -G0").
+
 [maspsx]
 url = "https://github.com/mkst/maspsx/archive/4ffa8b5106f9780d5d4aa7609f184949433ddbbc.zip"
 sha256 = "ef60294812d9e4bf6f97ccac973102ebedcc233b8afbccab770be6eac104713c"

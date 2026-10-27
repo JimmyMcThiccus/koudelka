@@ -23,7 +23,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   use_legacy_include_asm: false
   asm_jtbl_label_macro: jlabel
-  create_c_files: false
+  create_c_files: true # only creates missing files; never overwrites src/
+  auto_decompile_empty_functions: false # keep them INCLUDE_ASM: a .cpp body would mangle the name
+  disassemble_all: true # decompiled functions keep a reference .s in asm/<target>/matchings/
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
@@ -38,8 +40,8 @@ segments:
     start: 0x0
     vram: 0x800B6DF0
     subsegments:
-      - [0x0, rodata] # overlay id + entry table, jump tables, strings
-      - [0x120C, asm]
+      - [0x0, .rodata, battle] # overlay id + entry table, jump tables, strings
+      - [0x120C, cpp, battle]
       - [0x1EF88, data]
 
   - [0x1EFBC]
