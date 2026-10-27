@@ -56,7 +56,7 @@ struct S_A2_VE { short delta; short index; int (*pfn)(...); };
 #define VENT(obj, off) ((S_A2_VE *)(AT(obj, char *, 0) + (off)))
 struct S_A2_Arr { void **items; int n; };
 struct S_A2_Iter { S_A2_Arr *arr; int i; };
-EXTERN_C void *func_8003CA10(void *p);
+EXTERN_C void *func_8003CA10(void *p, void *q);
 EXTERN_C void func_80044990(void *p, int a, int b, int c, int d, int e);
 EXTERN_C int func_8001D25C(void *p, int a);
 EXTERN_C void func_8001D324(void *p, int a);
@@ -313,4 +313,9 @@ EXTERN_C void *D_80010160[];
 EXTERN_C void *D_8001265C[];
 EXTERN_C void *D_800126DC[];
 EXTERN_C int func_8003906C(void *p, short a, short b);
+EXTERN_C int func_80034BD4(void *a, void *b, void *c, void *d, void *e);
+EXTERN_C int func_8004AC04(void *a, void *b, void *c, void *d, void *e);
+EXTERN_C void *D_80012364[];
+EXTERN_C void *D_8001237C[];
+EXTERN_C int func_80019A18(List *l, int a);
 #endif /* GAME_A2_A2_H */

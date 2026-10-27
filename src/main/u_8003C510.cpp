@@ -51,7 +51,26 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003C764);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003C908);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CA10);
+EXTERN_C void *func_8003CA10(void *p, void *q)
+{
+    if (AT(p, int, 0x10) == AT(AT(q, void *, 8), int, 0x24)) {
+        char *e = AT(p, char *, 8);
+        char *r = (char *)((void *(*)(void *, void *))func_8001A744)(e ? e - 8 : 0, q);
+        void *n;
+        void *v = r ? r + 8 : 0;
+        AT(p, void *, 8) = v;
+        if (v)
+            return p;
+        n = AT(p, void *, 4);
+        AT(p, void *, 4) = 0;
+        if (p)
+            ((A2VObj0 *)p)->v00(3);
+        return n;
+    }
+    if (AT(p, void *, 4))
+        AT(p, void *, 4) = func_8003CA10(AT(p, void *, 4), q);
+    return p;
+}
 
 EXTERN_C void func_8003CAD0(void *p)
 {

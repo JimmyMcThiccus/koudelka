@@ -177,7 +177,28 @@ EXTERN_C int func_80034F40(S_80034F40 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034F54);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800351A4);
+EXTERN_C void *func_800351A4(void *p, int vb)
+{
+    if (vb) {
+        char *b = (char *)p + 0x3C;
+        AT(p, void *, 4) = b;
+        AT(p, short, 0x3C) = 16;
+        AT(b, short, 2) = 1;
+        AT(b, int, 4) = -1;
+    }
+    AT(p, void **, 0) = D_80012154;
+    AT(p, void **, 8) = D_8001201C;
+    AT(p, void **, 0) = D_80012034;
+    AT(p, void *, 0xC) = (char *)p + 0x10;
+    ((int (*)(void *, int, int))func_800198E0)((char *)p + 0x10, 4, 0);
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    AT(p, void **, 8) = D_80011F5C;
+    AT(p, int, 0x28) = 0;
+    AT(p, int, 0x2C) = 0;
+    AT(p, void **, 0) = D_80011F74;
+    return p;
+}
 
 EXTERN_C void func_8003525C(void *p, int flags)
 {
