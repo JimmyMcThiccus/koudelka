@@ -112,7 +112,6 @@ EXTERN_C void func_8001AA28(void *p, int n);
 EXTERN_C void func_8003CC78(void *p, int a);
 EXTERN_C void func_80051AA4(void *a, void *b);
 EXTERN_C void func_80051B70(void *a, void *b);
-EXTERN_C void func_80036674(void *p);
 EXTERN_C void *D_800127D4[];
 EXTERN_C void *D_80012C28[];
 EXTERN_C void *D_80012C58[];
@@ -202,6 +201,7 @@ EXTERN_C void *func_80056E0C(void *p, int a);
 EXTERN_C void func_80056FBC(void *p, int a, int b);
 EXTERN_C void func_80056FE0(void *p);
 struct S_A2_V4z { int a, b, c, d; S_A2_V4z() { a = 0; b = 0; c = 0; d = 0; } };
+EXTERN_C void *func_8003A754(void *p, short a);
 struct S_A2_M4 { char pad[0x20]; S_A2_M4(short a) { func_8003A754(this, a); } };
 struct C_80039A14_def { void *vt; S_A2_M4 m4; int unk24, unk28; S_A2_Sv0 s2C; S_A2_V4z v34; C_80039A14_def() asm("func_80039A14"); };
 struct C_8001E40C { C_8001E40C(int a, int b, int c, int d) asm("func_8001E40C"); char pad[0x11C]; };
@@ -243,4 +243,7 @@ struct C_8004A7F0 : C_800497FC { char pad10[8]; S_A2_FT3Set m; C_8004A7F0() asm(
 struct C_8004B2C4 : C_800497FC { char pad10[8]; S_A2_FT3Set m; C_8004B2C4() asm("func_8004B2C4"); };
 struct C_8004E17C : C_8004CF20 { char pad10[0xC]; S_A2_FT4Set m; C_8004E17C() asm("func_8004E17C"); };
 struct C_8004E700 : C_8004CF20 { char pad10[0xC]; S_A2_FT4Set m; C_8004E700() asm("func_8004E700"); };
+struct S_A2_RgbC { unsigned char r, g, b, cd; S_A2_RgbC() {} };
+struct S_A2_H0C { char pad[0xC]; Holder h; };
+EXTERN_C void func_80036674(S_A2_H0C *p);
 #endif /* GAME_A2_A2_H */

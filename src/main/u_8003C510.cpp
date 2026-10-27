@@ -53,7 +53,17 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003C908);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CA10);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CAD0);
+EXTERN_C void func_8003CAD0(void *p)
+{
+    int c = AT(p, int, 0xC);
+    if (c) {
+        char *q = AT(p, char *, 8);
+        S_A2_VEnt *e = (S_A2_VEnt *)(AT(q, char *, 0) + 0x28);
+        p = q + e->delta;
+        e->pfn(p, c);
+    } else
+        AT(p, A2VObj0 *, 8)->v03();
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CB50);
 
@@ -233,7 +243,12 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003FA50);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003FAEC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003FB88);
+EXTERN_C void func_8003FB88(void *p, int a, S_A2_RgbC c)
+{
+    void *q = AT(p, void *, 0x1B8);
+    if (q && AT(q, void *, 0x68))
+        ((void (*)(void *, int, S_A2_RgbC))func_8003D358)(AT(q, void *, 0x68), a, c);
+}
 
 EXTERN_C void func_8003FC08(void *p, int a, int b)
 {
