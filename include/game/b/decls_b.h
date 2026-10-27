@@ -2417,4 +2417,48 @@ struct E12_8005DFE8 {
     int w[3];
 };
 
+struct C20_80060260 {
+    char c[20];
+};
+struct C16_80060260 {
+    char c[16];
+};
+struct C14_80060260 {
+    char c[14];
+};
+
+EXTERN_C C20_80060260 D_80014C50;
+EXTERN_C C16_80060260 D_80014C68;
+EXTERN_C C14_80060260 D_80014C7C;
+EXTERN_C short D_800B4DAA;
+EXTERN_C int func_8005618C(void *p);
+
+EXTERN_C void func_8005549C(int a, void *b, void *c, int d);
+EXTERN_C int func_80053830(void *self);
+
+struct E94_80061AAC {
+    int w[37];
+};
+
+struct S_80061AAC {
+    char pad[0x224];
+    E94_80061AAC e[8];
+};
+
+EXTERN_C void func_80061CC4(void *self);
+
+struct C690_80062610 {
+    char c[0x690];
+};
+
+EXTERN_C void *func_8005F238(void *self);
+EXTERN_C void func_8005F298(void *self, int b, int c);
+EXTERN_C int func_8005F28C(void *self);
+EXTERN_C void func_8005F248(void *self, int flags);
+
+EXTERN_C int func_80043700(void *self, int a, void *b, int c);
+
+EXTERN_C void func_80055330(int a);
+EXTERN_C int func_80043700(void *self, int a, void *b, int c);
+
 #endif /* GAME_B_DECLS_B_H */

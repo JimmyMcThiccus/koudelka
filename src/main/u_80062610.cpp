@@ -6,7 +6,29 @@
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062610);
+EXTERN_C void *func_80062610(void *self)
+{
+    if (D_800B4E2C == 0) {
+        char o[8];
+        D_800B4E30 = (Entry_800627E8 *)func_800A0D2C(0x5780);
+        D_800B4E34 = (int)func_800A0D2C(0x690);
+        func_8005F238(o);
+        func_8005F298(o, 0x15086, 0x5800);
+        {
+            void *p = D_800B4E30;
+            func_80025CE0(p, func_8005F28C(o), 0x5780);
+        }
+        func_8005F298(o, 0xC3D2, 0x800);
+        {
+            char *q = (char *)D_800B4E34;
+            *(C690_80062610 *)q = *(C690_80062610 *)func_8005F28C(o);
+        }
+        func_8005F3E0(o);
+        func_8005F248(o, 2);
+    }
+    D_800B4E2C++;
+    return self;
+}
 
 EXTERN_C void func_80062764(void *self, int flags)
 {

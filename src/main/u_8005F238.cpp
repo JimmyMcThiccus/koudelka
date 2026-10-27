@@ -54,7 +54,32 @@ EXTERN_C int func_8005F470(void)
     return D_800B4DC4 != 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8005F47C);
+struct Msg_8005F47C {
+    void *vt;
+    int next;
+    short type;
+    short sub;
+    int c;
+    int d;
+};
+
+EXTERN_C void func_8005F47C(void)
+{
+    if (D_800B4DC4 == 0 && D_800B4DC8 != 0) {
+        int d = D_800B4DCC;
+        Msg_8005F47C *p = (Msg_8005F47C *)func_8001CA10(0x14);
+        p->vt = D_80010178;
+        p->next = 0;
+        p->vt = D_80010300;
+        p->type = 2;
+        p->sub = 7;
+        p->d = d;
+        p->c = 0;
+        p->vt = D_800102D0;
+        func_8001EFE4((void *)D_800B4DC8, p);
+        D_800B4DC8 = 0;
+    }
+}
 
 EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n)
 {
@@ -246,7 +271,20 @@ EXTERN_C int func_80060230(signed char *a, signed char *b)
     return a[0] == b[0] && a[1] == b[1];
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80060260);
+EXTERN_C char *func_80060260(int a, char *out)
+{
+    switch (a) {
+    case 0:
+        *(C20_80060260 *)out = D_80014C50;
+        return out + 0x14;
+    case 1:
+        *(C16_80060260 *)out = D_80014C68;
+        return out + 0x10;
+    default:
+        *(C14_80060260 *)out = D_80014C7C;
+        return out + 0xE;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80060378);
 
@@ -340,7 +378,13 @@ EXTERN_C int func_800619F4(Obj_800619F4 *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061A20);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061AAC);
+EXTERN_C void func_80061AAC(S_80061AAC *self, int i, int j)
+{
+    E94_80061AAC t = self->e[i];
+    self->e[i] = self->e[j];
+    self->e[j] = t;
+    func_80061CC4(self);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061BF0);
 

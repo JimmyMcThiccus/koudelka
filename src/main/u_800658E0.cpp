@@ -951,7 +951,20 @@ EXTERN_C void func_8006B928(void *self, int b)
     func_8006C4EC(self, b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_8006B988);
+EXTERN_C void func_8006B988(void *self)
+{
+    char *s = self ? (char *)self + 0x124 : 0;
+    char *p = (char *)func_8001CA10(0x14);
+    FIELD_AT(p, void *, 0x0) = D_80010178;
+    FIELD_AT(p, int, 0x4) = 0;
+    FIELD_AT(p, void *, 0x0) = D_80010300;
+    FIELD_AT(p, short, 0x8) = 2;
+    FIELD_AT(p, short, 0xA) = 2;
+    FIELD_AT(p, int, 0x10) = 8;
+    FIELD_AT(p, void *, 0xC) = s;
+    FIELD_AT(p, void *, 0x0) = D_800102D0;
+    func_8001EFE4(self ? (char *)self + 0x124 : 0, p);
+}
 
 EXTERN_C int func_8006BA1C(void *self)
 {
