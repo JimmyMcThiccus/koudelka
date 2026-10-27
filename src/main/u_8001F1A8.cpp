@@ -327,14 +327,14 @@ EXTERN_C int func_8001FCA4(S_8001FCA4 *p)
     return p->unk8->unk4;
 }
 
-EXTERN_C void func_8001FCB8(S_8001FC78 *p)
+EXTERN_C int func_8001FCB8(S_8001FC78 *p, void *item)
 {
-    func_800208D4(p->unk8);
+    return func_800208D4((char *)p->unk8, item);
 }
 
-EXTERN_C void func_8001FCDC(S_8001FC78 *p)
+EXTERN_C int func_8001FCDC(S_8001FC78 *p, void *item)
 {
-    func_80020948(p->unk8);
+    return func_80020948((char *)p->unk8, item);
 }
 
 EXTERN_C int func_8001FD00(S_Handler *o, S_Ev *e)

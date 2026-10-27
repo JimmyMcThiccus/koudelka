@@ -423,4 +423,6 @@ struct S_PadLv {
     int unk18;
 };
 
+EXTERN_C void *func_8001A744(void *list, void *item);
+
 #endif /* GAME_A_H_U_80020B70_H */

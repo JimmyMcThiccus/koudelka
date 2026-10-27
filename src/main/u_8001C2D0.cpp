@@ -10,7 +10,14 @@ EXTERN_C S_Vobj *func_8001C2D0(S_Vobj *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C2E4);
+EXTERN_C void **func_8001C2E4(void **p, int a)
+{
+    p[0] = D_800101F8;
+    ((int *)p)[1] = a;
+    int *o = D_800A4544;
+    func_8001D150(o, new S_8001D684b((int)p, 0xC0, 1));
+    return p;
+}
 
 EXTERN_C void func_8001C36C(void *p, int a)
 {
@@ -80,9 +87,44 @@ EXTERN_C void func_8001C6F8(void *p, int a)
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C718);
+EXTERN_C void *func_8001C718(void *v)
+{
+    S_Pool14 *p = (S_Pool14 *)v;
+    unsigned int bits, mask;
+    int i;
+loop:
+    bits = p->bits;
+    if (bits == (unsigned int)-1) {
+        p = p->next;
+        if (!p)
+            p = newpool_8001C718();
+        goto loop;
+    }
+    mask = 1;
+    i = 0;
+    while (mask & bits) {
+        mask <<= 1;
+        i++;
+    }
+    p->bits |= mask;
+    return &p->e[i];
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C7D4);
+EXTERN_C void func_8001C7D4(void *v, void *q)
+{
+    S_Pool14 *p = (S_Pool14 *)v;
+    if ((S_Elem14 *)q < p->e) {
+        func_8001C7D4(p->next, q);
+        return;
+    }
+    p->bits &= ~(1 << ((S_Elem14 *)q - p->e));
+    if (p->bits)
+        return;
+    if (D_800B4C14 == p)
+        return;
+    func_8001A744(D_800B4C14, p);
+    delete p;
+}
 
 EXTERN_C void func_8001C89C(S_VDel *p)
 {
@@ -351,9 +393,41 @@ EXTERN_C void func_8001CEB8(void *p, int a)
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001CED8);
+EXTERN_C S_Lnk *func_8001CED8(S_Lnk *head, S_Lnk *n)
+{
+    if (n < head) {
+        n->next = head;
+        return n;
+    }
+    S_Lnk *c = head;
+    while (1) {
+        if (!(c->next < n))
+            break;
+        c = c->next;
+    }
+    if (c->next && n)
+        func_8001A864(n, c->next);
+    c->next = n;
+    return head;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001CF68);
+EXTERN_C S_Lnk *func_8001CF68(S_Lnk *head, S_Lnk *n)
+{
+    if (head < n) {
+        n->next = head;
+        return n;
+    }
+    S_Lnk *c = head;
+    while (1) {
+        if (!(n < c->next))
+            break;
+        c = c->next;
+    }
+    if (c->next && n)
+        func_8001A864(n, c->next);
+    c->next = n;
+    return head;
+}
 
 EXTERN_C int func_8001CFF8(S_8001CFF8 *p)
 {
@@ -371,7 +445,16 @@ EXTERN_C void func_8001D024(void *p, int a)
     func_800198AC(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D04C);
+EXTERN_C void func_8001D04C(S_8001D04C *p, int flags)
+{
+    p->vt = D_80010338;
+    if (p->unk10) {
+        func_80018788(&D_800A451C);
+        delete p->unk8;
+        func_800186E8(&D_800A451C);
+    }
+    func_8001A610(p, flags);
+}
 
 EXTERN_C S_Node *func_8001D0E4(S_Node *p, int key)
 {
@@ -414,7 +497,22 @@ EXTERN_C void func_8001D324(void *v, S_Node *q)
     func_80018788(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D3A8);
+EXTERN_C void func_8001D3A8(S_8001D3A8 *list)
+{
+    S_8001D3A8_N *n, *nx;
+    func_800186E8(&D_800A451C);
+    for (n = list->next; n; n = nx) {
+        func_80018788(&D_800A451C);
+        int r = n->unk8->f1();
+        func_800186E8(&D_800A451C);
+        nx = n->next;
+        if (r) {
+            list->next = (S_8001D3A8_N *)func_8001A744(list->next, n);
+            delete n;
+        }
+    }
+    func_80018788(&D_800A451C);
+}
 
 EXTERN_C void func_8001D490(void *p, int key)
 {
@@ -543,7 +641,20 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D8A4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D9F4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001DB04);
+EXTERN_C void func_8001DB04()
+{
+    char *o = (char *)&D_800AC57C;
+    *(void ***)(o + 0x8C) = D_80010388;
+    *(void ***)(o + 0xF8) = D_80010378;
+    *(void ***)(o + 0x100) = D_800103A0;
+    *(void ***)&D_800AC57C = D_800103B8;
+    func_8001D024(o + 0x100, 0);
+    S_Own2 *m = (S_Own2 *)(o + 0xF8);
+    m->vt = D_80010328;
+    delete m->ptr;
+    func_800198AC(m, 0);
+    func_8001E508(o, 2);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001DBB8);
 

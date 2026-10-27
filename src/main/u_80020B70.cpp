@@ -124,7 +124,19 @@ EXTERN_C void func_80020E40(char *p, int flags)
     func_80020DB0(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80020EF8);
+EXTERN_C void func_80020EF8(S_800210A4 *p, S_Pt4 pos, int a)
+{
+    char *l = D_800A4544;
+    p->unk20 = pos;
+    p->unk24 = a;
+    if (!func_8001D25C(l, p ? (char *)p + 0xC : 0)) {
+        char *b = p ? (char *)p + 0xC : 0;
+        func_8001D150(l, new S_Evt338(b, 0xC0, 0));
+    }
+    ((S_AnimV *)p->unk10)->f2(pos, a);
+    p->unk14 = p->unk10;
+    p->unk1C = p->unk18;
+}
 
 EXTERN_C int func_8002101C(S_Holder10 *p)
 {
@@ -543,7 +555,21 @@ EXTERN_C S_80022AB4 *func_80022AB4(S_80022AB4 *p, S_Rect8 *r, S_Pt4 *q, int c, i
     return new (p) S_80022AB4(r, q, c, d, e);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80022B24);
+EXTERN_C void *func_80022B24(S_HTbl *t, S_KeyV *k)
+{
+    unsigned int h = k->hash() % t->count;
+    S_HNode *n;
+    for (n = t->data[h]; n; n = n->next) {
+        if (k->eq(n->unk8)) {
+            void *v;
+            t->data[h] = (S_HNode *)func_8001A744(t->data[h], n);
+            v = n->unk8;
+            VCALL(n, 1, Fn_vi, 3);
+            return v;
+        }
+    }
+    return 0;
+}
 
 EXTERN_C void *func_80022C34(S_HTbl *t, S_KeyV *k)
 {

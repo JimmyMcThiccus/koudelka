@@ -58,4 +58,81 @@ struct S_8001C5DC {
     int unk8;
 };
 
+struct S_Lnk {
+    void **vt;
+    S_Lnk *next;
+};
+struct S_8001C8D8 {
+    void **vt;
+    S_8001C8D8 *next;
+    unsigned short key;
+};
+struct S_Elem14 {
+    char pad[0x14];
+};
+struct S_Pool14 : S_VDel {
+    S_Pool14 *next;
+    unsigned int bits;
+    S_Elem14 e[32];
+};
+struct S_8001D04C {
+    void **vt;
+    int unk4;
+    S_VDel *unk8;
+    int unkC;
+    int unk10;
+};
+struct S_8001D684b {
+    void **vt;
+    int unk4;
+    int unk8;
+    short unkC;
+    int unk10;
+    S_8001D684b(int a, short b, int c)
+    {
+        vt = D_80010178;
+        unk4 = 0;
+        vt = D_80010338;
+        unk8 = a;
+        unkC = b;
+        unk10 = c;
+    }
+};
+EXTERN_C void *D_800101F8[];
+EXTERN_C int D_800A4544[];
+EXTERN_C S_Lnk *func_8001A864(S_Lnk *p, S_Lnk *a);
+EXTERN_C S_Lnk *func_8001CF68(S_Lnk *head, S_Lnk *n);
+static inline S_Pool14 *newpool_8001C718()
+{
+    S_Vobj4 *np = (S_Vobj4 *)operator new(0x28C);
+    np->vtbl = D_80010178;
+    np->unk4 = 0;
+    np->vtbl = D_800102C0;
+    np->unk8 = 0;
+    D_800B4C14 = func_8001CF68((S_Lnk *)D_800B4C14, (S_Lnk *)np);
+    return (S_Pool14 *)np;
+}
+
+struct S_Own2 {
+    void **vt;
+    S_VDel *ptr;
+};
+struct S_8001D3A8_V {
+    virtual void f0();
+    virtual int f1();
+};
+struct S_8001D3A8_N : S_VDel {
+    S_8001D3A8_N *next;
+    S_8001D3A8_V *unk8;
+};
+struct S_8001D3A8 {
+    int unk0;
+    S_8001D3A8_N *next;
+};
+EXTERN_C void *D_80010388[];
+EXTERN_C void *D_80010378[];
+EXTERN_C void *D_800103A0[];
+EXTERN_C void *D_800103B8[];
+EXTERN_C void func_8001E508(void *p, int a);
+
 #endif /* GAME_A_H_U_8001C2D0_H */
