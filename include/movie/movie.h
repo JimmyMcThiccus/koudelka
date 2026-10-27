@@ -391,7 +391,9 @@ struct Unk800C71E8B { char pad[0x18]; u16 x18; };
 
 /* stream reader state; x4 points at its status block */
 struct StreamStat { u16 x0; s16 x2; s32 x4; };
-struct Unk800B93D8T { s32 x0; StreamStat* x4; char pad[0x30 - 8]; s32 x30; u8 x34, x35, x36, x37; char p3[0x3C - 0x38]; void* x3C; s32 x40, x44; };
+struct StreamHdr { s32 x0, x4; u32 x8; };
+struct StreamV { virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800B93D8T : StreamV { StreamStat* x4; char p0[0x24 - 8]; s32 x24; u32 x28; char p1[0x30 - 0x2C]; s32 x30; u8 x34, x35, x36, x37; s16 x38, x3A; void* x3C; StreamHdr* x40; void* x44; u32 x48; };
 EXTERN_C Unk800B93D8T* D_800B4D0C[];
 EXTERN_C void StSetRing(void*, s32);
 EXTERN_C void StSetStream(s32, s32, s32, void*, void*);
@@ -523,5 +525,10 @@ struct Unk800C3F68 { char pad[0x30]; s32 x30; };
 EXTERN_C void* D_800B4C18[];
 EXTERN_C Unk800C3F68E* func_8001ED2C(void*, s32, s32);
 EXTERN_C s32 TestEvent(s32);
+
+struct Unk800B92B8T { void* x0; s32 x4; void* x8; s16 xC; s32 x10; };
+EXTERN_C u8 func_80035C30(s32);
+EXTERN_C s32 func_8009C9E0();
+EXTERN_C s32 func_8001D25C(void*, void*);
 
 #endif /* MOVIE_H */

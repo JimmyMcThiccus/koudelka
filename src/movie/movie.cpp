@@ -25,11 +25,11 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B914C);
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B9208);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B92B8);
+EXTERN_C s32 func_800B92B8(Unk800B93D8T* p, s32 a, s32 b) { if (D_800B4D0C[0] || func_80035C30(func_8009C9C0())) return 0; p->x24 = a; p->x28 = b; p->x4->x0 = 0; p->x3A = 0x10; p->x30 = -1; p->x36 = 0; p->x35 = func_8009C9E0() != 9 ? 3 : 9; char* d = D_800A4544; if (func_8001D25C(d, p ? (char*)p + 8 : 0) == 0) { void* q = p ? (char*)p + 8 : 0; Unk800B92B8T* n = (Unk800B92B8T*)operator new(0x14); *(void* volatile*)&n->x0 = D_80010178; n->x0 = D_80010338; n->x4 = 0; n->x8 = q; n->xC = 0x80; n->x10 = 0; func_8001D150(d, n); } D_800B4D0C[0] = p; return 1; }
 
 EXTERN_C s32 func_800B93D8(void* a, s32 n, s32 c, s32 d) { Unk800B93D8T* s = D_800B4D0C[0]; if (s == a) { s->x3C = func_800A0D2C(n << 11); StSetRing(s->x3C, n); StSetStream(d, 0, -1, 0, 0); StClearRing(); func_8008CD1C(0x4400, 0x18); s->x30 = 0; s->x37 = c; s->x36 = 1; return 1; } return 0; }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B9484);
+EXTERN_C void* func_800B9484(Unk800B93D8T* p) { void* r = p->x44; if (r || ((p ? p->x4 : 0)->x0 & 1)) { p->x44 = 0; } else if (StGetNext(&r, &p->x40)) { r = 0; if (func_8009C9C0() & 0x15) p->v3(); } else { StreamHdr* h = p->x40; if (h->x8 >= p->x28 || h->x8 <= p->x48) p->v3(); else if (h->x8 == p->x28 - 3) func_8008CD1C(0, 0x18); p->x48 = h->x8; p->x4->x4 = 0; } return r; }
 
 EXTERN_C void func_800B95A8(void* p, void* q) { StFreeRing(q); }
 
