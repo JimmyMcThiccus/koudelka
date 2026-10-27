@@ -216,4 +216,18 @@ struct N_800BE8E0 {
     char data[1];
 };
 
+// Constructors are real C++ constructors (mangled names in config/symbols/capture.txt): GCC returns `this` from them,
+// which a plain function can't reproduce. Base classes that are inlined show up as extra vtable stores.
+struct C_800BF560 {
+    void *vt;
+    int f4;
+    short f8, fA;
+    char fC;
+    int *f10, *f14;
+    int f18, f1C;
+    char f20;
+    int f24;
+    C_800BF560(short a, short n, char c);
+};
+
 #endif

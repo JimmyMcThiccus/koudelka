@@ -671,7 +671,23 @@ EXTERN_C char *func_800BF518(char *p)
     return p;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BF560);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_800B7364[];
+EXTERN_C void *func_800A0D2C(int);
+C_800BF560::C_800BF560(short a, short n, char c)
+{
+    vt = D_80010178;
+    f4 = 0;
+    vt = D_800B7364;
+    fA = n;
+    f8 = a;
+    fC = c;
+    f14 = f10 = (int *)func_800A0D2C(n * 4);
+    f18 = 0;
+    f1C = 0;
+    f24 = 0;
+    f20 = 1;
+}
 
 EXTERN_C char D_800B7364[];
 EXTERN_C void func_800A0D0C(void *);
