@@ -661,7 +661,24 @@ EXTERN_C void func_800DBDA8(void *self, int on)
         FIELD_AT(self, char, 0x160) = 0;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DBDC0);
+EXTERN_C int D_80010300[];
+EXTERN_C int D_800102D0[];
+EXTERN_C void *func_8001CA10(int size);
+EXTERN_C void func_8001EFE4(void *self, void *obj);
+
+EXTERN_C void func_800DBDC0(void *self)
+{
+    void *p = func_8001CA10(0x14);
+    FIELD_AT(p, int *, 0x0) = D_80010178;
+    FIELD_AT(p, int, 0x4) = 0;
+    FIELD_AT(p, int *, 0x0) = D_80010300;
+    FIELD_AT(p, short, 0x8) = 2;
+    FIELD_AT(p, short, 0xA) = 2;
+    FIELD_AT(p, int, 0x10) = 0;
+    FIELD_AT(p, int, 0xC) = 0;
+    FIELD_AT(p, int *, 0x0) = D_800102D0;
+    func_8001EFE4(self, p);
+}
 
 EXTERN_C void func_800DBE30(void *self)
 {
@@ -714,7 +731,20 @@ EXTERN_C void *func_800DC08C(void *self)
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC0CC);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC150);
+struct Rec28 {
+    int w[7];
+};
+
+EXTERN_C char *func_800DC150(void *self, char *src)
+{
+    char *p = func_800DBEBC(self, src);
+    void *buf = func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(Rec28));
+    int size;
+    FIELD_AT(self, void *, 0x2C) = buf;
+    size = FIELD_AT(self, short, 0x0) * sizeof(Rec28);
+    func_80025CE0(buf, p, size);
+    return p + size;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC1BC);
 
@@ -733,9 +763,30 @@ EXTERN_C void *func_800DC7C8(void *self)
     return self;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC804);
+EXTERN_C void func_800DC804(void *self, int flags)
+{
+    FIELD_AT(self, int *, 0x28) = D_800D6310;
+    if (FIELD_AT(self, void *, 0x2C))
+        func_800A0D0C(FIELD_AT(self, void *, 0x2C));
+    if (FIELD_AT(self, void *, 0x30))
+        func_800A0D0C(FIELD_AT(self, void *, 0x30));
+    func_800DBE88(self, flags);
+}
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC870);
+struct Rec20 {
+    int w[5];
+};
+
+EXTERN_C char *func_800DC870(void *self, char *src)
+{
+    char *p = func_800DBEBC(self, src);
+    void *buf = func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(Rec20));
+    int size;
+    FIELD_AT(self, void *, 0x2C) = buf;
+    size = FIELD_AT(self, short, 0x0) * sizeof(Rec20);
+    func_80025CE0(buf, p, size);
+    return p + size;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC8DC);
 
@@ -963,7 +1014,15 @@ EXTERN_C void func_800DDF08(void *self, Vec4 v)
     func_80039DD8(obj);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DDF58);
+EXTERN_C IdArray *func_800DDF58(IdArray *self, short id, short count, short def)
+{
+    idnode_init(self, id);
+    self->vptr = D_800D6408;
+    self->count = count;
+    self->def = def;
+    self->data = func_800A0D2C(count * sizeof(Color));
+    return self;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DDFC0);
 
@@ -977,8 +1036,6 @@ EXTERN_C void func_800DE108(void *self, int i, Color *c)
     FIELD_AT(self, Color *, 0xC)[i] = *c;
 }
 
-EXTERN_C void func_800A0D0C(void *p);
-
 EXTERN_C void func_800DE12C(IdNode *self, int flags)
 {
     self->vptr = D_800D6408;
@@ -987,7 +1044,15 @@ EXTERN_C void func_800DE12C(IdNode *self, int flags)
     func_800D67CC(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DE180);
+EXTERN_C IdArray *func_800DE180(IdArray *self, short id, short count, short def)
+{
+    idnode_init(self, id);
+    self->vptr = D_800D63F8;
+    self->count = count;
+    self->def = def;
+    self->data = func_800A0D2C(count * sizeof(SVec4));
+    return self;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DE1E8);
 
@@ -1306,7 +1371,17 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E1C5C);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E21B8);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E22E0);
+EXTERN_C void func_800E2F2C(void *p);
+
+EXTERN_C void func_800E22E0(void *self)
+{
+    if (FIELD_AT(self, void *, 0x4C))
+        func_800E2F2C(FIELD_AT(self, void *, 0x4C));
+    if (FIELD_AT(self, void *, 0x58))
+        func_800E22E0(FIELD_AT(self, void *, 0x58));
+    if (FIELD_AT(self, void *, 0x4))
+        func_800E22E0(FIELD_AT(self, void *, 0x4));
+}
 
 EXTERN_C char D_800B4C48[];
 EXTERN_C void func_80025444(void *a, void *b, int c);
@@ -1463,7 +1538,15 @@ EXTERN_C char *func_800E26E4(void *self, char *src)
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E2704);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E28D8);
+EXTERN_C void func_800E28D8(IdNode *self, int flags)
+{
+    self->vptr = D_800D6674;
+    if (FIELD_AT(self, void *, 0x10))
+        operator delete(FIELD_AT(self, void *, 0x10));
+    if (FIELD_AT(self, void *, 0x14))
+        operator delete(FIELD_AT(self, void *, 0x14));
+    func_800D67CC(self, flags);
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E2944);
 
@@ -1484,11 +1567,9 @@ EXTERN_C void *func_800E3518(void *self)
     return self;
 }
 
-EXTERN_C void func_800E28D8(void *self, int flags);
-
-EXTERN_C void func_800E3550(void *self, int flags)
+EXTERN_C void func_800E3550(IdNode *self, int flags)
 {
-    FIELD_AT(self, int *, 0x0) = D_800D6644;
+    self->vptr = D_800D6644;
     func_800E28D8(self, flags);
 }
 
@@ -1516,9 +1597,9 @@ EXTERN_C void *func_800E37F4(void *self)
     return self;
 }
 
-EXTERN_C void func_800E382C(void *self, int flags)
+EXTERN_C void func_800E382C(IdNode *self, int flags)
 {
-    FIELD_AT(self, int *, 0x0) = D_800D6614;
+    self->vptr = D_800D6614;
     func_800E28D8(self, flags);
 }
 
@@ -1717,8 +1798,6 @@ EXTERN_C void func_800E42B0(void *self, int flags)
         operator delete(self);
 }
 
-EXTERN_C void *func_800A0D2C(int size);
-EXTERN_C void func_80025CE0(void *dst, void *src, int size);
 EXTERN_C void func_8008ECB4(void *p);
 
 EXTERN_C char *func_800E42F4(void *self, char *data)

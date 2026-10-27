@@ -45,6 +45,14 @@ struct IdNode {
     short id;
 };
 
+/* IdNode owning an array of count elements (Color for vtable D_800D6408, SVec4 for
+   D_800D63F8); out-of-range indices read element def. */
+struct IdArray : IdNode {
+    void *data;
+    short def;
+    short count;
+};
+
 /* Base of a family of small polymorphic objects (vtable D_800D5F20). The virtuals
    mostly answer yes/no questions about the owner. */
 struct Cond {
@@ -107,7 +115,8 @@ struct SubNode : SubNodeHead, Link {
 struct SlotSet {
     char pad0[0x110];
     int slots[8];
-    char pad130[0x10];
+    char pad130[0xC];
+    int first;
     int cur;
 };
 
@@ -153,6 +162,11 @@ struct Poly {
     VtEntry *vptr;
 };
 
+/* EXE heap and memory helpers */
+EXTERN_C void func_800A0D0C(void *p);
+EXTERN_C void *func_800A0D2C(int size);
+EXTERN_C void func_80025CE0(void *dst, void *src, int size);
+
 /* EFFECT functions called from code above their definition */
 EXTERN_C IdNode *func_800D67F4(IdNode *self, short id);
 EXTERN_C void func_800DE108(void *self, int i, Color *c);
@@ -160,6 +174,10 @@ EXTERN_C void func_800DE38C(void *self, int i, SVec4 *v);
 EXTERN_C void func_800DE7A4(void *self, int i, Color *c);
 EXTERN_C char *func_800E40E4(void *self, char *src);
 EXTERN_C void *func_800E3EB4(void *self);
+EXTERN_C int func_800DA584(SlotSet *self);
+EXTERN_C void func_800DBE88(void *self, int flags);
+EXTERN_C void func_800E28D8(IdNode *self, int flags);
+EXTERN_C char *func_800DBEBC(void *self, char *src);
 EXTERN_C char *func_800E4110(void *self, char *src);
 EXTERN_C void func_800D67CC(IdNode *self, int flags);
 
@@ -193,6 +211,7 @@ EXTERN_C int D_800D63F8[];
 EXTERN_C int D_800D6408[];
 EXTERN_C int D_800D6614[];
 EXTERN_C int D_800D6644[];
+EXTERN_C int D_800D6674[];
 EXTERN_C int D_800D6704[];
 EXTERN_C int D_800D672C[];
 EXTERN_C int D_800D6754[];
@@ -206,6 +225,14 @@ EXTERN_C void *D_800E5848[];
 
 /* EXE globals */
 EXTERN_C void *D_800B4ED8[];
+
+inline void idnode_init(IdNode *self, short id)
+{
+    self->vptr = D_80010178;
+    self->next = 0;
+    self->vptr = D_800D5DB0;
+    self->id = id;
+}
 
 inline void key_init(Key *self, short id)
 {
