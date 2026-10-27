@@ -102,7 +102,35 @@ EXTERN_C void func_8002D1E0()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D24C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D780);
+EXTERN_C void func_8002D780(void *vp, S_Pt2 pos)
+{
+    S_D780 *p = (S_D780 *)vp;
+    S_Pt2s ofs;
+    if (p->parent) {
+        S_Pt2s t = p->parent->pos;
+        ofs.set(pos.x + t.x, pos.y + t.y);
+    } else {
+        ofs = *(S_Pt2s *)&pos;
+    }
+    S_Pt2s *pp = &p->pos;
+    *pp = ofs;
+    if (p->unk30) {
+        short x, y;
+        x = pp->x + D_800B4CF4[0].a;
+        y = pp->y + D_800B4CF4[0].b;
+        ofs.x = x;
+        ofs.y = y;
+        SetDrawOffset(p->d4C, &ofs);
+        x = pp->x + D_800B4CF4[1].a;
+        y = pp->y + D_800B4CF4[1].b;
+        ofs.x = x;
+        ofs.y = y;
+        SetDrawOffset(p->d58, &ofs);
+    } else {
+        SetDrawOffset(p->d4C, pp);
+        SetDrawOffset(p->d58, pp);
+    }
+}
 
 EXTERN_C int func_8002D8AC(void *p, void *it, int v)
 {

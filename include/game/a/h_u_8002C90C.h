@@ -114,4 +114,18 @@ struct S_8002D94C {
     }
 };
 
+EXTERN_C void SetDrawOffset(void *env, void *ofs);
+struct S_Pt2s { short x, y; void set(short ax, short ay) { x = ax; y = ay; } };
+struct S_D780 {
+    char pad[0x18];
+    S_D780 *parent;
+    char pad1C[0xC];
+    S_Pt2s pos;
+    int unk2C;
+    int unk30;
+    char pad34[0x18];
+    char d4C[0xC];
+    char d58[0xC];
+};
+
 #endif /* GAME_A_H_U_8002C90C_H */
