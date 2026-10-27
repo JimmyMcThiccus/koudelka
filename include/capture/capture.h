@@ -14,6 +14,12 @@ struct VObject {
     VtblEntry *vt;
 };
 
+// object whose vtable pointer follows 0x18 bytes of data
+struct VObj18 {
+    char pad[0x18];
+    VtblEntry *vt;
+};
+
 struct ObjSlot {
     int pad;
     VObject *obj;
@@ -334,6 +340,19 @@ struct N_800C0820 {
     N_800C0820 *next;
     char pad2[4];
     int val;
+};
+
+EXTERN_C char D_800B72BC[];
+
+// stands in for the compiler's vtable store between base and member initialisation
+struct B_800B72BC : B_800B86F0 {
+    B_800B72BC() { vt = D_800B72BC; }
+};
+struct C_800BDD00 : B_800B72BC {
+    char m[0x12C];
+    void *buf;
+    int f140, f144;
+    C_800BDD00();
 };
 
 #endif

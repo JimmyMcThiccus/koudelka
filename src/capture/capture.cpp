@@ -179,7 +179,26 @@ EXTERN_C void func_800B998C(VObject *p, unsigned char *in)
         ((char *)p)[0x35] = 2;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9A0C);
+EXTERN_C char D_80035F80[];
+EXTERN_C void func_8009CAE0(void *);
+EXTERN_C void func_80036554(void *, int);
+EXTERN_C void func_800B9A0C(VObject *p, unsigned char a, int b)
+{
+    signed char *s = (signed char *)p;
+    if (a == 2) {
+        if (s[0x34] == a) {
+            if (s[0x35] == 10) {
+                s[0x34] = 5;
+                s[0x35] = 0;
+                func_8009CAE0(D_80035F80);
+            }
+        } else
+            func_80036554(p, 2);
+    } else {
+        VtblEntry *e = &p->vt[13];
+        ((void (*)(void *, int))e->pfn)((char *)p + e->delta, b);
+    }
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9AA0);
 
@@ -370,7 +389,24 @@ INCLUDE_RODATA("asm/capture/nonmatchings/capture", D_800B6F8C);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BA538);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BB03C);
+EXTERN_C void func_800BB03C(char *p)
+{
+    int i;
+    VObj18 *o = *(VObj18 **)(p + 0x160);
+    VtblEntry *e;
+    if (o) {
+        // delete o (virtual destructor, slot 1)
+        e = &o->vt[1];
+        ((void (*)(void *, int))e->pfn)((char *)o + e->delta, 3);
+    }
+    for (i = 0; i < 22; i++) {
+        o = ((VObj18 **)(p + 0x108))[i];
+        if (o) {
+            e = &o->vt[1];
+            ((void (*)(void *, int))e->pfn)((char *)o + e->delta, 3);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BB0D0);
 
@@ -502,7 +538,20 @@ EXTERN_C int func_800BDCB8(S_800BD5D0 *p, int *src, short n)
     return 1;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BDD00);
+EXTERN_C char D_800B72BC[];
+EXTERN_C void func_800B7C34(void *, int, int, int);
+EXTERN_C void *func_800A0D2C(int);
+EXTERN_C void func_800B758C(void *, void *);
+EXTERN_C void func_800B7E0C(void *, int);
+C_800BDD00::C_800BDD00()
+{
+    func_800B7C34(m, 0x1000, 0x60, 0x40);
+    buf = func_800A0D2C(0x3F00);
+    func_800B758C(m, buf);
+    func_800B7E0C(m, 0);
+    f140 = 0;
+    f144 = 0;
+}
 
 EXTERN_C char D_800B72BC[];
 EXTERN_C void func_800B8360(void *);
