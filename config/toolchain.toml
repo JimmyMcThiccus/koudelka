@@ -12,15 +12,17 @@ aspsx = "2.79"            # maspsx --aspsx-version; the tests don't constrain it
 cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files reach globals with lui (-G0, or large objects)
 
 [compiler.overrides]
-# "src/<path>" = "<cflags>" for files built with other flags.
-# The overlays never use $gp (0 gp-relative accesses in all six; the EXE has 391), so they were built with -G0.
-# BATTLE's func_800BE390 matches only with -G0.
-"src/field/field.cpp" = "-O2 -G0"
-"src/battle/battle.cpp" = "-O2 -G0"
-"src/movie/movie.cpp" = "-O2 -G0"
-"src/capture/capture.cpp" = "-O2 -G0"
-"src/gameend/gameend.cpp" = "-O2 -G0"
-"src/effect/effect.cpp" = "-O2 -G0"
+# "src/<path>" = "<cflags>", or { cflags = "...", as_G = N } when the assembler's -G differs.
+# Overlays: the compiler ran with -G8 but the assembler never used $gp (0 gp-relative accesses in all six;
+# the EXE has 391). The CAPTURE session found the evidence: func_800B9E10 loads a 4-byte EXE global as
+# `lui $s0; lw $s0`, which is the assembler expanding GCC's `lw $16,sym` macro. With -G0, GCC splits the
+# address itself and picks $v0 as the temporary.
+"src/field/field.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/battle/battle.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/movie/movie.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/capture/capture.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/gameend/gameend.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/effect/effect.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 
 [maspsx]
 url = "https://github.com/mkst/maspsx/archive/4ffa8b5106f9780d5d4aa7609f184949433ddbbc.zip"
