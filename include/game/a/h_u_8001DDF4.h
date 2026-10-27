@@ -183,4 +183,10 @@ EXTERN_C void func_8001E508(char *p, int flags);
 EXTERN_C S_Node *func_8001E248(S_Node *n, void *id);
 EXTERN_C void func_8001EFE4(char *obj, void *e);
 
+EXTERN_C void func_8001F544(void *t, int delay, int a, int repeat, int b);
+EXTERN_C int func_8001F598(void *t);
+EXTERN_C void func_8001A7B4(void *a, void *b);
+EXTERN_C int func_80018F0C(void *jb, void *v);
+EXTERN_C void func_8001E9A8(void *p);
+
 #endif /* GAME_A_H_U_8001DDF4_H */

@@ -94,7 +94,11 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CDC0);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D020);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D1E0);
+EXTERN_C void func_8002D1E0()
+{
+    PutDispEnv(&D_800AC7F8[D_800B4CF0]);
+    PutDrawEnv(&D_800AC740[D_800B4CF0]);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D24C);
 
@@ -111,7 +115,14 @@ EXTERN_C int func_8002D8AC(void *p, void *it, int v)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D94C);
+EXTERN_C void func_8002D94C(S_8002D94C *p)
+{
+    p->add(&p->mode[D_800B4CF0].tag, p->count - 1);
+    p->add(&p->mode2[D_800B4CF0].tag, p->count - 1);
+    D_800B4CFC = p;
+    for (S_Node8 *n = p->list; n; n = n->next)
+        ((void (*)(void *))n->vt[3].pfn)((char *)n + n->vt[3].delta);
+}
 
 EXTERN_C void *func_8002DA94(void *p, void *it)
 {

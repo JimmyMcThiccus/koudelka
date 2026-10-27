@@ -7,8 +7,8 @@ EXTERN_C void *D_800112F4[];
 EXTERN_C void *D_80011304[];
 EXTERN_C void *D_8001126C[];
 struct S_80028FD8 { void **vt; int unk4; int unk8; void **vtC; };
-struct S_800B4CF0 { int value; int pad[2]; };
-EXTERN_C S_800B4CF0 D_800B4CF0;
+/* Retail reaches D_800B4CF0 (double-buffer index) without $gp in this file: an explicit section keeps it off $gp. */
+EXTERN_C int D_800B4CF0 __attribute__((section(".data")));
 struct S_80028F10e { short unk38; short unk3A; char pad[0x10]; };
 struct S_80028F10 { char pad0[8]; short unk8; char padA[0x2E]; S_80028F10e e[2]; };
 struct S_XYs { short x, y; };

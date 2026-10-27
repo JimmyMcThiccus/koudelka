@@ -81,4 +81,37 @@ struct S_8002C9D4 {
     S_8002C9D4(const S_8002C9D4 &src, S_Rect8 *rect);
 };
 
+// Retail reaches D_800B4CF0 from this file with the assembler macro (lui/lw), not $gp: the
+// explicit section keeps GCC from treating it as small data.
+EXTERN_C int D_800B4CF0 __attribute__((section(".data")));
+EXTERN_C void *D_800B4CFC;
+struct DISPENV { char b[0x14]; };
+struct DRAWENV { char b[0x5C]; };
+EXTERN_C DISPENV D_800AC7F8[];
+EXTERN_C DRAWENV D_800AC740[];
+EXTERN_C void PutDispEnv(DISPENV *env);
+EXTERN_C void PutDrawEnv(DRAWENV *env);
+struct P_TAG { unsigned addr : 24; unsigned len : 8; };
+struct S_Prim12 { P_TAG tag; int code[2]; };
+struct S_Node8 { VtE *vt; S_Node8 *next; };
+struct S_8002D94C {
+    char pad0[0x10];
+    unsigned int count;
+    unsigned long *tab;
+    char pad18[0x1C];
+    S_Prim12 mode[2];
+    S_Prim12 mode2[2];
+    char pad64[0];
+    S_Node8 *list;
+    int add(P_TAG *prim, unsigned int i)
+    {
+        if (i && i < count) {
+            prim->addr = tab[i];
+            tab[i] = (unsigned long)prim & 0x00ffffff;
+            return 1;
+        }
+        return 0;
+    }
+};
+
 #endif /* GAME_A_H_U_8002C90C_H */

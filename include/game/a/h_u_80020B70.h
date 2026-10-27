@@ -26,7 +26,7 @@ EXTERN_C void *D_800107F0[];
 EXTERN_C void *D_80010800[];
 EXTERN_C void *func_80021348(void *p, int a, int b);
 EXTERN_C void *func_8002466C(void *p, int a, int b);
-EXTERN_C void func_80023F50(void *p, int a);
+EXTERN_C int func_80023F50(void *p, int a);
 EXTERN_C void *func_8001FC38(void *p, int a, int b, int c);
 struct S_Obj178 {
     void **vtbl;
@@ -477,6 +477,58 @@ struct S_2510C {
     S_AnimNode *unk28;
     int unk2C;
     int unk30;
+};
+
+EXTERN_C int func_80023CB8(void *p, int a, int b);
+EXTERN_C void func_80020984(void *p, int a);
+EXTERN_C void *D_80010588[];
+inline void *S_first(List *l) { return l->count ? *(void **)*(void ***)l : 0; }
+struct S_ItemV {
+    virtual void f1();
+    virtual int f2(int a);
+    virtual int f3();
+};
+struct S_Grp {
+    char pad0[0x25];
+    unsigned char unk25;
+    unsigned char unk26;
+    signed char unk27;
+    char unk28[0x18];
+    unsigned char unk40;
+};
+struct S_C588n {
+    void **vtbl;
+    char pad4[0x10];
+    int unk14;
+    unsigned short unk18;
+    unsigned short unk1A;
+    S_C588n(void *a, unsigned short b)
+    {
+        func_8001FC38(this, 0x204, (int)a, 0);
+        vtbl = D_800105DC;
+        unk14 = 0;
+        vtbl = D_80010588;
+        unk18 = b;
+        unk1A = 0;
+    }
+};
+
+EXTERN_C int func_800209F4(void *p);
+struct S_C588m {
+    void **vtbl;
+    char pad4[0x10];
+    int unk14;
+    unsigned short unk18;
+    unsigned short unk1A;
+    S_C588m(void *a, unsigned short b)
+    {
+        func_8001FC38(this, 0x205, (int)a, 0);
+        vtbl = D_800105DC;
+        unk14 = 0;
+        vtbl = D_80010588;
+        unk18 = ~b;
+        unk1A = b;
+    }
 };
 
 #endif /* GAME_A_H_U_80020B70_H */

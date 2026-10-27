@@ -281,7 +281,32 @@ EXTERN_C void func_8001E840(S_8001E840 *p)
     p->unk98 = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001E848);
+EXTERN_C int func_8001E848(char *cur, char *s)
+{
+    int r;
+    Holder *h;
+    List *l;
+    func_800186E8(&D_800A451C);
+    r = *(int *)(s + 0xF0);
+    func_8001EFE4(cur, new (func_8001CA10(0x14)) S_Evt2D0(5, 0, 0));
+    if (cur == (char *)D_800B4C18)
+        func_8001E57C(cur);
+    D_800B4C18 = (S_8001F1BC *)s;
+    *(int *)(s + 0xF4) = 0;
+    h = (Holder *)(cur + 0xA4);
+    l = h;
+    func_80019A6C(l, (int)s, l->count);
+    l = &D_800AC688;
+    func_80019A6C(l, (int)s, l->count);
+    func_80018F0C(cur, s);
+    func_80018788(&D_800A451C);
+    if (cur == s) {
+        func_800949B0(&((int *)((S_Scn *)cur)->unk88)[((S_Scn *)cur)->unk8 - 1]);
+        ((S_SceneV *)cur)->f2();
+        func_8001E9A8(cur);
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001E9A8);
 
@@ -329,7 +354,40 @@ EXTERN_C S_Evt *func_8001EC98(S_Node *a, S_Evt *b, S_Evt *e)
     return e;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001ED2C);
+EXTERN_C S_Evt *func_8001ED2C(char *s, int a, int b)
+{
+    S_Evt *e;
+    int m;
+    *(int *)(s + 0xA0) = b;
+    func_8001F544(s + 0xC4, a, b, 0, 0);
+    while (1) {
+        func_8001E7C8((S_Scene *)s);
+        e = (S_Evt *)func_8001C974(s ? s + 0x8C : 0);
+        if (e->unkA)
+            break;
+        ((S_EvtV *)e)->f2();
+    }
+    m = 0;
+    if (e->unkA == 3) {
+        char *t = 0;
+        if (e->unkC)
+            t = (char *)e->unkC - 8;
+        if (t == s + 0xC4)
+            m = 1;
+    }
+    {
+        char *tm = s + 0xC4;
+        if (m) {
+            ((S_EvtV *)e)->f2();
+            e = 0;
+        } else if (!func_8001F598(tm)) {
+            char *g = D_800B4C28;
+            *(void **)(g + 4) = tm;
+            func_8001A7B4(s ? s + 0x8C : 0, g);
+        }
+    }
+    return e;
+}
 
 EXTERN_C int func_8001EE58(void *a, S_Node *b)
 {

@@ -168,7 +168,19 @@ EXTERN_C S_IntVec *func_8002E69C(S_IntVec *p, S_Lnk64 *n, int unlink)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E714);
+EXTERN_C void *func_8002E714(void *vp, int n)
+{
+    S_OT *p = (S_OT *)vp;
+    p->vt = D_80010178;
+    p->unk4 = 0;
+    p->vt = D_800117BC;
+    p->count = n;
+    p->buf[0] = (unsigned long *)func_800A0D2C(n * 4);
+    p->buf[1] = (unsigned long *)func_800A0D2C(n * 4);
+    p->tab = p->buf[D_800B4CF0];
+    ClearOTagR(p->tab, n);
+    return p;
+}
 
 EXTERN_C void func_8002E7A8(S_8002E7A8 *p, int flags)
 {
@@ -180,7 +192,14 @@ EXTERN_C void func_8002E7A8(S_8002E7A8 *p, int flags)
     func_8001A610(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E814);
+EXTERN_C void func_8002E814(S_OT *p)
+{
+    DrawOTag(p->tab + p->count - 1);
+    p->tab = p->buf[D_800B4CF0];
+    ClearOTagR(p->tab, p->count);
+    if (p->unk4)
+        VCALL0(p->unk4, 2);
+}
 
 EXTERN_C int func_8002E898(S_8002E898 *p, P_TAG *prim, unsigned int i)
 {
@@ -287,7 +306,13 @@ EXTERN_C void func_8002EAE8(S_8002E908 *p, int a, int b)
     p->unkE = b;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002EAF4);
+EXTERN_C int func_8002EAF4()
+{
+    S_IntVec *v = (S_IntVec *)&D_800AC820;
+    int r = func_80019C68(v, v->count - 1);
+    D_800B4CFC = v->count ? v->data[v->count - 1] : 0;
+    return r;
+}
 
 EXTERN_C int func_8002EB68(S_8002EB68 *p)
 {

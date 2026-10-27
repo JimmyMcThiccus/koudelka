@@ -49,4 +49,18 @@ struct S_8002E4E8 {
     S_8002E4E8(int a, int n, int b);
 };
 
+// Retail reaches D_800B4CF0 and D_800B4CFC from this file with the assembler macro (lui), not $gp.
+EXTERN_C int D_800B4CF0 __attribute__((section(".data")));
+EXTERN_C int D_800B4CFC __attribute__((section(".data")));
+EXTERN_C void *func_800A0D2C(int size);
+EXTERN_C void ClearOTagR(unsigned long *ot, int n);
+EXTERN_C void DrawOTag(unsigned long *ot);
+struct S_OT {
+    void **vt;
+    S_VObj *unk4;
+    unsigned long *buf[2];
+    int count;
+    unsigned long *tab;
+};
+
 #endif /* GAME_A_H_U_8002DED8_H */
