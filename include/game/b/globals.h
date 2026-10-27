@@ -16,6 +16,14 @@ struct GameMode_800AF410 {
 
 EXTERN_C GameMode_800AF410 D_800AF410;
 
+/* An index; entries it selects are 16 bytes apart. */
+struct GlobalInt_800B4CF0 {
+    int value;
+    int pad[2];
+};
+
+EXTERN_C GlobalInt_800B4CF0 D_800B4CF0;
+
 EXTERN_C GlobalWord D_800AF470;
 EXTERN_C GlobalWord D_800AFA70;
 EXTERN_C GlobalWord D_800B1A68;
