@@ -93,6 +93,9 @@ struct Link {
     Link *next;
 };
 
+EXTERN_C void func_8001A678(Link *a, Link *b);
+EXTERN_C Link *func_8001A744(Link *a, Link *b);
+
 struct SubNodeHead {
     int pad[6];
 };
@@ -138,15 +141,30 @@ struct KeyInt : Key {
     int value;
 };
 
+/* GCC 2 vtable entry: this adjustment and function. Entry 0 is unused; entry 1 is the
+   destructor, called with flags 3 by delete. */
+struct VtEntry {
+    short delta;
+    short index;
+    void (*pfn)(void *self, int arg);
+};
+
+struct Poly {
+    VtEntry *vptr;
+};
+
 /* EFFECT functions called from code above their definition */
 EXTERN_C IdNode *func_800D67F4(IdNode *self, short id);
 EXTERN_C void func_800DE108(void *self, int i, Color *c);
 EXTERN_C void func_800DE38C(void *self, int i, SVec4 *v);
 EXTERN_C void func_800DE7A4(void *self, int i, Color *c);
 EXTERN_C char *func_800E40E4(void *self, char *src);
+EXTERN_C void *func_800E3EB4(void *self);
 EXTERN_C char *func_800E4110(void *self, char *src);
 EXTERN_C void func_800D67CC(IdNode *self, int flags);
 
+
+/* vtables (retail rodata), then words in EFFECT .data */
 EXTERN_C int D_80010178[];
 EXTERN_C int D_800D5DB0[];
 EXTERN_C int D_800D5DC0[];
@@ -166,6 +184,23 @@ EXTERN_C int D_800D6110[];
 EXTERN_C int D_800D6138[];
 EXTERN_C int D_800D6160[];
 EXTERN_C int D_800D6188[];
+EXTERN_C int D_800D62B0[];
+EXTERN_C int D_800D62E0[];
+EXTERN_C int D_800D6310[];
+EXTERN_C int D_800D6340[];
+EXTERN_C int D_800D6370[];
+EXTERN_C int D_800D6614[];
+EXTERN_C int D_800D6644[];
+EXTERN_C int D_800D6704[];
+EXTERN_C int D_800D672C[];
+EXTERN_C int D_800D6754[];
+EXTERN_C int D_800D677C[];
+EXTERN_C int D_800D67A4[];
+EXTERN_C int D_800E583C[];
+EXTERN_C int D_800E5840[];
+EXTERN_C int D_800E5844[];
+
+EXTERN_C void *D_800E5848[];
 
 inline void key_init(Key *self, short id)
 {
@@ -188,6 +223,14 @@ inline void keyvec_init(KeyVec *self, short id)
     key_init(self, id);
     self->vptr = D_800D6160;
     vec4_zero(&self->v);
+}
+
+/* Element i of the Color array at 0x1C, or the default element if i is out of range */
+inline Color *color_at(void *self, int i)
+{
+    if (i >= FIELD_AT(self, short, 0xE))
+        return &FIELD_AT(self, Color *, 0x1C)[FIELD_AT(self, short, 0x20)];
+    return &FIELD_AT(self, Color *, 0x1C)[i];
 }
 
 inline void key_copy(Key *self, Key *other)
