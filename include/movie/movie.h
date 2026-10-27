@@ -13,10 +13,13 @@ typedef int s32;
 /* EXE globals. Declared as unsized arrays so they're reached with lui/%lo like
    retail (a sized small extern would get $gp, which the overlays never use). */
 struct GameUnk8 { char pad[0x14]; void* x14; };
-struct Game { s32 x0, x4; GameUnk8* x8; char pad[0x1D2 - 0xC]; u8 x1D2; };
+struct Game { s32 x0, x4; GameUnk8* x8; char pad[0x154 - 0xC]; char x154[0x1D2 - 0x154]; u8 x1D2; };
+struct Sys { s32 x0, x4, x8; volatile u32 xC; char pad[0x44 - 0x10]; char* x44; };
+EXTERN_C Sys D_800A4534;
 EXTERN_C Game* D_800A4578[];
 
 /* libgpu primitives */
+struct RECT { s16 x, y, w, h; };
 struct POLY_FT4 { u32 tag; u8 r0, g0, b0, code; s16 x0, y0; u8 u0, v0; u16 clut; s16 x1, y1; u8 u1, v1; u16 tpage; s16 x2, y2; u8 u2, v2; u16 pad1; s16 x3, y3; u8 u3, v3; u16 pad2; };
 struct SPRT { u32 tag; u8 r0, g0, b0, code; s16 x0, y0; u8 u0, v0; u16 clut; s16 w, h; };
 
@@ -54,8 +57,7 @@ struct Unk800BE54C { char pad[0x64]; s16 x64; char pad2[0x6E-0x66]; s16 x6E; };
 
 struct Unk800BCE7C { char pad[0x34]; s32 x34; char p2[0x40-0x38]; s32 x40; char p3[0x50-0x44]; s16 x50; };
 
-struct Unk800BA50CR { s16 a, b, c, d; };
-struct Unk800BA50C { char pad[0x30]; Unk800BA50CR x30; };
+struct Unk800BA50C { char pad[0x30]; RECT x30; };
 
 struct Unk800C5B30 { char pad[0x58]; s32 x58; };
 EXTERN_C void func_80054FE0(void*);
@@ -65,8 +67,6 @@ EXTERN_C void func_80025CE0(void*, void*, s32);
 
 EXTERN_C void func_8001FC78(s32, s32, s32);
 
-struct Unk800BDF84T { s32 x0, x4, x8; volatile u32 xC; };
-EXTERN_C Unk800BDF84T D_800A4534;
 
 struct Unk800B98C8 { char pad[0x8]; s32 x8; };
 
@@ -113,11 +113,9 @@ EXTERN_C void StFreeRing(void*);
 struct Unk800CA86C { char pad[0x10C]; void* x10C; };
 EXTERN_C void func_800BDDC8(void*, s32, s32);
 
-struct Unk800BA40CR { s16 a, b, c, d; };
-struct Unk800BA40C { char pad[8]; s16 x8; char pad2[0x3C-0xA]; Unk800BA40CR x3C; Unk800BA40CR x44; };
+struct Unk800BA40C { char pad[8]; s16 x8; char pad2[0x3C-0xA]; RECT x3C; RECT x44; };
 
-struct Unk800BA438R { s16 a, b, c, d; };
-struct Unk800BA438 { char pad[8]; s16 x8; char pad2[0x3C-0xA]; Unk800BA438R x3C; Unk800BA438R x44; };
+struct Unk800BA438 { char pad[8]; s16 x8; char pad2[0x3C-0xA]; RECT x3C; RECT x44; };
 
 struct Unk800BCE4CR { s32 a, b; };
 struct Unk800BCE4C { char pad[0x14]; Unk800BCE4CR x14[3]; char p2[0x30-0x2C]; s32 x30; char p3[0x4C-0x34]; s32 x4C; };
@@ -225,9 +223,8 @@ struct Unk800BD928 { void* x0; };
 EXTERN_C void DecDCToutCallback(void*);
 EXTERN_C void func_80019920(void*, s32);
 
-struct Unk800B97E4R { s16 a, b, c, d; };
 struct Unk800B97E4B { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); };
-struct Unk800B97E4 { s32 x0, x4; Unk800B97E4B* x8; char pad[0x30 - 0xC]; Unk800B97E4R x30; };
+struct Unk800B97E4 { s32 x0, x4; Unk800B97E4B* x8; char pad[0x30 - 0xC]; RECT x30; };
 
 struct Unk800BA534 { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(s32); virtual void v9(); virtual void v10(); virtual void v11(); virtual s32 v12(); };
 
@@ -262,5 +259,39 @@ EXTERN_C void func_80035304(void*, s32);
 struct Unk800BDDC8 { char pad[0x20]; s16 x20; char p2[0x44 - 0x22]; void* x44; char p3[0x50 - 0x48]; void* x50; };
 EXTERN_C void* func_800A0D2C(s32);
 EXTERN_C void func_800B93D8(void*, s32, s32, s32);
+
+struct Unk800C9874 { char pad[0x28]; SPRT x28[4]; };
+
+struct C { virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800CA7EC { char pad[0x110]; C* x110; };
+struct Unk800CA7ECB { char pad[0x1A]; u8 x1A; };
+EXTERN_C void func_800232A0(void*, void*);
+
+struct Unk800B8EB8B { u16 x0; s16 x2; s32 x4; };
+struct Unk800B8EB8 { s32 x0; Unk800B8EB8B* x4; char pad[0x40 - 8]; void* x40; void* x44; };
+EXTERN_C s32 StGetNext(void*, void*);
+
+struct Unk800B8FE0 { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(s32); };
+struct Unk800B8FE0B : Unk800B8FE0 { char pad[0x35 - 4]; u8 x35; };
+EXTERN_C void func_80036674(void*);
+
+struct Unk800C3D90 { char pad[0x40]; char* x40; };
+EXTERN_C s32 func_80094FD0(char*);
+EXTERN_C void func_800A0D0C(void*);
+
+struct Unk800C908C { char pad[0x20]; s32 x20; };
+EXTERN_C void func_8002456C(void*);
+EXTERN_C void func_80024524(void*);
+
+struct E { void* x0; };
+struct L { E* x0; s32 x4; };
+struct Unk800B9C64H { L* x0; };
+EXTERN_C void func_800BA438(Unk800BA438*, RECT*);
+EXTERN_C void func_800BA50C(Unk800BA50C*, RECT*);
+
+EXTERN_C s32 D_800CBA9C[], D_800CBAA0[], D_800CBAA4[], D_800CBAA8[];
+EXTERN_C void func_80094990();
+EXTERN_C void func_800949A0();
+EXTERN_C s32 CloseEvent(s32);
 
 #endif /* MOVIE_H */
