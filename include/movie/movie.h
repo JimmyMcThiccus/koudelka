@@ -328,7 +328,6 @@ EXTERN_C s32 write(s32, void*, s32);
 
 struct Unk800C4D5C { char pad[0x3C]; void* x3C; char p2[0x50 - 0x40]; s32 x50; char p3[0x80 - 0x54]; s8 x80, x81; };
 EXTERN_C void func_80054FC0(void*);
-EXTERN_C void* func_800C4F10(void*, s32, s32, s32, s32);
 EXTERN_C void func_8005800C(void*, void*);
 
 struct Unk800C8340E { s32 x0, x4; };
@@ -707,5 +706,112 @@ EXTERN_C void func_80062188(void*);
 EXTERN_C void func_800C1AE0(Unk800C11A0*, void*);
 EXTERN_C void* func_800C2624(void*, s32, s32, s32, s32, const char*);
 EXTERN_C void func_800553D8(s32);
+
+/* func_800B9A0C */
+struct Unk800B9A0CE { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800B9A0CV { const void* vptr; s32 x4; };
+struct Unk800B9A0C { Unk800B9A0CV* x0; char pad[0x2C - 4]; const void* x2C; };
+EXTERN_C char D_800B7044[];
+EXTERN_C void func_80029D74(void*, s32);
+
+/* func_800BBF7C */
+struct Unk800BBF7CE { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800BBF7CT { Unk800BBF7CE e[10]; };
+struct Unk800BBF7CV { const void* vptr; s32 x4; };
+struct Unk800BBF7CS { Unk800BBF7CV* x0; const void* x4; };
+struct Unk800BBF7C { const void* x0; char p0[0x8C - 4]; const void* x8C; char p1[0xF8 - 0x90]; const void* xF8; char p2[0x100 - 0xFC]; Unk800BBF7CS x100; };
+EXTERN_C const Unk800BBF7CT D_800B7564, D_80010538;
+EXTERN_C char D_800B75CC[], D_800B75B4[], D_800B7534[], D_800B75E4[], D_80010508[];
+EXTERN_C void func_80051514(void*, s32);
+EXTERN_C void func_8001E508(void*, s32);
+inline void Unk800BBF7C_dtor(Unk800BBF7CS* s) {
+  s->x4 = D_80010508;
+  s->x0->vptr = &D_80010538;
+  Unk800BBF7CT vt = D_80010538;
+  s->x0->vptr = &vt;
+  char* full; s32 adj;
+  vt.e[1].delta = D_80010538.e[1].delta + (adj = (char*)s - (full = (char*)s->x0 - 8));
+  vt.e[6].delta = D_80010538.e[6].delta + adj;
+}
+
+/* func_800C5380 */
+struct Unk800C5380E { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800C5380T { Unk800C5380E e[10]; };
+struct Unk800C5380V { const void* vptr; s32 x4; };
+struct Unk800C5380 { char pad[0x18]; const void* x18; char p1[0x50 - 0x1C]; Unk800C5380V* x50; const void* x54; const void* x58; char p2[0x68 - 0x5C]; s32 x68, x6C; char x70[0xC0 - 0x70]; char xC0[0xDC - 0xC0]; Unk800C5380V xDC; };
+EXTERN_C const Unk800C5380T D_800B7FB4;
+EXTERN_C char D_800B8024[], D_800B8004[], D_800B8054[], D_800104A8[];
+EXTERN_C void func_800630BC(void*, s32, s32);
+EXTERN_C void func_800538CC(void*, void*, s32);
+EXTERN_C void* func_80054E18(void*, void*);
+
+/* func_800C648C */
+/* libgpu P_TAG: addPrim(ot, p) is done with these bitfields */
+struct Unk800C648CS { u32 tag; s32 w1, w2, w3, w4; };
+struct Unk800C648CD { u32 tag; s32 code[2]; };
+struct Unk800C648C { char pad[0xA]; u16 xA; s32 xC; Unk800C648CD x10[2]; Unk800C648CS x28[2]; };
+struct Unk800C648CT { unsigned addr : 24; unsigned len : 8; };
+struct Unk800C648CO { char pad[0x10]; u32 x10; u32* x14; };
+EXTERN_C Unk800C648CO* D_800B4CFC[];
+EXTERN_C s32 func_8005F1B4(void*);
+inline void Unk800C648C_add(u32 z, u32* prim) {
+  Unk800C648CO* o = D_800B4CFC[0];
+  if (z && z < o->x10) { ((Unk800C648CT*)prim)->addr = ((Unk800C648CT*)&o->x14[z])->addr; o->x14[z] = (u32)prim & 0xFFFFFF; }
+}
+
+/* func_800BE9D4 */
+struct Unk800BE9D4C { void* x0; s32 x4, x8, xC, x10; u8 x14; };
+struct Unk800BE9D4D { void* x0; StreamStat* x4; void* x8; void* xC; char x10[0x28 - 0x10]; s32 x28, x2C; char p[0x3C - 0x30]; StreamStat x3C; };
+struct Unk800BE9D4 { char x0[0x64]; void* x64; Unk800BE9D4D* x68; Unk800BE9D4C* x6C; char p[0x74 - 0x70]; s32 x74; char p2[0x7C - 0x78]; s32 x7C, x80; char p3[0x88 - 0x84]; s32 x88; };
+EXTERN_C void* D_800127FC[];
+EXTERN_C void* func_80048D54(void*);
+EXTERN_C s32 func_800468D8(void*, s32, s32, void*, void*);
+inline Unk800BE9D4C* Unk800BE9D4_ctorC(Unk800BE9D4C* c, s32 a, s32 b, s32 cc, s32 d) { c->x0 = D_800127FC; c->x4 = a; c->x14 = 0; c->x8 = b; c->xC = cc; c->x10 = d; return c; }
+
+/* func_800BF918 */
+struct Unk800BF918X { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~Unk800BF918X(); };
+struct Unk800BF918 { char pad[0x6C]; s32 x6C; void* x70; s32 x74; Unk800BF918X* x78; char x7C[0x1F0 - 0x7C]; char x1F0[0x278 - 0x1F0]; Unk800C01C4O x278[15]; };
+EXTERN_C void func_80062160(void*);
+EXTERN_C void func_8002798C();
+inline Unk800CA59CT* Unk800BF918_ev(s16 k, void* a, s32 b) { Unk800CA59CT* t = func_8001CA10(0x14); Unk800CA59C_ctor1(t); *(void* volatile*)&t->x0 = D_80010300; t->x8 = 2; t->xA = k; t->x4 = 0; t->x10 = b; t->xC = (s32)a; t->x0 = D_800102D0; return t; }
+
+/* func_800C5148 */
+struct Unk800C5148 { s32 x0, x4, x8; Unk800C10BCP xC; char p1[0x1C - 0x10]; u16 x1C; char p2[0x30 - 0x1E]; Unk800C8340L* x30; s32 x34; u32 x38; s32 x3C; };
+EXTERN_C void* func_800C60E8(void*, s32, Unk800C10BCP*, s32);
+
+/* func_800BEB0C */
+struct Unk800BEB0C { char x0[0x64]; void* x64; Unk800BE8B0D* x68; Unk800BE8B0C* x6C; s32 x70, x74; char p2[0x7C - 0x78]; s32 x7C, x80; char p3[0x88 - 0x84]; s32 x88; };
+EXTERN_C s32 func_800468D8(void*, s32, s32, void*, void*);
+
+/* func_800C0DA4 */
+struct Unk800C0DA4 { char pad[0x74]; s32 x74; char p2[0x1F0 - 0x78]; char x1F0[4]; };
+EXTERN_C const char D_800B7810[], D_800B7814[], D_800B7854[], D_800B792C[];
+EXTERN_C void func_800C10BC(Unk800C10BC* p, void* a, s32 b, void* c, s32 d);
+EXTERN_C s32 func_80054E90(void*);
+EXTERN_C void func_80054CE4(void*);
+
+/* func_800C4860 */
+struct Unk800C4860 { char pad[0x1C]; void* x1C; char p1[0x50 - 0x20]; s32 x50; char p2[0x78 - 0x54]; s32 x78; char p3[0x200 - 0x7C]; char x200[4]; };
+EXTERN_C void func_80054094(void*, s32);
+
+/* func_800C8D18 */
+struct Unk800C8D18Q { u32 w[4]; };
+struct Unk800C8D18P { u32 tag; Unk800C8D18Q q[2]; u32 x24; };
+struct Unk800C8D18 { char pad[0xA]; u16 xA; char p2[0x10 - 0xC]; Unk800C8D18P x10[2]; };
+inline void Unk800C8D18_addz(void* pr, u32 z) { Unk800C648CO* ot = D_800B4CFC[0]; if (z != 0 && z < ot->x10) { u32 a = ot->x14[z]; *(u32*)pr = (*(u32*)pr & 0xFF000000) | (a & 0xFFFFFF); ot->x14[z] = (u32)pr & 0xFFFFFF; } }
+
+/* func_800C4F10 */
+struct Unk800C4F10E { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800C4F10V { const void* vptr; s32 x4; };
+struct Unk800C4F10 { Unk800C4F10V* x0; char pad[0x2C - 4]; const Unk800C4F10E* x2C; char p2[0x38 - 0x30]; s32 x38, x3C; Unk800C4F10V x40; };
+EXTERN_C char D_800104A8[];
+EXTERN_C void* func_800C4F10(Unk800C4F10* self, s32 in_chrg, s32 b, s32 c, u16 a);
+
+/* func_800C1AE0 */
+struct Unk800C1AE0S { char d[0x20]; };
+EXTERN_C char D_800B7B24[], D_800B7B28[], D_800B7B34[];
+EXTERN_C void func_80053964(void*, s32);
+EXTERN_C void func_80053DDC(void*, void*);
+EXTERN_C void func_80054708(void*, s32);
 
 #endif /* MOVIE_H */
