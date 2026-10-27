@@ -34,4 +34,7 @@ EXTERN_C void *D_80010588[];
 struct S_80020538 { void **vt; char pad[0x10]; int unk14; short unk18; short unk1A;
     S_80020538(unsigned short a, short b, short c, int d, unsigned short e, int f); };
 
+struct S_Pad8 { int a, b; };
+struct S_80020948 : S_Pad8, Holder { };
+
 #endif /* GAME_A_H_U_80020368_H */

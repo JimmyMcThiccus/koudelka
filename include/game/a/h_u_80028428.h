@@ -68,4 +68,30 @@ EXTERN_C char D_800B4CD8[];
 EXTERN_C char D_800B4CE0[];
 inline int max0(int x) { return x > 0 ? x : 0; }
 
+struct S_DmBody { int code[2]; };
+struct S_SpBody { int w[4]; };
+struct S_80028C80 { short x, y, w, h; };
+EXTERN_C void func_80028AE8(S_Spr2 *p);
+
+struct S_VEnt28 { short delta; short index; void *pfn; };
+struct S_VObj28 { S_VEnt28 *vt; int unk4; unsigned short unk8; };
+struct S_80028DC4 { char pad0[0xC]; S_VObj28 *unkC; short unk10; short unk12; char pad14[8]; unsigned short unk1C; };
+struct S_UV28 { unsigned char u, v; S_UV28(int a, int b) { u = a; v = b; } };
+struct P_TAG { unsigned addr : 24; unsigned len : 8; };
+struct S_Ot28 {
+    char pad0[0x10];
+    unsigned int count;
+    unsigned long *tab;
+    int add(P_TAG *prim, unsigned int i)
+    {
+        if (i && i < count) {
+            prim->addr = tab[i];
+            tab[i] = (unsigned long)prim & 0x00ffffff;
+            return 1;
+        }
+        return 0;
+    }
+};
+EXTERN_C S_Ot28 *D_800B4CFC __attribute__((section(".data")));
+
 #endif /* GAME_A_H_U_80028428_H */

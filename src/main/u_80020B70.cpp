@@ -290,7 +290,26 @@ EXTERN_C void func_8002141C(void *q, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80021478);
+EXTERN_C int func_80021478(S_SlotTbl2 *t, S_PlaceV *item)
+{
+    int base = 0;
+    int mode = item->f3();
+    S_SlotRef r;
+    S_SlotRef *rp = &r;
+    S_Pt4 p = t->pos;
+    while (p.x < t->pos.x + t->unk8) {
+        for (r.b = 0; r.b < t->unkA; r.b++) {
+            r.a = func_80021168(&t->arr[r.b + base], (int)item, mode) << 4;
+            if (r.a >= 0) {
+                item->f2(S_Pt4c(r.a + p.x, rp->b + p.y), 0);
+                return 1;
+            }
+        }
+        p.x += 0x100;
+        base += t->unkA;
+    }
+    return 0;
+}
 
 EXTERN_C void func_800215E8(void *q, void *x)
 {
@@ -1243,11 +1262,27 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_80010800);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_800252F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_8002537C);
+EXTERN_C int func_8002537C(char *p)
+{
+    void *o = operator new(0x20);
+    S_RectPS r(((S_VramV2 *)D_800B4C54)->f4(S_Pt4c(0x40, 0x100)), S_Pt4c(0x40, 0x100));
+    *(void **)(p + 4) = func_80026274(o, &r, 0);
+    return 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80025444);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80025714);
+EXTERN_C void func_80025714(void *q, void *r)
+{
+#define P ((S_TexImg *)r)
+    int s = P->getSize().x + P->getSize().y;
+    if (s == 0)
+        return;
+    if (s <= 64 && ((S_TexImg *)q)->unk4->f5(P->getPos()))
+        return;
+    D_800B4C54->f5(P->getPos());
+#undef P
+}
 
 EXTERN_C void func_80025808()
 {

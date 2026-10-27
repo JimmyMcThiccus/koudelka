@@ -157,4 +157,25 @@ struct S_80030534 {
     S_80030534();
 };
 
+// Retail reaches D_800B4CFC (and D_800B4CF0) from this file with the assembler macro (lui), not $gp.
+EXTERN_C int D_800B4CFC __attribute__((section(".data")));
+EXTERN_C void func_8002B6FC(void *p, void *o);
+EXTERN_C int func_8002EAF4();
+struct S_8002EF88_O { char pad[0x1C]; int unk1C; };
+struct S_8002EF88 { int a; void *unk4; };
+
+EXTERN_C void *func_8002EA70(void *p, void *src);
+EXTERN_C void *D_8001199C[];
+EXTERN_C char D_800B4C88[];
+EXTERN_C void func_8002EC90(void *p, void *a);
+struct S_8002EEC4 {
+    void **vt;
+    void *src;
+    S_Blk8 blk;
+    void *unk10;
+    // Other files call this constructor by its plain name.
+    S_8002EEC4(void *s) asm("func_8002EEC4");
+};
+struct S_8002F4D8 : S_8002EEC4 { int unk14; S_8002F4D8(void *s); };
+
 #endif /* GAME_A_H_U_8002ED44_H */

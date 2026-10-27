@@ -85,25 +85,96 @@ EXTERN_C S_Spr2 *func_800287C8(S_Spr2 *q)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_800288D0);
+EXTERN_C int func_800288D0(S_Spr2 *p)
+{
+    switch (p->unk8) {
+    case 1:
+        func_80028AE8(p);
+        break;
+    case 2:
+        p->unk8--;
+        break;
+    }
+    D_800B4CFC->add((P_TAG *)&p->sp[D_800B4CF0], (unsigned short)p->unkA);
+    D_800B4CFC->add((P_TAG *)&p->dm[D_800B4CF0], (unsigned short)p->unkA);
+    return 2;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028A24);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028AE8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028B90);
+EXTERN_C void func_80028B90(S_Spr2 *p, int x, int y)
+{
+    if (p->unk8 == 1)
+        func_80028AE8(p);
+    p->sp[D_800B4CF0].x0 = x;
+    p->sp[D_800B4CF0].y0 = y;
+    p->unk8 = 2;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028C08);
+EXTERN_C void func_80028C08(S_Spr2 *p, int w, int h)
+{
+    if (p->unk8 == 1)
+        func_80028AE8(p);
+    p->sp[D_800B4CF0].w = w;
+    p->sp[D_800B4CF0].h = h;
+    p->unk8 = 2;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028C80);
+EXTERN_C void func_80028C80(S_Spr2 *p, void *rv)
+{
+    S_80028C80 *r = (S_80028C80 *)rv;
+    if (p->unk8 == 1)
+        func_80028AE8(p);
+    p->sp[D_800B4CF0].x0 = r->x;
+    p->sp[D_800B4CF0].y0 = r->y;
+    p->sp[D_800B4CF0].w = r->w;
+    p->sp[D_800B4CF0].h = r->h;
+    p->unk8 = 2;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028D10);
+EXTERN_C void func_80028D10(S_Spr2 *p, void *cv)
+{
+    if (p->unk8 == 1)
+        func_80028AE8(p);
+    p->sp[D_800B4CF0].r0 = ((S_80029BF4 *)cv)->unk5;
+    p->sp[D_800B4CF0].g0 = ((S_80029BF4 *)cv)->unk6;
+    p->sp[D_800B4CF0].b0 = ((S_80029BF4 *)cv)->unk7;
+    p->unk8 = 2;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028DC4);
+EXTERN_C void func_80028DC4(void *pv, int a)
+{
+    S_Spr2 *p = (S_Spr2 *)pv;
+    S_80028DC4 *t = (S_80028DC4 *)a;
+    int u;
+    if (p->unk8 == 1)
+        func_80028AE8(p);
+    int tp = t->unk1C;
+    SetDrawMode(&p->dm[D_800B4CF0], 0, 1, tp, 0);
+    if (!t->unkC)
+        u = (unsigned short)t->unk10 & 0x3F;
+    else if (((int (*)(void *))t->unkC->vt[3].pfn)((char *)t->unkC + t->unkC->vt[3].delta))
+        u = (t->unk10 << 1) & 0x7F;
+    else
+        u = t->unk10 << 2;
+    S_UV28 uv(u, t->unk12);
+    p->sp[D_800B4CF0].u0 = uv.u;
+    p->sp[D_800B4CF0].v0 = uv.v;
+    p->sp[D_800B4CF0].clut = t->unkC->unk8;
+    p->unk8 = 2;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028F10);
+EXTERN_C int func_80028F10(S_80028F10 *p)
+{
+    return p->e[p->unk8 == 1 ? D_800B4CF0 ^ 1 : D_800B4CF0].unk38;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028F58);
+EXTERN_C int func_80028F58(S_80028F10 *p)
+{
+    return p->e[p->unk8 == 1 ? D_800B4CF0 ^ 1 : D_800B4CF0].unk3A;
+}
 
 EXTERN_C void func_80028FA0(void *p, int a)
 {

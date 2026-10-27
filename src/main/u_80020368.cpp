@@ -100,9 +100,23 @@ EXTERN_C S_80020884_Out *func_80020884(S_80020884 *p, S_80020884_Out *out)
     return out;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020368", func_800208D4);
+EXTERN_C int func_800208D4(char *p, void *item)
+{
+    Holder *h = (Holder *)(p + 8);
+    if (!func_80019C24(h, item)) {
+        List *l = h;
+        func_80019A6C(l, (int)item, l->count);
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020368", func_80020948);
+EXTERN_C int func_80020948(char *p, void *item)
+{
+    S_80020948 *m = (S_80020948 *)(p + 8);
+    Holder *h = m;
+    return func_80019CFC(h, item) != 0;
+}
 
 EXTERN_C int func_80020984(S_80020984 *p, void *item)
 {

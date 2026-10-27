@@ -41,7 +41,12 @@ EXTERN_C int func_8002EE10(S_IntVec *p)
     return p->count ? p->data[p->count - 1] : 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002EE40);
+EXTERN_C void func_8002EE40(int a)
+{
+    S_IntVec *v = (S_IntVec *)&D_800AC820;
+    func_80019A6C(v, a, v->count);
+    D_800B4CFC = a;
+}
 
 EXTERN_C void func_8002EE7C(void *p, int a)
 {
@@ -54,7 +59,12 @@ EXTERN_C void func_8002EE9C(void *p, int a)
     func_800198AC(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002EEC4);
+S_8002EEC4::S_8002EEC4(void *s)
+{
+    func_8002EA70(this, s);
+    vt = D_800118FC;
+    unk10 = 0;
+}
 
 EXTERN_C void func_8002EEFC(void *vp, int flags)
 {
@@ -82,7 +92,16 @@ EXTERN_C S_8002EC18 *func_8002EF70(S_8002EC18 *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002EF88);
+EXTERN_C void func_8002EF88(S_8002EF88 *p, S_8002EF88_O *o)
+{
+    func_8002DB50(o, 1);
+    o->unk1C = func_8002A3C0(p->unk4);
+    S_IntVec *v = (S_IntVec *)&D_800AC820;
+    func_80019A6C(v, (int)o, v->count);
+    D_800B4CFC = (int)o;
+    func_8002B6FC(p->unk4, o);
+    func_8002EAF4();
+}
 
 EXTERN_C void func_8002F004(void *p, void *q)
 {
@@ -165,7 +184,12 @@ EXTERN_C int func_8002F4CC(S_8002F4CC *p)
     return p->unk14;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", __10S_8002F4D8Pv);
+S_8002F4D8::S_8002F4D8(void *s) : S_8002EEC4(s)
+{
+    vt = D_8001199C;
+    unk14 = 0;
+    func_8002EC90(this, D_800B4C88);
+}
 
 EXTERN_C void func_8002F520(void *p, int a)
 {

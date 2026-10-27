@@ -399,7 +399,7 @@ struct S_VramV {
     virtual void f4();
     virtual int f5(S_Pt4 pos);
 };
-EXTERN_C S_VramV *D_800B4C54[0];
+EXTERN_C S_VramV *D_800B4C54 __attribute__((section(".data")));
 struct S_TexImg {
     char pad0[0x4];
     S_VramV *unk4;
@@ -529,6 +529,31 @@ struct S_C588m {
         unk18 = ~b;
         unk1A = b;
     }
+};
+
+struct S_VramV2 {
+    virtual void f1();
+    virtual void f2();
+    virtual void f3();
+    virtual S_Pt4 f4(S_Pt4c size);
+};
+struct S_RectPS {
+    S_Pt4 pos;
+    S_Pt4c size;
+    S_RectPS(S_Pt4 p, S_Pt4c s) : pos(p), size(s) {}
+};
+EXTERN_C void *func_80026274(void *o, S_RectPS *r, int a);
+
+struct S_PlaceV {
+    virtual void f1();
+    virtual void f2(S_Pt4c pos, int a);
+    virtual int f3();
+};
+struct S_SlotTbl2 {
+    S_80021274 *arr;
+    S_Pt4 pos;
+    short unk8;
+    short unkA;
 };
 
 #endif /* GAME_A_H_U_80020B70_H */
