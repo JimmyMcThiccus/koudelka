@@ -41,7 +41,19 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032B2C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032BD8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032C80);
+EXTERN_C S_A2_32C80 *func_80032C80(S_A2_32C80 *p)
+{
+    int i;
+    S_A2_PolyF4 *q = p->p;
+    p->rgb = 0x28808080;
+    i = 2;
+    while (i--) {
+        q->len = 5;
+        q->code = 0x28;
+        q++;
+    }
+    return p;
+}
 
 EXTERN_C S_Prim *func_80032CBC(S_Prim *p)
 {
@@ -74,7 +86,12 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033404);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800338A4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033D34);
+EXTERN_C char *func_80033D34(void *p, char *src)
+{
+    func_80030AA8(p, src);
+    func_80034854(p ? (char *)p + 0x34 : 0, src + 0x2C);
+    return src + 0x38;
+}
 
 EXTERN_C void func_80033D7C(void *p)
 {

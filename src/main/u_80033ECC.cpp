@@ -40,7 +40,14 @@ EXTERN_C void func_80034854(void *p, void *q)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003488C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800348E4);
+EXTERN_C int func_800348E4(void *p)
+{
+    if ((AT(p, unsigned char, 3) >> 1) & 1) {
+        char *q = p ? (char *)p + 4 : 0;
+        return (AT(q, unsigned short, 6) >> 5) & 3;
+    }
+    return -1;
+}
 
 EXTERN_C S_80034924_B *func_80034924(S_80034924_A *p, S_80034924_B *q)
 {
@@ -167,7 +174,18 @@ EXTERN_C void func_80035910(void *p)
     func_8001AB50(p ? (char *)p + 8 : 0, 0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035940);
+EXTERN_C char *func_80035940(void *p, int n)
+{
+    char *r = 0;
+    char *b = AT(p, char *, 0x24);
+    if (b && AT(p, unsigned int, 0x20) < AT(p, unsigned int, 0x1C)) {
+        r = b + AT(p, unsigned int, 0x20);
+        AT(p, unsigned int, 0x20) += n;
+        if (AT(p, unsigned int, 0x20) > AT(p, unsigned int, 0x1C))
+            AT(p, unsigned int, 0x20) = AT(p, unsigned int, 0x1C);
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003598C);
 
@@ -296,7 +314,18 @@ EXTERN_C void *func_80036EB8(void *p, void *q)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036EC0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036F14);
+EXTERN_C int func_80036F14(void *p)
+{
+    int r;
+    void *s = AT(p, void *, 4);
+    int v = AT(s, int, 4);
+    if (v >= 0) {
+        r = AT(p, unsigned char *, 0x2C)[v];
+        AT(s, int, 4) = v + 1;
+    } else
+        r = -1;
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036F54);
 
