@@ -227,7 +227,21 @@ EXTERN_C void func_800B9C70(S_800B9E74 *p)
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9CF4);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9E10);
+EXTERN_C char *D_800B4D0C;
+EXTERN_C void func_8008CD1C(int, int);
+EXTERN_C int func_800B9E10(char *a, char b)
+{
+    char *s = D_800B4D0C;
+    if (s == a) {
+        func_8008CD1C(0x4400, 0x18);
+        *(int *)(s + 0x30) = 0;
+        *(int *)(*(char **)(s + 4) + 4) = 0;
+        s[0x36] = 1;
+        s[0x37] = b;
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C int func_800B9E74(S_800B9E74 *p, int v, int i)
 {
