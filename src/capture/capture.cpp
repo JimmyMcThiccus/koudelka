@@ -96,7 +96,23 @@ EXTERN_C void func_800B85EC(VObject *p)
     }
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B8640);
+EXTERN_C int func_800B8640(VObject *p, int a, int b, int c)
+{
+    int *f = (int *)p;
+    if (b)
+        return f[2] == a && b == f[3];
+    if (f[3] != 0) {
+        VtblEntry *e = &p->vt[2];
+        ((void (*)(void *, int))e->pfn)((char *)p + e->delta, 0);
+        f[3] = 0;
+        f[2] = a;
+        f[1] = c;
+        return 1;
+    }
+    f[2] = a;
+    f[1] = c;
+    return 1;
+}
 
 EXTERN_C void func_800B86E8() {}
 
@@ -133,7 +149,41 @@ EXTERN_C void func_800B8F20(char *p) { *(int *)(p + 0x21C) = 1; }
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B8F2C);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9020);
+EXTERN_C char D_800A4544[];
+EXTERN_C char D_80010178[];
+EXTERN_C char D_80010338[];
+EXTERN_C void func_8001D150(void *, void *);
+EXTERN_C int func_800B9E10(char *a, char b);
+
+struct T_800B9020 {
+    void *vt;
+    int f4;
+    void *f8;
+    short fC;
+    int f10;
+};
+
+EXTERN_C int func_800B9020(char *p)
+{
+    char *l;
+    T_800B9020 *o;
+    if (*(char **)(p + 0x18)) {
+    *(int *)(p + 0x224) = 0;
+    *(int *)(p + 0x228) = 0;
+    func_800B9E10(*(char **)(p + 0x18), 0x40);
+    l = D_800A4544;
+    o = (T_800B9020 *)operator new(0x14);
+    o->vt = D_80010178;
+    o->f4 = 0;
+    o->vt = D_80010338;
+    o->f8 = p;
+    o->fC = 0x80;
+    o->f10 = 1;
+    func_8001D150(l, o);
+    return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B90C0);
 
@@ -150,7 +200,28 @@ EXTERN_C void func_800B9414(S_800B9414 *p, ShortQuad v) { p->q = v; }
 
 EXTERN_C ShortQuad func_800B9444(S_800B9414 *p) { return p->q; }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9470);
+EXTERN_C char D_800B6E9C[];
+EXTERN_C char D_800112F4[];
+// base ctor is func_8002860C (EXE)
+// EXE constructor (alias keeps the call a relocation against func_8002860C)
+__asm__(".set __10B_8002860Ciiii, func_8002860C");
+struct B_8002860C {
+    void *vt;
+    char pad4[8];
+    B_8002860C(int, int, int, int);
+};
+struct C_800B9470 : B_8002860C {
+    void *vtC;
+    char pad10[0x48];
+    int f58;
+    C_800B9470(int a, int b, int c, int d);
+};
+C_800B9470::C_800B9470(int a, int b, int c, int d) : B_8002860C(a, b, c, d)
+{
+    vtC = D_800112F4;
+    vt = D_800B6E9C;
+    f58 = 0;
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B94BC);
 
@@ -2429,7 +2500,85 @@ EXTERN_C int func_800C21CC(int *p) { return p[3]; }
 
 EXTERN_C void func_800C21D8(char *p, char v) { p[8] = v; }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C21E0);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_80011A44[];
+EXTERN_C char D_80011AAC[];
+EXTERN_C char D_80011B14[];
+EXTERN_C char D_80011B8C[];
+EXTERN_C char D_80011BF4[];
+EXTERN_C char D_80011C44[];
+EXTERN_C char D_80011CAC[];
+EXTERN_C char D_800B7454[];
+EXTERN_C char D_800B74BC[];
+
+// EXE constructor (alias keeps the call a relocation against func_80030694)
+__asm__(".set __10M_800C21E0, func_80030694");
+struct Q_800C21E0 {
+    short a, b, c, d;
+    Q_800C21E0()
+    {
+        a = 0;
+        b = 0;
+        c = 0;
+        d = 0;
+    }
+};
+struct M_800C21E0 {
+    char data[0x14];
+    M_800C21E0();
+};
+struct A_800C21E0 {
+    void *vt;
+    int f4;
+    A_800C21E0()
+    {
+        vt = D_80010178;
+        f4 = 0;
+    }
+};
+struct B0_800C21E0 {
+    void *vt2;
+    B0_800C21E0() { vt2 = D_80011A44; }
+};
+struct B_800C21E0 : B0_800C21E0 {
+    Q_800C21E0 q;
+};
+struct L1v_800C21E0 : A_800C21E0, B_800C21E0 {
+    L1v_800C21E0()
+    {
+        vt2 = D_80011AAC;
+        vt = D_80011B14;
+    }
+};
+struct L1_800C21E0 : L1v_800C21E0 {
+    Q_800C21E0 arr[3];
+};
+struct L2v_800C21E0 : L1_800C21E0 {
+    L2v_800C21E0()
+    {
+        vt2 = D_80011B8C;
+        vt = D_80011BF4;
+    }
+};
+struct L2_800C21E0 : L2v_800C21E0 {
+    M_800C21E0 m;
+};
+struct L3_800C21E0 : L2_800C21E0 {
+    L3_800C21E0()
+    {
+        vt2 = D_80011C44;
+        vt = D_80011CAC;
+    }
+};
+struct C_800C21E0 : L3_800C21E0 {
+    C_800C21E0();
+};
+
+C_800C21E0::C_800C21E0()
+{
+    vt2 = D_800B7454;
+    vt = D_800B74BC;
+}
 
 EXTERN_C char D_800B7454[];
 EXTERN_C char D_800B74BC[];
@@ -2649,7 +2798,22 @@ EXTERN_C void func_800C2D5C(S_800C2D5C *p, unsigned char *out)
     out[2] = p->e[D_800B4CF0[0]].b.col.c.b;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2DB4);
+EXTERN_C int D_800B4CF0[];
+EXTERN_C void func_800C2BD0(S_800C2D5C *);
+// tpage passed as short here (the call sign-extends it)
+EXTERN_C void SetDrawMode(void *, int, int, short, void *);
+EXTERN_C void func_800C2DB4(S_800C2D5C *p, char *q, short c)
+{
+    if (p->state == 1)
+        func_800C2BD0(p);
+    unsigned short tp = *(unsigned short *)(q + 0x1C);
+    if (c) {
+        tp = (tp & ~0x60) | ((c - 1) << 5);
+        SetDrawMode(&p->a[D_800B4CF0[0]], 0, 0, tp, 0);
+    } else
+        SetDrawMode(&p->a[D_800B4CF0[0]], 0, 0, tp, 0);
+    p->state = 2;
+}
 
 EXTERN_C int D_800B4CF0[];
 EXTERN_C void func_800C2BD0(S_800C2D5C *);

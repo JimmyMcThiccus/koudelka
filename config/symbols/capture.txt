@@ -12,3 +12,5 @@ __10C_800BB6E8i = 0x800BB6E8; // type:func
 __10C_800BCE0Ciii = 0x800BCE0C; // type:func
 __10C_800BD0A8iissss = 0x800BD0A8; // type:func
 __10C_800C23F8 = 0x800C23F8; // type:func
+__10C_800B9470iiii = 0x800B9470; // type:func
+__10C_800C21E0 = 0x800C21E0; // type:func
