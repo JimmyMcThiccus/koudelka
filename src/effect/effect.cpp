@@ -416,7 +416,36 @@ EXTERN_C char *func_800D7C84(Key *self, char *src)
     return src + 0x1C;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D7CB0);
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
+EXTERN_C int rand(void);
+
+struct Mat_800D7CB0 {
+    int m[8];
+};
+
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v)
+{
+    Vec4 r = *v;
+    int half;
+    SVec4 rot;
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = 0;
+    rot.w = 0;
+    Mat_800D7CB0 m;
+    func_8003A754(&m, 0x1000);
+    half = (self->s2 / 2 << 12) / 360;
+    if (self->s2) {
+        rot.x = ((rand() / (0x8000 / self->s2)) << 12) / 360 - half;
+        rot.y = ((rand() / (0x8000 / self->s2)) << 12) / 360 - half;
+        rot.z = ((rand() / (0x8000 / self->s2)) << 12) / 360 - half;
+        func_8003A7FC(&m, &rot);
+        ApplyMatrixLV(&m, v, &r);
+    }
+    return r;
+}
 
 EXTERN_C void func_800D7F94(void *self)
 {
@@ -441,7 +470,40 @@ EXTERN_C char *func_800D8078(KeyVec *self, char *src)
     return func_800D7C84(self, src);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D80D8);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C int SquareRoot0(int a);
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
+
+struct Mat_800D80D8 {
+    int m[8];
+
+};
+
+EXTERN_C Vec4 func_800D80D8(KeyVec2 *self, Vec4 *p)
+{
+    Vec4 d;
+    vec4_zero(&d);
+    Vec4 v(0, 0, 0, 0);
+    Mat_800D80D8 m;
+    func_8003A754(&m, 0x1000);
+    int len = 1;
+    int flag = (unsigned short)self->v.w & 0x8000;
+    v = self->v;
+    if (flag && self->extra) {
+        func_8003A7FC(&m, (SVec4 *)(self->extra + 0x2C));
+        ApplyMatrixLV(&m, &v, &v);
+    }
+    if (v.x || v.y || v.z)
+        len = SquareRoot0(v.x * v.x + v.y * v.y + v.z * v.z);
+    d.x = v.x * self->w4 / len;
+    d.y = v.y * self->w4 / len;
+    d.z = v.z * self->w4 / len;
+    Vec4 r = func_800D9698(&func_800D7CB0(self, &d), p);
+    return r;
+}
 
 EXTERN_C void func_800D8354(KeyInt *self, int flags)
 {
@@ -449,7 +511,29 @@ EXTERN_C void func_800D8354(KeyInt *self, int flags)
     func_800D7C50(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D837C);
+EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C Vec4 func_8003A150(int h, int n);
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800D837C(KeyInt *self, Vec4 *p)
+{
+    Vec4 z;
+    vec4_zero(&z);
+    Vec4 t = func_8003A150(self->value, (int)&z);
+    Vec4 d;
+    int len;
+    d = func_800D9658(p, &t);
+    len = 1;
+    if (d.x || d.y || d.z)
+        len = SquareRoot0(d.x * d.x + d.y * d.y + d.z * d.z);
+    d.x = d.x * self->w4 / len;
+    d.y = d.y * self->w4 / len;
+    d.z = d.z * self->w4 / len;
+    Vec4 r = func_800D9698(&func_800D7CB0(self, &d), p);
+    return r;
+}
 
 EXTERN_C void func_800D85AC(KeyInt *self, int flags)
 {
@@ -457,7 +541,29 @@ EXTERN_C void func_800D85AC(KeyInt *self, int flags)
     func_800D7C50(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D85D4);
+EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C Vec4 func_8003A150(int h, int n);
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800D85D4(KeyInt *self, Vec4 *p)
+{
+    Vec4 z;
+    vec4_zero(&z);
+    Vec4 t = func_8003A150(self->value, (int)&z);
+    Vec4 d;
+    int len;
+    d = func_800D9658(p, &t);
+    len = 1;
+    if (d.x || d.y || d.z)
+        len = SquareRoot0(d.x * d.x + d.y * d.y + d.z * d.z);
+    d.x = d.x * self->w4 / len;
+    d.y = d.y * self->w4 / len;
+    d.z = d.z * self->w4 / len;
+    Vec4 r = func_800D9698(&func_800D7CB0(self, &d), p);
+    return r;
+}
 
 EXTERN_C void func_800D8804(KeyInt *self, int flags)
 {
@@ -465,7 +571,27 @@ EXTERN_C void func_800D8804(KeyInt *self, int flags)
     func_800D7C50(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D882C);
+EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800D882C(KeyInt *self, Vec4 *p)
+{
+    Vec4 d;
+    int len;
+    d = func_800D9658(p, &p[3]);
+    len = 1;
+    if (d.x || d.y || d.z)
+        len = SquareRoot0(d.x * d.x + d.y * d.y + d.z * d.z);
+    if (len == 0)
+        len = 1;
+    d.x = d.x * self->w4 / len;
+    d.y = d.y * self->w4 / len;
+    d.z = d.z * self->w4 / len;
+    Vec4 r = func_800D9698(&func_800D7CB0(self, &d), p);
+    return r;
+}
 
 EXTERN_C void func_800D8A44(KeyInt *self, int flags)
 {
@@ -473,7 +599,29 @@ EXTERN_C void func_800D8A44(KeyInt *self, int flags)
     func_800D7C50(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D8A6C);
+EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800D8A6C(KeyInt *self, Vec4 *p)
+{
+    Vec4 d;
+    int len;
+    d = func_800D9658(&p[1], p);
+    Vec4 e = d;
+    len = 1;
+    if (d.x || d.y || d.z)
+        len = SquareRoot0(d.x * d.x + d.y * d.y + d.z * d.z);
+    d.x = d.x * self->w4 / len;
+    d.y = d.y * self->w4 / len;
+    d.z = d.z * self->w4 / len;
+    e.x = (e.x * self->w4 - d.x * len) / self->w4;
+    e.y = (e.y * self->w4 - d.y * len) / self->w4;
+    e.z = (e.z * self->w4 - d.z * len) / self->w4;
+    Vec4 r = func_800D9698(&func_800D9698(&func_800D7CB0(self, &d), p), &e);
+    return r;
+}
 
 EXTERN_C void func_800D8DC0(KeyInt *self, int flags)
 {
@@ -481,7 +629,25 @@ EXTERN_C void func_800D8DC0(KeyInt *self, int flags)
     func_800D7C50(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D8DE8);
+EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800D8DE8(KeyInt *self, Vec4 *p)
+{
+    Vec4 d;
+    int len;
+    d = func_800D9658(&p[3], p);
+    len = 1;
+    if (d.x || d.y || d.z)
+        len = SquareRoot0(d.x * d.x + d.y * d.y + d.z * d.z);
+    d.x = d.x * self->w4 / len;
+    d.y = d.y * self->w4 / len;
+    d.z = d.z * self->w4 / len;
+    Vec4 r = func_800D9698(&func_800D7CB0(self, &d), p);
+    return r;
+}
 
 EXTERN_C void func_800D8FF0(KeyVec *self, int flags)
 {
@@ -489,7 +655,47 @@ EXTERN_C void func_800D8FF0(KeyVec *self, int flags)
     func_800D8050(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D9018);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C int SquareRoot0(int a);
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
+EXTERN_C int rand(void);
+
+struct Mat_800D9018 {
+    int m[8];
+};
+
+EXTERN_C Vec4 func_800D9018(KeyVec *self, Vec4 *p)
+{
+    Vec4 d;
+    int len;
+    int half;
+    vec4_zero(&d);
+    len = 1;
+    if (self->v.x || self->v.y || self->v.z)
+        len = SquareRoot0(self->v.x * self->v.x + self->v.y * self->v.y + self->v.z * self->v.z);
+    d.x = self->v.x * self->w4 / len;
+    d.y = self->v.y * self->w4 / len;
+    d.z = self->v.z * self->w4 / len;
+    SVec4 rot;
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = 0;
+    rot.w = 0;
+    Mat_800D9018 m;
+    func_8003A754(&m, 0x1000);
+    half = (self->s2 / 2 << 12) / 360;
+    if (self->s2) {
+        rot.x = 0;
+        rot.y = ((rand() / (0x8000 / self->s2)) << 12) / 360 - half;
+        rot.z = 0;
+        func_8003A7FC(&m, &rot);
+        ApplyMatrixLV(&m, &d, &d);
+    }
+    Vec4 r = func_800D9698(&d, p);
+    return r;
+}
 
 EXTERN_C void func_800D9324(KeyVec *self, int flags)
 {
@@ -497,7 +703,47 @@ EXTERN_C void func_800D9324(KeyVec *self, int flags)
     func_800D8050(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D934C);
+EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
+EXTERN_C int SquareRoot0(int a);
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
+EXTERN_C int rand(void);
+
+struct Mat_800D934C {
+    int m[8];
+};
+
+EXTERN_C Vec4 func_800D934C(KeyVec *self, Vec4 *p)
+{
+    Vec4 d;
+    int len;
+    int half;
+    vec4_zero(&d);
+    len = 1;
+    if (self->v.x || self->v.y || self->v.z)
+        len = SquareRoot0(self->v.x * self->v.x + self->v.y * self->v.y + self->v.z * self->v.z);
+    d.x = self->v.x * self->w4 / len;
+    d.y = self->v.y * self->w4 / len;
+    d.z = self->v.z * self->w4 / len;
+    SVec4 rot;
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = 0;
+    rot.w = 0;
+    Mat_800D934C m;
+    func_8003A754(&m, 0x1000);
+    half = (self->s2 / 2 << 12) / 360;
+    if (self->s2) {
+        rot.x = 0;
+        rot.y = 0;
+        rot.z = ((rand() / (0x8000 / self->s2)) << 12) / 360 - half;
+        func_8003A7FC(&m, &rot);
+        ApplyMatrixLV(&m, &d, &d);
+    }
+    Vec4 r = func_800D9698(&d, p);
+    return r;
+}
 
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b)
 {
@@ -956,7 +1202,25 @@ EXTERN_C void func_800DAD28(void *self)
     }
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DAD80);
+EXTERN_C int func_800DD9FC(void *self);
+
+/* func_800DD9FC returns bool (xori at the call site); the unit defines it returning int */
+typedef bool (*Pred_800DAD80)(void *);
+
+EXTERN_C int func_800DAD80(SlotSet *self)
+{
+    int i;
+    void *p;
+    if (FIELD_AT(self, int, 0x150))
+        return 1;
+    for (i = 0; i < 8; i++) {
+        p = (void *)func_800DAB94(self, i);
+        if (p && !((Pred_800DAD80)func_800DD9FC)(p))
+            return 0;
+    }
+    FIELD_AT(self, int, 0x150) = 1;
+    return 1;
+}
 
 EXTERN_C void func_800DADF8(void *self, SubNode *node)
 {
@@ -2834,9 +3098,50 @@ EXTERN_C void *func_800E0188(void *self, int n)
     return p;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E01B0);
+EXTERN_C void *func_800E01B0(short kind, short b, void *owner)
+{
+    Cond *c = 0;
+    switch (kind) {
+    case -1: {
+        CondMin *m = (CondMin *)operator new(0x10);
+        m->vptr = D_800D5F20;
+        m->owner = owner;
+        m->id = kind;
+        m->vptr = D_800D5EC8;
+        m->min = b;
+        c = m;
+        break;
+    }
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+        c = (Cond *)operator new(0xC);
+        c->vptr = D_800D5F20;
+        c->owner = owner;
+        c->id = kind;
+        c->vptr = D_800D5E70;
+        break;
+    case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15:
+        c = (Cond *)operator new(0xC);
+        c->vptr = D_800D5F20;
+        c->owner = owner;
+        c->id = kind;
+        c->vptr = D_800D5E18;
+        break;
+    case 16: {
+        CondList *l = (CondList *)operator new(0x24);
+        l->vptr = D_800D5F20;
+        l->owner = owner;
+        l->id = kind;
+        l->vptr = D_800D5DC0;
+        l->ref.list = &l->list;
+        func_800198E0(&l->list, 0x10, 0);
+        c = l;
+        break;
+    }
+    }
+    return c;
+}
 
-EXTERN_C void *func_800E01B0(int a, short b, void *c);
+EXTERN_C void *func_800E01B0(short a, short b, void *c);
 
 EXTERN_C void *func_800E02F4(void *self, void *arg)
 {

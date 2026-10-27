@@ -131,7 +131,86 @@ INCLUDE_RODATA("asm/capture/nonmatchings/capture", D_800B6DF4);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B870C);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B8BDC);
+EXTERN_C char D_80010348[];
+EXTERN_C char D_800100F8[];
+EXTERN_C char D_80010198[];
+EXTERN_C char D_800101C0[];
+EXTERN_C char D_800101B0[];
+EXTERN_C char D_800B6E54[];
+EXTERN_C char D_800B6E6C[];
+EXTERN_C char D_800B6E7C[];
+EXTERN_C char D_800127FC[];
+
+// (same as in capture.cpp before func_800BD0A8: drop when landing)
+struct A_800BD0A8 {
+    void *vtA;
+    A_800BD0A8() { vtA = D_80010348; }
+};
+struct B1_800BD0A8 {
+    void *vt1;
+    B1_800BD0A8() { vt1 = D_800100F8; }
+};
+struct B2_800BD0A8 {
+    void *vt2;
+    B2_800BD0A8() { vt2 = D_80010198; }
+};
+struct B_800BD0A8 : B1_800BD0A8, B2_800BD0A8 {
+    int f8;
+    short fC, fE, f10, f12;
+    B_800BD0A8(int a, short b, short c, short d, short e)
+    {
+        vt2 = D_800101C0;
+        vt1 = D_800101B0;
+        f8 = a;
+        fC = c;
+        fE = d;
+        f10 = e;
+        f12 = b;
+    }
+};
+// end of duplicate
+
+struct T_800B8BDC {
+    void *vt;
+    int f4, f8, fC, f10;
+    unsigned char f14;
+};
+
+struct C_800B8BDC : A_800BD0A8, B_800BD0A8 {
+    int f18;
+    char pad1C[0x218 - 0x1C];
+    int f218, f21C, f220;
+    char pad224[8];
+    int f22C;
+    T_800B8BDC *f230;
+    int f234, f238;
+    C_800B8BDC(int x, int y, int z);
+};
+EXTERN_C void func_800B870C(C_800B8BDC *);
+
+C_800B8BDC::C_800B8BDC(int x, int y, int z) : B_800BD0A8(z, 2, 1, 2, 6)
+{
+    T_800B8BDC *o;
+    vt2 = D_800B6E54;
+    vt1 = D_800B6E6C;
+    vtA = D_800B6E7C;
+    f218 = 0;
+    f21C = 0;
+    f220 = z;
+    f234 = x;
+    f238 = y;
+    f18 = 0;
+    o = (T_800B8BDC *)operator new(0x18);
+    o->vt = D_800127FC;
+    o->f4 = z;
+    o->f8 = 6;
+    o->f14 = 0;
+    o->fC = 0xA;
+    o->f10 = 0;
+    f230 = o;
+    f22C = 0;
+    func_800B870C(this);
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B8CE8);
 
@@ -158,17 +237,18 @@ struct S_800B8F2C {
     VObject *f18;
     C_800BA258 *f1C;
 };
-EXTERN_C void func_800B90C0(S_800B8F2C *p, int it);
-EXTERN_C void func_800B9288(S_800B8F2C *p, int it);
+struct S_800B90C0;
+EXTERN_C void func_800B90C0(S_800B90C0 *p, char *src);
+EXTERN_C void func_800B9288(S_800B90C0 *p, int a);
 
 EXTERN_C int func_800B8F2C(S_800B8F2C *p)
 {
     int it = func_800BA17C(p->f1C ? &p->f1C->ring : 0);
     if (it) {
-        func_800B90C0(p, it);
+        func_800B90C0((S_800B90C0 *)p, (char *)it);
         func_800BA1BC(p->f1C ? &p->f1C->ring : 0, it);
     } else {
-        func_800B9288(p, 0);
+        func_800B9288((S_800B90C0 *)p, 0);
     }
     {
         VObject *o = p->f18;
@@ -220,7 +300,73 @@ EXTERN_C int func_800B9020(char *p)
     return 0;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B90C0);
+EXTERN_C int D_800B4CF0[];
+EXTERN_C int LoadImage(void *rect, void *p);
+
+struct VObj2C_800B8CE8 {
+    char pad[0x2C];
+    VtblEntry *vt;
+};
+struct Clock_800A4534 {
+    int f0, f4, f8;
+    volatile unsigned int fC;
+    char pad10[0x34];
+    VObj2C_800B8CE8 *f44;
+};
+EXTERN_C Clock_800A4534 D_800A4534;
+
+struct Rect_800B90C0 {
+    short x, y, w, h;
+};
+struct O_800B90C0 {
+    char pad0[0x30];
+    E_800B93D8 e[1];
+    char pad44[0xC];
+    Rect_800B90C0 rect;
+    int id;
+};
+struct S_800B90C0 {
+    char pad0[0x28];
+    O_800B90C0 *o[2][31];
+    char pad120[0x228 - 0x120];
+    unsigned int f228;
+};
+struct Hdr_800B90C0 {
+    int id, f4, f8, fC;
+};
+EXTERN_C void *memcpy(void *, const void *, unsigned int);
+EXTERN_C void func_800B9288(S_800B90C0 *p, int a);
+
+EXTERN_C void func_800B90C0(S_800B90C0 *p, char *src)
+{
+    Hdr_800B90C0 h;
+    Rect_800B90C0 r;
+    int k;
+    memcpy(&h, src, sizeof(h));
+    k = h.id % 31;
+    src += sizeof(Hdr_800B90C0);
+    if (p->o[0][k]->id != h.id) {
+        int v, d;
+        r = p->o[0][k]->rect;
+        LoadImage(&r, src);
+        d = D_800B4CF0[0];
+        p->o[0][k]->id = h.id;
+        v = p->o[0][k]->e[d].h;
+        if (v < 0xE8) {
+            if (v > 0)
+                p->f228 = 0;
+        }
+    }
+    src += 0x280;
+    if (p->o[1][k]->id != h.id) {
+        r = p->o[1][k]->rect;
+        LoadImage(&r, src);
+        p->o[1][k]->id = h.id;
+    }
+    if (p->f228 == 0)
+        p->f228 = D_800A4534.fC;
+    func_800B9288(p, h.f4);
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9288);
 
@@ -1012,32 +1158,6 @@ EXTERN_C char D_800B7274[];
 EXTERN_C char D_800B728C[];
 EXTERN_C char D_800B729C[];
 
-struct A_800BD0A8 {
-    void *vtA;
-    A_800BD0A8() { vtA = D_80010348; }
-};
-struct B1_800BD0A8 {
-    void *vt1;
-    B1_800BD0A8() { vt1 = D_800100F8; }
-};
-struct B2_800BD0A8 {
-    void *vt2;
-    B2_800BD0A8() { vt2 = D_80010198; }
-};
-struct B_800BD0A8 : B1_800BD0A8, B2_800BD0A8 {
-    int f8;
-    short fC, fE, f10, f12;
-    B_800BD0A8(int a, short b, short c, short d, short e)
-    {
-        vt2 = D_800101C0;
-        vt1 = D_800101B0;
-        f8 = a;
-        fC = c;
-        fE = d;
-        f10 = e;
-        f12 = b;
-    }
-};
 struct C_800BD0A8 : A_800BD0A8, B_800BD0A8 {
     int pad[4];
     int f28, f2C;
@@ -1113,11 +1233,6 @@ struct S_800BD66C;
 struct In_800BD66C;
 EXTERN_C void func_800BD66C(S_800BD66C *p, In_800BD66C *d);
 EXTERN_C void func_8001AA68(void *, int);
-struct Clock_800BD2E0 {
-    int f0, f4, f8;
-    volatile unsigned int fC;
-};
-EXTERN_C Clock_800BD2E0 D_800A4534;
 
 struct S_800BD2E0 {
     char pad0[0xC];
@@ -1591,7 +1706,7 @@ EXTERN_C int func_800BE5F8(char *p)
     return 1;
 }
 
-EXTERN_C void func_800C0030(void *, void *, int);
+EXTERN_C char *func_800C0030(char *, char *, short);
 EXTERN_C int func_800BE6D8(char *p)
 {
     char *a = *(char **)(p + 0x4DC);
@@ -1765,7 +1880,7 @@ EXTERN_C void func_800BED34(void *p, short id)
 
 EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C ShortPair func_800C0B7C(char *, short);
-EXTERN_C void func_800C0D14(void *, ShortPair);
+EXTERN_C void func_800C0D14(char *, ShortPair);
 
 struct S_800BED7C {
     char pad[0x10];
@@ -1783,14 +1898,14 @@ EXTERN_C void func_800BED7C(void *p, short id)
         e->i = 0;
         t = func_800C0B7C((char *)p, id);
         if (t.b != 0x1000)
-            func_800C0D14(p, ShortPair(t));
+            func_800C0D14((char *)p, ShortPair(t));
     }
 }
 
 EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C void func_800BF6E8(S_800BF6E8 *p);
 EXTERN_C ShortPair func_800C0B7C(char *, short);
-EXTERN_C void func_800C0D14(void *, ShortPair);
+EXTERN_C void func_800C0D14(char *, ShortPair);
 EXTERN_C void func_800BEE24(void *p, short id)
 {
     signed char *e = func_800C0CB0(p, id);
@@ -1799,7 +1914,7 @@ EXTERN_C void func_800BEE24(void *p, short id)
         func_800BF6E8((S_800BF6E8 *)e);
         t = func_800C0B7C((char *)p, id);
         if (t.b != 0x1000)
-            func_800C0D14(p, ShortPair(t));
+            func_800C0D14((char *)p, ShortPair(t));
     }
 }
 
@@ -2448,7 +2563,122 @@ EXTERN_C void func_800BFF8C(void *self, int in_chrg)
     func_8001E508(p, in_chrg);
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0030);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_80011A44[];
+EXTERN_C char D_80011AAC[];
+EXTERN_C char D_80011B14[];
+EXTERN_C char D_80011B8C[];
+EXTERN_C char D_80011BF4[];
+EXTERN_C char D_80011C44[];
+EXTERN_C char D_80011CAC[];
+EXTERN_C char D_800B7454[];
+EXTERN_C char D_800B74BC[];
+
+struct Q_800C21E0 {
+    short a, b, c, d;
+    Q_800C21E0()
+    {
+        a = 0;
+        b = 0;
+        c = 0;
+        d = 0;
+    }
+};
+struct M_800C21E0 {
+    char data[0x14];
+    M_800C21E0();
+};
+struct A_800C21E0 {
+    void *vt;
+    int f4;
+    A_800C21E0()
+    {
+        vt = D_80010178;
+        f4 = 0;
+    }
+};
+struct B0_800C21E0 {
+    void *vt2;
+    B0_800C21E0() { vt2 = D_80011A44; }
+};
+struct B_800C21E0 : B0_800C21E0 {
+    Q_800C21E0 q;
+};
+struct L1v_800C21E0 : A_800C21E0, B_800C21E0 {
+    L1v_800C21E0()
+    {
+        vt2 = D_80011AAC;
+        vt = D_80011B14;
+    }
+};
+struct L1_800C21E0 : L1v_800C21E0 {
+    Q_800C21E0 arr[3];
+};
+struct L2v_800C21E0 : L1_800C21E0 {
+    L2v_800C21E0()
+    {
+        vt2 = D_80011B8C;
+        vt = D_80011BF4;
+    }
+};
+struct L2_800C21E0 : L2v_800C21E0 {
+    M_800C21E0 m;
+};
+struct L3_800C21E0 : L2_800C21E0 {
+    L3_800C21E0()
+    {
+        vt2 = D_80011C44;
+        vt = D_80011CAC;
+    }
+};
+// (classes as landed with func_800C21E0; C_800C21E0 gains f40/f44 so that sizeof == 0x48)
+struct C_800C21E0 : L3_800C21E0 {
+    int f40, f44;
+    C_800C21E0();
+};
+
+struct Hdr_800C0030 {
+    short pad;
+    short n;
+    int x, y, z;
+};
+EXTERN_C void func_8001A864(void *, void *);
+EXTERN_C char *func_800C0030(char *p, char *d, short n)
+{
+    int t = 0;
+    while (1) {
+        if (!n)
+            break;
+        Hdr_800C0030 *h = (Hdr_800C0030 *)d;
+        short m = h->n;
+        int x = h->x;
+        int y = h->y;
+        int z = h->z;
+        d += 0x34;
+        while (1) {
+            if (!m)
+                break;
+            C_800C21E0 *o = new C_800C21E0;
+            VtblEntry *v = &((VObject *)o)->vt[11];
+            ((void (*)(void *, char *, int *))v->pfn)((char *)o + v->delta, d, &t);
+            o->f44 = *(int *)(d + 0x24);
+            Q_800C21E0 *q = o->arr;
+            for (int i = 0; i < 3; i++) {
+                q[i].a += x;
+                q[i].b += y;
+                q[i].c += z;
+            }
+            char *l = p + 0x48C;
+            if (*(void **)(l + 4) && o)
+                func_8001A864(o, *(void **)(l + 4));
+            *(void **)(l + 4) = o;
+            d += 0x28;
+            m--;
+        }
+        n--;
+    }
+    return p + 0x48C;
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0194);
 
@@ -2564,7 +2794,6 @@ EXTERN_C int func_800C0958(void *p, void *list)
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0A28);
 
-EXTERN_C Clock_800BD2E0 D_800A4534;
 
 struct N_800C0B7C {
     int pad;
@@ -2637,13 +2866,181 @@ EXTERN_C signed char *func_800C0CB0(void *p, int id)
     return (signed char *)e;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0D14);
+struct Rec_800C0D14 {
+    signed char id;
+    unsigned char u, v;
+    char pad;
+    short x, y;
+};
+struct F_800C0D14 {
+    int pad;
+    F_800C0D14 *next;
+    short id;
+    char pad2[6];
+    signed char c10, c11;
+    char pad3[2];
+    short n;
+    char pad4[2];
+    Rec_800C0D14 *recs;
+};
+struct E_800C0D14 {
+    int pad;
+    E_800C0D14 *next;
+    char pad2[4];
+    char sub[0x2C - 0xC];
+    short id;
+};
+EXTERN_C int func_8001A6E8(void *);
+EXTERN_C int func_800C0820(char *p, signed char key);
+EXTERN_C int func_800C089C(char *p, signed char key);
+EXTERN_C void func_80024FEC(void *, int);
+EXTERN_C void *func_80019F64(void *, int);
+EXTERN_C void func_800C2EE0(S_800C2D5C *p, char *q);
+EXTERN_C void func_800C2DB4(S_800C2D5C *p, char *q, short c);
+EXTERN_C void func_800C2E60(S_800C2D5C *p, unsigned char a, unsigned char b);
+EXTERN_C void func_800C0D14(char *p, ShortPair key)
+{
+    Rec_800C0D14 *r = 0;
+    char *found = 0;
+    signed char last = -1;
+    signed char c1;
+    signed char c0 = -1;
+    short cnt;
+    int a, b;
+    F_800C0D14 *f = *(F_800C0D14 **)(p + 0x40C);
+    short n = *(short *)(p + 0x3D0);
+    while (1) {
+        if (!n)
+            break;
+        if (key.a == f->id) {
+            r = f->recs;
+            c0 = f->c10;
+            c1 = f->c11;
+            cnt = f->n;
+            break;
+        }
+        n--;
+        f = f->next;
+    }
+    if (!r)
+        return;
+    E_800C0D14 *e = *(E_800C0D14 **)(p + 0x44C);
+    int m = func_8001A6E8(e);
+    while (1) {
+        if (!m)
+            break;
+        if (key.b == e->id) {
+            found = e->sub;
+            break;
+        }
+        m--;
+        e = e->next;
+    }
+    if (!found)
+        return;
+    *(int *)(found + 4) = 0;
+    Rec_800C0D14 *q = r;
+    while (1) {
+        if (!cnt)
+            break;
+        if (last != r->id) {
+            last = r->id;
+            b = func_800C089C(p, r->id);
+            a = func_800C0820(p, c0);
+            func_80024FEC((void *)b, a);
+        }
+        void **vb = found ? (void **)(found + 8) : 0;
+        int i = cnt - 1;
+        VObject *o = (VObject *)func_80019F64(vb ? *vb : 0, i);
+        r++;
+        func_800C2EE0((S_800C2D5C *)o, (char *)a);
+        func_800C2DB4((S_800C2D5C *)o, (char *)b, c1);
+        func_800C2E60((S_800C2D5C *)o, q->u, q->v);
+        cnt--;
+        VtblEntry *v = &o->vt[8];
+        ((void (*)(void *, int, int))v->pfn)((char *)o + v->delta, q->x + *(int *)(p + 0x484), q->y + *(int *)(p + 0x488));
+        v = &o->vt[7];
+        ((void (*)(void *))v->pfn)((char *)o + v->delta);
+        q++;
+    }
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0F38);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C12B4);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C15F4);
+struct CV_800C15F4 {
+    unsigned char r, g, b, cd;
+};
+struct O_800C15F4 {
+    char pad[0x2C];
+    VtblEntry *vt2;
+    char pad30[0x7C - 0x30];
+    short f7C, f7E, f80;
+    short pad82;
+    int f84, f88, f8C;
+    char pad90[0x108 - 0x90];
+    CV_800C15F4 col;
+    int f10C;
+    char pad110[0x11C - 0x110];
+    int f11C;
+};
+struct E_800C15F4 {
+    Vec3 a, b;
+    unsigned char r, g, bl, pad[5];
+};
+struct S_800C15F4 {
+    char pad[0x270];
+    O_800C15F4 *o;
+    char pad274[0x284 - 0x274];
+    short n;
+    short pad286;
+    int x, y, z;
+    int f294;
+    int f298;
+    short sx, sy, sz;
+    short pad2A2;
+    unsigned char r, g, b;
+    char pad2A7[0x2AC - 0x2A7];
+    E_800C15F4 e[3];
+    Vec3 out[3];
+};
+#define SUB_800C15F4(o) ((o) ? (char *)(o) + 0x50 : 0)
+EXTERN_C void func_80099C80(int);
+EXTERN_C void func_80065D20(void *, int, int, int, int, int, int, int);
+EXTERN_C void func_80065E10(void *, int);
+// p is the parameter itself (a local copy of the cast pointer changes the register allocation)
+#define p ((S_800C15F4 *)pv)
+EXTERN_C void func_800C15F4(void *pv)
+{
+    int i;
+    p->o->f11C = p->f298;
+    func_80099C80(p->o->f11C);
+    p->o->f84 = p->x * 10;
+    p->o->f88 = p->y * 10;
+    p->o->f8C = p->z * 10;
+    p->o->f7C = p->sx;
+    p->o->f7E = p->sy;
+    p->o->f80 = p->sz;
+    O_800C15F4 *o = p->o;
+    VtblEntry *v = &o->vt2[34];
+    ((void (*)(void *, short *, int *))v->pfn)((char *)o + v->delta, &o->f7C, &o->f84);
+    CV_800C15F4 c;
+    c.r = p->r;
+    c.g = p->g;
+    c.b = p->b;
+    char *l = SUB_800C15F4(p->o);
+    *(CV_800C15F4 *)(l + 0xB8) = c;
+    *(int *)(l + 0xBC) = 1;
+    int n = p->n;
+    int k = 3 - n;
+    for (i = 0; i < n; i++)
+        func_80065D20(SUB_800C15F4(p->o), i, p->out[i].x, p->out[i].y, p->out[i].z, p->e[i].r, p->e[i].g, p->e[i].bl);
+    for (int j = 0; j < k; j++)
+        func_80065E10(SUB_800C15F4(p->o), 2 - j);
+}
+#undef p
+#undef SUB_800C15F4
 
 EXTERN_C void VectorNormal(Vec3 *, Vec3 *);
 EXTERN_C void func_800C1814(S_800C1814 *p)
@@ -2915,67 +3312,6 @@ EXTERN_C char D_800B74BC[];
 
 // EXE constructor (alias keeps the call a relocation against func_80030694)
 __asm__(".set __10M_800C21E0, func_80030694");
-struct Q_800C21E0 {
-    short a, b, c, d;
-    Q_800C21E0()
-    {
-        a = 0;
-        b = 0;
-        c = 0;
-        d = 0;
-    }
-};
-struct M_800C21E0 {
-    char data[0x14];
-    M_800C21E0();
-};
-struct A_800C21E0 {
-    void *vt;
-    int f4;
-    A_800C21E0()
-    {
-        vt = D_80010178;
-        f4 = 0;
-    }
-};
-struct B0_800C21E0 {
-    void *vt2;
-    B0_800C21E0() { vt2 = D_80011A44; }
-};
-struct B_800C21E0 : B0_800C21E0 {
-    Q_800C21E0 q;
-};
-struct L1v_800C21E0 : A_800C21E0, B_800C21E0 {
-    L1v_800C21E0()
-    {
-        vt2 = D_80011AAC;
-        vt = D_80011B14;
-    }
-};
-struct L1_800C21E0 : L1v_800C21E0 {
-    Q_800C21E0 arr[3];
-};
-struct L2v_800C21E0 : L1_800C21E0 {
-    L2v_800C21E0()
-    {
-        vt2 = D_80011B8C;
-        vt = D_80011BF4;
-    }
-};
-struct L2_800C21E0 : L2v_800C21E0 {
-    M_800C21E0 m;
-};
-struct L3_800C21E0 : L2_800C21E0 {
-    L3_800C21E0()
-    {
-        vt2 = D_80011C44;
-        vt = D_80011CAC;
-    }
-};
-struct C_800C21E0 : L3_800C21E0 {
-    C_800C21E0();
-};
-
 C_800C21E0::C_800C21E0()
 {
     vt2 = D_800B7454;
@@ -3086,7 +3422,72 @@ EXTERN_C int func_800C259C(short *p) { return p[4]; }
 
 EXTERN_C void func_800C25A8(short *p, short v) { p[4] = v; }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C25B0);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_800111BC[];
+EXTERN_C char D_800B752C[];
+
+struct Col_800C25B0 {
+    void *vt;
+    unsigned char c[4];
+};
+struct Pt_800C25B0 {
+    short x, y;
+};
+struct S_800C25B0 {
+    void *vt;
+    int f4;
+    short state;
+    short z;
+    E12 a[2];
+    E16 e[2];
+    int f44;
+    int f48;
+};
+EXTERN_C void func_8002972C(void *, int, int, int, int);
+EXTERN_C void func_800198AC(void *, int);
+EXTERN_C void SetDrawMode(void *, int, int, short, void *);
+EXTERN_C void func_80098DC0(void *, int);
+EXTERN_C void func_800C2EE0(S_800C2D5C *p, char *q);
+EXTERN_C void func_800C2DB4(S_800C2D5C *p, char *q, short c);
+EXTERN_C void func_800C2A38(S_800C2D5C *p, short x, short y);
+EXTERN_C void func_800C2E60(S_800C2D5C *p, unsigned char a, unsigned char b);
+EXTERN_C void func_800C2C4C(S_800C2D5C *p, unsigned char *c);
+EXTERN_C void func_800C2B28(S_800C2D5C *p);
+EXTERN_C S_800C25B0 *func_800C25B0(S_800C25B0 *p, Pt_800C25B0 xy, Pt_800C25B0 uv, char *q1, char *q2, short abr, short z, int unused, int f44)
+{
+    Col_800C25B0 col;
+
+    p->vt = D_80010178;
+    p->f4 = 0;
+    p->vt = D_800111BC;
+    p->state = 0;
+    p->z = z;
+    p->vt = D_800B752C;
+    p->f48 = 1;
+    p->f44 = f44;
+    func_8002972C(&col, 0x80, 0x80, 0x80, 1);
+    SetDrawMode(&p->a[0], 0, 0, 0, 0);
+    SetDrawMode(&p->a[1], 0, 0, 0, 0);
+    ((unsigned char *)&p->e[0].hdr)[3] = 3;
+    p->e[0].b.col.c.cd = 0x7C;
+    ((unsigned char *)&p->e[1].hdr)[3] = 3;
+    p->e[1].b.col.c.cd = 0x7C;
+    func_800C2EE0((S_800C2D5C *)p, q1);
+    func_800C2DB4((S_800C2D5C *)p, q2, abr);
+    func_800C2A38((S_800C2D5C *)p, xy.x, xy.y);
+    func_800C2E60((S_800C2D5C *)p, uv.x, uv.y);
+    func_800C2C4C((S_800C2D5C *)p, (unsigned char *)&col);
+    if (abr) {
+        func_80098DC0(&p->e[0], 1);
+        func_80098DC0(&p->e[1], 1);
+    } else {
+        func_80098DC0(&p->e[0], 0);
+        func_80098DC0(&p->e[1], 0);
+    }
+    func_800C2B28((S_800C2D5C *)p);
+    func_800198AC(&col, 2);
+    return p;
+}
 
 EXTERN_C char D_80010178[];
 EXTERN_C char D_800111BC[];
@@ -3112,7 +3513,56 @@ EXTERN_C void func_800C277C(void **p, int in_chrg)
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C27A4);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2850);
+struct OT_800C2850 {
+    char pad[0x10];
+    unsigned int len;
+    unsigned int *ot;
+};
+EXTERN_C int D_800B4CF0[];
+EXTERN_C OT_800C2850 *D_800B4CFC[];
+EXTERN_C void func_800C2BD0(S_800C2D5C *);
+
+struct S_800C2850 {
+    char pad[8];
+    short state;
+    unsigned short z;
+    E12 a[2];
+    E16 e[2];
+    int f44;
+    int f48;
+};
+
+struct Tag_800C2850 {
+    unsigned addr : 24;
+    unsigned len : 8;
+};
+static inline void add_800C2850(unsigned int z, void *p)
+{
+    OT_800C2850 *o = D_800B4CFC[0];
+    if (z && z < o->len) {
+        ((Tag_800C2850 *)p)->addr = o->ot[z];
+        o->ot[z] = (unsigned int)p & 0xFFFFFF;
+    }
+}
+
+EXTERN_C int func_800C2850(S_800C2850 *p)
+{
+    if (!p->f48)
+        return 0;
+    switch (p->state) {
+    case 1:
+        func_800C2BD0((S_800C2D5C *)p);
+    case 2:
+        p->state--;
+    }
+    if (p->f44) {
+        add_800C2850(p->z, &p->e[D_800B4CF0[0]]);
+        add_800C2850(p->z, &p->a[D_800B4CF0[0]]);
+        return 2;
+    }
+    add_800C2850(p->z, &p->e[D_800B4CF0[0]]);
+    return 1;
+}
 
 EXTERN_C int D_800B4CF0[];
 EXTERN_C void func_800C2BD0(S_800C2D5C *);
