@@ -1406,7 +1406,19 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C12B4);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C15F4);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C1814);
+EXTERN_C void VectorNormal(Vec3 *, Vec3 *);
+EXTERN_C void func_800C1814(S_800C1814 *p)
+{
+    int i;
+    int n = p->n;
+    Vec3 v;
+    for (i = 0; i < n; i++) {
+        v.x = p->e[i].b.x - p->e[i].a.x;
+        v.y = p->e[i].b.y - p->e[i].a.y;
+        v.z = p->e[i].b.z - p->e[i].a.z;
+        VectorNormal(&v, &p->out[i]);
+    }
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C18C0);
 
@@ -1541,7 +1553,29 @@ EXTERN_C void func_800C2074(char *p, int in_chrg)
     func_8001A610(p, in_chrg);
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C20DC);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_800106EC[];
+EXTERN_C char D_80010624[];
+EXTERN_C void func_80021F48(void *, void *);
+EXTERN_C VObj10 *D_800B4C38[];
+EXTERN_C void func_800C20DC(char *p, void *a)
+{
+    char *o = (char *)operator new(0x20C);
+    VObj10 *m;
+    VtblEntry *e;
+    *(char **)o = D_80010178;
+    *(int *)(o + 4) = 0;
+    *(char **)o = D_800106EC;
+    *(short *)(o + 8) = 0;
+    *(short *)(o + 0xA) = 0;
+    *(char **)o = D_80010624;
+    func_80021F48(o, a);
+    m = D_800B4C38[0];
+    *(char **)(p + 0xC) = o;
+    e = &m->vt[1];
+    ((void (*)(void *, void *))e->pfn)((char *)m + e->delta, o);
+    *(short *)(p + 0xA) = *(short *)(*(char **)(p + 0xC) + 8);
+}
 
 EXTERN_C short func_800C2194(char *p)
 {

@@ -20,6 +20,11 @@ struct VObj18 {
     VtblEntry *vt;
 };
 
+struct VObj10 {
+    char pad[0x10];
+    VtblEntry *vt;
+};
+
 struct ObjSlot {
     int pad;
     VObject *obj;
@@ -373,5 +378,24 @@ struct C_800C1E7C {
     C_800C1E7C(Desc_800C1E7C *d);
 };
 
+
+// PSX VECTOR
+struct Vec3 {
+    int x, y, z, pad;
+};
+
+struct E_800C1814 {
+    Vec3 a;
+    Vec3 b;
+    char pad[8];
+};
+
+struct S_800C1814 {
+    char pad[0x284];
+    short n;
+    char pad2[0x26];
+    E_800C1814 e[3];
+    Vec3 out[1];
+};
 
 #endif
