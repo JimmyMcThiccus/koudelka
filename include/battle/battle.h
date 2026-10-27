@@ -565,4 +565,33 @@ struct T_CF2D0_r { char pad[0x94C]; unsigned char b94C; unsigned char b94D; };
 struct T_CF2D0_g { char pad[0x33C]; int f33C; char pad340[8]; int f348; int f34C[1]; };
 struct T_CF2D0 { char pad[0x7DC]; short s7DC; };
 
+EXTERN_C char D_800B7EDC[];
+EXTERN_C int func_80053880(void *p);
+EXTERN_C void *func_800550BC(void *p);
+EXTERN_C int func_8005409C(void *p);
+EXTERN_C void func_8008EF40(int a);
+EXTERN_C void func_80063340(void *p, void *q);
+EXTERN_C int func_8005618C(void *q);
+struct T_D59AC_f { char pad[0x50]; char f50[4]; };
+struct T_D59AC : T_D2598_b { int f1C; int f20; char pad24[0x18]; T_D59AC_f *f3C; char pad40[0x1C]; int f5C; char pad60[8]; int f68; };
+struct T_4DD0f { char pad[0x1F4]; short s1F4; };
+struct T_CFB08_q { char pad[0x1B8]; void *f1B8; char pad1BC[0x30A]; short h4C6; short pad4C8; short h4CA; };
+struct T_CFB08 { char pad[0xA0]; T_CFB08_q *fA0; };
+EXTERN_C int func_800392C8(void *p);
+EXTERN_C void func_8006B690(void *p, int a);
+EXTERN_C VTable D_800104A8[];
+EXTERN_C void func_8005BC84(void *p, int a, int b, int c);
+EXTERN_C void func_800537C0(void *p);
+struct T_D3ED0_vb { VTable *vptr; int f4; };
+struct T_D3ED0 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; int f44; int f48; int f4C; char b50; char pad51; SVec4 s52; char pad5A[2]; T_D3ED0_vb v5C; };
+EXTERN_C char D_800AE640[];
+EXTERN_C int func_80060154(void *p, int a);
+EXTERN_C int func_800600A4(void *p, int a);
+EXTERN_C void SetDrawMode(void *p, int a, int b, int c, void *r);
+struct T_D43B0_e { char pad[3]; char b3; char pad4[2]; char b6; char b7; short s8; short sA; short sC; short sE; short s10; short s12; };
+struct T_D43B0 { VTable *vt; char pad4[0xC]; int f10; char f14[0xC]; char f20[0xC]; T_D43B0_e e[2]; SVec4 s54; short s5C; short s5E; };
+EXTERN_C void func_8005F0E4(void *p);
+EXTERN_C VTable D_800B7D84[];
+typedef void (*F4518)(void *, int);
+
 #endif /* BATTLE_BATTLE_H */

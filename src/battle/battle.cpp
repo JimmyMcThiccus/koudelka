@@ -869,7 +869,33 @@ EXTERN_C void func_800CF9CC(T_CF95C *pp, int a, int b) {
     }
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CFB08);
+EXTERN_C void func_800CFB08(T_CFB08 *p, T_CFB08_q *q) {
+    if (!q) q = p->fA0;
+    T_VEC v; T_VEC *pv = &v; v.x = 0; pv->y = 0; pv->z = 0; pv->w = 0;
+    if (q) {
+        SVec2 pos;
+        short x = q->h4C6, y = q->h4CA;
+        v.y = -900;
+        pos.x = x; pos.y = y;
+        if (q->f1B8 && func_800392C8(q->f1B8)) { T_VEC t; func_8003A150((T_BFB18_t *)&t, func_8003912C(q->f1B8, 5), 0); v = t; }
+        if (v.y == 0) v.y = -900;
+        T_VEC u;
+        mk_vec(&u, pos.x * 2400 - 4800, v.y - 200, pos.y * -2400 + 7200);
+        T_CF95C_g *g = (T_CF95C_g *)D_800B4ED8[0];
+        set_g2(g, &u);
+        func_8006B690(g, 0xCC);
+    }
+}
+inline T_D3ED0 *d3ed0_init(T_D3ED0 *x) {
+    x->vt40 = D_800B7D64;
+    x->vt2C = D_800B7C6C;
+    x->f4C = 4;
+    x->f44 = 0;
+    x->f48 = 0;
+    SVec4 *s = &x->s52; x->s52.x = 0; s->y = 0; s->z = 0; s->w = 0;
+    x->b50 = 0;
+    return x;
+}
 
 EXTERN_C int func_800CFC50(T_CFCBC *p, int v) { int a, b; p->f950 = 0; func_800C8D9C(p, 2, &a, &b); if (a < v) v = a; p->f950 = v; return v; }
 
@@ -1240,9 +1266,24 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D5760);
 
 EXTERN_C void func_800D596C(T_D596C *p) { func_8006323C(p); int v = p->f20; D_800B4DD0[0]->s1F6 = v; func_8005457C(p, 0); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D59AC);
+EXTERN_C int func_800D59AC(T_D59AC *p, T_D19F0_q *q) {
+    if (func_8005618C(q)) return 1;
+    int i = p->f20;
+    if (q->h18 & 0x2000) {
+        if (!func_80053880(p->f3C ? p->f3C->f50 : 0)) return 1;
+        if (func_8005409C(func_800550BC(p))) {
+            p->f5C = 2; p->v3();
+            T_4DD0f *t = (T_4DD0f *)D_800B4DD0[0];
+            if (t->s1F4 < 3 && ((signed char *)p + i)[0x6C] == 9) { t->s1F4++; func_800C5020(operator new(0x78), D_800B7EDC, 0x3C); }
+            func_8005549C(p->f68, p, 0, -1);
+        } else func_8008EF40(0xE);
+    } else func_80063340(p, q);
+    return 1;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D5AE4);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7EDC);
 
 INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7F1C);
 
