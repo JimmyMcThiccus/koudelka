@@ -530,7 +530,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C43F0);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C4510);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C46F0);
+EXTERN_C void func_800C46F0(T_C46F0 *p, int flags) { p->vtbl = D_800B7538; if (p->f38) func_800A0D0C(p->f38); p->f38 = 0; func_8005F120(p, flags); }
 
 EXTERN_C void func_800C4748(T_C4748 *p, int a, int b) { p->s18 += a; p->s1A += b; func_8005F1D8(p); }
 
@@ -1082,7 +1082,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D4748);
 
 EXTERN_C void func_800D47C8() {}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D47D0);
+EXTERN_C void func_800D47D0(T_D47D0 *p, int a, int b) { p->v11(a - p->e[D_800B4CF0[0]].x, b - p->e[D_800B4CF0[0]].y); }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D4828);
 

@@ -410,4 +410,16 @@ EXTERN_C void func_80062280(void *p, int a);
 EXTERN_C void func_8006323C(void *p);
 EXTERN_C int func_800B9268(T_B9268 *p, int *t);
 
+EXTERN_C VTable D_800B7538[];
+EXTERN_C void func_800A0D0C(void *p);
+struct T_C46F0 { VTable *vtbl; char pad4[0x34]; void *f38; };
+EXTERN_C int D_800B4CF0[];
+struct T_D47D0_e { short x, y; char pad[0x10]; };
+struct T_D47D0_B {
+    virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+    virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10();
+    virtual void v11(int a, int b);
+};
+struct T_D47D0 : T_D47D0_B { char pad4[0x30]; T_D47D0_e e[2]; };
+
 #endif /* BATTLE_BATTLE_H */
