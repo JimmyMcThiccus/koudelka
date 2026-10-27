@@ -528,4 +528,20 @@ EXTERN_C void func_8005388C(void *p, int a);
 EXTERN_C void func_8002DA94(int a, Holder *h);
 struct T_D41D4 { char pad[8]; int f8; char padC[0x10]; unsigned short h1C; char pad1E[0x12]; Holder *f30; char pad34[4]; char f38[0xC]; int f44; char pad48[0xA]; SVec4 s52; };
 
+EXTERN_C int func_80063744(void *p, int a);
+
+struct T_D1B68_b { int pad[6]; virtual void v1(); virtual void v2(); virtual void v3(); };
+struct T_D1B68 : T_D1B68_b { char pad1C[0x5738]; int f5754; };
+struct T_D2C50_s { char pad[0x400]; char f400[0x10]; short s410; short s412; char pad414[0xC]; short s420; short s422; };
+struct T_D2C50_B { int pad[2]; T_D2C50_s *items[3]; };
+struct T_D2C50_D : T_D0390_A, T_D2C50_B {};
+struct T_D2C50_G { char pad[0x328]; T_D2C50_D *f328; };
+struct T_D2C50 { char pad[0x7C]; int f7C; char pad80[0x54]; char fD4[0x50]; char f124[0x28]; void *f14C; void *f150; };
+EXTERN_C void func_8008687C(void *p, int a);
+EXTERN_C int func_800549C4(void *p, int a);
+EXTERN_C void func_80064884(void *p, int a, int b);
+EXTERN_C void func_800648E8(void *p, int a);
+EXTERN_C void func_80054708(void *p, int a);
+EXTERN_C void func_80054CE4(void *p);
+
 #endif /* BATTLE_BATTLE_H */

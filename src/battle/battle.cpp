@@ -1038,7 +1038,16 @@ EXTERN_C void func_800D2A2C(T_D2A2C *p, int a) { p->f7C = a; switch (a) { case 0
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D2A98);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D2C50);
+EXTERN_C void func_800D2C50(T_D2C50 *p) {
+    if (p->f14C) {
+        T_D2C50_D *d = ((T_D2C50_G *)func_800787B4())->f328; int i = p->f7C;
+        T_D2C50_B *b = d; T_D2C50_s *s = b->items[i];
+        func_8008687C(s ? s->f400 : 0, 0);
+        if (func_800549C4(p->fD4, s->s410)) { func_80064884(p->f14C, s->s412, 0); func_800648E8(p->f14C, s->s410); func_80054708(p->fD4, s->s410); }
+        if (func_800549C4(p->f124, s->s420)) { func_80064884(p->f150, s->s422, 0); func_800648E8(p->f150, s->s420); func_80054708(p->f124, s->s420); }
+        func_80054CE4(p);
+    }
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D2D60);
 
