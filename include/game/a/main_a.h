@@ -1199,4 +1199,38 @@ typedef struct S_80051A7C {
     short unk124;
 } S_80051A7C;
 
+typedef struct S_800229B0_10 {
+    char pad0[0x8];
+    unsigned short unk8;
+} S_800229B0_10;
+
+typedef struct S_800229B0 {
+    char pad0[0x10];
+    S_800229B0_10 *unk10;
+} S_800229B0;
+
+typedef struct S_800239C0 {
+    char pad0[0x9C];
+    signed char unk9C;
+    char pad9D[0x23];
+    signed char unkC0;
+} S_800239C0;
+
+typedef struct S_8002456C {
+    char pad0[0x26];
+    unsigned char unk26;
+} S_8002456C;
+
+typedef struct S_8002AF94 {
+    char pad0[0x8];
+    int unk8;
+    char padC[0x1C];
+    unsigned int unk28;
+} S_8002AF94;
+
+typedef struct S_8003C584 {
+    char pad0[0x48];
+    S_800391DC_14 *unk48;
+} S_8003C584;
+
 #endif
