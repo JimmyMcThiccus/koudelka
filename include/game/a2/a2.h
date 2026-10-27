@@ -277,4 +277,17 @@ struct C_8004CE14 : C_800497FC { char pad10[8]; S_A2_M4C35C m; C_8004CE14() asm(
 struct C_800500B4 : C_8004CF20 { char pad10[0xC]; S_A2_MFA2C m; C_800500B4() asm("func_800500B4"); };
 struct C_800506F4 : C_8004CF20 { char pad10[0xC]; S_A2_MFA2C m; C_800506F4() asm("func_800506F4"); };
 struct S_A2_X44764 : S_A2_X0 { void *p8; short sC; int u10; S_A2_X44764(void *p) { vt = D_80010338; p8 = p; sC = 0x80; u10 = 0; } };
+EXTERN_C int func_8009C9C0();
+EXTERN_C int CdControl(unsigned char com, unsigned char *param, unsigned char *result);
+EXTERN_C int func_80044F18(void *a, int b, int c, int d, int e);
+EXTERN_C void *D_800111BC[];
+EXTERN_C void *D_80013AA8[];
+EXTERN_C void func_80098DF0(void *p);
+EXTERN_C void func_80053658(void *p, int a);
+EXTERN_C void func_800536F0(void *p, int a);
+EXTERN_C void func_800534F8(void *p);
+EXTERN_C void *D_800127E4[];
+EXTERN_C int D_800B4D28;
+struct S_A2_X1 : S_A2_X0 { void *p8; short sC; int u10; S_A2_X1(void *p) { vt = D_80010338; p8 = p; sC = 0x80; u10 = 1; } };
+struct S_A2_Pt2 { short x, y; };
 #endif /* GAME_A2_A2_H */

@@ -14,7 +14,26 @@ EXTERN_C int func_800372D4(S_80037258 *p)
     return p->unk2C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800372E0);
+EXTERN_C void *func_800372E0(void *p, int vb)
+{
+    if (vb) {
+        char *b = (char *)p + 0x3C;
+        AT(p, void *, 4) = b;
+        AT(p, short, 0x3C) = 16;
+        AT(b, short, 2) = 1;
+        AT(b, int, 4) = -1;
+    }
+    AT(p, void **, 0) = D_80012154;
+    AT(p, void **, 8) = D_8001201C;
+    AT(p, void **, 0) = D_80012034;
+    AT(p, void *, 0xC) = (char *)p + 0x10;
+    ((int (*)(void *, int, int))func_800198E0)((char *)p + 0x10, 4, 0);
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    AT(p, int, 0x28) = 0;
+    AT(p, int, 0x2C) = 0;
+    return p;
+}
 
 EXTERN_C int func_80037380()
 {
@@ -113,7 +132,22 @@ EXTERN_C int func_800378A8(void *p)
     return AT(p, int, 0xC) = r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037934);
+EXTERN_C void func_80037934(void *p)
+{
+    int r = func_8009C9C0();
+    if (r & 0x10)
+        AT(p, int, 0xC) = 9;
+    else if (r & 2) {
+        if (AT(p, int, 0xC) == 15 && AT(p, int, 0x24))
+            AT(p, int, 0xC) = 14;
+        else
+            AT(p, int, 0xC) = 4;
+    } else {
+        AT(p, int, 0xC) = 0xB;
+        AT(p, int, 0x24) = 600;
+        CdControl(6, 0, 0);
+    }
+}
 
 EXTERN_C int func_800379D0(void *p)
 {
