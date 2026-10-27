@@ -1,6 +1,10 @@
 #include "common.h"
 #include "gameend/gameend.h"
 
+// Overlay id word, read by the EXE through ovl_header. Under -G8 a 4-byte
+// const would go to .sdata; it has to be the first word of the overlay.
+EXTERN_C const int D_800B6DF0 __attribute__((section(".rodata"))) = 8;
+
 EXTERN_C const int D_80010178[];
 EXTERN_C const int D_800104A8[];
 EXTERN_C int D_800B4C74[];
@@ -81,6 +85,7 @@ EXTERN_C GameEnd *func_800B6FEC(GameEnd *self, int in_chrg, int arg)
     return self;
 }
 
+EXTERN_C void func_800B7190(GameEnd *self);
 INCLUDE_ASM("asm/gameend/nonmatchings/gameend", func_800B7190);
 
 EXTERN_C void func_800B753C(GameEnd *self)
@@ -169,16 +174,132 @@ EXTERN_C void func_800B7944(GameEnd *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6DF0);
+// The vtables. Data is output in source order ahead of all functions, so
+// these follow D_800B6DF0. Slot 0 holds the offset to the complete object.
+EXTERN_C void func_8001FD00();
+EXTERN_C void func_8001FD90();
+EXTERN_C void func_8001FE20();
+EXTERN_C void func_8001FF40();
+EXTERN_C void func_800201DC();
+EXTERN_C void func_800202C4();
+EXTERN_C void func_800202CC();
+EXTERN_C void func_800202D4();
+EXTERN_C void func_80029EC0();
+EXTERN_C void func_80029EC8();
+EXTERN_C void func_80029F30();
+EXTERN_C void func_80029FC0();
+EXTERN_C void func_8002A004();
+EXTERN_C void func_8002A09C();
+EXTERN_C void func_8002A0D0();
+EXTERN_C void func_8002A118();
+EXTERN_C void func_8002A168();
+EXTERN_C void func_8002A1BC();
+EXTERN_C void func_8002A210();
+EXTERN_C void func_8002A37C();
+EXTERN_C void func_8002A400();
+EXTERN_C void func_8002A484();
+EXTERN_C void func_8002A4C8();
+EXTERN_C void func_8002A55C();
+EXTERN_C void func_8002A65C();
+EXTERN_C void func_8002A698();
+EXTERN_C void func_8002A728();
+EXTERN_C void func_8002A7B8();
+EXTERN_C void func_8002A864();
+EXTERN_C void func_8002A910();
+EXTERN_C void func_8002A9BC();
+EXTERN_C void func_8002AA8C();
+EXTERN_C void func_8002AB5C();
+EXTERN_C void func_8002AC2C();
+EXTERN_C void func_80053848();
+EXTERN_C void func_80054CE4();
+EXTERN_C void func_80055020();
+EXTERN_C void func_80056B3C();
+EXTERN_C void func_80056B44();
+EXTERN_C void func_80056D60();
+EXTERN_C void func_80056D9C();
+EXTERN_C void func_8005BF04();
+EXTERN_C void func_8005BF50();
+EXTERN_C void func_8005BFA4();
+EXTERN_C void func_8005BFE4();
+EXTERN_C void func_8005C238();
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6DF4);
+EXTERN_C const VEntry D_800B6DF4[4] = {
+    { -0x58, 0, 0 },
+    { -0x58, 0, (void (*)(void *))func_800B7944 },
+    { -0x58, 0, (void (*)(void *))func_80056B3C },
+    { -0x58, 0, (void (*)(void *))func_80056B44 },
+};
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6E14);
+EXTERN_C const VEntry D_800B6E14[6] = {
+    { -0x50, 0, 0 },
+    { -0x50, 0, (void (*)(void *))func_800B789C },
+    { -0x50, 0, (void (*)(void *))func_800B791C },
+    { 0, 0, (void (*)(void *))func_800202C4 },
+    { 0, 0, (void (*)(void *))func_800202CC },
+    { 0, 0, (void (*)(void *))func_800202D4 },
+};
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6E44);
+EXTERN_C const VEntry D_800B6E44[31] = {
+    { -0x64, 0, 0 },
+    { 0, 0, (void (*)(void *))func_8005C238 },
+    { 0, 0, (void (*)(void *))func_8002A168 },
+    { 0, 0, (void (*)(void *))func_8002A1BC },
+    { 0, 0, (void (*)(void *))func_8002A210 },
+    { 0, 0, (void (*)(void *))func_8005BFA4 },
+    { 0, 0, (void (*)(void *))func_8002A37C },
+    { 0, 0, (void (*)(void *))func_8002A400 },
+    { 0, 0, (void (*)(void *))func_8002A4C8 },
+    { 0, 0, (void (*)(void *))func_8002A55C },
+    { 0, 0, (void (*)(void *))func_80029EC8 },
+    { 0, 0, (void (*)(void *))func_80029F30 },
+    { 0, 0, (void (*)(void *))func_80029FC0 },
+    { 0, 0, (void (*)(void *))func_8002A004 },
+    { -0x64, 0, (void (*)(void *))func_800B76C0 },
+    { 0, 0, (void (*)(void *))func_8005BFE4 },
+    { 0, 0, (void (*)(void *))func_8002A65C },
+    { 0, 0, (void (*)(void *))func_8002A698 },
+    { 0, 0, (void (*)(void *))func_80029EC0 },
+    { 0, 0, (void (*)(void *))func_8002A09C },
+    { 0, 0, (void (*)(void *))func_8002A0D0 },
+    { 0, 0, (void (*)(void *))func_8002A728 },
+    { 0, 0, (void (*)(void *))func_8002A7B8 },
+    { 0, 0, (void (*)(void *))func_8002A864 },
+    { 0, 0, (void (*)(void *))func_8002A910 },
+    { 0, 0, (void (*)(void *))func_8002A484 },
+    { 0, 0, (void (*)(void *))func_8005BF50 },
+    { 0, 0, (void (*)(void *))func_8002A118 },
+    { 0, 0, (void (*)(void *))func_8002AC2C },
+    { -0x64, 0, (void (*)(void *))func_800B75F4 },
+    { 0, 0, (void (*)(void *))func_8005BF04 },
+};
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6F3C);
+EXTERN_C const VEntry D_800B6F3C[4] = {
+    { -0x9C, 0, 0 },
+    { -0x9C, 0, (void (*)(void *))func_800B7944 },
+    { -0x9C, 0, (void (*)(void *))func_800B7568 },
+    { 0, 0, (void (*)(void *))func_80053848 },
+};
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6F5C);
+EXTERN_C const VEntry D_800B6F5C[8] = {
+    { 0, 0, 0 },
+    { 0, 0, (void (*)(void *))func_800B7944 },
+    { 0, 0, (void (*)(void *))func_800B7190 },
+    { 0, 0, (void (*)(void *))func_800B753C },
+    { 0, 0, (void (*)(void *))func_80055020 },
+    { 0, 0, (void (*)(void *))func_80054CE4 },
+    { 0, 0, (void (*)(void *))func_80056D60 },
+    { 0, 0, (void (*)(void *))func_80056D9C },
+};
 
-INCLUDE_RODATA("asm/gameend/nonmatchings/gameend", D_800B6F9C);
+EXTERN_C const VTable10 D_800B6F9C = { {
+    { -0x2C4, 0, 0 },
+    { -0x2C4, 0, (void (*)(void *))func_800B7944 },
+    { 0, 0, (void (*)(void *))func_8001FD00 },
+    { 0, 0, (void (*)(void *))func_8001FD90 },
+    { 0, 0, (void (*)(void *))func_8001FE20 },
+    { -0x260, 0, (void (*)(void *))func_8002A9BC },
+    { -0x274, 0, (void (*)(void *))func_800201DC },
+    { -0x260, 0, (void (*)(void *))func_8002AA8C },
+    { 0, 0, (void (*)(void *))func_8001FF40 },
+    { -0x260, 0, (void (*)(void *))func_8002AB5C },
+} };
