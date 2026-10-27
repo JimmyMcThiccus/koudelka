@@ -136,4 +136,22 @@ struct S_800BDC70 {
     short n;
 };
 
+struct Rgb16 {
+    unsigned char r, g, b;
+    char pad[13];
+};
+
+struct S_800C2D5C {
+    char pad[0x28];
+    Rgb16 e[1];
+};
+
+struct N_800C08FC {
+    int pad;
+    N_800C08FC *next;
+    short id;
+    char pad2[0xE];
+    int val;
+};
+
 #endif
