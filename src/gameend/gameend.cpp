@@ -2,8 +2,10 @@
 #include "gameend/gameend.h"
 
 // Overlay id word, read by the EXE through ovl_header; it has to be the first
-// word of the overlay.
-EXTERN_C const int D_800B6DF0 = 8;
+// word of the overlay. Under -G8 a 4-byte const would go to .sdata, and it can't
+// join an aggregate: the next word starts D_800B6DF4. INCLUDE_RODATA would come
+// out after the vtables (data is output before all functions).
+EXTERN_C const int D_800B6DF0 __attribute__((section(".rodata"))) = 8;
 
 EXTERN_C const int D_80010178[];
 EXTERN_C const int D_800104A8[];
