@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a/h_u_8002ED44.h"
 
 EXTERN_C void *func_8002ED44(void *p, int a, int b)
 {
@@ -321,7 +322,12 @@ EXTERN_C int func_80031278()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_80031280);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_800313BC);
+EXTERN_C void func_800313BC(S_800313BC *p)
+{
+    if (D_800AC834.c)
+        p->next = D_800AC834.c;
+    D_800AC834.c = (int)p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_800313E0);
 

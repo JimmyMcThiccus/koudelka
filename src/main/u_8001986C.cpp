@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a/h_u_8001986C.h"
 
 EXTERN_C void func_8001986C(void *p, int a)
 {
@@ -69,7 +70,13 @@ EXTERN_C void func_8001A00C(S_80019FB4 *p, int v)
     p->unk8 = v;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001A014);
+EXTERN_C S_8001A014 *func_8001A014(S_8001A014 *p, int a, int b)
+{
+    p->vt = D_80010108;
+    p->a = a;
+    p->b = b;
+    return p;
+}
 
 EXTERN_C void func_8001A030(void *p, int a)
 {

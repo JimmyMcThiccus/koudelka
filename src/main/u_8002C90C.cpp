@@ -2,13 +2,20 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a/h_u_8002C90C.h"
 
 EXTERN_C int func_8002C90C(S_8002C90C *p)
 {
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C918);
+EXTERN_C S_8002C918 *func_8002C918(S_8002C918 *p)
+{
+    p->vt = D_80010178;
+    p->a = 0;
+    p->vt = D_8001178C;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C93C);
 
