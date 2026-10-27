@@ -6,7 +6,7 @@
 Also writes <out>.d, a depfile listing the headers (from the preprocessor's
 line markers) and the INCLUDE_ASM/INCLUDE_RODATA .s files the object pulls in.
 
-Usage: python cc.py --psyq bin/psyq4.4 --aspsx 2.79 --cflags "-O2 -G8"
+Usage: python cc.py --psyq bin/psyq4.4 --aspsx 2.79 --cflags "-O2 -G8" [--as-G N]
        [-I include ...] -o build/src/x.cpp.o src/x.cpp
 """
 import argparse
@@ -47,13 +47,14 @@ def main():
     ap.add_argument("--psyq", required=True)
     ap.add_argument("--aspsx", required=True)
     ap.add_argument("--cflags", default="-O2 -G8")
+    ap.add_argument("--as-G", dest="as_g", type=int, help="assembler -G (default: the -G in --cflags)")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     a = ap.parse_args()
 
     lang = "c++" if Path(a.src).suffix in (".cpp", ".cc") else "c"
     psyq = ROOT / a.psyq
     cflags = a.cflags.split()
-    gflag = [f for f in cflags if f.startswith("-G")]
+    gflag = [f for f in cflags if f.startswith("-G")] if a.as_g is None else [f"-G{a.as_g}"]
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
 
