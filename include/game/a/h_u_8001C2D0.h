@@ -135,4 +135,12 @@ EXTERN_C void *D_800103A0[];
 EXTERN_C void *D_800103B8[];
 EXTERN_C void func_8001E508(void *p, int a);
 
+struct S_8001D8A4 {
+    char pad0[0xFC];
+    S_8001D3A8_N *list;
+    int pad100;
+    S_8001D3A8_N *cur;
+    S_8001D3A8_N *nxt;
+};
+
 #endif /* GAME_A_H_U_8001C2D0_H */

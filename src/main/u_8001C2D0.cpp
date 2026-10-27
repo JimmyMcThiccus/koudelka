@@ -637,7 +637,34 @@ EXTERN_C void func_8001D76C(void *p, int flags)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D7B0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D8A4);
+EXTERN_C void func_8001D8A4(S_8001D8A4 *p)
+{
+    S_8001D3A8_N *n;
+    func_800186E8(&D_800A451C);
+    n = 0;
+    if (p->list) {
+        if (p->cur && func_8001A6A8(p->list, (int)p->cur))
+            n = p->cur;
+        else if (p->nxt && func_8001A6A8(p->list, (int)p->nxt))
+            n = p->nxt;
+        else
+            n = p->list;
+    }
+    if (n) {
+        func_80018788(&D_800A451C);
+        int r = n->unk8->f1();
+        func_800186E8(&D_800A451C);
+        S_8001D3A8_N *nx = n->next;
+        p->cur = nx;
+        if (nx)
+            p->nxt = nx->next;
+        if (r) {
+            p->list = (S_8001D3A8_N *)func_8001A744(p->list, n);
+            delete n;
+        }
+    }
+    func_80018788(&D_800A451C);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D9F4);
 

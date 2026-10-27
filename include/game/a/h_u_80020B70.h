@@ -425,4 +425,58 @@ struct S_PadLv {
 
 EXTERN_C void *func_8001A744(void *list, void *item);
 
+EXTERN_C void *func_80023450(void *p);
+EXTERN_C void func_8001EFE4(void *obj, void *e);
+EXTERN_C void *func_8001CA10(int size);
+EXTERN_C void *D_80010300[];
+EXTERN_C void *D_800102D0[];
+EXTERN_C void func_8001A864(void *a, void *b);
+struct S_Evt300b : S_Obj178 {
+    unsigned short unk8;
+    short unkA;
+    void *unkC;
+    int unk10;
+    S_Evt300b(unsigned short a, short b, void *c, int d) { vtbl = D_80010300; unk8 = a; unkA = b; unk10 = d; unkC = c; }
+};
+struct S_Evt2D0b : S_Evt300b {
+    S_Evt2D0b(unsigned short a, short b, void *c) : S_Evt300b(a, b, c, 0) { vtbl = D_800102D0; }
+};
+struct S_HNode734 : S_Obj178 {
+    void *unk8;
+    S_HNode734(void *k) { vtbl = D_80010734; unk8 = k; }
+};
+
+EXTERN_C int MoveImage(S_Rect8 *r, int x, int y);
+EXTERN_C void DrawOTag(void *ot);
+EXTERN_C int func_80098DA0(void *p);
+struct S_Scroll {
+    short x;
+    short y;
+    char pad4[0x4];
+    unsigned short unk8;
+    unsigned short unkA;
+    char padC[0x4];
+    int unk10;
+    int unk14;
+    int unk18;
+};
+struct S_21764 {
+    char pad0[0x8];
+    short unk8;
+    short unkA;
+    S_Scroll *unkC;
+};
+struct S_2510C {
+    char pad0[0xC];
+    S_AnimV *unkC;
+    S_Pt4 pos;
+    char pad14[0x8];
+    unsigned short unk1C;
+    char pad1E[0x6];
+    S_AnimNode *unk24;
+    S_AnimNode *unk28;
+    int unk2C;
+    int unk30;
+};
+
 #endif /* GAME_A_H_U_80020B70_H */
