@@ -38,6 +38,7 @@ typedef struct { int tag; unsigned char r0, g0, b0, code; short x0, y0; short w,
 #define VSLOTS VSLOTS10(0) VSLOTS10(1) VSLOTS10(2) VSLOTS10(3) VSLOTS10(4)
 template <int N> struct VAt { char vpad[N]; VSLOTS };
 struct VAt0 { VSLOTS };
+template <class H> struct VWith : H { VSLOTS };
 
 /* vtables */
 EXTERN_C char D_80010178[];
@@ -431,7 +432,7 @@ EXTERN_C void func_800C0890(int);
 struct Unk_800DF26C_obj { char pad0[0x18]; virtual ~Unk_800DF26C_obj(); virtual int vf01(...); virtual int vf02(...); };
 struct Unk_800DF26C { char pad0[0x55C]; Unk_800DF26C_obj* unk55C; };
 struct Unk_800C6E8C : VAt<0x18> { char pad1C[0xBC]; int unkD8; };
-struct Unk_800A4534 { char pad0[0x44]; char* unk44; };
+struct Unk_800A4534 { char pad0[0xC]; unsigned int unkC; char pad10[0x34]; char* unk44; };
 EXTERN_C Unk_800A4534 D_800A4534;
 EXTERN_C void func_8002456C(void*);
 EXTERN_C void func_80024524(void*);
@@ -554,5 +555,22 @@ struct Unk_800D9E4C { char pad0[0x38]; void* unk38; Unk_Deletable* unk3C; };
 EXTERN_C void func_8005F5F4(void*, void*, int);
 EXTERN_C void func_800215E8(int, void*);
 EXTERN_C int D_800B4C38[];
+struct Unk_Pad4 { int pad0; };
+struct Unk_List2 { Unk_800BFB64_node* head; };
+inline Unk_800BFB64_node* first2(Unk_List2* l) { return l ? l->head : 0; }
+struct Unk_DualList : Unk_800BFB64_list, Unk_Pad4, Unk_List2 { };
+EXTERN_C void func_80019C68(void*, int);
+struct Unk_800C497C { char pad0[8]; int unk8; char padC_[0]; short unkC; short unkE; char pad10[0x20]; Unk_DualList* unk30; };
+struct Unk_800C4C04_h { char pad0[8]; int unk8; char padC[0x20]; };
+struct Unk_800C4C04 : VWith<Unk_800C4C04_h> { Unk_DualList* unk30; };
+struct Unk_800CAEE4 { char pad0[0x84]; Unk_DualList unk84; };
+struct Unk_Blk2B0 { char v[0x2B0]; };
+EXTERN_C Unk_Blk2B0 D_800EA2E8;
+struct Unk_Blk40 { char v[0x40]; };
+struct Unk_800E56B4 { char pad0[0x48]; Unk_Blk40* unk48; };
+struct Unk_Blk80 { char v[0x80]; };
+struct Unk_800E5760 { char pad0[0x44]; Unk_Blk80* unk44; };
+EXTERN_C Unk_Short2 func_800BE0C8(void*, short);
+EXTERN_C void func_800BE264(void*, Unk_Short2);
 
 #endif /* FIELD_FIELD_H */
