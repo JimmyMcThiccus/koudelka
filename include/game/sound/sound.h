@@ -156,5 +156,7 @@ EXTERN_C void SpuSetVoiceRRAttr(int voice, unsigned short rr, long mode);
 EXTERN_C void func_8008F4B0(Req_8008EF64 *r);
 EXTERN_C int func_8008F1DC(Req_8008EF64 *r, int vol, int pan);
 EXTERN_C void *func_8008F618(int id, Ent_8008F618 *e, int vol, int pan);
+typedef void (*SpuCb_8008CA50)(void);
+EXTERN_C SpuCb_8008CA50 func_8009F6D0(SpuCb_8008CA50 f);
 
 #endif /* GAME_SOUND_SOUND_H */
