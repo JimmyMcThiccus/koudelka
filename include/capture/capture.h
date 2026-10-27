@@ -226,10 +226,10 @@ struct C_800BF560 {
     void *vt;
     int f4;
     short f8, fA;
-    char fC;
+    signed char fC;
     int *f10, *f14;
     int f18, f1C;
-    char f20;
+    signed char f20;
     int f24;
     C_800BF560(short a, short n, char c);
 };
