@@ -163,7 +163,12 @@ struct Unk800B8F34B { s32 x0, x4; };
 struct Unk800B8F34 { s32 x0; Unk800B8F34B* x4; char p2[0x40-8]; u8* x40; };
 
 EXTERN_C void* D_800CBA90[];
-EXTERN_C void* func_800BD988(void*);
+EXTERN_C void func_800198E0(void*, s32, s32);
+EXTERN_C void DecDCTReset(s32);
+/* x0 and x8 are the virtual-base pointers of two bases sharing the list at xC
+   (see func_800BD83C); the ctor sets them without the in_chrg protocol. */
+struct L800BD988 { char d[0x14]; };
+struct Unk800BD988 { void* x0; s32 x4; void* x8; L800BD988 xC; s32 x20, x24; Unk800BD988(); };
 
 struct Unk800B95DCB { virtual void v1(); virtual void v2(void*, s32); };
 struct Unk800B95DC { s32 x0, x4; char x8[0x20]; };
@@ -537,5 +542,7 @@ struct Unk800B9208G { Unk800B9208L* x0; };
 struct Unk800B9208S { virtual void v1(); virtual void v2(); virtual void v3(); };
 EXTERN_C Unk800B9208G D_800AC854[];
 EXTERN_C Unk800B9208V* func_80019C68(Unk800B9208L*, s32);
+
+struct Unk800C40B8 { char pad[0x50]; s32 x50; s32 x54; s32 x58; };
 
 #endif /* MOVIE_H */

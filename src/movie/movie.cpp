@@ -163,11 +163,11 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BD008);
 
 EXTERN_C void func_800BD83C() { func_80018AF4(); Unk800BD83CS* s = (Unk800BD83CS*)D_800CBA90[0]; if (s->x20) s->x24 = 1; else if ((s ? s->x0 : 0)->x4) { Unk800BD83CH* h = s ? &s->x8 : 0; Unk800BD83CL* l = h ? h->x0 : 0; func_800BD008(l->x4 ? *l->x0 : 0); } func_80018B18(); }
 
-EXTERN_C void func_800BD8E8() { if (D_800CBA90[0] == 0) D_800CBA90[0] = func_800BD988(operator new(0x28)); }
+EXTERN_C void func_800BD8E8() { if (D_800CBA90[0] == 0) D_800CBA90[0] = new Unk800BD988; }
 
 EXTERN_C void func_800BD928() { if (D_800CBA90[0]) { DecDCToutCallback(0); Unk800BD928* t = (Unk800BD928*)D_800CBA90[0]; if (t) { func_80019920(t->x0, 0); operator delete(t); } D_800CBA90[0] = 0; } }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BD988);
+Unk800BD988::Unk800BD988() { x0 = x8 = &xC; func_800198E0(x8, 4, 0); x4 = 0; x20 = 0; x24 = 0; DecDCTReset(0); }
 
 EXTERN_C void func_800BD9DC(void* vs, void* item) { Unk800BD83CS* s = (Unk800BD83CS*)vs; s->x20 = 1; Unk800BD83CL* l = s ? s->x0 : 0; func_80019A6C(l, item, l->x4); if ((s ? s->x0 : 0)->x4 == 1) { Unk800BD83CH* h = s ? &s->x8 : 0; Unk800BD83CL* m = h ? h->x0 : 0; func_800BCEA0(m->x4 ? *m->x0 : 0); } s->x20 = 0; if (s->x24) { Unk800BD83CH* h2 = s ? &s->x8 : 0; Unk800BD83CL* m2 = h2 ? h2->x0 : 0; func_800BD008(m2->x4 ? *m2->x0 : 0); s->x24 = 0; } }
 
@@ -397,7 +397,7 @@ EXTERN_C s32 func_800C3F68(Unk800C3F68* p) { u32 i = 0; while (p->x30 == -1 && i
 
 EXTERN_C void func_800C407C(Unk800C407C* p) { p->x48 = p->x44->d; p->x4C = p->x44->e; p->x54 = (char*)p->x44->rows; p->x5C = p->x54 + p->x50 * 128; }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C40B8);
+EXTERN_C s32 func_800C40B8(void* vp) { Unk800C40B8* p = (Unk800C40B8*)vp; return p->x50 * 128 + 0x80 + p->x58; }
 
 EXTERN_C void func_800C40D0(void* vp, void* vq) { Unk800C40D0* p = (Unk800C40D0*)vp; Unk800C40D0S8* q = (Unk800C40D0S8*)vq; *(Unk800C40D0S5*)D_800CBAAC = *(Unk800C40D0S5*)(p->x38 == 0 ? D_800B7CAC : D_800B7CB4); *(Unk800C40D0S12*)D_800CBAB1 = *p->x40; *(Unk800C40D0S8*)(D_800CBAB1 + 0xC) = *q; D_800CBAB1[0x14] = 0; }
 
