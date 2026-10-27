@@ -24,6 +24,14 @@ struct GlobalInt_800B4CF0 {
 
 EXTERN_C GlobalInt_800B4CF0 D_800B4CF0;
 
+struct Obj_800AF414 {
+    char pad[0x54];
+    int a;
+    int b;
+};
+
+EXTERN_C Obj_800AF414 D_800AF414;
+
 EXTERN_C GlobalWord D_800AF470;
 EXTERN_C GlobalWord D_800AFA70;
 EXTERN_C GlobalWord D_800B1A68;
