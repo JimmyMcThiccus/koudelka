@@ -78,6 +78,36 @@ struct RandVal {
     int *vptr;
 };
 
+/* Unaligned 4-byte and 8-byte records (copied with lwl/lwr). */
+struct Color {
+    unsigned char r, g, b, a;
+};
+
+struct SVec4 {
+    short x, y, z, w;
+};
+
+/* Doubly linked node embedded at 0x18 of SubNode. */
+struct Link {
+    Link *prev;
+    Link *next;
+};
+
+struct SubNodeHead {
+    int pad[6];
+};
+
+struct SubNode : SubNodeHead, Link {
+};
+
+/* Object with eight word slots at 0x110 (0x800DAxxx code). */
+struct SlotSet {
+    char pad0[0x110];
+    int slots[8];
+    char pad130[0x10];
+    int cur;
+};
+
 /* Keyed value family (base vtable D_800D6188). Load functions read a record and
    return the pointer just past it. */
 struct Key {
@@ -108,6 +138,15 @@ struct KeyInt : Key {
     int value;
 };
 
+/* EFFECT functions called from code above their definition */
+EXTERN_C IdNode *func_800D67F4(IdNode *self, short id);
+EXTERN_C void func_800DE108(void *self, int i, Color *c);
+EXTERN_C void func_800DE38C(void *self, int i, SVec4 *v);
+EXTERN_C void func_800DE7A4(void *self, int i, Color *c);
+EXTERN_C char *func_800E40E4(void *self, char *src);
+EXTERN_C char *func_800E4110(void *self, char *src);
+EXTERN_C void func_800D67CC(IdNode *self, int flags);
+
 EXTERN_C int D_80010178[];
 EXTERN_C int D_800D5DB0[];
 EXTERN_C int D_800D5DC0[];
@@ -127,5 +166,34 @@ EXTERN_C int D_800D6110[];
 EXTERN_C int D_800D6138[];
 EXTERN_C int D_800D6160[];
 EXTERN_C int D_800D6188[];
+
+inline void key_init(Key *self, short id)
+{
+    self->vptr = D_800D6188;
+    self->id = id;
+    self->s2 = 0;
+    self->w4 = 0;
+}
+
+inline void vec4_zero(Vec4 *v)
+{
+    v->x = 0;
+    v->y = 0;
+    v->z = 0;
+    v->w = 0;
+}
+
+inline void keyvec_init(KeyVec *self, short id)
+{
+    key_init(self, id);
+    self->vptr = D_800D6160;
+    vec4_zero(&self->v);
+}
+
+inline void key_copy(Key *self, Key *other)
+{
+    self->s2 = other->s2;
+    self->w4 = other->w4;
+}
 
 #endif /* EFFECT_EFFECT_H */
