@@ -529,7 +529,11 @@ EXTERN_C int func_800756EC(void *self)
     return FIELD_AT(self, int, 0x0) == 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800756F8);
+EXTERN_C void *func_800756F8(void *self)
+{
+    FIELD_AT(self, void *, 0x0) = D_80016808;
+    return self;
+}
 
 EXTERN_C void *func_8007570C(void *self)
 {

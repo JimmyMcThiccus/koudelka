@@ -4,7 +4,7 @@
 /* Generated once by tools/hoist_decls.py from the units' inline declarations; edit freely. */
 
 /* from main_b.cpp */
-EXTERN_C void func_80053964(void *self);
+EXTERN_C void func_80053964(void *self, int b);
 
 /* from main_b.cpp */
 EXTERN_C void func_80058830(void *self, void *b);
@@ -327,7 +327,7 @@ EXTERN_C void func_80036D8C(void *p);
 /* from u_8005F238.cpp */
 EXTERN_C int D_800B4DC8;
 EXTERN_C int D_800B4DCC;
-EXTERN_C void func_8005F47C(int a, int b);
+EXTERN_C void func_8005F47C(void);
 
 /* from u_8005F238.cpp */
 EXTERN_C int D_800B4DC4;
@@ -557,7 +557,7 @@ EXTERN_C char D_800154B4[];
 EXTERN_C char D_800154D4[];
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8001D024(void *self);
+EXTERN_C void func_8001D024(void *self, int b);
 
 /* from u_800658E0.cpp */
 struct Mgr_800A4544 {
@@ -697,7 +697,7 @@ struct V_8006B928 {
 EXTERN_C V_8006B928 func_8003B310(void);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006BC98(void *self);
+EXTERN_C int func_8006BC98(void *self);
 EXTERN_C void *func_800A0D2C(int size);
 EXTERN_C void func_80025CE0(void *p, int b, int c);
 
@@ -2160,5 +2160,17 @@ struct Unpacked_8008B5B4 {
     Hdr_8008B5B4 hdr;
     Pair32_8008B5B4 e[9];
 };
+
+EXTERN_C char D_80016808[];
+struct Col_80065870 {
+    short r, g, b, a;
+};
+EXTERN_C Col_80065870 D_800B4E38;
+EXTERN_C Col_80065870 D_800B4E40;
+EXTERN_C Col_80065870 D_800B4E48;
+EXTERN_C Col_80065870 D_800B4E50;
+EXTERN_C char D_80014C38[];
+EXTERN_C void func_8008E504(void *p);
+EXTERN_C char D_80013B70[];
 
 #endif /* GAME_B_DECLS_B_H */

@@ -46,7 +46,7 @@ EXTERN_C void func_8005F440(int a, int b)
         D_800B4DC8 = a;
         D_800B4DCC = b;
     }
-    func_8005F47C(a, b);
+    func_8005F47C();
 }
 
 EXTERN_C int func_8005F470(void)
@@ -60,7 +60,18 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8005F50C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8005F5F4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8005F698);
+EXTERN_C void func_8005F698(void *self, int b)
+{
+    void *p;
+    FIELD_AT(self, void *, 0x0) = D_80014C38;
+    p = FIELD_AT(self, void *, 0xC);
+    if (p != 0) {
+        func_800A0D0C(p);
+    }
+    D_800B4DC4--;
+    func_8005F47C();
+    func_8001D024(self, b);
+}
 
 EXTERN_C void func_8005F704(Arr_8005F704 *self, unsigned int i, int v)
 {

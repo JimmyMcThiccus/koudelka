@@ -6,9 +6,9 @@
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
 
-EXTERN_C void func_80054A2C(void *self)
+EXTERN_C void func_80054A2C(void *self, int b)
 {
-    func_80053964(self);
+    func_80053964(self, b);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80054A4C);
@@ -17,7 +17,16 @@ INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80054AF0);
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80054B98);
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80054C34);
+EXTERN_C void func_80054C34(void *self, int b)
+{
+    char *h;
+    FIELD_AT(self, void *, 0x18) = D_80013B70;
+    func_80054FE0(self);
+    h = (char *)self + 0x1C;
+    func_80019D40(h ? FIELD_AT(h, List *, 0x0) : 0);
+    func_80019920(FIELD_AT(self, void *, 0x1C), 0);
+    func_80053964(self, b);
+}
 
 EXTERN_C void func_80054CA0(void *self)
 {

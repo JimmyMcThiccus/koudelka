@@ -174,4 +174,26 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064E0C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80065458);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80065870);
+EXTERN_C void func_80065870(void)
+{
+    Col_80065870 *a = &D_800B4E38;
+    Col_80065870 *b = &D_800B4E40;
+    Col_80065870 *c = &D_800B4E48;
+    Col_80065870 *d = &D_800B4E50;
+    a->r = 0xFF;
+    a->g = 0x40;
+    a->b = 0x10;
+    D_800B4E38.a = 0;
+    b->r = 0xC0;
+    b->g = 0xC0;
+    b->b = 0xFF;
+    D_800B4E40.a = 0;
+    c->r = 0x80;
+    c->g = 0x20;
+    c->b = 0x20;
+    D_800B4E48.a = 0;
+    d->r = 0xFF;
+    d->g = 0xFF;
+    d->b = 0xFF;
+    D_800B4E50.a = 0;
+}
