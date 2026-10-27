@@ -127,5 +127,10 @@ EXTERN_C void func_8008CFD4(void);
 EXTERN_C void func_8008D038(int v, short *out, int side);
 EXTERN_C void func_80093A80(void *drv, int bits);
 EXTERN_C void func_800A0800(int a, int b);
+struct Song_8008EB40;
+EXTERN_C Song_8008EB40 *func_8008EB40(int n);
+EXTERN_C void func_8008D808(void *n);
+EXTERN_C int func_800947B8(void *a);
+EXTERN_C void SpuSetVoiceRRAttr(int voice, unsigned short rr, long mode);
 
 #endif /* GAME_SOUND_SOUND_H */
