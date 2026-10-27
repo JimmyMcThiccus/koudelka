@@ -36,7 +36,7 @@ The last line must be `functional check: OK`.
 
    ```powershell
    .venv/Scripts/python.exe tools/try_compile.py scratch_c/f.cpp func_XXXXXXXX
-   # overlays: add --asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN
+   # overlays: add --asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --cflags "-O2 -G0"
    ```
 
    Done means `0 differing instructions`.
