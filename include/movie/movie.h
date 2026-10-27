@@ -111,12 +111,52 @@ struct Unk800BCE4C { char pad[0x14]; Unk800BCE4CR x14[3]; char p2[0x30-0x2C]; s3
 
 EXTERN_C void func_8001AB50(void*, s32);
 
-struct Unk800BF898 { char pad[0x78]; void* x78; };
-EXTERN_C void func_800C3D5C(void*);
+struct Unk800C3D5C { char pad[0x34]; s32 x34, x38; };
+struct Unk800BF898 { char pad[0x78]; Unk800C3D5C* x78; };
+EXTERN_C int func_800C3D5C(Unk800C3D5C*, s32);
 
 struct DIRENTRY { char name[20]; s32 attr; s32 size; DIRENTRY* next; s32 head; char system[4]; };
 EXTERN_C char D_800CBAAC[];
 EXTERN_C void func_800C40D0(void*);
 EXTERN_C DIRENTRY* firstfile(char*, DIRENTRY*);
+
+struct Unk800B988C { char pad[0x2C];
+  virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+  virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual s32 v14(s32); };
+
+struct Unk800B9848B { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); };
+struct Unk800B9848 { s32 x0, x4; Unk800B9848B* x8; };
+
+struct Unk800B977C { void* x0; };
+EXTERN_C char D_800B6FBC[];
+
+struct Unk800C3D1C { char pad[0x2C]; char* x2C; };
+
+
+struct Unk800C9058B { char pad[0x1D2]; u8 x1D2; };
+struct Unk800C9058 { char pad[0x20]; s32 x20; };
+EXTERN_C Unk800C9058B* D_800A4578[];
+EXTERN_C void func_800550FC(Unk800C9058*, s32);
+
+struct Unk800C1690B { char pad[0x1BC]; s32 x1BC, x1C0; char p2[0x204-0x1C4]; s32 x204, x208; };
+EXTERN_C Unk800C1690B* D_800B4DD0[];
+
+struct Unk800C407CH { s32 x0; char d[0x5C]; char e[0x20]; char rows[1][128]; };
+struct Unk800C407C { char pad[0x44]; Unk800C407CH* x44; char* x48; char* x4C; s32 x50; char* x54; char* x58; char* x5C; };
+
+struct Unk800C8A54R { char pad[0x1E]; u16 x1E; char p2[40-0x20]; };
+struct Unk800C8A54 { Unk800C8A54R x0[1]; };
+struct Unk800C8A54B { char pad[8]; u16 x8; };
+EXTERN_C s32 D_800B4CF0[];
+EXTERN_C void func_8005F1D8(Unk800C8A54*, Unk800C8A54B*);
+
+struct Unk800B8F34B { s32 x0, x4; };
+struct Unk800B8F34 { s32 x0; Unk800B8F34B* x4; char p2[0x40-8]; u8* x40; };
+
+EXTERN_C void* D_800CBA90[];
+EXTERN_C void* func_800BD988(void*);
+
+struct Unk800B95DCB { virtual void v1(); virtual void v2(void*, s32); };
+struct Unk800B95DC { s32 x0, x4; char x8[0x20]; };
 
 #endif /* MOVIE_H */
