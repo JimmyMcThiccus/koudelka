@@ -68,6 +68,46 @@ struct CondMin : Cond {
     short min;
 };
 
+/* Randomised value (vtable D_800D6038 at 0xC). */
+struct RandVal {
+    short base;
+    short step;
+    short range;
+    short phase;
+    short spread;
+    int *vptr;
+};
+
+/* Keyed value family (base vtable D_800D6188). Load functions read a record and
+   return the pointer just past it. */
+struct Key {
+    short id;
+    short s2;
+    int w4;
+    int *vptr;
+};
+
+struct Vec4 {
+    int x, y, z, w;
+    Vec4() {}
+    Vec4(int ax, int ay, int az, int aw) : x(ax), y(ay), z(az), w(aw) {}
+};
+
+/* Key with a vector (vtable D_800D6160, derived D_800D6048/D_800D6070). */
+struct KeyVec : Key {
+    Vec4 v;
+};
+
+/* KeyVec subclasses D_800D6048 and D_800D6070 add a word. */
+struct KeyVec2 : KeyVec {
+    int extra;
+};
+
+/* Key with one extra word (vtables D_800D6098, D_800D60C0, D_800D60E8, D_800D6110, D_800D6138). */
+struct KeyInt : Key {
+    int value;
+};
+
 EXTERN_C int D_80010178[];
 EXTERN_C int D_800D5DB0[];
 EXTERN_C int D_800D5DC0[];
@@ -75,5 +115,17 @@ EXTERN_C int D_800D5E18[];
 EXTERN_C int D_800D5E70[];
 EXTERN_C int D_800D5EC8[];
 EXTERN_C int D_800D5F20[];
+EXTERN_C int D_800D5F78[];
+EXTERN_C int D_800D5FD0[];
+EXTERN_C int D_800D6038[];
+EXTERN_C int D_800D6048[];
+EXTERN_C int D_800D6070[];
+EXTERN_C int D_800D6098[];
+EXTERN_C int D_800D60C0[];
+EXTERN_C int D_800D60E8[];
+EXTERN_C int D_800D6110[];
+EXTERN_C int D_800D6138[];
+EXTERN_C int D_800D6160[];
+EXTERN_C int D_800D6188[];
 
 #endif /* EFFECT_EFFECT_H */
