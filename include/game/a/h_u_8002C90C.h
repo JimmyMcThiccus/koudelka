@@ -57,4 +57,28 @@ struct S_Iter {
 };
 #define DRW(p) ((S_Drawable *)(p))
 
+EXTERN_C void *func_8002E714(void *p, int n);
+EXTERN_C void func_8002D24C(void *p, void *rect);
+struct S_Pt2 { short x, y; };
+struct S_Rect8 { S_Pt2 pos; S_Pt2 size; };
+EXTERN_C void func_8002D780(void *p, S_Pt2 pos);
+struct S_Blk8 { unsigned char b[8]; };
+struct S_8002C9D4 {
+    void **vt;
+    char pad4[0xC];
+    int unk10;
+    char pad14[4];
+    int unk18;
+    int unk1C;
+    S_Blk8 blk20;
+    short unk28;
+    short unk2A;
+    int unk2C;
+    int unk30;
+    char pad34[0x30];
+    void *unk64;
+    S_8002C9D4(const S_8002C9D4 &src);
+    S_8002C9D4(const S_8002C9D4 &src, S_Rect8 *rect);
+};
+
 #endif /* GAME_A_H_U_8002C90C_H */

@@ -147,4 +147,14 @@ struct POLY_F4 { unsigned char tag[3]; unsigned char len; unsigned char r0, g0, 
 struct S_80031280 { void **vt; S_80031280 *next; S_8002F558 b; S_Vec4sA v[4]; int c34; POLY_F4 prim[2]; };
 struct S_Pool834 { int a; S_80031280 *free; int c; int d; };
 
+EXTERN_C int *func_80030694(int *p);
+struct S_80030534 {
+    void **vt;
+    int unk4;
+    S_8002F558 b;
+    S_Vec4sA v[3];
+    int m2C[6];
+    S_80030534();
+};
+
 #endif /* GAME_A_H_U_8002ED44_H */

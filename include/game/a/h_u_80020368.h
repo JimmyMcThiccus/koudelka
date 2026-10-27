@@ -28,4 +28,10 @@ struct S_800207C4_R { char pad[8]; void *unk8; char padC[8]; int unk14; };
 struct S_800207C4 { int a; S_VObj *unk4; char pad[0x40]; short unk48; short unk4A; unsigned int unk4C; short unk50; short unk52; int unk54; };
 struct S_80020A30 { int a; S_VObj *unk4; S_Iter iter; };
 
+EXTERN_C void *func_8001FC38(void *p, int a, int b, int c);
+EXTERN_C void *D_800105DC[];
+EXTERN_C void *D_80010588[];
+struct S_80020538 { void **vt; char pad[0x10]; int unk14; short unk18; short unk1A;
+    S_80020538(unsigned short a, short b, short c, int d, unsigned short e, int f); };
+
 #endif /* GAME_A_H_U_80020368_H */

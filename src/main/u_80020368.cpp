@@ -28,7 +28,15 @@ EXTERN_C int func_8002052C(S_80020510 *p)
     return p->unk18;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020368", func_80020538);
+S_80020538::S_80020538(unsigned short a, short b, short c, int d, unsigned short e, int f)
+{
+    func_8001FC38(this, a, d, e);
+    vt = D_800105DC;
+    unk14 = f;
+    vt = D_80010588;
+    unk18 = b;
+    unk1A = c;
+}
 
 EXTERN_C void func_800205B4(void *p, int a)
 {

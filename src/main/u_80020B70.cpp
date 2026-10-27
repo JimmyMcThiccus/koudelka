@@ -242,7 +242,31 @@ EXTERN_C void func_80021300(int a, int b)
     D_800B4C38 = func_80021348(operator new(0x14), a, b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80021348);
+EXTERN_C void *func_80021348(void *q, int a, int b)
+{
+    int n, i;
+    S_80021274 *arr, *s;
+#define P ((S_TexPool *)q)
+#define R ((S_Rect8 *)a)
+    P->unk10 = D_80010694;
+    P->r = *R;
+    P->unkC = b;
+    n = (R->h * R->w) / 256;
+    arr = (S_80021274 *)func_800A0D2C(n * sizeof(S_80021274));
+    s = arr;
+    i = n - 1;
+    if (i >= 0) {
+        do {
+            func_80021144(s);
+            i--;
+            s++;
+        } while (i != -1);
+    }
+    P->arr = arr;
+    return q;
+#undef P
+#undef R
+}
 
 EXTERN_C void func_8002141C(void *q, int flags)
 {
@@ -272,7 +296,16 @@ EXTERN_C void func_800215E8(void *q, void *x)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_800216A4);
+EXTERN_C S_SlotRef func_800216A4(S_SlotTbl *t, int x)
+{
+    S_SlotRef r;
+    for (r.b = 0; r.b < t->unkA; r.b++) {
+        r.a = func_80021294(&t->arr[r.b], x);
+        if (r.a >= 0)
+            break;
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80021764);
 
@@ -534,7 +567,21 @@ EXTERN_C S_IntVec *func_80022CF0(S_IntVec *p, unsigned int n)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80022D64);
+EXTERN_C void func_80022D64(S_IntVec *p, int flags)
+{
+    unsigned int i;
+    void *o;
+    p->vtbl = D_80010714;
+    for (i = 0; i < p->count; i++) {
+        o = (void *)p->data[i];
+        if (o)
+            VCALL(o, 1, Fn_vi, 3);
+    }
+    if (p->data)
+        func_800A0D0C(p->data);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80022E28);
 
@@ -776,7 +823,31 @@ EXTERN_C int func_800246EC(S_800246EC *p, int a)
     return a + 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80024770);
+EXTERN_C int func_80024770(S_PadLv *p, int x)
+{
+    int n;
+    unsigned char *q;
+    if (p->unk10) {
+    if (p->unk14) {
+        int d = 0xFFFF / ((1 << (p->unk14 * 8)) - 1);
+        x = (x + d / 2) / d;
+        p->unk18 = x;
+        n = p->unk14;
+    } else {
+        x = x != 0;
+        p->unk18 = x;
+        n = 1;
+    }
+    q = p->unkC + n;
+    do {
+        *--q = x;
+        n--;
+        x >>= 8;
+    } while (n);
+    return p->unk18 != 0;
+    }
+    return 0;
+}
 
 EXTERN_C int func_80024858(S_80024858 *p)
 {
@@ -814,7 +885,32 @@ EXTERN_C int *func_80024940(char *p, int *q)
     return q + 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80024974);
+EXTERN_C int func_80024974(S_PadLv *p, int v)
+{
+    void *b;
+    char *g;
+    p->unk14 = v;
+    p->unk18 = v;
+    b = p ? (char *)p + 0x1C : 0;
+    g = D_800A4558;
+    if (func_80019C24((Holder *)g, b)) {
+        if (!v) {
+            Holder *h8;
+            b = p ? (char *)p + 0x1C : 0;
+            h8 = g ? (Holder *)(g + 8) : 0;
+            func_80019CFC(h8, b);
+            p->unkC[0] = 0x40;
+            p->unkC[1] = 0;
+            PadSetAct(p->unk4, p->unkC, 2);
+        }
+    } else if (v) {
+        List *l;
+        b = p ? (char *)p + 0x1C : 0;
+        l = (Holder *)g;
+        func_80019A6C(l, (int)b, l->count);
+    }
+    return 1;
+}
 
 EXTERN_C void func_80024A80(S_Act *p)
 {
@@ -827,7 +923,20 @@ EXTERN_C void func_80024A80(S_Act *p)
     PadSetAct(p->unk4, p->unkC, 2);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80024AF0);
+EXTERN_C void func_80024AF0(void *q, int flags)
+{
+#define P ((S_80024CA0 *)q)
+    *(void ***)((char *)q + 8) = D_80010888;
+    *(void ***)q = D_800108A0;
+    if (P->unk1E != 0xFFFF)
+        func_80025714(&D_800B4C48, q);
+    if (P->unk18 && P->unk1E != 0xFFFE)
+        func_800A0D0C(P->unk18);
+    if (P->unkC)
+        VCALL(P->unkC, 1, Fn_vi, 3);
+    func_8001A610(q, flags);
+#undef P
+}
 
 EXTERN_C S_IdNode1E *func_80024BB0(S_IdNode1E *n, unsigned short id)
 {
@@ -889,7 +998,15 @@ EXTERN_C void func_80024E44(S_80024CA0 *p, S_Rect8 *r)
     p->unk1E = 0xFFFF;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80024EE4);
+EXTERN_C void func_80024EE4(char *p)
+{
+    if (*(void **)(p + 0x18)) {
+        S_118 *o = new S_118(p ? p + 8 : 0, 1);
+        char *g = (char *)&D_800AC57C;
+        char *l = g ? g + 0xF8 : 0;
+        func_8001D150(l, new S_Evt338(o, 0x80, 1));
+    }
+}
 
 EXTERN_C void func_80024FA8(S_80024FA8 *p)
 {

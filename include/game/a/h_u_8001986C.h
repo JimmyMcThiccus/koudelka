@@ -123,4 +123,25 @@ static inline void link_8001ADE0(S_Heap *h, S_HeapE *a, S_HeapE *b)
     func_8001AD18(h, a);
 }
 
+struct S_8001B394 {
+    char pad0[0x14C];
+    int unk14C;
+    void *unk150;
+};
+struct S_800EA8A0;
+EXTERN_C S_800EA8A0 D_800EA8A0[];
+EXTERN_C void *func_80018C90(unsigned int size);
+EXTERN_C void *func_8001AF8C(S_Heap *h, unsigned int size);
+EXTERN_C void *func_80018D80(unsigned int size);
+EXTERN_C void *func_80027E30(unsigned int size);
+EXTERN_C void func_80027FB0(void *p);
+EXTERN_C int func_80018DF4(int *p);
+EXTERN_C void func_8002D1E0();
+EXTERN_C int DrawSync(int mode);
+EXTERN_C int ResetRCnt(int spec);
+static inline bool above_8001B1C8(S_Heap *h, void *p)
+{
+    return (char *)h->e < (char *)p;
+}
+
 #endif /* GAME_A_H_U_8001986C_H */

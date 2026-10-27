@@ -98,7 +98,22 @@ EXTERN_C int func_8002E4DC(S_8002E4B8 *p)
     return p->unk1C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E4E8);
+S_8002E4E8::S_8002E4E8(int a, int n, int b)
+{
+    func_8002E714(this, n);
+    vt = D_800117A4;
+    unk18 = a;
+    unk1C = 0;
+    unk20[0] = 0;
+    unk20[1] = 0;
+    unk20[2] = 0;
+    unk20[3] = 0;
+    unk20[4] = 0;
+    unk20[5] = 0;
+    unk2C = 0;
+    unk30 = b;
+    unk64 = 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E564);
 

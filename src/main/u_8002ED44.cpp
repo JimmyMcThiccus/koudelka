@@ -165,7 +165,7 @@ EXTERN_C int func_8002F4CC(S_8002F4CC *p)
     return p->unk14;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002F4D8);
+INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", __10S_8002F4D8Pv);
 
 EXTERN_C void func_8002F520(void *p, int a)
 {
@@ -468,7 +468,26 @@ EXTERN_C int func_80030528(S_80030528 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_80030534);
+S_80030534::S_80030534()
+{
+    int i;
+    S_Vec4sA *q;
+    vt = D_80010178;
+    b.vt = D_80011A44;
+    unk4 = 0;
+    b.v.clear();
+    b.vt = D_80011AAC;
+    vt = D_80011B14;
+    q = v;
+    for (i = 2; i != -1; i--) {
+        q->x = 0; q->y = 0; q->z = 0; q->w = 0; q++;
+    }
+    b.vt = D_80011B8C;
+    vt = D_80011BF4;
+    func_80030694(m2C);
+    b.vt = D_80011C44;
+    vt = D_80011CAC;
+}
 
 EXTERN_C void func_80030608(S_8002F824 *p, int flags)
 {

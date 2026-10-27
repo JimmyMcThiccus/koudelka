@@ -34,9 +34,42 @@ EXTERN_C void func_8002C9B4(void *p, int a)
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C9D4);
+S_8002C9D4::S_8002C9D4(const S_8002C9D4 &src)
+{
+    func_8002E714(this, src.unk10);
+    vt = D_800117A4;
+    unk18 = src.unk18;
+    blk20 = src.blk20;
+    unk28 = 0;
+    unk2A = 0;
+    unk1C = src.unk1C;
+    unk2C = 0;
+    unk30 = src.unk30;
+    unk64 = 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CA64);
+S_8002C9D4::S_8002C9D4(const S_8002C9D4 &src, S_Rect8 *rect)
+{
+    func_8002E714(this, src.unk10);
+    vt = D_800117A4;
+    unk18 = src.unk18;
+    *(short *)&blk20.b[0] = 0;
+    *(short *)&blk20.b[2] = 0;
+    *(short *)&blk20.b[4] = 0;
+    *(short *)&blk20.b[6] = 0;
+    unk28 = 0;
+    unk2A = 0;
+    func_8002D24C(this, rect);
+    S_Pt2 pos;
+    S_Rect8 r;
+    r = *rect;
+    pos = r.pos;
+    func_8002D780(this, pos);
+    unk1C = src.unk1C;
+    unk2C = 0;
+    unk30 = src.unk30;
+    unk64 = 0;
+}
 
 EXTERN_C void func_8002CB44(S_Drawable *p, int flags)
 {

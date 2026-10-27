@@ -27,7 +27,7 @@ EXTERN_C S_8001A294 *func_80027930(S_8001A294 *p, int a)
 EXTERN_C void func_80027948()
 {
     if (!D_800B4C5C && !D_800B4C58)
-        D_800B4C5C = func_800279C0(operator new(0x20));
+        D_800B4C5C = new C_800279C0;
 }
 
 EXTERN_C void func_8002798C()
@@ -41,7 +41,15 @@ EXTERN_C void func_800279A8()
     D_800B4C58++;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800278EC", func_800279C0);
+C_800279C0::C_800279C0()
+{
+    vt = D_80010348;
+    vt4 = D_8001116C;
+    vt = D_800111A4;
+    void *m = D_800A4544;
+    func_8001D150(m, new S_N338(this));
+    unkC = 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800278EC", func_80027A60);
 

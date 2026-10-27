@@ -17,7 +17,6 @@ EXTERN_C S_800EA8A4 D_800EA8A4;
 EXTERN_C char D_800EA8A8[];
 EXTERN_C void func_80018C1C(void *p);
 EXTERN_C void *D_800B4C5C;
-EXTERN_C void *func_800279C0(void *p);
 struct S_80028330 { char pad0[0x10]; VEnt *vt; };
 struct S_Ptr4C38;
 EXTERN_C S_Ptr4C38 D_800B4C38;

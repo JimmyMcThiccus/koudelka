@@ -366,4 +366,61 @@ struct S_HTbl {
     unsigned int count;
 };
 
+EXTERN_C void func_80025714(void *list, void *p);
+EXTERN_C void *D_800108A0[];
+EXTERN_C void *D_80010118[];
+EXTERN_C S_80021274 *func_80021144(S_80021274 *p);
+EXTERN_C int func_80021294(S_80021274 *p, int x);
+struct S_SlotRef {
+    short a;
+    short b;
+    S_SlotRef() : a(0), b(0) {}
+};
+struct S_118 {
+    void **vtbl;
+    void *unk4;
+    int unk8;
+    S_118(void *a, int b) { vtbl = D_80010118; unk4 = a; unk8 = b; }
+};
+struct S_TexPool {
+    S_80021274 *arr;
+    S_Rect8 r;
+    int unkC;
+    void **unk10;
+};
+
+EXTERN_C int LoadImage(S_Rect8 *r, void *p);
+EXTERN_C int func_80019C24(List *l, void *item);
+struct S_VramV;
+struct S_VramV {
+    virtual void f1();
+    virtual void f2();
+    virtual void f3();
+    virtual void f4();
+    virtual int f5(S_Pt4 pos);
+};
+EXTERN_C S_VramV *D_800B4C54[0];
+struct S_TexImg {
+    char pad0[0x4];
+    S_VramV *unk4;
+    char pad8[0x4];
+    S_AnimV *unkC;
+    S_Pt4 pos;
+    S_Pt4 size;
+    short *unk18;
+    unsigned short unk1C;
+    unsigned short unk1E;
+    S_Pt4 getPos() { return pos; }
+    S_Pt4 getSize() { return size; }
+};
+struct S_PadLv {
+    char pad0[0x4];
+    int unk4;
+    char pad8[0x4];
+    unsigned char *unkC;
+    int unk10;
+    int unk14;
+    int unk18;
+};
+
 #endif /* GAME_A_H_U_80020B70_H */

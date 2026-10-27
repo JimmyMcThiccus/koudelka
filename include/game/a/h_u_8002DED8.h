@@ -34,4 +34,19 @@ struct S_8002EB68_M { int a; S_8002EB68_O *unk4; };
 struct S_8002EB68 { int a; S_8002EB68_M *unk4; };
 struct S_Rect { short x, y, w, h; S_Rect(short ax, short ay) { x = ax; y = ay; } };
 
+EXTERN_C void *func_8002E714(void *p, int n);
+EXTERN_C void *D_800117A4[];
+struct S_8002E4E8 {
+    void **vt;
+    char pad4[0x14];
+    int unk18;
+    int unk1C;
+    short unk20[6];
+    int unk2C;
+    int unk30;
+    char pad34[0x30];
+    void *unk64;
+    S_8002E4E8(int a, int n, int b);
+};
+
 #endif /* GAME_A_H_U_8002DED8_H */

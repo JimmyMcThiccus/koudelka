@@ -715,11 +715,48 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001AF8C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B0C0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B134);
+EXTERN_C void *func_8001B134(unsigned int size)
+{
+    void *r;
+    func_800186E8(&D_800A451C);
+    r = size > 0xBFFF ? func_80027E30(size) : 0;
+    if (!r) {
+        if (size >= 0x400)
+            r = func_80018C90(size);
+        else
+            r = func_8001AF8C((S_Heap *)D_800B4C04, size);
+    }
+    func_80018788(&D_800A451C);
+    return r;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B1C8);
+EXTERN_C void func_8001B1C8(void *p)
+{
+    func_800186E8(&D_800A451C);
+    if ((char *)p < (char *)D_800EA8A0) {
+        func_80027FB0(p);
+    } else {
+        S_Heap *h = (S_Heap *)D_800B4C04;
+        while (!above_8001B1C8(h, p))
+            h = (S_Heap *)h->unk4;
+        if (h)
+            func_8001ADE0(h, (S_HeapE *)p);
+        else
+            func_80018C1C(p);
+    }
+    func_80018788(&D_800A451C);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B26C);
+EXTERN_C void *func_8001B26C(unsigned int size)
+{
+    void *r;
+    func_800186E8(&D_800A451C);
+    r = func_80018D80(size);
+    if (!r)
+        r = func_80018C90(size);
+    func_80018788(&D_800A451C);
+    return r;
+}
 
 EXTERN_C void func_8001B2D8(void *p)
 {
@@ -743,7 +780,19 @@ EXTERN_C void func_8001B318(void *p, int a)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B338);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B394);
+EXTERN_C void func_8001B394(S_8001B394 *p)
+{
+    ResetRCnt(0xF2000001);
+    if (!p->unk14C && DrawSync(1))
+        return;
+    if (p->unk150) {
+        func_8002D1E0();
+        char *g = (char *)D_800A4578[0];
+        func_8001EFE4(g ? g + 0x50 : 0, p->unk150);
+        p->unk150 = 0;
+        p->unk14C = 0;
+    }
+}
 
 EXTERN_C void func_8001B424()
 {
