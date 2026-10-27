@@ -85,7 +85,7 @@ Two things are specific to this compiler:
    ```
 
    This diffs it against retail; reference asm comes from `nonmatchings/` or `matchings/`. For an overlay, add
-   `--asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --cflags "-O2 -G0"` (overlays are built with `-G0`).
+   `--asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --as-G 0` (overlays: compiler `-G8`, assembler `-G0`).
 2. Replace the function's `INCLUDE_ASM(...)` line in the `.cpp` with the code.
    - Wrap free functions, and the asm functions they call, in `EXTERN_C` (`include/common.h`), so names stay
      `func_XXXXXXXX`.
