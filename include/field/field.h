@@ -345,7 +345,8 @@ struct Unk_800D3D54;
 EXTERN_C void func_800D3D54(Unk_800D3D54*);
 EXTERN_C void func_800D44D4(void*, void*);
 EXTERN_C void func_800D9C84(void*, int);
-EXTERN_C void func_800D9E4C(void*);
+struct Unk_800D9E4C;
+EXTERN_C void func_800D9E4C(Unk_800D9E4C*);
 EXTERN_C void func_800E6EF0(void*);
 EXTERN_C void func_800E75BC();
 
@@ -516,5 +517,42 @@ EXTERN_C int D_800AF40C[];
 EXTERN_C void func_8006F154();
 struct Unk_E16 { char pad0[0xD]; unsigned char unkD; unsigned char unkE; char padF; };
 struct Unk_800D3D54 : Unk_Pad10, Unk_Base { char pad14[8]; int unk1C; char pad20[0xF0]; Unk_E16 unk110[2]; };
+EXTERN_C void func_8008687C(Unk_Base*, int);
+struct Unk_Ent400 : Unk_Pad400, Unk_Base { char pad404[0xC]; unsigned short unk410; unsigned short unk412; char pad414[0xC]; unsigned short unk420; unsigned short unk422; };
+struct Unk_EntTab { int unk0; int unk4; void* unk8[1]; };
+struct Unk_EntTabObj : Unk_PadB8, Unk_EntTab { };
+struct Unk_EntOwner { char pad0[0x328]; Unk_EntTabObj* unk328; };
+inline Unk_EntTab* base(Unk_EntTabObj* o) { return o; }
+EXTERN_C Unk_EntOwner* D_800AF470[];
+struct Unk_800D5EFC { char pad0[0x3C]; void* unk3C; char pad40[0xAF8]; unsigned int unkB38; int unkB3C; };
+EXTERN_C void func_8005816C(void*, int);
+struct Unk_800DFB10 { char pad0[0x3C]; VAt<0x18>* unk3C; };
+EXTERN_C void func_8007E47C(void*);
+EXTERN_C VAt<0x18>* func_800DFC8C(void*, int, void*, int, int);
+struct Unk_800E31B8 { char pad0[0x6C]; int unk6C; };
+struct Unk_800E8B9C { char pad0[0xFC]; Unk_Deletable18* unkFC; };
+EXTERN_C int func_80063744(void*, int);
+EXTERN_C void func_800E8C34(void*);
+struct Unk_Sprt16_24c : VAt0 { char pad4[4]; short unk8; char padA[0x1A]; SPRT_16 unk24[2]; };
+struct Unk_800BF2C0_src { int unk0; int unk4; signed char unk8; signed char unk9; short unkA; short unkC; };
+struct C_800BF2C0 {
+    void* vtbl; int unk4; int unk8; int unkC; signed char unk10; signed char unk11; short unk12; short unk14; short pad16;
+    void* unk18; int unk1C;
+    C_800BF2C0(Unk_800BF2C0_src*);
+};
+struct Unk_800BFCEC_r { char pad0[0x1B8]; Unk_800BFC58_s* unk1B8; };
+struct Unk_800BFCEC { char pad0[0x610]; Unk_800CAD68_m unk610; char pad61C[0x14]; Unk_800BFCEC_r* unk630; };
+EXTERN_C void func_80039DD8(void*);
+EXTERN_C void func_800C7984(void*);
+EXTERN_C void func_800C7890(void*);
+struct Unk_800C1120_e : Unk_Pad400, VAt<0x9C> { virtual int vf09(...); };
+EXTERN_C int D_800B4D5C[];
+EXTERN_C int D_800EA0B4[];
+struct Unk_Short4v { short x, y, z, w; Unk_Short4v(short a, short b, short c, short d) { x = a; y = b; z = c; w = d; } };
+EXTERN_C void func_80043D38(void*, Unk_Short4v);
+struct Unk_800D9E4C { char pad0[0x38]; void* unk38; Unk_Deletable* unk3C; };
+EXTERN_C void func_8005F5F4(void*, void*, int);
+EXTERN_C void func_800215E8(int, void*);
+EXTERN_C int D_800B4C38[];
 
 #endif /* FIELD_FIELD_H */

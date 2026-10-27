@@ -3,3 +3,4 @@ __10C_800BD220ssSc = 0x800BD220; // type:func
 D_800B85F4 = 0x800B85F4; // force_not_migration:True
 D_800B8608 = 0x800B8608; // force_not_migration:True
 D_800B8618 = 0x800B8618; // force_not_migration:True
+__10C_800BF2C0P16Unk_800BF2C0_src = 0x800BF2C0; // type:func
