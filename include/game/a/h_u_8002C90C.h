@@ -6,4 +6,55 @@
 struct S_8002C918 { void **vt; int a; };
 EXTERN_C void *D_8001178C[];
 
+struct S_Sh4 { short a, b, c, d; };
+struct S_Sh2 { short a, b; };
+EXTERN_C S_Sh4 D_800AC730[];
+EXTERN_C S_Sh2 D_800B4CF4[2];
+
+struct VtE { short delta; short index; void *pfn; };
+struct S_VObj { VtE *vt; };
+EXTERN_C void func_8001D150(void *sched, void *timer);
+EXTERN_C void *func_8001A744(void *list, void *item);
+EXTERN_C int func_80019CFC(List *l, void *item);
+EXTERN_C void func_8001A864(void *a, void *b);
+EXTERN_C void func_8002E7A8(void *p, int flags);
+EXTERN_C void *D_80010148[];
+EXTERN_C void *D_80010160[];
+EXTERN_C void *D_80010338[];
+EXTERN_C void *D_800117A4[];
+struct S_Timer14 {
+    void **vt;
+    int unk4;
+    void *unk8;
+    short unkC;
+    int unk10;
+    S_Timer14(void *t, short d, int n) { vt = D_80010178; unk4 = 0; vt = D_80010338; unk8 = t; unkC = d; unk10 = n; }
+};
+struct S_Deleter {
+    void **vt;
+    int unk4;
+    void *operator new(unsigned int n) { return __builtin_new(n); }
+    S_Deleter()
+    {
+        vt = D_80010160;
+        unk4 = 1;
+        char *g = (char *)&D_800AC57C;
+        void *s = g ? g + 0xF8 : 0;
+        func_8001D150(s, new S_Timer14(this, 0x80, 1));
+    }
+};
+struct S_DeleteObj : S_Deleter {
+    void *obj;
+    S_DeleteObj(void *o) { vt = D_80010148; obj = o; }
+};
+struct S_Drawable { void **vt; char pad[0x60]; void *unk64; };
+struct S_Lnk64 { int a; S_Lnk64 *next; };
+struct S_PtrVec { void **data; int count; };
+struct S_Iter {
+    S_PtrVec *l;
+    int it;
+    void *next() { return it < l->count ? l->data[it++] : 0; }
+};
+#define DRW(p) ((S_Drawable *)(p))
+
 #endif /* GAME_A_H_U_8002C90C_H */

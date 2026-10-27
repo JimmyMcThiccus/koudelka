@@ -17,9 +17,17 @@ EXTERN_C S_8002C918 *func_8002C918(S_8002C918 *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C93C);
+EXTERN_C void func_8002C93C(int a)
+{
+    List *l = &D_800AC710;
+    func_80019A6C(l, a, 0);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C974);
+EXTERN_C void func_8002C974(int a)
+{
+    List *l = &D_800AC710;
+    func_80019A6C(l, a, l->count);
+}
 
 EXTERN_C void func_8002C9B4(void *p, int a)
 {
@@ -30,9 +38,24 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002C9D4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CA64);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CB44);
+EXTERN_C void func_8002CB44(S_Drawable *p, int flags)
+{
+    p->vt = D_800117A4;
+    if (p->unk64)
+        new S_DeleteObj(p->unk64);
+    char *g = (char *)&D_800AC710;
+    Holder *h = g ? (Holder *)(g + 8) : 0;
+    func_80019CFC(h, p);
+    func_8002E7A8(p, flags);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CC60);
+EXTERN_C void func_8002CC60(S_Drawable *p)
+{
+    if (p->unk64)
+        new S_DeleteObj(p->unk64);
+    p->unk64 = 0;
+    new S_DeleteObj(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CDC0);
 
@@ -44,16 +67,67 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D24C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D780);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D8AC);
+EXTERN_C int func_8002D8AC(void *p, void *it, int v)
+{
+    void *o;
+    if (!DRW(p)->unk64)
+        return 0;
+    for (((S_Iter *)it)->it = 0; (o = ((S_Iter *)it)->next()) != 0;)
+        if (((int (*)(void *, void *))func_8001A6A8)(DRW(p)->unk64, o) != v)
+            return v;
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D94C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002DA94);
+EXTERN_C void *func_8002DA94(void *p, void *it)
+{
+    S_Lnk64 *o;
+    ((S_Iter *)it)->it = 0;
+    while ((o = (S_Lnk64 *)((S_Iter *)it)->next()) != 0) {
+        S_Lnk64 *h = (S_Lnk64 *)DRW(p)->unk64;
+        if (h) {
+            if (o->next)
+                func_8001A864(h, o->next);
+            o->next = h;
+        }
+        DRW(p)->unk64 = o;
+    }
+    return it;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002DB50);
+EXTERN_C void func_8002DB50(void *p, int del)
+{
+    if (DRW(p)->unk64) {
+        if (del)
+            new S_DeleteObj(DRW(p)->unk64);
+        DRW(p)->unk64 = 0;
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002DC34);
+EXTERN_C int func_8002DC34(void *p, int a, int del)
+{
+    if (DRW(p)->unk64 && ((int (*)(void *, int))func_8001A6A8)(DRW(p)->unk64, a)) {
+        DRW(p)->unk64 = func_8001A744(DRW(p)->unk64, (void *)a);
+        if (del)
+            new S_DeleteObj((void *)a);
+        return a;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002DD34);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002DE7C);
+EXTERN_C void func_8002DE7C()
+{
+    int i, j;
+    S_Sh4 *p = D_800AC730;
+    S_Sh2 *q;
+    for (i = 1; i != -1; i--) {
+        p->a = 0; p->b = 0; p->c = 0; p->d = 0; p++;
+    }
+    q = D_800B4CF4;
+    for (j = 1; j != -1; j--) {
+        q->a = 0; q->b = 0; q++;
+    }
+}
