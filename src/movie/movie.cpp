@@ -565,7 +565,7 @@ EXTERN_C void func_800C8340(Unk800C8340* p, void* q) { if (p->x8) { func_8005C08
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C83CC);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C84FC);
+EXTERN_C void func_800C84FC(Unk800C8594* p, Unk800C8594Q d) { s32 i = D_800B4CF0[0]; p->x10[i].x0 = d.x0; p->x10[i].y0 = d.y0; p->x10[i].x1 = d.x1; p->x10[i].y1 = d.y1; p->x10[i].x2 = d.x2; p->x10[i].y2 = d.y2; p->x10[i].x3 = d.x3; p->x10[i].y3 = d.y3; func_8005F1D8(p); }
 
 EXTERN_C void func_800C8594(Unk800C8594* p, Unk800C8594Q d) { s32 i = D_800B4CF0[0]; p->x10[i].x0 += d.x0; p->x10[i].y0 += d.y0; p->x10[i].x1 += d.x1; p->x10[i].y1 += d.y1; p->x10[i].x2 += d.x2; p->x10[i].y2 += d.y2; p->x10[i].x3 += d.x3; p->x10[i].y3 += d.y3; func_8005F1D8(p); }
 
