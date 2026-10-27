@@ -9,7 +9,22 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B7728);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B77D8);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B7B28);
+EXTERN_C int D_800B1A5C[];
+EXTERN_C void func_800B7B28(unsigned char *p)
+{
+    if (D_800B1A5C[0]) {
+        if (!(*(unsigned short *)p & 0x400)) {
+            int c = p[0x49];
+            if (c != p[0x48]) {
+                c++;
+                if (c >= 4)
+                    c = 0;
+                p[0x49] = c;
+            }
+        }
+        *(unsigned short *)p &= ~0x400;
+    }
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B7B90);
 
@@ -341,7 +356,7 @@ EXTERN_C int func_800BD5D0(S_800BD5D0 *p, int v)
     return 1;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BD604);
+EXTERN_C void func_800BD604(S_800BD604 *p, Short12 *v) { p->v = *v; }
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BD66C);
 
@@ -458,7 +473,7 @@ EXTERN_C void func_800BEBB0(char *p)
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BEC00);
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C void func_800BF720(char *p, char v);
 EXTERN_C void func_800BED34(void *p, short id)
 {
@@ -471,7 +486,7 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BED7C);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800BEE24);
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C void func_800BF750(signed char *p);
 EXTERN_C void func_800BEEC8(void *p, short id)
 {
@@ -480,7 +495,7 @@ EXTERN_C void func_800BEEC8(void *p, short id)
         func_800BF750(e);
 }
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C void func_800BF73C(char *p);
 EXTERN_C void func_800BEF10(void *p, short id)
 {
@@ -492,7 +507,7 @@ EXTERN_C void func_800BEF10(void *p, short id)
         func_800BF73C((char *)e);
 }
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C void func_800BF7A8(char *p, int v);
 EXTERN_C void func_800BEF6C(void *p, short id, int v)
 {
@@ -501,7 +516,7 @@ EXTERN_C void func_800BEF6C(void *p, short id, int v)
         func_800BF7A8((char *)e, v);
 }
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C int func_800BEFA8(void *p, short id)
 {
     signed char *e = func_800C0CB0(p, id);
@@ -510,7 +525,7 @@ EXTERN_C int func_800BEFA8(void *p, short id)
     return 0xFF;
 }
 
-EXTERN_C signed char *func_800C0CB0(void *, short);
+EXTERN_C signed char *func_800C0CB0(void *, int);
 EXTERN_C int func_800BEFE0(void *p, short id)
 {
     signed char *e = func_800C0CB0(p, id);
@@ -781,7 +796,23 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0194);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0820);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C089C);
+EXTERN_C void exit(int);
+EXTERN_C int func_800C089C(char *p, signed char key)
+{
+    N_800C089C *e = *(N_800C089C **)(p + 0x43C);
+    signed char n = p[0xF8];
+    while (1) {
+        if (n == 0)
+            break;
+        if (key == e->id)
+            goto found;
+        n--;
+        e = e->next;
+    }
+    exit(1);
+found:
+    return e->val;
+}
 
 EXTERN_C void exit(int);
 EXTERN_C int func_800C08FC(char *p, signed char key)
@@ -807,7 +838,21 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0A28);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0B7C);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0CB0);
+EXTERN_C short func_8001A6E8(void *);
+EXTERN_C signed char *func_800C0CB0(void *p, int id)
+{
+    N_800C0CB0 *e = *(N_800C0CB0 **)((char *)p + 0x3E4);
+    short n = func_8001A6E8(e);
+    while (1) {
+        if (n == 0)
+            break;
+        if (id == e->id)
+            break;
+        n--;
+        e = e->next;
+    }
+    return (signed char *)e;
+}
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0D14);
 
@@ -1045,7 +1090,15 @@ INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2DB4);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2E60);
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C2EE0);
+EXTERN_C int D_800B4CF0[];
+EXTERN_C void func_800C2BD0(S_800C2D5C *);
+EXTERN_C void func_800C2EE0(S_800C2D5C *p, char *q)
+{
+    if (*(short *)((char *)p + 8) == 1)
+        func_800C2BD0(p);
+    p->e[D_800B4CF0[0]].s = *(short *)(q + 8);
+    *(short *)((char *)p + 8) = 2;
+}
 
 EXTERN_C void func_800C2F40(int *p) { p[0x12] = 1; }
 
