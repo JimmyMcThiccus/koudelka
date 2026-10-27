@@ -7,8 +7,8 @@ same. This checks what can be checked statically:
      before the overlay slot (0x800B6DF0), and each overlay must be no larger
      than retail (so BATTLE still ends before EFFECT's load address).
   2. pins: addresses that other images reach by absolute address (the EXE
-     calling into an overlay, EFFECT calling into BATTLE) must still hold the
-     same symbol. config/pins.txt lists them.
+     calling into an overlay, EFFECT calling into BATTLE) must still hold a
+     symbol (any name: renames are fine). config/pins.txt lists them.
   3. SHA-1: reported per image as "identical" or "differs". Information only.
 
 Usage: python functional_check.py <nm.exe> <out_stamp>
@@ -58,15 +58,17 @@ def main():
         if not fit:
             fails.append(f"{t}: does not fit, {detail}")
 
+    # Pins are checked by address, so renaming a pinned function is fine.
     for line in open("config/pins.txt"):
         line = line.split("#")[0].split()
         if not line:
             continue
         t, name, addr = line[0], line[1], int(line[2], 16)
-        got = syms[t].get(name)
-        if got != addr:
-            fails.append(f"pin {t}:{name} must stay at {addr:#010x}, now "
-                         f"{'missing' if got is None else hex(got)}")
+        here = [s for s, a in syms[t].items() if a == addr and not s.endswith(("_START", "_END", "_SIZE"))]
+        if not here:
+            moved = syms[t].get(name)
+            fails.append(f"pin {t}:{name} must stay at {addr:#010x}; no symbol there now"
+                         + (f" ({name} is at {moved:#010x})" if moved is not None else ""))
 
     if fails:
         for f in fails:

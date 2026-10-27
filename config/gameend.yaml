@@ -14,6 +14,8 @@ options:
   ld_script_path: build/linkers/gameend.ld
   symbol_addrs_path:
     - config/symbols/main.txt
+    - config/symbols/main_a.txt
+    - config/symbols/main_b.txt
     - config/symbols/gameend.txt
   undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.gameend.txt
   undefined_syms_auto_path: build/linkers/undefined_syms_auto.gameend.txt

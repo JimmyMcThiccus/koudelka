@@ -1,0 +1,2 @@
+// main_a: names for functions/data in src/main/game.cpp 0x800186B0-0x80054A2C (owned by the main_a session).
+// Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
