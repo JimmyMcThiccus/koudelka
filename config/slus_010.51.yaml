@@ -1,0 +1,57 @@
+name: SLUS_010.51
+sha1: 7db0f45fb65a764b2ec0fc40c9e100e47242103a
+options:
+  basename: slus_010.51
+  target_path: extracted/disc1/SLUS_010.51
+  elf_path: build/slus_010.51.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/main
+  src_path: src/main
+  build_path: build
+  ld_script_path: build/linkers/slus_010.51.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.main.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  ld_bss_is_noload: true
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+  # Retail sections are only word-aligned (.data at 0x800A4514, .sdata at $gp).
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80010000
+    # BSS really spans 0x800B4EE8..0x800B6DF0 (cleared by the entry point), but splat measures
+    # bss_size from the segment's ROM end (0x800B5000, after the zero padding).
+    bss_size: 0x1DF0
+    subsegments:
+      - [0x800, rodata]
+      - [0x8EB0, asm] # 0x800186B0
+      - [0x94D14, data] # 0x800A4514
+      - [0xA53FC, sdata] # 0x800B4BFC = $gp
+      - { start: 0xA56E8, type: bss, vram: 0x800B4EE8 }
+
+  - [0xA5800]

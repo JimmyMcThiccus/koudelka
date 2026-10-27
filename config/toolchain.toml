@@ -1,0 +1,48 @@
+# Koudelka toolchain. Archives are fetched into bin/dl/<name>/ and unpacked into bin/.
+
+[compiler]
+# Game code: GCC 2.8.x, PsyQ 4.3 (2.8.0) or 4.4 (2.8.1). Every test so far gives identical output
+# from both; 4.4 is the pick. Reproduced exactly: func_800186E8 (C++ virtual call in a loop) and
+# func_8006F630 (switch with jump table). PsyQ 4.1 (2.7.2), 4.5 (egcs 2.91) and 4.6 (2.95.2) all
+# differ on both. (The SDK libraries linked into the EXE are PsyQ 4.6; the compiler is older.)
+psyq = "bin/psyq4.4"
+cc1 = "CC1PSX.EXE"        # C: GCC 2.8.1 SN32 BUILD 4.0.0010
+cc1plus = "CC1PLPSX.EXE"  # C++
+aspsx = "2.79"            # maspsx --aspsx-version; the tests don't constrain it, so 4.4's own ASPSX
+cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files reach globals with lui (-G0, or large objects)
+
+[maspsx]
+url = "https://github.com/mkst/maspsx/archive/4ffa8b5106f9780d5d4aa7609f184949433ddbbc.zip"
+sha256 = "ef60294812d9e4bf6f97ccac973102ebedcc233b8afbccab770be6eac104713c"
+dest = "bin/maspsx"
+
+# PsyQ binary sets from https://github.com/mkst/esa/releases/tag/psyq-binaries (as used by decomp.me).
+# 3.6 is a 16-bit DOS build and does not run on 64-bit Windows.
+[psyq."3.6"]
+sha256 = "9445f4cd871ca85b764b8d2746b6122750af17ecfe2d6e8aae41d15461d8c41d"
+gcc = "2.7.2.SN.1"
+aspsx = "2.34"
+[psyq."4.0"]
+sha256 = "f25a4f6f044eb1b344bbbd3291aa9a4fc1a1124fc637eae9522c0a117d940e28"
+gcc = "2.7.2.SN32.3.7.0002"
+aspsx = "2.56"
+[psyq."4.1"]
+sha256 = "2a2650ceb5eaa73fdc581bec4a85ccaa6ff9eeea8a4810be25a638f3cd2ebac4"
+gcc = "cygnus-2.7.2-970404 SN32.3.7.0004"
+aspsx = "2.67"
+[psyq."4.3"]
+sha256 = "577038d66507d3aa5423de0ba3f540e121a4f60f637f4794aa4350135d4f9a46"
+gcc = "2.8.0 SN32 Build 4.0.0007"
+aspsx = "2.77"
+[psyq."4.4"]
+sha256 = "72e73934bab0d51933eb95af514afb14f3d432f01530eac3ddb16dfbb57ab66c"
+gcc = "2.8.1 SN32 BUILD 4.0.0010"
+aspsx = "2.79"
+[psyq."4.5"]
+sha256 = "75f28034f6844f0f7633e3f17443727865c8955da1cd19147db2c760b40f14f7"
+gcc = "egcs-2.91.66 19990314 (egcs-1.1.2)"
+aspsx = "2.81"
+[psyq."4.6"]
+sha256 = "635603e09a452c9c2923492fea8b8eb051959dd94f240933b88e94866814b894"
+gcc = "2.95.2 19991024 BUILD 4.0.0030"
+aspsx = "2.86"

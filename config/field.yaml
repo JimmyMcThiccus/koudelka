@@ -1,0 +1,45 @@
+name: FIELD.BIN
+sha1: 8ce2df53f4a68c64401b9760211b731d2f486270
+options:
+  basename: field
+  target_path: extracted/disc1/BIN/FIELD.BIN
+  elf_path: build/field.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/field
+  src_path: src/field
+  build_path: build
+  ld_script_path: build/linkers/field.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/field.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.field.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.field.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: field
+    type: code
+    start: 0x0
+    vram: 0x800B6DF0
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0x3A10, asm]
+      - [0x332B8, data]
+
+  - [0x33AB0]

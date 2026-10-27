@@ -1,0 +1,45 @@
+name: EFFECT.BIN
+sha1: f2a87e3d2ea831033f181065f52129d245d3c268
+options:
+  basename: effect
+  target_path: extracted/disc1/BIN/EFFECT.BIN
+  elf_path: build/effect.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/effect
+  src_path: src/effect
+  build_path: build
+  ld_script_path: build/linkers/effect.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/effect.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.effect.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.effect.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: effect
+    type: code
+    start: 0x0
+    vram: 0x800D5DAC
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0xA20, asm]
+      - [0xFA90, data]
+
+  - [0xFAA0]

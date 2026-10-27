@@ -1,0 +1,45 @@
+name: CAPTURE.BIN
+sha1: df5a2b5465a645bc78a7b13173bf3aee428edbad
+options:
+  basename: capture
+  target_path: extracted/disc1/BIN/CAPTURE.BIN
+  elf_path: build/capture.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/capture
+  src_path: src/capture
+  build_path: build
+  ld_script_path: build/linkers/capture.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/capture.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.capture.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.capture.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: capture
+    type: code
+    start: 0x0
+    vram: 0x800B6DF0
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0x79C, asm]
+      - [0xC3EC, data]
+
+  - [0xC42C]

@@ -1,0 +1,45 @@
+name: MOVIE.BIN
+sha1: 5cef61d77f8b96147171bdda6c8ed8cd9453bdfa
+options:
+  basename: movie
+  target_path: extracted/disc1/BIN/MOVIE.BIN
+  elf_path: build/movie.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/movie
+  src_path: src/movie
+  build_path: build
+  ld_script_path: build/linkers/movie.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/movie.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.movie.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.movie.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: movie
+    type: code
+    start: 0x0
+    vram: 0x800B6DF0
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0x1CC4, asm]
+      - [0x14C9C, data]
+
+  - [0x15CB8]

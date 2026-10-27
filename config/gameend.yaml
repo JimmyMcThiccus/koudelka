@@ -1,0 +1,44 @@
+name: GAMEEND.BIN
+sha1: c3240cd82a946fed676642757f594aa606dca207
+options:
+  basename: gameend
+  target_path: extracted/disc1/BIN/GAMEEND.BIN
+  elf_path: build/gameend.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/gameend
+  src_path: src/gameend
+  build_path: build
+  ld_script_path: build/linkers/gameend.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/gameend.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.gameend.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.gameend.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: gameend
+    type: code
+    start: 0x0
+    vram: 0x800B6DF0
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0x1FC, asm]
+
+  - [0xCB0]

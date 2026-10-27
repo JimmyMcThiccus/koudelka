@@ -1,0 +1,45 @@
+name: BATTLE.BIN
+sha1: d7651888ab475b1e0b3ea40a274e9a225c0948b1
+options:
+  basename: battle
+  target_path: extracted/disc1/BIN/BATTLE.BIN
+  elf_path: build/battle.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/battle
+  src_path: src/battle
+  build_path: build
+  ld_script_path: build/linkers/battle.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/battle.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.battle.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.battle.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: false
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: battle
+    type: code
+    start: 0x0
+    vram: 0x800B6DF0
+    subsegments:
+      - [0x0, rodata] # overlay id + entry table, jump tables, strings
+      - [0x120C, asm]
+      - [0x1EF88, data]
+
+  - [0x1EFBC]

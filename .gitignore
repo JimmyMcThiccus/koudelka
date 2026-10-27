@@ -1,0 +1,20 @@
+# Game data: never committed
+Koudelka_Game_Data/
+extracted/
+*.bin
+*.cue
+*.BIN
+*.STR
+
+# Generated (asm/ holds bytes derived from the game)
+asm/
+build/
+build.ninja
+.ninja_*
+bin/
+__pycache__/
+.venv/
+.run/
+
+Japan Demo/
+scratch_c/
