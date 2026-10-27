@@ -11,7 +11,7 @@ EXTERN_C void func_8009482C(int a, int b);
 EXTERN_C void func_8008BFEC(void);
 EXTERN_C void func_8008C6F8(void);
 EXTERN_C void func_80093AEC(void);
-EXTERN_C void func_8008FDE4(void);
+EXTERN_C int func_8008FDE4(void);
 EXTERN_C void func_8008C9A8(void);
 EXTERN_C void func_8008CB84(void);
 EXTERN_C void func_8009F6D0(void (*f)(void));
@@ -60,7 +60,7 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     func_80093AEC();
     func_80094990();
     if (!(flags & 0x2000)) {
-        FIELD_AT(s, long, 0x13C) = OpenEvent(0xF2000002, 2, 0x1000, func_8008FDE4);
+        FIELD_AT(s, long, 0x13C) = OpenEvent(0xF2000002, 2, 0x1000, (void (*)(void))func_8008FDE4);
         SetRCnt(0xF2000002, 0x44E8, 0x1000);
         StartRCnt(0xF2000002);
         EnableEvent(FIELD_AT(s, long, 0x13C));
@@ -1486,19 +1486,6 @@ struct Bank_8008EF64 {
     Bank_8008EF64 *next;
     unsigned short offs[1];
 };
-struct Req_8008EF64 {
-    int id;
-    unsigned short unk14;
-    unsigned char unk16;
-    unsigned char unk17;
-    unsigned char unk18;
-    unsigned char unk19;
-    char pad1A[2];
-    unsigned char *data;
-};
-EXTERN_C void func_8008F4B0(Req_8008EF64 *r);
-EXTERN_C void func_8008F1DC(Req_8008EF64 *r, int b, int c);
-EXTERN_C void func_8008F618(int a, void *e, int b, int c);
 EXTERN_C void func_8008EF64(int a, int b, int c)
 {
     Req_8008EF64 r;
@@ -1544,25 +1531,653 @@ EXTERN_C void func_8008EF64(int a, int b, int c)
         func_8008F4B0(&r);
         func_8008F1DC(&r, b, c);
     } else {
-        func_8008F618(a, (char *)tbl + idx * 10, b, c);
+        func_8008F618(a, (Ent_8008F618 *)((char *)tbl + idx * 10), b, c);
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008F0CC);
+struct Bank_8008F0CC {
+    unsigned int magic;
+    char pad4[0xE];
+    unsigned short count;
+    unsigned short id;
+    unsigned short unk16;
+    Bank_8008F0CC *next;
+    unsigned short offs[1];
+};
+EXTERN_C void func_8008F0CC(int a, int b, int c, int d)
+{
+    Req_8008EF64 r;
+    unsigned short id = (unsigned int)a >> 16;
+    Bank_8008F0CC *p = FIELD_AT(&D_800B18FC, Bank_8008F0CC *, 0x158);
+    unsigned short idx;
+    unsigned char *q;
+    unsigned short *tbl;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008F1DC);
+    if (p == 0) {
+        func_8009482C(0x12, a);
+        return;
+    }
+    while (p->id != id) {
+        p = p->next;
+        if (p == 0) {
+            func_8009482C(0x12, a);
+            return;
+        }
+    }
+    idx = a;
+    if (idx >= p->count) {
+        func_8009482C(0x13, a);
+        return;
+    }
+    tbl = p->offs;
+    if (p->magic == 0x73646573) {
+        r.id = a;
+        r.unk14 = p->unk16;
+        r.unk16 = 0;
+        r.unk18 = 0;
+        r.unk19 = 0;
+        q = (unsigned char *)p + *(unsigned short *)((char *)tbl + (idx << 1));
+        r.unk17 = q[3];
+        r.data = q;
+        func_8008F1DC(&r, b, c);
+    } else {
+        func_8008F618(a, (Ent_8008F618 *)((char *)tbl + idx * 10), b, c);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008F4B0);
+struct Voice_8008F1DC {
+    char pad0[0x9];
+    unsigned char unk9;
+    unsigned char unkA;
+    char padB;
+    unsigned char unkC;
+    unsigned char unkD;
+    short unkE;
+    char pad10[0x90];
+    short unkA0;
+    short unkA2;
+    short unkA4;
+    short unkA6;
+    int unkA8;
+    char padAC[4];
+    Voice_8008F1DC *next;
+    short unkB4;
+    unsigned char unkB6;
+    char padB7;
+    short unkB8;
+    short unkBA;
+    char padBC[0x28];
+};
+struct Track_8008F1DC {
+    short flags;
+    short unk02;
+    unsigned char unk04;
+    unsigned char unk05;
+    char pad06;
+    unsigned char unk07;
+    unsigned char nvoice;
+    unsigned char voice0;
+    unsigned char unk0A;
+    char pad0B[3];
+    unsigned char unk0E;
+    char pad0F;
+    int unk10;
+    int unk14;
+    int unk18;
+    int unk1C;
+    int unk20;
+    Voice_8008F1DC *voices;
+    int unk28;
+    Voice_8008F1DC *head;
+    char *song;
+    int unk34;
+    int unk38;
+    short unk3C;
+    unsigned char unk3E;
+    char pad3F;
+    int unk40;
+    int unk44;
+    int unk48;
+    short unk4C;
+    unsigned char unk4E;
+    unsigned char unk4F;
+    unsigned char unk50;
+    unsigned char unk51;
+    unsigned char unk52;
+    unsigned char unk53;
+    short unk54;
+    char pad56[2];
+    int unk58;
+    int unk5C;
+    int unk60;
+    int unk64;
+    char pad68[0xF4];
+    int unk15C;
+};
+EXTERN_C char *func_8008D5A8(unsigned short id);
+EXTERN_C void func_8008D5E8(void *v, void *song, short idx);
+EXTERN_C void func_8008FAB4(int id);
+EXTERN_C int func_8008F1DC(Req_8008EF64 *r, int vol, int pan)
+{
+    char *song;
+    SoundState *ss;
+    unsigned char *q;
+    char *drv;
+    int n;
+    int ti;
+    Track_8008F1DC *t;
+    unsigned short *offs;
+    int mask;
+    int x;
+    int off;
+    Voice_8008F1DC *v;
+    int j;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008F618);
+    song = func_8008D5A8(r->unk14);
+    if (song == 0) {
+        func_8009482C(0x14, r->id);
+        return 0;
+    }
+    ss = &D_800B18FC;
+    q = r->data;
+    drv = FIELD_AT(ss, char *, 0x154);
+    n = q[3];
+    if (n == 0) {
+        return 0;
+    }
+    ti = r->unk18;
+    t = FIELD_AT(drv, Track_8008F1DC *, 0xC) + ti;
+    if (t->flags != 0) {
+        func_8008FAB4(t->unk10);
+    }
+    vol = q[1] * vol / 127;
+    offs = (unsigned short *)(q + 8);
+    mask = 0;
+    x = FIELD_AT(ss, int, 0x144);
+    func_8008BAC4();
+    do {
+        off = *offs++;
+        if (off != 0) {
+            t->unk14 = x;
+            t->unk10 = r->id;
+            t->unk0A = 0x20;
+            t->flags = (short)0x8400;
+            t->unk02 = 0;
+            t->unk05 = 1;
+            t->unk18 = (int)(q + off);
+            t->unk1C = (int)(q + off);
+            t->unk20 = 0;
+            t->unk38 = 0;
+            t->unk3C = 0;
+            t->unk3E = 0;
+            t->song = song;
+            t->unk34 = 0;
+            t->unk40 = 0;
+            t->unk44 = 0;
+            t->unk48 = 0;
+            t->unk4C = r->unk14;
+            t->unk4E = 0xFF;
+            t->unk4F = 0;
+            t->unk50 = 0xF;
+            t->unk51 = 0x3C;
+            t->unk52 = 0x3C;
+            t->unk53 = 0x3C;
+            t->unk5C = vol << 24;
+            t->unk64 = 0x1FC00000;
+            t->unk60 = pan << 16;
+            t->unk58 = 0;
+            t->unk54 = 0;
+            t->unk0E = 0xFF;
+            t->unk15C = 0;
+            v = t->voices;
+            t->head = v;
+            FIELD_AT(v, int, 0) = 0;
+            v->unkB6 = 0;
+            v->unkB8 = 0x200;
+            v->unkA = 0x20;
+            func_8008D5E8(v, song, 0);
+            v->unk9 = 0;
+            v->unkA8 = 0;
+            for (j = 3; j >= 0; j--) {
+                FIELD_AT(v, short, 0x10 + j * 0x24) = 0;
+            }
+            v->unkA0 = 0;
+            v->unkA2 = 0;
+            v->unkA4 = 0;
+            v->unkA6 = 0;
+            t->unk28 = 0;
+            mask |= 1 << t->unk04;
+        } else {
+            t->flags = 0;
+        }
+        n--;
+        t++;
+    } while (n != 0);
+    FIELD_AT(drv, short, 0x24) = 0x8000;
+    FIELD_AT(drv, int, 0x20) |= mask;
+    func_8008BA68();
+    return ti;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FA34);
+struct Track_8008F4B0 {
+    short flags;
+    char pad02[0xE];
+    int id;
+    unsigned int time;
+    char pad18[0x148];
+};
+struct Drv_8008F4B0 {
+    char pad0[0xC];
+    Track_8008F4B0 *tracks;
+    char pad10[0x1A];
+    unsigned char ntrack;
+};
+EXTERN_C void func_8008FAB4(int id);
+EXTERN_C void func_8008F4B0(Req_8008EF64 *r)
+{
+    Drv_8008F4B0 *drv = FIELD_AT(&D_800B18FC, Drv_8008F4B0 *, 0x154);
+    unsigned char *q;
+    int need;
+    int i;
+    int k;
+    Track_8008F4B0 *t;
+    Track_8008F4B0 *p;
+    unsigned int min;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FAB4);
+    func_8008FAB4(r->id);
+    q = r->data;
+    for (;;) {
+        need = q[3];
+        i = drv->ntrack - need;
+        t = drv->tracks + i;
+        while (i >= 0) {
+            k = need;
+            if (t->flags == 0) {
+                p = t + 1;
+                for (k--; k != 0; k--) {
+                    if (p->flags != 0) {
+                        break;
+                    }
+                    p++;
+                }
+                if (k == 0) {
+                    r->unk18 = i;
+                    return;
+                }
+            }
+            i -= k;
+            t -= k;
+        }
+        t = 0;
+        min = -1;
+        i = drv->ntrack;
+        p = &drv->tracks[i - 1];
+        while (i != 0) {
+            if (p->flags != 0 && p->time < min) {
+                min = p->time;
+                t = p;
+            }
+            i--;
+            p--;
+        }
+        if (t != 0) {
+            func_8008FAB4(t->id);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FB80);
+struct Voice_8008F618 {
+    char pad0[0x9];
+    unsigned char unk9;
+    unsigned char unkA;
+    char padB;
+    unsigned char unkC;
+    unsigned char unkD;
+    short unkE;
+    char pad10[0x90];
+    short unkA0;
+    short unkA2;
+    short unkA4;
+    short unkA6;
+    int unkA8;
+    char padAC[4];
+    Voice_8008F618 *next;
+    short unkB4;
+    unsigned char unkB6;
+    char padB7;
+    short unkB8;
+    short unkBA;
+    char padBC[0x28];
+};
+struct Track_8008F618 {
+    short flags;
+    short unk02;
+    unsigned char unk04;
+    unsigned char unk05;
+    char pad06;
+    unsigned char unk07;
+    unsigned char nvoice;
+    unsigned char voice0;
+    unsigned char unk0A;
+    char pad0B[3];
+    unsigned char unk0E;
+    char pad0F;
+    int id;
+    unsigned int time;
+    int unk18;
+    int unk1C;
+    int unk20;
+    Voice_8008F618 *voices;
+    int unk28;
+    Voice_8008F618 *head;
+    char *song;
+    int unk34;
+    int unk38;
+    short unk3C;
+    unsigned char unk3E;
+    char pad3F;
+    int unk40;
+    int unk44;
+    int unk48;
+    short unk4C;
+    unsigned char unk4E;
+    unsigned char unk4F;
+    unsigned char unk50;
+    unsigned char unk51;
+    unsigned char unk52;
+    unsigned char unk53;
+    short unk54;
+    char pad56[2];
+    int unk58;
+    int unk5C;
+    int unk60;
+    int unk64;
+    char pad68[0xF4];
+    int unk15C;
+};
+struct Drv_8008F618 {
+    char pad0[0xC];
+    Track_8008F618 *tracks;
+    char pad10[0x10];
+    int mask;
+    unsigned short flags;
+    char pad26[4];
+    unsigned char ntrack;
+};
+EXTERN_C char *func_8008D5A8(unsigned short id);
+EXTERN_C void func_8008D5E8(void *v, void *song, short idx);
+EXTERN_C void func_8008FAB4(int id);
+EXTERN_C void *func_8008F618(int id, Ent_8008F618 *e, int vol, int pan)
+{
+    char *song;
+    Drv_8008F618 *drv;
+    int last;
+    int i;
+    Track_8008F618 *t;
+    Track_8008F618 *best;
+    unsigned int min;
+    Voice_8008F618 *v;
+    SoundState *ss;
+    int x;
+    short d;
+    int j;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FC38);
+    if (!(e->flags & 1)) {
+        func_8009482C(0x12, id);
+        return 0;
+    }
+    song = func_8008D5A8(e->song);
+    if (song == 0) {
+        return 0;
+    }
+    drv = FIELD_AT(&D_800B18FC, Drv_8008F618 *, 0x154);
+    last = drv->ntrack - 1;
+    if (!(e->flags & 4)) {
+        for (i = last, t = &drv->tracks[i]; i >= 0; i--, t--) {
+            if (t->flags < 0 && t->id == id) {
+                func_8008FAB4(id);
+                break;
+            }
+        }
+    }
+    for (i = last, t = &drv->tracks[i]; i >= 0; i--, t--) {
+        if (t->flags >= 0) {
+            break;
+        }
+    }
+    if (i < 0) {
+        t = 0;
+        min = -1;
+        i = drv->ntrack;
+        best = &drv->tracks[i - 1];
+        while (i != 0) {
+            if (best->flags != 0 && best->time < min) {
+                min = best->time;
+                t = best;
+            }
+            i--;
+            best--;
+        }
+        if (t->flags < 0) {
+            func_8008FAB4(t->id);
+        }
+        for (i = last, t = &drv->tracks[i]; i >= 0; i--, t--) {
+            if (t->flags >= 0) {
+                break;
+            }
+        }
+    }
+    func_8008BAC4();
+    ss = &D_800B18FC;
+    x = FIELD_AT(ss, int, 0x144);
+    t->unk0A = 0x30;
+    t->id = id;
+    t->unk02 = 0;
+    t->unk05 = 2;
+    t->unk18 = 0;
+    t->unk1C = 0;
+    t->unk20 = 0;
+    t->unk38 = 0;
+    t->unk3C = 0;
+    t->unk3E = 0;
+    t->song = song;
+    t->unk34 = 0;
+    t->time = x;
+    t->unk40 = e->time;
+    t->unk44 = 0;
+    t->unk48 = 0;
+    t->unk4C = e->song;
+    t->unk4E = 0xFF;
+    t->unk4F = e->unk1;
+    t->unk50 = 0xF;
+    t->unk51 = 0x3C;
+    t->unk52 = 0x3C;
+    t->unk53 = 0x3C;
+    t->unk5C = (e->vol * vol / 127) << 24;
+    t->unk58 = 0;
+    t->unk64 = 0x1FC00000;
+    t->unk60 = pan << 16;
+    d = e->rnd;
+    if ((e->flags & 2) && d != 0) {
+        int r = FIELD_AT(ss, int, 0x254);
+        r ^= r << 17;
+        r ^= r >> 15;
+        FIELD_AT(ss, int, 0x254) = r;
+        d = (r & 0x7FFF) % (d * 2);
+    }
+    t->unk54 = d;
+    v = t->voices;
+    t->unk0E = 0xFF;
+    t->unk15C = 0;
+    t->unk28 = 0;
+    t->head = v;
+    FIELD_AT(v, int, 0) = e->time;
+    v->unkA = 0x20;
+    func_8008D5E8(v, song, e->unk1);
+    v->unkBA = 0;
+    if (e->flags & 8) {
+        v->unkB6 = 0x40;
+    } else {
+        v->unkB6 = 0;
+    }
+    v->unkB8 = 0x200;
+    v->unk9 = 0;
+    v->unkA8 = 0;
+    for (j = 3; j >= 0; j--) {
+        FIELD_AT(v, short, 0x10 + j * 0x24) = 0;
+    }
+    v->unkA0 = 0;
+    v->unkA2 = 0;
+    v->unkA4 = 0;
+    v->unkA6 = 0;
+    t->flags = (short)0x8420;
+    drv->mask |= 1 << t->unk04;
+    drv->flags |= 0x8000;
+    func_8008BA68();
+    return t;
+}
+
+struct Track_8008FA34 {
+    short flags;
+    char pad02[0x1E];
+    int unk20;
+    char *voices;
+    char pad28[0x138];
+};
+struct Drv_8008FA34 {
+    char pad0[0xC];
+    Track_8008FA34 *tracks;
+    char pad10[0x10];
+    int mask;
+    char pad24[6];
+    unsigned char ntrack;
+};
+EXTERN_C void func_8008FA34(void)
+{
+    Drv_8008FA34 *drv = FIELD_AT(&D_800B18FC, Drv_8008FA34 *, 0x154);
+    Track_8008FA34 *t = drv->tracks;
+    int n = drv->ntrack;
+
+    func_8008BAC4();
+    do {
+        if (t->flags & 0x8000) {
+            t->flags = 0;
+            func_80093E80((Slot_80093D8C *)(t->voices + 0xB4));
+        }
+        t++;
+    } while (--n);
+    drv->mask = 0;
+    func_8008BA68();
+}
+
+struct Track_8008FAB4 {
+    short flags;
+    char pad02[2];
+    unsigned char unk04;
+    char pad05[0xB];
+    int id;
+    char pad14[0x10];
+    char *voices;
+    char pad28[0x138];
+};
+struct Drv_8008FAB4 {
+    char pad0[0xC];
+    Track_8008FAB4 *tracks;
+    char pad10[0x10];
+    int mask;
+    char pad24[6];
+    unsigned char ntrack;
+};
+EXTERN_C void func_8008FAB4(int id)
+{
+    Drv_8008FAB4 *drv = FIELD_AT(&D_800B18FC, Drv_8008FAB4 *, 0x154);
+    Track_8008FAB4 *t = drv->tracks;
+    int n = drv->ntrack;
+
+    func_8008BAC4();
+    do {
+        if ((t->flags & 0x8000) && t->id == id) {
+            drv->mask &= ~(1 << t->unk04);
+            func_80093E80((Slot_80093D8C *)(t->voices + 0xB4));
+            t->flags = 0;
+        }
+        t++;
+    } while (--n);
+    func_8008BA68();
+}
+
+struct Track_8008FB80 {
+    short flags;
+    short unk02;
+    char pad04[0xC];
+    int id;
+    char pad14[0x48];
+    int vol;
+    char pad60[0x20];
+    int unk80;
+    char pad84[0xA];
+    short unk8E;
+    char pad90[0xD0];
+};
+struct Drv_8008FB80 {
+    char pad0[0xC];
+    Track_8008FB80 *tracks;
+    char pad10[0x1A];
+    unsigned char ntrack;
+};
+EXTERN_C void func_8008FB80(int id, int dur)
+{
+    Drv_8008FB80 *drv = FIELD_AT(&D_800B18FC, Drv_8008FB80 *, 0x154);
+    Track_8008FB80 *t = drv->tracks;
+    int n = drv->ntrack;
+
+    func_8008BAC4();
+    do {
+        if ((t->flags & 0x8000) && t->id == id) {
+            t->unk8E = dur;
+            t->unk80 = -(t->vol / dur);
+            t->unk02 = 0x20;
+        }
+        t++;
+    } while (--n);
+    func_8008BA68();
+}
+
+struct Track_8008FC38 {
+    short flags;
+    char pad02[2];
+    unsigned char unk04;
+    char pad05[0xD];
+    unsigned short id;
+    char pad14[0x10];
+    char *voices;
+    char pad28[0x138];
+};
+struct Drv_8008FC38 {
+    char pad0[0xC];
+    Track_8008FC38 *tracks;
+    char pad10[0x10];
+    int mask;
+    char pad24[6];
+    unsigned char ntrack;
+};
+EXTERN_C void func_8008FC38(unsigned short id)
+{
+    Drv_8008FC38 *drv = FIELD_AT(&D_800B18FC, Drv_8008FC38 *, 0x154);
+    Track_8008FC38 *t = drv->tracks;
+    int n = drv->ntrack;
+
+    func_8008BAC4();
+    do {
+        if ((t->flags & 0x8000) && t->id == id) {
+            drv->mask &= ~(1 << t->unk04);
+            func_80093E80((Slot_80093D8C *)(t->voices + 0xB4));
+            t->flags = 0;
+        }
+        t++;
+    } while (--n);
+    func_8008BA68();
+}
 
 EXTERN_C int func_8008FD04(void)
 {
@@ -1609,15 +2224,363 @@ EXTERN_C int func_8008FD94(unsigned short id)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FDE4);
+EXTERN_C void func_8008C9A8(void);
+EXTERN_C void func_8008FEAC(void);
+EXTERN_C void func_80093FE0(void);
+EXTERN_C void func_8008FFF0(void);
+EXTERN_C void func_8009422C(void);
+EXTERN_C int func_8008FDE4(void)
+{
+    SoundState *s = &D_800B18FC;
+    unsigned char v;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FEAC);
+    v = s->unk25B;
+    if (v != 0 && (D_800B18FC.flags & 2)) {
+        s->unk25B = --v;
+        if (v < 1 || v > 0x2F) {
+            func_8009484C(0xE0, FIELD_AT(s, int, 0x168));
+            func_8008C9A8();
+        }
+    }
+    if (!(D_800B18FC.flags & 0x80)) {
+        SoundState *t = &D_800B18FC;
+        FIELD_AT(t, int, 0x144)++;
+        FIELD_AT(t, int, 0x148)++;
+        if (FIELD_AT(t, int, 0x144) & 1) {
+            func_8008FEAC();
+        }
+        func_80093FE0();
+        func_8008FFF0();
+        func_8009422C();
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008FFF0);
+struct Fade_8008FEAC {
+    int cur;
+    int step;
+    short count;
+    short target;
+};
+EXTERN_C void SpuSetCommonAttr(void *attr);
+EXTERN_C void func_8008FEAC(void)
+{
+    SoundState *s;
+    SoundState *d;
+    Fade_8008FEAC *f;
+    int v;
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8009031C);
+    s = &D_800B18FC;
+    if (FIELD_AT(s, short, 0x1AC) != 0) {
+        f = &FIELD_AT(s, Fade_8008FEAC, 0x1A4);
+        if (--f->count != 0) {
+            f->cur += f->step;
+        } else {
+            f->cur = f->target << 16;
+        }
+        SoundState *d1 = &D_800B18FC;
+        v = FIELD_AT(d1, short, 0x1A6);
+        FIELD_AT(d1, short, 0x198) = v;
+        func_8008D038(v, &FIELD_AT(d1, short, 0x174), 0);
+        FIELD_AT(d1, int, 0x170) |= 3;
+    }
+    s = &D_800B18FC;
+    if (FIELD_AT(s, short, 0x1B8) != 0) {
+        f = &FIELD_AT(s, Fade_8008FEAC, 0x1B0);
+        if (--f->count != 0) {
+            f->cur += f->step;
+        } else {
+            f->cur = f->target << 16;
+        }
+        SoundState *d2 = &D_800B18FC;
+        v = FIELD_AT(d2, short, 0x1B2);
+        FIELD_AT(d2, short, 0x19A) = v;
+        func_8008D038(v, &FIELD_AT(d2, short, 0x180), 0);
+        FIELD_AT(d2, int, 0x170) |= 0xC0;
+    }
+    d = &D_800B18FC;
+    if (FIELD_AT(d, int, 0x170) != 0) {
+        SpuSetCommonAttr(&FIELD_AT(d, int, 0x170));
+        FIELD_AT(d, int, 0x170) = 0;
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_80090550);
+struct Fade_8008FFF0 {
+    int cur;
+    int step;
+    short count;
+    short target;
+};
+EXTERN_C void func_8009031C(void *s);
+EXTERN_C void func_80090550(void *s);
+EXTERN_C void func_80090AAC(void *drv);
+EXTERN_C void func_80090CF4(void *s);
+EXTERN_C void func_8008E210(void *a);
+EXTERN_C void func_80094330(void *drv);
+EXTERN_C void func_80091334(void *s);
+EXTERN_C void func_8008FFF0(void)
+{
+    char *s;
+
+    for (s = FIELD_AT(&D_800B18FC, char *, 0x150); s != 0; s = FIELD_AT(s, char *, 0x4)) {
+        Fade_8008FFF0 *f;
+
+        if (FIELD_AT(s, short, 0x24) >= 0) {
+            continue;
+        }
+        FIELD_AT(s, int, 0xB8)++;
+        if (FIELD_AT(s, short, 0x78) != 0) {
+            f = &FIELD_AT(s, Fade_8008FFF0, 0x70);
+            if (--f->count != 0) {
+                f->cur += f->step;
+            } else {
+                f->cur = f->target << 16;
+            }
+            FIELD_AT(s, int, 0x44) = (FIELD_AT(s, short, 0x36) * 0xDA74 >> 16) * FIELD_AT(s, short, 0x72);
+        }
+        if (FIELD_AT(s, short, 0x90) != 0) {
+            f = &FIELD_AT(s, Fade_8008FFF0, 0x88);
+            if (--f->count != 0) {
+                f->cur += f->step;
+            } else {
+                f->cur = f->target << 16;
+            }
+            func_80093A80(s, 4);
+        }
+        if (FIELD_AT(s, short, 0x84) != 0) {
+            f = &FIELD_AT(s, Fade_8008FFF0, 0x7C);
+            if (--f->count != 0) {
+                f->cur += f->step;
+            } else {
+                f->cur = f->target << 16;
+            }
+            func_80093A80(s, 8);
+        }
+        if (FIELD_AT(s, short, 0x9C) != 0) {
+            f = &FIELD_AT(s, Fade_8008FFF0, 0x94);
+            if (--f->count != 0) {
+                f->cur += f->step;
+            } else {
+                f->cur = f->target << 16;
+            }
+            func_80093A80(s, 4);
+        }
+        FIELD_AT(s, int, 0x48)++;
+        FIELD_AT(s, int, 0x50) += FIELD_AT(s, short, 0x72);
+        FIELD_AT(s, int, 0x40) -= FIELD_AT(s, int, 0x44);
+        while (FIELD_AT(s, int, 0x40) < 0) {
+            FIELD_AT(s, int, 0x40) += 0x10000;
+            FIELD_AT(s, int, 0xBC)++;
+            if (++FIELD_AT(s, unsigned short, 0x5E) == FIELD_AT(s, unsigned short, 0x62)) {
+                FIELD_AT(s, unsigned short, 0x5E) = 0;
+                if (++FIELD_AT(s, unsigned short, 0x5C) >= FIELD_AT(s, unsigned short, 0x60)) {
+                    FIELD_AT(s, unsigned short, 0x5C) = 0;
+                    FIELD_AT(s, unsigned short, 0x5A)++;
+                }
+            }
+            if (FIELD_AT(s, unsigned char, 0x31) == 0) {
+                func_8009031C(s);
+                func_80090550(s);
+            } else {
+                func_80090AAC(s);
+                func_80090CF4(s);
+            }
+            if (FIELD_AT(s, int, 0x20) == 0) {
+                FIELD_AT(s, unsigned short, 0x24) &= 0x7FFF;
+                break;
+            }
+            FIELD_AT(s, int, 0x4C)++;
+            if (FIELD_AT(s, int, 0x88) == 0) {
+                FIELD_AT(s, unsigned short, 0x24) = (FIELD_AT(s, unsigned short, 0x24) | 0x100) & 0x7FFF;
+                func_8008E210(s);
+            }
+        }
+        func_80094330(s);
+        func_80091334(s);
+    }
+}
+
+struct Voice_8009031C {
+    int time;
+    char pad4[6];
+    unsigned char unkA;
+    unsigned char upd;
+    char padC[0xA0];
+    Voice_8009031C *next;
+    Voice_8009031C *free;
+};
+struct Track_8009031C {
+    short flags;
+    unsigned short flags2;
+    char pad04[4];
+    unsigned char nvoice;
+    char pad09[0x1F];
+    Voice_8009031C *active;
+    Voice_8009031C *head;
+    char pad30[0x28];
+    int unk58;
+    char pad5C[4];
+    int unk60;
+    int unk64;
+    char pad68[0xC];
+    int unk74;
+    int unk78;
+    int unk7C;
+    char pad80[4];
+    signed char unk84;
+    unsigned char unk85;
+    unsigned char unk86;
+    char pad87;
+    unsigned short unk88;
+    unsigned short unk8A;
+    unsigned short unk8C;
+    char pad8E[0xD2];
+};
+EXTERN_C void func_8009031C(void *s)
+{
+    int n = FIELD_AT(s, unsigned char, 0x2A);
+    Track_8009031C *t = FIELD_AT(s, Track_8009031C *, 0xC);
+    unsigned short f;
+    unsigned short upd;
+    Voice_8009031C *v;
+    Voice_8009031C *prev;
+    Voice_8009031C *p;
+    int time;
+
+    while (n--) {
+        if (t->flags < 0) {
+            f = t->flags2;
+            upd = 0;
+            if (f & 8) {
+                if (--t->unk8A == 0) {
+                    f &= ~8;
+                    t->unk64 = t->unk85 << 22;
+                } else {
+                    t->unk64 += t->unk78;
+                }
+                upd |= 4;
+            }
+            if (f & 1) {
+                if (!(f & 2)) {
+                    if (--t->unk88 == 0) {
+                        f &= ~1;
+                        t->unk58 = t->unk84 << 24;
+                    } else {
+                        t->unk58 += t->unk74;
+                    }
+                }
+                upd |= 8;
+            }
+            if (f & 0x10) {
+                if (--t->unk8C == 0) {
+                    f &= ~0x10;
+                    t->unk60 = t->unk86 << 16;
+                } else {
+                    t->unk60 += t->unk7C;
+                }
+                upd |= 4;
+            }
+            t->flags2 = f;
+            prev = 0;
+            for (v = t->active; v != 0; v = v->next) {
+                time = v->time - 1;
+                if (time == 0) {
+                    if (!(v->unkA & 0x100)) { /* always true; reproduces retail's dead "li v0,0; bnez v0" */
+                        if (t->nvoice == 1) {
+                            t->active = 0;
+                            t->head = v;
+                        } else {
+                            if (prev != 0) {
+                                prev->next = v->next;
+                            } else {
+                                t->active = v->next;
+                            }
+                            v->unkA &= 0x7F;
+                            p = t->head;
+                            if (p != 0) {
+                                while (p->free != 0) {
+                                    p = p->free;
+                                }
+                                p->free = v;
+                            } else {
+                                t->head = v;
+                            }
+                        }
+                        v->free = 0;
+                        upd |= 2;
+                    }
+                } else {
+                    prev = v;
+                }
+                v->time = time;
+                v->upd |= upd;
+            }
+        }
+        t++;
+    }
+}
+
+struct Note_80090550 {
+    char pad0[2];
+    unsigned char cmd;
+    unsigned char key;
+    int dur;
+};
+typedef unsigned char *(*SeqCmd_80090550)(void *drv, SeqTrack *t, unsigned char *p);
+/* The command table starts at 0x800AFABC, 6 words into splat's D_800AFAA4 blob. */
+EXTERN_C SeqCmd_80090550 D_800AFAA4[];
+EXTERN_C void func_80090724(void *drv, SeqTrack *t, unsigned char *ev);
+EXTERN_C void func_80090550(void *drv)
+{
+    int n = FIELD_AT(drv, unsigned char, 0x2A);
+    SeqTrack *t = FIELD_AT(drv, SeqTrack *, 0xC);
+    unsigned char *p;
+    unsigned char c;
+    unsigned char x;
+    int len;
+    int v;
+    Note_80090550 ev;
+
+    while (n--) {
+        if ((short)t->flags < 0) {
+            p = FIELD_AT(t, unsigned char *, 0x1C);
+            if (p != 0) {
+                while (t->unk40 == 0) {
+                    c = *p++;
+                    if (c >= 0x80) {
+                        p = D_800AFAA4[c - 0x80 + 6](drv, t, p);
+                    } else {
+                        ev.cmd = c;
+                        x = *p++;
+                        len = x >> 6;
+                        t->octave += (((x >> 4) & 3) - 1) * 12;
+                        ev.key = t->octave + (x & 0xF);
+                        if (len != 0) {
+                            v = 0;
+                            while (len--) {
+                                v <<= 8;
+                                v += *p++;
+                            }
+                            t->unk48 = v;
+                        } else {
+                            v = t->unk48;
+                        }
+                        ev.dur = v;
+                        func_80090724(drv, t, (unsigned char *)&ev);
+                    }
+                    if ((short)t->flags >= 0) {
+                        FIELD_AT(drv, int, 0x20) &= ~(1 << FIELD_AT(t, unsigned char, 0x4));
+                        t->flags |= 0x4000;
+                        break;
+                    }
+                }
+            }
+            t->unk40--;
+            FIELD_AT(t, unsigned char *, 0x1C) = p;
+        }
+        t = (SeqTrack *)((char *)t + 0x160);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/sound", func_80090724);
 
@@ -1724,7 +2687,99 @@ EXTERN_C int func_800912DC(void *drv, SeqTrack *t)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_80091334);
+EXTERN_C int func_800942E0(unsigned int a);
+EXTERN_C void func_80093F98(Slot_80093D8C *s);
+
+EXTERN_C void func_80091334(void *drv)
+{
+    char *t;
+    int i;
+    int n;
+    char *v;
+    int f;
+    int vol;
+    int pan;
+    int l;
+    int r;
+    int p;
+    int c;
+
+    if (FIELD_AT(drv, unsigned short, 0x24) & 0x20) {
+        return;
+    }
+    t = FIELD_AT(drv, char *, 0xC);
+    i = FIELD_AT(drv, unsigned char, 0x2A);
+    do {
+        if (FIELD_AT(t, short, 0x0) & 0xC000) {
+            if (FIELD_AT(t, unsigned short, 0x0) & 0x4000) {
+                FIELD_AT(t, short, 0x0) = 0;
+            }
+            n = FIELD_AT(t, unsigned char, 0x8);
+            v = FIELD_AT(t, char *, 0x24);
+            while (n--) {
+                f = FIELD_AT(v, unsigned char, 0xB);
+                if (f & 4) {
+                    vol = (FIELD_AT(t, int, 0x64) >> 14) * FIELD_AT(v, unsigned short, 0x6) >> 14;
+                    vol -= vol * FIELD_AT(v, short, 0xA2) >> 15;
+                    if (vol > 0x7FFF) {
+                        vol = 0x7FFF;
+                    }
+                    if (vol < -0x7FFF) {
+                        vol = -0x7FFF;
+                    }
+                    vol = FIELD_AT(drv, short, 0x8A) * FIELD_AT(t, short, 0x70) / 127 * vol >> 16;
+                    pan = FIELD_AT(v, short, 0xA4) + ((FIELD_AT(t, int, 0x60) + FIELD_AT(drv, int, 0x94)) >> 8);
+                    c = pan - 0x4000;
+                    pan = c + (FIELD_AT(t, short, 0x72) << 8);
+                    if (pan > 0x7F00) {
+                        pan = 0x7F00;
+                    }
+                    if (pan < 0) {
+                        pan = 0;
+                    }
+                    if (D_800B1A9F.v != 0) {
+                        if (pan < 0x4000) {
+                            r = pan * 23040 >> 14;
+                            l = 0x7F00 - (pan * 9472 >> 14);
+                        } else {
+                            pan = 0x7F00 - pan;
+                            l = pan * 23040 >> 14;
+                            r = 0x7F00 - (pan * 9472 >> 14);
+                        }
+                        l = l * vol >> 15;
+                        r = r * vol >> 15;
+                    } else {
+                        l = r = vol * 23040 >> 15;
+                    }
+                    FIELD_AT(v, short, 0xBC) = l;
+                    FIELD_AT(v, short, 0xBE) = r;
+                    FIELD_AT(v, unsigned short, 0xBA) |= 1;
+                }
+                if (f & 8) {
+                    p = FIELD_AT(v, unsigned short, 0x4) + FIELD_AT(t, short, 0x54) + FIELD_AT(v, short, 0xA0) +
+                          ((FIELD_AT(t, int, 0x58) + FIELD_AT(drv, int, 0x7C)) >> 16);
+                    FIELD_AT(v, short, 0xC8) = func_800942E0((short)p) & 0x3FFF;
+                    FIELD_AT(v, unsigned short, 0xBA) |= 4;
+                }
+                if (f & 1) {
+                    if (!(FIELD_AT(t, unsigned short, 0x0) & 2)) {
+                        func_80093DE8(v + 0xB4);
+                        FIELD_AT(v, unsigned char, 0xA) |= 0x11;
+                    }
+                }
+                if (f & 2) {
+                    if (!(FIELD_AT(t, unsigned short, 0x0) & 0x802)) {
+                        func_80093F98((Slot_80093D8C *)(v + 0xB4));
+                        FIELD_AT(v, unsigned char, 0xA) &= ~0x10;
+                    }
+                }
+                FIELD_AT(v, unsigned char, 0xB) = 0;
+                v += 0xE4;
+            }
+        }
+        t += 0x160;
+    } while (--i);
+}
 
 EXTERN_C unsigned char *func_800916A0(void *drv, SeqTrack *t, unsigned char *p)
 {

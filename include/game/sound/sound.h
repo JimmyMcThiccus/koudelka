@@ -89,6 +89,27 @@ struct Slot_80093D8C {
     short prio;
 };
 
+struct Req_8008EF64 {
+    int id;
+    unsigned short unk14;
+    unsigned char unk16;
+    unsigned char unk17;
+    unsigned char unk18;
+    unsigned char unk19;
+    char pad1A[2];
+    unsigned char *data;
+};
+
+struct Ent_8008F618 {
+    unsigned char flags;
+    unsigned char unk1;
+    unsigned short song;
+    short rnd;
+    unsigned short time;
+    unsigned char vol;
+    char pad9;
+};
+
 EXTERN_C void func_80094990();
 EXTERN_C void func_800949A0();
 EXTERN_C void func_8008C7B4(int a, int b, int c, int d, int e);
@@ -132,5 +153,8 @@ EXTERN_C Song_8008EB40 *func_8008EB40(int n);
 EXTERN_C void func_8008D808(void *n);
 EXTERN_C int func_800947B8(void *a);
 EXTERN_C void SpuSetVoiceRRAttr(int voice, unsigned short rr, long mode);
+EXTERN_C void func_8008F4B0(Req_8008EF64 *r);
+EXTERN_C int func_8008F1DC(Req_8008EF64 *r, int vol, int pan);
+EXTERN_C void *func_8008F618(int id, Ent_8008F618 *e, int vol, int pan);
 
 #endif /* GAME_SOUND_SOUND_H */
