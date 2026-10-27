@@ -75,7 +75,17 @@ EXTERN_C S_Prim *func_80032CBC(S_Prim *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032CD4);
+EXTERN_C void func_80032CD4(char *p)
+{
+    if (p) {
+        char *q = p + AT(p, int, -8) * 0x98;
+        while (p != q) {
+            q -= 0x98;
+            ((A2VObj0 *)q)->v00(2);
+        }
+        func_800A0D0C(p - 8);
+    }
+}
 
 EXTERN_C int func_80032D54()
 {

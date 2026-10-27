@@ -191,7 +191,17 @@ EXTERN_C S_Vobj *func_800352F0(S_Vobj *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035304);
+EXTERN_C void func_80035304(void *p, int flags)
+{
+    AT(p, void **, 8) = D_8001201C;
+    AT(p, void **, 0) = D_80012034;
+    func_80035384(p);
+    func_80019920(AT(p, List *, 0xC), 0);
+    func_8001D024((char *)p + 8, 0);
+    func_80035AB0(p, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035384);
 
@@ -199,7 +209,22 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003546C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003556C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035678);
+EXTERN_C void *func_80035678(void *p, int vb, short c)
+{
+    if (vb) {
+        char *b = (char *)p + 0x24;
+        AT(p, void *, 4) = b;
+        AT(p, short, 0x24) = 16;
+        AT(b, short, 2) = c;
+        AT(b, int, 4) = -1;
+    }
+    AT(p, void **, 0) = D_80012154;
+    AT(p, void **, 8) = D_8001201C;
+    AT(p, void **, 0) = D_80012034;
+    AT(p, void *, 0xC) = (char *)p + 0x10;
+    func_800198E0((char *)p + 0x10, 4, 0);
+    return p;
+}
 
 EXTERN_C void func_800356F4(void *p)
 {
@@ -209,7 +234,16 @@ EXTERN_C void func_800356F4(void *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003572C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800357E0);
+EXTERN_C void func_800357E0(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80012074;
+    AT(p, void **, 0x24) = D_8001208C;
+    AT(p, void **, 0) = D_800120B4;
+    func_80035B28((char *)p + 0x24, 0);
+    func_80035304(p, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003585C);
 
@@ -243,7 +277,18 @@ EXTERN_C char *func_80035940(void *p, int n)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003598C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035A28);
+EXTERN_C void func_80035A28(void *p, int flags)
+{
+    char *b = (char *)p + 8;
+    AT(p, void **, 0xC) = D_80012104;
+    AT(p, void **, 8) = D_800120F4;
+    AT(p, void **, 0) = D_8001211C;
+    AT(b, void **, 4) = D_800101C0;
+    AT(b, void **, 0) = D_800101B0;
+    func_800198AC(b, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_80035AB0(void *p, int a)
 {
