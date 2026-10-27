@@ -56,6 +56,33 @@ struct Node_80093800 {
     Node_80093800 *next;
 };
 
+struct Blk_8008BE08 {
+    int unk0;
+    int unk4;
+    char *end;
+    Blk_8008BE08 *next;
+};
+
+struct Time_8008E134 {
+    char pad0[2];
+    unsigned short hours;
+    unsigned char minutes;
+    unsigned char seconds;
+    unsigned char unk6;
+    unsigned char unk7;
+    char pad8[4];
+    unsigned short ticks;
+};
+
+/* A byte inside D_800B18FC (offset 0x1A3) that retail reaches as its own symbol: reading it as
+   a D_800B18FC field lets the scheduler move the load above stores through pointers. */
+struct Byte_800B1A9F {
+    unsigned char v;
+    char pad[11];
+};
+
+EXTERN_C Byte_800B1A9F D_800B1A9F;
+
 EXTERN_C void func_80094990();
 EXTERN_C void func_800949A0();
 EXTERN_C void func_8008C7B4(int a, int b, int c, int d, int e);
@@ -63,5 +90,26 @@ EXTERN_C void func_8008CA50(void);
 EXTERN_C char *func_8008C970(void);
 EXTERN_C void func_8008CBE4(void);
 EXTERN_C void func_8009484C(int a, int b);
+EXTERN_C void *func_8008BC0C(int size);
+EXTERN_C char *func_8008C4F0(int id);
+EXTERN_C void func_8008DACC(void *self, int a, int b);
+EXTERN_C void func_8008EF64(int a, int b, int c);
+EXTERN_C void func_8008F0CC(int a, int b, int c, int d);
+EXTERN_C void func_80093710(void *t, int k);
+EXTERN_C void func_80093788(void *t, int k);
+EXTERN_C void func_800939A8(void *t, int a, int b);
+EXTERN_C void func_800939F4(void *t, int a, int b);
+EXTERN_C void func_80093A40(void *t, int bits);
+EXTERN_C unsigned int func_80094800(unsigned int *p);
+EXTERN_C long EnableEvent(unsigned long event);
+EXTERN_C long DisableEvent(unsigned long event);
+EXTERN_C void func_8008BA68(void);
+EXTERN_C void func_8008BAC4(void);
+EXTERN_C void func_8008E134(unsigned int n, Time_8008E134 *t);
+EXTERN_C void func_80093DE8(void *n);
+EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
+EXTERN_C long SpuSetNoiseClock(long n_clock);
+EXTERN_C void func_8008E1B4(void *t);
+EXTERN_C void func_8009482C(int a, int b);
 
 #endif /* GAME_SOUND_SOUND_H */
