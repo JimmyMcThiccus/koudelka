@@ -93,9 +93,9 @@ EXTERN_C char *func_80033D34(void *p, char *src)
     return src + 0x38;
 }
 
-EXTERN_C void func_80033D7C(void *p)
+EXTERN_C void func_80033D7C(void *p, int a)
 {
-    func_8003488C(p ? (char *)p + 0x34 : 0);
+    func_8003488C(p ? (char *)p + 0x34 : 0, a);
 }
 
 EXTERN_C void func_80033DAC(void *p)

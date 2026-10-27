@@ -1,2 +1,4 @@
 // main_a2: names for functions/data in src/main/u_80032264.cpp ... u_8003C510.cpp (0x80032264-0x80054A2C).
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
+D_80012C88 = 0x80012C88; // force_not_migration:True
+D_80013210 = 0x80013210; // force_not_migration:True

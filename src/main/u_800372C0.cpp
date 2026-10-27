@@ -26,7 +26,14 @@ EXTERN_C int func_8003738C(void *p, int a)
     return (a & 0x1D) != 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037398);
+EXTERN_C void func_80037398(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    func_80035304(p, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_800373F8(void *p)
 {
@@ -76,7 +83,22 @@ INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800378A8);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037934);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800379D0);
+EXTERN_C int func_800379D0(void *p)
+{
+    int r;
+    switch (AT(p, int, 0xC)) {
+    case 2:
+        r = D_8001232C[AT(p, int, 0x10)].b;
+        break;
+    case 15:
+        r = 0x800;
+        break;
+    default:
+        r = 0x1000;
+        break;
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037A20);
 

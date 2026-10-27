@@ -38,7 +38,12 @@ EXTERN_C void func_80034854(void *p, void *q)
     func_80034EBC(p ? (char *)p + 4 : 0, (char *)q + 4);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003488C);
+EXTERN_C void func_8003488C(void *p, int a)
+{
+    func_80034B84((S_A2_Flags *)p, a != -1);
+    if (a != -1)
+        func_80034F24((S_80034F24 *)(p ? (char *)p + 4 : 0), a);
+}
 
 EXTERN_C int func_800348E4(void *p)
 {
@@ -63,7 +68,17 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003494C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800349F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034AA0);
+C_80034AA0::C_80034AA0()
+{
+    int i;
+    S_A2_PolyFT4 *q = p;
+    i = 2;
+    while (i--) {
+        q->len = 9;
+        q->code = 0x2C;
+        q++;
+    }
+}
 
 EXTERN_C S_Prim *func_80034AF4(S_Prim *p)
 {
@@ -244,7 +259,15 @@ EXTERN_C void *func_80035B64(void *p, int a, short c)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035B98);
+EXTERN_C int func_80035B98(A2VObj0 *p, unsigned int n)
+{
+    void *r = (void *)p->v04(n);
+    if (r) {
+        CdGetSector(r, n >> 2);
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C void func_80035BF0()
 {
@@ -267,7 +290,13 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035CA8);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035CD8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035CF8);
+EXTERN_C void func_80035CF8()
+{
+    if (D_800B4D0C) {
+        func_80036674((void *)D_800B4D0C);
+        ((A2VObj0 *)D_800B4D0C)->v07(2);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035D4C);
 
