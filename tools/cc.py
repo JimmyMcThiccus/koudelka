@@ -6,7 +6,7 @@
 Also writes <out>.d, a depfile listing the headers (from the preprocessor's
 line markers) and the INCLUDE_ASM/INCLUDE_RODATA .s files the object pulls in.
 
-Usage: python cc.py --psyq bin/psyq4.4 --aspsx 2.79 --cflags "-O2 -G8" [--as-G N]
+Usage: python cc.py --psyq bin/psyq4.4 --aspsx 2.79 --cflags "-O2 -G8" [--as-G N] [--expand-div]
        [-I include ...] -o build/src/x.cpp.o src/x.cpp
 """
 import argparse
@@ -48,6 +48,7 @@ def main():
     ap.add_argument("--aspsx", required=True)
     ap.add_argument("--cflags", default="-O2 -G8")
     ap.add_argument("--as-G", dest="as_g", type=int, help="assembler -G (default: the -G in --cflags)")
+    ap.add_argument("--expand-div", action="store_true", help="maspsx expands div/rem with zero checks")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     a = ap.parse_args()
 
@@ -70,7 +71,7 @@ def main():
             capture_output=True, text=True)
         # maspsx reads stdin whenever it isn't a tty, so always feed it that way.
         mas = run([sys.executable, str(ROOT / "tools" / "maspsx_extern.py"), f"--aspsx-version={a.aspsx}",
-                   *gflag], input=s_file.read_text(), capture_output=True, text=True)
+                   *gflag, *(["--expand-div"] if a.expand_div else [])], input=s_file.read_text(), capture_output=True, text=True)
         m_file = tmp / "out.mas.s"
         m_file.write_text(mas.stdout)
         run([str(AS), *AS_FLAGS, *[f"-I{i}" for i in a.incs], "-o", str(out), str(m_file)])

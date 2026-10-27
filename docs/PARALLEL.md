@@ -8,7 +8,8 @@ The areas don't overlap, so their branches merge cleanly.
 | Area | Source | Range | Your symbols | Your headers |
 |---|---|---|---|---|
 | `main_a` | `src/main/main_a.cpp` | functions `0x800186B0`–`0x80054A2C` (1,712) | `config/symbols/main_a.txt` | `include/game/a/` |
-| `main_b` | `src/main/main_b.cpp` | functions `0x80054A2C`–`0x80094910` (1,561) | `config/symbols/main_b.txt` | `include/game/b/` |
+| `main_b` | `src/main/main_b.cpp` | functions `0x80054A2C`–`0x8008B6B0` | `config/symbols/main_b.txt` | `include/game/b/` |
+| `sound` | `src/main/sound.cpp` | functions `0x8008B6B0`–`0x80094910` (the sound driver, PsyQ 4.1) | `config/symbols/sound.txt` | `include/game/sound/` (it also uses `include/game/b/sound.h`) |
 | `field` | `src/field/field.cpp` | all (930 entries) | `config/symbols/field.txt` | `include/field/` |
 | `battle` | `src/battle/battle.cpp` | all (568) | `config/symbols/battle.txt` | `include/battle/` |
 | `effect` | `src/effect/effect.cpp` | all (418) | `config/symbols/effect.txt` | `include/effect/` |
@@ -35,9 +36,11 @@ The last line must be `functional check: OK`.
 2. Write it in a scratch file (`scratch_c/` is git-ignored) and iterate until it matches exactly:
 
    ```powershell
-   .venv/Scripts/python.exe tools/try_compile.py scratch_c/f.cpp func_XXXXXXXX
-   # overlays: add --asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --as-G 0
+   .venv/Scripts/python.exe tools/try_compile.py scratch_c/f.cpp func_XXXXXXXX --unit src/field/field.cpp
    ```
+
+   `--unit` is the source file the function lives in. It brings that file's exact build flags (compiler, ASPSX
+   version, `-G`, divide checks) and its asm folder and retail binary.
 
    Done means `0 differing instructions`.
 3. Move it into your `.cpp`, replacing its `INCLUDE_ASM(...)` line. Follow the rules in the README ("Decompiling a

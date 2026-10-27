@@ -16,6 +16,7 @@ options:
     - config/symbols/main.txt
     - config/symbols/main_a.txt
     - config/symbols/main_b.txt
+    - config/symbols/sound.txt
   undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.main.txt
   undefined_syms_auto_path: build/linkers/undefined_syms_auto.main.txt
 
@@ -57,11 +58,15 @@ segments:
       - [0x800, rodata, ctors]
       - [0x8C0, .rodata, main_a] # 0x800100C0: main_a's rodata, migrated into its functions
       - [0x4140, .rodata, main_b] # 0x80013940: main_b's rodata (no interleaving with main_a's)
+      - [0x874C, .rodata, sound] # 0x80017F4C: the sound driver's rodata (jtbl_80017F4C)
       - [0x8760, rodata, psyq] # 0x80017F60: library rodata ("$Id: sys.c ...")
       # Game code, split at a real file boundary: func_80054A04 is a static constructor, the last
       # function of its file. More splits will follow at the other .ctors boundaries.
       - [0x8EB0, cpp, main_a] # 0x800186B0 -> src/main/main_a.cpp
       - [0x4522C, cpp, main_b] # 0x80054A2C -> src/main/main_b.cpp
+      # Sound driver (next to "Programmed by Hidenori Suzuki"): GCC 2.7.2 / PsyQ 4.1, no $gp. It starts after
+      # func_8008B630 (the last 4.4-only function) and by 0x8008C4B8 (the first 4.1-only one).
+      - [0x7BEB0, cpp, sound] # 0x8008B6B0 -> src/main/sound.cpp
       - [0x85110, asm, psyq] # 0x80094910: PsyQ 4.6 libraries (LoadExec ...), kept as asm
       - [0x94D14, data] # 0x800A4514
       - [0xA53FC, sdata] # 0x800B4BFC = $gp

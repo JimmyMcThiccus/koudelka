@@ -1,0 +1,2 @@
+// sound: names for functions/data in src/main/sound.cpp 0x8008B6B0-0x80094910 (the sound driver).
+// Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)

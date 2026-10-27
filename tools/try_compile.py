@@ -5,11 +5,11 @@ Compiles through tools/cc.py, the build's own pipeline (CPPPSX -> CC1PLPSX/CC1PS
 splat .s file (nonmatchings/ or matchings/). Relocated fields (jal targets,
 %hi/%lo immediates) are masked before comparing.
 
-Usage: python try_compile.py <file.c|.cpp> <func> [--psyq bin/psyq4.4] [--aspsx 2.79]
-       [--cflags "-O2 -G8"] [--as-G N] [--asm-dir asm/main] [--target extracted/disc1/SLUS_010.51]
-       [-I dir ...]
-Defaults follow config/toolchain.toml's game-code flags. For an overlay function pass
---asm-dir asm/<ovl> --target extracted/disc1/BIN/<OVL>.BIN --as-G 0.
+Usage: python try_compile.py <file.c|.cpp> <func> --unit src/<area>/<file>.cpp
+       [-I dir ...] [--quiet]
+--unit takes the build's flags for that file from config/toolchain.toml, and picks its asm dir
+and retail binary. Without it: the EXE's game-code defaults. To experiment, override any of
+--psyq, --aspsx, --cflags, --as-G, --[no-]expand-div, --asm-dir, --target.
 """
 import argparse
 import re
@@ -20,6 +20,9 @@ import tempfile
 from pathlib import Path
 
 import rabbitizer
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import toolchain  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 BIN = ROOT / "bin" / "binutils"
@@ -40,15 +43,29 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cfile")
     ap.add_argument("func")
-    ap.add_argument("--psyq", default="bin/psyq4.4")
-    ap.add_argument("--aspsx", default="2.79")
-    ap.add_argument("--cflags", default="-O2 -G8")
+    ap.add_argument("--unit", help="source file the function belongs to (e.g. src/field/field.cpp): use its "
+                    "build flags, asm dir and retail binary from config/toolchain.toml; the options below override")
+    ap.add_argument("--psyq")
+    ap.add_argument("--aspsx")
+    ap.add_argument("--cflags")
     ap.add_argument("--as-G", dest="as_g", type=int, help="assembler -G (default: the -G in --cflags); overlays: 0")
-    ap.add_argument("--asm-dir", default="asm/main")
-    ap.add_argument("--target", default="extracted/disc1/SLUS_010.51")
+    ap.add_argument("--expand-div", action=argparse.BooleanOptionalAction, default=None,
+                    help="maspsx expands div/rem with zero checks")
+    ap.add_argument("--asm-dir")
+    ap.add_argument("--target")
     ap.add_argument("-I", dest="incs", action="append", default=["include"], help="include dir (repeatable)")
     ap.add_argument("--quiet", action="store_true")
     a = ap.parse_args()
+    unit = a.unit or "src/main/main_a.cpp"
+    s = toolchain.settings(unit)
+    asm_dir, target = toolchain.target_of(unit)
+    a.psyq = a.psyq or s["psyq"]
+    a.aspsx = a.aspsx or s["aspsx"]
+    a.cflags = a.cflags or s["cflags"]
+    a.as_g = a.as_g if a.as_g is not None else s.get("as_G")
+    a.expand_div = s["expand_div"] if a.expand_div is None else a.expand_div
+    a.asm_dir = a.asm_dir or asm_dir
+    a.target = a.target or target
 
     rom, size = retail_bytes(ROOT / a.asm_dir, a.func)
     want = open(ROOT / a.target, "rb").read()[rom:rom + size]
@@ -59,6 +76,7 @@ def main():
         # The build's own pipeline (preprocessor, both -G settings, maspsx wrapper).
         cc = [sys.executable, str(ROOT / "tools" / "cc.py"), "--psyq", a.psyq, "--aspsx", a.aspsx,
               "--cflags", a.cflags, *(["--as-G", str(a.as_g)] if a.as_g is not None else []),
+              *(["--expand-div"] if a.expand_div else []),
               *[f"-I{i}" for i in a.incs], "-o", str(obj), str(a.cfile)]
         if subprocess.run(cc, cwd=ROOT).returncode != 0:
             sys.exit(f"{a.func}: compile failed")

@@ -53,7 +53,7 @@ Game code is C++ (vtables, `__builtin_new`), so every target's code is a `.cpp` 
 
 | Target | Source | Kept as assembly |
 |---|---|---|
-| `SLUS_010.51` | `src/main/main_a.cpp` (`0x800186B0`–`0x80054A2C`, rodata from `0x800100C0`) and `src/main/main_b.cpp` (`0x80054A2C`–`0x80094910`, rodata from `0x80013940`), split at a real file boundary | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
+| `SLUS_010.51` | `src/main/main_a.cpp` (`0x800186B0`–`0x80054A2C`, rodata from `0x800100C0`), `src/main/main_b.cpp` (`0x80054A2C`–`0x8008B6B0`, rodata from `0x80013940`), `src/main/sound.cpp` (the sound driver, `0x8008B6B0`–`0x80094910`, PsyQ 4.1) | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
 | each overlay | `src/<overlay>/<overlay>.cpp`: all of its code and leading rodata | trailing `.data` |
 
 splat writes these files once, with one `INCLUDE_ASM` / `INCLUDE_RODATA` line per function and rodata symbol, in
@@ -81,11 +81,11 @@ Two things are specific to this compiler:
 1. Check it on its own:
 
    ```powershell
-   .venv/Scripts/python.exe tools/try_compile.py my.cpp func_XXXXXXXX
+   .venv/Scripts/python.exe tools/try_compile.py my.cpp func_XXXXXXXX --unit src/main/main_a.cpp
    ```
 
-   This diffs it against retail; reference asm comes from `nonmatchings/` or `matchings/`. For an overlay, add
-   `--asm-dir asm/field --target extracted/disc1/BIN/FIELD.BIN --as-G 0` (overlays: compiler `-G8`, assembler `-G0`).
+   This diffs it against retail, compiled with the build's own flags for that source file (`--unit`). Reference
+   asm comes from `nonmatchings/` or `matchings/`.
 2. Replace the function's `INCLUDE_ASM(...)` line in the `.cpp` with the code.
    - Wrap free functions, and the asm functions they call, in `EXTERN_C` (`include/common.h`), so names stay
      `func_XXXXXXXX`.
@@ -111,7 +111,11 @@ exactly there, so the EXE has **no room to grow**. A decompiled function may be 
 | `include/` | splat's assembler macros (generated) and `common.h` |
 | `tools/cc.py` | the C/C++ compile pipeline |
 | `tools/maspsx_extern.py` | maspsx, plus `$gp` for small `.extern` symbols |
-| `tools/try_compile.py` | compile one function and diff it against retail |
+| `tools/try_compile.py` | compile one function and diff it against retail (`--unit` = that file's flags) |
+| `tools/toolchain.py` | per-file compiler settings, shared by `configure.py` and `try_compile.py` |
+| `tools/func_diff.py` | list the functions of a built image that differ from retail |
+| `tools/split_unit.py` | split a source file in two at a function start (yaml, source, paired rodata) |
+| `tools/resync_rodata.py` | re-place `INCLUDE_RODATA` lines after a change in what splat migrates |
 | `tools/check.py` | pad to retail size, compare SHA-1 |
 
 Tools in `bin/` (git-ignored):
@@ -155,14 +159,21 @@ and the `MOVIE/` contents. Disc 1 is the reference.
   `__builtin_delete`, `__do_global_dtors`), and `func_800186E8` makes a GCC 2.x virtual call (vtable entries of
   `{short delta; short index; pfn}`) through a null-checked virtual-base pointer.
 - Compiler: **GCC 2.8.x, from PsyQ 4.3 or 4.4.** That is older than the 4.6 libraries. The pick is PsyQ 4.4
-  (CC1PSX/CC1PLPSX 2.8.1, ASPSX 2.79), recorded in `config/toolchain.toml`. `tools/try_compile.py` runs
+  (CC1PSX/CC1PLPSX 2.8.1), with maspsx emulating ASPSX 2.81 and the ASPSX divide-by-zero checks; all of this is in
+  `config/toolchain.toml`. `tools/try_compile.py` runs
   CC1PSX/CC1PLPSX → maspsx → GNU as and diffs one function against retail, with relocations masked. The matching
   sources are in `tests/compiler/`:
   - `func_800186E8` (C++ loop) and `func_8006F630` (switch with jump table) match exactly on 4.3 and 4.4 only.
   - 4.0/4.1 (GCC 2.7.2) differ in the epilogue.
   - 4.5 (egcs) and 4.6 (2.95) move the loop test to the bottom and lay out the switch differently.
   - 2.8.0 and 2.8.1 gave identical output in every test.
-  - ASPSX 2.67–2.86 all give the same result on these functions, so the assembler version is not pinned yet.
+  - ASPSX 2.67–2.86 all give the same result on these functions. Later evidence picks **2.81** (PsyQ 4.5's):
+    `func_80065870` needs its `$gp`-relative `la`, and nothing already matched regresses.
+  - Divides: every `div` in the game code (EXE and overlays) carries ASPSX's zero checks (`break 7`/`break 6`);
+    `func_80089A4C` matches only with them.
+  - **The sound driver is different:** `0x8008B6B0`–`0x80094910` was built with GCC 2.7.2 (PsyQ 4.1, ASPSX
+    2.67), no `$gp` and no divide checks. Compiling `main_b` with 4.1 breaks every 4.4 function up to
+    `func_8008B630` and none after; about 25 functions there match only with 4.1.
   - PsyQ 3.6 is a 16-bit DOS build and can't run on 64-bit Windows.
   - The 2.7.2 builds need `TMPDIR` set to a Windows path (the tool does this).
 

@@ -2,7 +2,7 @@
 
 bin/, .venv/ and extracted/ are git-ignored, so a fresh worktree has none of
 them. This copies what the build needs from the main checkout (about 45 MB):
-binutils, the PsyQ compiler named in config/toolchain.toml, maspsx, the
+binutils, the PsyQ compilers named in config/toolchain.toml, maspsx, the
 virtualenv, and the seven retail target files. Copies, not links, so removing
 a worktree can never delete the main checkout's files.
 
@@ -36,8 +36,11 @@ def main():
         sys.exit("worktree_setup: this is the main checkout; run it inside a worktree")
 
     with open(here / "config" / "toolchain.toml", "rb") as f:
-        psyq = tomllib.load(f)["compiler"]["psyq"]
-    dirs = ["bin/binutils", psyq, "bin/maspsx", ".venv"]
+        comp = tomllib.load(f)["compiler"]
+    # the default compiler plus any a per-file override names (e.g. PsyQ 4.1 for the sound driver)
+    psyqs = [comp["psyq"]] + sorted({o["psyq"] for o in comp.get("overrides", {}).values()
+                                     if isinstance(o, dict) and "psyq" in o} - {comp["psyq"]})
+    dirs = ["bin/binutils", *psyqs, "bin/maspsx", ".venv"]
 
     for rel in dirs:
         src, dst = main_root / rel, here / rel

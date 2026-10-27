@@ -16,6 +16,7 @@ options:
     - config/symbols/main.txt
     - config/symbols/main_a.txt
     - config/symbols/main_b.txt
+    - config/symbols/sound.txt
     - config/symbols/field.txt
   undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.field.txt
   undefined_syms_auto_path: build/linkers/undefined_syms_auto.field.txt

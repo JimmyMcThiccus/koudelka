@@ -8,10 +8,14 @@
 psyq = "bin/psyq4.4"
 cc1 = "CC1PSX.EXE"        # C: GCC 2.8.1 SN32 BUILD 4.0.0010
 cc1plus = "CC1PLPSX.EXE"  # C++
-aspsx = "2.79"            # maspsx --aspsx-version; the tests don't constrain it, so 4.4's own ASPSX
+aspsx = "2.81"            # maspsx --aspsx-version. 2.81 (PsyQ 4.5's ASPSX): func_80065870 needs it ($gp for la), nothing regresses
+expand_div = true         # every div in the game code (EXE + overlays) has the ASPSX zero checks; func_80089A4C needs it
 cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files reach globals with lui (-G0, or large objects)
 
 [compiler.overrides]
+# Sound driver: GCC 2.7.2 from PsyQ 4.1 with its own ASPSX; the region never uses $gp.
+"src/main/sound.cpp" = { psyq = "bin/psyq4.1", aspsx = "2.67", cflags = "-O2 -G8", as_G = 0, expand_div = false }
+# (its 19 divs have no zero checks)
 # "src/<path>" = "<cflags>", or { cflags = "...", as_G = N } when the assembler's -G differs.
 # Overlays: the compiler ran with -G8 but the assembler never used $gp (0 gp-relative accesses in all six;
 # the EXE has 391). The CAPTURE session found the evidence: func_800B9E10 loads a 4-byte EXE global as
