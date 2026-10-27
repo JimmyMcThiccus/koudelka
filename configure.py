@@ -40,9 +40,14 @@ with open(ROOT / "config" / "toolchain.toml", "rb") as f:
     COMPILER = tomllib.load(f)["compiler"]
 
 
-def cflags_for(src):
-    """Default cflags, or a per-file override from [compiler.overrides] in config/toolchain.toml."""
-    return COMPILER.get("overrides", {}).get(src, COMPILER["cflags"])
+def flags_for(src):
+    """(cflags, assembler -G or None) for a source, from [compiler.overrides] in config/toolchain.toml.
+
+    An override is either a cflags string or a table {cflags = "...", as_G = N}."""
+    o = COMPILER.get("overrides", {}).get(src, COMPILER["cflags"])
+    if isinstance(o, str):
+        return o, None
+    return o.get("cflags", COMPILER["cflags"]), o.get("as_G")
 
 
 def load(target):
@@ -73,7 +78,7 @@ def write_ninja(mode):
     n.variable("nm", f"{BINUTILS}nm.exe")
     n.rule("as", f"{BINUTILS}as.exe {AS_FLAGS} -o $out $in", description="as $in")
     n.rule("cc", f"$python tools/cc.py --psyq {COMPILER['psyq']} --aspsx {COMPILER['aspsx']} "
-                 f"--cflags \"$cflags\" -Iinclude -o $out $in",
+                 f"--cflags \"$cflags\" $asflags -Iinclude -o $out $in",
            description="cc $in", depfile="$out.d", deps="gcc")
     n.rule("ld", f"{BINUTILS}ld.exe {LD_FLAGS} -T $ldscript $externs -Map $map -o $out",
            description="ld $out")
@@ -100,7 +105,8 @@ def write_ninja(mode):
             rel = s.relative_to(ROOT).as_posix()
             o = f"build/{rel}.o"
             n.build(o, "cc", rel, implicit=["tools/cc.py", "config/toolchain.toml"],
-                    variables={"cflags": cflags_for(rel)})
+                    variables={"cflags": flags_for(rel)[0],
+                               "asflags": "" if flags_for(rel)[1] is None else f"--as-G {flags_for(rel)[1]}"})
             objs.append(o)
         elf = opt["elf_path"]
         undefs = [opt["undefined_syms_auto_path"], opt["undefined_funcs_auto_path"]]
