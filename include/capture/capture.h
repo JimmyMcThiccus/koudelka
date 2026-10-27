@@ -179,4 +179,32 @@ struct S_800BD604 {
     Short12 v;
 };
 
+struct Rec8 {
+    unsigned char a, b, c, d;
+    short e, f;
+};
+
+struct S_800C1F6C {
+    char pad[0x14];
+    short n;
+    char pad2[2];
+    Rec8 *list;
+};
+
+struct S_800C2370_src {
+    int pad;
+    ShortQuad q[4];
+};
+
+struct S_800C2370_dst {
+    char pad[0xC];
+    ShortQuad q[4];
+};
+
+struct N_800BE6D8 {
+    int pad;
+    N_800BE6D8 *next;
+    VObject obj;
+};
+
 #endif
