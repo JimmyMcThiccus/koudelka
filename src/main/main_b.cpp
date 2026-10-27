@@ -159,7 +159,21 @@ EXTERN_C void func_80054FE0(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055020);
+struct SV2C_80055020 {
+    short x, y;
+    SV2C_80055020(short a, short b) : x(a), y(b) {}
+};
+EXTERN_C void func_80053F28(void *self, SV2C_80055020 v);
+EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
+{
+    char *o;
+    func_80053F28(self, v);
+    o = FIELD_AT(self, char *, 0x3C);
+    if (o != 0) {
+        ((VObj<8> *)(o + 0x50))->v02();
+        FIELD_AT(self, VObj<0x2C> *, 0x3C)->v07(v.x, v.y);
+    }
+}
 
 EXTERN_C void func_800550BC(void *self)
 {
@@ -212,7 +226,29 @@ EXTERN_C int func_80055838(int value)
     return old;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_8005584C);
+EXTERN_C void *func_8005584C(void *self, int b)
+{
+    char *r;
+    func_8001E40C(self, b, 2, 0x400, 0);
+    FIELD_AT(self, void *, 0x8C) = D_80013BA0;
+    FIELD_AT(self, void *, 0x0) = D_80013BB8;
+    FIELD_AT(self, int, 0x44E8) = 0;
+    FIELD_AT(self, int, 0x44F0) = 0;
+    FIELD_AT(self, int, 0x44F8) = 0;
+    FIELD_AT(self, int, 0x44FC) = 0;
+    FIELD_AT(self, int, 0x4500) = 1;
+    func_80060378((char *)self + 0x4504);
+    r = (char *)self;
+    FIELD_AT(r, int, 0x6790) = 0;
+    FIELD_AT(r, int, 0x6794) = -1;
+    FIELD_AT(r, int, 0x6798) = 0;
+    FIELD_AT(r, int, 0x44F4) = 0;
+    FIELD_AT(r, int, 0x44EC) = 0;
+    FIELD_AT(r, int, 0x6788) = 0;
+    FIELD_AT(r, int, 0x678C) = 0;
+    D_800B4D84 = r;
+    return r;
+}
 
 EXTERN_C void func_800558DC(void *self, int flags)
 {
@@ -229,7 +265,21 @@ INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055A9C);
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055D78);
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055F0C);
+EXTERN_C void func_80055F0C(void *self)
+{
+    char *h = FIELD_AT(self, char *, 0x44F4);
+    char *v = h ? h + 8 : 0;
+    char *p;
+    func_80019CFC(v ? *(void **)v : 0);
+    if (--FIELD_AT(self, int, 0x44F0) == 0) {
+        p = FIELD_AT(self, char *, 0x44F4);
+        if (p != 0) {
+            func_80019920(*(void **)p, 0);
+            __builtin_delete(p);
+        }
+        FIELD_AT(self, void *, 0x44F4) = 0;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055F98);
 

@@ -214,7 +214,10 @@ EXTERN_C int func_80061030(void *self, unsigned int i)
     return (((unsigned int *)((char *)self + 0x124))[i >> 5] & (1 << (i & 0x1F))) != 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061058);
+EXTERN_C void func_80061058(void *self)
+{
+    *FIELD_AT(self, Blk32 *, 0x120) = FIELD_AT(self, Blk32, 0x1D4);
+}
 
 EXTERN_C void func_800610E4(Obj_800610E4 *self, int i, int j)
 {

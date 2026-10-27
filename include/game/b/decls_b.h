@@ -99,7 +99,7 @@ EXTERN_C Str_800AE620 D_800AE620;
 EXTERN_C void func_80019920(void *a, int b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005717C(void *self);
+EXTERN_C void func_8005717C(void *self, int a, int b);
 
 /* from u_80056E0C.cpp */
 EXTERN_C void func_8005388C(void *self, int b);
@@ -709,7 +709,7 @@ EXTERN_C void func_8002DC34(void *self, int b, int c);
 
 /* from u_800658E0.cpp */
 EXTERN_C void *func_80066FB0(void *self, void *b, int c, int d, int e);
-EXTERN_C void func_800670A4(void *self);
+EXTERN_C int func_800670A4(void *self);
 
 /* from u_800658E0.cpp */
 struct Blk_8006BEA0 {
@@ -2172,5 +2172,87 @@ EXTERN_C Col_80065870 D_800B4E50;
 EXTERN_C char D_80014C38[];
 EXTERN_C void func_8008E504(void *p);
 EXTERN_C char D_80013B70[];
+
+EXTERN_C void func_80019CFC(void *l);
+EXTERN_C void func_8005BFA4(void *self);
+EXTERN_C void func_80059A84(void *self);
+EXTERN_C short D_800B4DA6;
+EXTERN_C char D_80014548[];
+EXTERN_C char D_800145B0[];
+EXTERN_C int func_8002EB68(void *self);
+EXTERN_C void func_800386B8(void *self, int b);
+EXTERN_C void func_80060378(void *self);
+
+struct E16_80059800 {
+    int a, b;
+    short x, y, z, w;
+};
+
+struct S_80059800 {
+    char pad[0x8];
+    short state;
+    short pad2;
+    E16_80059800 e[2];
+};
+
+struct TILE_B {
+    int tag;
+    unsigned char r0, g0, b0, code;
+    short x0, y0;
+    short w, h;
+};
+
+struct Blk32 {
+    char c[32];
+};
+
+struct SV2_80055020 {
+    short x, y;
+};
+
+EXTERN_C void func_800198E0(void *a, int b, int c);
+EXTERN_C unsigned short D_800B4D7C;
+EXTERN_C void func_8002B174(void *heap, void *p, int c);
+EXTERN_C void func_8005D9D4(void *self, int b);
+EXTERN_C void func_8005A020(void *self, int b, int c);
+EXTERN_C int func_80059E90(VObj<0x2C> *self, int b);
+EXTERN_C int func_80059F00(void *self);
+EXTERN_C void func_80058A80(void *self);
+EXTERN_C VObj0 *func_80019F64(void *l, int i);
+EXTERN_C void *__builtin_new(int size);
+EXTERN_C void *func_8005D080(void *self, void *b, int c, int d);
+EXTERN_C void func_8002DA94(void *self, void *b);
+EXTERN_C short D_800B4E2C;
+
+struct MATRIX_B {
+    short m[3][3];
+    short pad;
+    int t[3];
+};
+struct V3i_B {
+    int x, y, z;
+};
+struct V3s_B {
+    short x, y, z;
+};
+
+EXTERN_C void func_80039A14(void *self);
+EXTERN_C void func_8003A754(void *self, int b);
+EXTERN_C void func_8003AD78(void *self, void *b);
+EXTERN_C void func_8003B2F0(void *self, void *b);
+EXTERN_C void func_8003BC10(MATRIX_B *m, void *b);
+EXTERN_C void SetColorMatrix(MATRIX_B *m);
+EXTERN_C void SetBackColor(int r, int g, int b);
+EXTERN_C void func_800C0920(void);
+EXTERN_C int func_8005409C(void *self);
+EXTERN_C void func_800631D4(void *self);
+EXTERN_C void func_80099C80(int a);
+EXTERN_C int func_8006BCF4(void *self);
+EXTERN_C int SquareRoot0(int a);
+EXTERN_C int func_80080CC8(void *self, int b);
+EXTERN_C void func_8007164C(void *self, void *b);
+EXTERN_C int func_80077234(void *self, void *b);
+
+EXTERN_C void func_80063714(void *self, unsigned int b);
 
 #endif /* GAME_B_DECLS_B_H */

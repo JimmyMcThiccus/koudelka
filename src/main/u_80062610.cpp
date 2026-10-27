@@ -8,7 +8,20 @@
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062610);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062764);
+EXTERN_C void func_80062764(void *self, int flags)
+{
+    if (--D_800B4E2C == 0) {
+        if (D_800B4E34 != 0) {
+            func_800A0D0C((void *)D_800B4E34);
+        }
+        if (D_800B4E30 != 0) {
+            func_800A0D0C(D_800B4E30);
+        }
+    }
+    if (flags & 1) {
+        __builtin_delete(self);
+    }
+}
 
 EXTERN_C void func_800627E8(Entry_800627E8 *out, int i)
 {
