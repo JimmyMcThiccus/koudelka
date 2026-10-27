@@ -169,7 +169,7 @@ EXTERN_C void func_800BD928() { if (D_800CBA90[0]) { DecDCToutCallback(0); Unk80
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BD988);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BD9DC);
+EXTERN_C void func_800BD9DC(void* vs, void* item) { Unk800BD83CS* s = (Unk800BD83CS*)vs; s->x20 = 1; Unk800BD83CL* l = s ? s->x0 : 0; func_80019A6C(l, item, l->x4); if ((s ? s->x0 : 0)->x4 == 1) { Unk800BD83CH* h = s ? &s->x8 : 0; Unk800BD83CL* m = h ? h->x0 : 0; func_800BCEA0(m->x4 ? *m->x0 : 0); } s->x20 = 0; if (s->x24) { Unk800BD83CH* h2 = s ? &s->x8 : 0; Unk800BD83CL* m2 = h2 ? h2->x0 : 0; func_800BD008(m2->x4 ? *m2->x0 : 0); s->x24 = 0; } }
 
 EXTERN_C void func_800BDADC(void* vs, s32 item) { Unk800BD83CS* s = (Unk800BD83CS*)vs; s->x20 = 1; Unk800BD83CH* h = s ? &s->x8 : 0; func_80019CFC(h ? h->x0 : 0, item); s->x20 = 0; if ((s ? s->x0 : 0)->x4 == 0) DecDCToutCallback(0); else if (s->x24) { Unk800BD83CH* h2 = s ? &s->x8 : 0; Unk800BD83CL* l = h2 ? h2->x0 : 0; func_800BD008(l->x4 ? *l->x0 : 0); s->x24 = 0; } }
 
@@ -199,7 +199,7 @@ EXTERN_C void func_800BE2C4(Unk800BE2C4* p, s32 f) { p->xC = D_800112F4; p->x50 
 
 EXTERN_C void func_800BE368(Unk800BE368* p) { func_8002DC34(D_800A4578[0]->x8->x14, p, 0); func_80025714(D_800B4C48, p->x68); }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BE3B4);
+EXTERN_C void func_800BE3B4(Unk800BE3B4* p, s16 a, s16 b) { if (p->x6C == 0) { Unk800BE5F8T t; p->x5E = 0; p->x64 = a; p->x58 = b; p->x60 = 0; p->x62 = 0; p->x6C = 1; p->x6E = 0; func_8002972C(&t, p->x5E, p->x60, p->x62, 1); func_80028D10(p, &t); func_800198AC(&t, 2); p->v7(); func_800BE584((Unk800BE584*)p, 1); void* q = p ? p->x50 : 0; char* d = D_800A4544; Unk800BE3B4T* n = (Unk800BE3B4T*)operator new(0x14); *(void* volatile*)&n->x0 = D_80010178; n->x0 = D_80010338; n->x4 = 0; n->x8 = q; n->xC = 0x80; n->x10 = 0; func_8001D150(d, n); } }
 
 EXTERN_C void func_800BE4B4(Unk800BE4B4* p, s16 a, s16 b) { if (p->x6C == 0) { p->x6C = 2; p->x6E = 0; p->x58 = b; p->x64 = a; void* q = p ? p->x50 : 0; char* d = D_800A4544; Unk800BE4B4T* t = (Unk800BE4B4T*)operator new(0x14); *(void* volatile*)&t->x0 = D_80010178; t->x0 = D_80010338; t->x4 = 0; t->x8 = q; t->xC = 0x80; t->x10 = 0; func_8001D150(d, t); } }
 

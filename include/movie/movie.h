@@ -494,4 +494,10 @@ EXTERN_C s16 func_80028F10(void*);
 EXTERN_C s16 func_80028F58(void*);
 EXTERN_C void func_80028A24(void*);
 
+EXTERN_C void func_800BCEA0(void*);
+
+struct Unk800BE3B4T { void* x0; s32 x4; void* x8; s16 xC; s32 x10; };
+struct Unk800BE3B4V { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); };
+struct Unk800BE3B4 : Unk800BE3B4V { char pad[0x50 - 4]; char x50[8]; s16 x58; char p1[0x5E - 0x5A]; s16 x5E, x60, x62, x64; char p3[0x6C - 0x66]; s16 x6C, x6E; };
+
 #endif /* MOVIE_H */
