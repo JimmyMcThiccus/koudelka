@@ -825,4 +825,15 @@ EXTERN_C void func_800BCAEC(T_BCA6C *p, short y);
 EXTERN_C void func_800BCB6C(T_BCA6C *p, T_BCB6C_c *c);
 EXTERN_C void func_800BCC2C(T_BCA6C *p, T_BCB6C_c *c);
 
+EXTERN_C int func_80054D78(void *p);
+EXTERN_C void func_80054EB4(void *p, int a, int b);
+EXTERN_C void func_80054FC0(void *p);
+EXTERN_C void func_80054CA0(void *p);
+struct T_D3D50_o { char pad[0x2C]; T_VEntry *vt2C; };
+struct T_D3D50 { char pad[0x64]; unsigned f64; char pad68[0x2CC]; char f334[0x5C]; T_D3D50_o *f390; };
+EXTERN_C void func_80068770(void *p, int a);
+EXTERN_C void func_800557C8(void *p, int a, int b);
+EXTERN_C void func_8006897C(void *p, int a, int b);
+struct T_D20E0 { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; char pad5C[0x2220]; int f227C; T_D3ED0_vb v2280; };
+
 #endif /* BATTLE_BATTLE_H */
