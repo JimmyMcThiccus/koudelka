@@ -403,5 +403,36 @@ struct Unk_800C1A74_sub { char pad0[0x20]; int unk20; };
 struct Unk_800C1A74 : VAt<0x18> { char pad1C[0x20]; Unk_800C1A74_sub* unk3C; char pad40[0x2C]; Unk_800C9D60 unk6C; };
 EXTERN_C int func_800C9EE8(Unk_800C9D60*);
 struct Unk_800D7AF0 { char pad0[0x108]; Unk_Deletable18* unk108; };
+EXTERN_C void func_8008299C(void*, int, int, int, int, int, int);
+EXTERN_C void func_80082E14(void*, int);
+EXTERN_C int func_8005618C(void*);
+EXTERN_C void func_800690C8(void*, void*);
+EXTERN_C void func_80054F30(void*, int, void*, int);
+struct Unk_Short4 { short x, y, z, w; Unk_Short4() {} Unk_Short4(short a, short b) { x = a; y = b; } Unk_Short4(const short& a, const short& b, const short& c, const short& d) { x = a; y = b; z = c; w = d; } };
+struct Unk_FlagArg { char pad0[0x18]; unsigned short unk18; };
+struct Unk_Fx { short v; short pad; };
+EXTERN_C void func_800C0814(int, int);
+EXTERN_C void func_800C0890(int);
+struct Unk_800DF26C_obj { char pad0[0x18]; virtual ~Unk_800DF26C_obj(); virtual int vf01(...); virtual int vf02(...); };
+struct Unk_800DF26C { char pad0[0x55C]; Unk_800DF26C_obj* unk55C; };
+struct Unk_800C6E8C : VAt<0x18> { char pad1C[0xBC]; int unkD8; };
+struct Unk_800A4534 { char pad0[0x44]; char* unk44; };
+EXTERN_C Unk_800A4534 D_800A4534;
+EXTERN_C void func_8002456C(void*);
+EXTERN_C void func_80024524(void*);
+EXTERN_C void func_800D5F94(void*, int);
+struct Unk_800DAD54 { char pad0[0x23A8]; int unk23A8[0x30]; };
+EXTERN_C int func_800619F4(void*);
+EXTERN_C void func_800691EC(void*, int, int);
+EXTERN_C void func_80054CE4(void*);
+struct Unk_800E522C { char pad0[0x40]; char* unk40; };
+EXTERN_C int func_80094FD0(char*);
+struct Unk_800BAC9C : VAt0 { char pad4[4]; short unk8; char padA[0x1A]; TILE unk24[2]; };
+struct Unk_800BFD88_r { char pad0[0x1B8]; int unk1B8; unsigned short unk1BC; };
+struct Unk_800BFD88 { char pad0[0x610]; Unk_800CAD68_m unk610; char pad61C[0x14]; Unk_800BFD88_r* unk630; };
+struct Unk_800D8E4C : VAt<0x18> { char pad1C[0x58]; int unk74; };
+inline int func_800CDA28_test(int f) { return (f & 0xC50) && !(f & 0x4000); }
+struct Unk_800C6D2C { char pad0[0x64]; char unk64[0x74]; int unkD8; };
+struct Unk_800C8938 { char pad0[0x68]; int unk68; char pad6C[0x454]; char unk4C0[4]; };
 
 #endif /* FIELD_FIELD_H */
