@@ -389,7 +389,9 @@ struct Unk800C71E8V { char pad[0x18]; virtual void v1(); virtual void v2(); virt
 struct Unk800C71E8 : Unk800C71E8V { char p2[0x4B8 - 0x1C]; s32 x4B8; };
 struct Unk800C71E8B { char pad[0x18]; u16 x18; };
 
-struct Unk800B93D8T { char pad[0x30]; s32 x30; char p2[0x36 - 0x34]; u8 x36, x37; char p3[0x3C - 0x38]; void* x3C; };
+/* stream reader state; x4 points at its status block */
+struct StreamStat { u16 x0; s16 x2; s32 x4; };
+struct Unk800B93D8T { s32 x0; StreamStat* x4; char pad[0x30 - 8]; s32 x30; u8 x34, x35, x36, x37; char p3[0x3C - 0x38]; void* x3C; s32 x40, x44; };
 EXTERN_C Unk800B93D8T* D_800B4D0C[];
 EXTERN_C void StSetRing(void*, s32);
 EXTERN_C void StSetStream(s32, s32, s32, void*, void*);
@@ -402,5 +404,35 @@ struct Unk800BD83CS { Unk800BD83CL* x0; s32 x4; Unk800BD83CH x8; char p[0x20 - 0
 EXTERN_C void func_80018AF4();
 EXTERN_C void func_80018B18();
 EXTERN_C void func_800BD008(void*);
+
+struct Unk800C7F60 { s32 x0, x4, x8; char xC[4]; char p2[0x1C - 0x10]; u16 x1C; char p3[0x30 - 0x1E]; Unk800C8340L* x30; char p4[4]; char x38[4]; };
+EXTERN_C void* func_800C83CC(void*, void*, s32, void*, s32);
+
+struct Unk800C7740T { u16 x0, x2; s16 x4, x6; };
+struct Unk800C7740O { char pad[0x2C]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); };
+struct Unk800C7740E { char d[80]; };
+struct Unk800C7740 { char pad[0x74]; Unk800C7740E x74[13]; char p2[0x4B4 - 0x74 - 13 * 80]; Unk800C7740O* x4B4; Unk800C7740O* x4B8; s32 x4BC, x4C0; };
+EXTERN_C void func_80054054(Unk800C7740T*, void*);
+EXTERN_C void func_80063BE4(Unk800C7740O*);
+EXTERN_C void func_80063B14(Unk800C7740O*, Unk800C7740T*, s32);
+
+EXTERN_C void _bu_init();
+EXTERN_C s32 OpenEvent(u32, s32, s32, void (*)());
+EXTERN_C void func_800C22E8();
+EXTERN_C void func_800C2360();
+EXTERN_C void func_800C23D8();
+EXTERN_C void func_800C2450();
+
+struct Unk800C6024V { virtual void v1(s32); };
+EXTERN_C void* D_800CBACC[];
+EXTERN_C Unk800C6024V* D_800CBAD0[];
+EXTERN_C void* D_800B4C38[];
+EXTERN_C void func_80024FEC(void*, s32);
+EXTERN_C void func_8005F5F4(void*, void*, s32);
+EXTERN_C void func_800215E8(void*, void*);
+
+struct Unk800C95ECV { virtual void v1(s32); };
+EXTERN_C void* D_800CBAE0[];
+EXTERN_C Unk800C95ECV* D_800CBAE8[];
 
 #endif /* MOVIE_H */
