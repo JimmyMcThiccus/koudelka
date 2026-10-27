@@ -94,4 +94,15 @@ struct S_Ot28 {
 };
 EXTERN_C S_Ot28 *D_800B4CFC __attribute__((section(".data")));
 
+struct B_8002860C {
+    void **vt;
+    int unk4;
+    int unk8;
+    void **vtC;
+    B_8002860C(S_XYs *q, int a, int b, int c) asm("func_8002860C");
+};
+struct C_80028454 : B_8002860C {
+    C_80028454(int a, int b, int c) asm("func_80028454");
+};
+
 #endif /* GAME_A_H_U_80028428_H */

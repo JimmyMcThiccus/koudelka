@@ -12,8 +12,8 @@ EXTERN_C void *func_800284D4(void *p, void *q);
 EXTERN_C char D_800B4C6C[];
 EXTERN_C char D_800AC6E4[];
 EXTERN_C int D_800B4C60;
-struct S_800EA8A4;
-EXTERN_C S_800EA8A4 D_800EA8A4;
+/* Retail stores D_800EA8A4 with the assembler macro (lui $at), not $gp: an explicit section keeps it off $gp. */
+EXTERN_C volatile int D_800EA8A4 __attribute__((section(".data")));
 EXTERN_C char D_800EA8A8[];
 EXTERN_C void func_80018C1C(void *p);
 EXTERN_C void *D_800B4C5C;

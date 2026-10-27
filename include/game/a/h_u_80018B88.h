@@ -60,4 +60,18 @@ EXTERN_C void *D_80010328[];
 EXTERN_C void *func_800A0D2C(int size);
 EXTERN_C void func_800A0D0C(void *p);
 
+/* This file reaches D_800B4C34, D_800EA8A0 and D_800B4C08 with lui (no $gp): explicit sections keep them off $gp. */
+EXTERN_C void *D_800B4C34 __attribute__((section(".data")));
+EXTERN_C S_Block D_800EA8A0 __attribute__((section(".data")));
+EXTERN_C char *D_800B4EEC;
+EXTERN_C int D_800B4C08 __attribute__((section(".data")));
+EXTERN_C void func_8001ACB4();
+EXTERN_C void func_8001DF58(void *p, int a);
+static inline void own_dtor_80019158(S_Own *m)
+{
+    m->vt = D_80010328;
+    delete m->ptr;
+    func_800198AC(m, 2);
+}
+
 #endif /* GAME_A_H_U_80018B88_H */

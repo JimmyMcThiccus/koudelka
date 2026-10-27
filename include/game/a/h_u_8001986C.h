@@ -144,4 +144,8 @@ static inline bool above_8001B1C8(S_Heap *h, void *p)
     return (char *)h->e < (char *)p;
 }
 
+/* This file reads D_800B4C3C with lui (no $gp); main_a.h declares it plainly, so it is reached here by asm name. */
+EXTERN_C int D_800B4C3C_lui asm("D_800B4C3C") __attribute__((section(".data")));
+EXTERN_C void DrawSyncCallback(void (*f)());
+
 #endif /* GAME_A_H_U_8001986C_H */

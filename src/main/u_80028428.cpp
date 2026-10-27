@@ -14,7 +14,11 @@ EXTERN_C int func_80028448(S_80028448 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80028454);
+C_80028454::C_80028454(int a, int b, int c) : B_8002860C(&D_800B4C64, a, b, c)
+{
+    vtC = D_800112F4;
+    vt = D_8001126C;
+}
 
 EXTERN_C void *func_800284AC(void *p, void *q)
 {

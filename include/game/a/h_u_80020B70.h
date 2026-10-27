@@ -556,4 +556,33 @@ struct S_SlotTbl2 {
     short unkA;
 };
 
+struct S_PadV {
+    virtual void f1();
+    virtual void f2();
+    virtual void f3();
+    virtual unsigned char *f4(unsigned char *q);
+};
+struct S_Grp2 {
+    char pad0[0x4];
+    unsigned char unk4[0x10];
+    unsigned char unk14[0x10];
+    unsigned char unk24;
+    unsigned char unk25;
+    unsigned char unk26;
+    signed char unk27;
+    char unk28[0x18];
+};
+EXTERN_C S_80024870 *func_80024870(S_80024870 *p, int a);
+
+struct S_PalTbl {
+    S_80021274 *arr;
+    S_Pt4 pos;
+    char pad8[0x2];
+    short unkA;
+    int unkC;
+    char pad10[0x4];
+    S_80021274 *unk14;
+    int unk18;
+};
+
 #endif /* GAME_A_H_U_80020B70_H */

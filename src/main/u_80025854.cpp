@@ -190,7 +190,10 @@ EXTERN_C void func_80026138(void *q, int a)
     func_800198AC(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80026190);
+EXTERN_C S_Pt16 func_80026190(void *p, S_Pt16 x)
+{
+    return D_800B4C50_pt;
+}
 
 EXTERN_C S_Cc func_800261B4(void *p, S_Cc *s, S_Cc x)
 {

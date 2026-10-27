@@ -89,7 +89,14 @@ EXTERN_C void func_80027DFC(S_80027DFC *p, int a)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800278EC", func_80027E30);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800278EC", func_80027FB0);
+EXTERN_C void func_80027FB0()
+{
+    if (D_800B4C60) {
+        D_800EA8A4 = D_800B4C60;
+        func_80018C1C(D_800EA8A8);
+        D_800B4C60 = 0;
+    }
+}
 
 EXTERN_C S_80027FEC *func_80027FEC(S_80027FEC *p, S_80027FEC *q)
 {

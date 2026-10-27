@@ -374,7 +374,32 @@ EXTERN_C void func_800218B4(int a)
     D_800B4C38 = new (operator new(0x1C)) S_80022974(a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_8002190C);
+EXTERN_C int func_8002190C(S_PalTbl *t, S_PlaceV *item)
+{
+    if (item->f3()) {
+        S_SlotRef r;
+        for (r.b = 0; r.b < t->unkA; r.b += 2) {
+            r.a = func_80021168(&t->arr[r.b], (int)item, 1);
+            if (r.a >= 0) {
+                item->f2(S_Pt4c(r.a + t->pos.x, r.b + t->pos.y), t->unkC);
+                int k = r.b + 1;
+                t->unk18 = k;
+                t->unk14 = &t->arr[k];
+                return 1;
+            }
+        }
+    } else if (t->unk14) {
+        S_SlotRef r;
+        S_SlotRef *rp = &r;
+        r.b = t->unk18;
+        r.a = func_80021168(t->unk14, (int)item, 0);
+        if (r.a >= 0) {
+            item->f2(S_Pt4c(r.a + t->pos.x, rp->b + t->pos.y), t->unkC);
+            return 1;
+        }
+    }
+    return 0;
+}
 
 EXTERN_C void func_80021ACC(void *p, int a)
 {
@@ -882,7 +907,52 @@ EXTERN_C void func_80023C40(char *p, int flags)
     func_8001D024(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80023CB8);
+EXTERN_C int func_80023CB8(void *q, int idx, int a)
+{
+#define P ((S_Grp2 *)q)
+#define H ((Holder *)P->unk28)
+    int i;
+    int r;
+    if (!P->unk26) {
+    if (count_of(H) == 0) {
+        if (P->unk27 > 0) {
+            unsigned char *b = P->unk4;
+            unsigned char *c = P->unk14;
+            for (i = 0; i < P->unk27; i++) {
+                List *l;
+                S_PadV *o = (S_PadV *)func_8002466C(operator new(0x1C), P->unk24, i);
+                unsigned char *e;
+                l = H;
+                func_80019A6C(l, (int)o, l->count);
+                e = o->f4(b);
+                while (b < e) {
+                    *b++ = 0;
+                    *c++ = i;
+                }
+            }
+        } else if (P->unk27 < 0) {
+            List *l;
+            S_PadV *o = (S_PadV *)func_80024870((S_80024870 *)operator new(0x20), P->unk24);
+            l = H;
+            func_80019A6C(l, (int)o, l->count);
+            o->f4(P->unk4);
+        }
+    }
+    if ((unsigned int)idx < (unsigned int)count_of(H)) {
+        int j;
+        r = ((S_ItemV *)func_80019F64(H, idx))->f2(a);
+        P->unk25 = 0;
+        for (j = 0; j < count_of(H); j++) {
+            if (*(int *)((char *)func_80019F64(H, j) + 0x18))
+                P->unk25 += ((S_ItemV *)func_80019F64(H, j))->f3();
+        }
+        return r;
+    }
+    }
+    return 0;
+#undef P
+#undef H
+}
 
 EXTERN_C int func_80023F50(void *q, int a)
 {

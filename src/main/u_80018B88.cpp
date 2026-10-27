@@ -4,7 +4,15 @@
 #include "game/a/decls_a.h"
 #include "game/a/h_u_80018B88.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80018B88", func_80018B88);
+EXTERN_C void func_80018B88()
+{
+    S_Block *b = &D_800EA8A0;
+    D_800B4EE8 = b;
+    D_800EA8A0.next = 0;
+    b->size = (D_800B4C08 - 0x7FF80000 - (int)b) & ~7;
+    D_800B4EEC = (char *)b + b->size;
+    func_8001ACB4();
+}
 
 EXTERN_C void func_80018BE4(S_Block *b)
 {
@@ -137,7 +145,17 @@ EXTERN_C S_Link *func_80019274(S_Link *p, S_Link *a)
     return a;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80018B88", func_800192C0);
+EXTERN_C void func_800192C0()
+{
+    S_80019158 *p = (S_80019158 *)&D_800A4534;
+    p->vt = D_800100D0;
+    if (&p->h == D_800B4C34)
+        D_800B4C34 = 0;
+    func_80019920((List *)p->h.vb, 0);
+    func_8001DF58(&p->unk20, 2);
+    own_dtor_80019158(&p->m18);
+    own_dtor_80019158(&p->m10);
+}
 
 EXTERN_C S_80019158 *func_800193AC(S_80019158 *p, S_80019158 *q)
 {

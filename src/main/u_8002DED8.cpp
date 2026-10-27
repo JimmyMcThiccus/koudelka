@@ -115,7 +115,10 @@ S_8002E4E8::S_8002E4E8(int a, int n, int b)
     unk64 = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E564);
+EXTERN_C S_Arr5 *func_8002E564()
+{
+    return new S_Arr5;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E5B0);
 

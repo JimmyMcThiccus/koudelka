@@ -63,4 +63,13 @@ struct S_OT {
     unsigned long *tab;
 };
 
+struct S_Arr5 {
+    int *p;
+    int n;
+    int *q;
+    int buf[5];
+    void *operator new(unsigned int n) { return __builtin_new(n); }
+    S_Arr5() { q = buf; p = q; func_800198E0(q, 5, 0); n = 0; }
+};
+
 #endif /* GAME_A_H_U_8002DED8_H */

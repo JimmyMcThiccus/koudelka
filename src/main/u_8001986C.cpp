@@ -778,7 +778,14 @@ EXTERN_C void func_8001B318(void *p, int a)
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B338);
+EXTERN_C void func_8001B338()
+{
+    func_800188D4(&D_800A451C);
+    DrawSyncCallback(0);
+    PadEnableCom(D_800B4C3C_lui);
+    ((int *)D_800A4578[0])[0x14C / 4] = 1;
+    func_80018970(&D_800A451C);
+}
 
 EXTERN_C void func_8001B394(S_8001B394 *p)
 {

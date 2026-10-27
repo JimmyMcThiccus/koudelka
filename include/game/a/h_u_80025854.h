@@ -60,4 +60,9 @@ inline void vdel(S_Del *o)
 }
 struct S_UV2 { unsigned char u, v; S_UV2(int u_, int v_) { u = u_; v = v_; } };
 
+/* D_800B4C50/D_800B4C52 (two shorts in main_a.h) read as one point; it must be a 2-aligned struct
+   for GCC to copy it with lwl/lwr straight off $gp. */
+struct S_Pt16 { short x, y; };
+EXTERN_C S_Pt16 D_800B4C50_pt asm("D_800B4C50");
+
 #endif /* GAME_A_H_U_80025854_H */
