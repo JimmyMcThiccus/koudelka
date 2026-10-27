@@ -254,14 +254,35 @@ EXTERN_C char *func_800D7A14(RandVal *self, char *src)
     return src + 1;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D7A4C);
+EXTERN_C int rand(void);
+
+EXTERN_C void func_800D7A4C(RandVal *self, short *base, short *phase)
+{
+    int r = 0;
+    self->phase += self->step;
+    if (self->range != 0)
+        r = rand() / (0x8000 / self->range) - (self->range >> 1);
+    if (self->range > 0x1000)
+        self->range -= 0x1000;
+    else if (self->range < -0x1000)
+        self->range += 0x1000;
+    *base = self->base;
+    *phase = self->phase + r;
+}
 
 EXTERN_C void func_800D7B64(RandVal *self)
 {
     self->phase = 0;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D7B6C);
+EXTERN_C int rand(void);
+
+EXTERN_C int func_800D7B6C(RandVal *self)
+{
+    if (self->spread == 0)
+        return self->base;
+    return self->base + rand() / (0x8000 / self->spread) - (self->spread >> 1);
+}
 
 EXTERN_C RandVal *func_800D7C2C(RandVal *self)
 {
