@@ -165,7 +165,7 @@ struct T_C1340 {
     char pad50E[0x2E];
     short s53C;
 };
-struct T_CE044_10 { char pad[0x18]; };
+struct T_CE044_10 { int f0; void *p4; unsigned short h8; char padA[0xE]; };
 struct T_CE044 { int pad0; int pad4; int f8; int fC; T_CE044_10 f10[1]; };
 struct T_CFD98 { char pad[0x14]; int f14[1][5]; };
 struct T_D5740 { char pad[0x20]; int f20; char pad24[0x48]; signed char b6C[1]; };
@@ -205,6 +205,8 @@ EXTERN_C int func_800C1360(T_C1340 *p);
 EXTERN_C int func_800C757C(void *p, int a);
 EXTERN_C void func_800CC110(void *p);
 EXTERN_C T_CE044_10 *func_800CE00C(T_CE044 *p);
+EXTERN_C T_CE044_10 *func_800CE044(T_CE044 *p);
+EXTERN_C T_CE044_10 *func_800CE090(T_CE044 *p);
 
 EXTERN_C int D_800D5D78 LUI_DATA;
 EXTERN_C int D_800D5D7C LUI_DATA;
@@ -356,5 +358,28 @@ EXTERN_C void func_8008299C(void *p, int a, int b, int c, int d, int e, int f);
 EXTERN_C void func_80085FD4(void *p);
 inline void node_init(S_800D00B8 *l, int a, int b) { l->prev = l; l->next = l; l->fC = 1; l->f10 = a; l->f14 = b; }
 EXTERN_C void *memset(void *p, int c, unsigned n);
+
+struct T_CC1B0 { char pad[0x3D8]; T_CE044 f3D8; };
+struct T_BF968 { char pad[0xF8]; int fF8; char padFC[0x24]; unsigned char b120; char pad121[0xFF]; short s220; char pad222[0x29E]; T_Obj0 *f4C0; char pad4C4[0x20]; signed char b4E4; };
+struct T_D10D4 { char pad[0x54FC]; char f54FC[0x78]; char f5574[0x168]; char f56DC[4]; };
+struct T_CA75C { char pad[0x2C8]; signed char b2C8[7][5]; char pad2EB[0x579]; int f864[36]; };
+EXTERN_C void func_80054094(void *p, int a);
+EXTERN_C void func_80068E60(void *p);
+EXTERN_C void func_800B9758(void *p);
+EXTERN_C void func_800B9844(void *p);
+struct T_D0390_A { char pad[0xB8]; };
+struct T_D0390_B { int pad[2]; T_CE9B8_x *items[3]; };
+struct T_D0390_D : T_D0390_A, T_D0390_B {};
+struct T_D0390_G { char pad[0x328]; T_D0390_D *f328; };
+/* SVec2 built in place as an argument */
+struct SVec2C { short x, y; SVec2C(short a, short b) { x = a; y = b; } };
+struct T_D24E8_B {
+    int pad[6];
+    virtual void v1();
+    virtual void v2();
+    virtual void v3();
+    virtual void v4(SVec2C v);
+};
+struct T_D24E8 : T_D24E8_B { char pad1C[0x40]; int f5C; };
 
 #endif /* BATTLE_BATTLE_H */

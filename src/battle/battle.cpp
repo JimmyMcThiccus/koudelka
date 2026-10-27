@@ -191,7 +191,7 @@ EXTERN_C void func_800BC158(T_VObj *p, int flags) { p->vtbl = D_800B7154; func_8
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BC180);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BC1F8);
+EXTERN_C int func_800BC1F8(S_800BA6B4 *p) { if (p->fC == 300) return 1; else { void *s = (void *)p->f4; if (p->fC == 301) { if (p->f14 == 0) { func_800BC270((T_BC270 *)p); func_800B9758(s); func_800B9844(s); return 1; } p->f14--; } return 0; } }
 
 EXTERN_C int func_800BC270(T_BC270 *p) { func_800B9654(p->f4); return 1; }
 
@@ -354,7 +354,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF76C);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF8B4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF968);
+EXTERN_C void func_800BF968(T_BF968 *p) { if (p->f4C0) { delete p->f4C0; p->f4C0 = 0; } if (p->b4E4 == 0) { p->fF8 = 0; p->s220 = 0; p->b120++; } }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF9DC);
 
@@ -680,7 +680,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CA1B4);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CA710);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CA75C);
+EXTERN_C int func_800CA75C(T_CA75C *p) { int n = 0; for (int i = 0; i < 7; i++) for (int j = 0; j < 5; j++) if (p->b2C8[i][j] >= 0) p->f864[n++] = i * 5 + j; p->f864[n] = -1; return n; }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CA7D4);
 
@@ -716,9 +716,9 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CBBB4);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CC110);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CC1B0);
+EXTERN_C void *func_800CC1B0(T_CC1B0 *p) { for (T_CE044_10 *e = func_800CE044(&p->f3D8); e; e = func_800CE090(&p->f3D8)) if ((e->h8 & 1) && (e->h8 & 0x20)) return e->p4; return 0; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CC220);
+EXTERN_C T_CE044_10 *func_800CC220(T_CC1B0 *p, void *a) { for (T_CE044_10 *e = func_800CE044(&p->f3D8); e; e = func_800CE090(&p->f3D8)) if ((e->h8 & 1) && e->p4 == a) return e; return 0; }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CC298);
 
@@ -764,7 +764,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800CDF64);
 
 EXTERN_C T_CE044_10 *func_800CE00C(T_CE044 *p) { return p->fC ? &p->f10[p->f8] : 0; }
 
-EXTERN_C void func_800CE044(T_CE044 *p) { p->f8 = 0; func_800CE00C(p); }
+EXTERN_C T_CE044_10 *func_800CE044(T_CE044 *p) { p->f8 = 0; return func_800CE00C(p); }
 
 EXTERN_C void func_800CE064(T_CE044 *p) { p->f8 = p->fC - 1; func_800CE00C(p); }
 
@@ -938,7 +938,7 @@ EXTERN_C T_D0338 *func_800D0338(T_D0338 *p) { func_80074E28(p); p->vtbl8 = D_800
 
 EXTERN_C void func_800D0370(void *p, int flags) { func_80074E44(p, flags); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D0390);
+EXTERN_C int func_800D0390() { int v = 1; for (unsigned i = 0; i < 3 && v > 0; i++) { T_D0390_B *b = ((T_D0390_G *)func_800787B4())->f328; v = b->items[i]->s410; } return v > 0; }
 
 EXTERN_C T_D0404 *func_800D0404(T_D0404 *p) { p->f68 = 0; p->f6C = 0xFF; p->f70 = 0; p->f54 = 0; for (unsigned i = 0; i < 3; i++) p->f58[i] = 0; p->f64 = 0; return p; }
 
@@ -970,7 +970,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D0CC0);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D0D1C);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D10D4);
+EXTERN_C void func_800D10D4(T_D10D4 *p, int m, int a) { if (m & 1) func_80054094(p->f54FC, a); if (m & 2) func_80054094(p->f5574, a); if (m & 4) func_80054094(p->f56DC, a); }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D1148);
 
@@ -1012,7 +1012,7 @@ INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7924);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D23C0);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D24E8);
+EXTERN_C void func_800D24E8(T_D24E8 *p) { func_8005457C(p, 1); p->v4(SVec2C(8, 0xD7)); p->f5C = 1; func_80068E60(p); func_8005783C(10); }
 
 EXTERN_C void func_800D255C(void *p) { func_8005783C(0); func_80068EE8(p); func_8005457C(p, 0); }
 
