@@ -1,8 +1,8 @@
-#ifndef GAME_A_ACCESSORS_H
-#define GAME_A_ACCESSORS_H
+#ifndef GAME_A_MAIN_A_H
+#define GAME_A_MAIN_A_H
 
-/* Objects behind the small accessor functions in 0x800186B0-0x80054A2C. Each struct
-   covers a run of nearby accessors; only the fields they touch are known. */
+/* Types, globals and functions used by the main_a part of game.cpp (0x800186B0-0x80054A2C).
+   Most structs cover a run of nearby accessors; only the fields they touch are known. */
 
 typedef struct S_8001914C {
     char pad0[0x4];
@@ -688,5 +688,270 @@ EXTERN_C void *D_80010348[];
 EXTERN_C void *D_800103E0[];
 EXTERN_C void *D_800103F8[];
 EXTERN_C void *D_80011FE4[];
+
+EXTERN_C void func_800198AC(void *p);
+EXTERN_C void func_8001A610(void *p);
+EXTERN_C void func_8001A678(void *p);
+EXTERN_C void func_8001A6A8(void *p);
+EXTERN_C void func_8001D024(void *p);
+EXTERN_C void func_8001DEB8(void *p);
+EXTERN_C void func_80020DB0(void *p);
+EXTERN_C void func_80026138(void *p);
+EXTERN_C void func_80028DC4(void *p);
+EXTERN_C void func_8002D8AC(void *p);
+EXTERN_C void func_8002DA94(void *p);
+EXTERN_C void func_8002DC34(void *p);
+EXTERN_C void func_8002DD34(void *p);
+EXTERN_C void func_8002EE9C(void *p);
+EXTERN_C void func_8002EEFC(void *p);
+EXTERN_C void func_8003950C(void *p);
+EXTERN_C void func_80039610(void *p);
+EXTERN_C void func_80039710(void *p);
+EXTERN_C void func_80039824(void *p);
+EXTERN_C void func_8003BEC4(void *p);
+
+/* A 4-byte value copied with lwl/lwr, so byte-aligned: an RGB+code colour, probably. */
+typedef struct S_Rgb {
+    unsigned char r, g, b, cd;
+} S_Rgb;
+
+/* unkC counts frames; it's volatile (it changes under interrupts). */
+typedef struct S_800A4534 {
+    char pad0[0xC];
+    volatile unsigned int unkC;
+} S_800A4534;
+
+typedef struct S_80019D40 {
+    int unk0;
+    int unk4;
+    char pad8[0x8];
+    int unk10;
+} S_80019D40;
+
+typedef struct S_8001A294 {
+    void **vtbl;
+    int unk4;
+    int unk8;
+} S_8001A294;
+
+typedef struct S_8001A6E8 {
+    int unk0;
+    struct S_8001A6E8 *unk4;
+} S_8001A6E8;
+
+typedef struct S_8001D6C8 {
+    char pad0[0x14];
+    unsigned int unk14;
+    unsigned int unk18;
+} S_8001D6C8;
+
+/* unkC points at the second base of a class; the cast back adjusts by -8 with a null check. */
+struct S_8001F964_Base0 {
+    int unk0;
+    int unk4;
+};
+
+struct S_8001F964_Base {
+    int unk0;
+};
+
+struct S_8001F964_Derived : S_8001F964_Base0, S_8001F964_Base {
+};
+
+typedef struct S_8001F964 {
+    char pad0[0xC];
+    S_8001F964_Base *unkC;
+} S_8001F964;
+
+typedef struct S_80020B70 {
+    char pad0[0x28];
+    Holder unk28;
+} S_80020B70;
+
+typedef struct S_8002C15C {
+    char pad0[0x30];
+    Holder unk30;
+} S_8002C15C;
+
+typedef struct S_80021274 {
+    int unk0[16];
+    int unk40;
+} S_80021274;
+
+typedef struct S_80023A24 {
+    char pad0[0x106];
+    short unk106;
+} S_80023A24;
+
+typedef struct S_80025A64 {
+    char pad0[0x8];
+    S_Rgb unk8;
+    S_Rgb unkC;
+    S_Rgb unk10;
+    S_Rgb unk14;
+} S_80025A64;
+
+typedef struct S_80025C88 {
+    unsigned char unk0;
+    unsigned char unk1;
+    short unk2;
+    short unk4;
+} S_80025C88;
+
+typedef struct S_80027FEC {
+    char pad0[0x8];
+    short unk8;
+    short unkA;
+} S_80027FEC;
+
+typedef struct S_8002A004 {
+    char pad0[0x28];
+    int unk28;
+} S_8002A004;
+
+typedef struct S_8002E088 {
+    char pad0[0x28];
+    S_Rgb unk28;
+} S_8002E088;
+
+typedef struct S_8002EC00 {
+    short unk0;
+    short unk2;
+    short unk4;
+    short unk6;
+} S_8002EC00;
+
+typedef struct S_8002EC18 {
+    int unk0;
+    int unk4;
+    int unk8;
+    int unkC;
+} S_8002EC18;
+
+typedef struct S_8002F8E0 {
+    int unk0;
+    void **vtbl;
+} S_8002F8E0;
+
+typedef struct S_800323C0_Node {
+    int unk0;
+    struct S_800323C0_Node *unk4;
+} S_800323C0_Node;
+
+typedef struct S_800323C0 {
+    int unk0;
+    int unk4;
+    S_800323C0_Node *unk8;
+} S_800323C0;
+
+/* GPU primitive header: tag word, then r0 g0 b0 code. */
+typedef struct S_Prim {
+    unsigned int tag;
+    unsigned char r0, g0, b0, code;
+} S_Prim;
+
+typedef struct S_80034F24 {
+    char pad0[0x6];
+    unsigned short unk6;
+} S_80034F24;
+
+typedef struct S_8003B2F0_V {
+    int unk0;
+    int unk4;
+    int unk8;
+} S_8003B2F0_V;
+
+typedef struct S_8003B2F0 {
+    char pad0[0x14];
+    S_8003B2F0_V unk14;
+} S_8003B2F0;
+
+typedef struct S_Short {
+    short v;
+} S_Short;
+
+typedef struct S_Int {
+    int v;
+} S_Int;
+
+typedef struct S_8003ECE4 {
+    char pad0[0x100];
+    int unk100;
+    int unk104;
+} S_8003ECE4;
+
+typedef struct S_80044690 {
+    char pad0[0xF8];
+    int unkF8;
+    char padFC[0x24];
+    unsigned char unk120;
+    char pad121[0xFF];
+    short unk220;
+} S_80044690;
+
+typedef struct S_1F80000C {
+    int unk0;
+    int unk4;
+    int unk8;
+} S_1F80000C;
+
+typedef struct S_800493C8 {
+    char pad0[0x8];
+    unsigned int unk8;
+} S_800493C8;
+
+typedef struct S_8004AA24_A {
+    int unk0;
+    int unk4;
+    int unk8;
+    int unkC;
+} S_8004AA24_A;
+
+typedef struct S_8004AA24_B {
+    char pad0[0xC];
+    int unkC;
+    char pad10[0x4];
+    int unk14;
+    char pad18[0x4];
+    int unk1C;
+} S_8004AA24_B;
+
+typedef struct S_800537C0 {
+    int unk0;
+    int unk4;
+    void **vtbl;
+} S_800537C0;
+
+typedef struct S_80053830 {
+    int unk0;
+    int unk4;
+} S_80053830;
+
+typedef struct S_8005402C {
+    char pad0[0xC];
+    short unkC;
+    short unkE;
+} S_8005402C;
+
+EXTERN_C S_800A4534 D_800A4534;
+EXTERN_C int D_800B4C24;
+EXTERN_C int D_800B4C3C;
+EXTERN_C int D_800B4C58;
+EXTERN_C signed char D_800B4D08[];
+EXTERN_C signed char D_800B4D3C[];
+EXTERN_C S_1F80000C D_1F80000C[];
+EXTERN_C void *D_80010118[];
+EXTERN_C void *D_80010178[];
+EXTERN_C void *D_80010328[];
+EXTERN_C void *D_80011124[];
+EXTERN_C void *D_80011384[];
+EXTERN_C void *D_80011B5C[];
+EXTERN_C void *D_80013B00[];
+EXTERN_C void func_80019A6C(void *p, int a, int b);
+EXTERN_C void func_8001F094(void *p);
+EXTERN_C void func_8003C320(void *p, int a);
+EXTERN_C void PadEnableCom(int a);
+EXTERN_C void PadStopCom();
+EXTERN_C void PadStartCom();
 
 #endif
