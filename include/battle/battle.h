@@ -544,4 +544,15 @@ EXTERN_C void func_800648E8(void *p, int a);
 EXTERN_C void func_80054708(void *p, int a);
 EXTERN_C void func_80054CE4(void *p);
 
+struct T_VEntry { short delta; short index; void (*pfn)(void *); };
+struct T_VTable10 { T_VEntry e[10]; };
+struct T_VBase { T_VTable10 *vptr; };
+EXTERN_C const T_VTable10 D_800B79A4, D_800B7C1C, D_800B7DEC;
+EXTERN_C VTable D_800B7A14[], D_800B79F4[], D_800B7A44[], D_800B7D64[], D_800B7C6C[], D_800B7E5C[], D_800B7E3C[], D_800B7E8C[];
+EXTERN_C void func_80069264(void *p, int a);
+EXTERN_C void func_8005BDA4(void *p, int a);
+struct T_D2670 { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; };
+struct T_D4290 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; };
+struct T_D51FC { char pad[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; char pad5C[0x2228]; char f2284[0x50]; char f22D4[0x1C]; char f22F0[4]; };
+
 #endif /* BATTLE_BATTLE_H */

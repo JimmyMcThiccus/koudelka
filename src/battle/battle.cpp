@@ -1022,7 +1022,26 @@ EXTERN_C void func_800D255C(void *p) { func_8005783C(0); func_80068EE8(p); func_
 
 EXTERN_C int func_800D2598(T_D2598 *p, T_D19F0_q *q) { if (func_8005618C(q)) return 1; if (q->h18 & 0x2000) { if (func_8005409C(func_800550BC(p))) { func_80061F80(D_800B4DD0[0], ((signed char *)p)[p->f20 + 0x68]); p->f5C = 2; p->v3(); func_8005549C(p->f227C, p, 0, -1); } else func_8008EF40(0xE); } else func_80068F3C(p, q); return 1; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D2670);
+EXTERN_C void func_800D2670(T_D2670 *self, int in_chrg)
+{
+    self->vt54 = D_800B7A14;
+    self->vt58 = D_800B79F4;
+    self->vt18 = D_800B7A44;
+    self->vb50->vptr = (T_VTable10 *)&D_800B79A4;
+    if (!in_chrg) {
+        T_VTable10 vt = D_800B79A4;
+        self->vb50->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800B79A4.e[1].delta + (adj = (char *)self - (full = (char *)self->vb50 - 0x2280));
+        vt.e[6].delta = D_800B79A4.e[6].delta + adj;
+    }
+    func_80069264(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb50, 0);
+    if (in_chrg & 1)
+        operator delete(self);
+}
 
 INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B79A4);
 
@@ -1089,7 +1108,28 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D40BC);
 
 EXTERN_C void func_800D41D4(T_D41D4 *p, int a) { if (p->f8) { func_8005C088(p, a, 1); void *x = func_800D43B0(operator new(0x60), p->h1C); if (p->f44) { func_800D4718((T_D4718 *)x, &p->s52); func_8005388C(p ? p->f38 : 0, 0x1E); } List *l = p->f30; func_80019A6C(l, (int)x, l->count); func_8002DA94(a, p->f30); } }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D4290);
+EXTERN_C void func_800D4290(T_D4290 *self, int in_chrg)
+{
+    self->vt40 = D_800B7D64;
+    self->vt2C = D_800B7C6C;
+    self->vb0->vptr = (T_VTable10 *)&D_800B7C1C;
+    if (!in_chrg) {
+        T_VTable10 vt = D_800B7C1C;
+        self->vb0->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800B7C1C.e[1].delta + (adj = (char *)self - (full = (char *)self->vb0 - 0x5C));
+        vt.e[5].delta = D_800B7C1C.e[5].delta + adj;
+        vt.e[7].delta = D_800B7C1C.e[7].delta + adj;
+        vt.e[9].delta = D_800B7C1C.e[9].delta + adj;
+    }
+    func_800537DC(self->f38, 0);
+    func_8005BDA4(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb0, 0);
+    if (in_chrg & 1)
+        operator delete(self);
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D43B0);
 
@@ -1121,7 +1161,29 @@ EXTERN_C void func_800D5038(T_D2284 *p) { func_80054FE0(p->f2284); func_80068EE8
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D5074);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800D51FC);
+EXTERN_C void func_800D51FC(T_D51FC *self, int in_chrg)
+{
+    self->vt54 = D_800B7E5C;
+    self->vt58 = D_800B7E3C;
+    self->vt18 = D_800B7E8C;
+    self->vb50->vptr = (T_VTable10 *)&D_800B7DEC;
+    if (!in_chrg) {
+        T_VTable10 vt = D_800B7DEC;
+        self->vb50->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800B7DEC.e[1].delta + (adj = (char *)self - (full = (char *)self->vb50 - 0x2318));
+        vt.e[6].delta = D_800B7DEC.e[6].delta + adj;
+    }
+    func_80053964(self->f22F0, 2);
+    func_80053964(self->f22D4, 2);
+    func_80054C34(self->f2284, 2);
+    func_80069264(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb50, 0);
+    if (in_chrg & 1)
+        operator delete(self);
+}
 
 INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7B3C);
 
