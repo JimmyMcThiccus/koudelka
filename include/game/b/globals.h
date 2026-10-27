@@ -21,6 +21,13 @@ EXTERN_C GlobalWord D_800AFA70;
 EXTERN_C GlobalWord D_800B1A68;
 EXTERN_C GlobalWord D_800B1B48;
 
+/* Object at 0x800AFA74; layout unknown. */
+struct Global_800AFA74 {
+    int pad[8];
+};
+
+EXTERN_C Global_800AFA74 D_800AFA74;
+
 EXTERN_C int D_800AFA58[3];
 EXTERN_C int D_800AFA64[3];
 
