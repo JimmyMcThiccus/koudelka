@@ -3585,7 +3585,7 @@ EXTERN_C void func_800E0BD8(void *self)
         FIELD_AT(self, short, 0xE) = 0;
 }
 
-EXTERN_C int func_800E0D2C(void *self)
+EXTERN_C bool func_800E0D2C(void *self)
 {
     int r = 0;
     if (FIELD_AT(self, int, 0x18) != 0)
@@ -3652,11 +3652,201 @@ EXTERN_C void func_800E0FDC(void *self, Poly *p)
         FIELD_AT(self, Link *, 0x4C) = (Link *)o;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E1090);
+struct Params_800E2704 {
+    char pad0[8];
+    int a;
+    int b;
+    RandVal *rv;
+    Vec4 v14;
+    Vec4 v24;
+    Vec4 v34;
+    int pad44;
+    short s48;
+    short s4A;
+    short s4C;
+    short s4E;
+    short s50;
+    unsigned char b52;
+};
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E1304);
+EXTERN_C Params_800E2704 D_1F800000;
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E1604);
+struct ZVec_800E1090 : Vec4 {
+    ZVec_800E1090() { x = 0; y = 0; z = 0; w = 0; }
+};
+
+struct Frame_800E1090 {
+    ZVec_800E1090 a, b, c, d, e, f;
+};
+
+EXTERN_C void func_800E1604(void *self, void *arg);
+EXTERN_C bool func_800E0D2C(void *self);
+EXTERN_C void func_800E0E70(void *self);
+EXTERN_C short func_800E0D50(void *self);
+EXTERN_C void func_800D7F94(void *self);
+EXTERN_C void func_800E0FDC(void *self, Poly *p);
+
+
+inline Vec4 get_800E1090(void *o)
+{
+    VtEntry *vt = FIELD_AT(o, VtEntry *, 0x0);
+    return ((Vec4 (*)(void *, int))vt[4].pfn)((char *)o + vt[4].delta, 0);
+}
+
+EXTERN_C void func_800E1090(void *self, void *arg)
+{
+    int i, n;
+    if (FIELD_AT(self, void *, 0x58))
+        func_800E1604(FIELD_AT(self, void *, 0x58), arg);
+    if (!func_800E0D2C(self))
+        return;
+    func_800E0E70(self);
+    n = func_800E0D50(self);
+    for (i = 0; i < n; i++) {
+        Frame_800E1090 fr;
+        func_800D7F94(&fr);
+        D_1F800000.v14 = get_800E1090(FIELD_AT(self, void *, 0x2C));
+        D_1F800000.v34 = get_800E1090(FIELD_AT(self, void *, 0x30));
+        (Vec4 &)fr.a = D_1F800000.v14;
+        (Vec4 &)fr.b = D_1F800000.v34;
+        {
+            void *o = FIELD_AT(self, void *, 0x50);
+            VtEntry *vt = FIELD_AT(o, VtEntry *, 0x8);
+            D_1F800000.v24 = ((Vec4 (*)(void *, void *))vt[4].pfn)((char *)o + vt[4].delta, &fr);
+        }
+        func_800E0FDC(self, (Poly *)arg);
+    }
+}
+
+/* Params_800E2704, ZVec_800E1090, Frame_800E1090: same definitions as in func_800E1090.cpp (paste once). */
+EXTERN_C Params_800E2704 D_1F800000;
+
+EXTERN_C bool func_800E0D2C(void *self);
+EXTERN_C void func_800E0E70(void *self);
+EXTERN_C short func_800E0D50(void *self);
+EXTERN_C void func_800D7F94(void *self);
+EXTERN_C void func_800E0FDC(void *self, Poly *p);
+
+inline Vec4 get_800E1304(void *o, int a)
+{
+    VtEntry *vt = FIELD_AT(o, VtEntry *, 0x0);
+    return ((Vec4 (*)(void *, int))vt[4].pfn)((char *)o + vt[4].delta, a);
+}
+
+EXTERN_C void func_800E1304(void *self, void *arg)
+{
+    int m, n, j;
+    void *p;
+    VtEntry *vt;
+    if (FIELD_AT(self, void *, 0x58))
+        func_800E1304(FIELD_AT(self, void *, 0x58), arg);
+    p = FIELD_AT(self, void *, 0x54);
+    vt = FIELD_AT(p, VtEntry *, 0x8);
+    m = ((int (*)(void *))vt[4].pfn)((char *)p + vt[4].delta);
+    if (!m)
+        return;
+    func_800E0E70(self);
+    n = func_800E0D50(self);
+    for (j = 0; j < m; j++) {
+        int k;
+        int x;
+        p = FIELD_AT(self, void *, 0x54);
+        vt = FIELD_AT(p, VtEntry *, 0x8);
+        x = ((int (*)(void *, int))vt[8].pfn)((char *)p + vt[8].delta, j);
+        for (k = 0; k < n; k++) {
+            Frame_800E1090 fr;
+            func_800D7F94(&fr);
+            D_1F800000.v14 = get_800E1304(FIELD_AT(self, void *, 0x2C), x);
+            D_1F800000.v34 = get_800E1304(FIELD_AT(self, void *, 0x30), 0);
+            (Vec4 &)fr.a = D_1F800000.v14;
+            (Vec4 &)fr.b = D_1F800000.v34;
+            {
+                void *o = FIELD_AT(self, void *, 0x50);
+                VtEntry *vt = FIELD_AT(o, VtEntry *, 0x8);
+                D_1F800000.v24 = ((Vec4 (*)(void *, void *))vt[4].pfn)((char *)o + vt[4].delta, &fr);
+            }
+            func_800E0FDC(self, (Poly *)arg);
+        }
+    }
+    p = FIELD_AT(self, void *, 0x54);
+    vt = FIELD_AT(p, VtEntry *, 0x8);
+    ((void (*)(void *))vt[6].pfn)((char *)p + vt[6].delta);
+}
+
+/* Params_800E2704, ZVec_800E1090, Frame_800E1090, get_800E1090: same definitions as in func_800E1090.cpp (paste once). */
+EXTERN_C Params_800E2704 D_1F800000;
+
+EXTERN_C bool func_800E0D2C(void *self);
+EXTERN_C void func_800E0E70(void *self);
+EXTERN_C short func_800E0D50(void *self);
+EXTERN_C void func_800D7F94(void *self);
+EXTERN_C void func_800E0FDC(void *self, Poly *p);
+EXTERN_C void *func_800E1B24(void *self);
+
+inline Vec4 getp_800E1604(void *o, Vec4 *a)
+{
+    VtEntry *vt = FIELD_AT(o, VtEntry *, 0x0);
+    return ((Vec4 (*)(void *, Vec4 *))vt[4].pfn)((char *)o + vt[4].delta, a);
+}
+
+EXTERN_C void func_800E1604(void *self, void *arg)
+{
+    int i, j, n;
+    void *q;
+    if (FIELD_AT(self, void *, 0x58))
+        func_800E1604(FIELD_AT(self, void *, 0x58), arg);
+    if (!func_800E0D2C(self))
+        return;
+    func_800E0E70(self);
+    Frame_800E1090 fr;
+    Vec4 pos(0, 0, 0, 0);
+    Vec4 dir(0, 0, 0, 0);
+    n = func_800E0D50(self);
+    switch (FIELD_AT(FIELD_AT(self, void *, 0x2C), signed char, 0x40)) {
+    case 0:
+    case 7:
+    case 8:
+        for (i = 0; i < n; i++) {
+            func_800D7F94(&fr);
+            D_1F800000.v14 = get_800E1090(FIELD_AT(self, void *, 0x2C));
+            D_1F800000.v34 = get_800E1090(FIELD_AT(self, void *, 0x30));
+            (Vec4 &)fr.a = D_1F800000.v14;
+            (Vec4 &)fr.b = D_1F800000.v34;
+            {
+                void *o = FIELD_AT(self, void *, 0x50);
+                VtEntry *vt = FIELD_AT(o, VtEntry *, 0x8);
+                D_1F800000.v24 = ((Vec4 (*)(void *, void *))vt[4].pfn)((char *)o + vt[4].delta, &fr);
+            }
+            func_800E0FDC(self, (Poly *)arg);
+        }
+        break;
+    case 9:
+        for (q = FIELD_AT(func_800E1B24(self), void *, 0x4C); q; q = FIELD_AT(q, void *, 0x4)) {
+            pos = Vec4(FIELD_AT(q, Vec4, 0x28));
+            dir = Vec4(FIELD_AT(q, Vec4, 0x38));
+            for (j = 0; j < n; j++) {
+                func_800D7F94(&fr);
+                D_1F800000.v14 = getp_800E1604(FIELD_AT(self, void *, 0x2C), &pos);
+                D_1F800000.v34 = getp_800E1604(FIELD_AT(self, void *, 0x30), &pos);
+                (Vec4 &)fr.a = D_1F800000.v14;
+                (Vec4 &)fr.b = D_1F800000.v34;
+                (Vec4 &)fr.c = pos;
+                (Vec4 &)fr.d = dir;
+                {
+                    void *o = FIELD_AT(self, void *, 0x50);
+                    VtEntry *vt = FIELD_AT(o, VtEntry *, 0x8);
+                    D_1F800000.v24 = ((Vec4 (*)(void *, void *))vt[4].pfn)((char *)o + vt[4].delta, &fr);
+                }
+                func_800E0FDC(self, (Poly *)arg);
+            }
+        }
+        break;
+    case 1:
+        break;
+    }
+    if (FIELD_AT(self, void *, 0x4))
+        func_800E1604(FIELD_AT(self, void *, 0x4), arg);
+}
 
 EXTERN_C void func_800E1AE4(void *self, Link *link)
 {
@@ -3920,23 +4110,6 @@ struct Pair_800E2704 {
     int v;
     int next;
     Pair_800E2704(int a) : v(a), next(0) {}
-};
-
-struct Params_800E2704 {
-    char pad0[8];
-    int a;
-    int b;
-    RandVal *rv;
-    Vec4 v14;
-    Vec4 v24;
-    Vec4 v34;
-    int pad44;
-    short s48;
-    short s4A;
-    short s4C;
-    short s4E;
-    short s50;
-    unsigned char b52;
 };
 
 EXTERN_C Params_800E2704 D_1F800000;

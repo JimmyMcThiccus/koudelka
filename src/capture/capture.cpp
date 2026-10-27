@@ -706,7 +706,76 @@ EXTERN_C void func_800B9A0C(VObject *p, unsigned char a, int b)
     }
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B9AA0);
+EXTERN_C int func_800366F8(void *);
+EXTERN_C int func_80036850(void *);
+EXTERN_C void CdIntToPos(int, void *);
+EXTERN_C int CdControl(int, void *, void *);
+EXTERN_C int func_8009C9D0(void);
+EXTERN_C void func_8009CAC0(void *);
+EXTERN_C char D_80036090[];
+
+struct S_800B9AA0 {
+    VtblEntry *vt;
+    char pad4[0x20];
+    int f24;
+    char pad28[0xC];
+    signed char f34, f35, f36, f37;
+    short f38;
+    char pad3A[0x4A];
+    int f84;
+    char pad88[0x14];
+    int f9C;
+};
+
+EXTERN_C int func_800B9AA0(S_800B9AA0 *p)
+{
+    unsigned char res[8];
+    unsigned char arg[4];
+    int err, err2;
+    VtblEntry *e;
+    switch (p->f35) {
+    case 5:
+        if (!p->f36)
+            return 0;
+        if (!func_800366F8(p))
+            return 0;
+        p->f35 = (func_8009C9D0() & 0x80) == (p->f37 & 0x80) ? 9 : 6;
+        err = 0;
+        arg[0] = p->f37;
+        arg[1] = arg[2] = arg[3] = 0;
+        if (!CdControl(0xE, arg, res) || (res[0] & 0x1D))
+            err = 1;
+        if (!err)
+            break;
+        goto report;
+    case 9:
+        if (!p->f36)
+            return 0;
+        if (func_800366F8(p)) {
+            p->f34 = 2;
+            p->f35 = 10;
+            p->f38 = 0x3C;
+            p->f9C = 0;
+            p->f84 = 0;
+            CdIntToPos(p->f24, arg);
+            func_8009CAC0(D_80036090);
+            err2 = 0;
+            if (!CdControl(0x1B, arg, res) || (res[0] & 0x1D))
+                err2 = 1;
+            if (!err2)
+                return 0;
+            func_8009CAC0(0);
+        report:
+            e = &p->vt[13];
+            ((void (*)(void *, void *))e->pfn)((char *)p + e->delta, res);
+            return 0;
+        }
+        break;
+    default:
+        return func_80036850(p);
+    }
+    return 0;
+}
 
 EXTERN_C int func_800B9C60() { return -1; }
 
@@ -2835,7 +2904,203 @@ EXTERN_C char *func_800C0030(char *p, char *d, short n)
     return p + 0x48C;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C0194);
+struct R0_800C0194 {
+    int a, b, c, d, e;
+    short f, g, h, i;
+    unsigned char j, k, l, m;
+    int n;
+};
+struct R1_800C0194 {
+    int a, b, c, d, e, f, g, h;
+    unsigned char i, j, k, l, m, n, o, pp;
+};
+struct Img_800C0194 {
+    int w, h;
+    unsigned char a, b, c, d;
+    int x;
+};
+struct S_800C0194 {
+    char pad[0xF8];
+    signed char nF8, nF9;
+    char padFA[0x274 - 0xFA];
+    int magic;
+    short f278, f27A;
+    unsigned char f27C;
+    char pad27D[3];
+    signed char id[4];
+    short f284;
+    char pad286[2];
+    R0_800C0194 r;
+    R1_800C0194 e[3];
+    char pad324[0x3D0 - 0x324];
+    short n3D0, n3D2;
+};
+EXTERN_C void exit(int);
+// C_800BF560::C_800BF560 called by its symbol: the call site sign-extends c, i.e. the real parameter is signed char
+// (the ctor still matches with `signed char c`: preferably change it to that, rename the symbol to __10C_800BF560ssSc
+// and write `new C_800BF560(a, cnt, c)` here; GCC rejects a plain extern "C" redeclaration of the mangled name)
+EXTERN_C void *ctor_800BF560(void *, short, short, signed char) __asm__("__10C_800BF560ssc");
+EXTERN_C char *func_800C2044(char *p, char a, short b);
+EXTERN_C void func_800C20DC(char *p, void *a);
+EXTERN_C char *func_800C2F6C(char *p);
+EXTERN_C void func_800C301C(char *, char *, short, short);
+EXTERN_C void func_8001A678(void *, void *);
+EXTERN_C void func_800BF62C(S_800BF62C *p, short a, short b);
+EXTERN_C void func_800C1F6C(S_800C1F6C *p, Rec8 *s);
+#define R1COPY_800C0194(dst, src)  \
+    dst.a = src->a;                \
+    dst.b = src->b;                \
+    dst.c = src->c;                \
+    dst.d = src->d;                \
+    dst.e = src->e;                \
+    dst.f = src->f;                \
+    dst.g = src->g;                \
+    dst.h = src->h;                \
+    dst.i = src->i;                \
+    dst.j = src->j;                \
+    dst.k = src->k;                \
+    dst.l = src->l;                \
+    dst.m = src->m;                \
+    dst.n = src->n;                \
+    dst.o = src->o;                \
+    dst.pp = src->pp
+#define p ((S_800C0194 *)pv)
+static inline void add_800C0194(void *l, char *o, char id)
+{
+    o[8] = id;
+    func_8001A678(l, o);
+}
+EXTERN_C void func_800C0194(void *pv, void *dv, void *l1, void *l2, void *l3, void *l4)
+{
+    signed char *d = (signed char *)dv;
+    signed char *q = d;
+    int n = p->nF9;
+    while (1) {
+        if (!n)
+            break;
+        if (d[0] != 'K')
+            exit(1);
+        if (q[1] != 'M')
+            exit(1);
+        if (q[2] != 'C')
+            exit(1);
+        char *o = ((char *(*)(void *, int, int))func_800C2044)(operator new(0x10), q[3], 0);
+        d += 0x204;
+        n--;
+        func_800C20DC(o, q + 4);
+        func_8001A678(l1, o);
+        q += 0x204;
+    }
+    n = p->nF8;
+    int k = 0;
+    while (1) {
+        if (!n)
+            break;
+        Img_800C0194 img;
+        Img_800C0194 *s = (Img_800C0194 *)d;
+        img.w = s->w;
+        img.h = s->h;
+        img.a = s->a;
+        img.b = s->b;
+        img.c = s->c;
+        img.d = s->d;
+        img.x = s->x;
+        int size = img.w * img.h;
+        d += sizeof(Img_800C0194);
+        char *o = func_800C2F6C((char *)operator new(0x10));
+        func_800C301C(o, (char *)d, img.w, img.h);
+        add_800C0194(l2, o, k++);
+        d += size;
+        n--;
+    }
+    p->magic = *(int *)d;
+    p->f278 = *(short *)(d + 4);
+    p->f27A = *(short *)(d + 6);
+    p->f27C = d[8];
+    d += 0xC;
+    if (p->magic != 0x4B4D0001)
+        exit(1);
+    p->id[0] = d[0];
+    p->id[1] = d[1];
+    p->id[2] = d[2];
+    p->id[3] = d[3];
+    p->f284 = *(short *)(d + 4);
+    d += 8;
+    if (p->id[0] != 'K')
+        exit(1);
+    if (p->id[1] != 'M')
+        exit(1);
+    if (p->id[2] != 0)
+        exit(1);
+    if (p->id[3] != 1)
+        exit(1);
+    {
+        R0_800C0194 *s = (R0_800C0194 *)d;
+        p->r.a = s->a;
+        p->r.b = s->b;
+        p->r.c = s->c;
+        p->r.d = s->d;
+        p->r.e = s->e;
+        p->r.f = s->f;
+        p->r.g = s->g;
+        p->r.h = s->h;
+        p->r.i = s->i;
+        p->r.j = s->j;
+        p->r.k = s->k;
+        p->r.l = s->l;
+        p->r.m = s->m;
+        p->r.n = s->n;
+        d += sizeof(R0_800C0194);
+    }
+    {
+        R1_800C0194 *s = (R1_800C0194 *)d;
+        R1COPY_800C0194(p->e[0], s);
+        d += sizeof(R1_800C0194);
+        s = (R1_800C0194 *)d;
+        R1COPY_800C0194(p->e[1], s);
+        d += sizeof(R1_800C0194);
+        s = (R1_800C0194 *)d;
+        R1COPY_800C0194(p->e[2], s);
+        d += sizeof(R1_800C0194);
+    }
+    p->n3D0 = *(short *)d;
+    short m = *(short *)(d + 2);
+    p->n3D2 = m;
+    d += 4;
+    n = m;
+    q = d;
+    while (1) {
+        if (!n)
+            break;
+        short a = *(short *)d;
+        short cnt = *(short *)(q + 2);
+        signed char c = q[4];
+        C_800BF560 *o = (C_800BF560 *)ctor_800BF560(operator new(0x28), a, cnt, c);
+        q += 8;
+        d += 8;
+        while (cnt) {
+            func_800BF62C((S_800BF62C *)o, *(short *)d, *(short *)(q + 2));
+            q += 8;
+            d += 8;
+            cnt--;
+        }
+        func_8001A678(l3, o);
+        n--;
+    }
+    n = p->n3D0;
+    while (1) {
+        if (!n)
+            break;
+        C_800C1E7C *o = new C_800C1E7C((Desc_800C1E7C *)d);
+        d += 0x10;
+        func_800C1F6C((S_800C1F6C *)o, (Rec8 *)d);
+        func_8001A678(l4, o);
+        n--;
+        d += o->n * 8;
+    }
+}
+#undef R1COPY_800C0194
+#undef p
 
 EXTERN_C void exit(int);
 EXTERN_C signed char func_800C21B0(char *p);
@@ -3913,7 +4178,76 @@ EXTERN_C void func_800C2F9C(char *p, int in_chrg)
     func_8001A610(p, in_chrg);
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C301C);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_800106EC[];
+EXTERN_C char D_80010624[];
+EXTERN_C char D_80010888[];
+EXTERN_C char D_800108A0[];
+EXTERN_C char D_800B4C48[];
+EXTERN_C void func_80021F48(void *, void *);
+EXTERN_C void func_80024BF0(void *, char *, short, short);
+EXTERN_C void func_80025444(void *, void *, int);
+
+struct Pt_800C301C {
+    short x, y;
+    Pt_800C301C() {}
+    Pt_800C301C(short a, short b) : x(a), y(b) {}
+};
+struct T_800C301C;
+static inline void setpt_800C301C(T_800C301C *t, Pt_800C301C p);
+struct T_800C301C {
+    VtblEntry *vt;
+    int f4;
+    void *vt2;
+    VObject *o;
+    Pt_800C301C pt;
+    short f14, f16;
+    int f18;
+    unsigned short f1C;
+    short f1E;
+};
+static inline void setpt_800C301C(T_800C301C *t, Pt_800C301C p) { t->pt = p; }
+struct S_800C301C {
+    char pad[0xA];
+    unsigned short fA;
+    T_800C301C *t;
+};
+#define p ((S_800C301C *)pc)
+EXTERN_C void func_800C301C(char *pc, char *data, short w, short h)
+{
+    char buf[0x200];
+    char *o = (char *)operator new(0x20C);
+    *(char **)o = D_80010178;
+    *(int *)(o + 4) = 0;
+    *(char **)o = D_800106EC;
+    *(short *)(o + 8) = 0;
+    *(short *)(o + 0xA) = 0;
+    *(char **)o = D_80010624;
+    func_80021F48(o, buf);
+    T_800C301C *t = (T_800C301C *)operator new(0x20);
+    t->vt2 = D_80010888;
+    t->vt = (VtblEntry *)D_80010178;
+    t->f4 = 0;
+    t->vt = (VtblEntry *)D_800108A0;
+    t->o = (VObject *)o;
+    setpt_800C301C(t, Pt_800C301C(-1, -1));
+    t->f14 = 0;
+    t->f16 = 0;
+    t->f18 = 0;
+    t->f1E = 0;
+    func_80024BF0(t, data, w, h);
+    func_80025444(D_800B4C48, p->t = t, 0);
+    p->fA = p->t->f1C;
+    T_800C301C *q = p->t;
+    VtblEntry *e = &q->vt[3];
+    ((void (*)(void *))e->pfn)((char *)q + e->delta);
+    VObject *v = (VObject *)o;
+    if (v) {
+        e = &v->vt[1];
+        ((void (*)(void *, int))e->pfn)((char *)v + e->delta, 3);
+    }
+}
+#undef p
 
 EXTERN_C int func_800C31A8(int *p) { return p[3]; }
 
