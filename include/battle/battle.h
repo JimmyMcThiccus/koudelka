@@ -213,4 +213,33 @@ EXTERN_C void func_800C7764(void *p, int a, int b, int c, int d);
 EXTERN_C T_D0338 *func_80074E28(T_D0338 *p);
 EXTERN_C T_VObj *func_800BC094(T_VObj *p, int a, int b);
 
+struct T_BC074 { char pad[0xB8]; int fB8; };
+struct T_CDA8C { char pad[0x818]; int f818; };
+struct T_CFCBC { char pad[0x848]; int f848; char pad84C[0xE8]; int f934; char pad938[0x18]; int f950; };
+struct T_D0440 { char pad[0x6C]; int f6C; int f70; };
+struct T_D1758 { char pad[0x5750]; int f5750; };
+struct T_BE0F8 { int f0; int f4; };
+struct T_CEBC4 { char pad[0x90C]; void *f90C; int f910; };
+struct T_D0404 { char pad[0x54]; int f54; int f58[3]; int f64; int f68; int f6C; int f70; };
+struct T_D2284 { char pad[0x2284]; char f2284[4]; };
+struct T_VEC { int x, y, z, w; };
+struct T_C1118 { char pad[0x2A0]; char f2A0[0x170]; short s410; };
+struct T_D2F54 { char pad[0x50]; char f50[0xFC]; int f14C; int f150; int f154; };
+struct T_D596C { char pad[0x20]; int f20; };
+struct T_4DD0 { char pad[0x1F6]; short s1F6; };
+EXTERN_C T_4DD0 *D_800B4DD0 LUI_DATA;
+EXTERN_C void func_80019A6C(List *l, int a, int n);
+EXTERN_C void *func_800751AC(void *p);
+EXTERN_C void func_8007669C(void *p, int a, int b);
+EXTERN_C void func_8005783C(int a);
+EXTERN_C void func_80068EE8(void *p);
+EXTERN_C void func_8005457C(void *p, int a);
+EXTERN_C void func_80054FE0(void *p);
+EXTERN_C void func_80082E14(void *p, int a);
+EXTERN_C void func_800566E4(void *p);
+EXTERN_C void func_80055330(int a);
+EXTERN_C void func_8005549C(int a, void *p, int b, int c);
+EXTERN_C void func_80055624(void *p, int a);
+EXTERN_C void func_8006323C(void *p);
+
 #endif /* BATTLE_BATTLE_H */
