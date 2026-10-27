@@ -1,5 +1,5 @@
 // func_800B7190 (GameEnd vtable D_800B6F5C slot 2): loads the ending graphics.
-// Best attempt: 87 of 235 instructions differ (try_compile, 948 vs 940 bytes).
+// Best attempt: 87 of 235 instructions differ (try_compile, 948 vs 940 bytes; same with -G0 and -G8).
 // Everything else lines up, including the inline vptr stores, the 0x200-byte copy
 // with its alignment test, and the stack layout of the Point temporary and f2.
 //

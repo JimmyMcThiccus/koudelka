@@ -1,9 +1,9 @@
 #include "common.h"
 #include "gameend/gameend.h"
 
-// Overlay id word, read by the EXE through ovl_header. Under -G8 a 4-byte
-// const would go to .sdata; it has to be the first word of the overlay.
-EXTERN_C const int D_800B6DF0 __attribute__((section(".rodata"))) = 8;
+// Overlay id word, read by the EXE through ovl_header; it has to be the first
+// word of the overlay.
+EXTERN_C const int D_800B6DF0 = 8;
 
 EXTERN_C const int D_80010178[];
 EXTERN_C const int D_800104A8[];
