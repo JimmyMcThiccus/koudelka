@@ -135,7 +135,18 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063F3C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063FFC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800640D0);
+EXTERN_C void func_800640D0(void *self)
+{
+    if (FIELD_AT(self, int, 0x8) != 0) {
+        char *h = FIELD_AT(self, char *, 0x30);
+        if ((h ? FIELD_AT(h, List *, 0x0) : 0)->count == 1) {
+            char *v = h ? h + 8 : 0;
+            List *l = v ? *(List **)v : 0;
+            VObj0 *o = l->count ? **(VObj0 ***)l : 0;
+            o->v07(FIELD_AT(self, short, 0xC), FIELD_AT(self, short, 0xE));
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064188);
 

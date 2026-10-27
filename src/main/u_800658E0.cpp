@@ -555,7 +555,27 @@ EXTERN_C void func_80069E60(void *self, int flags)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80069ECC);
+EXTERN_C int func_80069ECC(void *self, int a, int b)
+{
+    int n;
+    void *p;
+    if (FIELD_AT(self, int, 0x18) > 0 && FIELD_AT(self, int, 0x18) != a) {
+        return 0;
+    }
+    FIELD_AT(self, int, 0x18) = a;
+    if (FIELD_AT(self, void *, 0x14) != 0) {
+        func_800A0D0C(FIELD_AT(self, void *, 0x14));
+    }
+    FIELD_AT(self, void *, 0x14) = 0;
+    if (b) {
+        n = a == 4 ? 0x10 : 0x100;
+        n *= 2;
+        p = func_800A0D2C(n);
+        FIELD_AT(self, void *, 0x14) = p;
+        func_80025CE0(p, b, n);
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80069F74);
 
@@ -826,7 +846,22 @@ EXTERN_C void func_8006B618(void *self, int b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_8006B690);
+EXTERN_C void func_8006B690(void *self, int b)
+{
+    void *p;
+    if (FIELD_AT(self, int, 0x274) != 0 && FIELD_AT(self, void *, 0x270) != 0) {
+        char *l = (char *)&D_800A4544;
+        func_8001D324(l, func_8001D25C(l, FIELD_AT(self, void *, 0x270)));
+        FIELD_AT(self, void *, 0x270) = 0;
+        FIELD_AT(self, int, 0x274) = 0;
+    }
+    FIELD_AT(self, int, 0x278) = 6;
+    FIELD_AT(self, int, 0x26C) = 0;
+    p = func_8006C95C(__builtin_new(0x20), self ? (char *)self + 0x124 : 0, b);
+    FIELD_AT(self, void *, 0x270) = p;
+    func_8006CA80(p);
+    FIELD_AT(self, int, 0x274) = 1;
+}
 
 EXTERN_C void func_8006B740(void *self, int b)
 {
@@ -970,7 +1005,23 @@ EXTERN_C int func_8006BCF4(void *self)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_8006BD34);
+EXTERN_C int func_8006BD34(void *self)
+{
+    if (FIELD_AT(self, int, 0x2E0) == 0) {
+        char *o = (char *)((VObj<0x2C> *)D_800A4578.p)->v11();
+        char *s = FIELD_AT(self, char *, 0x250);
+        char *a = FIELD_AT(o, char *, 0x64);
+        if (a != 0) {
+            if (FIELD_AT(s, void *, 0x4) != 0) {
+                func_8001A864(a, FIELD_AT(s, void *, 0x4));
+            }
+            FIELD_AT(s, void *, 0x4) = a;
+        }
+        FIELD_AT(o, void *, 0x64) = s;
+        FIELD_AT(self, int, 0x2E0) = 1;
+    }
+    return 1;
+}
 
 EXTERN_C int func_8006BDE0(void *self)
 {
@@ -1602,7 +1653,15 @@ EXTERN_C void func_800702EC(void)
     func_80080CC8(s, (short)SquareRoot0(q[0] * q[0] + q[1] * q[1] + q[2] * q[2]));
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80070384);
+EXTERN_C int func_80070384(void)
+{
+    char *s = (char *)D_800AF470.p;
+    char *v = FIELD_AT(s, char *, 0x328);
+    short *q;
+    v = v ? v + 0xB8 : 0;
+    q = (short *)(FIELD_AT(FIELD_AT(v, char *, 0x8), char *, 0x1B8) + 0x2C);
+    return 1 << (func_80080CC8(s, (short)SquareRoot0(q[0] * q[0] + q[1] * q[1] + q[2] * q[2])) % 8);
+}
 
 EXTERN_C int func_80070440(void)
 {

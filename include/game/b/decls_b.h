@@ -19,7 +19,7 @@ EXTERN_C void func_80057F20(void *self, unsigned short b);
 EXTERN_C int func_80053880(void *self);
 
 /* from main_b.cpp */
-EXTERN_C void func_8005800C(void *self);
+EXTERN_C void func_8005800C(void *self, void *b);
 
 /* from main_b.cpp */
 EXTERN_C void func_80019D40(List *l);
@@ -1202,7 +1202,7 @@ EXTERN_C int func_80075448(void *self, void *b);
 EXTERN_C void func_80078564(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800773B0(void *self);
+EXTERN_C void *func_800773B0(void *self, int b);
 
 /* from u_80071A74.cpp */
 EXTERN_C void *func_800774D0(void *self, int b);
@@ -1837,7 +1837,7 @@ EXTERN_C void func_800437CC(void *self, int b, int c, int d);
 EXTERN_C void func_80039DD8(void *p);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800435AC(void *self);
+EXTERN_C void func_800435AC(void *self, int b, int c);
 
 /* from u_80082174.cpp */
 EXTERN_C void func_800CDAC8(void *self, int b);
@@ -2254,5 +2254,130 @@ EXTERN_C void func_8007164C(void *self, void *b);
 EXTERN_C int func_80077234(void *self, void *b);
 
 EXTERN_C void func_80063714(void *self, unsigned int b);
+
+struct LNode_B {
+    LNode_B *next;
+    LNode_B *prev;
+};
+
+struct LList_B {
+    LNode_B *head;
+    LNode_B *cur;
+    int count;
+};
+
+EXTERN_C char D_80016820[];
+EXTERN_C char D_80016830[];
+EXTERN_C char D_800120F4[];
+EXTERN_C char D_8001211C[];
+EXTERN_C char D_80012104[];
+EXTERN_C char D_800101C0[];
+EXTERN_C char D_800101B0[];
+EXTERN_C void func_800198AC(void *self, int b);
+EXTERN_C void func_80077254(void *self);
+EXTERN_C void func_8001A678(void *self, void *b);
+EXTERN_C void func_800C68D8(void *self, int b);
+EXTERN_C void func_800C6DF4(void *self, int b);
+EXTERN_C void func_800C7158(void *self, int b);
+
+static inline int at_end_B(LList_B *l)
+{
+    return l->head ? l->head->prev == l->cur : 0;
+}
+
+inline void *operator new(unsigned int, void *p)
+{
+    return p;
+}
+
+struct MsgNode_B {
+    void *vt;
+    int next;
+    MsgNode_B()
+    {
+        vt = D_80010178;
+        next = 0;
+    }
+};
+
+struct Msg_B : MsgNode_B {
+    short type;
+    short sub;
+    Msg_B(short t, short s)
+    {
+        vt = D_80010300;
+        type = t;
+        sub = s;
+    }
+};
+
+struct MsgArg_B : Msg_B {
+    int c;
+    int d;
+    MsgArg_B(short t, short s, int c_, int d_) : Msg_B(t, s)
+    {
+        vt = D_800102D0;
+        c = c_;
+        d = d_;
+    }
+};
+
+struct V4_80085578 {
+    int x, y, z, w;
+    V4_80085578(int a, int b, int c, int d) { x = a; y = b; z = c; w = d; }
+};
+
+struct B4_80081260 {
+    char a, b, c, d;
+};
+
+EXTERN_C void func_8008FC38(int a);
+EXTERN_C void func_8008ED44(void *p);
+EXTERN_C int func_80043700(void *self, int a, void *b, int c);
+EXTERN_C void func_80042D3C(void *self);
+
+struct B32_B {
+    int w[8];
+};
+struct B8_B {
+    short s[4];
+};
+struct B16_B {
+    int w[4];
+};
+struct SV4_B {
+    short x, y, z, w;
+};
+
+EXTERN_C char D_80014278[];
+EXTERN_C void func_8002DD34(void *self, void *b, int c);
+EXTERN_C SV2_80055020 func_80054054(void);
+EXTERN_C int func_80054074(int b);
+EXTERN_C void func_8002972C(void *self, int a, int b, int c, int d);
+EXTERN_C B8_B *func_80053BC0(void *p);
+EXTERN_C void func_80063F3C(void *self);
+EXTERN_C void func_8003B35C(MATRIX_B *m, void *b, int c);
+EXTERN_C void SetLightMatrix(MATRIX_B *m);
+EXTERN_C void func_8003B3EC(MATRIX_B *m, void *b, int c);
+EXTERN_C MATRIX_B *ScaleMatrix(MATRIX_B *m, void *v);
+EXTERN_C void SetRotMatrix(MATRIX_B *m);
+EXTERN_C void SetTransMatrix(MATRIX_B *m);
+EXTERN_C void *func_8001D25C(void *self, void *b);
+EXTERN_C void func_8001D324(void *self, void *b);
+EXTERN_C void func_8001A864(void *self, void *b);
+EXTERN_C int ratan2(int y, int x);
+EXTERN_C void func_80071C78(void *self, void *b);
+EXTERN_C void func_80071D90(void *self, void *b, int c);
+EXTERN_C void func_800230E8(void *self, void *b);
+
+struct Iter_B {
+    List *l;
+    int i;
+};
+
+static inline void *iter_next_B(Iter_B *it)
+{
+    return it->i < it->l->count ? ((void **)it->l->pad)[it->i++] : 0;
+}
 
 #endif /* GAME_B_DECLS_B_H */
