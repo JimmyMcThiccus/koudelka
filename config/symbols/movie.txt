@@ -32,3 +32,5 @@ BUILD_OBJ_AC = 0x800CBA3C; // type:func
 __11Unk800BD988 = 0x800BD988; // type:func
 D_800B7134 = 0x800B7134; // force_not_migration:True
 D_800B723C = 0x800B723C; // force_not_migration:True
+D_800B8094 = 0x800B8094; // force_not_migration:True
+D_800B7A90 = 0x800B7A90; // force_not_migration:True

@@ -609,4 +609,103 @@ struct Unk800C2F90B { s16 x0; s16 x2; s32 x4; };
 struct Unk800C2F90 { s32 x0; Unk800C2F90B* x4; char p2[0x34 - 8]; s32 x34; char p3[0x44 - 0x38]; void* x44; char p4[0x50 - 0x48]; s32 x50; };
 // storing D_800CBA94 through a local pointer makes the MEM non-"in struct", so GCC lets the p->x loads move above it
 
+/* func_800B98D4 */
+struct Unk800B98D4E { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800B98D4T { Unk800B98D4E e[10]; };
+struct Unk800B98D4V { const void* vptr; s32 x4; };
+struct Unk800B98D4 { Unk800B98D4V* x0; char pad[0x2C - 4]; const void* x2C; RECT x30; Unk800B98D4V x38; };
+EXTERN_C const Unk800B98D4T D_800B6FF4;
+EXTERN_C char D_800B7044[], D_800104A8[];
+EXTERN_C void* func_80029C54(void*, s32, s32);
+
+/* func_800B9E78 */
+struct Unk800B9E78E { s32 d[6]; };
+/* same object as Unk800B9D18 (its ctor); this is its clone: new T(*this) with the copy ctor inlined */
+struct Unk800B9E78 { void* x0; s32 x4; s16 x8, xA; Unk800B9E78E xC[2]; RECT x3C; RECT x44; };
+
+/* func_800BDC88 */
+struct Unk800BDC88O { virtual void v1(s32); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(s32); };
+struct Unk800BDC88M { void* x0; void* x4; };
+struct Unk800BDC88 { void* x0; void* x4; void* x8; char p[0x30 - 0xC]; Unk800BDC88M x30; char p2[0x44 - 0x38]; Unk800BDC88O* x44; Unk800BDC88O* x48; char p3[4]; void* x50; };
+EXTERN_C char D_800B76B4[], D_800B767C[], D_800B7664[], D_800B76C4[], D_800B76D4[], D_800101C0[], D_800101B0[];
+EXTERN_C void func_8001D324(void*, s32);
+
+/* func_800C3E38 */
+struct Unk800C3E38O { virtual void v1(s32); virtual void v2(s32); };
+struct Unk800C3E38L { Unk800C3E38O** x0; s32 x4; };
+struct Unk800C3E38H { Unk800C3E38L* x0; };
+struct Unk800C3E38 { s32 x0; StreamStat* x4; char p[0xC - 8]; Unk800C3E38H xC; char p2[0x2C - 0x10]; Unk800C3E38O* x2C; s32 x30; };
+
+/* func_800C8114 */
+struct Unk800C8114E { s16 delta; s16 index; void (*pfn)(); };
+struct Unk800C8114T { Unk800C8114E e[10]; };
+/* virtual base (List-like) at 0x38: inline ctor D_80010178, x4 = 0, D_800104A8 */
+struct Unk800C8114V { const void* vptr; s32 x4; };
+struct Unk800C8114 { Unk800C8114V* x0; char pad[0x2C - 4]; const void* x2C; char p2[0x38 - 0x30]; Unk800C8114V x38; };
+EXTERN_C const Unk800C8114T D_800B85C4;
+EXTERN_C char D_800B84CC[], D_800104A8[];
+EXTERN_C void func_8005BC84(void*, s32, s32, s32);
+EXTERN_C void func_800C9364();
+
+/* func_800BE8B0 */
+struct Unk800BE8B0C { void* x0; s32 x4, x8, xC, x10; u8 x14; };
+struct Unk800BE8B0D { void* x0; StreamStat* x4; void* x8; void* xC; char x10[0x28 - 0x10]; s32 x28, x2C; char p[0x3C - 0x30]; StreamStat x3C; };
+struct Unk800BE8B0 { char x0[0x64]; void* x64; Unk800BE8B0D* x68; Unk800BE8B0C* x6C; char p[0x74 - 0x70]; s32 x74; char p2[0x88 - 0x78]; s32 x88; };
+EXTERN_C void* D_800127FC[];
+EXTERN_C char* strcpy(char*, const char*);
+EXTERN_C void* func_80048D54(void*);
+EXTERN_C s32 func_800468D0(void*, void*, void*, void*);
+inline Unk800BE8B0C* ctorC(Unk800BE8B0C* c, s32 a, s32 b, s32 cc, s32 d) { c->x0 = D_800127FC; c->x4 = a; c->x14 = 0; c->x8 = b; c->xC = cc; c->x10 = d; return c; }
+
+/* func_800C5278 */
+struct Unk800C5278E { s16 delta; s16 index; void (*pfn)(void*); };
+struct Unk800C5278T { Unk800C5278E e[10]; };
+struct Unk800C5278VB { const Unk800C5278T* vptr; };
+struct Unk800C5278 { Unk800C5278VB* x0; char pad[0x2C - 4]; const void* x2C; };
+EXTERN_C const Unk800C5278T D_800B7E1C;
+EXTERN_C const char D_800B7E6C[];
+EXTERN_C void func_8005BDA4(void*, s32);
+
+/* func_800C595C */
+struct Unk800C595CR { Unk800C10BCP xy; s16 w, h; };
+struct Unk800C595C { char pad[0x18]; void* x18; char p2[0x50 - 0x1C]; s32 x50, x54, x58; };
+EXTERN_C char D_800B8094[];
+EXTERN_C void func_80054AF0(void*, s32);
+EXTERN_C void func_80054EB4(void*, s32, s32);
+
+/* func_800C6388 */
+struct Unk800C6388A { s32 d[3]; };
+struct Unk800C6388B { s32 d[5]; };
+struct Unk800C6388 { void* x0; s32 x4; u16 x8, xA; s32 xC; Unk800C6388A x10[2]; Unk800C6388B x28[2]; };
+EXTERN_C char D_80014BD0[], D_800B80D4[];
+
+/* func_800C7C3C */
+struct Unk800C7C3CE { s16 delta, index; void* pfn; };
+struct Unk800C7C3CT { Unk800C7C3CE e[10]; };
+struct Unk800C7C3CB { const void* vptr; };
+struct Unk800C7C3C { Unk800C7C3CB* x0; char pad[0x2C - 4]; const void* x2C; char p2[0x58 - 0x30]; const void* x58; s32 x5C; };
+EXTERN_C const Unk800C7C3CT D_800B82F4;
+EXTERN_C const char D_800B8344[], D_80013E30[];
+EXTERN_C void func_80057558(void*, s32);
+
+/* func_800C800C */
+struct Unk800C800CE { s16 delta, index; void* pfn; };
+struct Unk800C800CT { Unk800C800CE e[10]; };
+struct Unk800C800CB { const void* vptr; };
+struct Unk800C800C { Unk800C800CB* x0; char pad[0x2C - 4]; const void* x2C; };
+EXTERN_C const Unk800C800CT D_800B8384;
+EXTERN_C const char D_800B83D4[];
+EXTERN_C void func_8005BDA4(void*, s32);
+
+/* func_800C8C28 */
+struct Unk800C8C28 { void* x0; s32 x4; u16 x8, xA; s32 xC; POLY_FT4 x10[2]; u16 x60; };
+EXTERN_C char D_80014BD0[], D_800B8614[];
+
+/* func_800C11A0 */
+struct Unk800C11A0 { char pad[0x68]; s32 x68; char p1[0x78 - 0x6C]; void* x78; char x7C[0xE8 - 0x7C]; char xE8[0x18C - 0xE8]; s32 x18C, x190; };
+EXTERN_C void func_80062188(void*);
+EXTERN_C void func_800C1AE0(Unk800C11A0*, void*);
+EXTERN_C void* func_800C2624(void*, s32, s32, s32, s32, const char*);
+EXTERN_C void func_800553D8(s32);
+
 #endif /* MOVIE_H */
