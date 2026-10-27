@@ -2,3 +2,5 @@
 D_800B7A98 = 0x800B7A98; // force_not_migration:True
 D_800B7AAC = 0x800B7AAC; // force_not_migration:True
 D_800B7ABC = 0x800B7ABC; // force_not_migration:True
+D_800B77D8 = 0x800B77D8; // force_not_migration:True
+D_800B7800 = 0x800B7800; // force_not_migration:True
