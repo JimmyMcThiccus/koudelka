@@ -6,7 +6,12 @@
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032264);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800322C8);
+EXTERN_C void func_800322C8(void *p, int a)
+{
+    AT(p, void **, 0) = D_80011E74;
+    func_8001D324(D_800A4544, func_8001D25C(D_800A4544, (int)p));
+    func_8001D024(p, a);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032334);
 
@@ -103,6 +108,11 @@ EXTERN_C void func_80033DAC(void *p)
     func_800348E4(p ? (char *)p + 0x34 : 0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033DDC);
+EXTERN_C void func_80033DDC()
+{
+    AT(&D_800AC844, void **, 0) = D_80011F44;
+    func_8001D324(D_800A4544, func_8001D25C(D_800A4544, (int)&D_800AC844));
+    func_8001D024(&D_800AC844, 2);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033E40);

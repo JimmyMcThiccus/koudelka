@@ -11,19 +11,60 @@ EXTERN_C int func_800385E4(S_800385E4 *p)
     return p->unk10;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_800385F0);
+EXTERN_C void func_800385F0(void *p, int flags)
+{
+    AT(p, void **, 8) = D_800123EC;
+    AT(p, void **, 0) = D_80012404;
+    func_8001D024((char *)p + 8, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038654);
+EXTERN_C void *func_80038654(void *p, int a, int b)
+{
+    char *m;
+    func_8002EA70(p, a);
+    m = (char *)p + 0x10;
+    AT(p, void **, 0) = D_80012484;
+    AT(m, void *, 8) = (char *)p + 0x1C;
+    AT(p, void *, 0x10) = (char *)p + 0x1C;
+    func_800198E0(AT(m, void *, 8), b, 0);
+    AT(m, int, 4) = 0;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_800386B8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038764);
+EXTERN_C void func_80038764(void *p, int a)
+{
+    Holder *h = (Holder *)((char *)p + 0x10);
+    List *l = h;
+    if (l->count) {
+        ((void (*)(int, Holder *, int))func_8002DD34)(a, h, 1);
+        func_80019D40((List *)h);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_800387D0);
+EXTERN_C void func_800387D0(A2VObj0 *p)
+{
+    int r = p->v11();
+    if (r)
+        p->v07(r);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038834);
+EXTERN_C void func_80038834(A2VObj0 *p)
+{
+    int r = p->v11();
+    if (r)
+        p->v07(r);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038898);
+EXTERN_C void func_80038898(A2VObj0 *p)
+{
+    int r = p->v11();
+    if (r)
+        p->v08(r);
+}
 
 EXTERN_C void func_800388FC(A2VObj0 *p, int a)
 {
@@ -96,7 +137,16 @@ EXTERN_C void func_80038E2C()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038E34);
+C_80038E34::C_80038E34(short a)
+{
+    AT(this, void **, 0) = D_80012674;
+    unk4C = -1;
+    unk4E = -1;
+    unk52 = 1;
+    unk68 = 0;
+    unk50 = a;
+    unk58 = -1;
+}
 
 C_80038E98::C_80038E98()
 {
@@ -447,7 +497,16 @@ EXTERN_C MATRIX *func_8003B334(MATRIX *p, MATRIX *q)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B35C);
+EXTERN_C MATRIX *func_8003B35C(MATRIX *r, MATRIX *a, MATRIX *b)
+{
+    MATRIX t;
+    MATRIX *tp;
+    func_8003A7A4(&t, (int)a);
+    tp = &t;
+    MulMatrix0(a, b, tp);
+    func_8003A7A4(r, (int)tp);
+    return r;
+}
 
 EXTERN_C MATRIX *func_8003B3C0(MATRIX *p, MATRIX *q)
 {

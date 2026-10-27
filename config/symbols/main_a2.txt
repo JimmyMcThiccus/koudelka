@@ -2,3 +2,4 @@
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
 D_80012C88 = 0x80012C88; // force_not_migration:True
 D_80013210 = 0x80013210; // force_not_migration:True
+D_80013798 = 0x80013798; // force_not_migration:True
