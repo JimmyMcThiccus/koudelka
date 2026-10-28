@@ -32,4 +32,10 @@ EXTERN_C void func_8007D498_c(void *self, int a1, int a2, int a3, int a4, int a5
 
 EXTERN_C void func_800DE59C_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, B16_C s, int a12) asm("func_800DE59C");
 
+static inline char *nx_80080350(char *p) { return FIELD_AT(p, char *, 4); }
+
+EXTERN_C char D_800173D0[];
+
+EXTERN_C void func_8008022C_def(void *self, int a, int b) asm("func_8008022C");
+
 #endif /* GAME_B2_B2_H */
