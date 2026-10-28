@@ -1168,4 +1168,12 @@ EXTERN_C void func_80061138(void*);
 EXTERN_C void func_80061114(void*, s32, s32);
 EXTERN_C void* func_80053BC0(void*);
 
+/* func_800C02D8 */
+struct Unk800C02D8C { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual s32 v7(s32); };
+struct Unk800C02D8V { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(s32); };
+struct Unk800C02D8 : Unk800C02D8V { void* x1C; char p1[0x74 - 0x20]; s32 x74; Unk800C02D8C* x78; char p2[0x18C - 0x7C]; s32 x18C, x190; char p3[0x1F0 - 0x194]; char x1F0[0x278 - 0x1F0]; Unk800C01C4O x278[15]; char p4[0x2564 - 0x278 - 15 * 0x254]; char* x2564; };
+EXTERN_C const char D_800B77B8[], D_800B7888[], D_800B78B8[];
+EXTERN_C s32 func_800C39D4(void*);
+inline s32 Unk800C02D8_open(Unk800C02D8* p) { s32 r; if ((r = func_800C2AF0((Unk800C3228*)p->x78, func_800C4994(p->x2564), 1)) != 0) return r; return (func_800C2F04((Unk800C2F04*)p->x78) == 0) << 1; }
+
 #endif /* MOVIE_H */
