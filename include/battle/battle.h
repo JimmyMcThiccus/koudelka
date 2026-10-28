@@ -1010,7 +1010,6 @@ struct T_CDD0C2 {
 };
 EXTERN_C int func_800C7DD0(void *p, int h, int a, int b);
 EXTERN_C void func_800C8EE4(T_C8EE4 *p, int a);
-EXTERN_C void func_800C7B5C(void *p, int a, void *b, int x, int y);
 EXTERN_C void *func_80085AD4(void *p, short x, short y);
 /* battle.h declares func_800C78EC as void; retail returns the count. */
 EXTERN_C int func_800C78EC_i(T_C9A4C *p, int a) __asm__("func_800C78EC");
@@ -1431,5 +1430,13 @@ EXTERN_C void func_80082D44(B2A0 *p, int a, B2A0 *b, int c, int d);
 EXTERN_C void func_80085C00(void *p);
 inline B2A0 *base_of(S2ECC *s) { return s ? &s->b2A0 : 0; }
 EXTERN_C int func_800C2ECC(S2ECC *self, S2ECC *other);
+
+struct P7B5C { char pad[0x2C8]; signed char b2C8[7][5]; char pad2EB[0x549]; int f834; int f838; int f83C; int f840; int f844; };
+EXTERN_C int D_800D5D84[];
+EXTERN_C int D_800D5D94[];
+EXTERN_C int func_800C9EF4(void *p, int a, int b, int c, int d, int e, int f);
+EXTERN_C bool func_800C7B5C_b(P7B5C *p, int a, void *l, int x, int y) __asm__("func_800C7B5C");
+inline bool valid7b5c(int x, int y) { if (x < 0 || y < 0 || x >= 5 || y >= 7) return false; return true; }
+EXTERN_C bool func_800C7B5C(P7B5C *p, int a, void *l, int x, int y);
 
 #endif /* BATTLE_BATTLE_H */
