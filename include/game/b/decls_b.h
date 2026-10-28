@@ -3244,4 +3244,9 @@ struct S_CpE0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; W3q 
 EXTERN_C char D_80014950[];
 EXTERN_C char D_80014B68[];
 
+EXTERN_C void func_8005F0E4_v(void *p, int b) asm("func_8005F0E4");
+EXTERN_C unsigned func_80060154_v(void *p, int b) asm("func_80060154");
+EXTERN_C void func_8005DF54_v(void *p, void *b) asm("func_8005DF54");
+EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d) asm("func_8005DD4C");
+
 #endif /* GAME_B_DECLS_B_H */

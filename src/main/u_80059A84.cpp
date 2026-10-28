@@ -936,7 +936,42 @@ EXTERN_C void func_8005DC44(S_DtorB *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005DD4C);
+EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d)
+{
+    unsigned char tmp[8];
+    int i;
+    int off;
+    char *q;
+    func_8005F0E4_v(p, d);
+    FIELD_AT(p, void *, 0) = D_80014B00;
+    FIELD_AT(p, unsigned char, 0x2B) = 3;
+    FIELD_AT(p, unsigned char, 0x2F) = 0x60;
+    FIELD_AT(p, unsigned char, 0x3B) = 3;
+    FIELD_AT(p, unsigned char, 0x3F) = 0x60;
+    SetDrawMode((char *)p + 0x10, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    SetDrawMode((char *)p + 0x1C, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    i = D_800B4CF0_w;
+    off = i << 4;
+    q = (char *)p + off;
+    FIELD_AT(q, short, 0x30) = r.x;
+    FIELD_AT(q, short, 0x32) = r.y;
+    FIELD_AT(q, short, 0x36) = r.h;
+    FIELD_AT(q, short, 0x34) = r.w;
+    func_8002972C(tmp, c, c, c, 1);
+    func_8005DF54_v(p, tmp);
+    {
+        int *s = (int *)((char *)p + (off + 0x28));
+        int *d = (int *)((char *)p + ((i ^ 1) * 16 + 0x28));
+        int a = s[1];
+        int b = s[2];
+        int e = s[3];
+        d[1] = a;
+        d[2] = b;
+        d[3] = e;
+        func_800198AC(tmp, 2);
+    }
+    return p;
+}
 
 EXTERN_C void func_8005DEA4(void *self, int b)
 {
