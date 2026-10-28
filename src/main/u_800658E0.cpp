@@ -84,7 +84,20 @@ EXTERN_C void func_80065AD0(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065B5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065C64);
+EXTERN_C void func_80065C64_def(void *self, int b) asm("func_80065C64");
+EXTERN_C void func_80065C64_def(void *self, int b)
+{
+    MATRIX_B m;
+    MATRIX_B m2;
+    MATRIX_B *mp;
+    func_8003B35C(&m, (char *)self + 0x78, b);
+    mp = &m;
+    SetLightMatrix(mp);
+    func_8003B3EC(&m2, (char *)self + 0x48, b);
+    *mp = m2;
+    SetRotMatrix(ScaleMatrix(mp, (char *)self + 0x68));
+    SetTransMatrix(mp);
+}
 
 EXTERN_C void func_80065D20(void *self, int i, short a, short b, short c, int d, int e, int f)
 {
@@ -298,7 +311,40 @@ EXTERN_C int func_800665C8(void *self)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066690);
+EXTERN_C void func_80066690_def(void *self) asm("func_80066690");
+EXTERN_C void func_80066690_def(void *self)
+{
+    switch (FIELD_AT(self, int, 0x4C)) {
+    case 2:
+        if (func_800667C8_i(self)) {
+            func_800BCA58_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    case 4:
+        func_80066A54_i(self);
+        func_800B92B0_v(FIELD_AT(self, void *, 0x48));
+        break;
+    case 7:
+        if (func_80066AF0_i(self)) {
+            char *o = 0;
+            if (FIELD_AT(self, int, 0x48) != 0) {
+                o = FIELD_AT(self, char *, 0x48) - 0x124;
+            }
+            func_8006B988_v(o);
+        }
+        break;
+    case 6:
+        if (func_80066BC0_i(self)) {
+            func_800BCA88_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    case 3:
+        if (func_8006692C_i(self)) {
+            func_800BF018_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    }
+}
 
 EXTERN_C void func_80066798(void *self)
 {

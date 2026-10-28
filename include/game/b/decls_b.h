@@ -3208,4 +3208,65 @@ EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
 EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
 EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
 
+struct S_Ct3C { S_VBB *vb; char pad4[0x38]; S_VBobjB vobj; };
+struct S_Ct50 { S_VBB *vb; char pad4[0x4C]; S_VBobjB vobj; };
+struct S_Ct5C { S_VBB *vb; char pad4[0x58]; S_VBobjB vobj; };
+EXTERN_C void *func_8005BC84_v2(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
+EXTERN_C void func_800537C0(void *p);
+EXTERN_C void *func_80057368_v(void *p, int in_chrg) asm("func_80057368");
+EXTERN_C void *func_80064884_v(void *p, int a, int b) asm("func_80064884");
+EXTERN_C const VTabB50 D_8001506C;
+EXTERN_C void *D_800150BC[];
+EXTERN_C const VTabB50 D_8001521C;
+EXTERN_C void *D_80015364[];
+EXTERN_C void *D_8001526C[];
+EXTERN_C const VTabB50 D_80014FFC;
+EXTERN_C void *D_8001504C[];
+EXTERN_C void *D_80014EEC[];
+
+struct S_Ct44 { S_VBB *vb; char pad4[0x40]; S_VBobjB vobj; };
+EXTERN_C void *func_80058EE8_v(void *p, int a, int b) asm("func_80058EE8");
+EXTERN_C const VTabB50 D_80014130;
+EXTERN_C void *D_80014180[];
+
+struct W3q { int a, b, c; };
+struct S_CpB24 { void *vtbl; int unk4; short unk8, unkA; int w[7]; };
+struct S_CpB2C { void *vtbl; int unk4; short unk8, unkA; Q16 arr[2]; };
+struct B36q { int w[9]; };
+struct S_CpB58 { void *vtbl; int unk4; short unk8, unkA; int unkC; B36q arr[2]; };
+struct S_CpB48 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; Q16 b[2]; };
+EXTERN_C char D_80014278[];
+EXTERN_C char D_800151B4[];
+
+struct B52q { int w[13]; };
+struct S_CpD0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; Q16 b[2]; Q16 c[2]; Q16 d[2]; };
+struct S_CpE0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; W3q b[2]; B52q c[4]; int unk110; };
+EXTERN_C char D_80014950[];
+EXTERN_C char D_80014B68[];
+
+EXTERN_C void func_8005F0E4_v(void *p, int b) asm("func_8005F0E4");
+EXTERN_C unsigned func_80060154_v(void *p, int b) asm("func_80060154");
+EXTERN_C void func_8005DF54_v(void *p, void *b) asm("func_8005DF54");
+EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d) asm("func_8005DD4C");
+
+EXTERN_C char D_800B4E60[];
+EXTERN_C char D_800B4E68[];
+EXTERN_C char D_800B4E70[];
+EXTERN_C char D_800B4E78[];
+EXTERN_C char D_800B4E80[];
+EXTERN_C void func_80054708_v(void *p, int a) asm("func_80054708");
+EXTERN_C void func_800538CC_v(void *p, char *s, int n) asm("func_800538CC");
+EXTERN_C void func_80053DDC_v(void *p, void *q) asm("func_80053DDC");
+
+EXTERN_C int func_800667C8_i(void *p) asm("func_800667C8");
+EXTERN_C int func_8006692C_i(void *p) asm("func_8006692C");
+EXTERN_C int func_80066A54_i(void *p) asm("func_80066A54");
+EXTERN_C int func_80066AF0_i(void *p) asm("func_80066AF0");
+EXTERN_C int func_80066BC0_i(void *p) asm("func_80066BC0");
+EXTERN_C void func_800BCA58_v(void *p) asm("func_800BCA58");
+EXTERN_C void func_800BCA88_v(void *p) asm("func_800BCA88");
+EXTERN_C void func_800BF018_v(void *p) asm("func_800BF018");
+EXTERN_C void func_800B92B0_v(void *p) asm("func_800B92B0");
+EXTERN_C void func_8006B988_v(void *p) asm("func_8006B988");
+
 #endif /* GAME_B_DECLS_B_H */

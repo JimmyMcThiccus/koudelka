@@ -310,7 +310,31 @@ EXTERN_C void func_8005B560(Obj_8005B560 *self, int b, int c)
     vt[11].pfn((char *)self + vt[11].delta, b - self->ents[i].a, c - self->ents[i].b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005B5B4);
+EXTERN_C S_CpB24 *func_8005B5B4_def(S_CpB24 *p) asm("func_8005B5B4");
+EXTERN_C S_CpB24 *func_8005B5B4_def(S_CpB24 *p)
+{
+    S_CpB24 *o = (S_CpB24 *)operator new(0x24);
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->w[0];
+    o->vtbl = D_80014548;
+    o->w[0] = w;
+    o->w[1] = p->w[1];
+    o->w[2] = p->w[2];
+    o->w[3] = p->w[3];
+    o->w[4] = p->w[4];
+    o->w[5] = p->w[5];
+    return o;
+}
 
 EXTERN_C int func_8005B66C(void *self)
 {
@@ -553,7 +577,34 @@ EXTERN_C void func_8005C8B4(void *self, int a, int b)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005C910);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005C968);
+EXTERN_C S_CpB58 *func_8005C968_def(S_CpB58 *p) asm("func_8005C968");
+EXTERN_C S_CpB58 *func_8005C968_def(S_CpB58 *p)
+{
+    S_CpB58 *o = (S_CpB58 *)operator new(0x58);
+    B36q *d = o->arr;
+    int n = 1;
+    B36q *s = p->arr;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_800147A0;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    return o;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005CA4C);
 
@@ -723,7 +774,63 @@ EXTERN_C void func_8005D734(void *self, int b)
     func_8005D228(self, b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005D754);
+EXTERN_C S_CpD0 *func_8005D754_def(S_CpD0 *o, S_CpD0 *p) asm("func_8005D754");
+EXTERN_C S_CpD0 *func_8005D754_def(S_CpD0 *o, S_CpD0 *p)
+{
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    Q16 *d4;
+    Q16 *s4;
+    int n4;
+    Q16 *d2;
+    Q16 *s2;
+    int n2;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_80014950;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d2 = o->c;
+    n2 = 1;
+    s2 = p->c;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d4 = o->d;
+    n4 = 1;
+    s4 = p->d;
+    do {
+        *d4 = *s4;
+        d4++;
+        s4++;
+    } while (--n4 != -1);
+    return o;
+}
 
 EXTERN_C void func_8005D8A4(void *self, int flags)
 {
@@ -829,7 +936,42 @@ EXTERN_C void func_8005DC44(S_DtorB *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005DD4C);
+EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d)
+{
+    unsigned char tmp[8];
+    int i;
+    int off;
+    char *q;
+    func_8005F0E4_v(p, d);
+    FIELD_AT(p, void *, 0) = D_80014B00;
+    FIELD_AT(p, unsigned char, 0x2B) = 3;
+    FIELD_AT(p, unsigned char, 0x2F) = 0x60;
+    FIELD_AT(p, unsigned char, 0x3B) = 3;
+    FIELD_AT(p, unsigned char, 0x3F) = 0x60;
+    SetDrawMode((char *)p + 0x10, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    SetDrawMode((char *)p + 0x1C, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    i = D_800B4CF0_w;
+    off = i << 4;
+    q = (char *)p + off;
+    FIELD_AT(q, short, 0x30) = r.x;
+    FIELD_AT(q, short, 0x32) = r.y;
+    FIELD_AT(q, short, 0x36) = r.h;
+    FIELD_AT(q, short, 0x34) = r.w;
+    func_8002972C(tmp, c, c, c, 1);
+    func_8005DF54_v(p, tmp);
+    {
+        int *s = (int *)((char *)p + (off + 0x28));
+        int *d = (int *)((char *)p + ((i ^ 1) * 16 + 0x28));
+        int a = s[1];
+        int b = s[2];
+        int e = s[3];
+        d[1] = a;
+        d[2] = b;
+        d[3] = e;
+        func_800198AC(tmp, 2);
+    }
+    return p;
+}
 
 EXTERN_C void func_8005DEA4(void *self, int b)
 {
@@ -870,7 +1012,45 @@ EXTERN_C void func_8005DF98(void *self, int b, int c)
     vt[11].pfn((char *)self + vt[11].delta, b - FIELD_AT(p, short, 0x30), c - FIELD_AT(p, short, 0x32));
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005DFE8);
+EXTERN_C S_CpB48 *func_8005DFE8_def(S_CpB48 *p) asm("func_8005DFE8");
+EXTERN_C S_CpB48 *func_8005DFE8_def(S_CpB48 *p)
+{
+    S_CpB48 *o = (S_CpB48 *)operator new(0x48);
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    Q16 *d2;
+    Q16 *s2;
+    int n2;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_80014B00;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    return o;
+}
 
 EXTERN_C int func_8005E0E0(void *self)
 {
@@ -931,7 +1111,56 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EB30);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EDF4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EF58);
+EXTERN_C S_CpE0 *func_8005EF58_def(S_CpE0 *o, S_CpE0 *p) asm("func_8005EF58");
+EXTERN_C S_CpE0 *func_8005EF58_def(S_CpE0 *o, S_CpE0 *p)
+{
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    W3q *d2;
+    W3q *s2;
+    int n2;
+    B52q *d3;
+    B52q *s3;
+    int n3;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_80014B68;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d3 = o->c;
+    n3 = 3;
+    s3 = p->c;
+    do {
+        *d3 = *s3;
+        d3++;
+        s3++;
+    } while (--n3 != -1);
+    o->unk110 = p->unk110;
+    return o;
+}
 
 EXTERN_C void func_8005F090(void *self, int flags)
 {

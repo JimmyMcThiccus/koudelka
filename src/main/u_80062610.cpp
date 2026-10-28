@@ -334,7 +334,35 @@ EXTERN_C void func_800637A0(S_Dtor50 *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800638A8);
+EXTERN_C S_Ct5C *func_800638A8_def(S_Ct5C *p, int in_chrg) asm("func_800638A8");
+EXTERN_C S_Ct5C *func_800638A8_def(S_Ct5C *p, int in_chrg)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80057368_v(p, 0);
+    p->vb->vt = (VEntB *)D_80014FFC.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014FFC;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014FFC.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x5C));
+        tmp.e[5].d = D_80014FFC.e[5].d + adj;
+        tmp.e[7].d = D_80014FFC.e[7].d + adj;
+        tmp.e[9].d = D_80014FFC.e[9].d + adj;
+    }
+    FIELD_AT(p, void **, 0x58) = D_8001504C;
+    FIELD_AT(p, void **, 0x2C) = D_80014EEC;
+    ((VObj<0x2C> *)p)->v07(0, 0);
+    ((VObj<0x2C> *)p)->v08(0x140, 0xF0);
+    return p;
+}
 
 EXTERN_C void func_800639F8(S_DtorB *p, int flags)
 {
@@ -391,7 +419,34 @@ EXTERN_C void func_80063D64(S_WB *p)
     func_8005388C(p ? (char *)p + 0x50 : 0, -1);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063E18);
+EXTERN_C S_Ct3C *func_80063E18_def(S_Ct3C *p, int in_chrg, int a2, int a3) asm("func_80063E18");
+EXTERN_C S_Ct3C *func_80063E18_def(S_Ct3C *p, int in_chrg, int a2, int a3)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_8005BC84_v2(p, 0, (unsigned short)a3, 1);
+    p->vb->vt = (VEntB *)D_8001506C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_8001506C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_8001506C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x3C));
+        tmp.e[5].d = D_8001506C.e[5].d + adj;
+        tmp.e[7].d = D_8001506C.e[7].d + adj;
+        tmp.e[9].d = D_8001506C.e[9].d + adj;
+    }
+    FIELD_AT(p, void **, 0x2C) = D_800150BC;
+    FIELD_AT(p, short, 0x38) = a2;
+    FIELD_AT(p, short, 0x3A) = 0;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063F3C);
 
@@ -469,7 +524,45 @@ EXTERN_C void func_80064428(void *self, int b, int c)
     vt[11].pfn((char *)self + vt[11].delta, b - FIELD_AT(p, short, 0x30), c - FIELD_AT(p, short, 0x32));
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064478);
+EXTERN_C S_CpB48 *func_80064478_def(S_CpB48 *p) asm("func_80064478");
+EXTERN_C S_CpB48 *func_80064478_def(S_CpB48 *p)
+{
+    S_CpB48 *o = (S_CpB48 *)operator new(0x48);
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    Q16 *d2;
+    Q16 *s2;
+    int n2;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_800151B4;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    return o;
+}
 
 EXTERN_C int func_80064570(void *self)
 {
@@ -498,7 +591,40 @@ EXTERN_C void func_800646DC(void *self, int flags)
     func_8005F120(self, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800646FC);
+EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3) asm("func_800646FC");
+EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_8005BC84_v2(p, 0, (unsigned short)a3, 0x10);
+    func_800537C0((char *)p + 0x38);
+    p->vb->vt = (VEntB *)D_8001521C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_8001521C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_8001521C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x50));
+        tmp.e[5].d = D_8001521C.e[5].d + adj;
+        tmp.e[7].d = D_8001521C.e[7].d + adj;
+        tmp.e[9].d = D_8001521C.e[9].d + adj;
+    }
+    FIELD_AT(p, void **, 0x40) = D_80015364;
+    FIELD_AT(p, void **, 0x2C) = D_8001526C;
+    FIELD_AT(p, int, 0x44) = 0;
+    FIELD_AT(p, int, 0x48) = 0;
+    FIELD_AT(p, int, 0x4C) = 0;
+    ((VObj<0x2C> *)p)->v07(r[0], r[1]);
+    ((VObj<0x2C> *)p)->v08(r[2], r[3]);
+    func_80064884_v(p, 1, 0);
+    return p;
+}
 
 EXTERN_C void func_80064884(int *s, int a, int b)
 {

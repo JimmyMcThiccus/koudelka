@@ -112,3 +112,19 @@ Round 3, batch 4:
   `f_v(...) asm("func_X")` aliases.
 - func_80057214 / func_80057C7C (composite dtors with member dtors) are still open; Ghidra shows the shape but retail keeps the member
   pointer in a callee-saved register and reads member->vb through it, which GCC folds into p+const here.
+
+Round 3, batch 5:
+- Copy ctors (new + member copy, `this` form too): read the source fields into locals before the vtable stores
+  (`t = p->unk4; o->vtbl = X; o->unk4 = t;`), arrays as `d = o->a; n = 1; s = p->a; do { *d = *s; d++; s++; } while (--n != -1);`
+  with the declaration order d, n, s; a later array loop declares d, s, n (tried all permutations; func_8005D754's 4th loop).
+  A 36-byte element copy (`*d = *s` on a struct of 9 ints) becomes GCC's block-move loop, as retail has.
+- Order of the post-increments (`d++; s++;` as separate statements) decides which `addiu` lands in the delay slot.
+- A value stored after a call that retail puts in the call's delay slot has to be stored *before* the call in the source (func_8005DD4C).
+
+Round 3, batch 6:
+- A switch whose arms all end in the same three calls (func_80068660): write the calls in every arm; GCC cross-jumps the tail and leaves the
+  per-arm argument setup, exactly as retail has it.
+- `char *o = 0; if (x) o = x - 0x124;` (not the ternary) for a null-checked base adjust (func_80066690).
+- func_800667C8 / 8006692C / 80066A54 / 80066BC0 / 800663EC: retail loads the .bin header through TWO pseudos for the same pointer (`h` for the value
+  words, a copy `base` for the offset words, both with fixed offsets, copy made right after the first tag-byte test). I could not stop GCC
+  from coalescing them; these stay open (667C8 is 64 off with `h += 8` stepping, 67 off with the copy placed after the first test).
