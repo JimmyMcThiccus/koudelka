@@ -413,4 +413,7 @@ inline S_A2_C98 *a2_init_C98(S_A2_C98 *p)
 struct S_A2_Pool { int unk0; S_A2_C28 *head; };
 struct S_A2_Pool98 { int unk0; S_A2_C98 *head; };
 struct S_A2_VD { virtual ~S_A2_VD(); };
+struct S_A2_VH0C : A2VObj0 { char pad[8]; Holder h; };
+EXTERN_C int func_8009C9E0();
+EXTERN_C void *func_800A0D2C(int n);
 #endif /* GAME_A2_A2_H */
