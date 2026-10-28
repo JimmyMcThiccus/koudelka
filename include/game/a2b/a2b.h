@@ -88,4 +88,7 @@ struct C_8003D9FC : C_8001E40C {
     C_8003D9FC(int a, int b, char *s) asm("func_8003D9FC");
     C_8003D9FC(int a, int b, char *s, S_A2B_V4 *src) asm("func_8003DB1C");
 };
+extern "C++" void *f40294(void *p, int a) asm("func_80040294");
+extern "C++" void *f4025C(void *p, int a, int b) asm("func_8004025C");
+EXTERN_C int func_8003ED10(void *p, int b, int c, int d, int e);
 #endif /* GAME_A2B_A2B_H */

@@ -280,7 +280,25 @@ EXTERN_C void func_8003EBCC()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003EBD4);
+EXTERN_C int func_8003EBD4(void *p)
+{
+    S_A2_V4z z;
+    S_A2_V4 w;
+    int r;
+    void *s3 = f40294(AT(p, void *, 0x13C), AT(p, short, 0x11E));
+    void *s2 = f40294(AT(p, void *, 0x13C), (short)(AT(p, unsigned short, 0x11E) - 1));
+    void *s0 = f4025C(AT(p, void *, 0x13C), AT(p, short, 0x11E), 0);
+    void *s1 = f4025C(AT(p, void *, 0x13C), (short)(AT(p, unsigned short, 0x11E) - 1), 0);
+    int a3;
+    if (AT(p, short, 0x11E) != 1)
+        a3 = AT(s0, short, 0xA) - AT(s1, short, 0xA);
+    else
+        a3 = AT(s0, short, 0xA);
+    r = func_8003ED10(p, AT(s3, int, 8), AT(s2, int, 8), a3, a3 - (AT(s0, short, 0xA) - AT(p, int, 0xFC)));
+    w.c = r;
+    w.c = AT(s2, int, 8) + r;
+    return w.c;
+}
 
 EXTERN_C void func_8003ECE4(S_8003ECE4 *p, int *a, int *b)
 {
