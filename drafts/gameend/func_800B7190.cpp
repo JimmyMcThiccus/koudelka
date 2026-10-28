@@ -4,15 +4,21 @@
 // with its alignment test, and the stack layout of the Point temporary and f2.
 //
 // What still differs:
-// 1. D_800A4534+0xC: GCC folds the load into lui %hi(sym+12) / lw %lo(sym+12).
-//    Retail has lui/addiu/lw 0xC with the lui in the beqz delay slot. The EXE never
-//    loads D_800A4534+0xC folded (42 uses, all via a base register).
-//    A local pointer at function scope gives the unfolded form, but then the address
-//    is computed before the branch. Inline functions with a pointer parameter do the same.
+// 1. SOLVED (round 2): D_800A4534+0xC must be `volatile` (as main_a's S_800A4534::unkC
+//    is). Combine won't fold a volatile MEM, so `D_800A4534.fC` gives retail's
+//    lui/addiu/lw 0xC with the lui in the beqz delay slot.
 // 2. loop.c hoists &D_80010888 and &D_800108A0 (lui/addiu pairs, savings 2,
 //    life 2, 53 loop insns) into s6/s7, so the frame saves s0-s7 instead of s0-s5.
 //    Retail keeps them in the loop, which needs a higher insn count or unsplit
 //    addresses (-mno-split-addresses stops the hoisting but changes other code).
+//    Round 2 (-dL, and GCC 2.8.1 loop.c): threshold = (loop_has_call ? 1 : 2) * (1 +
+//    n_non_fixed_regs) = 29 here, and move_movables does `threshold -= 3` per insn moved; a lui/addiu pair (savings 2, life 2) moves
+//    when 4*T >= loop insns. Retail moved the D_80010178 pair only (cse2 then turned it
+//    into `s5 = s1`), so its loop had ~93-115 RTL insns at loop time vs 54 here.
+//    EXE func_8005FC78 shows the same thing (2 of 3 vtable pairs hoisted in a loop of
+//    ~30 machine insns, which needs >= 69 RTL insns). Real ctors, `new T(args)`,
+//    -fexceptions (default on) and real virtual classes don't add RTL insns.
+//    A goto loop stops all loop opts but then loses the f2B0[i] giv and the s5 copy.
 // 3. Retail has 24 bytes of locals, this has 16. The Point temporary sits at
 //    sp+0x1C, the second word of an 8-byte slot that f2 reuses at sp+0x18.
 //
@@ -27,7 +33,7 @@ struct Obj20C { const void *vptr; int f4; short f8, fA; };
 struct Sprite { const void *vptr; int f4; const void *vptr8; void *fC; PointP f10; short f14, f16; int f18; short f1C, f1E; };
 struct Big { const VEntry *vt0; char pad4[0xC]; const VEntry *vt10; };
 struct Item3 { virtual void v1(); virtual void v2(); virtual void v3(); };
-struct S800A4534 { int pad0[3]; int fC; };
+struct S800A4534 { int pad0[3]; volatile unsigned int fC; };
 struct Blk200 { char d[0x200]; };
 
 EXTERN_C S800A4534 D_800A4534;
@@ -62,10 +68,9 @@ inline void n_init(Obj20C *o, char *p) { m_init(o); o->vptr = D_80010624; func_8
 EXTERN_C void func_800B7190(GameEnd *self)
 {
     int n;
-    if (self->f2A8) {
-        S800A4534 *g = &D_800A4534;
-        n = (g->fC & 3) + 1;
-    } else
+    if (self->f2A8)
+        n = (D_800A4534.fC & 3) + 1;
+    else
         n = 0;
     File f;
     func_8005F238(&f);
