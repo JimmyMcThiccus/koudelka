@@ -870,7 +870,6 @@ struct T_D2D60_B { char pad[0x2C]; int f7C; char pad80[0x54]; char fD4[0x28]; ch
 struct T_D2D60 : T_D2D60_A, T_D2D60_B {};
 EXTERN_C void *func_800646FC(void *p, int a, SVec2 *v, int n);
 EXTERN_C void func_8005800C(void *a, void *b);
-EXTERN_C void *func_800D3ED0(void *p, int a, int b);
 inline void sv2(SVec2 *v, short x, short y) { v->x = x; v->y = y; }
 struct T_SPRTB { unsigned char r0, g0, b0, code; short x0, y0; unsigned char u0, v0; unsigned short clut; short w, h; };
 struct T_SPRT2 { int tag; union { T_SPRTB b; struct { int w[4]; } body; }; };
@@ -1610,5 +1609,9 @@ struct T_C43F0 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; cha
 EXTERN_C const T_VTable10 D_800B73D0;
 EXTERN_C VTable D_800B7518[], D_800B7420[];
 EXTERN_C void func_800C43F0(T_C43F0 *self, int in_chrg);
+
+struct T_D3ED0n { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; int f44; int f48; int f4C; char b50; char pad51; short h52, h54, h56, h58; char pad5A[2]; T_D3ED0_vb v5C; };
+EXTERN_C void f5BC84_4(void *p, int a, int b, int c) __asm__("func_8005BC84");
+EXTERN_C T_D3ED0n *func_800D3ED0(T_D3ED0n *self, int in_chrg, unsigned short x);
 
 #endif /* BATTLE_BATTLE_H */

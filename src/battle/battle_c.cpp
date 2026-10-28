@@ -552,7 +552,40 @@ EXTERN_C int func_800D3D50(T_D3D50 *p, T_D19F0_q *q) {
     return 1;
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D3ED0);
+EXTERN_C T_D3ED0n *func_800D3ED0(T_D3ED0n *self, int in_chrg, unsigned short x)
+{
+    if (in_chrg) {
+        self->vb0 = (T_VBase *)&self->v5C;
+        T_D3ED0_vb *v = (T_D3ED0_vb *)self->vb0;
+        v->vptr = D_80010178;
+        v->f4 = 0;
+        v->vptr = D_800104A8;
+    }
+    f5BC84_4(self, 0, x, 1);
+    func_800537C0(self->f38);
+    self->vb0->vptr = (T_VTable10 *)&D_800B7C1C;
+    T_VTable10 vt;
+    if (!in_chrg) {
+        vt = D_800B7C1C;
+        self->vb0->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800B7C1C.e[1].delta + (adj = (char *)self - (full = (char *)self->vb0 - 0x5C));
+        vt.e[5].delta = D_800B7C1C.e[5].delta + adj;
+        vt.e[7].delta = D_800B7C1C.e[7].delta + adj;
+        vt.e[9].delta = D_800B7C1C.e[9].delta + adj;
+    }
+    register T_D3ED0n *r asm("$2") = self;
+    r->vt40 = D_800B7D64;
+    r->vt2C = D_800B7C6C;
+    r->f4C = 4;
+    short *q = &r->h52;
+    r->f44 = 0;
+    r->f48 = 0;
+    r->h52 = 0; q[1] = 0; q[2] = 0; q[3] = 0;
+    r->b50 = 0;
+    return r;
+}
 
 EXTERN_C void func_800D401C(T_D401C *p) { T_D401C_M *m = p->f30; T_D401C_V *v = m; func_800D4518(v->count ? v->items[0] : 0); }
 
