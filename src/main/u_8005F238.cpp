@@ -358,9 +358,53 @@ EXTERN_C void *func_80061188(Obj_80061188 *self, int i)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_800611D0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_800614BC);
+EXTERN_C void func_800614BC(S_80061AAC *self, int i)
+{
+    int n = func_800619F4((Obj_800619F4 *)self);
+    if (i < n) {
+        int j;
+        for (j = i; j + 1 < n; j++) {
+            self->e[j] = self->e[j + 1];
+        }
+        FIELD_AT(&self->e[n - 1], char, 0x18) = 0;
+    }
+    func_80061CC4(self);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_800615B4);
+EXTERN_C void func_800615B4(S_800615B4 *self, int key)
+{
+    int flag = 1;
+    int i;
+    for (i = func_800619F4((Obj_800619F4 *)self) - 1; i >= 0; i--) {
+        if (!flag) {
+            break;
+        }
+        if (FIELD_AT(&self->e[i], unsigned char, 0x1B) == key) {
+            func_800614BC((S_80061AAC *)self, i);
+            flag = 0;
+        }
+    }
+    if (flag) {
+        unsigned int j;
+        Ent_800620D8 *q;
+        for (j = 0; (q = func_800620D8(self, j)) != 0 && flag; j++) {
+            if (FIELD_AT(q, unsigned char, 0x1B) == key) {
+                int k;
+                int m;
+                for (k = 0; k < 8; k++) {
+                    if (FIELD_AT(&self->f[k], unsigned char, 0x18) == 0) {
+                        break;
+                    }
+                }
+                for (m = j; m + 1 < k; m++) {
+                    self->f[m] = self->f[m + 1];
+                }
+                FIELD_AT(&self->f[k - 1], unsigned char, 0x18) = 0;
+                flag = 0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061758);
 
@@ -386,7 +430,27 @@ EXTERN_C void func_80061AAC(S_80061AAC *self, int i, int j)
     func_80061CC4(self);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061BF0);
+EXTERN_C void func_80061BF0(void *self, unsigned char *b)
+{
+    if (b[0x18] == 4) {
+        unsigned int n = func_800619F4((Obj_800619F4 *)self);
+        int flag = 1;
+        unsigned int i = 0;
+        char *p = (char *)self;
+    loop:
+        if (i < n) {
+            if ((unsigned char)p[0x23F] == b[0x1B]) {
+                *(C20_80060260 *)(b + 0x1C) = *(C20_80060260 *)(p + 0x240);
+                flag = 0;
+            }
+            p += 0x94;
+            i++;
+            if (flag) {
+                goto loop;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061CC4);
 
@@ -413,7 +477,24 @@ EXTERN_C int func_80061E9C(void *self, int b)
     return found;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_80061F80);
+EXTERN_C void func_80061F80(S_80061F80 *self, int i)
+{
+    int k;
+    if (i >= 0) {
+        if ((unsigned int)(FIELD_AT(&self->e[i], unsigned char, 0x1B) - 12) < 4) {
+            return;
+        }
+        self->cur = self->e[i];
+        self->idx = i;
+        return;
+    }
+    k = self->idx;
+    if (k >= 0 && FIELD_AT(&self->cur, unsigned char, 0x8C) != 0 && FIELD_AT(&self->e[k], unsigned char, 0x1B) == FIELD_AT(&self->cur, unsigned char, 0x1B)) {
+        self->e[k] = self->cur;
+    }
+    self->cur = self->e[0];
+    self->idx = -1;
+}
 
 EXTERN_C Ent_800620D8 *func_800620D8(void *self, unsigned int i)
 {
