@@ -2799,4 +2799,19 @@ EXTERN_C void func_8002DB50(void *self, int b);
 
 EXTERN_C void ApplyMatrixLV(MATRIX_B *m, void *v, void *out);
 
+struct S_80061F80 {
+    char pad[8];
+    E94_80061AAC cur;
+    int idx;
+    char pad2[0x224 - 0xA0];
+    E94_80061AAC e[8];
+};
+
+EXTERN_C void func_800614BC(S_80061AAC *self, int i);
+struct S_800615B4 {
+    char pad[0x224];
+    E94_80061AAC e[48];
+    E94_80061AAC f[8];
+};
+
 #endif /* GAME_B_DECLS_B_H */
