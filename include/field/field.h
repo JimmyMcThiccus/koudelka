@@ -1772,5 +1772,27 @@ EXTERN_C int _card_load(int);
 EXTERN_C int _card_clear(int);
 EXTERN_C int func_800E4D8C(void*);
 EXTERN_C int func_800E5404(Unk_800E5404*);
+struct Unk_800CAAD4 : Unk_Pad50, Unk_Base { char pad54[8]; int unk5C; char pad60[4]; int unk64; Unk_S4_800CBA70 unk68; int unk70; int unk74; int unk78; char pad7C[4]; int unk80; Unk_DualList unk84; char pad90[0x14]; char unkA4[8]; char unkAC[8]; char unkB4[8]; };
+inline void call_CAAD4(VAt<0x2C>* o, Unk_800CAAD4* p, void* q) {
+    Unk_S4_800CBA70 r = p->unk68;
+    ((void (*)(void*, Unk_S4_800CBA70, void*))func_800D0608)(o, r, q);
+}
+struct Hm_Pt { short x, y; };
+struct Hm_D2B30_s { char pad0[0x14]; int unk14; char pad18[4]; int unk1C; Hm_Pt pt; char pad24[4]; };
+struct Unk_800D2B30 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; VAt0* unk38; void* unk3C; Unk_VbObj vobj; };
+EXTERN_C Unk_800D2B30* func_800D2B30(Unk_800D2B30* self, int in_chrg, unsigned short a);
+struct Unk_800D77F8 : VAt<0x18> { char pad1C[0x20]; void* unk3C; char pad40[0x24]; int unk64; char unk68[0x6C]; int unkD4; VAt<0x18>* unkD8[4]; char padE8[0x10]; Unk_800C9D60_sub* unkF8; char padFC[0xC]; VAt<0x18>* unk108; };
+EXTERN_C void func_80054CA0(void*);
+EXTERN_C int func_800D77F8(Unk_800D77F8* p, Unk_FlagArg* q);
+struct Unk_800E3B68_vb { short a; short b; int c; };
+struct Unk_800E3B68 { void* vtbl0; void* vb4; void* vtbl8; void* unkC; char pad10[0x14]; void* vtbl24; void* vb28; int unk2C; int unk30; int unk34; int unk38; int unk3C; char* unk40; char* unk44; int unk48; int unk4C; int unk50; int unk54; int unk58; int unk5C; Unk_800E3B68_vb vb60; };
+EXTERN_C char D_80012154[];
+EXTERN_C char D_8001201C[];
+EXTERN_C char D_80012034[];
+EXTERN_C char D_800121AC[];
+EXTERN_C Unk_800E3B68* func_800E3B68_i(Unk_800E3B68* p, int in_chrg, int a2, int a3, int a4, char* name) asm("func_800E3B68");
+inline void init_vb(Unk_800E3B68_vb* v) { v->a = 0x10; v->b = 0; v->c = -1; }
+struct Unk_800E7DEC { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; int unk68; int unk6C; Unk_Deletable18* unk70; Unk_Deletable18* unk74; int unk78; int unk7C; int unk80; char* unk84; int unk88; char unk8C[0x54]; int unkE0; int unkE4[7]; Unk_VbObj vobj; };
+EXTERN_C Unk_800E7DEC* func_800E7DEC_i(Unk_800E7DEC* self, int in_chrg, char* s, int a3) asm("func_800E7DEC");
 
 #endif /* FIELD_FIELD_H */
