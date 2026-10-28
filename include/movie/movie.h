@@ -1204,4 +1204,19 @@ struct Unk800C3B88S13 { char c[13]; };
 EXTERN_C char D_800B7CBC[], D_800B7CC0[];
 EXTERN_C DIRENTRY* nextfile(DIRENTRY*);
 
+/* func_800C0EA4 */
+struct Unk800C0EA4V { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800C0EA4O { virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800C0EA4 : Unk800C0EA4V { char p1[0x6C - 0x1C]; s32 x6C; char p2[0x78 - 0x70]; Unk800C0EA4O* x78; char x7C[0xE8 - 0x7C]; char xE8[0x18C - 0xE8]; s32 x18C; char p3[0x1F0 - 0x190]; char x1F0[0x25D8 - 0x1F0]; char x25D8[0x25F8 - 0x25D8]; s32 x25F8; char p4[0x2718 - 0x25FC]; s32 x2718; };
+EXTERN_C s32 func_80063744(void*, s32);
+EXTERN_C void func_80060588(void*, s32);
+EXTERN_C void func_800C16C8(Unk800C0EA4*);
+EXTERN_C void func_800C02D8(Unk800C02D8*);
+EXTERN_C void func_800C1278(Unk800C0EA4*);
+EXTERN_C void func_800C06BC(Unk800C0EA4*);
+EXTERN_C void func_800C10BC(Unk800C10BC* p, void* a, s32 b, void* c, s32 d);
+EXTERN_C void func_80054CE4(void*);
+EXTERN_C const char D_800B7810[];
+EXTERN_C char D_800B7A40[];
+
 #endif /* MOVIE_H */
