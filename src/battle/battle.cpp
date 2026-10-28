@@ -1,7 +1,25 @@
 #include "common.h"
 #include "battle/battle.h"
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800B7FFC);
+EXTERN_C T_B7FFC *func_800B7FFC(T_B7FFC *p, short a, short b, UVB *c, unsigned short *d, unsigned short *e, unsigned short f, unsigned short g) {
+    ctor_BB190(p);
+    p->vtbl8 = D_800B6E64;
+    p->vtbl = D_800B6E0C;
+    p->uv9C = *c;
+    p->s98 = a * 10;
+    p->s9A = b * 10;
+    *(SV4C *)&p->fC = SV4C(0, 1, 0);
+    p->m34.code = 0x2E808080;
+    unsigned short d0 = *d, e0 = *e;
+    func_800B8210_c((T_B8210 *)p, UVHc(d0), UVHc(e0));
+    *(short *)((char *)p + 0x3E) = f;
+    *(short *)((char *)p + 0x3A) = g;
+    p->m34.prims[0].len = 9;
+    p->m34.prims[0].code = 0x2C;
+    p->m34.prims[1].code = 0x2C;
+    p->m34.prims[1].len = 9;
+    return p;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800B8210);
 

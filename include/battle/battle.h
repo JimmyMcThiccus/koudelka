@@ -1199,7 +1199,6 @@ EXTERN_C T_VEC func_800BF1D0(void *self, T_VEC *b);
 struct T_BEBE0 { VTable *vtbl; int f4; int f8; short sC; short sE; short s10; short s12; T_V0 *f14; void *f18; int f1C; int f20;
     signed char b24; signed char b25; signed char b26; char pad27; T_VEC v28; };
 EXTERN_C void func_800BEE50(T_BEBE0 *p, T_BEE50_r *a, T_BEE50_r *b);
-EXTERN_C void *func_800B7FFC(void *n, int a, int b, T_BE7A4_c *c, T_BEE50_r *d, T_BEE50_r *e, int f, int g);
 struct T_BE484_c { signed char a; unsigned char b; T_BE484_c() {} T_BE484_c(int x, int y) { T_BE484_c *t = this; a = x; t->b = y; } };
 struct T_BE484_e { short s; T_BE484_c c1; T_BE484_c c2; T_BE484_e() {} };
 inline void be484_set(T_BE484_e *e, T_BE484_c &t, T_BE484_c *tp) { e->s = 0; t.a = 0; tp->b = 0; e->c1 = t; t.a = 0x7F; tp->b = 0xFF; e->c2 = t; }
@@ -1389,5 +1388,9 @@ EXTERN_C void func_800CF080_1(void *p) __asm__("func_800CF080");
 EXTERN_C void func_8007C070(void *p, int a);
 struct T_CEFE8 { char pad[0x808]; char *f808[1]; };
 EXTERN_C void func_800CEFE8(T_CEFE8 *p, char *q0, int x, int i0);
+
+struct UVHc { unsigned short h; UVHc(const UVHc &o) { h = o.h; } UVHc(unsigned short v) { h = v; } };
+EXTERN_C void func_800B8210_c(T_B8210 *p, UVHc a, UVHc b) __asm__("func_800B8210");
+EXTERN_C T_B7FFC *func_800B7FFC(T_B7FFC *p, short a, short b, UVB *c, unsigned short *d, unsigned short *e, unsigned short f, unsigned short g);
 
 #endif /* BATTLE_BATTLE_H */
