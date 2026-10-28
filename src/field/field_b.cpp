@@ -87,7 +87,24 @@ EXTERN_C void func_800DEF98(Unk_800DF32C* p, short a, int b) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800DEFF8);
+EXTERN_C void func_800DEFF8(Unk_800DF32C* p, short x, int mode) {
+    if (p->unk380) {
+        switch (mode) {
+        case 0:
+            func_800BCF08(p->unk380, x, 0x68);
+            break;
+        case 1:
+            func_800BCF08(p->unk380, x, 0x67);
+            break;
+        case 2:
+            func_800BCF08(p->unk380, x, 0x6A);
+            break;
+        case 3:
+            func_800BCF08(p->unk380, x, 0x69);
+            break;
+        }
+    }
+}
 
 EXTERN_C void func_800DF098(Unk_800DF098* p, int a, Unk_W3 s, int x, int y) {
     if (p->unk55C) {
@@ -240,7 +257,17 @@ EXTERN_C void func_800DFBA8(Unk_800DFBA8* p) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800DFBF8);
+EXTERN_C void func_800DFBF8(Unk_800DFBF8* p) {
+    int i;
+    if (!p->unk10) return;
+    delete p->unk10;
+    p->unk10 = 0;
+    for (i = 0; i < 10; i++) {
+        if (!p->unk14[i]) break;
+        delete p->unk14[i];
+        p->unk14[i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800DFC8C);
 

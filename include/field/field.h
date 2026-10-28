@@ -1634,5 +1634,15 @@ struct Unk_E28_DB5A4 { char c[28]; };
 struct Unk_E148_DB5A4 { char c[148]; };
 struct Unk_S6C_DB5A4 { char pad0[0x1C]; Unk_E28_DB5A4 unk1C[1]; };
 struct Unk_800DB5A4 { char pad0[0x6C]; Unk_S6C_DB5A4* unk6C; Unk_E148_DB5A4* unk70; };
+EXTERN_C void* func_800198E0(void*, int, int);
+struct Unk_Hld3 { void* vb; int unk4; void* unk8; };
+struct Unk_800C0344 { void* vtbl; int unk4; short unk8; char padA[2]; Unk_Hld3 unkC; char list[0x14]; short unk2C; char pad2E[2]; int unk30; int unk34; int unk38; };
+struct Unk_800DFBF8 { char pad0[0x10]; Unk_Deletable18* unk10; Unk_Deletable18* unk14[10]; };
+struct Unk_800C1628 { char pad0[0x3C]; char* unk3C; char pad40[0x2C]; char unk6C[1]; char pad6D[0x7033]; Unk_Derived50* unk70A0; };
+EXTERN_C void func_800635FC(void*, void*);
+struct Unk_800C7FC8 : Unk_Hdr38d, Unk_Base { char pad3C[0x10]; int unk4C; };
+struct Unk_800CDEEC_p { char pad0[0x400]; Unk_Base unk400; char pad404[0xC]; unsigned short unk410; char pad412[0xE]; unsigned short unk420; };
+struct Unk_800CDEEC { char pad0[0x50]; int unk50; unsigned short unk54; unsigned short unk56; };
+inline Unk_800CDEEC_p* ent_800CDEEC(Unk_EntTabObj* o, int i) { return (Unk_800CDEEC_p*)base(o)->unk8[i]; }
 
 #endif /* FIELD_FIELD_H */
