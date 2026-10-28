@@ -143,4 +143,21 @@ struct S_8001D8A4 {
     S_8001D3A8_N *nxt;
 };
 
+inline void *operator new(unsigned int, void *p) { return p; }
+struct B_8001E40C {
+    void **vt;
+    char pad4[0x88];
+    void **vt8C;
+    char pad90[0x68];
+    B_8001E40C(int a, int b, int c, int d) asm("func_8001E40C");
+};
+struct C_8001D7B0 : B_8001E40C {
+    void **vtF8;
+    int unkFC;
+    void **vt100;
+    int unk104;
+    int unk108;
+    C_8001D7B0() asm("func_8001D7B0");
+};
+
 #endif /* GAME_A_H_U_8001C2D0_H */
