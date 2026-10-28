@@ -1187,4 +1187,14 @@ struct Unk800C21B8L { char pad[8]; Unk800C21B8C* x8[3]; };
 struct Unk800C21B8D { char p[0x410]; s16 x410, x412; char p1[0xC]; s16 x420, x422; u8 x424[8]; };
 struct Unk800C21B8G { char pad[0x328]; char* x328; };
 
+/* func_800BEC54 */
+struct Unk800BEC54V { virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(); };
+struct Unk800BEC54 { char p0[0x64]; void* x64; Unk800BEC54V* x68; void* x6C; void* x70; s32 x74; char p1[0x7C - 0x78]; s32 x7C, x80; char p2[0x88 - 0x84]; s32 x88; };
+struct Unk800BEC54S { const void* v0; const void* v4; s32 x8; s16 xC, xE, x10, x12; };
+struct Unk800BEC54O { const void* x0; s32 x4; Unk800BEC54S x8; s32 x1C, x20, x24; };
+EXTERN_C char D_80011FE4[], D_800100F8[], D_80010198[], D_800101C0[], D_800101B0[], D_80012104[], D_800120F4[], D_8001211C[];
+EXTERN_C void func_80035EB4(void*);
+EXTERN_C void func_8003714C(void*);
+#define Unk800BEC54_VS(x) (*(const void* volatile*)&(x))
+
 #endif /* MOVIE_H */
