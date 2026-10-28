@@ -1305,4 +1305,27 @@ EXTERN_C void func_800C8B24(Unk800C8B24* p, Unk800C8B24B* q);
 EXTERN_C void func_800C8894(Unk800C8894* p, Unk800C8894B* q);
 EXTERN_C void func_800C899C(void*, void*);
 
+/* func_800C4370 */
+struct Unk800C4370 { char p0[0x18]; const void* x18; char p1[0x50 - 0x1C]; s32 x50; char p3[0x78 - 0x54]; s32 x78, x7C; s8 x80; u8 x81; s8 x82; char p4;
+  Unk800C49BCA x84[3]; Unk800C49BCB xD8[3]; Unk800C49BCB x150, x178, x1A0; Unk800C49BCA x1C8, x1E4, x200, x21C, x238; };
+EXTERN_C char D_800B7DEC[], D_800B7D60[], D_800B7D64[];
+EXTERN_C void func_80053928(void*);
+EXTERN_C void func_8005464C(void*);
+EXTERN_C void func_80054584(void*, s32);
+EXTERN_C void func_8005408C(void*, s32);
+
+/* func_800C899C */
+struct Unk800C899CQ { s16 x, y; };
+struct Unk800C899C { char pad[0x10]; POLY_FT4 x10[2]; u8 x60, x61; };
+inline void Unk800C899C_fix(Unk800C899C* p, s32 i, s32 u, s32 v) {
+  u -= p->x10[i].x0;
+  v -= p->x10[i].y0;
+  p->x10[i].u1 = p->x10[i].x1 + u;
+  p->x10[i].v1 = p->x10[i].v0;
+  p->x10[i].u2 = p->x10[i].u0;
+  p->x10[i].v2 = p->x10[i].y2 + v;
+  p->x10[i].u3 = p->x10[i].x3 + u;
+  p->x10[i].v3 = p->x10[i].y3 + v;
+}
+
 #endif /* MOVIE_H */
