@@ -190,7 +190,23 @@ EXTERN_C Unk800B9E78* func_800B9E78(Unk800B9E78* s) {
   return p;
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B9F74);
+EXTERN_C s32 func_800B9F74(Unk800B9F74* p) {
+  Unk800B9F74R r0(0), r1(0);
+  r0.xy.x = 0; r0.xy.y = 0; r0.w = 0; r0.h = 0;
+  r1.xy.x = 0; r1.xy.y = 0; r1.w = 0; r1.h = 0;
+  if (p->x8 < 3) if (p->x8 > 0) {
+    Unk800B9F74O& o = *(Unk800B9F74O*)D_800B4CFC[0];
+    r1 = o.x30 ? (o.x20 + Unk800B9F74R(D_800B4CF4[D_800B4CF0[0] ^ 1])) & D_800AC730[D_800B4CF0[0] ^ 1] : o.x20;
+    r1.xy.x += p->x3C; r1.xy.y += p->x3E;
+    r0.xy.x = p->x44.x; r0.xy.y = p->x44.y;
+    r0.w = MINO800B9F74(MINI800B9F74(r1.w, p->x3C + p->x40) - p->x3C, p->x48);
+    r0.h = MINO800B9F74(MINI800B9F74(r1.h, p->x3E + p->x42) - p->x3E, p->x4A);
+    SetDrawMove(&p->xC[D_800B4CF0[0]], &r0, r1.xy.x, r1.xy.y);
+    p->x8--;
+  }
+  Unk800C648C_add(p->xA, &p->xC[D_800B4CF0[0]].tag);
+  return 1;
+}
 
 EXTERN_C void func_800BA3E4(Unk800BA3E4* p, s16 a, s16 b) { p->x3C = a; p->x3E = b; p->x8 = 2; }
 

@@ -1394,4 +1394,31 @@ EXTERN_C void func_80053FB0(void*, s32, s32);
 EXTERN_C void func_80055020(void*, Unk800C10BCP);
 EXTERN_C Unk800C8E64* func_800C8E64(Unk800C8E64*, s32);
 
+/* func_800B9F74 */
+struct Unk800B9F74P { s16 x, y; Unk800B9F74P() {} Unk800B9F74P(s16 x_, s16 y_) { x = x_; y = y_; } };
+struct Unk800B9F74R { Unk800B9F74P xy; s16 w, h;
+  Unk800B9F74R() { xy.x = 0; xy.y = 0; w = 0; h = 0; }
+  Unk800B9F74R(Unk800B9F74P p) { xy = p; w = 0; h = 0; }
+  Unk800B9F74R(Unk800B9F74P p, int) { xy = p; }
+  Unk800B9F74R(int) {}
+  Unk800B9F74R(s16 x, s16 y, s16 w_, s16 h_) { xy.x = x; xy.y = y; w = w_; h = h_; }
+  Unk800B9F74R operator&(const Unk800B9F74R& a) const { const Unk800B9F74R& b = *this;
+  Unk800B9F74R c(Unk800B9F74P(a.xy.x < b.xy.x ? b.xy.x : a.xy.x, a.xy.y < b.xy.y ? b.xy.y : a.xy.y), 0); c.w = 0; c.h = 0;
+  s32 x2 = a.xy.x + a.w; if (b.xy.x + b.w < x2) x2 = b.xy.x + b.w; c.w = x2 - c.xy.x;
+  s32 y2 = a.xy.y + a.h; if (b.xy.y + b.h < y2) y2 = b.xy.y + b.h; c.h = y2 - c.xy.y;
+  if (c.w < 0 || c.h < 0) return Unk800B9F74R();
+  return c;
+}
+};
+struct Unk800B9F74D { u32 tag; u32 code[5]; };
+struct Unk800B9F74O { char pad[0x10]; u32 x10; u32* x14; char p2[0x20 - 0x18]; Unk800B9F74R x20; char p3[0x30 - 0x28]; s32 x30; };
+struct Unk800B9F74 { char pad[8]; s16 x8; u16 xA; Unk800B9F74D xC[2]; s16 x3C, x3E, x40, x42; Unk800B9F74P x44; s16 x48, x4A; };
+EXTERN_C Unk800B9F74P D_800B4CF4[];
+EXTERN_C Unk800B9F74R D_800AC730[];
+EXTERN_C void SetDrawMove(void*, Unk800B9F74R*, s32, s32);
+inline Unk800B9F74R operator+(const Unk800B9F74R& r, const Unk800B9F74R& d) { return Unk800B9F74R(r.xy.x + d.xy.x, r.xy.y + d.xy.y, r.w, r.h); }
+
+#define MINI800B9F74(a, b) ((a) >= (b) ? (b) : (a))
+#define MINO800B9F74(a, b) ((a) < (b) ? (a) : (b))
+
 #endif /* MOVIE_H */
