@@ -574,7 +574,36 @@ EXTERN_C void func_8003635C()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036364);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036554);
+extern "C++" void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf) asm("func_80036554");
+void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf)
+{
+    if (t == 2) {
+        switch ((signed char)(AT(p, unsigned char, 0x34) - 1)) {
+        case 0:
+            if (AT(p, signed char, 0x35) == 4)
+                AT(p, signed char, 0x35) = 5;
+            break;
+        case 2:
+            if (AT(p, signed char, 0x35) == 0xF)
+                AT(p, signed char, 0x35) = 0x10;
+            break;
+        case 5:
+            if (AT(p, signed char, 0x35) == 0x14)
+                p->v07(buf[0]);
+            break;
+        case 1:
+        case 3:
+            if (AT(p, signed char, 0x35) == 0xA) {
+                AT(p, char, 0x34) = 5;
+                AT(p, signed char, 0x35) = 0xB;
+                AT(p, short, 0x38) = ((unsigned)(AT(p, int, 0x28) - AT(p, int, 0x30)) >> 12) + 0x78;
+                func_8009CAE0((int)func_80035F80);
+            }
+            break;
+        }
+    } else
+        p->v12(buf);
+}
 
 EXTERN_C void func_80036674(S_A2_H0C *p)
 {
