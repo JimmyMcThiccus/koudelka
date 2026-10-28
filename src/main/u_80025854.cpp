@@ -314,11 +314,50 @@ EXTERN_C int func_80026920(S_80026920 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_800269B8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80027408);
+EXTERN_C void func_80027408(void *vp, void *vc)
+{
+    S_TNode *p = (S_TNode *)vp;
+    S_TNode *c = (S_TNode *)vc;
+    if (c == p->c0) {
+        p->c0 = 0;
+        c->parent = 0;
+        if (!p->c1)
+            tnode_collapse(p);
+    } else if (c == p->c1) {
+        p->c1 = 0;
+        c->parent = 0;
+        if (!p->c0)
+            tnode_collapse(p);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_8002758C);
+EXTERN_C void func_8002758C(void *vp, void *vc)
+{
+    S_TNode *p = (S_TNode *)vp;
+    S_TNode *c = (S_TNode *)vc;
+    if (c == p->c0) {
+        p->c0 = 0;
+        c->parent = 0;
+        vdel((S_Del *)c);
+        if (!p->c1)
+            tnode_collapse(p);
+    } else if (c == p->c1) {
+        p->c1 = 0;
+        c->parent = 0;
+        vdel((S_Del *)c);
+        if (!p->c0)
+            tnode_collapse(p);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80027754);
+EXTERN_C int func_80027754(S_80027754 *p, S_XYc pt)
+{
+    if (p->o10 && in_rect(&p->r8, pt))
+        return send_80027754(p->o10, pt);
+    if (p->o1C && in_rect(&p->r14, pt))
+        return send_80027754(p->o1C, pt);
+    return 0;
+}
 
 EXTERN_C void func_800278D8()
 {
