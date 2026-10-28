@@ -1283,4 +1283,8 @@ struct Unk800C39D4 { char pad[0x30]; s32 x30, x34, x38, x3C; };
 EXTERN_C s32 _card_clear(s32);
 EXTERN_C s32 _card_load(s32);
 
+/* func_800C8674 */
+EXTERN_C s32 func_800260A4(s32);
+EXTERN_C s32 func_80026014(s32);
+
 #endif /* MOVIE_H */

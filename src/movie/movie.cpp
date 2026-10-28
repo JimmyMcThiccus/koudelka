@@ -2186,7 +2186,21 @@ EXTERN_C void func_800C84FC(Unk800C8594* p, Unk800C8594Q d) { s32 i = D_800B4CF0
 
 EXTERN_C void func_800C8594(Unk800C8594* p, Unk800C8594Q d) { s32 i = D_800B4CF0[0]; p->x10[i].x0 += d.x0; p->x10[i].y0 += d.y0; p->x10[i].x1 += d.x1; p->x10[i].y1 += d.y1; p->x10[i].x2 += d.x2; p->x10[i].y2 += d.y2; p->x10[i].x3 += d.x3; p->x10[i].y3 += d.y3; func_8005F1D8(p); }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C8674);
+EXTERN_C void func_800C8674(Unk800C8594* p, s32 a) {
+  s32 i = D_800B4CF0[0];
+  s32 c = func_800260A4(a); s32 c2 = c; /* retail keeps separate copies of cos/sin for the last term */
+  s32 s = func_80026014(a); s32 s2 = s;
+  s32 x, y;
+  x = p->x10[i].x0; y = p->x10[i].y0;
+  p->x10[i].x0 = (x * c - y * s + 0x800) / 4096; p->x10[i].y0 = (x * s + y * c + 0x800) / 4096;
+  x = p->x10[i].x1; y = p->x10[i].y1;
+  p->x10[i].x1 = (x * c - y * s + 0x800) / 4096; p->x10[i].y1 = (x * s + y * c + 0x800) / 4096;
+  x = p->x10[i].x2; y = p->x10[i].y2;
+  p->x10[i].x2 = (x * c - y * s + 0x800) / 4096; p->x10[i].y2 = (x * s + y * c + 0x800) / 4096;
+  x = p->x10[i].x3; y = p->x10[i].y3;
+  p->x10[i].x3 = (x * c - y * s + 0x800) / 4096; p->x10[i].y3 = (x * s2 + y * c2 + 0x800) / 4096;
+  func_8005F1D8(p);
+}
 
 EXTERN_C void func_800C8894(Unk800C8894* p, Unk800C8894B* q) { if (q) { s32 c = D_800B4CF0[0]; Unk800C8894UV uv; s32 u; p->x10[c].tpage = q->x1C; if (q->xC == 0) u = q->x10 & 0x3F; else if (q->xC->v3()) u = (q->x10 << 1) & 0x7F; else u = q->x10 << 2; Unk800C8894_set(&uv, u, q->x12); p->x10[c].u0 = uv.u; p->x10[c].v0 = uv.v; p->x60 = *(u16*)&uv; p->x10[c].clut = q->xC->x8; func_8005F1D8(p); } }
 
