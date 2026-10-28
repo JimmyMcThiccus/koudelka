@@ -43,7 +43,50 @@ EXTERN_C void func_80018C1C(void *p)
     link_80018C1C(prev, b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80018B88", func_80018C90);
+EXTERN_C void *func_80018C90(unsigned int size)
+{
+  S_Block *best = 0;
+  S_Block *prev;
+  S_Block *c;
+  size = ((size + 7) >> 3) + 1;
+  size = size << 3;
+  prev = D_800B4EE8;
+  for (c = prev->next; c; prev = c, c = c->next)
+  {
+    if ((c->size >= size) && ((!best) || (c->size < best->size)))
+    {
+      best = c;
+      if (size == c->size)
+      {
+        prev->next = c->next;
+        return c + 1;
+      }
+    }
+  }
+
+  if (!best)
+  {
+    best = D_800B4EE8;
+    if (size > best->size)
+    {
+      return 0;
+    }
+    if (best->size == size)
+    {
+      D_800B4EE8 = best->next;
+      return best + 1;
+    }
+    if (!best)
+    {
+      return 0;
+    }
+  }
+  best->size -= size;
+  best = (S_Block *) (((char *) best) + best->size);
+  best->size = size;
+  c = best;
+  return c + 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80018B88", func_80018D80);
 
