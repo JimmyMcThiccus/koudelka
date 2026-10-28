@@ -70,4 +70,25 @@ EXTERN_C void func_800DE760_c(void *self, int a1, int a2, int a3, int a4, int a5
 
 EXTERN_C void func_8006EF84(void *self);
 
+EXTERN_C int D_800B4D28_w asm("D_800B4D28");
+
+EXTERN_C int D_800B4D30_w asm("D_800B4D30");
+
+EXTERN_C void func_80071F08(void *self);
+
+EXTERN_C char D_800127E4[];
+
+struct Rgb_B {
+    unsigned char v[4];
+    Rgb_B() {}
+};
+
+EXTERN_C void func_8003D358_c(void *a, int b, Rgb_B c) asm("func_8003D358");
+
+EXTERN_C void func_800435E8(void *self);
+
+EXTERN_C short func_80073C04(void *self);
+
+EXTERN_C void func_800DDFB0_c(void *self, int a, int b, int c, int d, int e, int f, int g, B16_B s, int h) asm("func_800DDFB0");
+
 #endif /* GAME_B2_B2_H */
