@@ -1776,7 +1776,36 @@ EXTERN_C void func_800518A8(void *p, int a, int b, int c)
     AT(p, short, 0x118) = 99;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80051930);
+EXTERN_C void func_80051930(void *p, void *a, short b)
+{
+    void *new_var;
+    void *m;
+    if (!AT(p, short, 0xF8)) {
+        AT(p, void *, 0x110) = a;
+        m = func_8001CA10(0x14);
+        AT(m, void **, 0) = D_80010178;
+        AT(m, int, 4) = 0;
+        AT(m, void **, 0) = D_80010300;
+        AT(m, short, 8) = 2;
+        AT(m, short, 0xA) = 0x10;
+        AT(m, int, 0x10) = 0;
+        AT(new_var = (char *)m + 0xC, int, 0) = 0;
+        AT(m, void **, 0) = D_800102D0;
+        func_8001EFE4(p, m);
+        AT(p, short, 0x118) = b;
+    } else {
+        m = (new_var = func_8001CA10(0x14));
+        AT(m, void **, 0) = D_80010178;
+        AT(m, int, 4) = 0;
+        AT(new_var, void **, 0) = D_80010300;
+        AT(new_var, short, 8) = 2;
+        AT(new_var, short, 0xA) = 0x10;
+        AT(new_var, int, 0x10) = 1;
+        AT(new_var, int, 0xC) = 0;
+        AT(new_var, void **, 0) = D_800102D0;
+        func_8001EFE4(a, new_var);
+    }
+}
 
 EXTERN_C void func_80051A2C(void *p, void *a)
 {
