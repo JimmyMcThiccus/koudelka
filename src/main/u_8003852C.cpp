@@ -577,7 +577,26 @@ EXTERN_C void func_80039DD8(void *p)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039E80);
+extern "C++" void f39E80(S_A2_E80 *p) asm("func_80039E80");
+void f39E80(S_A2_E80 *p)
+{
+    if (AT(p, int, 0x44)) {
+        A2VObj0 *o = AT(p, A2VObj0 *, 0x24);
+        if (o) {
+            MATRIX t, r;
+            o->v01();
+            func_8003A754(&t, 0x1000);
+            func_8003A7FC(&t, &p->sv2C);
+            func_8003B2F0((S_8003B2F0 *)&t, (S_8003B2F0_V *)&p->v34);
+            func_8003B3EC(&r, (MATRIX *)(AT(p, char *, 0x24) + 4), &t);
+            p->m = r;
+        } else {
+            func_8003A7FC(&p->m, &p->sv2C);
+            func_8003B2F0((S_8003B2F0 *)&p->m, (S_8003B2F0_V *)&p->v34);
+        }
+        AT(p, int, 0x44) = 0;
+    }
+}
 
 EXTERN_C void func_80039F80(void *p, int a, S_A2_Sv *d)
 {

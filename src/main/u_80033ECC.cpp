@@ -581,7 +581,26 @@ EXTERN_C void func_80036110(void *p, int a)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800361C8);
+extern "C++" void f361C8(S_A2_VH0C *p) asm("func_800361C8");
+void f361C8(S_A2_VH0C *p)
+{
+    AT(p, int, 0x30) += 0x800;
+    if (!((unsigned)AT(p, int, 0x30) < (unsigned)AT(p, int, 0x28)))
+        p->v07(2);
+    if (AT(p, int, 0x2C)) return;
+    List *l = &p->h;
+    A2VObj0 *s = l->count ? AT(l, A2VObj0 **, 0)[0] : 0;
+    if (!s) return;
+    s->v03();
+    if (!p->v06(AT(s, int, 4))) return;
+    s->v00(p ? (char *)p + 8 : 0);
+    func_80019C68((List *)&p->h, 0);
+    AT(AT(p, int *, 4), int, 4) = AT(p, int, 0x30);
+    if (!count_of(&p->h) && (unsigned)AT(p, int, 0x30) < (unsigned)AT(p, int, 0x28)) {
+        p->v07(2);
+        AT(p, int, 0x28) = AT(p, int, 0x30);
+    }
+}
 
 EXTERN_C void func_8003635C()
 {

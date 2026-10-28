@@ -421,4 +421,5 @@ EXTERN_C long TransRot_32(S_A2_V4 *v0, S_A2_V4 *v1, long *flag);
 EXTERN_C void func_8003A7FC(MATRIX *m, S_A2_SvI *v);
 struct S_A2_Lv { char pad[0x4C]; short s4C, s4E; };
 struct S_A2_Strm : A2VObj0 { char pad[0x18]; unsigned end, cur; };
+struct S_A2_E80 { char pad[4]; MATRIX m; char pad2[8]; S_A2_SvI sv2C; S_A2_V4 v34; };
 #endif /* GAME_A2_A2_H */
