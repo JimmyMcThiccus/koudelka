@@ -1022,7 +1022,7 @@ struct Unk800C7290 : Unk800C7290V { char p0[0x20 - 0x1C]; s32 x20; char p1[0x74 
   Unk800C7290S x3D4, x3F0, x40C, x428, x444, x460, x47C, x498; Unk800C7740O* x4B4; s32 x4B8, x4BC; char p4[0x568 - 0x4C0]; char x568[0x610 - 0x568]; Unk800C7740O* x610; };
 struct Unk800C7290G { char pad[0x1D4]; u16 x1D4[16]; char p2[0x1F8 - 0x1F4]; s8 x1F8; };
 EXTERN_C void func_80053C6C(void*, void*);
-EXTERN_C void* func_800C7D60(void*, s32, Unk800C10BCP, s32, s32);
+EXTERN_C void* func_800C7D60(void*, s32, Unk800C10BCP, s32, u16);
 EXTERN_C void func_80054DA8(void*, void*);
 
 /* func_800C96C0 */
@@ -1229,5 +1229,9 @@ EXTERN_C void func_800C1BF8();
 EXTERN_C void func_800C21B8();
 EXTERN_C s32 func_800382A4(void*, s32, s32);
 EXTERN_C char D_800AC86C[];
+
+/* func_800C7D60 */
+struct Unk800C7D60R { s16 x, y, w, h; };
+struct Unk800C7D60 { Unk800C8114V* x0; char pad[0xC - 4]; Unk800C7D60R xC; char p1[0x2C - 0x14]; const void* x2C; char p2[0x38 - 0x30]; s16 x38, x3A; Unk800C8114V x3C; };
 
 #endif /* MOVIE_H */

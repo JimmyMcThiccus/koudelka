@@ -1832,7 +1832,43 @@ INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B82F4);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8344);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C7D60);
+EXTERN_C void* func_800C7D60(void* p, s32 in_chrg, Unk800C10BCP t, s32 kind, u16 a) {
+#define self ((Unk800C7D60*)p)
+  Unk800C800CT vt;
+  if (in_chrg) {
+    self->x0 = &self->x3C;
+    Unk800C8114V* v = self->x0;
+    v->vptr = D_80010178; v->x4 = 0; v->vptr = D_800104A8;
+  }
+  func_8005BC84(self, 0, a, 0x10);
+  self->x0->vptr = &D_800B8384;
+  if (!in_chrg) {
+    vt = D_800B8384;
+    self->x0->vptr = &vt;
+    char* full; s32 adj;
+    vt.e[1].delta = D_800B8384.e[1].delta + (adj = (char*)self - (full = (char*)self->x0 - 0x3C));
+    vt.e[5].delta = D_800B8384.e[5].delta + adj;
+    vt.e[7].delta = D_800B8384.e[7].delta + adj;
+    vt.e[9].delta = D_800B8384.e[9].delta + adj;
+  }
+  self->x2C = D_800B83D4;
+  self->x38 = 0;
+  self->x3A = 0;
+  Unk800C7D60R r;
+s16 x = t.x, y = t.y; r.w = 0x20; r.h = 0x10; r.x = x; r.y = y;
+  self->xC = r;
+  switch (kind) {
+  case 9: self->x38 = 0x20; break;
+  case 10: self->x3A = 0x10; break;
+  case 11: self->x38 = 0x20; self->x3A = 0x10; break;
+  case 12: self->xC.w = 0x10; self->x3A = 0x20; break;
+  case 13: self->xC.w = 0x10; self->x38 = 0x10; self->x3A = 0x20; break;
+  case 14: self->xC.w = 0x10; self->x38 = 0x20; self->x3A = 0x20; break;
+  case 15: self->xC.w = 0x10; self->x38 = 0x30; self->x3A = 0x20; break;
+  }
+  return self;
+}
+#undef self
 
 EXTERN_C void func_800C7F60(Unk800C7F60* p, void* q) { if (p->x8) { func_8005C088(p, q, 1); Unk800C8340E* e = p->x30 ? p->x30->x0 : 0; void* m = operator new(0x64); s32 g = func_800C96B0(); func_80019A6C(e, func_800C83CC(m, p->xC, g, p->x38, p->x1C), e->x4); func_8002DA94(q, p->x30); } }
 
@@ -2105,6 +2141,8 @@ EXTERN_C Unk800C9CDC* func_800C9CDC(Unk800C9CDC* self, s32 in_chrg, s32 a, s16 b
   self->x118 = b;
   return self;
 }
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8380);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8384);
 

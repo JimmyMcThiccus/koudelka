@@ -99,3 +99,4 @@ D_800B79C0 = 0x800B79C0; // force_not_migration:True
 D_800B79F8 = 0x800B79F8; // force_not_migration:True
 D_800B7810 = 0x800B7810; // force_not_migration:True
 D_800B7A40 = 0x800B7A40; // force_not_migration:True
+D_800B8380 = 0x800B8380; // force_not_migration:True (padding after jtbl_800B8364)
