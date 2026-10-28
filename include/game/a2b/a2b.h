@@ -112,4 +112,6 @@ struct S_A2B_OtB {
 EXTERN_C S_A2B_OtB *D_800B4CFC;
 #define PB_(s) ((unsigned char *)(s)->p)
 struct S_A2B_StrC { char pad[0x10]; S_A2_Ch *p; unsigned len; };
+EXTERN_C void *func_80048D64(void *p, int a, int b, int c, int d, int e);
+EXTERN_C void func_80036D8C(void *p);
 #endif /* GAME_A2B_A2B_H */
