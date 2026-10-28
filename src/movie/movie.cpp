@@ -1014,41 +1014,24 @@ EXTERN_C s32 func_800C38F0(Unk800C38F0* p) {
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C39D4);
 
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B24);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B28);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B34);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B40);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B50);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B60);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B6C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B80);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B90);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BA0);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BB4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BC4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BF4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C44);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C64);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CAC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CB4);
-
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C3B88);
+EXTERN_C s32 func_800C3B88(Unk800C3B88* p) {
+  char name[7];
+  DIRENTRY d;
+  Unk800C3B88S13 cmp;
+  char* src = p->x38 == 0 ? D_800B7CAC : D_800B7CB4;
+  s32 n = 15, u = 0;
+  *(Unk800C3B88S5*)name = *(Unk800C3B88S5*)src;
+  name[6] = 0;
+  cmp = *(Unk800C3B88S13*)D_800B7CC0;
+  name[5] = D_800B7CBC[0];
+  for (s32 r = firstfile(name, &d) != 0; r; r = nextfile(&d) != 0) {
+    s32 match = 1;
+    for (s32 k = 11; k >= 0; k--) { if (!match) break; if ((s8)d.name[k] != (s8)cmp.c[k]) match = 0; }
+    if (!match) u += 1 + (d.size - 1) / 0x2000;
+    n -= 1 + (d.size - 1) / 0x2000;
+  }
+  return n * 16 + u;
+}
 
 EXTERN_C int func_800C3D08(Unk800C3D08* p) { return p->x4->x0 == 0; }
 
@@ -1104,6 +1087,44 @@ EXTERN_C s32 func_800C42B8(Unk800C42B8* p) { return p->x48; }
 EXTERN_C void func_800C42C4(Unk800C42C4* p, Unk800C42C4R* r) { *p->x44 = *r; }
 
 EXTERN_C s32 func_800C4364(Unk800C4364* p) { return p->x44; }
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B24);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B28);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B34);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B40);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B50);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B60);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B6C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B80);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B90);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BA0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BB4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BC4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BF4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C44);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C64);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CAC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CB4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CBC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CC0);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CD4);
 

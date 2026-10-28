@@ -1197,4 +1197,11 @@ EXTERN_C void func_80035EB4(void*);
 EXTERN_C void func_8003714C(void*);
 #define Unk800BEC54_VS(x) (*(const void* volatile*)&(x))
 
+/* func_800C3B88 */
+struct Unk800C3B88 { char pad[0x38]; s32 x38; };
+struct Unk800C3B88S5 { char c[5]; };
+struct Unk800C3B88S13 { char c[13]; };
+EXTERN_C char D_800B7CBC[], D_800B7CC0[];
+EXTERN_C DIRENTRY* nextfile(DIRENTRY*);
+
 #endif /* MOVIE_H */
