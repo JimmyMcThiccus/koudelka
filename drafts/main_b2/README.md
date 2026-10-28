@@ -35,3 +35,19 @@ func_800824C8 (the header prototype has one argument, the asm uses two).
 | func_80081ED0 / func_8006AE68 | 50+ | loop and switch shape right, constants (`2`, vtables) hoisted differently |
 
 Note for the integrator: `func_8006C95C`'s switch needs one `case` per jump-table entry (separate bodies) to get a table.
+
+## Third batch
+
+| Function | Diff | What differs |
+|---|---|---|
+| func_800766F8 | 6 | twin of func_80076848; retail loads the stack arg `lw s0,0x40(sp)` and `li a0,0x24` after the `0x1BC` store, we hoist them |
+| func_8007698C | 18 | twin of func_80076848; retail computes `D_80012104`'s address early (before the `D_800120F4` store) and stores it late |
+| func_80076CD0 | 18 | twin of func_80035A28 plus two more vtable stores; same early `D_80012104` address in retail |
+
+## Fourth batch (Ghidra-assisted)
+
+| Function | Diff | What differs |
+|---|---|---|
+| func_8006C4EC | 31 | structure and stack layout match (Ghidra: MATRIX + 2 VECTOR + 16-byte buffer + long[2]); only the `$s0`/`$s1` roles (param copy vs buffer pointer) and `$v0`/`$v1` temps swap. Permuter (10 min) best score 35 |
+| func_8006D768 | 70+ | dtor reaching a virtual base through `self->4 - 0x124`; skipped as virtual-base class code |
+| func_8006F8B4 | 90 | retail copies the by-value `V4_80085578` argument to a stack temp before each `func_8006FE6C` call; neither a ctor nor a copy ctor reproduces it |
