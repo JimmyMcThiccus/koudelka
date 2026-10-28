@@ -884,7 +884,28 @@ EXTERN_C void func_800CCC4C(T_C9A4C *p, SVec2C v, int a) {
 
 EXTERN_C int func_800CCD70(T_CCD70 *p, SVec2 v) { func_800C78EC(p, p->fA0->b4C5 != 0); return p->b2C8[v.y][v.x] >= 0; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CCDCC);
+EXTERN_C int func_800CCDCC(T_C9A4C *p, SVec2I *out, T_CCDCC_in *in, int a3, int s5, int flag) {
+    if ((in->h8 & 2) && !flag) {
+        if (f_CCD70(p, in_c(in))) { *out = *(SVec2I *)&in->xy; return 1; }
+        return 0;
+    }
+    f_CCC4C(p, in_c(in), flag ^ 1);
+    if (l_cnt(&p->l2EC)) {
+        T_L2EC *l = &p->l2EC;
+        T_C9284 *cur = p->fA0;
+        l->f90 = 0;
+        do {
+            *out = l_cur(l);
+            T_C9284 *cell = p->f14[out->y][out->x];
+            if (cell == cur) return 0;
+            if (!cell) {
+                int k = cur->b4BD; f_800C(p, *out, a3, s5, k);
+                if (p->b380[in->xy.y][in->xy.x]) return 1;
+            }
+        } while (l2ec_next(&p->l2EC));
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CCFC0);
 

@@ -1393,4 +1393,14 @@ struct UVHc { unsigned short h; UVHc(const UVHc &o) { h = o.h; } UVHc(unsigned s
 EXTERN_C void func_800B8210_c(T_B8210 *p, UVHc a, UVHc b) __asm__("func_800B8210");
 EXTERN_C T_B7FFC *func_800B7FFC(T_B7FFC *p, short a, short b, UVB *c, unsigned short *d, unsigned short *e, unsigned short f, unsigned short g);
 
+struct T_CCDCC_in { SVec2 xy; int pad4; unsigned short h8; };
+EXTERN_C int f_CCD70(T_C9A4C *p, SVec2C v) __asm__("func_800CCD70");
+EXTERN_C void f_CCC4C(T_C9A4C *p, SVec2C v, int a) __asm__("func_800CCC4C");
+EXTERN_C void f_800C(T_C9A4C *p, SVec2I v, int a, int b, int c) __asm__("func_800C800C");
+inline SVec2I l_cur(T_L2EC *l) { return *(SVec2I *)&l->f0[l->f90]; }
+inline SVec2C in_c(T_CCDCC_in *i) { return *(SVec2C *)&i->xy; }
+inline int l_cnt(T_L2EC *l) { return l->f8C; }
+inline void l_rst(T_L2EC *l) { l->f90 = 0; }
+EXTERN_C int func_800CCDCC(T_C9A4C *p, SVec2I *out, T_CCDCC_in *in, int a3, int s5, int flag);
+
 #endif /* BATTLE_BATTLE_H */
