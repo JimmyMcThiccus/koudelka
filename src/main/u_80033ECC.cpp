@@ -326,7 +326,22 @@ EXTERN_C void func_800357E0(void *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003585C);
+extern "C++" int f3585C(S_A2_Strm *p, unsigned int n) asm("func_8003585C");
+int f3585C(S_A2_Strm *p, unsigned int n)
+{
+    unsigned int avail = p->end;
+    unsigned int c = p->cur;
+    avail = avail - c;
+    void *r;
+    if (n >= avail)
+        n = avail;
+    r = (void *)p->v04(n);
+    if (r) {
+        CdGetSector(r, n >> 2);
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C int func_800358D4(S_800358D4 *p)
 {

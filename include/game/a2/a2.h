@@ -420,4 +420,5 @@ struct S_A2_V4i { int a, b, c, d; S_A2_V4i(int x, int y, int z) { a = x; b = y; 
 EXTERN_C long TransRot_32(S_A2_V4 *v0, S_A2_V4 *v1, long *flag);
 EXTERN_C void func_8003A7FC(MATRIX *m, S_A2_SvI *v);
 struct S_A2_Lv { char pad[0x4C]; short s4C, s4E; };
+struct S_A2_Strm : A2VObj0 { char pad[0x18]; unsigned end, cur; };
 #endif /* GAME_A2_A2_H */
