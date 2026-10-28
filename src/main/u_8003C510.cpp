@@ -340,4 +340,19 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003F3DC);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003F594);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003F73C);
+EXTERN_C S_A2_V4 func_8003F73C(int unused, S_A2_Sv rot, S_A2_Sv a, S_A2_Sv b)
+{
+    MATRIX m;
+    func_8003A754(&m, 0x1000);
+    S_A2_V4 out;
+    func_8003A7FC(&m, (S_A2_SvI *)&rot);
+    SetRotMatrix(&m);
+    S_A2_SvI v(a.x, 0, b.x);
+    ApplyRotMatrix((SVECTOR *)&v, &out);
+    S_A2_V4 r;
+    r.a = out.a;
+    r.b = out.b;
+    r.c = out.c;
+    r.d = 0;
+    return r;
+}
