@@ -3178,4 +3178,13 @@ EXTERN_C void *D_80013E30[];
 EXTERN_C void func_8002AFEC(void *p, int a);
 EXTERN_C void func_80057558_def(S_DtorB *p, int flags) asm("func_80057558");
 
+struct S_ArrB { void **items; int count; };
+struct S_CollB {
+    S_ArrB *vb;
+    int idx;
+    void reset() { idx = 0; }
+    void *next() { return idx < vb->count ? vb->items[idx++] : 0; }
+};
+struct S_WB { char pad0[0x30]; S_CollB coll; };
+
 #endif /* GAME_B_DECLS_B_H */

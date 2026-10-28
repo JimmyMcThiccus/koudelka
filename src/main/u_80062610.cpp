@@ -370,9 +370,26 @@ EXTERN_C void func_80063B14(void *self, short *v, unsigned short c)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063BE4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063CA4);
+EXTERN_C int func_80063CA4(S_WB *p)
+{
+    void *c;
+    p->coll.reset();
+    for (c = p->coll.next(); c != 0; c = p->coll.next()) {
+        func_80063F3C(c);
+    }
+    return 1;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063D64);
+EXTERN_C void func_80063D64(S_WB *p)
+{
+    void *c;
+    p->coll.reset();
+    while ((c = p->coll.next()) != 0) {
+        ((VObj<0x2C> *)c)->v04();
+    }
+    func_8002A210(p);
+    func_8005388C(p ? (char *)p + 0x50 : 0, -1);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063E18);
 

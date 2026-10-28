@@ -243,7 +243,20 @@ EXTERN_C void func_80058654(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80058728);
+EXTERN_C void func_80058728(S_WB *p)
+{
+    void *c;
+    if (FIELD_AT(p, unsigned short, 0x144) != 0 && FIELD_AT(p, int, 0x140) == 0) {
+        func_8005388C(p ? (char *)p + 0x50 : 0, FIELD_AT(p, unsigned short, 0x144));
+        FIELD_AT(p, int, 0x140) = 1;
+    } else {
+        FIELD_AT(p, int, 0x20) = 0;
+        p->coll.reset();
+        for (c = p->coll.next(); c != 0; c = p->coll.next()) {
+            ((VObj<0x2C> *)c)->v04();
+        }
+    }
+}
 
 EXTERN_C void func_80058830(void *self, void *b)
 {
@@ -271,7 +284,21 @@ EXTERN_C void func_800588EC(void *self, unsigned int b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80058910);
+EXTERN_C void func_80058910(S_WB *p)
+{
+    void *c;
+    p->coll.reset();
+    while ((c = p->coll.next()) != 0) {
+        ((VObj<0x2C> *)c)->v04();
+    }
+    func_8002A210(p);
+    func_80057F20(p, FIELD_AT(p, unsigned short, 0x13C));
+    func_80058A80(p);
+    if (FIELD_AT(p, unsigned short, 0x144) != 0 && FIELD_AT(p, int, 0x140) == 0) {
+        func_8005388C(p ? (char *)p + 0x50 : 0, FIELD_AT(p, unsigned short, 0x144));
+        FIELD_AT(p, int, 0x140) = 2;
+    }
+}
 
 EXTERN_C void func_80058A04(void *self)
 {
