@@ -12,3 +12,6 @@ D_800B9F28 = 0x800B9F28; // force_not_migration:True
 D_800B9F34 = 0x800B9F34; // force_not_migration:True
 __10C_800E5FC4iP14Unk_800E5FC4_r = 0x800E5FC4; // type:func
 D_800BA268 = 0x800BA268; // force_not_migration:True
+D_800BA160 = 0x800BA160; // force_not_migration:True
+D_800BA2EC = 0x800BA2EC; // force_not_migration:True
+D_800BA2E8 = 0x800BA2E8; // force_not_migration:True
