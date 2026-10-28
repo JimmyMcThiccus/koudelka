@@ -84,7 +84,20 @@ EXTERN_C void func_80065AD0(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065B5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065C64);
+EXTERN_C void func_80065C64_def(void *self, int b) asm("func_80065C64");
+EXTERN_C void func_80065C64_def(void *self, int b)
+{
+    MATRIX_B m;
+    MATRIX_B m2;
+    MATRIX_B *mp;
+    func_8003B35C(&m, (char *)self + 0x78, b);
+    mp = &m;
+    SetLightMatrix(mp);
+    func_8003B3EC(&m2, (char *)self + 0x48, b);
+    *mp = m2;
+    SetRotMatrix(ScaleMatrix(mp, (char *)self + 0x68));
+    SetTransMatrix(mp);
+}
 
 EXTERN_C void func_80065D20(void *self, int i, short a, short b, short c, int d, int e, int f)
 {

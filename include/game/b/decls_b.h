@@ -3249,4 +3249,13 @@ EXTERN_C unsigned func_80060154_v(void *p, int b) asm("func_80060154");
 EXTERN_C void func_8005DF54_v(void *p, void *b) asm("func_8005DF54");
 EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d) asm("func_8005DD4C");
 
+EXTERN_C char D_800B4E60[];
+EXTERN_C char D_800B4E68[];
+EXTERN_C char D_800B4E70[];
+EXTERN_C char D_800B4E78[];
+EXTERN_C char D_800B4E80[];
+EXTERN_C void func_80054708_v(void *p, int a) asm("func_80054708");
+EXTERN_C void func_800538CC_v(void *p, char *s, int n) asm("func_800538CC");
+EXTERN_C void func_80053DDC_v(void *p, void *q) asm("func_80053DDC");
+
 #endif /* GAME_B_DECLS_B_H */
