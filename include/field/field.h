@@ -1035,7 +1035,7 @@ struct Unk_800DE3B8_g { char pad0[0x378]; int unk378; };
 struct Unk_800DE3B8 : Unk_PadB8, Unk_800DE59C_b { char padC4[0x88]; int unk14C; char pad150[4]; Unk_W4 unk154; int unk164; int unk168; int unk16C; int unk170; int unk174; int unk178; int unk17C; char pad180[0x24]; int unk1A4; char pad1A8[4]; int unk1AC; };
 inline Unk_800DE59C_b* base(Unk_800DE3B8* p) { return p; }
 inline Unk_W4 getW(Unk_800DE3B8* p) { return base(p)->unk8->unk1B8->unk34; }
-EXTERN_C void func_800DDE6C(void*, int, int, int, int, int, int);
+EXTERN_C int func_800DDE6C(void*, int, int, int, int, int, int);
 EXTERN_C void func_8007B538(void*, int, int, int, int, int);
 #ifndef UNK_VBOBJ_DEFINED
 #define UNK_VBOBJ_DEFINED
