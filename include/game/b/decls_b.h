@@ -3229,4 +3229,13 @@ EXTERN_C void *func_80058EE8_v(void *p, int a, int b) asm("func_80058EE8");
 EXTERN_C const VTabB50 D_80014130;
 EXTERN_C void *D_80014180[];
 
+struct W3q { int a, b, c; };
+struct S_CpB24 { void *vtbl; int unk4; short unk8, unkA; int w[7]; };
+struct S_CpB2C { void *vtbl; int unk4; short unk8, unkA; Q16 arr[2]; };
+struct B36q { int w[9]; };
+struct S_CpB58 { void *vtbl; int unk4; short unk8, unkA; int unkC; B36q arr[2]; };
+struct S_CpB48 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; Q16 b[2]; };
+EXTERN_C char D_80014278[];
+EXTERN_C char D_800151B4[];
+
 #endif /* GAME_B_DECLS_B_H */
