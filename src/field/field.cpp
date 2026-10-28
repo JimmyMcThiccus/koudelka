@@ -5842,7 +5842,23 @@ INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B99BC);
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B99EC);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DDDF8);
+EXTERN_C int func_800DDDF8() {
+    switch (D_800AF410[0]) {
+    case 1:
+    case 3:
+        func_8006F154();
+        return 1;
+    case 2:
+    case 4:
+    case 5:
+    case 6:
+        D_800AF40C[0] = 0;
+        break;
+    default:
+        return 0;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DDE6C);
 
