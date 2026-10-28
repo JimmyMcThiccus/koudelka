@@ -17,7 +17,7 @@ EXTERN_C void func_800361C8(void *p);
 EXTERN_C void func_80036364(void *p, unsigned char a);
 EXTERN_C void func_80036554(void *p, unsigned char a);
 EXTERN_C int func_80036850(void *p);
-EXTERN_C void func_80019CFC(void *p, int a);
+EXTERN_C int func_80019CFC(void *p, int a);
 EXTERN_C void func_8004A98C(void *p, int a);
 EXTERN_C int func_8004A9E4(void *p);
 EXTERN_C void func_8001A744(void *p, int a);
@@ -178,7 +178,8 @@ struct C_8004D678 : C_8004CF20 { char pad10[0xC]; S_A2_F4x2 m; C_8004D678() asm(
 struct C_8004DB8C : C_8004CF20 { char pad10[0xC]; S_A2_F4x2 m; C_8004DB8C() asm("func_8004DB8C"); };
 struct S_A2_At3540 { char pad[0x1B8]; S_A2_At34 *q; char pad1BC[0x44]; int unk200, unk204; char pad208[0x18]; short unk220; char pad222[4]; short unk226; char pad228[0x30]; S_A2_Pt unk258; S_A2_V4 unk25C; };
 struct A2V_53F48 : A2VPad<0x18> { virtual int s0(); virtual int s1(); virtual int s2(); virtual void s3(S_A2_Pt); };
-EXTERN_C void func_800376D0(void *p);
+EXTERN_C int func_800376D0(void *p);
+EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C void *D_800126F4[];
 EXTERN_C int func_8003C908(void *p, void *a);
 EXTERN_C void *func_8001CA10(int n);
@@ -334,4 +335,9 @@ EXTERN_C void func_8003C0D0(void *p, int a);
 EXTERN_C void func_8003BF30(void *p, int a);
 EXTERN_C unsigned char D_800B4D10[4];
 EXTERN_C void f3635C_alt(void *p, unsigned char a) asm("func_8003635C");
+struct S_A2_N14 { int p0; S_A2_N14 *next; char pad[0xC]; int f14; };
+EXTERN_C void SetRotMatrix(MATRIX *m);
+EXTERN_C void SetTransMatrix(MATRIX *m);
+struct S_A2_SvI { short x, y, z, w; S_A2_SvI() { x = 0; y = 0; z = 0; w = 0; } S_A2_SvI(short a, short b, short c) { x = a; y = b; z = c; w = 0; } };
+EXTERN_C long RotTrans(S_A2_SvI *v0, S_A2_V4 *v1, long *flag);
 #endif /* GAME_A2_A2_H */

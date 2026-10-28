@@ -475,7 +475,27 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039A88);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039BEC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039C88);
+EXTERN_C int func_80039C88(void *p, void *q)
+{
+    char *h = AT(p, char *, 0x28);
+    if (h) {
+        char *h8 = h + 8;
+        if (func_80019CFC(h8 ? AT(h8, void *, 0) : 0, (int)q)) {
+            AT(q, int, 0x24) = 0;
+            char *g = AT(p, char *, 0x28);
+            List *l = g ? AT(g, List *, 0) : 0;
+            if (!l->count) {
+                if (g) {
+                    func_80019920(AT(g, List *, 0), 0);
+                    delete g;
+                }
+                AT(p, int, 0x28) = 0;
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
 
 EXTERN_C int func_80039D38(void *p, A2VObj0 *q)
 {
@@ -517,11 +537,34 @@ EXTERN_C void func_80039DD8(void *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039E80);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039F80);
+EXTERN_C void func_80039F80(void *p, int a, S_A2_Sv *d)
+{
+    AT(p, S_A2_V4, 0x34) = func_8003B450(a, (char *)p + 0x34);
+    if (d) {
+        S_A2_Sv *s = (S_A2_Sv *)((char *)p + 0x2C);
+        short x = s->x + d->x;
+        short y = s->y + d->y;
+        short z = s->z + d->z;
+        s->x = x;
+        s->y = y;
+        s->z = z;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A010);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A150);
+EXTERN_C S_A2_V4 *func_8003A150(S_A2_V4 *r, char *m, S_A2_V4 *v)
+{
+    MATRIX *mx = (MATRIX *)(m + 4);
+    long flag;
+    SetRotMatrix(mx);
+    SetTransMatrix(mx);
+    S_A2_V4z t;
+    S_A2_SvI sv = v ? S_A2_SvI(v->a, v->b, v->c) : S_A2_SvI();
+    RotTrans(&sv, (S_A2_V4 *)&t, &flag);
+    *r = *(S_A2_V4 *)&t;
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A214);
 
@@ -985,7 +1028,27 @@ C_8003BEF8::C_8003BEF8()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BF30);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003C01C);
+EXTERN_C void func_8003C01C(void *p)
+{
+    int i;
+    S_A2_N14 *v = AT(p, S_A2_N14 *, 0x48);
+    while (v) {
+        S_A2_N14 *w = v;
+        w->f14 = 0;
+        v = w->next;
+    }
+    if (!AT(p, void *, 0x28))
+        return;
+    for (i = 0;; i++) {
+        char *h = AT(p, char *, 0x28);
+        List *l = h ? AT(h, List *, 0) : 0;
+        char *h2;
+        if (!(i < l->count))
+            break;
+        h2 = h ? h + 8 : 0;
+        func_8003C01C(func_80019F64(h2 ? AT(h2, List *, 0) : 0, i));
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003C0D0);
 

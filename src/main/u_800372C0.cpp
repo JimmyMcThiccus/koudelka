@@ -200,7 +200,16 @@ EXTERN_C char *func_80037A20(A2VObj0 *p, int n)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037AAC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800382A4);
+EXTERN_C int func_800382A4(void *p, int a, int b)
+{
+    if (!AT(p, int, 0xC) && func_800376D0(p)) {
+        AT(p, int, 0x10) = a;
+        AT(p, int, 0x18) = b;
+        return AT(p, int, 0x1C);
+    }
+    func_8001EAAC(D_800B4C18);
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_8003831C);
 

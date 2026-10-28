@@ -537,7 +537,21 @@ EXTERN_C void func_80036674(S_A2_H0C *p)
         ((A2VObj0 *(*)(void *, int))func_80019C68)((List *)&p->h, 0)->v01(0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800366F8);
+EXTERN_C int func_800366F8(A2VObj0 *p)
+{
+    unsigned char buf[8];
+    switch (func_8009CA80(1, buf)) {
+    case 2:
+        return 1;
+    case 5:
+        p->v12(buf);
+        return 0;
+    default:
+        if (!(buf[0] & 0x1D)) return 0;
+        p->v12(buf);
+        return 0;
+    }
+}
 
 EXTERN_C void func_80036780(A2VObj0 *p, unsigned char *b)
 {
