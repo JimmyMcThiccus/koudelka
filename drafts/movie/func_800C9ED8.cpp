@@ -1,4 +1,4 @@
-// func_800C9ED8 draft: 390 positional / ~53 aligned instructions differ (sdiff.py). Same size -8 bytes. Differs: (1) loop-invariant motion also hoists D_80010300 (retail hoists only &D_800A4534, 2, D_80010178), so retail fp=b / s7=&D_800A4534 / s6=D_80010178 become fp=&D_800A4534 / s7 / s6 and b is spilled to 0x64(sp); (2) at the xA==5 test retail reuses v1 and copies it to s3 (addu s3,v1,zero) for the xA==2 test and the constant-2 args, we reload lhu s3; (3) tbl advance is (tbl+x118*64)-0x30 into v0 then s4 in retail, ours updates s4 in place. Everything else (vbase vcall, jump table, inline stream ctor, event ctors, switch on x10) lines up.
+// func_800C9ED8 draft (k4): 182 positional / ~19 aligned instructions differ (k4/sd.py), built 4 bytes longer (1736 vs 1732). k4: D_80010300 AND D_800102D0 aliased as small objects (D_80010300_s/D_800102D0_s asm labels -> unsplit `la`, never hoisted); hoisting and register allocation now match retail (fp=b, s7=&D_800A4534, s6=D_80010178, s5=2). The D_800B4ED8[0] load is taken into a local before the x110/x10C stores. Still differs: (1) preheader order s5=2 / s6=D_80010178 swapped; (2) at the xA==5 test retail reuses v1 from the xA==7 test and copies it to s3 (ours reloads lhu s3; cse doesn't reuse the HImode load); (3) tbl advance: retail computes (tbl + x118*64) into v0 then s4 = v0-0x30, ours updates s4 in place; (4) retail re-materializes `li v0,2` before the k==2 test.
 #include "movie/movie.h"
 struct Unk800C9ED8X { virtual void v1(s32); };
 struct Unk800C9ED8E : Unk800C3F68EV { u16 x4, x6, x8, xA; Unk800C9ED8X* xC; u32 x10; };
@@ -25,7 +25,9 @@ inline Unk800B9640* Unk800C9ED8_stream() {
   d->x8 = D_80012294; d->x0 = D_80012224; d->x8 = D_800B6F34; d->x28 = 0; d->x2C = 0; d->x0 = D_800B6F4C; d->x3C = 0; d->x40 = 0; d->x44 = 0;
   return d;
 }
-inline Unk800CA59CT* EV2(s16 k, void* a, s32 b) { Unk800CA59CT* t = func_8001CA10(0x14); *(void* volatile*)&t->x0 = D_80010178; *(void* volatile*)&t->x0 = D_80010300; t->x4 = 0; t->x8 = 2; t->xA = k; t->x10 = b; t->xC = (s32)a; t->x0 = D_800102D0; return t; }
+EXTERN_C char D_80010300_s asm("D_80010300");
+EXTERN_C char D_800102D0_s asm("D_800102D0");
+inline Unk800CA59CT* EV2(s16 k, void* a, s32 b) { Unk800CA59CT* t = func_8001CA10(0x14); *(void* volatile*)&t->x0 = D_80010178; *(void* volatile*)&t->x0 = &D_80010300_s; t->x4 = 0; t->x8 = 2; t->xA = k; t->x10 = b; t->xC = (s32)a; t->x0 = &D_800102D0_s; return t; }
 inline void Unk800C9ED8_set118(Unk800C9ED8* p, s32 v) { p->x118 = v; }
 //@func
 EXTERN_C void func_800C9ED8(Unk800C9ED8* p) {
@@ -55,9 +57,10 @@ EXTERN_C void func_800C9ED8(Unk800C9ED8* p) {
         func_800BD928();
         if (p->x10C) p->x10C->v1(3);
         operator delete(b);
+        { void* q = D_800B4ED8[0];
         p->x110 = 0;
         p->x10C = 0;
-        func_8006BD34(D_800B4ED8[0]);
+        func_8006BD34(q); }
         if (p->x17C) {
           func_800232A0(D_800A4534.x44 + 0x154, p);
           func_8001EFE4((void*)p->x114, EV2(0x13, 0, 0));

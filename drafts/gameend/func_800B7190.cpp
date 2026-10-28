@@ -1,36 +1,19 @@
-// func_800B7190 (GameEnd vtable D_800B6F5C slot 2): loads the ending graphics.
-// Best attempt: 87 of 235 instructions differ (try_compile, 948 vs 940 bytes; same with -G0, -G8, and -G8 with as -G0).
-// Everything else lines up, including the inline vptr stores, the 0x200-byte copy
-// with its alignment test, and the stack layout of the Point temporary and f2.
-//
-// What still differs:
-// 1. SOLVED (round 2): D_800A4534+0xC must be `volatile` (as main_a's S_800A4534::unkC
-//    is). Combine won't fold a volatile MEM, so `D_800A4534.fC` gives retail's
-//    lui/addiu/lw 0xC with the lui in the beqz delay slot.
-// 2. loop.c hoists &D_80010888 and &D_800108A0 (lui/addiu pairs, savings 2,
-//    life 2, 53 loop insns) into s6/s7, so the frame saves s0-s7 instead of s0-s5.
-//    Retail keeps them in the loop, which needs a higher insn count or unsplit
-//    addresses (-mno-split-addresses stops the hoisting but changes other code).
-//    Round 2 (-dL, and GCC 2.8.1 loop.c): threshold = (loop_has_call ? 1 : 2) * (1 +
-//    n_non_fixed_regs) = 29 here, and move_movables does `threshold -= 3` per insn moved; a lui/addiu pair (savings 2, life 2) moves
-//    when 4*T >= loop insns. Retail moved the D_80010178 pair only (cse2 then turned it
-//    into `s5 = s1`), so its loop had ~93-115 RTL insns at loop time vs 54 here.
-//    EXE func_8005FC78 shows the same thing (2 of 3 vtable pairs hoisted in a loop of
-//    ~30 machine insns, which needs >= 69 RTL insns). Real ctors, `new T(args)`,
-//    -fexceptions (default on) and real virtual classes don't add RTL insns.
-//    A goto loop stops all loop opts but then loses the f2B0[i] giv and the s5 copy.
-// 3. Retail has 24 bytes of locals, this has 16. The Point temporary sits at
-//    sp+0x1C, the second word of an 8-byte slot that f2 reuses at sp+0x18.
-//
-// Compile with scratch_c-style headers (types below plus include/gameend/gameend.h).
-
+// 4 of 235 differ (try_compile, same size), two scheduling swaps only: before the loop retail has `addu a1,s0` before `addiu s2,s2,0x200`; in the loop retail has `lui %hi(D_80010888)`, `lw v1,0x2BC(s4)`, `addiu` (the lw sits INSIDE the lui/addiu pair).
+// k4: the second swap probably can't come from the small-object alias trick: GCC emits `la` as ONE insn (the
+// assembler expands it), so the scheduler can't put the lw between lui and addiu. Retail therefore had a split
+// HIGH/LO_SUM pair for D_80010888 in the loop that loop.c did not hoist, i.e. the real cause is still the
+// threshold (loop insn count) effect. The alias trick reproduces everything else.
+// Hoisting: D_80010888/D_800108A0 aliased as small (<= 8 byte) objects -> unsplit `la`, never hoisted.
+// Layout: the Point is the 2nd half of an 8-byte block local and a 2nd dead 8-byte local makes 24 bytes of locals
+// (retail: point at sp+0x1C, f2 reusing sp+0x18). `r.b.y = r.b.x = -1` keeps the -1 pseudo at life 2 (not hoisted).
 #include "common.h"
 #include "gameend/gameend.h"
 
-struct PointP { short x, y; };
+struct PointE { short x, y; };
+struct PointC { short x, y; PointC() {} PointC(short a, short b) { x = a; y = b; } };
 struct File { char *data; void *h; };
 struct Obj20C { const void *vptr; int f4; short f8, fA; };
-struct Sprite { const void *vptr; int f4; const void *vptr8; void *fC; PointP f10; short f14, f16; int f18; short f1C, f1E; };
+struct Sprite { const void *vptr; int f4; const void *vptr8; void *fC; PointC f10; short f14, f16; int f18; short f1C, f1E; };
 struct Big { const VEntry *vt0; char pad4[0xC]; const VEntry *vt10; };
 struct Item3 { virtual void v1(); virtual void v2(); virtual void v3(); };
 struct S800A4534 { int pad0[3]; volatile unsigned int fC; };
@@ -40,7 +23,9 @@ EXTERN_C S800A4534 D_800A4534;
 EXTERN_C Big *D_800B4C38[];
 EXTERN_C int D_800B4C48[];
 EXTERN_C int D_800B4ED8[];
-EXTERN_C const int D_80010178[], D_800106EC[], D_80010624[], D_80010888[], D_800108A0[];
+EXTERN_C const int D_80010178[], D_800106EC[], D_80010624[];
+EXTERN_C const int D_80010888_s asm("D_80010888");
+EXTERN_C const int D_800108A0_s asm("D_800108A0");
 EXTERN_C void func_8005F238(File *);
 EXTERN_C void func_8005F248(File *, int);
 EXTERN_C char *func_8005F28C(File *);
@@ -60,11 +45,18 @@ EXTERN_C void func_8008ECB4(void *);
 EXTERN_C void func_8008EF40(int);
 EXTERN_C void func_800566E4(BaseA *);
 
+inline void setPosE(Sprite *p, PointE v) { *(PointE *)&p->f10 = v; }
+inline void setPosXY(Sprite *p, short a, short b) { PointE v; v.x = a; v.y = b; *(PointE *)&p->f10 = v; }
+inline void setPosR(Sprite *p, const PointC &v) { p->f10 = v; }
+inline void setPos(Sprite *p, PointC v) { p->f10 = v; }
 // Nested inline constructors: separate `this` pseudos keep both vptr stores.
 inline void w_init(Obj20C *o) { o->vptr = D_80010178; o->f4 = 0; }
 inline void m_init(Obj20C *o) { w_init(o); o->vptr = D_800106EC; o->f8 = 0; o->fA = 0; }
 inline void n_init(Obj20C *o, char *p) { m_init(o); o->vptr = D_80010624; func_80021F48(o, p); }
+inline Obj20C *n_new(Obj20C *o, char *p) { m_init(o); o->vptr = D_80010624; func_80021F48(o, p); return o; }
 
+//@unit gameend
+//@func
 EXTERN_C void func_800B7190(GameEnd *self)
 {
     int n;
@@ -80,20 +72,18 @@ EXTERN_C void func_800B7190(GameEnd *self)
     Obj20C *o = (Obj20C *)operator new(0x20C);
     n_init(o, p);
     p += 0x200;
-    self->f2BC = o;
     Big *b = D_800B4C38[0];
-    b->vt10[1].pfn((char *)b + b->vt10[1].delta);
+    self->f2BC = o;
+    ((void (*)(void *, void *))b->vt10[1].pfn)((char *)b + b->vt10[1].delta, o);
     for (unsigned int i = 0; i < 3; i++) {
         Sprite *t = (Sprite *)operator new(0x20);
-        t->vptr8 = D_80010888;
+        void *own = self->f2BC;
         t->vptr = D_80010178;
         t->f4 = 0;
-        t->vptr = D_800108A0;
-        t->fC = self->f2BC;
-        struct { PointP a, b; } r;
-        r.b.x = -1;
-        r.b.y = -1;
-        t->f10 = r.b;
+        t->vptr8 = &D_80010888_s;
+        t->vptr = &D_800108A0_s;
+        t->fC = own;
+        struct { PointE a, b; } r; PointE u; r.b.y = r.b.x = -1; *(PointE *)&t->f10 = r.b;
         t->f14 = 0;
         t->f16 = 0;
         t->f18 = 0;

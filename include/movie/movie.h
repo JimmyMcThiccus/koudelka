@@ -1458,4 +1458,17 @@ EXTERN_C s32 D_800B6AA4[];
 EXTERN_C void StCdInterrupt();
 EXTERN_C s32 LoadImage(void*, void*);
 
+/* func_800BFA58 */
+struct Unk800BFA58I { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(Unk800C10BCP); };
+struct Unk800BFA58Q { Unk800BFA58I** x0; s32 x4; };
+struct Unk800BFA58T { Unk800BFA58Q* x0; s32 x4; void* x8; };
+struct Unk800BFA58E { char pad[0x18]; u16 x18; };
+struct Unk800BFA58 { char pad[0x1C]; Unk800BFA58T x1C; char p1[0x74 - 0x28]; s32 x74; s32 x78; char x7C[0x2564 - 0x7C]; void* x2564; char x2568[0x2588 - 0x2568]; s32 x2588; };
+struct Unk800BFA58R { Unk800C10BCP a, b; };
+EXTERN_C void func_80054CA0(void*);
+EXTERN_C void func_80054F5C(void*);
+EXTERN_C s32 func_8005409C(void*);
+struct Unk800BFA58VE { s16 delta, index; void (*pfn)(); };
+#define Unk800BFA58_v4(o, q) { Unk800BFA58VE* e_ = &(*(Unk800BFA58VE**)((char*)(o) + 0x18))[4]; ((void (*)(void*, Unk800C10BCP))e_->pfn)((char*)(o) + e_->delta, q); }
+
 #endif /* MOVIE_H */

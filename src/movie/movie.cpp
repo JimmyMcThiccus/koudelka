@@ -850,7 +850,84 @@ EXTERN_C void func_800BF918(Unk800BF918* p) {
   p->x6C = 0; func_800C6024(); func_8002798C();
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BFA58);
+EXTERN_C s32 func_800BFA58(Unk800BFA58* p, Unk800BFA58E* ev) {
+  Unk800BFA58R r;
+  if (func_80054D78(func_800550BC(p)) == 0) return 1;
+  D_800B4D90[0] = 1;
+  func_8001FC78(ev, 0, 0);
+  u16 k = ev->x18;
+  if (p->x74 == 0) { func_8005549C(7, p, 0, -1); return 1; }
+  if (k & 0x10) {
+    Unk800BFA58T* t = &p->x1C;
+    s32 n = t->x4;
+    if (n <= 0) return 1;
+    func_8008EF40(8);
+    Unk800BFA58I* o = (Unk800BFA58I*)func_800550BC(p);
+    if (p->x74 == 1) {
+      Unk800C10BC_set(&r.a, 5, 11); Unk800C10BC_set(&r.b, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, -12); o->v2();
+      Unk800BFA58I* nx; if (t->x4 > 0) nx = p->x1C.x0->x0[--t->x4]; else nx = 0;
+      o = nx;
+      Unk800C10BCP* rb = &r.b;
+      Unk800C10BC_set(&r.a, 0x19, 0x38); Unk800BFA58_v4(o, r.a);
+      Unk800C10BC_set(&r.a, 0, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 12); o->v2();
+      func_80054CA0(o);
+      func_800C1AE0((Unk800C11A0*)p, func_800C4854((Unk800C4854*)o) ? o : 0);
+      { void** h = &p->x1C ? &p->x1C.x8 : 0; s32 i = n + 1; o = (Unk800BFA58I*)func_80019F64(h ? *h : 0, i); }
+      Unk800C10BC_set(&r.a, 0, 11); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 0); o->v2();
+      { void** h = &p->x1C ? &p->x1C.x8 : 0; s32 i = n + 2; o = (Unk800BFA58I*)func_80019F64(h ? *h : 0, i); }
+      Unk800C10BC_set(&r.a, 0, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, -12); func_80054F5C(o);
+    } else {
+      p->x74--;
+      Unk800C10BC_set(&r.a, 5, 0); Unk800C10BC_set(&r.b, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, -12); o->v2();
+      Unk800BFA58I* nx; if (t->x4 > 0) nx = p->x1C.x0->x0[--t->x4]; else nx = 0;
+      o = nx;
+      func_80054CA0(o);
+      Unk800C10BC_set(&r.a, -5, 0); Unk800C10BC_set(&r.b, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 12); o->v2();
+      func_800C1AE0((Unk800C11A0*)p, func_800C4854((Unk800C4854*)o) ? o : 0);
+    }
+  } else if (k & 0x40) {
+    Unk800BFA58T* t = &p->x1C;
+    s32 n = t->x4;
+    if (!(n < (t ? t->x0 : 0)->x4 - 1)) return 1;
+    func_8008EF40(8);
+    Unk800BFA58I* cur; if (t->x4 < p->x1C.x0->x4) { cur = p->x1C.x0->x0[p->x1C.x4]; p->x1C.x4++; } else cur = 0;
+    Unk800BFA58I* o = cur;
+    if (p->x74 == 3) {
+      Unk800C10BCP* rb = &r.b;
+      Unk800C10BC_set(&r.a, 5, -11); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, -12); o->v2();
+      o = (Unk800BFA58I*)func_800550BC(p);
+      Unk800C10BC_set(&r.a, 0x19, 0xA6); Unk800BFA58_v4(o, r.a);
+      Unk800C10BC_set(&r.a, 0, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 12); o->v2();
+      func_80054CA0(o);
+      func_800C1AE0((Unk800C11A0*)p, func_800C4854((Unk800C4854*)o) ? o : 0);
+      { void** h = &p->x1C ? &p->x1C.x8 : 0; s32 i = n - 1; o = (Unk800BFA58I*)func_80019F64(h ? *h : 0, i); }
+      Unk800C10BC_set(&r.a, 0, -11); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 0); o->v2();
+      { void** h = &p->x1C ? &p->x1C.x8 : 0; s32 i = n - 2; o = (Unk800BFA58I*)func_80019F64(h ? *h : 0, i); }
+      Unk800C10BC_set(&r.a, 0, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, -12); func_80054F5C(o);
+    } else {
+      p->x74++;
+      Unk800C10BCP* rb = &r.b;
+      Unk800C10BC_set(&r.a, 5, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(cur, 6, (RECT*)&r.a, -12); cur->v2();
+      o = (Unk800BFA58I*)func_800550BC(p);
+      func_80054CA0(o);
+      Unk800C10BC_set(&r.a, -5, 0); Unk800C10BC_set(rb, 0, 0); func_80054F30(o, 6, (RECT*)&r.a, 12); o->v2();
+      func_800C1AE0((Unk800C11A0*)p, func_800C4854((Unk800C4854*)o) ? o : 0);
+    }
+  } else goto other;
+  func_80054CE4(p->x7C);
+  return 1;
+other:
+  if (k & 0x2000) {
+    if (func_8005409C(func_800550BC(p))) {
+      p->x2564 = func_800550BC(p); p->x2588 = 0;
+      func_8005457C(p->x2568, 0);
+      Unk800C10BC_set(&r.a, 0xD9, p->x74 * 0x37 + 0x20);
+      func_80053F48(p->x2568, r.a);
+      func_800631D4(p->x2568);
+    } else func_8008EF40(0xE);
+  }
+  return 1;
+}
 
 EXTERN_C s32 func_800C01C4(Unk800C01C4* p, Unk800C01C4B* q) { s32 hit; func_8001FC78(q, 0, 0); hit = 0; if (func_80054D78(func_800550BC(p)) && p->x18C == 3) hit = q->x18 == 0x4000; if (hit) { D_800B4D90[0] = 1; for (s32 i = 0; i < 15; i++) p->x278[i].v3(); void** h = &p->x1C; func_80019D40(h ? *h : 0); p->x74 = 0; p->x18C = 1; func_8005549C(7, p, 0, -1); } return 1; }
 
