@@ -7,7 +7,7 @@ not saved; take func_800499D0 and change those constants.
 Not attempted because the toolchain can't express them yet:
 - `new T[n]` functions (func_800544AC, func_80054258, func_80053DDC): they need `__builtin_vec_new` named at
   0x800A0D2C in `config/symbols/main.txt`, but every caller of `func_800A0D2C` would then lose its name.
-- virtual-base ctors: func_80045EB8, func_8005226C, func_80052100.
+- virtual-base ctors: func_8005226C and func_80052100 landed with the hand-written in_chrg form; func_80045EB8 is an MI ctor (draft).
 
 Round 3, batch 3:
 - GTE-heavy functions (func_80049488, func_80049680, func_8004A16C-style prims) are skipped: the gte_* macros are
