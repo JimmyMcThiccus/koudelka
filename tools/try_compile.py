@@ -92,6 +92,17 @@ def main():
                              capture_output=True, text=True).stdout
         relocs = {int(l.split()[0], 16) for l in rel.splitlines()
                   if re.match(r"^[0-9a-f]{8} ", l) and "R_MIPS" in l}
+        # Compare only the function itself, wherever it sits in .text (a scratch file may define helpers
+        # or inline functions first): from its symbol to the next .text symbol.
+        syms = subprocess.run([str(BIN / "mips-ps2-decompals-nm.exe"), "-n", "--defined-only", str(obj)],
+                              capture_output=True, text=True).stdout
+        text_syms = [(int(v, 16), n) for v, t, n in (l.split()[:3] for l in syms.splitlines() if len(l.split()) >= 3)
+                     if t in "Tt" and not n.startswith(("__maspsx", "."))]
+        start = next((v for v, n in text_syms if n == a.func), None)
+        if start is not None:
+            end = min([v for v, _ in text_syms if v > start] + [len(got)])
+            got = got[start:end]
+            relocs = {r - start for r in relocs if start <= r < end}
         if not a.quiet:
             print(subprocess.run([str(BIN / "mips-ps2-decompals-objdump.exe"), "-dr", str(obj)],
                                  capture_output=True, text=True).stdout)
