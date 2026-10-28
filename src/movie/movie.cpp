@@ -635,7 +635,7 @@ EXTERN_C void func_800BEC54(Unk800BEC54* p) {
   func_8003714C(p->x68);
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BEDD0);
+EXTERN_C void* func_800BEDD0(Unk800BEDD0* p) { Unk800BE5F8T t; Unk800BE5F8T* tp = &t; func_80050838(tp); if (p->x70) p->x70->v1(3); Unk800BEDD0R* r = func_80049398(p->x64); r->xC = (s32*)(p->x68->x2C + p->x68->x4->x4); r->x8 = r->xC; s32* h = r->xC; r->xC = h + 6; s32* q = h + 3; if (*r->x8 == -1) { p->x78 = func_80050874(tp, q, r, 0, 0); func_80025444(D_800B4C48, p->x78, 0); func_8001ED2C(D_800B4C18[0], 5, 3); } else p->x78 = 0; func_800BEED4((Unk800BEED4*)p); return p->x78; }
 
 EXTERN_C void func_800BEED4(Unk800BEED4* p) { p->x68->v3(); func_80036D8C(p->x68); if (p->x64) func_80048D2C(p->x64, 3); }
 
