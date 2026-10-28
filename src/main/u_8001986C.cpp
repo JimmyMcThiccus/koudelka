@@ -9,11 +9,11 @@ EXTERN_C void func_8001986C(void *p, int a)
     func_8001D024(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", printf);
+EXTERN_C void printf() {}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_80019894);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", puts);
+EXTERN_C void puts() {}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_800198A4);
 
