@@ -21,3 +21,19 @@ Round 2's notes for these units are in `drafts/main_b/` (read-only).
 
 Round 2 near misses still open: func_80089AC0, func_80089B44, func_8008A770, func_80086578, func_8008A188,
 func_800824C8 (the header prototype has one argument, the asm uses two).
+
+## Second batch (this session)
+
+| Function | Diff | What differs |
+|---|---|---|
+| func_8007C6A8 | 0 in try_compile | Does not land: its jump table `jtbl_80017048` sits in the unit's rodata cluster (between `jtbl_80017030` and `D_8001705C`); GCC would emit its own table after the whole cluster. Needs the integrator to split the unit rodata, or a place for this function after the cluster |
+| func_8006EACC / func_8006EF84 / func_8006EE94 / func_80078FD4 | 40+ | register allocation (`self`/`m` swap between `$s` registers); permuter found nothing |
+| func_8006D964 | 10 | three `return 1` blocks: retail keeps them separate, we cross-jump |
+| func_8006F3DC | 8 | needs `xori` from `bool ok = !f()`; the last case (store + `return 1`) gets an extra `$a0` copy |
+| func_8007DB04 | 49 | retail switch tests `k == 2` first, then `k < 3`, then `k == 1` (root of the case tree is 2) |
+| func_80084C50 | 60 | table element is read through a pointer computed before the `D_800AF470` load |
+| func_800846EC | small | retail keeps both params in `$a2`/`$a3` copies; permuter found nothing in 15 min |
+| func_80075EC8 | 43 | `self` in `$s1`, constant 1 in `$s0` (we swap); `p + 4` is computed right after `new` |
+| func_80081ED0 / func_8006AE68 | 50+ | loop and switch shape right, constants (`2`, vtables) hoisted differently |
+
+Note for the integrator: `func_8006C95C`'s switch needs one `case` per jump-table entry (separate bodies) to get a table.
