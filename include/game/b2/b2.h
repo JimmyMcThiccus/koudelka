@@ -68,4 +68,6 @@ EXTERN_C void func_80028184(void *self);
 
 EXTERN_C void func_800DE760_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int b1, int b2, int b3) asm("func_800DE760");
 
+EXTERN_C void func_8006EF84(void *self);
+
 #endif /* GAME_B2_B2_H */

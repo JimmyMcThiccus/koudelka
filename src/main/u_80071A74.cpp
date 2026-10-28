@@ -1774,7 +1774,26 @@ EXTERN_C void func_80079D64(void *self, int a1)
     func_8007A1F4(self, 4);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80079E8C);
+EXTERN_C void func_80079E8C(void *self)
+{
+    int m = D_800AF410.state;
+    if (m == 4 || m == 1 || m == 2 || m == 5 || m == 6) {
+        return;
+    }
+    if (FIELD_AT(D_800AF470.p, int, 0x540) != 0) {
+        return;
+    }
+    if (func_800771D4(&D_800AF414)) {
+        return;
+    }
+    if (FIELD_AT(self, signed char, 0x360) != 0) {
+        return;
+    }
+    VObj<0x18> *p = FIELD_AT(self, VObj<0x18> *, 0x330);
+    if (p != 0) {
+        p->v01();
+    }
+}
 
 EXTERN_C int func_80079F48(void *self)
 {

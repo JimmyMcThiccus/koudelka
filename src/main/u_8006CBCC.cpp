@@ -164,7 +164,23 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006E8E4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EACC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EBB0);
+EXTERN_C void func_8006EBB0_def(void *self, void *m) asm("func_8006EBB0");
+
+EXTERN_C void func_8006EBB0_def(void *self, void *m)
+{
+    if (FIELD_AT(self, short, 8) == 1) {
+        func_8006EF84(self);
+    }
+    FIELD_AT(IDX40(self), unsigned short, 0x2C) = FIELD_AT(m, unsigned short, 0);
+    FIELD_AT(IDX40(self), unsigned short, 0x2E) = FIELD_AT(m, unsigned short, 2);
+    FIELD_AT(IDX40(self), unsigned short, 0x34) = FIELD_AT(m, unsigned short, 4);
+    FIELD_AT(IDX40(self), unsigned short, 0x36) = FIELD_AT(m, unsigned short, 6);
+    FIELD_AT(IDX40(self), unsigned short, 0x3C) = FIELD_AT(m, unsigned short, 8);
+    FIELD_AT(IDX40(self), unsigned short, 0x3E) = FIELD_AT(m, unsigned short, 0xA);
+    FIELD_AT(IDX40(self), unsigned short, 0x44) = FIELD_AT(m, unsigned short, 0xC);
+    FIELD_AT(IDX40(self), unsigned short, 0x46) = FIELD_AT(m, unsigned short, 0xE);
+    FIELD_AT(self, short, 8) = 2;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EC70);
 
