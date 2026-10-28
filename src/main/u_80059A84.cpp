@@ -376,7 +376,33 @@ EXTERN_C S_CtorB38 *func_8005BC84(S_CtorB38 *p, int in_chrg, int a2, int a3)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005BDA4);
+EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014658;
+    p->vb->vt = (VEntB *)D_80014750.e;
+    if (!flags) {
+        VTabB50 tmp = D_80014750;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014750.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x38));
+        tmp.e[5].d = D_80014750.e[5].d + adj;
+        tmp.e[7].d = D_80014750.e[7].d + adj;
+        tmp.e[9].d = D_80014750.e[9].d + adj;
+    }
+    if (FIELD_AT(p, int, 0x8) != 0) {
+        func_8005C088(p, func_80029FC0(p), 1);
+        if (FIELD_AT(p, VObj0 *, 0x8) != 0) {
+            FIELD_AT(p, VObj0 *, 0x8)->v00(3);
+        }
+        FIELD_AT(p, int, 0x8) = 0;
+    }
+    func_80029D74(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_8005BF04(void *self, int a, int b)
 {
