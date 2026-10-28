@@ -66,9 +66,15 @@ segments:
       - [0x2AAC, .rodata, u_80033ECC] # 0x800122AC
       - [0x2C3C, .rodata, u_800372C0] # 0x8001243C
       - [0x3234, .rodata, u_8003C510] # 0x80012A34
-      - [0x5468, .rodata, u_800658E0] # 0x80014C68: 8-aligned so func_8006F630's compiled jump table keeps its offset (first jtbl 0x80015484)
+      - [0x5C84, .rodata, u_800658E0] # 0x80015484: its first jump table (4 mod 8)
+      - [0x6070, .rodata, u_80067450]
+      - [0x63F4, .rodata, u_80068770]
+      - [0x66F8, .rodata, u_8006CBCC]
       - [0x6CA8, .rodata, u_80071A74] # 0x800164A8
       - [0x7F68, .rodata, u_80082174] # 0x80017768
+      - [0x83B4, .rodata, u_80083EB4]
+      - [0x8498, .rodata, u_80085168]
+      - [0x8694, .rodata, u_80089024]
       - [0x874C, .rodata, sound] # 0x80017F4C: the sound driver's rodata (jtbl_80017F4C)
       - [0x8760, rodata, psyq] # 0x80017F60: library rodata ("$Id: sys.c ...")
       # Game code: one unit per original source file, split after each .ctors entry (a static
@@ -99,8 +105,14 @@ segments:
       - [0x4FA38, cpp, u_8005F238]
       - [0x52E10, cpp, u_80062610]
       - [0x560E0, cpp, u_800658E0]
+      - [0x57C50, cpp, u_80067450]
+      - [0x58F70, cpp, u_80068770]
+      - [0x5D3CC, cpp, u_8006CBCC]
       - [0x62274, cpp, u_80071A74]
       - [0x72974, cpp, u_80082174]
+      - [0x746B4, cpp, u_80083EB4]
+      - [0x75968, cpp, u_80085168]
+      - [0x79824, cpp, u_80089024]
       # Sound driver (next to "Programmed by Hidenori Suzuki"): GCC 2.7.2 / PsyQ 4.1, no $gp. It starts after
       # func_8008B630 (the last 4.4-only function) and by 0x8008C4B8 (the first 4.1-only one).
       - [0x7BEB0, cpp, sound] # 0x8008B6B0 -> src/main/sound.cpp

@@ -2,3 +2,7 @@
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
 // vtable used by func_800756F8; keep it out of that function's .s so decompiling it does not drop the data.
 D_80016808 = 0x80016808; // force_not_migration:True
+// Two functions splat ran into the one before (after a tail call); data refers to them by address:
+// func_80078FD4 from the table at D_800171E0, func_80082128 from the .dtors table.
+func_80078FD4 = 0x80078FD4; // type:func
+func_80082128 = 0x80082128; // type:func

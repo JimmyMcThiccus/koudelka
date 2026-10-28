@@ -32,6 +32,8 @@ def cc_args(src):
         args += ["--as-G", str(s["as_G"])]
     if s["expand_div"]:
         args.append("--expand-div")
+    if s.get("as_G", 8) != 0 and Path(src).parts[1] == "main":
+        args += ["--gp-from", f"asm/main/*/{Path(src).stem}"]
     return args
 
 

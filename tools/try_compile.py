@@ -65,6 +65,9 @@ def main():
     a.as_g = a.as_g if a.as_g is not None else s.get("as_G")
     a.expand_div = s["expand_div"] if a.expand_div is None else a.expand_div
     a.asm_dir = a.asm_dir or asm_dir
+    # The unit's retail $gp symbols, as in the build (tools/toolchain.py)
+    args = toolchain.cc_args(unit)
+    gp_from = args[args.index("--gp-from") + 1] if "--gp-from" in args and a.as_g != 0 else None
     a.target = a.target or target
 
     rom, size = retail_bytes(ROOT / a.asm_dir, a.func)
@@ -77,6 +80,7 @@ def main():
         cc = [sys.executable, str(ROOT / "tools" / "cc.py"), "--psyq", a.psyq, "--aspsx", a.aspsx,
               "--cflags", a.cflags, *(["--as-G", str(a.as_g)] if a.as_g is not None else []),
               *(["--expand-div"] if a.expand_div else []),
+              *(["--gp-from", gp_from] if gp_from else []),
               *[f"-I{i}" for i in a.incs], "-o", str(obj), str(a.cfile)]
         if subprocess.run(cc, cwd=ROOT).returncode != 0:
             sys.exit(f"{a.func}: compile failed")

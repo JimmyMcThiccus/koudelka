@@ -10,3 +10,6 @@ __10S_8002C9D4RC10S_8002C9D4 = 0x8002C9D4; // type:func
 __10S_8002C9D4RC10S_8002C9D4P7S_Rect8 = 0x8002CA64; // type:func
 __10S_8002E4E8iii = 0x8002E4E8; // type:func
 __10S_80030534 = 0x80030534; // type:func
+// func_8001D9F4 never returns (its loop ends in j), so splat ran it into the next function. Declaring
+// this one splits them and lets the table at D_800103A0 refer to it by symbol instead of a raw address.
+func_8001DACC = 0x8001DACC; // type:func

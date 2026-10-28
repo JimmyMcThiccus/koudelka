@@ -16,6 +16,7 @@ Usage: .venv/Scripts/python.exe configure.py [--mode functional|matching] [--no-
 """
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -61,6 +62,15 @@ def split(target):
     with open(log, "w") as f:
         subprocess.run([PY, "-m", "splat", "split", f"config/{target}.yaml"], cwd=ROOT, check=True,
                        stdout=f, stderr=subprocess.STDOUT)
+    if target == "slus_010.51":
+        # splat writes the PS-X EXE header's initial PC as a number. Make it the entry symbol, so a
+        # functional build whose code has moved still boots at `start`.
+        header = asm / "header.s"
+        text = header.read_text()
+        fixed = re.sub(r"\.word 0x800A0A20(\s*/\* Initial PC \*/)", r".word start\1", text)
+        if fixed == text:
+            sys.exit("configure: EXE header initial PC not found in " + str(header))
+        header.write_text(fixed)
 
 
 def write_ninja(mode):

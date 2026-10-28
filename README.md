@@ -53,7 +53,7 @@ Game code is C++ (vtables, `__builtin_new`), so every target's code is a `.cpp` 
 
 | Target | Source | Kept as assembly |
 |---|---|---|
-| `SLUS_010.51` | 29 units in `src/main/`, one per original source file the `.ctors` table marks: `main_a.cpp`, `main_b.cpp`, `u_<start>.cpp`, and `sound.cpp` (the sound driver, `0x8008B6B0`–`0x80094910`, PsyQ 4.1). Only the 10 units whose jump tables must sit with their code have a rodata segment | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
+| `SLUS_010.51` | 35 units in `src/main/`, one per original source file: cut after each `.ctors` entry and wherever the jump tables' address mod 8 changes (`tools/jtbl_classes.py`). `main_a.cpp`, `main_b.cpp`, `u_<start>.cpp`, and `sound.cpp` (the sound driver, `0x8008B6B0`–`0x80094910`, PsyQ 4.1). Only units with jump tables have a rodata segment, starting at their first table | `.ctors`/`.dtors` tables, PsyQ library code and rodata, `.data`/`.sdata` |
 | each overlay | `src/<overlay>/<overlay>.cpp`: all of its code and leading rodata | trailing `.data` |
 
 splat writes these files once, with one `INCLUDE_ASM` / `INCLUDE_RODATA` line per function and rodata symbol, in
@@ -73,8 +73,12 @@ Two things are specific to this compiler:
 - **`INCLUDE_ASM` order.** With `-G8`, `CC1PLPSX` outputs every function after all top-level `asm` statements.
   `include/common.h` therefore wraps each include in a dummy `__maspsx_include_asm_hack_*` function, which maspsx
   strips. Without it, decompiled functions drift away from their neighbours.
-- **Small externs use `$gp`.** GCC declares them as `.extern sym, size`. ASPSX reached those through `$gp`: retail
-  shares `$gp` variables between source files. Plain maspsx doesn't do this, so `tools/maspsx_extern.py` adds it.
+- **Small globals use `$gp` only in their defining file.** ASPSX reached a small global through `$gp` in the
+  source file that defines it, and with `lui` everywhere else (main_b's round-2 scan: for each of 30 symbols
+  reached both ways, the `$gp` uses form one contiguous range). Our units declare those globals `extern`, so
+  `tools/cc.py` collects the symbols a unit's own retail asm reaches through `%gp_rel` and
+  `tools/maspsx_extern.py` gives only those `$gp`. A small extern not on that list gets the assembler's `lui`
+  macro form.
 
 ### Decompiling a function
 

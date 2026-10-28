@@ -1541,6 +1541,8 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80016BD0);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80078C50);
 
+INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80078FD4);
+
 EXTERN_C int func_8007908C(void *self, int b)
 {
     void *p = FIELD_AT(self, void *, 0x32C);
@@ -4291,6 +4293,8 @@ EXTERN_C void func_80082058(void *self, int flags)
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800820B4);
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80082128);
 
 EXTERN_C void func_80082150(void)
 {

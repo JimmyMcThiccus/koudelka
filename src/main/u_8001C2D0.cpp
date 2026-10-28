@@ -700,6 +700,8 @@ EXTERN_C void func_8001D8A4(S_8001D8A4 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D9F4);
 
+INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001DACC);
+
 EXTERN_C void func_8001DB04()
 {
     char *o = (char *)&D_800AC57C;

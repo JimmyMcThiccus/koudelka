@@ -13,7 +13,7 @@ units, so two sessions never edit the same file.
 |---|---|---|---|---|
 | `main_a1` | `main/main_a.cpp`, `main/u_80018B88` … `main/u_8002ED44.cpp` (16 units, `0x800186B0`–`0x80032264`) | 548 | `config/symbols/main_a.txt` | `include/game/a/` |
 | `main_a2` | `main/u_80032264` … `main/u_8003C510.cpp` (5 units, `0x80032264`–`0x80054A2C`) | 549 | `config/symbols/main_a2.txt` | `include/game/a2/` |
-| `main_b` | `main/main_b.cpp`, `main/u_80056E0C` … `main/u_80082174.cpp` (7 units, `0x80054A2C`–`0x8008B6B0`) | 552 | `config/symbols/main_b.txt` | `include/game/b/` |
+| `main_b` | `main/main_b.cpp`, `main/u_80056E0C` … `main/u_80089024.cpp` (13 units, `0x80054A2C`–`0x8008B6B0`) | 552 | `config/symbols/main_b.txt` | `include/game/b/` |
 | `sound` | `main/sound.cpp` (the sound driver: PsyQ 4.1, `0x8008B6B0`–`0x80094910`) | 180 | `config/symbols/sound.txt` | `include/game/sound/` |
 | `field` | `field/field.cpp`, `field/field_b.cpp` (from `0x800DE3B8`) | 468 | `config/symbols/field.txt` | `include/field/` |
 | `battle` | `battle/battle.cpp`, `battle/battle_b.cpp` (from `0x800C1E44`), `battle/battle_c.cpp` (from `0x800CF764`) | 283 | `config/symbols/battle.txt` | `include/battle/` |
@@ -98,6 +98,15 @@ under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs
   functions, so a literal lands at the start of the unit's rodata instead of beside its function. Refer to the
   retail symbol instead (`EXTERN_C const char D_XXXXXXXX[];`) and keep it with `force_not_migration` in your
   symbols file. Data of 8 bytes or less would go to `.sdata` and break the link.
+
+## Globals in the EXE
+
+A small global uses `$gp` only in the unit that defines it, as with ASPSX. The build gives `$gp` exactly to the
+symbols your unit's retail asm reaches through `%gp_rel` (`tools/cc.py --gp-from`, automatic with `--unit`). So
+declare small globals plainly (`EXTERN_C int D_X;`): where retail uses `$gp` you get `$gp`, and where it uses
+`lui` you get the assembler's `lui $dst; lw $dst, %lo(D_X)($dst)` macro. If a header already declares the
+symbol with another type, alias it: `EXTERN_C int D_X_word asm("D_X");`. For GCC's split form (another register
+as the temporary), use an incomplete array or a struct > 8 bytes, as in the overlays below.
 
 ## Globals in overlays
 

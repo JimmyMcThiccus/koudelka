@@ -49,6 +49,8 @@ def main():
     ap.add_argument("--cflags", default="-O2 -G8")
     ap.add_argument("--as-G", dest="as_g", type=int, help="assembler -G (default: the -G in --cflags)")
     ap.add_argument("--expand-div", action="store_true", help="maspsx expands div/rem with zero checks")
+    ap.add_argument("--gp-from", help="unit asm dir (asm/<target>/*/<unit>): only symbols its retail asm "
+                    "reaches through $gp may use $gp")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     a = ap.parse_args()
 
@@ -70,8 +72,17 @@ def main():
         run([str(psyq / cc1), "-quiet", *cflags, str(i_file), "-o", str(s_file)], env=env,
             capture_output=True, text=True)
         # maspsx reads stdin whenever it isn't a tty, so always feed it that way.
+        mas_env = dict(os.environ)
+        if a.gp_from:
+            # The unit's retail $gp symbols: from every function of it, matched or not.
+            syms = set()
+            for kind in ("nonmatchings", "matchings"):
+                for f in (ROOT / a.gp_from.replace("*", kind)).glob("*.s"):
+                    syms.update(re.findall(r"%gp_rel\(([A-Za-z_]\w*)", f.read_text()))
+            mas_env["KOUDELKA_GP_SYMS"] = ",".join(sorted(syms))
         mas = run([sys.executable, str(ROOT / "tools" / "maspsx_extern.py"), f"--aspsx-version={a.aspsx}",
-                   *gflag, *(["--expand-div"] if a.expand_div else [])], input=s_file.read_text(), capture_output=True, text=True)
+                   *gflag, *(["--expand-div"] if a.expand_div else [])], input=s_file.read_text(), capture_output=True,
+                  text=True, env=mas_env)
         m_file = tmp / "out.mas.s"
         m_file.write_text(mas.stdout)
         run([str(AS), *AS_FLAGS, *[f"-I{i}" for i in a.incs], "-o", str(out), str(m_file)])
