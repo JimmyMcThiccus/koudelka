@@ -290,55 +290,18 @@ EXTERN_C int func_8001CD1C(S_8001CD10 *p)
     return p->unk4 != 0;
 }
 
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100C0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100D0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100E0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100F8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010108);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010118);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010130);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010148);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010160);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010178);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010198);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101B0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101C0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101D8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101E8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101F8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010210);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010260);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010278);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010288);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102A0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102B0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102C0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102D0);
-
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001CD28);
+EXTERN_C S_E300 *func_8001CD28(S_E300 *p, void *c)
+{
+    p->vtbl = D_80010178;
+    p->unk4 = 0;
+    p->vtbl = D_80010300;
+    p->unk8 = 2;
+    p->unkA = 2;
+    p->unk10 = 0;
+    p->unkC = c;
+    p->vtbl = D_800102E8;
+    return p;
+}
 
 EXTERN_C int func_8001CD6C(S_8001CD10 *p)
 {
@@ -660,15 +623,19 @@ EXTERN_C void func_8001D700(S_8001D6C8 *p, int a)
     p->unk18 = t + a;
 }
 
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010300);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010328);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010338);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010348);
-
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D720);
+EXTERN_C S_D720 *func_8001D720(S_D720 *p)
+{
+    p->vtbl = D_80010360;
+    S_Vobj4 *q = &p->in;
+    q->vtbl = D_80010178;
+    q->unk4 = 0;
+    q->vtbl = D_800102B0;
+    q->unk8 = 0;
+    q->unkC = 0;
+    q->vtbl = D_800102A0;
+    q->unk8 = (int)p;
+    return p;
+}
 
 EXTERN_C void func_8001D76C(void *p, int flags)
 {
@@ -776,6 +743,66 @@ EXTERN_C void func_8001DDD0()
 {
     new (&D_800AC57C) C_8001D7B0;
 }
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100C0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100D0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100E0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800100F8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010108);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010118);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010130);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010148);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010160);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010178);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010198);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101B0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101C0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101D8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101E8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800101F8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010210);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010260);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010278);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010288);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102A0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102B0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102C0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102D0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_800102E8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010300);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010328);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010338);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010348);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010360);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010378);
 

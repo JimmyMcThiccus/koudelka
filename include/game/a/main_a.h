@@ -1032,7 +1032,7 @@ EXTERN_C int func_8001B0C0(void *p, void *q);
 EXTERN_C void func_80020734(void *p, int a, void *b, int c);
 EXTERN_C int func_800208D4(char *p, void *item);
 EXTERN_C int func_80020948(char *p, void *item);
-EXTERN_C void func_800252F8(void *p);
+EXTERN_C void *func_800252F8(void *p);
 EXTERN_C void *func_80028710(void *p, void *q);
 EXTERN_C bool func_8002A064(void *p, int a, int b);
 EXTERN_C void func_8002DB50(void *p, int a);
