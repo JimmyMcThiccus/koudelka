@@ -2147,58 +2147,6 @@ EXTERN_C void func_8007AF04(void *self)
     }
 }
 
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_80017010);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_80017030);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_80017048);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_8001705C);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017068);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017070);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_80017078);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_80017090);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_800170A8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", jtbl_800170C0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800170F0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017140);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017160);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017178);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017190);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171B0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171C0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171D0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171E0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017210);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017260);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017280);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017298);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172B0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172E8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172F8);
-
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007AF5C);
 
 EXTERN_C void func_8007AFD0(Set_8007AFD0 *self, int item)
@@ -2678,7 +2626,28 @@ EXTERN_C void func_8007C640(void *self, int flags)
     func_8006F0B0(self, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007C6A8);
+EXTERN_C void func_8007C6A8(void *self, void *m)
+{
+    if (FIELD_AT(m, unsigned short, 0xA) == 2) {
+        switch (FIELD_AT(m, int, 0x10) & 0xFFF) {
+        case 0:
+            func_8006F2A8(self);
+            break;
+        case 1:
+            func_8006F2E8(self);
+            break;
+        case 2:
+            func_8006F31C(self);
+            break;
+        case 3:
+            func_8006F35C(self);
+            break;
+        case 4:
+            func_800DDFB0_c(self, 0, FIELD_AT(self, int, 0x168), FIELD_AT(self, int, 0x16C), FIELD_AT(self, int, 0x170), FIELD_AT(self, int, 0x174), FIELD_AT(self, int, 0x178), FIELD_AT(self, int, 0x17C), FIELD_AT(self, B16_B, 0x180), FIELD_AT(self, int, 0x190));
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007C7B0);
 
@@ -4558,6 +4527,40 @@ EXTERN_C void func_80082150(void)
 {
     func_80081748(&D_800AFA74);
 }
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800170F0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017140);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017160);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017178);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017190);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171B0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171C0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171D0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800171E0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017210);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017260);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017280);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017298);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172B0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172E8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800172F8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017328);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_80017360);
 
