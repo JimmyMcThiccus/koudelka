@@ -4,9 +4,40 @@
 #include "game/a/decls_a.h"
 #include "game/a/h_u_80020368.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020368", func_80020368);
+EXTERN_C S_80020368 *func_80020368(S_80020368 *p, int in_chrg)
+{
+    if (in_chrg) {
+        p->vb = (S_VB_800104A8 *)((char *)p + 8);
+        new ((char *)p + 8) S_VB_800104A8;
+    }
+    p->vb->vt = (VtE *)D_80010538.e;
+    if (!in_chrg) {
+        VTab_80010538 tmp = D_80010538;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 8;
+        tmp.e[1].delta = D_80010538.e[1].delta + ((char *)p - q);
+        tmp.e[6].delta = D_80010538.e[6].delta + ((char *)p - q);
+    }
+    p->vt = D_80010508;
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020368", func_8002042C);
+EXTERN_C void func_8002042C(S_80020368 *p, int flags)
+{
+    p->vt = D_80010508;
+    p->vb->vt = (VtE *)D_80010538.e;
+    if (!flags) {
+        VTab_80010538 tmp = D_80010538;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 8;
+        tmp.e[1].delta = D_80010538.e[1].delta + ((char *)p - q);
+        tmp.e[6].delta = D_80010538.e[6].delta + ((char *)p - q);
+    }
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_80020510(S_80020510 *p, int v)
 {

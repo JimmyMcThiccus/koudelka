@@ -37,4 +37,16 @@ struct S_80020538 { void **vt; char pad[0x10]; int unk14; short unk18; short unk
 struct S_Pad8 { int a, b; };
 struct S_80020948 : S_Pad8, Holder { };
 
+struct VTab_80010538 { VtE e[10]; };
+EXTERN_C const VTab_80010538 D_80010538;
+EXTERN_C void *D_80010508[];
+EXTERN_C void *D_800104A8[];
+struct S_VB_800104A8 {
+    VtE *vt;
+    int unk4;
+    S_VB_800104A8() { vt = (VtE *)D_80010178; unk4 = 0; vt = (VtE *)D_800104A8; }
+};
+inline void *operator new(unsigned int, void *p) { return p; }
+struct S_80020368 { S_VB_800104A8 *vb; void **vt; };
+
 #endif /* GAME_A_H_U_80020368_H */

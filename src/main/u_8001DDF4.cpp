@@ -308,7 +308,36 @@ EXTERN_C int func_8001E848(char *cur, char *s)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001E9A8);
+EXTERN_C void func_8001E9A8(void *p)
+{
+    S_Task *s = (S_Task *)p;
+    Item *it;
+    char *g;
+    Holder *h;
+    S_8001F1BC *c;
+    func_800186E8(&D_800A451C);
+    g = (char *)&D_800AC688;
+    h = g ? (Holder *)(g + 8) : 0;
+    func_80019CFC(h, s);
+    if (s->unk98)
+        func_8001E804(s->unk98, s);
+    S_Iter *i = iter_reset(&s->iter);
+    while (1) {
+        if (i->idx < s->iter.list->count)
+            it = (Item *)s->iter.list->data[s->iter.idx++];
+        else
+            it = 0;
+        if (!it)
+            break;
+        func_8001E840((S_8001E840 *)it);
+    }
+    c = D_800B4C1C;
+    D_800B4C18 = c;
+    ((S_Task *)c)->unkF4 = 0;
+    D_800B4C1C = (S_8001F1BC *)((S_Task *)c)->next;
+    func_80018788(&D_800A451C);
+    func_800190A0(s, D_800B4C18);
+}
 
 EXTERN_C void func_8001EAAC(S_Scn *s)
 {
@@ -332,7 +361,11 @@ EXTERN_C S_Evt *func_8001EB60(char *obj, int a)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001EBD8);
+EXTERN_C void func_8001EBD8(S_8001EBD8 *self, char *obj, C_80010300 *e)
+{
+    *e = C_80010300(e->unk10, self->unk98, e->unk8);
+    func_8001EFE4(obj, e);
+}
 
 EXTERN_C S_Evt *func_8001EC98(S_Node *a, S_Evt *b, S_Evt *e)
 {
@@ -399,7 +432,35 @@ EXTERN_C int func_8001EE58(void *a, S_Node *b)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001EEC0);
+EXTERN_C int func_8001EEC0(void *p, void *unused)
+{
+    S_Task *s = (S_Task *)p;
+    Item *it;
+    char *g;
+    Holder *h;
+    func_800186E8(&D_800A451C);
+    g = (char *)&D_800AC688;
+    h = g ? (Holder *)(g + 8) : 0;
+    func_80019CFC(h, s);
+    if (s->unk98)
+        func_8001E804(s->unk98, s);
+    S_Iter *i = iter_reset(&s->iter);
+    while (1) {
+        if (i->idx < s->iter.list->count)
+            it = (Item *)s->iter.list->data[s->iter.idx++];
+        else
+            it = 0;
+        if (!it)
+            break;
+        func_8001E840((S_8001E840 *)it);
+    }
+    if (func_8001A6A8(D_800B4C1C, (int)s))
+        D_800B4C1C = (S_8001F1BC *)func_8001A744(D_800B4C1C, s);
+    else
+        D_800B4C20 = func_8001A744(D_800B4C20, s);
+    func_80018788(&D_800A451C);
+    return 1;
+}
 
 EXTERN_C void func_8001EFE4(char *obj, void *e)
 {

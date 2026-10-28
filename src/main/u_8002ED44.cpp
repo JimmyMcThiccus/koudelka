@@ -696,7 +696,27 @@ EXTERN_C void func_80030BFC(S_8002F824 *p, int flags)
     func_8001A610(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_80030C70);
+EXTERN_C bool func_80030C70(S_Base14 *pa, S_Base14 *pb, S_Base14 *pc, S_Base14 *pd, S_Base14 *pe)
+{
+    bool ok = 1;
+    int i;
+    for (i = 0; i < 3; i++) {
+        int n = 0;
+        if (NEAR64(VX(pa, 0), VX(pa, 1)) && NEAR64(VX(pa, 1), VX(pa, 2)) && NEAR64(VX(pa, 2), VX(pa, 3)) && NEAR64(VX(pa, 3), VX(pa, 0)))
+            n = 1;
+        ok &= n;
+        VX(pb, 0) = VX(pa, 0);
+        VX(pc, 1) = VX(pa, 1);
+        VX(pd, 2) = VX(pa, 2);
+        VX(pe, 3) = VX(pa, 3);
+        VX(pb, 1) = VX(pc, 0) = (VX(pa, 0) + VX(pa, 1)) >> 1;
+        VX(pb, 2) = VX(pd, 0) = (VX(pa, 0) + VX(pa, 2)) >> 1;
+        VX(pc, 3) = VX(pe, 1) = (VX(pa, 1) + VX(pa, 3)) >> 1;
+        VX(pd, 3) = VX(pe, 2) = (VX(pa, 2) + VX(pa, 3)) >> 1;
+        VX(pb, 3) = VX(pc, 2) = VX(pd, 1) = VX(pe, 0) = (VX(pa, 1) + VX(pa, 2)) >> 1;
+    }
+    return !ok;
+}
 
 EXTERN_C void func_80030E9C(S_Blk8 *d, S_Blk8 *s)
 {

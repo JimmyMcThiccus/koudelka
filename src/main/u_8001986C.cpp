@@ -713,7 +713,27 @@ EXTERN_C S_Link *func_8001AEFC(S_Link *head, S_Link *n)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001AF8C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B0C0);
+EXTERN_C int func_8001B0C0(void *v, void *q)
+{
+    S_Heap *h = (S_Heap *)v;
+    char *p = (char *)q;
+    while (1) {
+        if (p < (char *)h->e) {
+            h = (S_Heap *)h->unk4;
+            if (h)
+                continue;
+            break;
+        }
+        if (p < (char *)h + 0x4008)
+            goto found;
+        break;
+    }
+    return func_80018DF4((int *)p);
+found:
+    if (!p)
+        return 0;
+    return ((unsigned short *)p)[-1] - 4;
+}
 
 EXTERN_C void *func_8001B134(unsigned int size)
 {
