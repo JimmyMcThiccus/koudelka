@@ -89,7 +89,47 @@ void *f37688_alt(void *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_800376D0);
+extern "C++" void f279A8() asm("func_800279A8");
+static inline void *a2_ctor44(void *p)
+{
+    char *b = (char *)p + 0x3C;
+    AT(p, void *, 4) = b;
+    AT(p, short, 0x3C) = 16;
+    AT(b, short, 2) = 0;
+    AT(b, int, 4) = -1;
+    AT(p, void **, 0) = D_80012154;
+    AT(p, void **, 8) = D_8001201C;
+    AT(p, void **, 0) = D_80012034;
+    AT(p, void *, 0xC) = (char *)p + 0x10;
+    ((int (*)(void *, int, int))func_800198E0)((char *)p + 0x10, 4, 0);
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    AT(p, void **, 8) = D_80012364;
+    AT(p, int, 0x28) = 0;
+    AT(p, int, 0x2C) = 0;
+    AT(p, void **, 0) = D_8001237C;
+    AT(p, char, 0x37) = 0;
+    return p;
+}
+extern "C++" int f376D0(void *p) asm("func_800376D0");
+int f376D0(void *p)
+{
+    if (D_800B4D0C || AT(p, int, 0x14)) return 0;
+    AT(p, int, 0x28) = AT(p, int, 0x28) + 1;
+    f279A8();
+    if (AT(p, void *, 0x1C)) func_800A0D0C(AT(p, void *, 0x1C));
+    AT(p, void *, 0x1C) = func_800A0D2C(0x1000);
+    AT(p, int, 0x20) = 0;
+    AT(p, int, 0xC) = 0;
+    void *o = a2_ctor44(operator new(0x44));
+    AT(p, void *, 0x14) = o;
+    func_80035CF8();
+    func_80035CD8();
+    func_80036FC0(AT(p, void *, 0x14), 0x708, 0x1000);
+    func_8003546C(AT(p, void *, 0x14), (int)p);
+    func_8003714C(AT(p, void *, 0x14));
+    return 1;
+}
 
 EXTERN_C void func_80037834(void *p)
 {
@@ -190,7 +230,32 @@ EXTERN_C int func_800382A4(void *p, int a, int b)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_8003831C);
+EXTERN_C void func_8003831C(void *p, int m)
+{
+    if (AT(p, void *, 0x14)) {
+        if (!(m & 0x10)) {
+            if (m & 2) AT(p, int, 0xC) = 0xA;
+            else AT(p, int, 0xC) = 4;
+        } else AT(p, int, 0xC) = 9;
+        return;
+    }
+    switch (AT(p, int, 0xC)) {
+    case 0:
+        if (!AT(p, int, 0x2C) && !(m & 0x10)) return;
+        func_80035CF8();
+        func_800376D0(p);
+        return;
+    case 7:
+        AT(p, int, 0xC) = 9;
+    }
+    void *o = a2_ctor44(operator new(0x44));
+    AT(p, void *, 0x14) = o;
+    func_80035CF8();
+    func_80035CD8();
+    func_80036FC0(AT(p, void *, 0x14), 0x708, 0x1000);
+    func_8003546C(AT(p, void *, 0x14), (int)p);
+    ((A2VObj0 *)AT(p, void *, 0x14))->v02();
+}
 
 EXTERN_C void func_800384C4()
 {

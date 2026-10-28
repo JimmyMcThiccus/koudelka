@@ -166,7 +166,7 @@ EXTERN_C void func_80025CE0(int a, char *b, int c);
 EXTERN_C void func_80019D40(void *p);
 EXTERN_C int func_800464E4(void *p, int a, int b, void *q);
 EXTERN_C int func_800461F4(void *p, int a, int b, void *q);
-EXTERN_C int func_80036FC0(int e, int a, int b, void *q);
+EXTERN_C int func_80036FC0(void *o, int a, int b);
 struct S_A2_PolyF3 { unsigned char tag[3]; unsigned char len; unsigned char r0, g0, b0, code; short xy[6]; };
 struct S_A2_Pt { short x, y; };
 struct C_80038E34 : C_8003BEF8 { short unk4C, unk4E, unk50, unk52; int pad54; int unk58; short unk5C; char pad5E[10]; int unk68; C_80038E34(short a) asm("func_80038E34"); };
@@ -422,4 +422,6 @@ EXTERN_C void func_8003A7FC(MATRIX *m, S_A2_SvI *v);
 struct S_A2_Lv { char pad[0x4C]; short s4C, s4E; };
 struct S_A2_Strm : A2VObj0 { char pad[0x18]; unsigned end, cur; };
 struct S_A2_E80 { char pad[4]; MATRIX m; char pad2[8]; S_A2_SvI sv2C; S_A2_V4 v34; };
+EXTERN_C int CdPosToInt(void *p);
+struct S_A2_St : A2VObj0 { char pad[8]; Holder h; };
 #endif /* GAME_A2_A2_H */
