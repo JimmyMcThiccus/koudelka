@@ -77,9 +77,9 @@ under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs
 - Editing files outside your area (see "What you may edit").
 - Committing a function that doesn't match, or changing the build to make one fit.
 
-**Skip for now:** constructors and destructors of classes with virtual bases. You can spot them by an `in_chrg`
-test of `$a1`, a 0x50-byte vtable copied to the stack, and deltas patched through `self->vbptr`. They need shared
-class modelling, which the integrator does. List the ones you meet in your report.
+**Constructors and destructors of classes with virtual bases** (an `in_chrg` test of `$a1`, a 0x50-byte vtable
+copied to the stack, deltas patched through `self->vbptr`) are written by hand in an explicit form. See
+"Virtual-base constructors and destructors" below.
 
 ## What you may edit
 
@@ -154,6 +154,31 @@ overlay header as one struct).
 
 After a build, `tools/func_diff.py <target>` lists the functions that no longer match retail, which helps when the
 matching check fails.
+
+## Virtual-base constructors and destructors
+
+These are no longer skipped. Write them out by hand: the explicit form matches, real `virtual` inheritance
+doesn't. Examples: `func_800D0D1C` (`src/battle/battle_c.cpp`), `func_80056364` (`src/main/main_b.cpp`, a ctor
+with a virtual-base member), and FIELD's `func_800C5544` and `func_800DB120`. The shape:
+
+1. **Signature:** the second argument is GCC's `in_chrg` flag. Declare it `int in_chrg`.
+2. **`if (in_chrg)`, the most-derived object builds the virtual base:**
+   - Set the vbase pointer, e.g. `self->vb50 = (T_VBase *)((char *)self + 0x5758)`.
+   - Run the base's own ctor body inline. Usually that's `vptr = D_80010178; f4 = 0; vptr = <base vtable>`.
+3. **Call the direct base ctors**, passing `0` for their `in_chrg`.
+4. **Store the vtable into the vbase:** `self->vb50->vptr = &VT`.
+5. **`if (!in_chrg)`, the object is a subobject, so the deltas are wrong:**
+   - Copy the 0x50-byte vtable to a stack local (`T_VTable10 vt = VT;`) and point the vbase at the copy.
+   - Patch the entries whose delta depends on the vbase offset: `vt.e[1].delta = VT.e[1].delta + adj` (and
+     usually `e[6]`). `adj` is `(char *)self - ((char *)self->vb50 - <vbase offset>)`.
+6. **Then the rest of the ctor body:** non-virtual vptr stores, then member ctors.
+
+A vtable is 10 entries of `{short delta; short index; void (*pfn)(void *);}`. Each area has its own copy of
+these types for now (`T_VTable10`/`T_VEntry` in `battle.h`, `Unk_VTbl10` in `field.h`, `VTabB50` in `main_b`);
+use yours.
+
+For dtors, the steps run in reverse, and `in_chrg & 1` decides whether the virtual base is destroyed (and
+`& 2`, in deleting dtors, whether `__builtin_delete` runs).
 
 ## Ghidra
 
