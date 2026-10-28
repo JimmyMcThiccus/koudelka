@@ -17,7 +17,14 @@ EXTERN_C void *func_8003F7E8(void *p, short a)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8003F850);
+EXTERN_C void func_8003F850(void *p, int idx)
+{
+    idx++;
+    if (idx < AT(p, int, 0x1D0)) {
+        void *o = func_80024BB0(AT(p, void *, 0x1D4), (unsigned short)idx);
+        ((A2VObj0 *)o)->v01(S_A2B_Pt(AT(p, unsigned short, 0x1A8), AT(p, unsigned short, 0x1AC)), 0);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8003F8CC);
 
@@ -504,7 +511,23 @@ EXTERN_C void func_80042974()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8004297C);
+EXTERN_C void func_8004297C(void *p)
+{
+    if ((AT(p, unsigned short, 0x140) & 0xF0) == 0) {
+        func_8003FAEC(p, D_800B4D38, AT(p, short, 0x144), AT(p, short, 0x11A));
+        if (AT(p, unsigned char, 0x120))
+            func_8003E198(p, AT(p, void *, 0x138), AT(p, short, 0x11A));
+        else
+            func_8003E124(p);
+        if (AT(p, short, 0x214) == 0)
+            ((A2VObj0 *)p)->v06();
+    } else {
+        if (AT(p, short, 0x214) == 0)
+            ((A2VObj0 *)p)->v07();
+    }
+    if (AT(p, int, 0x208) && AT(p, void *, 0x1B8))
+        func_8004387C(p);
+}
 
 EXTERN_C int func_80042A74()
 {
@@ -513,7 +536,19 @@ EXTERN_C int func_80042A74()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80042A7C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80042D3C);
+EXTERN_C void func_80042D3C(void *p)
+{
+    if (AT(p, void *, 0x1B4) && AT(p, void *, 0x1B8)) {
+        S_A2_V4 v = ((S_A2_At34 *)AT(p, void *, 0x1B8))->v;
+        v.b = AT(p, int, 0x108);
+        S_A2_At34 *q = AT(p, S_A2_At34 *, 0x1B4);
+        q->v = v;
+        func_80039DD8(q);
+        S_A2_At2C *r = AT(p, S_A2_At2C *, 0x1B4);
+        r->v = AT(p, S_A2_At2C *, 0x1B8)->v;
+        func_80039DD8(r);
+    }
+}
 
 EXTERN_C int func_80042E08()
 {
@@ -583,7 +618,20 @@ EXTERN_C void func_800433CC(void *p)
     func_80044990((char *)p + 0x234, AT(AT(p, void *, 0x1B8), short, 0x2E), AT(p, int, 0x1FC), 0, AT(p, short, 0x220), 1);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80043460);
+EXTERN_C void func_80043460(void *p, S_A2_Pt a, int b, int c)
+{
+    AT(p, short, 0x226) = 0xB4;
+    AT(p, S_A2_Pt, 0x258) = a;
+    AT(p, short, 0x1BC) = func_80042E20(p, AT(p, short, 0x258) - AT(AT(p, void *, 0x1B8), int, 0x34), AT(p, short, 0x25A) - AT(AT(p, void *, 0x1B8), int, 0x3C));
+    AT(p, int, 0x1FC) = ratan2(AT(p, short, 0x258) - AT(AT(p, void *, 0x1B8), int, 0x34), AT(p, short, 0x25A) - AT(AT(p, void *, 0x1B8), int, 0x3C)) + 0x800;
+    func_80044990((char *)p + 0x234, AT(AT(p, void *, 0x1B8), short, 0x2E), AT(p, int, 0x1FC), 0x14, 1, 0);
+    AT(p, short, 0x220) = 1;
+    if (!c) {
+        AT(p, int, 0xF8) = 0;
+        AT(p, unsigned char, 0x120)++;
+    }
+    AT(p, short, 0x224) = 0;
+}
 
 EXTERN_C void func_80043540(S_A2_At3540 *p, S_A2_Pt v, int t)
 {
@@ -602,13 +650,30 @@ EXTERN_C void func_800435AC(void *p, int a, int b)
     func_80044990((char *)p + 0x234, AT(AT(p, void *, 0x1B8), short, 0x2E), a, b, 0, 0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_800435E8);
+EXTERN_C void func_800435E8(void *p)
+{
+    AT(p, short, 0x1BC) = func_80044890((char *)p + 0x234, AT(AT(p, void *, 0x1B8), short, 0x2E));
+    S_A2_Sv v = AT(p, S_A2_At2C *, 0x1B8)->v;
+    v.y = AT(p, short, 0x1BC) * 512;
+    S_A2_At2C *q = AT(p, S_A2_At2C *, 0x1B8);
+    q->v = v;
+    func_80039DD8(q);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80043680);
+EXTERN_C int func_80043680(void *p, short a, int b)
+{
+    return func_80044F18(D_800B4D38, AT(p, short, 0x144), a, b, 1) != 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_800436C0);
+EXTERN_C int func_800436C0(void *p, short a, int b)
+{
+    return func_80044F18(D_800B4D38, AT(p, short, 0x144), a, b, 1) != 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80043700);
+EXTERN_C int func_80043700(void *p, short a, int b, int c)
+{
+    return func_80044F18(D_800B4D38, AT(p, short, 0x144), a, b, c) != 0;
+}
 
 EXTERN_C void func_80043740(void *p, short a)
 {

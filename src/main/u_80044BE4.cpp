@@ -5,7 +5,17 @@
 #include "game/a2/a2.h"
 #include "game/a2b/a2b.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80044BE4", func_80044BE4);
+C_80044BE4::C_80044BE4() : C_8001E40C((int)(D_800A4578_p ? D_800A4578_p + 0x50 : 0), 2, 0x200, 0)
+{
+    int i;
+    AT(this, void **, 0x8C) = D_8001295C;
+    AT(this, void **, 0) = D_80012974;
+    AT(this, int, 0x328) = 0;
+    AT(this, int, 0x32C) = 0;
+    D_800B4D38 = this;
+    for (i = 2; i >= 0; i--)
+        AT(this, S_A2B_988 *, 0xF8 + i * 4) = &D_800AC8A0[i];
+}
 
 EXTERN_C void func_80044C7C(void *p, void *a)
 {

@@ -178,9 +178,67 @@ EXTERN_C int func_8003D9F0(S_8003D9F0 *p)
     return p->unkC;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003D9FC);
+C_8003D9FC::C_8003D9FC(int a, int b, char *s) : C_8001E40C(a, 2, 0x500, 0)
+{
+    int n;
+    AT(this, void **, 0x8C) = D_80012794;
+    AT(this, void **, 0) = D_800127AC;
+    AT(this, int, 0xF8) = 0;
+    AT(this, short, 0x11E) = 0;
+    v124.init();
+    u134 = 0;
+    u138 = 0;
+    u13C = 0;
+    u140 = 0;
+    u142 = 0;
+    u144 = b;
+    x178.init();
+    v190.init();
+    u1A0 = 0;
+    AT(this, int, 0x1B4) = 0;
+    AT(this, int, 0x1B8) = 0;
+    AT(this, short, 0x1BC) = 0;
+    f41CB8((char *)this + 0x1C0);
+    AT(this, int, 0x1CC) = 0;
+    n = func_80094FD0(s);
+    if (n)
+        func_80025CE0((int)name146, s, n + 1);
+    AT(this, void *, 0x134) = func_800A0D2C(0x190);
+    AT(this, int, 0x190) = 0;
+    AT(this, int, 0x194) = 0;
+    AT(this, int, 0x198) = 0;
+    AT(this, short, 0x1A4) = 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003DB1C);
+C_8003D9FC::C_8003D9FC(int a, int b, char *s, S_A2B_V4 *src) : C_8001E40C(a, 2, 0x500, 0)
+{
+    int n;
+    AT(this, void **, 0x8C) = D_80012794;
+    AT(this, void **, 0) = D_800127AC;
+    AT(this, int, 0xF8) = 0;
+    AT(this, short, 0x11E) = 0;
+    v124.init();
+    u134 = 0;
+    u138 = 0;
+    u13C = 0;
+    u140 = 0;
+    u142 = 0;
+    u144 = b;
+    x178.init();
+    v190.init();
+    u1A0 = 0;
+    AT(this, int, 0x1B4) = 0;
+    AT(this, int, 0x1B8) = 0;
+    AT(this, short, 0x1BC) = 0;
+    f41CB8((char *)this + 0x1C0);
+    AT(this, int, 0x1CC) = 0;
+    n = func_80094FD0(s);
+    if (n)
+        func_80025CE0((int)name146, s, n + 1);
+    AT(this, void *, 0x134) = func_800A0D2C(0x190);
+    v190 = *src;
+    AT(this, short, 0x1A4) = 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003DC54);
 
