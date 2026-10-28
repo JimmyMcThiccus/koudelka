@@ -1,4 +1,9 @@
-// DRAFT: structurally complete, 1489 differing (built 6532 vs retail 6576 bytes). Control flow, all 3 switches/jump tables, calls and constants follow retail; remaining diffs are mostly register allocation: retail keeps nobj in s7, &c (0x50 colour temp) in fp and spills the message pointer m to 0x70 (and &r/&r.h to 0x78/0x74), mine keeps m in fp and nobj in s4 (each m reload is 2 extra insns in retail). Also case 98/99 scheduling of the D_800B4ED8 base-pointer and event-ctor stores. func_800BE54C/BE568 are called through s32-returning casts (retail tests the result without sign-extension).
+// DRAFT (k2): 33 differing instructions, same size as retail (6576). Registers and stack slots match retail.
+// Remaining (all scheduling): (1) loop pre-header: the hoisted &r/&c/D_800A4534 setup order (retail &r.h,&r,...,&c last; mine &c
+// second, &r last); (2) case 0 of the xA==6 switch: retail sets started=1 after loading a0; (3) two sprites (case -1, case 10,
+// X=Y=0) pass &r as addiu a1,sp,0x48 instead of lw 0x78; (4) case 98: retail stores xA after x8 in event 2 and after the
+// constants in event 1. Init order ctor1,x4,300,x8,xA fixes (4) but puts the D_80010178 pseudo below nobj in priority
+// (s6/s7 swap); (5) case 101: lui v1/v0 swap for the D_800AF470 load.
 #include "movie/movie.h"
 struct Unk800BA5C4V { virtual void v1(s32); };
 struct Unk800BA5C4W { char pad[0x18]; virtual void v1(s32); virtual void v2(); };
@@ -66,11 +71,16 @@ inline Unk800B9640* Unk800BA5C4_stream(Unk800B9640* p) {
 #define BA5C4_SPRITE(dst, X, Y, W, H) { Unk800BE1CC* o = (Unk800BE1CC*)operator new(0x74); r.set(X, Y, W, H); func_8002972C(&c, 0, 0, 0, 1); dst = (Unk800BA5C4V*)func_800BE1CC(o, (s32)&r.a, (s32)nobj, 1, (s32)&c); func_800198AC(&c, 2); }
 #define BA5C4_54C(o, a) ((s32 (*)(Unk800BE54C*, s16))func_800BE54C)(o, a)
 #define BA5C4_568(o, a) ((s32 (*)(Unk800BE568*, s16))func_800BE568)(o, a)
+// event init split from its allocation (alloc, then the call's first argument, then the stores, as retail orders them).
+// init2 (case 98) stores x8 through a named local `two` so the loop pass does not merge it with the hoisted invariant 2.
+inline void Unk800BA5C4_init(Unk800CA59CT* t, s16 k, void* a, s32 b) { Unk800CA59C_ctor1(t); *(void* volatile*)&t->x0 = D_80010300; t->x4 = 0; t->x8 = 2; t->xA = k; t->x10 = b; t->xC = (s32)a; t->x0 = D_800102D0; }
+inline void Unk800BA5C4_init2(Unk800CA59CT* t, s16 k, void* a, s32 b) { s16 two = 2; t->xA = k; Unk800CA59C_ctor1(t); t->x4 = 0; *(void* volatile*)&t->x0 = D_80010300; t->x8 = two; t->x10 = b; t->xC = (s32)a; t->x0 = D_800102D0; }
+inline s32 Unk800BA5C4_msg(Unk800BA5C4M* m) { return m->x10; }
 //@func
 EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
   void* nobj = 0;
   Unk800BEB0C* s3 = 0;
-  u16 started = 0;
+  s16 started = 0; // s16 (not u16): its test becomes a paradoxical-subreg copy, and the slot gets 8-byte alignment (0x58..0x5F)
   Unk800BA5C4W* o60 = 0;
   Unk800C5B70* o64;
   Unk800BA5C4W* o68 = 0;
@@ -82,8 +92,9 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
   Unk800BE8B0C* o6c = ctorC((Unk800BE8B0C*)operator new(0x18), (s32)p, 6, 10, 0);
   func_80048D54(&l);
   Unk800BA5C4F* f = func_80048D64(&l, 0x708, 0x1000, p, 0, 0);
+  Unk800BA5C4FX* x = f->x2C;
   p->x10E = 1;
-  if (f->x2C->xE != '1') p->x10E = 0;
+  if (x->xE != '1') p->x10E = 0;
   f->v3();
   func_80036D8C(f);
   f = func_80048D64(&l, 0xC37C, 0x12800, p, 0, 0);
@@ -95,12 +106,12 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
   p->x118 = 0; p->x11C = 0;
   func_800230E8(D_800A4534.x44 + 0x154, p);
   while (p->x108) {
-    s32 done = 0;
+    s16 done = 0; // signed narrow: retail tests a copy of it (addu v0, s0)
     Unk800BA5C4M* m;
     if (p->x10C == 0) m = func_8001EB60(p, 1);
     else m = (Unk800BA5C4M*)func_8001ED2C(p, p->x10C, 1);
     if (m && m->xA == 5) {
-      switch (m->x10) {
+      switch (Unk800BA5C4_msg(m)) {
       case 0:
         func_800BEED4((Unk800BEED4*)s3);
         goto reload;
@@ -133,7 +144,7 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
       done = 1;
     }
     if (m && m->xA == 7) {
-      switch (m->x10) {
+      switch (Unk800BA5C4_msg(m)) {
       case 0: p->x10A = 0x15; break;
       case 1: p->x10A = 0x18; p->x134 = 0; p->x130 = 0x62; break;
       case 2: operator delete(o64); p->x10A = 0x65; break;
@@ -148,8 +159,8 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
         if (nobj) {
           p->x10A++;
           BA5C4_SPRITE(p->x118, 0, 0, 0xA0, 0xF0);
-          BA5C4_LOADER(0xC368, 0xA000);
           nobj = 0;
+          BA5C4_LOADER(0xC368, 0xA000);
         }
         break;
       case 0:
@@ -394,28 +405,39 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
         break;
       case 98: {
         func_8001ED2C(p, 0x3C, 1);
-        func_8001EFE4(D_800AF470[0], Unk800BF918_ev(0x11, 0, 1));
-        char* d = 0;
+        Unk800CA59CT* t = func_8001CA10(0x14);
+        void* q = D_800AF470[0];
+        Unk800BA5C4_init2(t, 0x11, 0, 1);
+        func_8001EFE4(q, t);
+        char* o = D_800B4ED8[0];
         p->x10A = 100;
-        if (D_800B4ED8[0]) d = D_800B4ED8[0] + 0x124;
-        func_8001EFE4(d, Unk800BF918_ev(2, p, 7));
+        char* d = o ? o + 0x124 : 0;
+        t = func_8001CA10(0x14);
+        Unk800BA5C4_init2(t, 2, p, 7);
+        func_8001EFE4(d, t);
         func_800232A0(D_800A4534.x44 + 0x154, p);
         break;
       }
       case 99: {
         o64 = func_800C5B70((Unk800C5B70*)operator new(8), (s32)p, 2);
         func_800C5B80((Unk800C5B80*)o64);
-        char* d = 0;
+        char* o = D_800B4ED8[0];
         p->x10A = 100;
-        if (D_800B4ED8[0]) d = D_800B4ED8[0] + 0x124;
-        func_8001EFE4(d, Unk800BF918_ev(2, p, 7));
+        char* d = o ? o + 0x124 : 0;
+        Unk800CA59CT* t = func_8001CA10(0x14);
+        Unk800BA5C4_init(t, 2, p, 7);
+        func_8001EFE4(d, t);
         break;
       }
-      case 101:
-        func_8001EFE4(D_800AF470[0], Unk800BF918_ev(0x11, 0, 0));
+      case 101: {
+        Unk800CA59CT* t = func_8001CA10(0x14);
+        void* q = D_800AF470[0];
+        Unk800BA5C4_init(t, 0x11, 0, 0);
+        func_8001EFE4(q, t);
         p->x10A = 100;
         func_800232A0(D_800A4534.x44 + 0x154, p);
         break;
+      }
       case 97: case 100:
         break;
       default:
