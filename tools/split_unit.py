@@ -107,8 +107,11 @@ def main():
     # Rodata ownership
     seg_dir = a.segment
     own_head, own_tail = set(), set()
+    src_text = "\n".join(lines)
     for d in ("nonmatchings", "matchings"):
         for f in glob.glob(str(ROOT / opt["asm_path"] / d / seg_dir / "*.s")):
+            if not re.search(rf"\b{Path(f).stem}\b", src_text):
+                continue  # moved out by an earlier split that hasn't been re-split yet
             t = Path(f).read_text()
             m = re.search(r"glabel (\w+)\n\s*/\* [0-9A-F]+ ([0-9A-F]{8})", t)
             if not m:
@@ -167,7 +170,9 @@ def main():
         idx = None
         # The tail takes over the head's rodata start: the head then owns none, so replace its line.
         if kind:
-            same = [j for j, l in enumerate(ylines) if rom_of(l) == r and ", .rodata, " in l]
+            same = [j for j, l in enumerate(ylines) if rom_of(l) == r and f", .rodata, {a.segment}]" in l]
+            if not same and any(rom_of(l) == r and ", .rodata, " in l for l in ylines):
+                sys.exit(f"the rodata at {new_line.strip()} already belongs to another unit")
             if same:
                 ylines[same[0]] = new_line
                 continue

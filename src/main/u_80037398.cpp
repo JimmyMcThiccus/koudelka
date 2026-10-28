@@ -1,0 +1,252 @@
+#include "common.h"
+#include "shared/vbase.h"
+#include "game/a/main_a.h"
+#include "game/a/decls_a.h"
+#include "game/a2/a2.h"
+
+EXTERN_C void func_80037398(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80012294;
+    AT(p, void **, 0) = D_80012224;
+    func_80035304(p, 0);
+    if (flags & 1)
+        operator delete(p);
+}
+
+EXTERN_C void func_800373F8(void *p)
+{
+    func_8009CAE0(0);
+    *AT(p, unsigned short *, 4) |= 1;
+    AT(p, char, 0x37) = 1;
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_80037440);
+
+EXTERN_C void func_800374F4(void *p)
+{
+    if (!AT(p, signed char, 0x37))
+        func_800361C8(p);
+}
+
+EXTERN_C void func_80037524(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37))
+        func_80036364(p, a);
+}
+
+EXTERN_C void func_80037554(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37)) f3635C_alt(p, a);
+}
+
+EXTERN_C void func_80037584(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37))
+        func_80036554(p, a);
+}
+
+EXTERN_C int func_800375B4(void *p)
+{
+    if (AT(p, signed char, 0x37))
+        return 0;
+    return func_80036850(p);
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_800375E4);
+
+extern "C++" void *f37688_alt(void *p) asm("func_80037688");
+void *f37688_alt(void *p)
+{
+    AT(p, void **, 0) = D_80011FE4;
+    AT(p, void **, 8) = D_800123EC;
+    AT(p, void **, 0) = D_80012404;
+    AT(p, int, 0x10) = 0;
+    AT(p, int, 0x14) = 0;
+    AT(p, int, 0x18) = 0;
+    AT(p, int, 0x1C) = 0;
+    AT(p, int, 0x28) = 0;
+    AT(p, int, 0x2C) = 1;
+    return p;
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_800376D0);
+
+EXTERN_C void func_80037834(void *p)
+{
+    A2VObj0 *q = AT(p, A2VObj0 *, 0x14);
+    if (q) {
+        q->v04(3);
+        AT(p, void *, 0x14) = 0;
+    }
+    if (AT(p, void *, 0x1C)) {
+        func_800A0D0C(AT(p, void *, 0x1C));
+        AT(p, void *, 0x1C) = 0;
+    }
+    func_800376D0(p);
+}
+
+EXTERN_C int func_800378A8(void *p)
+{
+    int r;
+    switch (AT(p, int, 0xC)) {
+    case 2:
+        r = 3;
+        break;
+    case 15:
+        r = 0x10;
+        break;
+    default:
+        if (strncmp(AT(p, char *, 0x1C), D_80012354, 14))
+            r = 4;
+        else if (AT(p, signed char *, 0x1C)[14] == AT(p, int, 0x10) + '0' || !AT(p, int, 0x10))
+            r = 0x11;
+        else
+            r = 1;
+        break;
+    }
+    return AT(p, int, 0xC) = r;
+}
+
+EXTERN_C void func_80037934(void *p)
+{
+    int r = func_8009C9C0();
+    if (r & 0x10)
+        AT(p, int, 0xC) = 9;
+    else if (r & 2) {
+        if (AT(p, int, 0xC) == 15 && AT(p, int, 0x24))
+            AT(p, int, 0xC) = 14;
+        else
+            AT(p, int, 0xC) = 4;
+    } else {
+        AT(p, int, 0xC) = 0xB;
+        AT(p, int, 0x24) = 600;
+        CdControl(6, 0, 0);
+    }
+}
+
+EXTERN_C int func_800379D0(void *p)
+{
+    int r;
+    switch (AT(p, int, 0xC)) {
+    case 2:
+        r = D_8001232C[AT(p, int, 0x10)].b;
+        break;
+    case 15:
+        r = 0x800;
+        break;
+    default:
+        r = 0x1000;
+        break;
+    }
+    return r;
+}
+
+EXTERN_C char *func_80037A20(A2VObj0 *p, int n)
+{
+    char *r;
+    unsigned int end;
+    int off;
+    if (!AT(p, char *, 0x1C))
+        return 0;
+    end = AT(p, int, 0x20) + n;
+    if ((unsigned int)p->v05() < end)
+        return 0;
+    off = AT(p, int, 0x20);
+    r = AT(p, char *, 0x1C) + off;
+    AT(p, int, 0x20) = off + n;
+    return r;
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_80037AAC);
+
+EXTERN_C int func_800382A4(void *p, int a, int b)
+{
+    if (!AT(p, int, 0xC) && func_800376D0(p)) {
+        AT(p, int, 0x10) = a;
+        AT(p, int, 0x18) = b;
+        return AT(p, int, 0x1C);
+    }
+    func_8001EAAC(D_800B4C18);
+    return 0;
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_8003831C);
+
+EXTERN_C void func_800384C4()
+{
+    char *o = (char *)&D_800AC86C;
+    AT(o, void **, 8) = D_800123EC;
+    AT(o, void **, 0) = D_80012404;
+    func_8001D024(o + 8, 0);
+}
+
+EXTERN_C void func_80038508()
+{
+    func_80037688(&D_800AC86C);
+}
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012484);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001252C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001257C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012594);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001260C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001262C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001265C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012674);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800126DC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800126F4);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012714);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012724);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001276C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001277C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012794);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800127AC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800127D4);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800127E4);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800127FC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012814);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012864);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001287C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001289C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800128CC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012944);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001295C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012974);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001298C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_8001299C);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800129AC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800129C4);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_800129FC);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80037398", D_80012A18);

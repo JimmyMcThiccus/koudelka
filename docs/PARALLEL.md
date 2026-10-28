@@ -5,19 +5,20 @@ The areas don't overlap, so their branches merge cleanly.
 
 ## Areas (round 3)
 
-The EXE's game code is split into 35 source units, one per original source file where the `.ctors` table or a
-jump-table alignment change marks one: `src/main/u_<start address>.cpp`, plus `main_a.cpp`, `main_b.cpp` and
-`sound.cpp`. An area is a set of whole units, so two sessions never edit the same file.
+The EXE's game code is split into 42 source units, one per original source file where the `.ctors` table, a
+jump-table alignment change or a `$gp` clash (`tools/gp_boundaries.py`) marks one: `src/main/u_<start
+address>.cpp`, plus `main_a.cpp`, `main_b.cpp` and `sound.cpp`. An area is a set of whole units, so two sessions
+never edit the same file. The "Left" counts are as of the first round-3 merge.
 
 | Area | Units (`src/...`) | Left | Your symbols | Your headers | Your drafts |
 |---|---|---|---|---|---|
-| `main_a2` | `main/u_80032264`, `u_80033ECC`, `u_800372C0`, `u_8003852C` | 76 | `main_a2.txt` | `include/game/a2/` | `drafts/main_a2/` |
-| `main_a2b` | `main/u_8003C510.cpp` (`0x8003C510`–`0x80054A2C`) | 168 | `main_a2b.txt` | `include/game/a2b/` | `drafts/main_a2b/` |
-| `main_b1` | `main/main_b.cpp`, `u_80056E0C`, `u_8005F238`, `u_80062610`, `u_800658E0`, `u_80067450` | 160 | `main_b.txt` | `include/game/b/` | `drafts/main_b/` |
-| `main_b2` | `main/u_80068770`, `u_8006CBCC`, `u_80071A74`, `u_80082174`, `u_80083EB4`, `u_80085168`, `u_80089024` | 175 | `main_b2.txt` | `include/game/b2/` | `drafts/main_b2/` |
+| `main_a2` | `main/u_80032264`, `u_80033ECC`, `u_800372C0`, `u_80037398`, `u_8003852C` | 49 | `main_a2.txt` | `include/game/a2/` | `drafts/main_a2/` |
+| `main_a2b` | `main/u_8003C510`, `u_8003F7E8`, `u_80044BE4`, `u_80045850` (`0x8003C510`–`0x80054A2C`) | 143 | `main_a2b.txt` | `include/game/a2b/` | `drafts/main_a2b/` |
+| `main_b1` | `main/main_b.cpp`, `u_80056E0C`, `u_80059A84`, `u_8005F238`, `u_80062610`, `u_800658E0`, `u_80067450` | 137 | `main_b.txt` | `include/game/b/` | `drafts/main_b/` |
+| `main_b2` | `main/u_80068770`, `u_8006BFE4`, `u_8006CBCC`, `u_80071A74`, `u_80082174`, `u_80083EB4`, `u_80085168`, `u_80089024` | 150 | `main_b2.txt` | `include/game/b2/` | `drafts/main_b2/` |
 | `field` | `field/field.cpp`, `field/field_b.cpp` | 192 | `field.txt` | `include/field/` | `drafts/field/` |
 | `battle` | `battle/battle.cpp`, `battle_b.cpp`, `battle_c.cpp` | 115 | `battle.txt` | `include/battle/` | `drafts/battle/` |
-| `small` | `effect/*`, `capture/*` (`capture.cpp` is PsyQ 4.1), `movie/movie.cpp` (game code only: leave its 28 Sony library functions), `gameend/gameend.cpp`, `main/sound.cpp` (PsyQ 4.1), `main/main_a.cpp` and `main/u_80018B88` … `u_8002ED44` | ~111 | `main_a.txt`, `sound.txt`, `effect.txt`, `capture.txt`, `movie.txt`, `gameend.txt` | `include/game/a/`, `include/game/sound/`, `include/effect/`, `include/capture/`, `include/movie/`, `include/gameend/` | `drafts/<that area>/` |
+| `small` | `effect/*`, `capture/*` (`capture.cpp` is PsyQ 4.1), `movie/movie.cpp` (game code only: leave its 28 Sony library functions), `gameend/gameend.cpp`, `main/sound.cpp` (PsyQ 4.1), `main/main_a.cpp` and `main/u_80018B88` … `u_8002ED44`, `u_8003148C` | ~102 | `main_a.txt`, `sound.txt`, `effect.txt`, `capture.txt`, `movie.txt`, `gameend.txt` | `include/game/a/`, `include/game/sound/`, `include/effect/`, `include/capture/`, `include/movie/`, `include/gameend/` | `drafts/<that area>/` |
 
 Symbols files are in `config/symbols/`. Headers outside your folders are **read-only** for you, including ones your
 units already include (`main_a2b` reads `include/game/a2/`, `main_b2` reads `include/game/b/`). Put new
@@ -119,6 +120,10 @@ declare small globals plainly (`EXTERN_C int D_X;`): where retail uses `$gp` you
 `lui` you get the assembler's `lui $dst; lw $dst, %lo(D_X)($dst)` macro. If a header already declares the
 symbol with another type, alias it: `EXTERN_C int D_X_word asm("D_X");`. For GCC's split form (another register
 as the temporary), use an incomplete array or a struct > 8 bytes, as in the overlays below.
+
+Because a symbol is reached one way only inside one original file, a unit where retail reaches it both ways
+holds two files. `tools/gp_boundaries.py` reports any such clash; there are none now. If a function of yours
+only matches with the other form, report it. Don't work around it.
 
 ## Globals in overlays
 
