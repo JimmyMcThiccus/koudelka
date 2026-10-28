@@ -1,0 +1,2 @@
+// main_a2b: names for functions/data in src/main/u_8003C510.cpp (0x8003C510-0x80054A2C).
+// Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)

@@ -3,27 +3,28 @@
 Several sessions can decompile at once, each in its own git worktree and branch and each owning one **area**.
 The areas don't overlap, so their branches merge cleanly.
 
-## Areas (round 2)
+## Areas (round 3)
 
-The EXE's game code is split into 29 source units, one per original source file where the `.ctors` table marks
-one: `src/main/u_<start address>.cpp`, plus `main_a.cpp`, `main_b.cpp` and `sound.cpp`. An area is a set of whole
-units, so two sessions never edit the same file.
+The EXE's game code is split into 35 source units, one per original source file where the `.ctors` table or a
+jump-table alignment change marks one: `src/main/u_<start address>.cpp`, plus `main_a.cpp`, `main_b.cpp` and
+`sound.cpp`. An area is a set of whole units, so two sessions never edit the same file.
 
-| Area | Units (`src/...`) | Functions left | Your symbols | Your headers |
-|---|---|---|---|---|
-| `main_a1` | `main/main_a.cpp`, `main/u_80018B88` … `main/u_8002ED44.cpp` (16 units, `0x800186B0`–`0x80032264`) | 548 | `config/symbols/main_a.txt` | `include/game/a/` |
-| `main_a2` | `main/u_80032264` … `main/u_8003C510.cpp` (5 units, `0x80032264`–`0x80054A2C`) | 549 | `config/symbols/main_a2.txt` | `include/game/a2/` |
-| `main_b` | `main/main_b.cpp`, `main/u_80056E0C` … `main/u_80089024.cpp` (13 units, `0x80054A2C`–`0x8008B6B0`) | 552 | `config/symbols/main_b.txt` | `include/game/b/` |
-| `sound` | `main/sound.cpp` (the sound driver: PsyQ 4.1, `0x8008B6B0`–`0x80094910`) | 180 | `config/symbols/sound.txt` | `include/game/sound/` |
-| `field` | `field/field.cpp`, `field/field_b.cpp` (from `0x800DE3B8`) | 468 | `config/symbols/field.txt` | `include/field/` |
-| `battle` | `battle/battle.cpp`, `battle/battle_b.cpp` (from `0x800C1E44`), `battle/battle_c.cpp` (from `0x800CF764`) | 283 | `config/symbols/battle.txt` | `include/battle/` |
-| `effect_capture` | `effect/effect.cpp`, `capture/capture.cpp` (PsyQ 4.1), `capture/capture_b.cpp` | 138 + 86 | `effect.txt`, `capture.txt` | `include/effect/`, `include/capture/` |
-| `movie_gameend` | `movie/movie.cpp`, `gameend/gameend.cpp` | 135 (28 are Sony library code: leave them) + 1 | `movie.txt`, `gameend.txt` | `include/movie/`, `include/gameend/` |
+| Area | Units (`src/...`) | Left | Your symbols | Your headers | Your drafts |
+|---|---|---|---|---|---|
+| `main_a2` | `main/u_80032264`, `u_80033ECC`, `u_800372C0`, `u_8003852C` | 76 | `main_a2.txt` | `include/game/a2/` | `drafts/main_a2/` |
+| `main_a2b` | `main/u_8003C510.cpp` (`0x8003C510`–`0x80054A2C`) | 168 | `main_a2b.txt` | `include/game/a2b/` | `drafts/main_a2b/` |
+| `main_b1` | `main/main_b.cpp`, `u_80056E0C`, `u_8005F238`, `u_80062610`, `u_800658E0`, `u_80067450` | 160 | `main_b.txt` | `include/game/b/` | `drafts/main_b/` |
+| `main_b2` | `main/u_80068770`, `u_8006CBCC`, `u_80071A74`, `u_80082174`, `u_80083EB4`, `u_80085168`, `u_80089024` | 175 | `main_b2.txt` | `include/game/b2/` | `drafts/main_b2/` |
+| `field` | `field/field.cpp`, `field/field_b.cpp` | 192 | `field.txt` | `include/field/` | `drafts/field/` |
+| `battle` | `battle/battle.cpp`, `battle_b.cpp`, `battle_c.cpp` | 115 | `battle.txt` | `include/battle/` | `drafts/battle/` |
+| `small` | `effect/*`, `capture/*` (`capture.cpp` is PsyQ 4.1), `movie/movie.cpp` (game code only: leave its 28 Sony library functions), `gameend/gameend.cpp`, `main/sound.cpp` (PsyQ 4.1), `main/main_a.cpp` and `main/u_80018B88` … `u_8002ED44` | ~111 | `main_a.txt`, `sound.txt`, `effect.txt`, `capture.txt`, `movie.txt`, `gameend.txt` | `include/game/a/`, `include/game/sound/`, `include/effect/`, `include/capture/`, `include/movie/`, `include/gameend/` | `drafts/<that area>/` |
 
-Headers outside your folder are **read-only** for you, including ones your units already include: `main_a2`
-reads `include/game/a/`, and `sound` reads `include/game/b/`. Put new declarations in your own folder and include
-that header from your units. Use `--unit` with the unit file a function lives in (see "The loop"); the unit
-boundaries are the `[0x..., cpp, u_...]` lines in `config/slus_010.51.yaml`.
+Symbols files are in `config/symbols/`. Headers outside your folders are **read-only** for you, including ones your
+units already include (`main_a2b` reads `include/game/a2/`, `main_b2` reads `include/game/b/`). Put new
+declarations in your own folder and include that header from your units. If a read-only header has a declaration
+that is wrong for your function, alias it (`EXTERN_C int f_alt(int) asm("func_X");`) and report it. Use `--unit`
+with the unit file a function lives in (see "The loop"); the unit boundaries are the `[0x..., cpp, u_...]` lines
+in `config/slus_010.51.yaml`.
 
 ## Setup (once per worktree)
 
@@ -67,6 +68,17 @@ The last line must be `functional check: OK`.
 **Only exact matches land.** An exact match is the only proof that a function behaves like retail; the build can't
 check a non-matching one. If you get close but can't finish, leave the `INCLUDE_ASM` in place, save your best attempt
 under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs. `drafts/` isn't built.
+
+**Not allowed.** A branch with any of these is rejected whole at merge, because each one fakes a match:
+- `asm`/`__asm__` statements that emit instructions. `asm("sym")` on a declaration, to give it a symbol name, is fine.
+- Editing anything under `asm/`, or adding `.s` files.
+- Defining new storage (globals, statics, string literals that land in new rodata).
+- Editing files outside your area (see "What you may edit").
+- Committing a function that doesn't match, or changing the build to make one fit.
+
+**Skip for now:** constructors and destructors of classes with virtual bases. You can spot them by an `in_chrg`
+test of `$a1`, a 0x50-byte vtable copied to the stack, and deltas patched through `self->vbptr`. They need shared
+class modelling, which the integrator does. List the ones you meet in your report.
 
 ## What you may edit
 
@@ -139,7 +151,8 @@ matching check fails.
 
 ## When you stop
 
-End with a short report:
+Stop and report after about 25 functions have landed and been committed, or when nothing easy is left. The
+integrator merges your branch, and then asks you to `git merge master` and carry on. The report is short:
 - how many functions landed, with their address range
 - matching and functional status
 - drafts left (with what differs)

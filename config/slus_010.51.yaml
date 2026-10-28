@@ -16,7 +16,9 @@ options:
     - config/symbols/main.txt
     - config/symbols/main_a.txt
     - config/symbols/main_a2.txt
+    - config/symbols/main_a2b.txt
     - config/symbols/main_b.txt
+    - config/symbols/main_b2.txt
     - config/symbols/sound.txt
     - config/symbols/main_keep_rodata.txt
   undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.main.txt
