@@ -3118,4 +3118,15 @@ EXTERN_C const VTabB50 D_80014FFC;
 EXTERN_C void *D_8001504C[];
 EXTERN_C void *D_80014EEC[];
 
+struct S_Dtor50 { char pad[0x50]; S_VBB *vb; };
+EXTERN_C void func_8005652C(void *self, int b);
+EXTERN_C void *D_80013BD0[];
+EXTERN_C void *D_80014DAC[];
+EXTERN_C void *D_80014DCC[];
+EXTERN_C const VTabB50 D_80014D5C;
+EXTERN_C void *D_80014E7C[];
+EXTERN_C void *D_80014E5C[];
+EXTERN_C void *D_80014EAC[];
+EXTERN_C const VTabB50 D_80014E0C;
+
 #endif /* GAME_B_DECLS_B_H */
