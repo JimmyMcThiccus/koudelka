@@ -1346,4 +1346,9 @@ struct Unk800C60E8Q { char pad[0x28]; SPRT s; };
 EXTERN_C Unk800C60E8W* D_800CBADC[];
 EXTERN_C void func_800C62E4(Unk800C62E4* p, Unk800C62E4B* q);
 
+/* func_800C1278 */
+struct Unk800C1278 { char pad[0x78]; void* x78; char x7C[0xE8 - 0x7C]; char xE8[0x18C - 0xE8]; s32 x18C, x190; char p1[0x1F0 - 0x194]; char x1F0[0x26BC - 0x1F0]; char x26BC[0x2718 - 0x26BC]; s32 x2718; };
+EXTERN_C char D_800B7778[], D_800B77A0[], D_800B7AA0[], D_800B7AD4[];
+EXTERN_C s32 func_800C3D50(Unk800C3D50*);
+
 #endif /* MOVIE_H */

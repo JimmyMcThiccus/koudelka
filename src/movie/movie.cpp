@@ -980,11 +980,79 @@ EXTERN_C void func_800C11A0(Unk800C11A0* p) {
     func_800553D8(0);
 }
 
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7A90);
-
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C1278);
+EXTERN_C void func_800C1278(Unk800C0EA4* p0) {
+  Unk800C1278* p = (Unk800C1278*)p0;
+  func_800C10BC((Unk800C10BC*)p, D_800B7AA0, 0x18, (void*)D_800B7810, 0);
+  func_80054FC0(p->x1F0);
+  for (u32 i = 0; i < 8; i++) func_8005556C(2, 1);
+  s32 q; /* retry-loop busy code (4) */
+  u32 b = (u32)func_800C3D50((Unk800C3D50*)p->x78) >> 4; s32 r = 0;
+  u32 k; /* the parity term b + k is a giv; retail keeps it as a reduced induction variable */
+  for (k = 1; ; k++) {
+    if (!(k < 2)) break;
+    if (r) goto done;
+    if ((b + k) % 2 == 1) { func_80053BCC(p->xE8, D_800B7778, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0); }
+    else { func_80053BCC(p->xE8, D_800B7AD4, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0x10); }
+    func_80054CE4(p->x7C);
+    s32 v = p->x190 = func_800C39D4(p->x78);
+    switch (v) {
+    case 0: case 3: if ((b + k) % 2 == 1) r += 1; else r += 2; break;
+    case 4: {
+      u32 j = 0; q = 4; /* function-scope q: keeps the retry loop's 4 out of the outer loop's hoisting */
+      for (; j < 10; ) { j++; s32 w = func_800C3674(p->x78); p->x190 = w; if (w != q) break; }
+    }
+      if (p->x190 != 4) p->x190 = -1;
+      r = -1; break;
+    case -1: r = -1; break;
+    }
+    func_8005556C(2, 1);
+  }
+  if (r) goto done;
+  for (k = 1; ; k++) {
+    if (!(k < 2)) break;
+    if (r) break;
+    if ((b + k) % 2 == 1) { func_80053BCC(p->xE8, D_800B7778, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0); }
+    else { func_80053BCC(p->xE8, D_800B7AD4, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0x10); }
+    func_80054CE4(p->x7C);
+    s32 v = p->x190 = func_800C3674(p->x78);
+    switch (v) {
+    case 0: case 3: if ((b + k) % 2 == 1) r += 1; else r += 2; break;
+    case 4: {
+      u32 j = 0; q = 4; /* function-scope q: keeps the retry loop's 4 out of the outer loop's hoisting */
+      for (; j < 10; ) { j++; s32 w = func_800C3674(p->x78); p->x190 = w; if (w != q) break; }
+    }
+      if (p->x190 != 4) p->x190 = -1;
+      r = -1; break;
+    case -1: r = -1; break;
+    }
+  }
+  func_8005556C(2, 1);
+done:
+  if (r <= 0) {
+    if (r == 0) { func_800C3D5C((Unk800C3D5C*)p->x78, 0); func_80054CE4(p->x7C); }
+    func_800C0DA4((Unk800C0DA4*)p, p->x190);
+    for (u32 i = 0; i < 0x3C; i++) func_8005556C(2, 1);
+    p->x18C = 1;
+    func_800553D8(0);
+  } else {
+    if (r % 2 == 1) { func_80053BCC(p->xE8, D_800B7778, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0); }
+    else { func_80053BCC(p->xE8, D_800B7AD4, 0x12); func_800C3D5C((Unk800C3D5C*)p->x78, 0x10); }
+    func_80054CE4(p->x7C);
+    p->x2718 = 2;
+    func_80053BCC(p->x26BC, D_800B77A0, 6);
+    p->x18C = 2;
+  }
+  func_80054FE0(p->x1F0);
+  func_8005549C(7, p, 0, -1);
+}
 
 EXTERN_C void func_800C1690(void* p, s32* a, s32* b, s32* c, s32* d) { Unk800C1690B* g = D_800B4DD0[0]; g->x1BC = *a; g->x1C0 = *b; g->x204 = *c; g->x208 = *d; }
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7A90);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7AA0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7AD4);
 
 EXTERN_C void func_800C16C8(Unk800C0EA4* p) {
   switch (((Unk800C16C8G*)D_800B4DD0[0])->x203) {
