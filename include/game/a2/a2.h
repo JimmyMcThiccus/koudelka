@@ -340,4 +340,8 @@ EXTERN_C void SetRotMatrix(MATRIX *m);
 EXTERN_C void SetTransMatrix(MATRIX *m);
 struct S_A2_SvI { short x, y, z, w; S_A2_SvI() { x = 0; y = 0; z = 0; w = 0; } S_A2_SvI(short a, short b, short c) { x = a; y = b; z = c; w = 0; } };
 EXTERN_C long RotTrans(S_A2_SvI *v0, S_A2_V4 *v1, long *flag);
+struct S_A2_S8 { short v; short pad[3]; S_A2_S8() {} S_A2_S8(const S_A2_S8 &o) { v = o.v; } };
+struct S_A2_Sv4c { short x, y, z, w; S_A2_Sv4c(S_A2_S8 a, S_A2_S8 b, S_A2_S8 c, S_A2_S8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
+struct S_A2_I8 { int v; int pad; S_A2_I8() {} S_A2_I8(const S_A2_I8 &o) { v = o.v; } };
+struct S_A2_Iv4c { int x, y, z, w; S_A2_Iv4c(S_A2_I8 a, S_A2_I8 b, S_A2_I8 c, S_A2_I8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
 #endif /* GAME_A2_A2_H */

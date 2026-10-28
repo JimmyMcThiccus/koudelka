@@ -806,7 +806,17 @@ EXTERN_C MATRIX *func_8003B3EC(MATRIX *r, MATRIX *a, MATRIX *b)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B450);
+extern "C++" S_A2_V4z f3b450(int a, void *b) asm("func_8003B450");
+S_A2_V4z f3b450(int a, void *b)
+{
+    MATRIX *m = (MATRIX *)a;
+    int *v = (int *)b;
+    S_A2_V4z t;
+    t.a = m->t[0] + ((m->m[0][0] * v[0] + m->m[0][1] * v[1] + m->m[0][2] * v[2] + 0x800) >> 12);
+    t.b = m->t[1] + ((m->m[1][0] * v[0] + m->m[1][1] * v[1] + m->m[1][2] * v[2] + 0x800) >> 12);
+    t.c = m->t[2] + ((m->m[2][0] * v[0] + m->m[2][1] * v[1] + m->m[2][2] * v[2] + 0x800) >> 12);
+    return t;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B598);
 
@@ -979,9 +989,27 @@ EXTERN_C void func_8003BCE0(MATRIX *m, int i, SVECTOR *v)
     m->m[2][i] = v->vz;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BD08);
+extern "C++" S_A2_S8 a2_be68(S_A2_S8 *a, S_A2_S8 *b) asm("func_8003BE68");
+#define S8(p, i) ((S_A2_S8 *)((short *)(p) + (i)))
+EXTERN_C S_A2_Sv4c func_8003BD08(short *a, short *b)
+{
+    S_A2_S8 x = a2_be68(S8(a, 0), S8(b, 0));
+    S_A2_S8 y = a2_be68(S8(a, 1), S8(b, 1));
+    S_A2_S8 z = a2_be68(S8(a, 2), S8(b, 2));
+    S_A2_S8 w = *S8(a, 3);
+    return S_A2_Sv4c(x, y, z, w);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BDB8);
+extern "C++" S_A2_I8 a2_be84(S_A2_I8 *a, S_A2_I8 *b) asm("func_8003BE84");
+#define I8(p, i) ((S_A2_I8 *)((int *)(p) + (i)))
+EXTERN_C S_A2_Iv4c func_8003BDB8(int *a, int *b)
+{
+    S_A2_I8 x = a2_be84(I8(a, 0), I8(b, 0));
+    S_A2_I8 y = a2_be84(I8(a, 1), I8(b, 1));
+    S_A2_I8 z = a2_be84(I8(a, 2), I8(b, 2));
+    S_A2_I8 w = *I8(a, 3);
+    return S_A2_Iv4c(x, y, z, w);
+}
 
 EXTERN_C S_Short func_8003BE68(S_Short *a, S_Short *b)
 {
