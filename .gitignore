@@ -18,3 +18,6 @@ __pycache__/
 
 Japan Demo/
 scratch_c/
+
+# decomp-permuter working dirs (tools/permute.py)
+permuter/

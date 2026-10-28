@@ -139,6 +139,27 @@ overlay header as one struct).
 After a build, `tools/func_diff.py <target>` lists the functions that no longer match retail, which helps when the
 matching check fails.
 
+## Brute-forcing a near miss
+
+For a draft a few instructions off on register allocation or instruction order, run
+[decomp-permuter](https://github.com/simonlindholm/decomp-permuter) (`bin/decomp-permuter`, copied by
+`worktree_setup.py`; rerun it if your worktree predates it). It rewrites the C at random, compiles each candidate
+with your unit's real flags, and keeps whatever scores closer to retail:
+
+```powershell
+.venv/Scripts/python.exe tools/permute.py setup drafts/<area>/func_X.cpp func_X --unit src/<area>/<file>.cpp
+.venv/Scripts/python.exe tools/permute.py run permuter/func_X -j 8 --stop-on-zero --best-only
+```
+
+- Use at most `-j 8`: seven sessions share the machine's 40 threads, and each candidate takes about 0.7 s.
+- Results land in `permuter/func_X/output-<score>-<n>/source.c` (`permuter/` is git-ignored). Score 0 is a
+  match. Copy the function back into your scratch file and confirm with `try_compile.py` before landing it.
+- The permuter parses C only. `setup` keeps the C parts of your headers and drops C++ classes (pointers to
+  them still work), but the function itself must be plain C: no member functions, virtual calls, `this`,
+  references or `new`/`delete`. If it isn't, `setup` says so.
+- Give it 20–60 minutes per function. If the score doesn't move, the difference is probably not one the
+  permuter can reach.
+
 ## Names and types
 
 - Keep `func_XXXXXXXX` / `D_XXXXXXXX` unless you're confident of a name. Rename only through your symbols file
