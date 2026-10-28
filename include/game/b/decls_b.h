@@ -3203,4 +3203,9 @@ EXTERN_C void *func_80054AF0_v(void *p, int b) asm("func_80054AF0");
 EXTERN_C void *func_80054A4C_v(void *p, int b, int c) asm("func_80054A4C");
 EXTERN_C void *func_80054094_v(void *p, int b) asm("func_80054094");
 
+EXTERN_C void func_800205D4_v(void *p) asm("func_800205D4");
+EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
+EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
+EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
+
 #endif /* GAME_B_DECLS_B_H */
