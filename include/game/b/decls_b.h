@@ -3047,4 +3047,8 @@ static inline void shift_8007F138(Arr_8007F434 *self)
 // header prototype/declaration is corrected (verified with the header decl renamed away).
 // Types used here (List_8007AB78, V4_80085578, ...) are already in include/game/b/decls_b.h.
 
+EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n);
+EXTERN_C void func_80078520(void *self, void *p);
+EXTERN_C void func_800825FC(short *self, int b);
+
 #endif /* GAME_B_DECLS_B_H */
