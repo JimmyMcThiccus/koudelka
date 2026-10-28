@@ -1764,7 +1764,7 @@ EXTERN_C char D_80017748[];
 EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80083F40(void *self, int b);
+EXTERN_C int func_80083F40(void *self, int id);
 EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
@@ -2625,7 +2625,7 @@ struct W20_80089658 { int w[5]; };
 struct C20_80089658 { char c[20]; };
 
 EXTERN_C Packed_8008B5B4 *func_8008B630(Unpacked_8008B5B4 *s, Packed_8008B5B4 *d);
-EXTERN_C void func_80086F94(void *self, int b, int c);
+EXTERN_C int func_80086F94(char *self, void *b, int c);
 EXTERN_C int func_800D9048(void *self, int b, int c);
 EXTERN_C int func_8008A54C(void *self, int b);
 EXTERN_C int func_8008B4E8(U16_8008B4E8 *p, int b);
@@ -2971,5 +2971,23 @@ static inline void *h8_80064B3C(char *h)
     char *v = h ? h + 8 : 0;
     return v ? *(void **)v : 0;
 }
+
+struct H6_80086B70 { char pad[0x6]; short h[5]; };
+
+EXTERN_C SBytes8_80089F10 func_80089F10(signed char *src, int d);
+
+struct Q_80088DEC { char pad[0x6]; short a[5]; char p2[6]; short b[5]; };
+
+EXTERN_C void func_8008691C(void *self);
+
+EXTERN_C unsigned short func_800891C0(void *a, void *b, void *c);
+
+struct S6C_800894AC { int w[0x1B]; };
+
+struct R_800894AC { unsigned short a; unsigned char b; char pad; unsigned short s[6]; };
+
+// Matches only if the header prototype is changed to: int func_80086F94(char *self, void *b, int c)
+// (currently decls_b.h has void func_80086F94(void *self, int b, int c); verified with a #define-rename test, scratch_c/ag_u_80082174/_proto_86F94.cpp)
+EXTERN_C void func_8008691C(void *self);
 
 #endif /* GAME_B_DECLS_B_H */
