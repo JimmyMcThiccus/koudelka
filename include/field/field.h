@@ -1009,5 +1009,17 @@ inline void addPrimN(unsigned int n, void* prim) {
     }
 }
 EXTERN_C int func_8005F1B4(void*);
+struct Unk_800BA800_uv { unsigned char u; unsigned char pad1; unsigned char v; unsigned char pad3; };
+struct Unk_800BA800 { void* vtbl; int unk4; short unk8; short unkA; char unkC[0xC]; char unk18[0xC]; SPRT_16 unk24[2]; char pad44_[0]; int unk44; int unk48; };
+EXTERN_C void SetDrawMode(void*, int, int, int, int);
+EXTERN_C void func_80098DC0(void*, int);
+EXTERN_C void func_800BB068(void*, int, int);
+EXTERN_C void func_800BADB4(void*);
+
+EXTERN_C void func_800BAC9C(Unk_800BAC9C* p, int x, int y);
+EXTERN_C void func_800BAED8(Unk_Sprt16_24c* p, Unk_ColorSrc* c);
+EXTERN_C void func_800BB128(Unk_Sprt16_24* p, int u, int v);
+EXTERN_C void func_800BB1BC(Unk_800BB1BC* p, Unk_800BB1BC_arg* a);
+EXTERN_C void func_800E6E64(Unk_800E6E64* p);
 
 #endif /* FIELD_FIELD_H */

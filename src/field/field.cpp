@@ -1,7 +1,39 @@
 #include "common.h"
 #include "field/field.h"
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800BA800);
+EXTERN_C Unk_800BA800* func_800BA800(Unk_800BA800* p, Unk_Short2 xy, Unk_800BA800_uv uv, Unk_800BB1BC_arg* q, int a, short b, short c, int, int d) {
+    char col[8];
+    p->vtbl = D_80010178;
+    p->unk4 = 0;
+    p->vtbl = D_800111BC;
+    p->unk8 = 0;
+    p->vtbl = D_800B6DF4;
+    p->unk48 = 1;
+    p->unkA = c;
+    p->unk44 = d;
+    func_8002972C(col, 0x80, 0x80, 0x80, 1);
+    SetDrawMode(p->unkC, 0, 0, 0, 0);
+    SetDrawMode(p->unk18, 0, 0, 0, 0);
+    ((unsigned char*)&p->unk24[0].tag)[3] = 3;
+    p->unk24[0].code = 0x7C;
+    ((unsigned char*)&p->unk24[1].tag)[3] = 3;
+    p->unk24[1].code = 0x7C;
+    func_800BB1BC((Unk_800BB1BC*)p, q);
+    func_800BB068(p, a, b);
+    func_800BAC9C((Unk_800BAC9C*)p, xy.x, xy.y);
+    func_800BB128((Unk_Sprt16_24*)p, uv.u, uv.v);
+    func_800BAED8((Unk_Sprt16_24c*)p, (Unk_ColorSrc*)col);
+    if (b) {
+        func_80098DC0(&p->unk24[0], 1);
+        func_80098DC0(&p->unk24[1], 1);
+    } else {
+        func_80098DC0(&p->unk24[0], 0);
+        func_80098DC0(&p->unk24[1], 0);
+    }
+    func_800BADB4(p);
+    func_800198AC(col, 2);
+    return p;
+}
 
 EXTERN_C Unk_800BA994* func_800BA994(Unk_800BA994* p) {
     p->vtbl = D_80010178;
