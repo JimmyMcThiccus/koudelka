@@ -114,7 +114,23 @@ EXTERN_C S_80034924_B *func_80034924(S_80034924_A *p, S_80034924_B *q)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003494C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800349F8);
+EXTERN_C int func_800349F8(void *p, short *r)
+{
+    short *q = (short *)((char *)p + 8);
+    int maxx = 0, maxy = 0;
+    int minx = r[2], miny = r[3];
+    int i, x, y;
+    for (i = 4; i; i--) {
+        x = q[0];
+        if (x < minx) minx = x;
+        if (maxx < x) maxx = x;
+        y = q[1];
+        if (y < miny) miny = y;
+        if (maxy < y) maxy = y;
+        q += 4;
+    }
+    return minx == r[2] || !maxx || miny == r[3] || !maxy;
+}
 
 C_80034AA0::C_80034AA0()
 {
@@ -269,7 +285,24 @@ EXTERN_C void func_80035304(void *p, int flags)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035384);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003546C);
+
+extern "C++" int f3546C(void *vp, void *vo) asm("func_8003546C");
+int f3546C(void *vp, void *vo)
+{
+    S_A2_VH0C *p = (S_A2_VH0C *)vp;
+    A2VObj0 *o = (A2VObj0 *)vo;
+    int r = p->v05(o->v05());
+    AT(o, int, 4) = r;
+    List *l = &p->h;
+    func_80019A6C(l, (int)o, l->count);
+    char *g = D_800A4544;
+    int key = (int)(p ? (char *)p + 8 : 0);
+    if (!func_8001D25C(g, key)) {
+        void *k = p ? (char *)p + 8 : 0;
+        func_8001D150(g, new S_A2_X44764(k));
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003556C);
 
@@ -309,7 +342,22 @@ EXTERN_C void func_800357E0(void *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003585C);
+extern "C++" int f3585C(S_A2_Strm *p, unsigned int n) asm("func_8003585C");
+int f3585C(S_A2_Strm *p, unsigned int n)
+{
+    unsigned int avail = p->end;
+    unsigned int c = p->cur;
+    avail = avail - c;
+    void *r;
+    if (n >= avail)
+        n = avail;
+    r = (void *)p->v04(n);
+    if (r) {
+        CdGetSector(r, n >> 2);
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C int func_800358D4(S_800358D4 *p)
 {
@@ -531,9 +579,44 @@ EXTERN_C void func_80036090(unsigned char a, int b)
     func_80018970(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036110);
+EXTERN_C void func_80036110(void *p, int a)
+{
+    unsigned short *q = AT(p, unsigned short *, 4);
+    AT(p, char, 0x34) = 0;
+    AT(p, char, 0x35) = 0x15;
+    int cur = D_800B4D0C;
+    *q |= 1;
+    if (cur == (int)p) {
+        func_8009CAE0(0);
+        D_800B4D0C = 0;
+        if (!(unsigned char)func_80035C30(a & 0xFF)) {
+            List *l = &D_800AC854;
+            if (l->count)
+                ((A2VObj0 *(*)(void *, int))func_80019C68)((List *)&D_800AC854, 0)->v00(0);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800361C8);
+extern "C++" void f361C8(S_A2_VH0C *p) asm("func_800361C8");
+void f361C8(S_A2_VH0C *p)
+{
+    AT(p, int, 0x30) += 0x800;
+    if (!((unsigned)AT(p, int, 0x30) < (unsigned)AT(p, int, 0x28)))
+        p->v07(2);
+    if (AT(p, int, 0x2C)) return;
+    List *l = &p->h;
+    A2VObj0 *s = l->count ? AT(l, A2VObj0 **, 0)[0] : 0;
+    if (!s) return;
+    s->v03();
+    if (!p->v06(AT(s, int, 4))) return;
+    s->v00(p ? (char *)p + 8 : 0);
+    func_80019C68((List *)&p->h, 0);
+    AT(AT(p, int *, 4), int, 4) = AT(p, int, 0x30);
+    if (!count_of(&p->h) && (unsigned)AT(p, int, 0x30) < (unsigned)AT(p, int, 0x28)) {
+        p->v07(2);
+        AT(p, int, 0x28) = AT(p, int, 0x30);
+    }
+}
 
 EXTERN_C void func_8003635C()
 {
@@ -541,7 +624,36 @@ EXTERN_C void func_8003635C()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036364);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036554);
+extern "C++" void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf) asm("func_80036554");
+void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf)
+{
+    if (t == 2) {
+        switch ((signed char)(AT(p, unsigned char, 0x34) - 1)) {
+        case 0:
+            if (AT(p, signed char, 0x35) == 4)
+                AT(p, signed char, 0x35) = 5;
+            break;
+        case 2:
+            if (AT(p, signed char, 0x35) == 0xF)
+                AT(p, signed char, 0x35) = 0x10;
+            break;
+        case 5:
+            if (AT(p, signed char, 0x35) == 0x14)
+                p->v07(buf[0]);
+            break;
+        case 1:
+        case 3:
+            if (AT(p, signed char, 0x35) == 0xA) {
+                AT(p, char, 0x34) = 5;
+                AT(p, signed char, 0x35) = 0xB;
+                AT(p, short, 0x38) = ((unsigned)(AT(p, int, 0x28) - AT(p, int, 0x30)) >> 12) + 0x78;
+                func_8009CAE0((int)func_80035F80);
+            }
+            break;
+        }
+    } else
+        p->v12(buf);
+}
 
 EXTERN_C void func_80036674(S_A2_H0C *p)
 {
@@ -579,7 +691,20 @@ EXTERN_C void func_80036780(A2VObj0 *p, unsigned char *b)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036850);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036D8C);
+EXTERN_C void func_80036D8C(A2VObj0 *p)
+{
+    void *q = p ? AT(p, void *, 4) : 0;
+    if (((AT(q, unsigned short, 0) >> 4) ^ 1) & 1)
+        p->v02();
+    if (D_800B4D0C == (int)p) {
+        int key = (int)(p ? (char *)p + 8 : 0);
+        char *g = D_800A4544;
+        func_8001D324(g, func_8001D25C(g, key));
+        void *k = p ? (char *)p + 8 : 0;
+        func_8001D150(g, new S_A2_X1(k));
+    } else if (p)
+        p->v04(3);
+}
 
 EXTERN_C void *func_80036EB8(void *p, void *q)
 {
@@ -611,7 +736,27 @@ EXTERN_C int func_80036F54(void *p, int a, int b)
     return b;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036FC0);
+extern "C++" int f36FC0(void *p, int a, int b) asm("func_80036FC0");
+int f36FC0(void *p, int a, int b)
+{
+    if (D_800B4D0C) return 0;
+    if ((unsigned char)func_80035C30((unsigned char)func_8009C9C0())) return 0;
+    unsigned short *q = AT(p, unsigned short *, 4);
+    AT(p, int, 0x24) = a;
+    AT(p, int, 0x28) = b;
+    *q = 0;
+    AT(p, short, 0x3A) = 0x10;
+    AT(p, char, 0x36) = 0;
+    AT(p, char, 0x35) = func_8009C9E0() != 9 ? 3 : 5;
+    char *g = D_800A4544;
+    int key = (int)(p ? (char *)p + 8 : 0);
+    if (!func_8001D25C(g, key)) {
+        void *k = p ? (char *)p + 8 : 0;
+        func_8001D150(g, new S_A2_X44764(k));
+    }
+    D_800B4D0C = (int)p;
+    return 1;
+}
 
 EXTERN_C void func_800370D0(void *p)
 {
@@ -633,7 +778,26 @@ EXTERN_C void func_800370D0(void *p)
     AT(p, void *, 0x2C) = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003714C);
+extern "C++" int f3714C(void *vp) asm("func_8003714C");
+int f3714C(void *vp)
+{
+    S_A2_VH0C *p = (S_A2_VH0C *)vp;
+    if (D_800B4D0C != (int)p) return 0;
+    int s = 0;
+    List *l;
+    if (count_of(&p->h)) {
+        l = &p->h;
+        A2VObj0 *o = l->count ? AT(l, A2VObj0 **, 0)[0] : 0;
+        if (!o->v04(0) && !AT(p, int, 0x2C)) s = 1;
+    } else
+        s = 1;
+    if (s) AT(p, void *, 0x2C) = func_800A0D2C((((unsigned)AT(p, int, 0x28) + 0x7FF) >> 11) << 11);
+    int *q = AT(p, int *, 4);
+    AT(p, int, 0x30) = 0;
+    q[1] = 0;
+    AT(p, char, 0x36) = 1;
+    return 1;
+}
 
 EXTERN_C int func_80037258(S_80037258 *p)
 {
