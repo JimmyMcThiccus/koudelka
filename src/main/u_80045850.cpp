@@ -2293,7 +2293,29 @@ EXTERN_C void *func_800532EC(void *p, void *q)
     return q;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80053360);
+S_A2B_CpB2C *f53360(S_A2B_CpB2C *p)
+{
+    S_A2B_CpB2C *o = (S_A2B_CpB2C *)operator new(0x2C);
+    S_A2B_Q16 *d = o->arr;
+    int n = 1;
+    S_A2B_Q16 *s = p->arr;
+    int t;
+    short u;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80013AA8;
+    o->unkA = u;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    return o;
+}
 
 EXTERN_C int func_8005340C(void *self)
 {
