@@ -412,7 +412,6 @@ EXTERN_C void func_80018B18();
 EXTERN_C void func_800BD008(void*);
 
 struct Unk800C7F60 { s32 x0, x4, x8; char xC[4]; char p2[0x1C - 0x10]; u16 x1C; char p3[0x30 - 0x1E]; Unk800C8340L* x30; char p4[4]; char x38[4]; };
-EXTERN_C void* func_800C83CC(void*, void*, s32, void*, s32);
 
 struct Unk800C7740T { u16 x0, x2; s16 x4, x6; };
 struct Unk800C7740O { char pad[0x2C]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); };
@@ -1292,5 +1291,18 @@ EXTERN_C void func_80027FEC(void*, void*);
 struct Unk800B9DB4M { s32 v[6]; };
 struct Unk800B9DB4 { char pad[0xC]; Unk800B9DB4M xC[2]; RECT x3C; RECT x44; };
 inline Unk800B9DB4* base(Unk800B9DB4* self, Unk800B9DB4* out) { func_80027FEC(self, out); Unk800B9DB4M* d = out->xC; s32 i = 1; Unk800B9DB4M* s = self->xC; do { *d = *s; d++; s++; i--; } while (i != -1); return out; }
+
+/* func_800C2AF0 */
+struct Unk800C2AF0B { s16 x0; s16 x2; s32 x4; };
+struct Unk800C2AF0 { s32 x0; Unk800C2AF0B* x4; char p2[0x34 - 8]; s32 x34; };
+struct Unk800C2AF0S { char d[26]; };
+
+/* func_800C83CC */
+struct Unk800C83CCP { u8 a0, a1, a2, len; u8 r0, g0, b0, code; char rest[0x28 - 8]; };
+struct Unk800C83CC { void* x0; char pad[0xC]; Unk800C83CCP x10[2]; u8 x60, x61; Unk800C83CC(void* a, s32 q, void* r, s32 n); };
+EXTERN_C void func_8005F148(void*, void*);
+EXTERN_C void func_800C8B24(Unk800C8B24* p, Unk800C8B24B* q);
+EXTERN_C void func_800C8894(Unk800C8894* p, Unk800C8894B* q);
+EXTERN_C void func_800C899C(void*, void*);
 
 #endif /* MOVIE_H */

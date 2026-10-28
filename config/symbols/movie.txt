@@ -104,3 +104,4 @@ D_800B7644 = 0x800B7644; // force_not_migration:True
 D_800B7530 = 0x800B7530; // force_not_migration:True (padding after jtbl_800B74BC)
 D_800B78D8 = 0x800B78D8; // force_not_migration:True
 D_800B7968 = 0x800B7968; // force_not_migration:True
+__11Unk800C83CCPviPvi = 0x800C83CC; // type:func
