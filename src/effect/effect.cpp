@@ -384,7 +384,111 @@ EXTERN_C char *func_800D7524(char *self, char *src, int *out)
     return src + 0x3C;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D75D4);
+#define gte_ldv0_800D75D4(r0) __asm__ volatile("lwc2 $0, %0\n\tlwc2 $1, %1" : : "m"(((int *)(r0))[0]), "m"(((int *)(r0))[1]))
+#define gte_rtps_800D75D4() __asm__ volatile("nop\n\tnop\n\t.word 0x4A180001")
+#define gte_mfsxy2_800D75D4(r0) __asm__ volatile("mfc2 %0, $14\n\tnop" : "=r"(r0))
+#define gte_mfsz3_800D75D4(r0) __asm__ volatile("mfc2 %0, $19\n\tnop" : "=r"(r0))
+
+struct Tag_800D75D4 {
+    unsigned addr : 24;
+    unsigned len : 8;
+};
+
+struct FT4_800D75D4 {
+    Tag_800D75D4 tag;
+    unsigned int rgbc;
+    short x0, y0;
+    unsigned int uv0;
+    short x1, y1;
+    unsigned int uv1;
+    short x2, y2;
+    unsigned int uv2;
+    short x3, y3;
+    unsigned int uv3;
+};
+
+/* Tag_800DF0C4, OT_800DF0C4, D_800B4CF0 and D_800B4D00: copied verbatim from src/effect/effect.cpp
+   (func_800DF0C4) for a standalone build; drop them when pasting into the unit. */
+struct Tag_800DF0C4 {
+    unsigned addr : 24;
+    unsigned len : 8;
+};
+
+struct OT_800DF0C4 {
+    char pad[0x10];
+    unsigned int size;
+    Tag_800DF0C4 *ot;
+};
+
+struct Head_800D75D4 {
+    char pad[0x34];
+};
+
+struct Tex_800D75D4 {
+    unsigned int rgbc;
+    unsigned int uv[4];
+};
+
+struct Obj_800D75D4 : Head_800D75D4, Tex_800D75D4 {
+    FT4_800D75D4 prim[2];
+    short scale, a, b, c;
+    SVec4 pos;
+};
+
+EXTERN_C int D_800B4CF0[];
+EXTERN_C OT_800DF0C4 *D_800B4D00[];
+EXTERN_C int func_800260A4(int a);
+EXTERN_C int func_80026014(int a);
+
+inline int add_800D75D4(unsigned int o, OT_800DF0C4 *d, FT4_800D75D4 *p)
+{
+    if (o && o < d->size) {
+        p->tag.addr = *(unsigned int *)&d->ot[o];
+        *(unsigned int *)&d->ot[o] = (unsigned int)p & 0x00FFFFFF;
+        return 1;
+    }
+    return 0;
+}
+
+EXTERN_C int func_800D75D4(Obj_800D75D4 *self)
+{
+    FT4_800D75D4 *p;
+    int sxy, sy, sz;
+    int dx1, dy1, dx2, dy2;
+    Tex_800D75D4 *t;
+    unsigned int o;
+    OT_800DF0C4 *d;
+    gte_ldv0_800D75D4(&self->pos);
+    gte_rtps_800D75D4();
+    p = &self->prim[D_800B4CF0[0]];
+    p->rgbc = self->rgbc;
+    gte_mfsxy2_800D75D4(sxy);
+    sy = sxy >> 16;
+    gte_mfsz3_800D75D4(sz);
+    if (sz <= 0)
+        return 0;
+    dx1 = FIELD_AT((void *)D_800E583C[0], int, 0x11C) * (short)((self->scale * func_800260A4(self->c + self->b + self->a) + 0x800) >> 12) / sz;
+    dy1 = FIELD_AT((void *)D_800E583C[0], int, 0x11C) * (short)((self->scale * func_80026014(self->c + self->b + self->a) + 0x800) >> 12) / sz;
+    dx2 = FIELD_AT((void *)D_800E583C[0], int, 0x11C) * (short)((self->scale * func_800260A4(self->c + self->b - (self->a - 0x1000)) + 0x800) >> 12) / sz;
+    dy2 = FIELD_AT((void *)D_800E583C[0], int, 0x11C) * (short)((self->scale * func_80026014(self->c + self->b - (self->a - 0x1000)) + 0x800) >> 12) / sz;
+    p->x0 = sxy + dx1;
+    p->x3 = sxy - dx1;
+    p->y0 = sy + dy1;
+    p->y3 = sy - dy1;
+    p->x1 = sxy + dx2;
+    p->x2 = sxy - dx2;
+    p->y1 = sy + dy2;
+    p->y2 = sy - dy2;
+    t = self;
+    {
+        unsigned int a = t->uv[0], b = t->uv[1], c = t->uv[2], e = t->uv[3];
+        p->uv0 = a;
+        p->uv1 = b;
+        p->uv2 = c;
+        p->uv3 = e;
+    }
+    return add_800D75D4(sz >> 2, D_800B4D00[0], p);
+}
 
 EXTERN_C int func_800D7958(void *self)
 {
@@ -2382,7 +2486,8 @@ EXTERN_C int func_800DE884(void *self, short i);
 EXTERN_C int func_800DE7C8(void *self, short i);
 EXTERN_C int func_800DE83C(void *self, short i);
 EXTERN_C void func_800DE8CC(void *self, short i);
-EXTERN_C void func_800DEA54(void *self, int arg);
+struct S_800DEA54;
+EXTERN_C void func_800DEA54(S_800DEA54 *self, int arg);
 EXTERN_C void func_800DEB64(void *self, short i);
 
 EXTERN_C void func_800DDA4C(void *self)
@@ -2390,11 +2495,11 @@ EXTERN_C void func_800DDA4C(void *self)
     if (FIELD_AT(self, void *, 0x8)) {
         if (func_800DE884(FIELD_AT(self, void *, 0x8), FIELD_AT(self, short, 0x6E))) {
             if (FIELD_AT(FIELD_AT(self, void *, 0x8), void *, 0x14))
-                func_800DEA54(FIELD_AT(self, void *, 0x8), 0);
+                func_800DEA54(FIELD_AT(self, S_800DEA54 *, 0x8), 0);
         } else if (func_800DE7C8(FIELD_AT(self, void *, 0x8), FIELD_AT(self, short, 0x6E))) {
             func_800DE8CC(FIELD_AT(self, void *, 0x8), FIELD_AT(self, short, 0x6E));
         } else if (func_800DE83C(FIELD_AT(self, void *, 0x8), FIELD_AT(self, short, 0x6E))) {
-            func_800DEA54(FIELD_AT(self, void *, 0x8), 0);
+            func_800DEA54(FIELD_AT(self, S_800DEA54 *, 0x8), 0);
         } else {
             func_800DEB64(FIELD_AT(self, void *, 0x8), FIELD_AT(self, short, 0x6E));
         }
@@ -2791,7 +2896,8 @@ EXTERN_C void *func_800DE5B0(void *self, void *other)
 }
 
 EXTERN_C int D_800D63E8[];
-EXTERN_C void func_800DEA54(void *self, int arg);
+struct S_800DEA54;
+EXTERN_C void func_800DEA54(S_800DEA54 *self, int arg);
 
 EXTERN_C void func_800DE6E8(IdNode *self, int flags)
 {
@@ -2801,7 +2907,7 @@ EXTERN_C void func_800DE6E8(IdNode *self, int flags)
     if (p)
         p->vptr[1].pfn((char *)p + p->vptr[1].delta, 3);
     if (FIELD_AT(self, void *, 0x18))
-        func_800DEA54(self, 1);
+        func_800DEA54((S_800DEA54 *)self, 1);
     if (FIELD_AT(self, void *, 0x1C))
         func_800A0D0C(FIELD_AT(self, void *, 0x1C));
     func_800D67CC(self, flags);
@@ -2838,18 +2944,224 @@ EXTERN_C int func_800DE884(void *self, short i)
     return color_at(self, i)->a == 0x63;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DE8CC);
+EXTERN_C int D_80011A44[];
+EXTERN_C int D_80011AAC[];
+EXTERN_C int D_80011B14[];
+EXTERN_C int D_80011D04[];
+EXTERN_C int D_80011D6C[];
+EXTERN_C int D_80011E8C[];
+EXTERN_C int D_80011EF4[];
+EXTERN_C int D_800D6468[];
+EXTERN_C int D_800D6418[];
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DEA54);
+struct SV_800DEF14 {
+    short x, y, z, w;
+    SV_800DEF14() { x = 0; y = 0; z = 0; w = 0; }
+};
 
-EXTERN_C void func_800DEA54(void *self, int arg);
+struct UV_800DEF14 {
+    unsigned int uv;
+    UV_800DEF14() {}
+};
+
+struct FT4_800DEF14 {
+    unsigned char addr[3], len;
+    unsigned char r0, g0, b0, code;
+    short x0, y0;
+    unsigned int uv0;
+    short x1, y1;
+    unsigned int uv1;
+    short x2, y2;
+    unsigned int uv2;
+    short x3, y3;
+    unsigned int uv3;
+    FT4_800DEF14() { len = 9; code = 0x2C; }
+};
+
+struct RGBC_800DEF14 {
+    unsigned char r, g, b, code;
+};
+
+struct Tex_800DEF14 {
+    unsigned int word;
+    UV_800DEF14 uv[4];
+    FT4_800DEF14 prim[2];
+    Tex_800DEF14() : word(0x2C808080) {}
+};
+
+struct A_800DEF14 {
+    int *vptr;
+    int next;
+    int *vptr8;
+    A_800DEF14() { vptr = D_80010178; vptr8 = D_80011A44; next = 0; }
+};
+
+struct L1_800DEF14 : A_800DEF14 {
+    SV_800DEF14 v;
+    L1_800DEF14() {}
+};
+
+struct L2v_800DEF14 : L1_800DEF14 {
+    L2v_800DEF14() { vptr8 = D_80011AAC; vptr = D_80011B14; }
+};
+
+struct L2_800DEF14 : L2v_800DEF14 {
+    SV_800DEF14 a[4];
+    L2_800DEF14() {}
+};
+
+struct L3v_800DEF14 : L2_800DEF14 {
+    L3v_800DEF14() { vptr8 = D_80011D04; vptr = D_80011D6C; }
+};
+
+struct L3_800DEF14 : L3v_800DEF14 {
+    Tex_800DEF14 tex;
+    L3_800DEF14() {}
+};
+
+struct L4_800DEF14 : L3_800DEF14 {
+    L4_800DEF14() { vptr8 = D_80011E8C; vptr = D_80011EF4; }
+};
+
+struct L5_800DEF14 : L4_800DEF14 {
+    L5_800DEF14() { vptr8 = D_800D6468; vptr = D_800D6418; }
+};
+
+struct C_800DEF14 : L5_800DEF14 {
+    int otz;
+    unsigned short clut, tpage;
+    int wA0;
+    C_800DEF14(void *g, unsigned short clut, unsigned short tpage);
+};
+
+struct UV_800DF1DC {
+    unsigned char u, v;
+} __attribute__((aligned(2)));
+
+struct UVX_800DE8CC {
+    unsigned char u, v;
+    UVX_800DE8CC(int au, int av) : u(au), v(av) {}
+};
+
+EXTERN_C void *func_8003BEF8(void *p);
+EXTERN_C void func_80039BEC(void *self, int b);
+EXTERN_C void func_800DF1DC(void *self, UV_800DF1DC *base);
+EXTERN_C void func_800DF27C(void *self, unsigned char *rgb);
+
+EXTERN_C void func_800DE8CC(void *self, short i)
+{
+    Poly *p;
+    void *n;
+    char *g;
+    void *q;
+    Poly *t;
+    int u;
+    FIELD_AT(self, int, 0x10) = 1;
+    p = FIELD_AT(self, Poly *, 0x18);
+    if (p)
+        p->vptr[1].pfn((char *)p + p->vptr[1].delta, 3);
+    n = func_8003BEF8(operator new(0x4C));
+    g = (char *)D_800B4ED8[0];
+    FIELD_AT(self, void *, 0x18) = n;
+    func_80039BEC(g ? g + 0x50 : 0, (int)n);
+    FIELD_AT(self, void *, 0x14) = new C_800DEF14(D_800B4ED8[0],
+                                                 FIELD_AT(FIELD_AT(FIELD_AT(self, void *, 0x24), void *, 0xC), unsigned short, 0x8),
+                                                 FIELD_AT(FIELD_AT(self, void *, 0x24), unsigned short, 0x1C));
+    q = FIELD_AT(self, void *, 0x24);
+    t = FIELD_AT(q, Poly *, 0xC);
+    if (!t)
+        u = FIELD_AT(q, short, 0x10) & 0x3F;
+    else if (((int (*)(void *))t->vptr[3].pfn)((char *)t + t->vptr[3].delta))
+        u = (FIELD_AT(q, short, 0x10) << 1) & 0x7F;
+    else
+        u = FIELD_AT(q, short, 0x10) << 2;
+    {
+        struct { unsigned char u, v; } uv;
+        int v = FIELD_AT(q, short, 0x12);
+        uv.u = u;
+        uv.v = v;
+        func_800DF1DC(FIELD_AT(self, void *, 0x14), (UV_800DF1DC *)&uv);
+    }
+    func_800DF27C(FIELD_AT(self, void *, 0x14), (unsigned char *)color_at(self, i));
+    p = FIELD_AT(self, Poly *, 0x18);
+    p->vptr[5].pfn((char *)p + p->vptr[5].delta, (int)FIELD_AT(self, void *, 0x14));
+}
+
+EXTERN_C int D_800D63A0[];
+EXTERN_C char D_80010338[];
+EXTERN_C char D_800A4544[];
+EXTERN_C void func_8001D150(void *, void *);
+
+struct L_800DEA54 {
+    void *vptr;
+    int next;
+    void *owner;
+    short prio;
+    int on;
+};
+
+struct X_800DEA54 {
+    int *vptr;
+    int b;
+    int a;
+    X_800DEA54(int aa, int ab)
+    {
+        char *l;
+        L_800DEA54 *o;
+        vptr = D_800D63A0;
+        b = ab;
+        a = aa;
+        l = D_800A4544;
+        o = (L_800DEA54 *)operator new(0x14);
+        o->vptr = D_80010178;
+        o->next = 0;
+        o->vptr = D_80010338;
+        o->owner = this;
+        o->prio = 0x80;
+        o->on = 1;
+        func_8001D150(l, o);
+        int *cnt = D_800E5844;
+        (*cnt)++;
+    }
+};
+
+struct O_800DEA54 {
+    virtual ~O_800DEA54();
+    virtual void v2();
+    virtual void v3();
+    virtual void v4();
+    virtual void v5();
+    virtual void stop(int id);
+};
+
+struct S_800DEA54 {
+    char pad[0x10];
+    int w10;
+    int id;
+    O_800DEA54 *obj;
+};
+
+EXTERN_C void func_800DEA54(S_800DEA54 *self, int arg)
+{
+    self->w10 = 0;
+    if (self->obj) {
+        self->obj->stop(self->id);
+        new X_800DEA54(self->id, 1);
+        delete self->obj;
+        self->obj = 0;
+        self->id = 0;
+    }
+}
+
+struct S_800DEA54;
+EXTERN_C void func_800DEA54(S_800DEA54 *self, int arg);
 EXTERN_C void func_800DF27C(void *self, unsigned char *rgb);
 
 EXTERN_C void func_800DEB64(void *self, short i)
 {
     if (i > FIELD_AT(self, short, 0xC)) {
         if (FIELD_AT(self, void *, 0x14))
-            func_800DEA54(self, 0);
+            func_800DEA54((S_800DEA54 *)self, 0);
     } else {
         func_800DF27C(FIELD_AT(self, void *, 0x14), (unsigned char *)color_at(self, i));
     }
@@ -3005,96 +3317,6 @@ EXTERN_C Color *func_800DEEDC(void *self, int i)
     return p;
 }
 
-EXTERN_C int D_80011A44[];
-EXTERN_C int D_80011AAC[];
-EXTERN_C int D_80011B14[];
-EXTERN_C int D_80011D04[];
-EXTERN_C int D_80011D6C[];
-EXTERN_C int D_80011E8C[];
-EXTERN_C int D_80011EF4[];
-EXTERN_C int D_800D6468[];
-EXTERN_C int D_800D6418[];
-
-struct SV_800DEF14 {
-    short x, y, z, w;
-    SV_800DEF14() { x = 0; y = 0; z = 0; w = 0; }
-};
-
-struct UV_800DEF14 {
-    unsigned int uv;
-    UV_800DEF14() {}
-};
-
-struct FT4_800DEF14 {
-    unsigned char addr[3], len;
-    unsigned char r0, g0, b0, code;
-    short x0, y0;
-    unsigned int uv0;
-    short x1, y1;
-    unsigned int uv1;
-    short x2, y2;
-    unsigned int uv2;
-    short x3, y3;
-    unsigned int uv3;
-    FT4_800DEF14() { len = 9; code = 0x2C; }
-};
-
-struct RGBC_800DEF14 {
-    unsigned char r, g, b, code;
-};
-
-struct Tex_800DEF14 {
-    unsigned int word;
-    UV_800DEF14 uv[4];
-    FT4_800DEF14 prim[2];
-    Tex_800DEF14() : word(0x2C808080) {}
-};
-
-struct A_800DEF14 {
-    int *vptr;
-    int next;
-    int *vptr8;
-    A_800DEF14() { vptr = D_80010178; vptr8 = D_80011A44; next = 0; }
-};
-
-struct L1_800DEF14 : A_800DEF14 {
-    SV_800DEF14 v;
-    L1_800DEF14() {}
-};
-
-struct L2v_800DEF14 : L1_800DEF14 {
-    L2v_800DEF14() { vptr8 = D_80011AAC; vptr = D_80011B14; }
-};
-
-struct L2_800DEF14 : L2v_800DEF14 {
-    SV_800DEF14 a[4];
-    L2_800DEF14() {}
-};
-
-struct L3v_800DEF14 : L2_800DEF14 {
-    L3v_800DEF14() { vptr8 = D_80011D04; vptr = D_80011D6C; }
-};
-
-struct L3_800DEF14 : L3v_800DEF14 {
-    Tex_800DEF14 tex;
-    L3_800DEF14() {}
-};
-
-struct L4_800DEF14 : L3_800DEF14 {
-    L4_800DEF14() { vptr8 = D_80011E8C; vptr = D_80011EF4; }
-};
-
-struct L5_800DEF14 : L4_800DEF14 {
-    L5_800DEF14() { vptr8 = D_800D6468; vptr = D_800D6418; }
-};
-
-struct C_800DEF14 : L5_800DEF14 {
-    int otz;
-    unsigned short clut, tpage;
-    int wA0;
-    C_800DEF14(void *g, unsigned short clut, unsigned short tpage);
-};
-
 C_800DEF14::C_800DEF14(void *g, unsigned short aclut, unsigned short atpage)
 {
     VtEntry *vt;
@@ -3115,11 +3337,6 @@ C_800DEF14::C_800DEF14(void *g, unsigned short aclut, unsigned short atpage)
     otz = z - 14;
 }
 
-struct Tag_800DF0C4 {
-    unsigned addr : 24;
-    unsigned len : 8;
-};
-
 struct FT4_800DF0C4 {
     Tag_800DF0C4 tag;
     unsigned char r0, g0, b0, code;
@@ -3131,12 +3348,6 @@ struct FT4_800DF0C4 {
     unsigned int uv2;
     short x3, y3;
     unsigned int uv3;
-};
-
-struct OT_800DF0C4 {
-    char pad[0x10];
-    unsigned int size;
-    Tag_800DF0C4 *ot;
 };
 
 struct Head_800DF0C4 {
@@ -3196,10 +3407,6 @@ EXTERN_C int func_800DF1D4(void *self)
 {
     return 1;
 }
-
-struct UV_800DF1DC {
-    unsigned char u, v;
-} __attribute__((aligned(2)));
 
 struct UVC_800DF1DC : UV_800DF1DC {
     UVC_800DF1DC() {}
