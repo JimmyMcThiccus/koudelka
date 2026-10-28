@@ -20,7 +20,19 @@ EXTERN_C void func_800373F8(void *p)
     AT(p, char, 0x37) = 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_80037440);
+EXTERN_C void func_80037440(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80012364;
+    AT(p, void **, 0) = D_8001237C;
+    char *b = p ? (char *)p + 8 : 0;
+    char *g = D_800A4544;
+    func_8001D324(g, func_8001D25C(g, (int)b));
+    AT(p, void **, 8) = D_80012294;
+    D_800B4D0C = 0;
+    AT(p, void **, 0) = D_80012224;
+    func_80035304(p, 0);
+    if (flags & 1) delete (char *)p;
+}
 
 EXTERN_C void func_800374F4(void *p)
 {
@@ -52,7 +64,15 @@ EXTERN_C int func_800375B4(void *p)
     return func_80036850(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_800375E4);
+EXTERN_C void func_800375E4()
+{
+    char *g = D_800A4544;
+    char *o = (char *)&D_800AC86C;
+    if (!func_8001D25C(g, (int)(o ? o + 8 : 0))) {
+        void *k = o ? o + 8 : 0;
+        func_8001D150(g, new S_A2_X44764(k));
+    }
+}
 
 extern "C++" void *f37688_alt(void *p) asm("func_80037688");
 void *f37688_alt(void *p)

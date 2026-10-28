@@ -412,4 +412,5 @@ inline S_A2_C98 *a2_init_C98(S_A2_C98 *p)
 }
 struct S_A2_Pool { int unk0; S_A2_C28 *head; };
 struct S_A2_Pool98 { int unk0; S_A2_C98 *head; };
+struct S_A2_VD { virtual ~S_A2_VD(); };
 #endif /* GAME_A2_A2_H */

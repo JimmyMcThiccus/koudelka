@@ -531,7 +531,23 @@ EXTERN_C void func_80036090(unsigned char a, int b)
     func_80018970(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036110);
+EXTERN_C void func_80036110(void *p, int a)
+{
+    unsigned short *q = AT(p, unsigned short *, 4);
+    AT(p, char, 0x34) = 0;
+    AT(p, char, 0x35) = 0x15;
+    int cur = D_800B4D0C;
+    *q |= 1;
+    if (cur == (int)p) {
+        func_8009CAE0(0);
+        D_800B4D0C = 0;
+        if (!(unsigned char)func_80035C30(a & 0xFF)) {
+            List *l = &D_800AC854;
+            if (l->count)
+                ((A2VObj0 *(*)(void *, int))func_80019C68)((List *)&D_800AC854, 0)->v00(0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800361C8);
 
