@@ -1421,4 +1421,41 @@ inline Unk800B9F74R operator+(const Unk800B9F74R& r, const Unk800B9F74R& d) { re
 #define MINI800B9F74(a, b) ((a) >= (b) ? (b) : (a))
 #define MINO800B9F74(a, b) ((a) < (b) ? (a) : (b))
 
+/* func_800BD008 */
+struct Unk800BD008P { s16 x, y; Unk800BD008P(s16 ax, s16 ay) { x = ax; y = ay; } };
+struct Unk800BD008R {
+  s16 x, y, w, h;
+  Unk800BD008R() {}
+  Unk800BD008R(s16 ax, s16 ay, s16 aw, s16 ah) { x = ax; y = ay; w = aw; h = ah; }
+  Unk800BD008R(Unk800BD008P p) { *(Unk800BD008P*)this = p; w = 0; h = 0; }
+};
+inline Unk800BD008R Unk800BD008R_make2(s16 x, s16 y) { return Unk800BD008R(Unk800BD008P(x, y)); }
+inline Unk800BD008R operator+(const Unk800BD008R& a, const Unk800BD008R& b) { return Unk800BD008R(a.x + b.x, a.y + b.y, a.w, a.h); }
+inline Unk800BD008R operator&(const Unk800BD008R& a, const Unk800BD008R& c) {
+  Unk800BD008R r = Unk800BD008R_make2(c.x < a.x ? a.x : c.x, c.y < a.y ? a.y : c.y);
+  s32 ar = a.x + a.w, cr = c.x + c.w;
+  r.w = (ar < cr ? ar : cr) - r.x;
+  s32 ab = a.y + a.h, cb = c.y + c.h;
+  r.h = (ab < cb ? ab : cb) - r.y;
+  if (r.w < 0 || r.h < 0) return Unk800BD008R(0, 0, 0, 0);
+  return r;
+}
+struct Unk800BD008O { char p0[0x20]; Unk800BD008R x20; char p1[0x30 - 0x28]; s32 x30; };
+struct Unk800BD008E { s16 delta; s16 index; void* pfn; };
+struct Unk800BD008V { Unk800BD008E* vt; };
+struct Unk800BD008 { char p0[0x14]; Unk800BD008R x14[2]; s32 x24[3]; s32 x30, x34; char* x38[2]; char* x40; s32 x44; char p1[0x4C - 0x48]; s32 x4C; s16 x50, x52; Unk800BD008V* x54; };
+inline Unk800BD008R Unk800BD008_clip() {
+  char* g = (char*)D_800A4578[0];
+  Unk800BD008E* vt = *(Unk800BD008E**)(g + 0x2C);
+  Unk800BD008O* o = ((Unk800BD008O* (*)(void*))vt[12].pfn)(g + vt[12].delta);
+  Unk800BD008O* q = o;
+  if (o->x30) {
+    return (o->x20 + Unk800BD008R(((Unk800BD008P*)D_800B4CF4)[D_800B4CF0[0] ^ 1])) & ((Unk800BD008R*)D_800AC730)[D_800B4CF0[0] ^ 1];
+  }
+  return q->x20;
+}
+EXTERN_C s32 D_800B6AA4[];
+EXTERN_C void StCdInterrupt();
+EXTERN_C s32 LoadImage(void*, void*);
+
 #endif /* MOVIE_H */

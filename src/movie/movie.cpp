@@ -458,7 +458,71 @@ EXTERN_C void func_800BCEA0(void* vp) {
     p->x24[p->x30] = 2;
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BD008);
+EXTERN_C void func_800BD008(void* vp) {
+  Unk800BD008* p = (Unk800BD008*)vp;
+  if (p->x4C == 5 && D_800B6AA4[0]) { StCdInterrupt(); D_800B6AA4[0] = 0; }
+  Unk800BD008R r; r.x = 0; r.y = 0; r.w = 0; r.h = 0;
+  s32 cur = p->x30;
+  s32 pos = p->x34;
+  char* buf = p->x38[p->x44];
+  p->x34 = pos + 16;
+  p->x44 ^= 1;
+  if (p->x34 < p->x50) {
+    s32 n = p->x52;
+    DecDCTout(p->x38[p->x44], (p->x4C == 1 || p->x4C == 5) ? n * 12 : n * 8);
+  } else {
+    if (p->x24[cur] == 2) p->x24[cur] = 0;
+    p->x30 = cur ^ 1;
+    if (p->x24[p->x30] == 1) func_800BCEA0(p);
+    else {
+      DecDCToutCallback(0);
+      Unk800BD008V* o = p->x54;
+      if (o) ((void (*)(void*))o->vt[1].pfn)((char*)o + o->vt[1].delta);
+    }
+  }
+  switch (p->x4C) {
+  case 0: {
+    u32* s = (u32*)buf;
+    u32* dst = (u32*)p->x40 + (u32)pos / 2;
+    s32 i = 0;
+    while (1) {
+      if (!(i < p->x52)) break;
+      u32 a = s[0], b = s[1], c = s[2], d = s[3];
+      dst[0] = a; dst[1] = b; dst[2] = c; dst[3] = d;
+      a = s[4]; b = s[5]; c = s[6]; d = s[7];
+      dst[4] = a; dst[5] = b; dst[6] = c; dst[7] = d; s += 8; i++;
+      dst += (u32)p->x50 / 2;
+    }
+    return;
+  }
+  case 1: {
+    u32* src = (u32*)buf;
+    u32* dst = (u32*)p->x40 + pos;
+    s32 i = 0;
+    while (1) {
+      if (!(i < p->x52)) break;
+      for (s32 j = 0; j < 16; j++) *dst++ = *src++;
+      i++;
+      s32 k = p->x50 - 16; dst += k;
+    }
+    return;
+  }
+  case 2: r = p->x14[0]; break;
+  case 3: r = p->x14[cur]; break;
+  case 4: r = Unk800BD008_clip(); break;
+  case 5:
+    r = Unk800BD008_clip();
+    r.w = 24;
+    r.x += (u32)(pos * 3) / 2;
+    LoadImage(&r, buf);
+    LoadImage(&r, buf);
+    p->x38[p->x44 ^ 1] = p->x38[p->x44] + p->x52 * 48;
+    return;
+  }
+  r.w = 16;
+  r.x += pos;
+  p->x38[p->x44 ^ 1] = p->x38[p->x44] + p->x52 * 32;
+}
 
 EXTERN_C void func_800BD83C() { func_80018AF4(); Unk800BD83CS* s = (Unk800BD83CS*)D_800CBA90[0]; if (s->x20) s->x24 = 1; else if ((s ? s->x0 : 0)->x4) { Unk800BD83CH* h = s ? &s->x8 : 0; Unk800BD83CL* l = h ? h->x0 : 0; func_800BD008(l->x4 ? *l->x0 : 0); } func_80018B18(); }
 
