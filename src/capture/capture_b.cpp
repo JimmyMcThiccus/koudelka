@@ -1,7 +1,16 @@
 #include "common.h"
 #include "capture/capture.h"
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800B85B8);
+EXTERN_C void func_80035B98(void *);
+EXTERN_C int func_800B85B8(int *p)
+{
+    // the return value lives in $v0 and is reused as the increment (li v0,1; addu)
+    register int r asm("$2");
+    func_80035B98(p);
+    r = 1;
+    p[3] += r;
+    return r;
+}
 
 EXTERN_C void func_800B85EC(VObject *p)
 {
@@ -136,7 +145,7 @@ EXTERN_C char D_800B6E7C[];
 EXTERN_C void func_800BA2A4(char *p, int in_chrg);
 EXTERN_C void func_800198AC(void *, int);
 EXTERN_C void func_8001D024(void *, int);
-EXTERN_C void func_8002DC34(void *, int, int);
+EXTERN_C int func_8002DC34(void *, int, int);
 
 struct VObj2C_800B8CE8 {
     char pad[0x2C];
@@ -1865,7 +1874,112 @@ EXTERN_C int func_800BE6D8(char *p)
     return 1;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800BE748);
+EXTERN_C int func_8001A6E8(void *);
+EXTERN_C int func_8002E600(void *);
+EXTERN_C void func_8001D150(void *, void *);
+EXTERN_C char D_80010178[];
+EXTERN_C char D_80010338[];
+// vtable declared as a small object: '&D_80010160' is one 'la' insn, so loop.c does not hoist it
+// out of the message loop (a char[] makes a high/lo_sum pair that is hoisted)
+EXTERN_C int D_80010160;
+EXTERN_C char D_80010148[];
+
+struct G0_800BE748 {
+    char pad[0xF8];
+};
+struct GList_800BE748 {
+    int pad;
+};
+struct G_800BE748 : G0_800BE748, GList_800BE748 {
+};
+EXTERN_C G_800BE748 D_800AC57C;
+
+struct T_800BE748 {
+    void *vt;
+    int f4;
+    void *f8;
+    short fC;
+    int f10;
+    T_800BE748(void *o, short c, int d)
+    {
+        vt = D_80010178;
+        f4 = 0;
+        vt = D_80010338;
+        f8 = o;
+        fC = c;
+        f10 = d;
+    }
+};
+struct OB_800BE748 {
+    void *vt;
+    int f4;
+    OB_800BE748(int a)
+    {
+        vt = &D_80010160;
+        f4 = a;
+        GList_800BE748 *l = &D_800AC57C;
+        func_8001D150(l, new T_800BE748(this, 0x80, 1));
+    }
+};
+struct O_800BE748 : OB_800BE748 {
+    int f8;
+    O_800BE748(int r) : OB_800BE748(1)
+    {
+        vt = D_80010148;
+        f8 = r;
+    }
+};
+
+struct A_800BE748 {
+    void **data;
+    int n;
+};
+struct It_800BE748 {
+    A_800BE748 *arr;
+    int i;
+    void *next()
+    {
+        void *x = 0;
+        if (i < arr->n)
+            x = arr->data[i++];
+        return x;
+    }
+};
+struct N_800BE748 {
+    int pad;
+    N_800BE748 *next;
+    char pad2[4];
+    It_800BE748 it;
+};
+
+EXTERN_C void func_800BE748(char *p)
+{
+    N_800BE748 *l = (N_800BE748 *)(p + 0x448);
+    int k = func_8001A6E8(l->next);
+    void *s = *(void **)(*(char **)(p + 0x270) + 0x254);
+    N_800BE748 *e = l->next;
+    while (1) {
+        It_800BE748 *it = &e->it;
+        int ok;
+        void *x;
+        if (!k)
+            break;
+        it->i = 0;
+        ok = 1;
+        while (1) {
+            x = it->next();
+            if (!x)
+                break;
+            if (!func_8002DC34(s, (int)x, 0))
+                ok = 0;
+        }
+        if (ok)
+            new O_800BE748(func_8002E600(it ? it->arr : 0));
+        e = e->next;
+        k--;
+    }
+    *(int *)(p + 0x614) = 1;
+}
 
 EXTERN_C int func_8001A6E8(void *);
 EXTERN_C void func_8002DD34(void *, void *, int);
@@ -3128,7 +3242,55 @@ EXTERN_C int func_800C0958(void *p, void *list)
     return r;
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800C0A28);
+EXTERN_C Clock_800A4534 D_800A4534;
+
+struct N_800C0A28 {
+    int pad;
+    N_800C0A28 *next;
+    short id;
+};
+EXTERN_C int func_8001A6E8(void *);
+EXTERN_C int func_800BF670(C_800BF560 *p);
+EXTERN_C ShortPair func_800C0A28(char *p, short key, int c)
+{
+    C_800BF560 *e = *(C_800BF560 **)(p + 0x3E4);
+    N_800C0A28 *f = *(N_800C0A28 **)(p + 0x40C);
+    short n = func_8001A6E8(e);
+    ShortPair r;
+    short *s;
+    r.a = 0x1000;
+    r.b = 0x1000;
+    while (1) {
+        if (!n)
+            break;
+        if (key == e->f8)
+            break;
+        n--;
+        e = (C_800BF560 *)e->f4;
+    }
+    if (e->fC == c) {
+        s = (short *)e->f14;
+        n = *(short *)(p + 0x3D0);
+        while (1) {
+            if (!n)
+                break;
+            if (*s == f->id) {
+                // a user variable set where the loop may not reach is not hoisted out of the loop
+                Clock_800A4534 *ck = &D_800A4534;
+                if (ck->fC - e->f24 < s[1])
+                    return r;
+                e->f24 = ck->fC;
+                r.a = *(short *)e->f14;
+                r.b = key;
+                func_800BF670(e);
+                return r;
+            }
+            f = f->next;
+            n--;
+        }
+    }
+    return r;
+}
 
 
 struct N_800C0B7C {
