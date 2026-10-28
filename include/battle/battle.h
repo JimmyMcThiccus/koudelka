@@ -1560,4 +1560,24 @@ inline T_CC3DC_e *e_first(T_CC3DC *p) { return (T_CC3DC_e *)func_800CE044(&p->f3
 inline T_CC3DC_e *e_next(T_CC3DC *p) { return (T_CC3DC_e *)func_800CE090(&p->f3D8); }
 EXTERN_C void func_800CC3DC(T_CC3DC *self, T_CDD0C_v pos, int a, int b);
 
+struct T_7158_o;
+struct T_7158 { char pad[0xA0]; T_7158_o *fA0; char padA4[0x330]; int f3D4; char pad3D8[0x448]; int f820; int f824; int pad828; int f82C; int f830; };
+struct T_7158_B { int pad[2]; void *items[3]; char pad14[8]; signed char b1C[1]; };
+struct T_7158_G { char pad[0x328]; T_D0390_A *dummy; };
+struct T_7158_D : T_D0390_A, T_7158_B {};
+struct T_7158_G2 { char pad[0x328]; T_7158_D *f328; };
+struct T_7158_a { char pad[0x2A0]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+struct T_7158_b { char pad[0x1B8]; void *f1B8; char pad1BC[0xE4]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+EXTERN_C void func_8006BE4C(void *p);
+EXTERN_C void func_80086E74(void *p);
+EXTERN_C void func_80082C68(B2A0 *p, int a, void *g, int c, int d);
+EXTERN_C void f_C59EC_7158(void *p, int a) __asm__("func_800C59EC");
+EXTERN_C void f7B2E4_b(T_7158_B *a, void *b) __asm__("func_8007B2E4");
+EXTERN_C void func_80043808(void *p);
+struct T_7158_o { char pad0[0x1B8]; void *f1B8; char pad1BC[0xE4]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+EXTERN_C T_7158_o *D_7158_64[] __asm__("D_800AFA64");
+EXTERN_C T_7158_o *D_7158_58[] __asm__("D_800AFA58");
+EXTERN_C T_7158_G2 *D_7158_70[] __asm__("D_800AF470");
+EXTERN_C void func_800C7158(T_7158 *self, int st);
+
 #endif /* BATTLE_BATTLE_H */

@@ -591,7 +591,93 @@ EXTERN_C void func_800C6DF4(T_6DF4 *self, int st) {
     }
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C7158);
+EXTERN_C void func_800C7158(T_7158 *self, int st) {
+    T_7158_o *o;
+    T_7158_D *d = D_7158_70[0]->f328;
+    self->f830 = 2;
+    self->f3D4 = st;
+    switch (st) {
+    case 0:
+        {
+        B2A0 *b = &self->fA0->b2A0;
+        func_8008299C(b, 0x19, 0x17, 0, 0, 0, 0);
+        func_80082C68(b, 0x21, D_7158_70[0], 0x202C, 2);
+        func_80082E14(b, 0);
+        }
+        break;
+    case 1:
+        self->f820 = 0;
+        for (int i = 0; i < 3; i++) {
+            int t = i;
+            o = D_7158_64[i];
+            if (o) {
+                o->b4AD = 0;
+                o->b4AE = 0;
+                func_80086E74(o->f400);
+                if (o->s410 == 0) o->s410 = 1;
+                self->f820++;
+                func_8008299C(&o->b2A0, 0x2C, 0x14, 0, 0, 0, 0);
+                func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
+                func_80082C68(&o->b2A0, 0x21, D_7158_70[0], 0x202D, 2);
+                func_80082E14(&o->b2A0, 0);
+                d->b1C[i] = -1;
+                func_800C5D84(self, i);
+                f_C59EC_7158(self, i);
+            }
+        }
+        break;
+    case 2:
+        if (--self->f820 <= 0) {
+            self->f820 = 0;
+            for (int i = 0; i < 3; i++) {
+                int t = i;
+                o = D_7158_64[i];
+                if (o) f7B2E4_b(d, o);
+            }
+            func_80081820(D_800AFA74, 0x78, 0x202E, 2, D_7158_70[0], 0);
+        }
+        break;
+    case 3:
+        func_8006BE4C(D_800B4ED8[0]);
+        self->f824 = 3;
+        break;
+    case 4:
+        self->f820 = 0;
+        for (int i = 0; i < 3; i++) {
+            int t = i;
+            o = D_7158_58[i];
+            if (o) {
+                o->b4AD = 0;
+                o->b4AE = 0;
+                func_80086E74(o->f400);
+                if (o->f1B8) {
+                    self->f820++;
+                    func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
+                    func_80082C68(&o->b2A0, 0x21, D_7158_70[0], 0x2030, 2);
+                    func_80082E14(&o->b2A0, 0);
+                    { signed char *q = d->b1C + 3; q[i] = -1; }
+                }
+                func_800C5D84(self, i + 3);
+                f_C59EC_7158(self, i + 3);
+            }
+        }
+        break;
+    case 5:
+        if (--self->f820 <= 0) {
+            self->f82C = 0;
+            for (int i = 0; i < 3; i++) {
+                int t = i;
+                o = D_7158_58[i];
+                if (o) {
+                    f7B2E4_b(d, o);
+                    func_80043808(o);
+                    self->f82C++;
+                }
+            }
+        }
+        break;
+    }
+}
 
 EXTERN_C int func_800C7528() {
     int n = 0;
