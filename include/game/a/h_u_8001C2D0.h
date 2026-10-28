@@ -165,4 +165,51 @@ EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C int GetRCnt(int spec);
 EXTERN_C char *D_800A4578_p asm("D_800A4578") __attribute__((section(".data")));
 
+struct VEnt_C38C { short d; short i; void *f; };
+struct VTab50_C38C { VEnt_C38C e[10]; };
+EXTERN_C const VTab50_C38C D_80010210;
+EXTERN_C const VTab50_C38C D_8001162C;
+EXTERN_C void *D_80010260[];
+EXTERN_C void *D_80010288[];
+EXTERN_C void *D_80010278[];
+EXTERN_C void *D_8001167C[];
+struct S_VB_C38C { VEnt_C38C *vt; };
+struct S_8001C38C {
+    S_VB_C38C *vb;
+    char pad4[0x28];
+    void **vt2C;
+    char pad30[0x20];
+    void **vt50;
+    char pad54[0x88];
+    void **vtDC;
+    char padE0[0x68];
+    void **vt148;
+    char pad14C[0x8];
+    char unk154[0x12C];
+    char unk280[0x4];
+};
+EXTERN_C void func_80023AEC(void *p, int flags);
+EXTERN_C void func_8002AFEC(void *p, int flags);
+inline void dtor_8002C6D4(S_8001C38C *p, int flags)
+{
+    p->vt2C = D_8001167C;
+    p->vb->vt = (VEnt_C38C *)D_8001162C.e;
+    if (!flags) {
+        VTab50_C38C tmp = D_8001162C;
+        p->vb->vt = tmp.e;
+        const VEnt_C38C *s = D_8001162C.e;
+        char *q = (char *)p->vb - 0x50;
+        int adj = (char *)p - q;
+        tmp.e[1].d = s[1].d + adj;
+        tmp.e[5].d = s[5].d + adj;
+        tmp.e[7].d = s[7].d + adj;
+        tmp.e[9].d = s[9].d + adj;
+    }
+    func_8002AFEC(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
+
 #endif /* GAME_A_H_U_8001C2D0_H */

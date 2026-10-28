@@ -269,4 +269,17 @@ EXTERN_C void func_8002A400(void *p, void *q);
 EXTERN_C void func_8002A37C(void *p, void *q);
 EXTERN_C int func_8001E07C(void *p, int a);
 
+struct S_BE20_N {
+    virtual void f0();
+    virtual void kill();
+};
+struct S_BE20 : S_BE20_N {
+    int dead() { int r = 0; if (unkA == 1) r = unk10 == 0; return r; }
+    S_BE20 *next;
+    short unk8;
+    unsigned short unkA;
+    int unkC;
+    int unk10;
+};
+
 #endif /* GAME_A_H_U_8001986C_H */

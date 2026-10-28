@@ -1,3 +1,5 @@
+// Pass 5 (~180 variants: top-level S_XYc locals, temps for unk14/m20, getter/setter inlines by value, inner block):
+// still 5. The frame needs an extra 4-byte slot at sp+0 and an 8-byte slot at sp+8 before the copy at sp+0x10.
 // func_80025880 (u_80025854): image-with-source ctor. 5 instructions differ, all the stack slot of the final
 // S_XYc copy: retail has it at sp+0x10 in a 0x18 frame (an unused 8-byte slot between it and the (-1,-1) temp at
 // sp+4); this reuses sp+0 (frame 0x10). Types: S_Img/S_XYc in include/game/a/h_u_80025854.h.

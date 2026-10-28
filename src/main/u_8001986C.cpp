@@ -931,7 +931,18 @@ EXTERN_C void func_8001BBBC(int a)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BE20);
+EXTERN_C S_BE20 *func_8001BE20(void *self, S_BE20 *prev, S_BE20 *n)
+{
+    // Register variable: the only form found where GCC keeps retail's copy of n (returned through $a1).
+    register S_BE20 *m asm("$5") = n;
+    if (!n->dead())
+        return m;
+    if (prev)
+        prev->next = n->next;
+    n->next = 0;
+    n->kill();
+    return prev;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BE9C);
 

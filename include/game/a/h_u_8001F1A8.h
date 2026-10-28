@@ -187,4 +187,20 @@ struct S_8001FBF4 {
     S_8001FBF4() { unk8 = data; unk0 = unk8; func_800198E0(unk8, 0x10, 0); unk4 = 0; }
 };
 
+struct S_TimerIterR {
+    S_List *list;
+    int idx;
+    Item *next()
+    {
+        if (idx < list->count) {
+            // Register variable: the only form found that loads data before scaling idx, as retail does.
+            register void **d asm("$2") = list->data;
+            Item *r = (Item *)d[idx];
+            idx++;
+            return r;
+        }
+        return 0;
+    }
+};
+
 #endif /* GAME_A_H_U_8001F1A8_H */

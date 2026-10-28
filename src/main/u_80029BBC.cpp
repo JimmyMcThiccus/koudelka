@@ -899,7 +899,47 @@ EXTERN_C S_8002C188 *func_8002C188(S_8002C188 *p, int in_chrg)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80029BBC", func_8002C2B8);
+EXTERN_C S_8002C2B8 *func_8002C2B8(S_8002C2B8 *p, int in_chrg)
+{
+    VTab50 t1, t2;
+    if (in_chrg) {
+        p->vb = (S_VB50 *)((char *)p + 0x50);
+        new ((char *)p + 0x50) S_VB30;
+    }
+    func_80029C54((S_W *)p, 0, 2);
+    p->vb->vt = (VEnt *)D_800114CC.e;
+    {
+        t1 = D_800114CC;
+        p->vb->vt = t1.e;
+        const VEnt *s = D_800114CC.e;
+        char *q = (char *)p->vb - 0x50;
+        int adj = (char *)p - q;
+        t1.e[1].d = s[1].d + adj;
+        t1.e[5].d = s[5].d + adj;
+        t1.e[7].d = s[7].d + adj;
+        t1.e[9].d = s[9].d + adj;
+    }
+    p->vt2C = D_8001151C;
+    S_8002C188m *m = (S_8002C188m *)((char *)p + 0x30);
+    m->vbp = m->vbase;
+    m->vb = m->vbase;
+    func_800198E0(m->vbp, 0x10, 4);
+    m->idx = 0;
+    p->vb->vt = (VEnt *)D_8001162C.e;
+    if (!in_chrg) {
+        t2 = D_8001162C;
+        p->vb->vt = t2.e;
+        char *q = (char *)p->vb - 0x50;
+        int adj = (char *)p - q;
+        t2.e[1].d = D_8001162C.e[1].d + adj;
+        t2.e[5].d = D_8001162C.e[5].d + adj;
+        t2.e[7].d = D_8001162C.e[7].d + adj;
+        t2.e[9].d = D_8001162C.e[9].d + adj;
+    }
+    p->vt2C = D_8001167C;
+    ((S_W *)p)->unk20 = 0;
+    return p;
+}
 
 EXTERN_C void func_8002C498(S_W *p)
 {
