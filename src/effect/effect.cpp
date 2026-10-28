@@ -316,7 +316,73 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D6DE8);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D7170);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D7524);
+struct S_800D7524_Scratch {
+    unsigned short uv;
+    volatile unsigned short tpage;
+    volatile unsigned short clut;
+    short pad[5];
+};
+/* Params_800E2704 + D_1F800000: copied verbatim from src/effect/effect.cpp for a standalone build;
+   drop them when pasting into the unit. */
+struct Params_800E2704 {
+    char pad0[8];
+    int a;
+    int b;
+    RandVal *rv;
+    Vec4 v14;
+    Vec4 v24;
+    Vec4 v34;
+    unsigned char b44, b45, b46, b47;
+    short s48;
+    short s4A;
+    short s4C;
+    short s4E;
+    short s50;
+    unsigned char b52;
+};
+
+EXTERN_C Params_800E2704 D_1F800000;
+#define SCR_800D7524 (*(S_800D7524_Scratch *)&D_1F800000)
+
+struct S_800D7524_UV {
+    unsigned char u, v;
+    unsigned short w;
+};
+
+EXTERN_C char *func_800D7524(char *self, char *src, int *out)
+{
+    int i;
+    unsigned short uv;
+    unsigned char u, v;
+    char *s;
+    S_800D7524_UV *d;
+    unsigned short tp;
+    i = 0;
+    *out = (signed char)src[1];
+    d = (S_800D7524_UV *)(self + 0x38);
+    uv = SCR_800D7524.uv;
+    u = uv;
+    v = uv >> 8;
+    s = src;
+    FIELD_AT(self, SVec4, 0xC) = FIELD_AT(src, SVec4, 0x4);
+    FIELD_AT(self, Color, 0x34) = FIELD_AT(src, Color, 0x38);
+    while (1) {
+        unsigned short t;
+        if (!(i < 4))
+            break;
+        i++;
+        t = *(unsigned short *)(s + 0x30);
+        d->u = t;
+        d->u += u;
+        s += 2;
+        d->v = (t >> 8) + v;
+        d++;
+    }
+    tp = SCR_800D7524.tpage;
+    ((S_800D7524_UV *)(self + 0x38))[0].w = SCR_800D7524.clut;
+    ((S_800D7524_UV *)(self + 0x38))[1].w = tp;
+    return src + 0x3C;
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D75D4);
 
@@ -849,7 +915,59 @@ EXTERN_C Key *func_800D9908(Key *self, short id)
     return self;
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D9928);
+EXTERN_C void func_8001E40C(void *self, void *a, int b, int c, int d);
+EXTERN_C void func_80051564(void *self);
+EXTERN_C void func_800756F8(void *self);
+EXTERN_C void *func_800E4298(void *self);
+EXTERN_C int D_800D6228[];
+EXTERN_C int D_800D6240[];
+EXTERN_C int D_800D6268[];
+EXTERN_C int D_800D6280[];
+
+EXTERN_C void *func_800D9928(void *self, void *a)
+{
+    int j;
+    int i;
+    int k;
+    func_8001E40C(self, a, 2, 0x1000, 0);
+    func_80051564((char *)self + 0xF8);
+    func_800756F8((char *)self + 0x100);
+    FIELD_AT(self, int *, 0x8C) = D_800D6228;
+    FIELD_AT(self, int *, 0xF8) = D_800D6268;
+    FIELD_AT(self, int *, 0x100) = D_800D6280;
+    FIELD_AT(self, int *, 0x0) = D_800D6240;
+    func_800E4298((char *)self + 0x134);
+    FIELD_AT(self, int, 0x140) = -1;
+    FIELD_AT(self, int, 0x13C) = 0;
+    FIELD_AT(self, short, 0x148) = 0;
+    vec4_zero(&FIELD_AT(self, Vec4, 0x16C));
+    FIELD_AT(self, short, 0x166) = 2;
+    FIELD_AT(self, int, 0x130) = 0;
+    FIELD_AT(self, int, 0x14C) = 0;
+    FIELD_AT(self, int, 0x150) = 0;
+    FIELD_AT(self, int, 0x154) = 0;
+    FIELD_AT(self, char, 0x15F) = 0;
+    FIELD_AT(self, int, 0x104) = 0;
+    FIELD_AT(self, int, 0x108) = 0;
+    FIELD_AT(self, int, 0x10C) = 0;
+    FIELD_AT(self, char, 0x161) = 0;
+    FIELD_AT(self, char, 0x162) = 0;
+    FIELD_AT(self, char, 0x163) = 0;
+    FIELD_AT(self, char, 0x165) = 0;
+    FIELD_AT(self, short, 0x168) = 1;
+    FIELD_AT(self, char, 0x160) = 1;
+    for (j = 0; j < 8; j++)
+        ((SlotSet *)self)->slots[j] = 0;
+    for (i = 0; i < 5; i++)
+        FIELD_AT(self, char, 0x15A + i) = 0;
+    for (k = 0; k < 2; k++)
+        FIELD_AT(self, char, 0x158 + k) = 0;
+    FIELD_AT(self, char, 0x164) = 0;
+    FIELD_AT(self, int, 0x184) = 0;
+    FIELD_AT(self, char, 0x181) = 0;
+    FIELD_AT(self, signed char, 0x180) = -1;
+    return self;
+}
 
 EXTERN_C void func_800D9B28(void *self);
 EXTERN_C void func_800515A4(void *p, int arg);
@@ -955,13 +1073,91 @@ EXTERN_C void func_800D9D08(void *self)
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D9D68);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA03C);
+EXTERN_C void func_800DB4BC(void *self);
+
+EXTERN_C void func_800DA03C(void *self)
+{
+    SubNode *n;
+    int m;
+    if (FIELD_AT(self, signed char, 0x163) && FIELD_AT(self, void *, 0x130) && FIELD_AT(FIELD_AT(self, void *, 0x130), short, 0x24) == 1)
+        func_800DB4BC(self);
+    n = FIELD_AT(self, SubNode *, 0x104);
+    if (n) {
+        if (FIELD_AT(self, void *, 0x108))
+            return;
+        if (FIELD_AT(self, void *, 0x10C)) {
+        loop:
+            if (!n)
+                return;
+            m = FIELD_AT(n, signed char, 0x7C);
+            if (m == 1) {
+                FIELD_AT(self, void *, 0x108) = FIELD_AT(self, void *, 0x10C);
+                FIELD_AT(self, void *, 0x10C) = 0;
+                if (!(FIELD_AT(self, unsigned int, 0x160) & 0xFFFF0000) && FIELD_AT(self, void *, 0x130)) {
+                    if (FIELD_AT(self, signed char, 0x161))
+                        FIELD_AT(FIELD_AT(self, void *, 0x130), short, 0x24) = m;
+                    func_800DB4BC(self);
+                }
+                return;
+            }
+            {
+                Link *l = n->next;
+                n = static_cast<SubNode *>(l);
+            }
+            goto loop;
+        }
+        /* volatile read stops CSE from folding this retest (retail reloads it) */
+        if (FIELD_AT(self, void *volatile, 0x104))
+            return;
+    }
+    if (FIELD_AT(self, void *, 0x10C)) {
+        FIELD_AT(self, void *, 0x108) = FIELD_AT(self, void *, 0x10C);
+        FIELD_AT(self, void *, 0x10C) = 0;
+    }
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA170);
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA35C);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA494);
+/* C_800DD34C: copied verbatim from src/effect/effect.cpp for a standalone build; drop when pasting */
+struct C_800DD34C {
+    int w0;
+    int w4;
+    int w8;
+    int wC;
+    short s10, s12;
+    int pad14;
+    int *vp18;
+    int w1C;
+    int w20;
+    int w24;
+    int w28;
+    int w2C;
+    int w30;
+    int pad34, pad38;
+    short s3C;
+    short pad3E;
+    int w40;
+    short s44, s46;
+    int w48;
+    Vec4 v4C;
+    Vec4 v5C;
+    short s6C, s6E, s70;
+    short pad72;
+    int w74, w78;
+    char c7C;
+    C_800DD34C(int a, int b, short *c, int d);
+};
+
+inline int w98_800DA494(void *p) { return FIELD_AT(p, int, 0x98); }
+
+EXTERN_C int func_800DA514(SlotSet *self, int obj, int slot);
+
+EXTERN_C int func_800DA494(void *self, int a, short *c, int d, int slot)
+{
+    return func_800DA514((SlotSet *)self, (int)new C_800DD34C(a, w98_800DA494(self), c, d), slot);
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA514);
 
@@ -1950,35 +2146,6 @@ EXTERN_C void func_800DD32C(void *self)
 
 EXTERN_C int D_800D63D0[];
 EXTERN_C int D_800E583C[];
-
-struct C_800DD34C {
-    int w0;
-    int w4;
-    int w8;
-    int wC;
-    short s10, s12;
-    int pad14;
-    int *vp18;
-    int w1C;
-    int w20;
-    int w24;
-    int w28;
-    int w2C;
-    int w30;
-    int pad34, pad38;
-    short s3C;
-    short pad3E;
-    int w40;
-    short s44, s46;
-    int w48;
-    Vec4 v4C;
-    Vec4 v5C;
-    short s6C, s6E, s70;
-    short pad72;
-    int w74, w78;
-    char c7C;
-    C_800DD34C(int a, int b, short *c, int d);
-};
 
 C_800DD34C::C_800DD34C(int a, int b, short *c, int d)
 {
@@ -3080,7 +3247,49 @@ EXTERN_C void func_800DF27C(void *self, unsigned char *rgb)
     p->vptr[10].pfn((char *)p + p->vptr[10].delta, rgb[3]);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DF2D8);
+/* Tag/FT4/OT/Head/Tex/Obj_800DF0C4 and the two externs: copied verbatim from src/effect/effect.cpp
+   (func_800DF0C4) for a standalone build; drop them when pasting into the unit. */
+EXTERN_C int D_800B4CF0[];
+EXTERN_C OT_800DF0C4 *D_800B4D00[];
+
+inline int add_800DF2D8(OT_800DF0C4 *d, unsigned int o, FT4_800DF0C4 *p)
+{
+    if (o && o < d->size) {
+        p->tag.addr = *(unsigned int *)&d->ot[o];
+        *(unsigned int *)&d->ot[o] = (unsigned int)p & 0x00FFFFFF;
+        return 1;
+    }
+    return 0;
+}
+
+EXTERN_C int func_800DF2D8(Obj_800DF0C4 *self)
+{
+    FT4_800DF0C4 *p = &self->prim[D_800B4CF0[0]];
+    Tex_800DF0C4 *t;
+    p->tag.len = 9;
+    p->code = 0x2C;
+    p->r0 = self->r;
+    p->g0 = self->g;
+    p->b0 = self->b;
+    p->code = 0x2E;
+    p->x0 = 0;
+    p->y0 = 0;
+    p->x1 = 320;
+    p->y1 = 0;
+    p->x2 = 0;
+    p->y2 = 240;
+    p->x3 = 320;
+    p->y3 = 240;
+    t = self;
+    {
+        unsigned int a = t->uv[0], b = t->uv[1], c = t->uv[2], e = t->uv[3];
+        p->uv0 = a;
+        p->uv1 = b;
+        p->uv2 = c;
+        p->uv3 = e;
+    }
+    return add_800DF2D8(D_800B4D00[0], self->otz, p);
+}
 
 EXTERN_C void func_800DF3EC(void *self)
 {
@@ -3651,23 +3860,6 @@ EXTERN_C void func_800E0FDC(void *self, Poly *p)
     else
         FIELD_AT(self, Link *, 0x4C) = (Link *)o;
 }
-
-struct Params_800E2704 {
-    char pad0[8];
-    int a;
-    int b;
-    RandVal *rv;
-    Vec4 v14;
-    Vec4 v24;
-    Vec4 v34;
-    unsigned char b44, b45, b46, b47;
-    short s48;
-    short s4A;
-    short s4C;
-    short s4E;
-    short s50;
-    unsigned char b52;
-};
 
 EXTERN_C Params_800E2704 D_1F800000;
 
@@ -5258,7 +5450,81 @@ EXTERN_C void func_800E4CE8(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E4D10);
+#define gte_SetRotMatrix(r0) __asm__ volatile( \
+    "lw $12, 0(%0)\n\t" \
+    "lw $13, 4(%0)\n\t" \
+    "ctc2 $12, $0\n\t" \
+    "ctc2 $13, $1\n\t" \
+    "lw $12, 8(%0)\n\t" \
+    "lw $13, 12(%0)\n\t" \
+    "lw $14, 16(%0)\n\t" \
+    "ctc2 $12, $2\n\t" \
+    "ctc2 $13, $3\n\t" \
+    "ctc2 $14, $4" \
+    : : "r"(r0) : "$12", "$13", "$14")
+#define gte_ldv0(r0) __asm__ volatile( \
+    "lwc2 $0, 0(%0)\n\t" \
+    "lwc2 $1, 4(%0)" \
+    : : "r"(r0))
+#define gte_rtv0() __asm__ volatile("nop\n\tnop\n\t.word 0x4A486012")
+#define gte_stlvnl(r0) __asm__ volatile( \
+    "swc2 $25, 0(%0)\n\t" \
+    "swc2 $26, 4(%0)\n\t" \
+    "swc2 $27, 8(%0)" \
+    : : "r"(r0) : "memory")
+
+struct Mat_800E4D10 {
+    int m[8];
+};
+
+EXTERN_C int rand(void);
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
+EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
+
+inline void add3p_800E4D10(Vec4 *a, const Vec4 *b)
+{
+    int x = a->x + b->x;
+    int y = a->y + b->y;
+    int z = a->z + b->z;
+    a->x = x;
+    a->y = y;
+    a->z = z;
+}
+
+EXTERN_C Vec4 func_800E4D10(void *self, Vec4 *arg)
+{
+    Vec4 r;
+    SVec4 rot;
+    Mat_800E4D10 m;
+    SVec4 sv;
+    vec4_zero(&r);
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = 0;
+    rot.w = 0;
+    func_8003A754(&m, 0x1000);
+    if (FIELD_AT(self, int, 0x1C)) {
+        sv.x = rand() / (0x8000 / FIELD_AT(self, int, 0x1C));
+        sv.y = rand() / (0x8000 / FIELD_AT(self, int, 0x1C));
+        sv.z = rand() / (0x8000 / FIELD_AT(self, int, 0x1C));
+        rot.x = rand() / 8;
+        rot.z = rand() / 8;
+        rot.y = rand() / 8;
+        func_8003A7FC(&m, &rot);
+        gte_SetRotMatrix(&m);
+        gte_ldv0(&sv);
+        gte_rtv0();
+        gte_stlvnl(&r);
+    }
+    {
+        const Vec4 &p = func_800E4674(self, arg);
+        add3p_800E4D10(&r, &p);
+    }
+    r = func_800E47AC(self, &r);
+    return r;
+}
 
 EXTERN_C void *func_800E5030(void *self, short id)
 {
@@ -5273,7 +5539,79 @@ EXTERN_C void func_800E506C(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E5094);
+#define gte_SetRotMatrix(r0) __asm__ volatile( \
+    "lw $12, 0(%0)\n\t" \
+    "lw $13, 4(%0)\n\t" \
+    "ctc2 $12, $0\n\t" \
+    "ctc2 $13, $1\n\t" \
+    "lw $12, 8(%0)\n\t" \
+    "lw $13, 12(%0)\n\t" \
+    "lw $14, 16(%0)\n\t" \
+    "ctc2 $12, $2\n\t" \
+    "ctc2 $13, $3\n\t" \
+    "ctc2 $14, $4" \
+    : : "r"(r0) : "$12", "$13", "$14")
+#define gte_ldv0(r0) __asm__ volatile( \
+    "lwc2 $0, 0(%0)\n\t" \
+    "lwc2 $1, 4(%0)" \
+    : : "r"(r0))
+#define gte_rtv0() __asm__ volatile("nop\n\tnop\n\t.word 0x4A486012")
+#define gte_stlvnl(r0) __asm__ volatile( \
+    "swc2 $25, 0(%0)\n\t" \
+    "swc2 $26, 4(%0)\n\t" \
+    "swc2 $27, 8(%0)" \
+    : : "r"(r0) : "memory")
+
+EXTERN_C void func_8003A754(void *m, int scale);
+EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
+EXTERN_C int rand(void);
+EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
+EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
+
+struct Mat_800E5094 {
+    int m[8];
+};
+
+inline void add3_800E5094(Vec4 *a, const Vec4 *b)
+{
+    int x = a->x + b->x;
+    int y = a->y + b->y;
+    int z = a->z + b->z;
+    a->x = x;
+    a->y = y;
+    a->z = z;
+}
+
+EXTERN_C Vec4 func_800E5094(void *self, Vec4 *off)
+{
+    Vec4 v;
+    vec4_zero(&v);
+    SVec4 rot;
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = 0;
+    rot.w = 0;
+    Mat_800E5094 m;
+    func_8003A754(&m, 0x1000);
+    SVec4 dir;
+    dir.x = FIELD_AT(self, short, 0x1C);
+    dir.z = 0;
+    dir.y = 0;
+    rot.x = rand() / 8;
+    rot.z = rand() / 8;
+    rot.y = rand() / 8;
+    func_8003A7FC(&m, &rot);
+    gte_SetRotMatrix(&m);
+    gte_ldv0(&dir);
+    gte_rtv0();
+    gte_stlvnl(&v);
+    {
+        const Vec4 &p = func_800E4674(self, off);
+        add3_800E5094(&v, &p);
+    }
+    v = func_800E47AC(self, &v);
+    return v;
+}
 
 EXTERN_C void *func_800E4458(void *self, short id);
 
@@ -5290,7 +5628,50 @@ EXTERN_C void func_800E5290(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E52B8);
+EXTERN_C int rand(void);
+EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
+EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
+
+inline void add3_800E52B8(Vec4 *a, const Vec4 *b)
+{
+    int x = a->x + b->x;
+    int y = a->y + b->y;
+    int z = a->z + b->z;
+    a->x = x;
+    a->y = y;
+    a->z = z;
+}
+
+EXTERN_C Vec4 func_800E52B8(void *self, Vec4 *off)
+{
+    Vec4 v;
+    int signs, a, b, c, t;
+    vec4_zero(&v);
+    signs = rand();
+    a = rand() >> 3;
+    b = rand() >> 3;
+    c = rand() >> 3;
+    t = FIELD_AT(self, int, 0x1C) * a >> 12;
+    if (!(signs & 1))
+        t = -t;
+    v.x = t;
+    signs >>= 1;
+    t = FIELD_AT(self, int, 0x20) * b >> 12;
+    if (!(signs & 1))
+        t = -t;
+    v.y = t;
+    signs >>= 1;
+    t = FIELD_AT(self, int, 0x24) * c >> 12;
+    if (!(signs & 1))
+        t = -t;
+    v.z = t;
+    {
+        const Vec4 &p = func_800E4674(self, off);
+        add3_800E52B8(&v, &p);
+    }
+    v = func_800E47AC(self, &v);
+    return v;
+}
 
 EXTERN_C void *func_800E4458(void *self, short id);
 
@@ -5307,7 +5688,67 @@ EXTERN_C void func_800E548C(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E54B4);
+EXTERN_C int rand(void);
+EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
+EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
+
+inline void add3p_800E54B4(Vec4 *a, const Vec4 *b)
+{
+    int x = a->x + b->x;
+    int y = a->y + b->y;
+    int z = a->z + b->z;
+    a->x = x;
+    a->y = y;
+    a->z = z;
+}
+
+EXTERN_C Vec4 func_800E54B4(void *self, Vec4 *arg)
+{
+    Vec4 r;
+    int v;
+    int z, y, x;
+    int sz, sy, sx;
+    vec4_zero(&r);
+    v = rand();
+    z = 0;
+    y = 0;
+    x = 0;
+    sz = 1;
+    sy = 1;
+    sx = 1;
+    if (v < 0x2AAB) {
+        sy = (v & 1) ? 1 : -1;
+        v >>= 1;
+        sz = (v & 1) ? 1 : -1;
+        x = (rand() & 1) ? 0x1000 : -0x1000;
+        y = rand() >> 3;
+        z = rand() >> 3;
+    } else if (v < 0x5555) {
+        sx = (v & 1) ? 1 : -1;
+        v >>= 1;
+        sy = 1;
+        sz = (v & 1) ? 1 : -1;
+        x = rand() >> 3;
+        y = (rand() & 1) ? 0x1000 : -0x1000;
+        z = rand() >> 3;
+    } else if (v <= 0x8000) {
+        sx = (v & 1) ? 1 : -1;
+        v >>= 1;
+        sy = (v & 1) ? 1 : -1;
+        x = rand() >> 3;
+        y = rand() >> 3;
+        z = (rand() & 1) ? 0x1000 : -0x1000;
+    }
+    r.x = (FIELD_AT(self, int, 0x1C) * x >> 12) * sx;
+    r.y = (FIELD_AT(self, int, 0x20) * y >> 12) * sy;
+    r.z = (FIELD_AT(self, int, 0x24) * z >> 12) * sz;
+    {
+        const Vec4 &p = func_800E4674(self, arg);
+        add3p_800E54B4(&r, &p);
+    }
+    r = func_800E47AC(self, &r);
+    return r;
+}
 
 EXTERN_C Vec4 func_800E5758(Vec4 *a, Vec4 *b)
 {
