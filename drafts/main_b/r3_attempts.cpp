@@ -282,3 +282,31 @@ EXTERN_C int func_80061A20(void *self, unsigned char *b)
     return found;
 }
 
+// ===== func_80057214: 78 differing: composite dtor with an inlined member dtor (member at +0x5C); retail keeps the member pointer in a callee-saved reg (s0) and reads member->vb via p+0x5C
+EXTERN_C void func_80057214_def(S_DtorB *p, int flags)
+{
+    S_DtorB *m;
+    FIELD_AT(p, void **, 0x58) = D_80013E10;
+    p->vt2C = D_80013D00;
+    p->vb->vt = (VEntB *)D_80013CB0.e;
+    if (!flags) {
+        VTabB50 tmp = D_80013CB0;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80013CB0.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0xAC));
+        tmp.e[5].d = D_80013CB0.e[5].d + adj;
+        tmp.e[7].d = D_80013CB0.e[7].d + adj;
+        tmp.e[9].d = D_80013CB0.e[9].d + adj;
+    }
+    m = (S_DtorB *)((char *)p + 0x5C);
+    m->vt2C = D_80014A08;
+    m->vb->vt = (VEntB *)D_800149B8.e;
+    func_8005BDA4(m, 0);
+    func_8001A610(m->vb, 0);
+    func_80057558(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}

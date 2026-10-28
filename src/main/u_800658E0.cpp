@@ -9,7 +9,28 @@
 /* $gp here: this file defines it (lui with the array form elsewhere) */
 EXTERN_C int D_800B4ED8;
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_800658E0);
+EXTERN_C void func_800658E0(S_DtorB *p, int flags)
+{
+    FIELD_AT(p, void **, 0x40) = D_80015364;
+    p->vt2C = D_8001526C;
+    p->vb->vt = (VEntB *)D_8001521C.e;
+    if (!flags) {
+        VTabB50 tmp = D_8001521C;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x50;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_8001521C.e[1].d + adj;
+        tmp.e[5].d = D_8001521C.e[5].d + adj;
+        tmp.e[7].d = D_8001521C.e[7].d + adj;
+        tmp.e[9].d = D_8001521C.e[9].d + adj;
+    }
+    func_800537DC((char *)p + 0x38, 0);
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void *func_80065A00(void *self)
 {
@@ -423,7 +444,38 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154D4);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154EC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066FB0);
+EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d)
+{
+    FIELD_AT(self, void *, 0x0) = D_800154EC;
+    FIELD_AT(self, int, 0x8) = a;
+    FIELD_AT(self, int, 0x10) = b;
+    FIELD_AT(self, int, 0xC) = c;
+    if (c == 0) {
+        FIELD_AT(self, int, 0xC) = FIELD_AT(self, int, 0x8);
+    }
+
+    FIELD_AT(self, int, 0x14) = d;
+    switch (b) {
+    case 0x65:
+    case 0x6B:
+    case 0x6C:
+        FIELD_AT(self, int, 0x4) = 0xFF;
+        break;
+    case 0x6F:
+        func_8008E70C_v(FIELD_AT((char *)D_800B4ED8, void *, 0x248), 0xF0);
+    case 0x66:
+    case 0x69:
+    case 0x6A:
+    case 0x6D:
+    case 0x6E:
+        FIELD_AT(self, int, 0x4) = 0;
+        break;
+    }
+    char *g = (char *)D_800B4ED8;
+    func_8006A4E4_v(FIELD_AT(g, void *, 0x250), FIELD_AT(self, unsigned char, 0x4));
+    func_8006BD34_v(g);
+    return self;
+}
 
 EXTERN_C void func_8006707C(void *self, int b)
 {

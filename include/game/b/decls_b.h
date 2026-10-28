@@ -3090,4 +3090,122 @@ struct U8bw { char c[8]; };
 EXTERN_C void *func_8005DD4C(void *p, Rc8 r, int c, int d);
 EXTERN_C void *func_80064290(void *p, Pt4w r, int c, int d);
 
+struct VEntB { short d; short i; void *f; };
+struct VTabB50 { VEntB e[10]; };
+struct S_VBB { VEntB *vt; };
+struct S_DtorB { S_VBB *vb; char pad4[0x28]; void **vt2C; };
+EXTERN_C const VTabB50 D_80014130;
+EXTERN_C const VTabB50 D_80014808;
+EXTERN_C const VTabB50 D_800149B8;
+EXTERN_C const VTabB50 D_8001506C;
+EXTERN_C void *D_80014180[];
+EXTERN_C void *D_80014858[];
+EXTERN_C void *D_80014A08[];
+EXTERN_C void *D_800150BC[];
+EXTERN_C const VTabB50 D_80014400;
+EXTERN_C void *D_80014450[];
+
+EXTERN_C void func_800537DC(void *self, int b);
+EXTERN_C void func_80063BE4(void *self);
+EXTERN_C void func_80057558(void *self, int b);
+EXTERN_C void func_8005BDA4(void *self, int b);
+EXTERN_C const VTabB50 D_800142B8;
+EXTERN_C void *D_80014308[];
+EXTERN_C const VTabB50 D_8001521C;
+EXTERN_C void *D_80015364[];
+EXTERN_C void *D_8001526C[];
+EXTERN_C const VTabB50 D_80014FFC;
+EXTERN_C void *D_8001504C[];
+EXTERN_C void *D_80014EEC[];
+
+struct S_Dtor50 { char pad[0x50]; S_VBB *vb; };
+EXTERN_C void func_8005652C(void *self, int b);
+EXTERN_C void *D_80013BD0[];
+EXTERN_C void *D_80014DAC[];
+EXTERN_C void *D_80014DCC[];
+EXTERN_C const VTabB50 D_80014D5C;
+EXTERN_C void *D_80014E7C[];
+EXTERN_C void *D_80014E5C[];
+EXTERN_C void *D_80014EAC[];
+EXTERN_C const VTabB50 D_80014E0C;
+
+struct S_VBobjB { void *vptr; int unk4; };
+struct S_CtorB38 { S_VBB *vb; char pad4[0x28]; void **vt2C; int unk30, unk34; S_VBobjB vobj; };
+struct S_CtorB64 { S_VBB *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int i38, i3C; char pad40[0x1C]; int i5C, i60; S_VBobjB vobj; };
+struct Pt4q { short x, y; };
+EXTERN_C char D_800104A8[];
+EXTERN_C short D_800B4D9E;
+EXTERN_C void *func_8005BC84_v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
+EXTERN_C const VTabB50 D_80014750;
+EXTERN_C void *D_80014658[];
+EXTERN_C const VTabB50 D_800149B8;
+EXTERN_C void *D_80014A08[];
+EXTERN_C const VTabB50 D_80014808;
+EXTERN_C void *D_80014858[];
+EXTERN_C const VTabB50 D_800142B8;
+EXTERN_C void *D_80014308[];
+EXTERN_C const VTabB50 D_80014400;
+EXTERN_C void *D_80014450[];
+EXTERN_C void func_8002A4C8(void *p, int a, int b);
+
+struct S_C50_64 { char pad0[0x50]; S_VBB *vb; char pad54[0x10]; S_VBobjB vobj; };
+struct S_C50_68 { char pad0[0x50]; S_VBB *vb; char pad54[0x14]; S_VBobjB vobj; };
+struct S_C50_70 { char pad0[0x50]; S_VBB *vb; char pad54[0x1C]; S_VBobjB vobj; };
+EXTERN_C void *func_80056364(void *p, int in_chrg, int a, int b);
+EXTERN_C void *func_80056198(void *p, int in_chrg, int a, int b, int c);
+EXTERN_C void *func_80062C3C_v(void *p, int in_chrg, int a, int b, int c) asm("func_80062C3C");
+EXTERN_C const VTabB50 D_80014D5C;
+EXTERN_C void *D_80013BD0[];
+EXTERN_C void *D_80014DAC[];
+EXTERN_C void *D_80014DCC[];
+EXTERN_C const VTabB50 D_80014E0C;
+EXTERN_C void *D_80014E7C[];
+EXTERN_C void *D_80014E5C[];
+EXTERN_C void *D_80014EAC[];
+EXTERN_C const VTabB50 D_80014CAC;
+EXTERN_C void *D_80014CFC[];
+EXTERN_C void *D_80014D1C[];
+
+EXTERN_C int func_80029FC0(void *p);
+EXTERN_C void func_80029D74(void *p, int a);
+EXTERN_C const VTabB50 D_80014750;
+EXTERN_C void *D_80014658[];
+EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags) asm("func_8005BDA4");
+
+EXTERN_C const VTabB50 D_80013F40;
+EXTERN_C void *D_80013F90[];
+EXTERN_C void *D_80013E30[];
+EXTERN_C void func_8002AFEC(void *p, int a);
+EXTERN_C void func_80057558_def(S_DtorB *p, int flags) asm("func_80057558");
+
+struct S_ArrB { void **items; int count; };
+struct S_CollB {
+    S_ArrB *vb;
+    int idx;
+    void reset() { idx = 0; }
+    void *next() { return idx < vb->count ? vb->items[idx++] : 0; }
+};
+struct S_WB { char pad0[0x30]; S_CollB coll; };
+
+EXTERN_C void func_8006A4E4_v(void *a, int b) asm("func_8006A4E4");
+EXTERN_C void func_8006BD34_v(void *a) asm("func_8006BD34");
+EXTERN_C void func_8008E70C_v(void *a, int b) asm("func_8008E70C");
+EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d) asm("func_80066FB0");
+
+struct S_SubB { S_VBB *vb; void *vptr; };
+EXTERN_C const VTabB50 D_80010538;
+EXTERN_C void *D_80010508[];
+EXTERN_C void *D_800118DC[];
+EXTERN_C const VTabB50 D_80013C00;
+EXTERN_C void *D_80013C50[];
+EXTERN_C void *D_80013C70[];
+EXTERN_C void *func_80054AF0_v(void *p, int b) asm("func_80054AF0");
+EXTERN_C void *func_80054A4C_v(void *p, int b, int c) asm("func_80054A4C");
+EXTERN_C void *func_80054094_v(void *p, int b) asm("func_80054094");
+
+EXTERN_C void func_800205D4_v(void *p) asm("func_800205D4");
+EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
+EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
+EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
+
 #endif /* GAME_B_DECLS_B_H */

@@ -62,7 +62,32 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057214);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057368);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057558);
+EXTERN_C void func_80057558_def(S_DtorB *p, int flags)
+{
+    FIELD_AT(p, void **, 0x58) = D_80013F90;
+    p->vt2C = D_80013E30;
+    p->vb->vt = (VEntB *)D_80013F40.e;
+    if (!flags) {
+        VTabB50 tmp = D_80013F40;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80013F40.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x5C));
+        tmp.e[5].d = D_80013F40.e[5].d + adj;
+        tmp.e[7].d = D_80013F40.e[7].d + adj;
+        tmp.e[9].d = D_80013F40.e[9].d + adj;
+    }
+    if (FIELD_AT(p, VObj0 *, 0x8) != 0) {
+        FIELD_AT(p, VObj0 *, 0x8)->v00(3);
+    }
+    FIELD_AT(p, int, 0x8) = 0;
+    func_800537DC((char *)p + 0x50, 0);
+    func_8002AFEC(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_800576A8(void *self)
 {
@@ -218,7 +243,20 @@ EXTERN_C void func_80058654(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80058728);
+EXTERN_C void func_80058728(S_WB *p)
+{
+    void *c;
+    if (FIELD_AT(p, unsigned short, 0x144) != 0 && FIELD_AT(p, int, 0x140) == 0) {
+        func_8005388C(p ? (char *)p + 0x50 : 0, FIELD_AT(p, unsigned short, 0x144));
+        FIELD_AT(p, int, 0x140) = 1;
+    } else {
+        FIELD_AT(p, int, 0x20) = 0;
+        p->coll.reset();
+        for (c = p->coll.next(); c != 0; c = p->coll.next()) {
+            ((VObj<0x2C> *)c)->v04();
+        }
+    }
+}
 
 EXTERN_C void func_80058830(void *self, void *b)
 {
@@ -246,7 +284,21 @@ EXTERN_C void func_800588EC(void *self, unsigned int b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80058910);
+EXTERN_C void func_80058910(S_WB *p)
+{
+    void *c;
+    p->coll.reset();
+    while ((c = p->coll.next()) != 0) {
+        ((VObj<0x2C> *)c)->v04();
+    }
+    func_8002A210(p);
+    func_80057F20(p, FIELD_AT(p, unsigned short, 0x13C));
+    func_80058A80(p);
+    if (FIELD_AT(p, unsigned short, 0x144) != 0 && FIELD_AT(p, int, 0x140) == 0) {
+        func_8005388C(p ? (char *)p + 0x50 : 0, FIELD_AT(p, unsigned short, 0x144));
+        FIELD_AT(p, int, 0x140) = 2;
+    }
+}
 
 EXTERN_C void func_80058A04(void *self)
 {
@@ -348,7 +400,26 @@ EXTERN_C void func_80059300(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800593A0);
+EXTERN_C void func_800593A0(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014180;
+    p->vb->vt = (VEntB *)D_80014130.e;
+    if (!flags) {
+        VTabB50 tmp = D_80014130;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x44;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_80014130.e[1].d + adj;
+        tmp.e[5].d = D_80014130.e[5].d + adj;
+        tmp.e[7].d = D_80014130.e[7].d + adj;
+        tmp.e[9].d = D_80014130.e[9].d + adj;
+    }
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800594A8);
 
@@ -431,4 +502,33 @@ EXTERN_C void func_80059938(void *self, int flags)
     func_8001A610(self, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80059958);
+EXTERN_C S_CtorB64 *func_80059958(S_CtorB64 *p, int in_chrg, int a2)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    p->vb->vt = (VEntB *)D_800142B8.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_800142B8;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_800142B8.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x64));
+        tmp.e[5].d = D_800142B8.e[5].d + adj;
+        tmp.e[7].d = D_800142B8.e[7].d + adj;
+        tmp.e[9].d = D_800142B8.e[9].d + adj;
+    }
+    p->vt2C = D_80014308;
+    func_80053928((char *)p + 0x40);
+    p->i5C = 1;
+    p->i60 = 0;
+    p->i38 = 0;
+    p->i3C = 0;
+    return p;
+}

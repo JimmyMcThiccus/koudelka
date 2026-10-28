@@ -92,3 +92,23 @@ Things that worked and are reusable:
 - Stack-passed small structs (`Pt4 {short x,y}`, `Col3 {short r,g,b}` = 6 bytes, 4-byte aligned) as by-value params.
 - Virtual calls where retail loads the vptr first: read the vtable by hand (`VE_B *vt = FIELD_AT(self, VE_B *, 0x2C); vt[8].pfn(...)`).
 - Virtual-base ctors/dtors skipped (in_chrg, 0x50-byte vtable copy): func_800593A0, 80059958, 8005A518, 8005A62C, 8005AFF0, 8005BC84, 8005CB88, 8005CF78, 8005D8C4, 8005DC44, 80062848, 80062C3C, 80062D60, 80062E9C, 80062FA4, 800630BC, 800637A0, 800639F8, 80064188, 800658E0, 80057214, 80057558, 8005BDA4, 80062A90, 8005652C, 80057C7C, 80068380.
+
+Round 3, batch 3 (virtual-base ctors/dtors, found via tools/twins.py against func_8002C6D4):
+- dtor: `p->vt2C=..; p->vb->vt = tab.e; if(!flags){ VTabB50 tmp=tab; p->vb->vt=tmp.e; adj via
+  `tmp.e[1].d = tab.e[1].d + (adj = (char*)p - (q = (char*)p->vb - OFF))` (FIELD's expression form; the two-statement form
+  swaps registers); base dtor(p,0); if(flags&2) func_8001A610(p->vb,0); if(flags&1) operator delete(p);`
+- A derived dtor that inlines its base dtor repeats the vtable block for the base with NO `if(!flags)` (func_80062A90).
+- ctor: same, preceded by `if (in_chrg) { p->vb = &p->vobj; vobj.vptr = D_80010178; unk4 = 0; vptr = D_800104A8; }` and the base ctor
+  called with in_chrg 0; `VTabB50 tmp;` declared after the base call; returns p.
+- Coll iterator (S_CollB{S_ArrB*vb; int idx}) at +0x30: `reset(); while((c=next())) ...` or, when the first next() is folded,
+  `for (c = next(); c; c = next())`.
+- A definition whose header prototype differs is written with `EXTERN_C void f_def(T *p, int n) asm("func_X")`.
+
+Round 3, batch 4:
+- Reading `self->8` back from memory (`if (c == 0) self->0xC = self->8`) reproduces retail's `addu v0,a1; sw v0` (func_80066FB0).
+- Two-stage vb ctors (func_80056364/56198) and dtors (func_8005652C): the first, unconditional stage is an inlined sub-object ctor
+  on `m = p+0x50` with its own tmp table (declare both `VTabB50`s at function scope so they get separate stack slots when retail does).
+- Header prelude declarations can collide with another area's definitions (main_b2 includes decls_b.h): declare helpers as
+  `f_v(...) asm("func_X")` aliases.
+- func_80057214 / func_80057C7C (composite dtors with member dtors) are still open; Ghidra shows the shape but retail keeps the member
+  pointer in a callee-saved register and reads member->vb through it, which GCC folds into p+const here.
