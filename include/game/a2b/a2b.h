@@ -56,4 +56,5 @@ struct C_8004F368 : S_A2B_B4 { S_A2B_Col4 col; C_8004F368() asm("func_8004F368")
 struct C_8004F924 : S_A2B_B4 { unsigned int rgb; C_8004F924() asm("func_8004F924"); };
 struct C_8004EDFC : C_8004CF20 { char pad10[0xC]; S_A2B_G4x2 m; C_8004EDFC() asm("func_8004EDFC"); };
 struct C_8004B8F8 : C_800497FC { char pad10[8]; S_A2B_G3x2 m; C_8004B8F8() asm("func_8004B8F8"); };
+// prelude
 #endif /* GAME_A2B_A2B_H */

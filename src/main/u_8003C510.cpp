@@ -1472,9 +1472,25 @@ EXTERN_C int func_80049860()
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80049868);
+EXTERN_C int func_80049868(void *p, short a)
+{
+    if (AT(p, short, 6) > 0) {
+    int s = func_80026014(a);
+    int c = func_800260A4(a);
+    return ratan2((AT(p, short, 4) * s - AT(p, short, 8) * c) / AT(p, short, 6), 0x1000);
+    }
+    return 0x400;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8004991C);
+EXTERN_C int func_8004991C(void *p, short a)
+{
+    if (AT(p, short, 6) > 0) {
+    int s = func_800260A4(a);
+    int c = func_80026014(a);
+    return ratan2((AT(p, short, 4) * s - AT(p, short, 8) * c) / AT(p, short, 6), 0x1000);
+    }
+    return 0x400;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_800499D0);
 
@@ -2120,9 +2136,25 @@ EXTERN_C int func_8004CF84()
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8004CF8C);
+EXTERN_C int func_8004CF8C(void *p, short a)
+{
+    if (AT(p, short, 6) > 0) {
+    int s = func_80026014(a);
+    int c = func_800260A4(a);
+    return ratan2((AT(p, short, 4) * s - AT(p, short, 8) * c) / AT(p, short, 6), 0x1000);
+    }
+    return 0x400;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8004D040);
+EXTERN_C int func_8004D040(void *p, short a)
+{
+    if (AT(p, short, 6) > 0) {
+    int s = func_800260A4(a);
+    int c = func_80026014(a);
+    return ratan2((AT(p, short, 4) * s - AT(p, short, 8) * c) / AT(p, short, 6), 0x1000);
+    }
+    return 0x400;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8004D0F4);
 
@@ -3071,7 +3103,17 @@ EXTERN_C void *func_80053250(void *p, int a, int b, short c)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_800532EC);
+EXTERN_C void *func_800532EC(void *p, void *q)
+{
+    S_A2_V4 *s, *d;
+    int i;
+    func_80027FEC(p, q);
+    d = (S_A2_V4 *)((char *)q + 0xC);
+    i = 1;
+    s = (S_A2_V4 *)((char *)p + 0xC);
+    do { *d = *s; d++; s++; } while (--i != -1);
+    return q;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80053360);
 
