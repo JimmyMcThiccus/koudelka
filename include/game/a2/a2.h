@@ -328,4 +328,8 @@ EXTERN_C int func_80045EB8(void *o, void *p, int r, void *q, int a, int b, int c
 EXTERN_C void func_8003546C(void *a, int b);
 EXTERN_C void func_8003714C(void *a);
 struct S_A2_Ch { short c; S_A2_Ch() asm("func_800601C8"); S_A2_Ch &operator=(const S_A2_Ch &o) asm("func_80060218"); };
+EXTERN_C void *D_80010148[];
+EXTERN_C void func_80039A88(void *p, int a);
+EXTERN_C void func_8003C0D0(void *p, int a);
+EXTERN_C void func_8003BF30(void *p, int a);
 #endif /* GAME_A2_A2_H */

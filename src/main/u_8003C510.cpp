@@ -1033,7 +1033,28 @@ EXTERN_C void *func_80044834(void *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80044890);
+EXTERN_C short func_80044890(void *p, int a)
+{
+    short r;
+    if ((unsigned short)(a - 0x101) >= 0xDFF)
+        r = 0;
+    else if ((unsigned short)(a - 0x100) <= 0x200)
+        r = 1;
+    else if ((unsigned short)(a - 0x300) <= 0x200)
+        r = 2;
+    else if ((unsigned short)(a - 0x500) <= 0x200)
+        r = 3;
+    else if ((unsigned short)(a - 0x700) <= 0x200)
+        r = 4;
+    else if ((unsigned short)(a - 0x900) <= 0x200)
+        r = 5;
+    else if ((unsigned short)(a - 0xB00) <= 0x200)
+        r = 6;
+    else if ((unsigned short)(a - 0xD00) <= 0x200)
+        r = 7;
+    func_80044990(p, r << 9, r << 9, 0, 0, 0);
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_80044990);
 

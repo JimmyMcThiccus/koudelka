@@ -344,13 +344,76 @@ EXTERN_C void func_8003944C(void *h, void *o)
     func_80019A18(h ? AT(h, List *, 0) : 0, s);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003950C);
+extern "C++" void *func_8003950C_(S_A2_Iter *it, A2VObj0 *o) asm("func_8003950C");
+void *func_8003950C_(S_A2_Iter *it, A2VObj0 *o)
+{
+    void *r = 0;
+    int s = func_80019A18(it ? (List *)it->arr : 0, 1);
+    it->i = 0;
+    while (it->i < it->arr->n) {
+        if (o->v00(it->arr->items[it->i])) {
+            r = it->arr->items[it->i];
+            break;
+        }
+        it->i++;
+    }
+    func_80019A18(it ? (List *)it->arr : 0, s);
+    return r;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039610);
+extern "C++" void *func_80039610_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039610");
+void *func_80039610_(S_A2_Iter *it, A2VObj0 *o)
+{
+    void *r = 0;
+    int s = func_80019A18(it ? (List *)it->arr : 0, 1);
+    while (it->i < it->arr->n) {
+        if (o->v00(it->arr->items[it->i])) {
+            r = it->arr->items[it->i];
+            break;
+        }
+        it->i++;
+    }
+    func_80019A18(it ? (List *)it->arr : 0, s);
+    return r;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039710);
+extern "C++" void *func_80039710_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039710");
+void *func_80039710_(S_A2_Iter *it, A2VObj0 *o)
+{
+    void *r;
+    int s;
+    if (!it->arr->n)
+        return 0;
+    r = 0;
+    s = func_80019A18(it ? (List *)it->arr : 0, 1);
+    for (it->i = it->arr->n - 1; it->i; it->i--) {
+        if (o->v00(it->arr->items[it->i])) {
+            r = it->arr->items[it->i];
+            break;
+        }
+    }
+    func_80019A18(it ? (List *)it->arr : 0, s);
+    return r;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80039824);
+extern "C++" void *func_80039824_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039824");
+void *func_80039824_(S_A2_Iter *it, A2VObj0 *o)
+{
+    void *r;
+    int s;
+    if (it->i <= 0)
+        return 0;
+    r = 0;
+    s = func_80019A18(it ? (List *)it->arr : 0, 1);
+    while (--it->i) {
+        if (o->v00(it->arr->items[it->i])) {
+            r = it->arr->items[it->i];
+            break;
+        }
+    }
+    func_80019A18(it ? (List *)it->arr : 0, s);
+    return r;
+}
 
 EXTERN_C void *func_80039928(S_A2_Stack *p)
 {
