@@ -273,7 +273,23 @@ EXTERN_C void func_800391DC(S_800391DC *p, int a, int b)
     p->unk48->unk14 = a;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_800391EC);
+EXTERN_C void func_800391EC(A2VObj0 *p)
+{
+    if (AT(p, short, 0x50) == 99)
+        return;
+    if (AT(p, void *, 0x68))
+        func_8003D00C(AT(p, void *, 0x68));
+    if (AT(p, short, 0x52)) {
+        p->v01();
+        p->v02((char *)p + 4);
+        if (AT(p, void *, 0x48))
+            func_8003CB50(AT(p, void *, 0x48));
+        if (AT(p, void *, 0x28))
+            func_8003944C(AT(p, void *, 0x28), &D_800B4D1C);
+    }
+    if (AT(p, void *, 0x68))
+        func_8003CF24(AT(p, void *, 0x68));
+}
 
 EXTERN_C int func_800392C8(S_800392C8 *p)
 {
