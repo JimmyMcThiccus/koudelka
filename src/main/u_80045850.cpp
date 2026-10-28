@@ -2254,7 +2254,25 @@ EXTERN_C void func_800539C8()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800539D0);
+extern "C++" S_A2B_Str *f539D0(S_A2B_Str *s, S_A2B_Ch2 *c) asm("func_800539D0");
+S_A2B_Str *f539D0(S_A2B_Str *s, S_A2B_Ch2 *c)
+{
+    S_A2B_Ch2 *d, *dd; unsigned i;
+    int n = s->len;
+    d = new S_A2B_Ch2[n + 2];
+    i = 0;
+    dd = d;
+    if (s->len) {
+        dd = d;
+        do { *dd = s->p[i]; i++; dd++; } while (i < s->len);
+    }
+    d[s->len] = *c;
+    s->len++;
+    if (s->p)
+        func_800A0D0C(s->p);
+    s->p = d;
+    return s;
+}
 
 S_A2B_Ch2 f53AE4(S_A2B_Str *s, unsigned i)
 {
