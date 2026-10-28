@@ -230,7 +230,32 @@ EXTERN_C int func_800382A4(void *p, int a, int b)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80037398", func_8003831C);
+EXTERN_C void func_8003831C(void *p, int m)
+{
+    if (AT(p, void *, 0x14)) {
+        if (!(m & 0x10)) {
+            if (m & 2) AT(p, int, 0xC) = 0xA;
+            else AT(p, int, 0xC) = 4;
+        } else AT(p, int, 0xC) = 9;
+        return;
+    }
+    switch (AT(p, int, 0xC)) {
+    case 0:
+        if (!AT(p, int, 0x2C) && !(m & 0x10)) return;
+        func_80035CF8();
+        func_800376D0(p);
+        return;
+    case 7:
+        AT(p, int, 0xC) = 9;
+    }
+    void *o = a2_ctor44(operator new(0x44));
+    AT(p, void *, 0x14) = o;
+    func_80035CF8();
+    func_80035CD8();
+    func_80036FC0(AT(p, void *, 0x14), 0x708, 0x1000);
+    func_8003546C(AT(p, void *, 0x14), (int)p);
+    ((A2VObj0 *)AT(p, void *, 0x14))->v02();
+}
 
 EXTERN_C void func_800384C4()
 {
