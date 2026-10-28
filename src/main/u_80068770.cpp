@@ -402,7 +402,24 @@ EXTERN_C void func_8006A608(void *self, int v)
     FIELD_AT(self, short, 8) = 2;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A6D4);
+EXTERN_C void func_8006A6D4(void *self)
+{
+    int *p = &D_800B4CF0_w;
+    if (FIELD_AT(self, short, 8) != 0) {
+        char *d = (char *)self + ((*p ^ 1) * 12);
+        char *s = (char *)self + (*p * 12);
+        *(W3_B *)(d + 0xC) = *(W3_B *)(s + 0xC);
+        char *s2 = (char *)self + (*p * 16 + 0x24);
+        int k = xor_8006A6D4(*p, 1) * 16 + 0x24;
+        int x = FIELD_AT(s2, int, 4);
+        int y = FIELD_AT(s2, int, 8);
+        int z = FIELD_AT(s2, int, 0xC);
+        FIELD_AT((char *)self + k, int, 4) = x;
+        FIELD_AT((char *)self + k, int, 8) = y;
+        FIELD_AT((char *)self + k, int, 0xC) = z;
+    }
+    func_80028184(self);
+}
 
 EXTERN_C void func_8006A784(char *self)
 {

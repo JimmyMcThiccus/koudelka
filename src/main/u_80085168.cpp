@@ -118,7 +118,20 @@ EXTERN_C void func_80085670(void *self, short b, int c, int d)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80085710);
+EXTERN_C void func_80085710(void *self, int a)
+{
+    int k = FIELD_AT(self, signed char, 0x4BC);
+    int new_var;
+    char *o;
+    new_var = k;
+    if (new_var < 3) {
+        o = (char *)FIELD_AT(D_800AF470.p, void *, 0x328);
+        func_8007BB48(o ? o + 0xB8 : 0, 1 << new_var, a);
+    } else {
+        o = (char *)FIELD_AT(D_800AF470.p, void *, 0x328);
+        func_8007BC3C(o ? o + 0xB8 : 0, 1 << (new_var - 3), a);
+    }
+}
 
 EXTERN_C void func_800857A0(void)
 {

@@ -101,4 +101,6 @@ EXTERN_C int func_80058488(void *self, int b);
 
 EXTERN_C void func_80063340(void *self, void *m);
 
+static inline int xor_8006A6D4(int a, int b) { return a ^ b; }
+
 #endif /* GAME_B2_B2_H */
