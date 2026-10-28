@@ -1,4 +1,9 @@
-// DRAFT: structurally complete, 1489 differing (built 6532 vs retail 6576 bytes). Control flow, all 3 switches/jump tables, calls and constants follow retail; remaining diffs are mostly register allocation: retail keeps nobj in s7, &c (0x50 colour temp) in fp and spills the message pointer m to 0x70 (and &r/&r.h to 0x78/0x74), mine keeps m in fp and nobj in s4 (each m reload is 2 extra insns in retail). Also case 98/99 scheduling of the D_800B4ED8 base-pointer and event-ctor stores. func_800BE54C/BE568 are called through s32-returning casts (retail tests the result without sign-extension).
+// DRAFT (k2): 199 instructions differ by sdiff alignment (offset-aware; the original draft scored 418 the same way), built 6572 vs retail 6576 bytes.
+// Fixed: m is spilled to 0x70; the stack layout now equals retail (0x58 started .. 0x78 &r); case 98's 2 sits in a callee-saved register.
+// Remaining: nobj is in s5 (retail s7) and &c in s7 (retail fp), because nobj/&c (global-alloc priority ~.21/.20) get allocated before case 98's
+// vtable-constant pseudos (~.19-.23; retail allocates those first). The case-98 regs are permuted (2/d in s2/s0 vs retail s0/s2).
+// The xA==5/xA==7 message switches: retail copies the index into a0 after the first compare (addu a0,v1). &r is passed
+// as addiu a1,sp,0x48 twice (retail always lw 0x78). Small sched diffs around started=1 and the first f->x2C load.
 #include "movie/movie.h"
 struct Unk800BA5C4V { virtual void v1(s32); };
 struct Unk800BA5C4W { char pad[0x18]; virtual void v1(s32); virtual void v2(); };
@@ -66,11 +71,14 @@ inline Unk800B9640* Unk800BA5C4_stream(Unk800B9640* p) {
 #define BA5C4_SPRITE(dst, X, Y, W, H) { Unk800BE1CC* o = (Unk800BE1CC*)operator new(0x74); r.set(X, Y, W, H); func_8002972C(&c, 0, 0, 0, 1); dst = (Unk800BA5C4V*)func_800BE1CC(o, (s32)&r.a, (s32)nobj, 1, (s32)&c); func_800198AC(&c, 2); }
 #define BA5C4_54C(o, a) ((s32 (*)(Unk800BE54C*, s16))func_800BE54C)(o, a)
 #define BA5C4_568(o, a) ((s32 (*)(Unk800BE568*, s16))func_800BE568)(o, a)
+// local copy of Unk800BF918_ev: the 2 for x8 goes through a named local so the loop pass does not merge it with the
+// hoisted loop-invariant 2; it then gets $s0 in case 98, which is what pushes m out of the registers as in retail
+inline Unk800CA59CT* Unk800BA5C4_ev(s16 k, void* a, s32 b) { Unk800CA59CT* t = func_8001CA10(0x14); s16 two = 2; Unk800CA59C_ctor1(t); *(void* volatile*)&t->x0 = D_80010300; t->x8 = two; t->xA = k; t->x4 = 0; t->x10 = b; t->xC = (s32)a; t->x0 = D_800102D0; return t; }
 //@func
 EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
   void* nobj = 0;
   Unk800BEB0C* s3 = 0;
-  u16 started = 0;
+  s16 started = 0; // s16 (not u16): its test becomes a paradoxical-subreg copy, and the slot gets 8-byte alignment (0x58..0x5F)
   Unk800BA5C4W* o60 = 0;
   Unk800C5B70* o64;
   Unk800BA5C4W* o68 = 0;
@@ -95,7 +103,7 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
   p->x118 = 0; p->x11C = 0;
   func_800230E8(D_800A4534.x44 + 0x154, p);
   while (p->x108) {
-    s32 done = 0;
+    s16 done = 0; // signed narrow: retail tests a copy of it (addu v0, s0)
     Unk800BA5C4M* m;
     if (p->x10C == 0) m = func_8001EB60(p, 1);
     else m = (Unk800BA5C4M*)func_8001ED2C(p, p->x10C, 1);
@@ -394,14 +402,15 @@ EXTERN_C void func_800BA5C4(Unk800BA5C4* p) {
         break;
       case 98: {
         func_8001ED2C(p, 0x3C, 1);
-        func_8001EFE4(D_800AF470[0], Unk800BF918_ev(0x11, 0, 1));
+        func_8001EFE4(D_800AF470[0], Unk800BA5C4_ev(0x11, 0, 1));
         char* d = 0;
         p->x10A = 100;
         if (D_800B4ED8[0]) d = D_800B4ED8[0] + 0x124;
-        func_8001EFE4(d, Unk800BF918_ev(2, p, 7));
+        func_8001EFE4(d, Unk800BA5C4_ev(2, p, 7));
         func_800232A0(D_800A4534.x44 + 0x154, p);
         break;
       }
+
       case 99: {
         o64 = func_800C5B70((Unk800C5B70*)operator new(8), (s32)p, 2);
         func_800C5B80((Unk800C5B80*)o64);
