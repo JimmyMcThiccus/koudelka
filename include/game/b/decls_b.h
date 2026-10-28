@@ -3208,4 +3208,20 @@ EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
 EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
 EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
 
+struct S_Ct3C { S_VBB *vb; char pad4[0x38]; S_VBobjB vobj; };
+struct S_Ct50 { S_VBB *vb; char pad4[0x4C]; S_VBobjB vobj; };
+struct S_Ct5C { S_VBB *vb; char pad4[0x58]; S_VBobjB vobj; };
+EXTERN_C void *func_8005BC84_v2(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
+EXTERN_C void func_800537C0(void *p);
+EXTERN_C void *func_80057368_v(void *p, int in_chrg) asm("func_80057368");
+EXTERN_C void *func_80064884_v(void *p, int a, int b) asm("func_80064884");
+EXTERN_C const VTabB50 D_8001506C;
+EXTERN_C void *D_800150BC[];
+EXTERN_C const VTabB50 D_8001521C;
+EXTERN_C void *D_80015364[];
+EXTERN_C void *D_8001526C[];
+EXTERN_C const VTabB50 D_80014FFC;
+EXTERN_C void *D_8001504C[];
+EXTERN_C void *D_80014EEC[];
+
 #endif /* GAME_B_DECLS_B_H */
