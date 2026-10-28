@@ -2304,7 +2304,17 @@ EXTERN_C void func_8007BDAC(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007BDB4);
+EXTERN_C void func_8007BDB4(void *self_, int a, int b, int c)
+{
+    char *self = (char *)self_;
+    FIELD_AT(self, int, 0x30) = a;
+    void *n = __builtin_new(0x1C8);
+    void *p = func_800758F8(n, 1, D_800A4578.p ? (char *)D_800A4578.p + 0x50 : 0, self);
+    void *d = D_800B4C18.p;
+    FIELD_AT(self, void *, 0x40) = p;
+    func_8001E848(d, p);
+    func_8007669C(FIELD_AT(self, void *, 0x40), b, c);
+}
 
 EXTERN_C void func_8007BE44(void *self)
 {

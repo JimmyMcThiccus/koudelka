@@ -38,4 +38,6 @@ EXTERN_C char D_800173D0[];
 
 EXTERN_C void func_8008022C_def(void *self, int a, int b) asm("func_8008022C");
 
+EXTERN_C void *D_800B4D38_w asm("D_800B4D38");
+
 #endif /* GAME_B2_B2_H */
