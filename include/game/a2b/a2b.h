@@ -92,4 +92,26 @@ extern "C++" void *f40294(void *p, int a) asm("func_80040294");
 extern "C++" void *f4025C(void *p, int a, int b) asm("func_8004025C");
 EXTERN_C int func_8003ED10(void *p, int b, int c, int d, int e);
 extern "C++" int f53BB4(S_A2B_Str *s) asm("func_80053BB4");
+struct S_A2B_Q16 { int a, b, c, d; };
+struct S_A2B_Q16o { char pad[0xC]; S_A2B_Q16 q; };
+struct S_A2B_PTag { unsigned addr : 24; unsigned len : 8; };
+struct S_A2B_OtB {
+    char pad0[0x10];
+    unsigned int count;
+    unsigned long *tab;
+    int add(S_A2B_PTag *prim, unsigned int i)
+    {
+        if (i && i < count) {
+            prim->addr = tab[i];
+            tab[i] = (unsigned long)prim & 0x00ffffff;
+            return 1;
+        }
+        return 0;
+    }
+};
+EXTERN_C S_A2B_OtB *D_800B4CFC;
+#define PB_(s) ((unsigned char *)(s)->p)
+struct S_A2B_StrC { char pad[0x10]; S_A2_Ch *p; unsigned len; };
+EXTERN_C void *func_80048D64(void *p, int a, int b, int c, int d, int e);
+EXTERN_C void func_80036D8C(void *p);
 #endif /* GAME_A2B_A2B_H */
