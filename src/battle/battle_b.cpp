@@ -155,7 +155,28 @@ EXTERN_C void func_800C435C(T_C435C *p, int x) {
     }
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C43F0);
+EXTERN_C void func_800C43F0(T_C43F0 *self, int in_chrg)
+{
+    self->vt40 = D_800B7518;
+    self->vt2C = D_800B7420;
+    self->vb0->vptr = (T_VTable10 *)&D_800B73D0;
+    if (!in_chrg) {
+        T_VTable10 vt = D_800B73D0;
+        self->vb0->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800B73D0.e[1].delta + (adj = (char *)self - (full = (char *)self->vb0 - 0x58));
+        vt.e[5].delta = D_800B73D0.e[5].delta + adj;
+        vt.e[7].delta = D_800B73D0.e[7].delta + adj;
+        vt.e[9].delta = D_800B73D0.e[9].delta + adj;
+    }
+    func_800537DC(self->f38, 0);
+    func_8005BDA4(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb0, 0);
+    if (in_chrg & 1)
+        operator delete(self);
+}
 
 EXTERN_C T_C4510 *func_800C4510(T_C4510 *p, SVec4 *pos, int a, int flags) {
     ((F_5F0E4)func_8005F0E4)(p, 2);
