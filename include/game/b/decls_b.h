@@ -2395,7 +2395,7 @@ EXTERN_C void func_80053848(void *self);
 EXTERN_C void func_8005BF04(void *self, int b, int c);
 EXTERN_C void func_80098E10(void *self);
 EXTERN_C void func_80059800(void *self, int a, int b, int c, int d);
-EXTERN_C void func_80059888(void *self, int b);
+EXTERN_C void func_80059888(void *self, unsigned char *b);
 EXTERN_C void func_80059790(void *self);
 EXTERN_C void func_8005B378(void *self, int b);
 EXTERN_C VObj<0x2C> *func_80063E18(void *self, int a, int b, int c);
@@ -3051,5 +3051,10 @@ static inline void shift_8007F138(Arr_8007F434 *self)
 EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n);
 EXTERN_C void func_80078520(void *self, void *p);
 EXTERN_C void func_800825FC(short *self, int b);
+
+EXTERN_C int D_800B4CF0_w asm("D_800B4CF0");
+struct Q16 { int a, b, c, d; };
+struct Q16o { char pad[0xC]; Q16 q; };
+
 
 #endif /* GAME_B_DECLS_B_H */
