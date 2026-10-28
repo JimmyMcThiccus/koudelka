@@ -571,9 +571,28 @@ EXTERN_C LNode_B *func_80075220(LList_B *l)
     return n;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800752B8);
+EXTERN_C void *func_800752B8(void *self)
+{
+    if (((List_8007AB78 *)self)->head == ((List_8007AB78 *)self)->cur) {
+        return func_800751AC(self);
+    }
+    if (((List_8007AB78 *)self)->IsLast()) {
+        return func_80075220((LList_B *)self);
+    }
+    LNode_B *c = ((List_8007AB78 *)self)->cur;
+    ((List_8007AB78 *)self)->cur = (LNode_B *)func_80074EA4((Node_80074EA4 *)c);
+    FIELD_AT(self, int, 8)--;
+    return c;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80075358);
+EXTERN_C void *func_80075358(void *self)
+{
+    if (((List_8007AB78 *)self)->IsLast()) {
+        return 0;
+    }
+    ((List_8007AB78 *)self)->Next();
+    return func_800752B8(self);
+}
 
 EXTERN_C void *func_800753F8(void *self)
 {

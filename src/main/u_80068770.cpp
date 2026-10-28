@@ -380,7 +380,23 @@ EXTERN_C void func_8006AD40(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006AE68);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006AF94);
+EXTERN_C void func_8006AF94(void *self_)
+{
+    char *self = (char *)self_;
+    if (FIELD_AT(self, int, 0x26C) != 0) {
+        int x = FIELD_AT(self, int, 0x28C);
+        FIELD_AT(self, int, 0x11C) = x;
+        func_80099C80(x);
+        FIELD_AT(self, int, 0x84) = FIELD_AT(self, int, 0x27C);
+        FIELD_AT(self, int, 0x88) = FIELD_AT(self, int, 0x280);
+        FIELD_AT(self, int, 0x8C) = FIELD_AT(self, int, 0x284);
+        FIELD_AT(self, short, 0x7C) = FIELD_AT(self, unsigned short, 0x290);
+        FIELD_AT(self, short, 0x7E) = FIELD_AT(self, unsigned short, 0x292);
+        FIELD_AT(self, short, 0x80) = FIELD_AT(self, unsigned short, 0x294);
+        ((VObj<0x2C> *)self)->v33(self + 0x7C, self + 0x84);
+        FIELD_AT(self, int, 0x26C) = 0;
+    }
+}
 
 EXTERN_C void func_8006B024(void *self, int b)
 {
