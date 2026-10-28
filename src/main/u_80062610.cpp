@@ -396,7 +396,24 @@ EXTERN_C void func_80063B14(void *self, short *v, unsigned short c)
     ((VObj<0x2C> *)self)->v27();
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063BE4);
+EXTERN_C void func_80063BE4_def(void *self) asm("func_80063BE4");
+EXTERN_C void func_80063BE4_def(void *self)
+{
+    char *m = (char *)self + 0x30;
+    int i;
+    for (i = (m ? *(List **)m : (List *)0)->count - 1; i >= 0; i--) {
+        char *m2 = (char *)self + 0x30;
+        char *v = m2 ? m2 + 8 : 0;
+        void **o = (void **)func_80019F64(v ? *(void **)v : 0, i);
+        if (o) {
+            ((VObj0 *)*o)->v00(3);
+        }
+    }
+    {
+        char *m3 = (char *)self + 0x30;
+        func_80019D40(m3 ? *(List **)m3 : (List *)0);
+    }
+}
 
 EXTERN_C int func_80063CA4(S_WB *p)
 {

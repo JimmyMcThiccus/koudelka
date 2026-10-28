@@ -128,3 +128,7 @@ Round 3, batch 6:
 - func_800667C8 / 8006692C / 80066A54 / 80066BC0 / 800663EC: retail loads the .bin header through TWO pseudos for the same pointer (`h` for the value
   words, a copy `base` for the offset words, both with fixed offsets, copy made right after the first tag-byte test). I could not stop GCC
   from coalescing them; these stay open (667C8 is 64 off with `h += 8` stepping, 67 off with the copy placed after the first test).
+
+Round 3, batch 7:
+- A list embedded at +0x30 whose address is null-checked (Ghidra shows `param_1 != -0x30`): keep `char *m = (char *)self + 0x30; m ? *(List **)m : 0`
+  and in the loop `char *m2 = (char *)self + 0x30; char *v = m2 ? m2 + 8 : 0;` (func_80063BE4).

@@ -431,3 +431,113 @@ EXTERN_C void func_80062988(void *self)
         func_80062E70(self);
     }
 }
+// ===== func_80057F20: 13 differing: loop and null-checks right; retail has b in s2, m in s3 (copy of the first &self->0x110 temp in v1), mine swaps s2/s3
+EXTERN_C void func_80057F20_def(void *self, int b) asm("func_80057F20");
+EXTERN_C void func_80057F20_def(void *self, int b)
+{
+    int i;
+    char *m;
+    char *m0;
+    FIELD_AT(self, unsigned short, 0x13C) = b;
+    func_80059F0C((char *)self + 0x5C, b & 0xFF);
+    func_8005A784((char *)self + 0xC8, b & 0xFF);
+    m0 = (char *)self + 0x110;
+    m = m0;
+    for (i = (m0 ? *(List **)m0 : (List *)0)->count - 1; i >= 0; i--) {
+        char *v = m ? (char *)self + 0x118 : 0;
+        VObj<0x2C> *o = (VObj<0x2C> *)func_80019F64(v ? *(void **)v : 0, i);
+        o->v28(b & 0xFF);
+    }
+}
+// ===== func_80063F3C: 30+ differing: retail does not fold `(n & 1) != 1` (li 1; bne) and keeps the if-chain on the halfword at +0x38
+EXTERN_C void func_80063F3C_def(void *self) asm("func_80063F3C");
+EXTERN_C void func_80063F3C_def(void *self)
+{
+    unsigned short u2 = (FIELD_AT(self, short, 0x3A) + 1) & 7;
+    int a;
+    int x;
+    int y;
+    unsigned short m;
+    FIELD_AT(self, unsigned short, 0x3A) = u2;
+    if ((u2 & 1) != 1) {
+        return;
+    }
+    a = -3;
+    if (u2 < 7) {
+        a = 1;
+    }
+    m = FIELD_AT(self, unsigned short, 0x38);
+    if (m == 3) {
+        x = 0;
+        y = -a;
+    } else {
+        if (m < 4) {
+            x = a;
+            if (m != 2) {
+                x = -a;
+            }
+        } else {
+            x = -a;
+            if (m == 4) {
+                y = a;
+                x = 0;
+                goto call;
+            }
+        }
+        y = 0;
+    }
+call:
+    ((VObj<0x2C> *)self)->v29(x, y);
+}
+// ===== func_8005D080: 68 differing (prim ctor, 4 sprites + 2 tiles): retail hoists the byte constants (3, 0x7C, 0x60) differently
+EXTERN_C void *func_8005D080_def(void *p, short *r, int a3, int a4) asm("func_8005D080");
+EXTERN_C void *func_8005D080_def(void *p, short *r, int a3, int a4)
+{
+    int i;
+    int off;
+    int *s;
+    int *d;
+    func_8005F0E4_v(p, a4);
+    FIELD_AT(p, unsigned char, 0x2F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x3F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x4F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x5F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x6F) = 0x60;
+    FIELD_AT(p, unsigned char, 0x7F) = 0x60;
+    FIELD_AT(p, unsigned char, 0x2B) = 3;
+    FIELD_AT(p, unsigned char, 0x3B) = 3;
+    FIELD_AT(p, unsigned char, 0x4B) = 3;
+    FIELD_AT(p, unsigned char, 0x5B) = 3;
+    FIELD_AT(p, unsigned char, 0x6B) = 3;
+    FIELD_AT(p, unsigned char, 0x7B) = 3;
+    i = D_800B4CF0_w;
+    FIELD_AT(p, char *, 0) = D_80014950;
+    off = i << 4;
+    FIELD_AT(p, short, off + 0x30) = r[0];
+    FIELD_AT(p, short, off + 0x32) = r[1];
+    FIELD_AT(p, short, off + 0x50) = r[0] + 0x20;
+    FIELD_AT(p, short, off + 0x52) = r[1];
+    FIELD_AT(p, short, off + 0x70) = r[0] + 0x10;
+    FIELD_AT(p, short, off + 0x74) = 0x10;
+    FIELD_AT(p, short, off + 0x76) = 0xD;
+    FIELD_AT(p, short, off + 0x72) = r[1] + 1;
+    func_8005D624_v(p);
+    func_8005D228_v(p, a3);
+    func_8005D2D8_v(p, &D_800B4C98);
+    s = (int *)((char *)p + (off + 0x28));
+    d = (int *)((char *)p + (((i ^ 1) << 4) + 0x28));
+    d[1] = s[1];
+    d[2] = s[2];
+    d[3] = s[3];
+    s = (int *)((char *)p + (off + 0x48));
+    d = (int *)((char *)p + (((i ^ 1) << 4) + 0x48));
+    d[1] = s[1];
+    d[2] = s[2];
+    d[3] = s[3];
+    s = (int *)((char *)p + (off + 0x68));
+    d = (int *)((char *)p + (((i ^ 1) << 4) + 0x68));
+    d[1] = s[1];
+    d[2] = s[2];
+    d[3] = s[3];
+    return p;
+}
