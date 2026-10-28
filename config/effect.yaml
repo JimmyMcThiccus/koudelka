@@ -44,8 +44,14 @@ segments:
     start: 0x0
     vram: 0x800D5DAC
     subsegments:
-      - [0x0, .rodata, effect] # overlay id + entry table, jump tables, strings
+      - [0x0, rodata] # overlay id + entry table and data, reached by global symbol
+      # Original files, from jump-table alignment (tools/jtbl_classes.py): GCC aligns tables to 8 relative
+      # to its object's rodata, so all tables of one file share an address mod 8, and each unit's rodata
+      # starts at its first table. effect then effect_b (code cut at 0x800E0188; rodata at 0x800D61B0, 0x800D654C).
+      - [0x404, .rodata, effect] # 0x800D61B0
+      - [0x7A0, .rodata, effect_b] # 0x800D654C
       - [0xA20, cpp, effect]
+      - [0xA3DC, cpp, effect_b] # 0x800E0188
       - [0xFA90, data]
 
   - [0xFAA0]

@@ -271,4 +271,30 @@ inline void key_copy(Key *self, Key *other)
     self->w4 = other->w4;
 }
 
+/* Shared by effect.cpp and effect_b.cpp (the two original files). */
+
+/* Scratchpad parameter block at 0x1F800000 (filled before building an effect object) */
+struct Params_800E2704 {
+    char pad0[8];
+    int a;
+    int b;
+    RandVal *rv;
+    Vec4 v14;
+    Vec4 v24;
+    Vec4 v34;
+    unsigned char b44, b45, b46, b47;
+    short s48;
+    short s4A;
+    short s4C;
+    short s4E;
+    short s50;
+    unsigned char b52;
+};
+
+EXTERN_C Params_800E2704 D_1F800000;
+
+struct C_800D6C94;
+EXTERN_C C_800D6C94 *func_800D6C94(C_800D6C94 *self);
+EXTERN_C Vec4 func_8003A150(int h, int n);
+
 #endif /* EFFECT_EFFECT_H */
