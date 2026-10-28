@@ -165,8 +165,9 @@ adjustments and struct offsets are easier to read there than in the asm.
   call `instances_use(8192)`.
 - `functions_decompile(address="8006c4ec")` decompiles an EXE function. For an overlay function, prefix the
   overlay's name: `address="FIELD::800c7740"`, `"BATTLE::800c7158"`.
-- If it says "Function not found", Ghidra doesn't have that function yet. Name it in your report, and the
-  integrator seeds it (`tools/ghidra_scripts/KoudelkaSeedFunctions.java`).
+- Every function splat knows is in Ghidra under our names (`func_XXXXXXXX`), so its output calls functions by
+  the names our source uses. They were seeded by `tools/ghidra_scripts/KoudelkaSeedFunctions.java`, from the
+  list `tools/ghidra_function_list.py` writes. If one still says "Function not found", name it in your report.
 - **Read only.** All seven sessions share one Ghidra instance, so don't rename, retype, create or save anything
   in it. Its C is a reading aid: it compiles to different code, so write the matching source yourself.
 
