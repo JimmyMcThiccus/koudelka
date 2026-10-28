@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80085168);
 
@@ -43,7 +44,19 @@ EXTERN_C void func_8008533C(void *self, int a, int b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_800853D8);
+EXTERN_C void func_800853D8(void *self, int a, int c)
+{
+    if (a < 0) {
+        func_800451A8(D_800B4D38_w, FIELD_AT(self, short, 0x4BE));
+        FIELD_AT(self, int, 0x13C) = 0;
+        FIELD_AT(self, short, 0x118) = -2;
+    } else {
+        func_80045120(D_800B4D38_w, FIELD_AT(self, short, 0x4BE), (short)a);
+        if (c == 0) {
+            FIELD_AT(self, int, 0x13C) = 0;
+        }
+    }
+}
 
 EXTERN_C void func_80085454(void *self, int b)
 {
@@ -485,7 +498,13 @@ EXTERN_C int func_800864B4(void *self)
     return FIELD_AT(self, int, 0x4D0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_800864C0);
+EXTERN_C void func_800864C0(void *self)
+{
+    VObj<8> *p;
+    while ((p = (VObj<8> *)func_800751AC(self)) != 0) {
+        p->v00(3);
+    }
+}
 
 EXTERN_C void func_80086518(void *self, short *b)
 {
@@ -746,7 +765,18 @@ EXTERN_C void func_80086DB4(Obj_80086DB4 *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80086E14);
+EXTERN_C void func_80086E14(char *self)
+{
+    FIELD_AT(self, void *, 0) = (void *)func_80079F48(D_800AF470_w);
+    func_800898F0(self + 0x34);
+    func_8008655C((short *)(self + 0x58));
+    func_80086DB4((Obj_80086DB4 *)self);
+    self[0x6D] = 0;
+    self[0x7B] = 0;
+    self[0x7A] = 0;
+    self[0x79] = 0;
+    self[0x78] = 0;
+}
 
 EXTERN_C void func_80086E74(void *self)
 {
@@ -1318,7 +1348,26 @@ EXTERN_C int func_80088DEC(char *self, char *b)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80088F34);
+EXTERN_C int func_80088F34(void *self, void *m)
+{
+    switch (FIELD_AT(m, unsigned short, 0x10)) {
+    case 0x1001:
+        return ((VObj<0x9C> *)self)->v06(FIELD_AT(m, int, 8));
+    case 0x1002:
+        return func_800D9970_i(self, FIELD_AT(m, int, 8));
+    case 0x1003:
+        return func_800883A0_i(self, FIELD_AT(m, int, 8));
+    case 0x1004:
+        return func_80088794_i(self, FIELD_AT(m, int, 8));
+    case 0x1005:
+        return func_800D9CB0_i(self, FIELD_AT(m, int, 8));
+    case 0x1006:
+        return func_8008891C_i(self, FIELD_AT(m, int, 8));
+    case 0x1007:
+        return func_80088C8C_i(self, FIELD_AT(m, int, 8));
+    }
+    return 0;
+}
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80085168", D_80017CB4);
 

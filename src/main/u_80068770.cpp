@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 EXTERN_C int D_800B4ED8; // defined in this file: reached through $gp here (func_8006BF94)
 
@@ -22,7 +23,16 @@ EXTERN_C void func_8006897C(void *self, int b, int c)
     FIELD_AT(self, int, 0x1CFC) = c;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_800689E0);
+EXTERN_C void func_800689E0(void *self)
+{
+    int i = FIELD_AT(self, int, 0x20);
+    if (i < FIELD_AT(self, unsigned short, 0x1CF0)) {
+        func_80061188((Obj_80061188 *)D_800B4DD0_w, FIELD_AT((char *)self + i, signed char, 0x68));
+    } else {
+        int j = FIELD_AT(self, unsigned short, 0x1D00);
+        func_80061164(D_800B4DD0_w, j ? j - 1 : 0);
+    }
+}
 
 EXTERN_C int func_80068A50(void *self)
 {
@@ -296,7 +306,25 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A608);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A6D4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A784);
+struct W3_B {
+    int a, b, c;
+};
+EXTERN_C void func_8006A784(char *self)
+{
+    int i = D_800B4CF0_w;
+    char *d = self + i * 12;
+    char *s = self + (i ^ 1) * 12;
+    *(W3_B *)(d + 0xC) = *(W3_B *)(s + 0xC);
+    int j = D_800B4CF0_w;
+    char *s2 = self + ((j ^ 1) * 16 + 0x24);
+    int k = j * 16 + 0x24;
+    int x = FIELD_AT(s2, int, 4);
+    int y = FIELD_AT(s2, int, 8);
+    int z = FIELD_AT(s2, int, 0xC);
+    FIELD_AT(self + k, int, 4) = x;
+    FIELD_AT(self + k, int, 8) = y;
+    FIELD_AT(self + k, int, 0xC) = z;
+}
 
 EXTERN_C void func_8006A80C(void *self)
 {
@@ -352,7 +380,23 @@ EXTERN_C void func_8006AD40(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006AE68);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006AF94);
+EXTERN_C void func_8006AF94(void *self_)
+{
+    char *self = (char *)self_;
+    if (FIELD_AT(self, int, 0x26C) != 0) {
+        int x = FIELD_AT(self, int, 0x28C);
+        FIELD_AT(self, int, 0x11C) = x;
+        func_80099C80(x);
+        FIELD_AT(self, int, 0x84) = FIELD_AT(self, int, 0x27C);
+        FIELD_AT(self, int, 0x88) = FIELD_AT(self, int, 0x280);
+        FIELD_AT(self, int, 0x8C) = FIELD_AT(self, int, 0x284);
+        FIELD_AT(self, short, 0x7C) = FIELD_AT(self, unsigned short, 0x290);
+        FIELD_AT(self, short, 0x7E) = FIELD_AT(self, unsigned short, 0x292);
+        FIELD_AT(self, short, 0x80) = FIELD_AT(self, unsigned short, 0x294);
+        ((VObj<0x2C> *)self)->v33(self + 0x7C, self + 0x84);
+        FIELD_AT(self, int, 0x26C) = 0;
+    }
+}
 
 EXTERN_C void func_8006B024(void *self, int b)
 {
