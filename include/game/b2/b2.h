@@ -103,4 +103,20 @@ EXTERN_C void func_80063340(void *self, void *m);
 
 static inline int xor_8006A6D4(int a, int b) { return a ^ b; }
 
+EXTERN_C short D_800B4EDC;
+
+EXTERN_C void func_8003FA50(void *self, void *a, int b, int c);
+
+EXTERN_C void func_8003E124(void *self);
+
+EXTERN_C short func_8003E170(void *self);
+
+EXTERN_C int func_8003ED90(void *out, void *self);
+
+EXTERN_C void func_8003ECFC(void *self, int a, int b);
+
+EXTERN_C void func_8003E198(void *self, int a, int b);
+
+EXTERN_C void func_80079918(void *a);
+
 #endif /* GAME_B2_B2_H */
