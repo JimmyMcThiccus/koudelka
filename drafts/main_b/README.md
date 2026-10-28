@@ -40,3 +40,41 @@
 - func_80054C34 needs `func_80053964(void *self, int b)`. func_80053964 is in main_a's range.
 - func_8005F698 needs `func_8005F47C(void)` and `func_8001D024(void *self, int b)`.
 - func_8006BC98 returns 1 (`int`), but it is declared `void`.
+
+# Round 2 (branch claude/r2-main-b-6e2409)
+
+218 functions landed (552 -> 334 left). Best attempts that don't match yet:
+
+- `r2_attempts.cpp`: the lead's attempts (one section per function, last variant tried).
+- `r2_u_800658E0_near.cpp`, `r2_u_80071A74_near.cpp`, `r2_u_80082174_near.cpp`: helper attempts for those units.
+
+None of these files is built.
+
+## What is left, by cause (334)
+
+| Cause | Count | Notes |
+|---|---|---|
+| Small global loaded/stored with the assembler-macro `lui $x; lw $x,%lo(sym)($x)` (or `lui $at; sw`) | 120 | Blocked by the toolchain. ASPSX used `$gp` only for symbols defined in the same source file; `tools/maspsx_extern.py` gp-registers every small `.extern`. See the round-2 finding below. |
+| Virtual-base ctor/dtor (`in_chrg` tests, 0x50-byte vtable copied to the stack, deltas patched via `self->vbptr`) | 58 | Compiler-generated. Needs real `virtual` base classes, plus their vtable/ctor symbols mapped in `config/symbols/main_b.txt`. Some bases live in main_a's range (func_8001A610). |
+| Jump table or data inside the .s | 28 | u_800658E0, u_80071A74 and u_80082174 have rodata segments. Not tried yet: rodata ordering risk. |
+| Other | 127 | Mostly large functions, or near misses that are register-allocation only. |
+
+## Closest near misses
+
+| Function | Diffs | What differs |
+|---|---|---|
+| func_8006C29C | 2 | final store `D_800B4D00 = ...` is the `lui $at; sw` macro (toolchain block) |
+| func_8008A2A0 | 3 | final `(sa+sb) < (ta+tb)` sums in swapped v0/v1 |
+| func_8007FD60 | 3 | `lui` of D_800AC86C scheduled before the s1=v0 move |
+| func_8005717C | 3 | `c = A0 ? 0 : 0xFF` arg layout (a0 = self+0x5C computed in the branch delay slot) |
+| func_80070038 | 6 | needs `register int result asm("$2")`; then i / &args[i] swapped |
+| func_800766F8, func_800729E8, func_80089AC0 | 6 | prologue order / register allocation |
+| func_8005C26C | 11 | constructor: s0/s1 swapped (same as round 1) |
+| func_8006C4EC, func_80086578, func_8008A188 | 7 | register allocation |
+| func_80057F20 | 7 | prologue: retail stores `self->0x13C` from `$a1`. Caller func_80054D48 needs the `unsigned short` prototype. |
+| func_80054B98 / 80054A4C / 80054AF0 | 16+ | ctor with a member List: retail moves `this` to `$v0` right after func_800198E0 and stores through `$v0`; `r = self`, call_value cast and real ctor didn't reproduce it |
+| func_800576F8 | 24 | struct return {short,short}; loop exact, tail register allocation |
+| func_80061758 | 45 | structure exact. Retail hoists the 99 constant out of the case-4 loop but doesn't strength-reduce `p+0x2A4`. |
+| copy ctors with array members (func_800595F8, 8005C968, 8005DFE8, 8005D754, 8005EF58, 80064478) | — | implicit copy ctor loops (`n = 1; ... while (--n != -1)`). Hand-written loops get unrolled. |
+
+Each `r2_*_near.cpp` file starts with the helper's one-line reason per function.
