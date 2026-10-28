@@ -61,7 +61,22 @@ EXTERN_C void func_800B8FE0(Unk800B8FE0B* p, u8* q) { if ((q[0] & 0x10) || ((q[0
 
 EXTERN_C s32 func_800B9060(Unk800B9060B* p) { switch (p->x35) { case 0: func_8003556C(p); return 0; case 9: { u8 loc[4]; Unk800B9060M m; if (p->x36 == 0) return 0; if (func_800366F8(p) == 0) return 0; CdIntToPos(p->x24, loc); CdControl(2, loc, 0); p->x30 = 0; p->x48 = 0; p->x34 = 0; p->x35 = 0; if (CdRead2(p->x37 | 0x120)) return 0; m.a = func_8009C9C0(); m.b = 0; p->v13(&m); return 0; } } return func_80036850(p); }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B914C);
+EXTERN_C void func_800B914C(Unk800B93D8T* p) {
+  Unk800B93D8T** g = D_800B4D0C;
+  Unk800B93D8T* s = *g;
+  // comparing through a flag keeps cse from recording s == p (combine folds it back into the bne)
+  s32 cur = s == p;
+  if (!cur) return;
+  if (p->x30 >= 0) { func_8008CD1C(0, 0); VSync(0); func_8009A470(); }
+  p->x36 = 0;
+  p->x35 = 0x15;
+  *g = 0; // through the local pointer so the p->x3C load can move above it
+  if (p->x3C) func_800A0D0C(p->x3C);
+  s->x44 = 0; s->x40 = 0; s->x3C = 0;
+  s->x4->x4 = -1;
+  StreamStat* st = s ? s->x4 : 0;
+  st->x0 |= 0x11;
+}
 
 EXTERN_C void func_800B9208(void* a, u8 b) { Unk800B9208S* s = (Unk800B9208S*)D_800B4D0C[0]; if (s != a) return; s->v3(); if (func_80035C30(b)) return; Unk800B9208G* g = D_800AC854; if ((g ? g->x0 : 0)->x4) func_80019C68(g ? g->x0 : 0, 0)->v1(0); }
 
@@ -277,7 +292,28 @@ EXTERN_C s32 func_800BC12C(Unk800BC12C* p, Unk800BC12CP* pad) {
 
 EXTERN_C int func_800BC54C() { return 1; }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BC554);
+EXTERN_C Unk800BC554* func_800BC554(Unk800BC554* self, s32 in_chrg, s32 a) {
+  if (in_chrg) { Unk800BBF7CV* v = &self->x150; self->x100.x0 = v; self->x150.vptr = D_80010178; v->x4 = 0; self->x150.vptr = D_800104A8; }
+  ((void* (*)(void*, s32, s32, s32, s32))func_8001E40C)(self, a, 2, 0x500, 0);
+  func_800514C8(&self->xF8);
+  Unk800BBF7CS* s = &self->x100;
+  s->x0->vptr = &D_80010538;
+  Unk800BBF7CT vt0 = D_80010538;
+  s->x0->vptr = &vt0;
+  char* full0; s32 adj0;
+  vt0.e[1].delta = D_80010538.e[1].delta + (adj0 = (char*)s - (full0 = (char*)s->x0 - 8));
+  vt0.e[6].delta = D_80010538.e[6].delta + adj0;
+  s->x4 = D_80010508;
+  self->x100.x0->vptr = &D_800B7564;
+  if (!in_chrg) {
+    Unk800BBF7CT vt = D_800B7564;
+    self->x100.x0->vptr = &vt;
+    char* full; s32 adj;
+    vt.e[1].delta = D_800B7564.e[1].delta + (adj = (char*)self - (full = (char*)self->x100.x0 - 0x150));
+    vt.e[6].delta = D_800B7564.e[6].delta + adj;
+  }
+  Unk800BC554_fin(self); return self;
+}
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7530);
 

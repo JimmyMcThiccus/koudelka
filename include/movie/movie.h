@@ -1328,4 +1328,12 @@ inline void Unk800C899C_fix(Unk800C899C* p, s32 i, s32 u, s32 v) {
   p->x10[i].v3 = p->x10[i].y3 + v;
 }
 
+/* func_800BC554 */
+struct Unk800BC554 { const void* x0; char p0[0x8C - 4]; const void* x8C; char p1[0xF8 - 0x90]; const void* xF8; char p2[0x100 - 0xFC]; Unk800BBF7CS x100; s16 x108; char p3[0x150 - 0x10A]; Unk800BBF7CV x150; };
+inline Unk800BC554* Unk800BC554_fin(Unk800BC554* t) { t->x8C = D_800B75CC; t->xF8 = D_800B75B4; t->x100.x4 = D_800B7534; t->x0 = D_800B75E4; t->x108 = 1; return t; }
+
+/* func_800B914C */
+extern "C" void VSync(s32);
+extern "C" void func_8009A470();
+
 #endif /* MOVIE_H */
