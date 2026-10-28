@@ -151,4 +151,7 @@ inline void S_Rc8::unite(const S_Rc8 &r)
     *(S_XY *)this = tl;
 }
 
+struct S_Box2 { S_XY a; S_XY b; S_Box2(short x, short y, const S_XY &s) : a(x, y), b(s) {} };
+inline S_Box2 box_at_origin(S_XY s) { return S_Box2(0, 0, s); }
+
 #endif /* GAME_A_H_U_80029BBC_H */

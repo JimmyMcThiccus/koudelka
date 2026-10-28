@@ -113,7 +113,16 @@ EXTERN_C S_Rgb func_80029EC8(S_80029EC8 *p)
     return p->unk10;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80029BBC", func_80029F30);
+EXTERN_C S_Box2 func_80029F30(S_W *p)
+{
+    VObj *o = p->unk8;
+    if (o) {
+        VEnt *e = &o->vt[14];
+        return ((S_Box2 (*)(void *))e->f)((char *)o + e->d);
+    }
+    VEnt *e = &p->vt[10];
+    return box_at_origin(((S_XY (*)(void *))e->f)((char *)p + e->d));
+}
 
 EXTERN_C int func_80029FC0(S_Node *p)
 {
