@@ -1654,5 +1654,23 @@ struct Unk_800D5E24 { char pad0[0x68]; Unk_E1C_D5E24 unk68[50]; Unk_E1C_D5E24 un
 struct Unk_800D9778 { char pad0[0x10]; char unk10[0xC]; char unk1C[0xC]; SPRT unk28[2]; };
 struct Unk_800CCAE8 { void* vtbl; int unk4; unsigned short unk8; unsigned short unkA; int unkC; POLY_FT4 unk10[2]; unsigned short unk60; };
 EXTERN_C char D_800B82CC[];
+struct Unk_hcA : VAt<0x18> { char pad1C[4]; int unk20; char pad24[0x18]; void* unk3C; char pad40[0x22B0]; char unk22F0[4]; };
+EXTERN_C void func_800DBA84(void*);
+struct Unk_hcB_e : Unk_Pad400, Unk_Base { char pad404[0x14C]; int unk550[4]; };
+struct Unk_hcB { char pad0[0xE0]; char unkE0[0x1C]; };
+EXTERN_C int func_80061164(Unk_800B4DD0*, int);
+struct Unk_DB_A { char c[0x1C]; };
+struct Unk_DB_B { char c[0x94]; };
+struct Unk_800DB8D8 { char pad0[0x1C]; Unk_800BFB64_list unk1C; char pad20[0x4C]; Unk_DB_A* unk6C; Unk_DB_B* unk70; };
+EXTERN_C int func_80061A20(void*, void*);
+struct Unk_800CC85C_s { short x, y; };
+struct Unk_800CC85C : Unk_Ft4_10 { char pad_[0x60 - 0x10 - sizeof(POLY_FT4)]; unsigned char ox, oy; };
+EXTERN_C void func_800C43DC_i(Unk_800C41E0*, unsigned char, unsigned char) asm("func_800C43DC");
+EXTERN_C void func_8005F0E4(void*, int);
+struct Unk_800E9A68_s { char pad0[0xC]; VAt0* unkC; short unk10; short unk12; char pad14[8]; unsigned short unk1C; };
+struct Unk_800E9A68_uv { unsigned char u, v; Unk_800E9A68_uv(int x, int y) { u = x; v = y; } };
+typedef struct { unsigned char tp0, tp1, tp2, len; unsigned char r0, g0, b0, code; short x0, y0; unsigned char u0, v0; unsigned short clut; short w, h; } Unk_Sp;
+struct Unk_800E9A68 { void* vtbl; char pad4[0xC]; Unk_Sp unk10[0x90]; char pad_[0xB50 - 0x10 - 0x90 * 0x14]; char unkB50[0xC]; char unkB5C[0xC]; };
+struct Unk_800D277C : Unk_Drawable { char pad4[0xC]; POLY_GT4 unk10[2]; char dr[4][0xC]; char pad_[0x30 - 0x30]; Unk_800D2214_uv uv; };
 
 #endif /* FIELD_FIELD_H */

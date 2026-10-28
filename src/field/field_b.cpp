@@ -1693,7 +1693,40 @@ EXTERN_C void func_800E99C4(Unk_800E99C4* p, void* a) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800E9A68);
+EXTERN_C void* func_800E9A68(void* vp, void* sv, int a) {
+    Unk_800E9A68* p = (Unk_800E9A68*)vp;
+    Unk_800E9A68_s* s = (Unk_800E9A68_s*)sv;
+    func_8005F0E4(p, a);
+    p->vtbl = D_800BA798;
+    SetDrawMode(p->unkB50, 0, 1, s->unk1C, 0);
+    SetDrawMode(p->unkB5C, 0, 1, s->unk1C, 0);
+    int u;
+    if (s->unkC == 0) {
+        u = s->unk10 & 0x3F;
+    } else if (s->unkC->vf02()) {
+        u = (s->unk10 << 1) & 0x7F;
+    } else {
+        u = s->unk10 << 2;
+    }
+    Unk_800E9A68_uv t(u, s->unk12);
+    unsigned short clut = *(unsigned short*)((char*)s->unkC + 8);
+    unsigned i = 0;
+    do {
+        ((Unk_Sp*)&p->unk10[i])->len = 4;
+        ((Unk_Sp*)&p->unk10[i])->code = 0x64;
+        p->unk10[i].w = 0x20;
+        p->unk10[i].h = 0xE;
+        p->unk10[i].r0 = 0;
+        p->unk10[i].g0 = 0;
+        p->unk10[i].b0 = 0;
+        p->unk10[i].x0 = ((i >> 1) & 7) * p->unk10[i].w + 0x20;
+        p->unk10[i].y0 = (i >> 4) * p->unk10[i].h + 0xAA;
+        p->unk10[i].u0 = t.u + ((i >> 1) & 7) * p->unk10[i].w;
+        p->unk10[i].v0 = t.v + (i >> 4) * p->unk10[i].h;
+        p->unk10[i].clut = clut;
+    } while (++i < 0x90);
+    return p;
+}
 
 EXTERN_C void func_800E9C08(Unk_Sprt10* p, int n) {
     int b = D_800B4CF0[0];
