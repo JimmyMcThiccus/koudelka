@@ -155,6 +155,21 @@ overlay header as one struct).
 After a build, `tools/func_diff.py <target>` lists the functions that no longer match retail, which helps when the
 matching check fails.
 
+## Ghidra
+
+When the Ghidra GUI is open (the Koudelka project with GhydraMCP), the `mcp__ghidra__*` tools read its
+decompiler output. That is the best starting point for large functions and C++: vtable calls, `this`
+adjustments and struct offsets are easier to read there than in the asm.
+
+- Load the tools with ToolSearch (`select:mcp__ghidra__instances_use,mcp__ghidra__functions_decompile`), then
+  call `instances_use(8192)`.
+- `functions_decompile(address="8006c4ec")` decompiles an EXE function. For an overlay function, prefix the
+  overlay's name: `address="FIELD::800c7740"`, `"BATTLE::800c7158"`.
+- If it says "Function not found", Ghidra doesn't have that function yet. Name it in your report, and the
+  integrator seeds it (`tools/ghidra_scripts/KoudelkaSeedFunctions.java`).
+- **Read only.** All seven sessions share one Ghidra instance, so don't rename, retype, create or save anything
+  in it. Its C is a reading aid: it compiles to different code, so write the matching source yourself.
+
 ## Brute-forcing a near miss
 
 For a draft a few instructions off on register allocation or instruction order, run
