@@ -5078,7 +5078,24 @@ EXTERN_C int func_800D5DA4(void* p, int a) {
     return 1;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D5E24);
+#define p ((Unk_800D5E24*)vp)
+EXTERN_C void func_800D5E24(void* vp) {
+    short* t = (short*)&D_800EA2E8;
+    for (unsigned int i = 0; i < 50; i++) {
+        func_80053BCC(&p->unk68[i], (int)t, 1);
+        t++;
+    }
+    for (unsigned int i = 0; i < 26; i++) {
+        func_80053BCC(&p->unk5E0[i], (int)t, 1);
+        t++;
+    }
+    for (unsigned int i = 0; i < 10; i++) {
+        func_80053BCC(&p->unk8B8[i], (int)t, 1);
+        t++;
+    }
+    p->unkB40 = ((volatile Unk_800A4534*)&D_800A4534)->unkC;
+}
+#undef p
 
 EXTERN_C void func_800D5EFC(Unk_800D5EFC* p) {
     switch (p->unkB38) {

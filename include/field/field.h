@@ -1649,5 +1649,7 @@ EXTERN_C char D_800BA4C8[];
 struct Unk_800D94F4 { void* vtbl; int unk4; short unk8; short unkA; int unkC; Unk_W3 unk10[2]; Unk_W5_800D4CC0 unk28[2]; };
 EXTERN_C char D_800B93D4[];
 EXTERN_C Unk_Vt50_800CDAAC D_800B806C_t asm("D_800B806C");
+struct Unk_E1C_D5E24 { char c[0x1C]; };
+struct Unk_800D5E24 { char pad0[0x68]; Unk_E1C_D5E24 unk68[50]; Unk_E1C_D5E24 unk5E0[26]; Unk_E1C_D5E24 unk8B8[10]; char pad9D0[0x170]; int unkB40; };
 
 #endif /* FIELD_FIELD_H */
