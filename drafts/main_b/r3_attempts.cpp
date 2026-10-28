@@ -310,3 +310,124 @@ EXTERN_C void func_80057214_def(S_DtorB *p, int flags)
     if (flags & 1)
         operator delete(p);
 }
+// ===== func_80057368: 4 differing: two-stage vb ctor; stage-1 fix-up loads/adds are paired (lhu,lhu,addu,addu,sh,sh) in retail but interleaved here
+EXTERN_C S_Ct5Cb *func_80057368_def(S_Ct5Cb *p, int in_chrg) asm("func_80057368");
+EXTERN_C S_Ct5Cb *func_80057368_def(S_Ct5Cb *p, int in_chrg)
+{
+    VTabB50 tmp1;
+    VTabB50 tmp;
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80029C54_v(p, 0, 2);
+    {
+        char *q;
+        int adj;
+        p->vb->vt = (VEntB *)D_800114CC.e;
+        tmp1 = D_800114CC;
+        p->vb->vt = tmp1.e;
+        tmp1.e[1].d = D_800114CC.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x50));
+        tmp1.e[5].d = D_800114CC.e[5].d + adj;
+        tmp1.e[7].d = D_800114CC.e[7].d + adj;
+        tmp1.e[9].d = D_800114CC.e[9].d + adj;
+    }
+    FIELD_AT(p, void **, 0x2C) = D_8001151C;
+    {
+        char *l = (char *)p + 0x30;
+        FIELD_AT(l, char *, 0x8) = (char *)p + 0x3C;
+        FIELD_AT(p, char *, 0x30) = (char *)p + 0x3C;
+        func_800198E0_v(FIELD_AT(l, void *, 0x8), 0x10, 4);
+        FIELD_AT(l, int, 0x4) = 0;
+        func_800537C0((char *)p + 0x50);
+    }
+    p->vb->vt = (VEntB *)D_80013F40.e;
+    if (!in_chrg) {
+        char *q;
+        int adj;
+        tmp = D_80013F40;
+        p->vb->vt = tmp.e;
+        tmp.e[1].d = D_80013F40.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x5C));
+        tmp.e[5].d = D_80013F40.e[5].d + adj;
+        tmp.e[7].d = D_80013F40.e[7].d + adj;
+        tmp.e[9].d = D_80013F40.e[9].d + adj;
+    }
+    FIELD_AT(p, void **, 0x58) = D_80013F90;
+    FIELD_AT(p, void **, 0x2C) = D_80013E30;
+    return p;
+}
+// ===== func_80064290: 48 differing: retail keeps `andi s4,s4,0xFFFF; sll s4,s4,4` on the char argument (mine drops the andi) and different saved-reg order
+EXTERN_C void *func_80064290_def(void *p, Pt4w pos, unsigned short c, int d)
+{
+    int i;
+    int off;
+    char *q;
+    func_8005F0E4_v(p, d);
+    FIELD_AT(p, void *, 0) = D_800151B4;
+    SetDrawMode((char *)p + 0x10, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    SetDrawMode((char *)p + 0x1C, 0, 0, func_80060154_v(&D_800AE640, 0xD) & 0xFFFF, 0);
+    FIELD_AT(p, unsigned char, 0x2F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x3F) = 0x7C;
+    FIELD_AT(p, unsigned char, 0x2B) = 3;
+    FIELD_AT(p, unsigned char, 0x3B) = 3;
+    i = D_800B4CF0_w;
+    off = i << 4;
+    q = (char *)p + off;
+    FIELD_AT(q, unsigned char, 0x2C) = 0x80;
+    FIELD_AT(q, unsigned char, 0x2D) = 0x80;
+    FIELD_AT(q, unsigned char, 0x2E) = 0x80;
+    FIELD_AT(q, short, 0x30) = pos.x;
+    FIELD_AT(q, unsigned char, 0x34) = c << 4;
+    FIELD_AT(q, unsigned char, 0x35) = 0x40;
+    FIELD_AT(q, short, 0x32) = pos.y;
+    FIELD_AT(q, short, 0x36) = func_800600A4_v(&D_800AE640, 0xD);
+    {
+        int *s = (int *)((char *)p + (off + 0x28));
+        int *dd = (int *)((char *)p + ((i ^ 1) * 16 + 0x28));
+        int a = s[1];
+        int b = s[2];
+        int e = s[3];
+        dd[1] = a;
+        dd[2] = b;
+        dd[3] = e;
+    }
+    return p;
+}
+// ===== func_80062988: 58 differing (register assignment): retail keeps self in s1 / t in s0 and builds the message in v0, mine puts it in a1
+EXTERN_C void func_80062988(void *self)
+{
+    int eq = FIELD_AT(self, int, 0x64) == D_800B4D60_w;
+    int t;
+    S_MsgB *m;
+    FIELD_AT(self, int, 0x6C) = 1;
+    if (eq) {
+        func_80062E70(self);
+        t = FIELD_AT(self, int, 0x68);
+        m = (S_MsgB *)func_8001CA10(0x14);
+        m->vt = D_80010178;
+        m->vt = D_80010300;
+        m->s8 = 2;
+        m->sA = 7;
+        m->u4 = 0;
+        m->pC = self;
+        m->vt = D_800102D0;
+        m->i10 = t;
+        func_8001EFE4(FIELD_AT(self, void *, 0x64), m);
+    } else {
+        t = FIELD_AT(self, int, 0x68);
+        m = (S_MsgB *)func_8001CA10(0x14);
+        m->vt = D_80010178;
+        m->vt = D_80010300;
+        m->s8 = 2;
+        m->sA = 7;
+        m->u4 = 0;
+        m->pC = self;
+        m->vt = D_800102D0;
+        m->i10 = t;
+        func_8001EFE4(FIELD_AT(self, void *, 0x64), m);
+        func_80062E70(self);
+    }
+}

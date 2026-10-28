@@ -112,3 +112,11 @@ Round 3, batch 4:
   `f_v(...) asm("func_X")` aliases.
 - func_80057214 / func_80057C7C (composite dtors with member dtors) are still open; Ghidra shows the shape but retail keeps the member
   pointer in a callee-saved register and reads member->vb through it, which GCC folds into p+const here.
+
+Round 3, batch 5:
+- Copy ctors (new + member copy, `this` form too): read the source fields into locals before the vtable stores
+  (`t = p->unk4; o->vtbl = X; o->unk4 = t;`), arrays as `d = o->a; n = 1; s = p->a; do { *d = *s; d++; s++; } while (--n != -1);`
+  with the declaration order d, n, s; a later array loop declares d, s, n (tried all permutations; func_8005D754's 4th loop).
+  A 36-byte element copy (`*d = *s` on a struct of 9 ints) becomes GCC's block-move loop, as retail has.
+- Order of the post-increments (`d++; s++;` as separate statements) decides which `addiu` lands in the delay slot.
+- A value stored after a call that retail puts in the call's delay slot has to be stored *before* the call in the source (func_8005DD4C).
