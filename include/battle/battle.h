@@ -1439,4 +1439,7 @@ EXTERN_C bool func_800C7B5C_b(P7B5C *p, int a, void *l, int x, int y) __asm__("f
 inline bool valid7b5c(int x, int y) { if (x < 0 || y < 0 || x >= 5 || y >= 7) return false; return true; }
 EXTERN_C bool func_800C7B5C(P7B5C *p, int a, void *l, int x, int y);
 
+struct T_D407C { char pad[0x44]; int f44; int f48; int pad4C; char b50; };
+EXTERN_C void func_800D407C(T_D407C *p, int a, int b);
+
 #endif /* BATTLE_BATTLE_H */
