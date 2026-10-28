@@ -1,4 +1,5 @@
 // func_80024D40 (u_80020B70): close. Retail keeps (r.w << 16) in $s0 (lhu+sll) and derives sra 16/17/18 per branch with the store in a delay slot; none of the short/int/ternary forms tried reproduce that allocation.
+// Fork N: `int v; if (p->unkC) { if (f3()) v = w >> 17; else v = w >> 18; } else v = w >> 16;` gets the branch shape (34 diffs): retail schedules the `sll $s0` before the beqz so reorg can steal `sra 16` into the delay slot and drop the else block; here the sll lands in that delay slot and an extra j remains.
 extern "C" void func_80024D40(S_TexImg *p, S_Pt4 pos, int abr)
 {
     S_Rect8 r;
