@@ -272,7 +272,71 @@ EXTERN_C void func_800B7B90(char *p)
     }
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B7C34);
+EXTERN_C S_800B18FC D_800B18FC;
+EXTERN_C void SpuSetIRQ(int);
+EXTERN_C void func_8008BF78(void *, int);
+EXTERN_C void func_800B8488(char *p, short a, char b);
+EXTERN_C void func_80093D8C(void *);
+EXTERN_C void func_8008C928(int);
+EXTERN_C void func_8009484C(int, int);
+EXTERN_C void func_8008CBE4(void);
+EXTERN_C void func_800B7C34(char *p, int, int a2, int a3)
+{
+    int vol = a2;
+    int full = 0x1000;
+    SpuSetIRQ(0);
+    SpuSetIRQ(3);
+    D_800B18FC.f140 = 0;
+    D_800B18FC.f14C = 0;
+    func_8008BF78(p, 0x12C);
+    *(unsigned short *)p = 0x201;
+    vol = vol * 90 / 127;
+    p[8] = 0;
+    p[9] = 0;
+    *(int *)(p + 0x14) = 0;
+    *(int *)(p + 0x1C) = 0;
+    *(int *)(p + 0x20) = 0;
+    *(int *)(p + 0x24) = 0;
+    *(int *)(p + 0x28) = 0;
+    *(int *)(p + 0x2C) = 0;
+    *(int *)(p + 0x38) = 0;
+    *(int *)(p + 0x3C) = 0;
+    *(int *)(p + 0x40) = 0;
+    *(int *)(p + 0xAC) = 0;
+    *(int *)(p + 0xB0) = 0;
+    p[0x90] = 0;
+    p[0x92] = 0;
+    *(int *)(p + 0xA8) = -1;
+    *(short *)(p + 2) = full;
+    *(short *)(p + 6) = a3;
+    *(short *)(p + 4) = vol;
+    func_800B8488(p + 0xC4, 0x14, 0);
+    func_800B8488(p + 0xF4, 0x15, 0);
+    vol <<= 7;
+    if (D_800B18FC.b1A3 == 0) {
+        vol = (vol * 0x5A00) >> 15;
+        *(short *)(p + 0xCC) = vol;
+        *(short *)(p + 0xCE) = vol;
+        *(short *)(p + 0xFC) = vol;
+        *(short *)(p + 0xFE) = vol;
+    } else {
+        *(short *)(p + 0xCC) = vol;
+        *(short *)(p + 0xCE) = 0;
+        *(short *)(p + 0xFC) = 0;
+        *(short *)(p + 0xFE) = vol;
+    }
+    *(short *)(p + 0x108) = full;
+    *(short *)(p + 0xD8) = full;
+    D_800B18FC.f160 = p;
+    func_80093D8C(p + 0xC4);
+    func_80093D8C(p + 0xF4);
+    *(short *)(p + 0x4A) = 0;
+    *(int *)(p + 0xB4) = -1;
+    func_8008C928(0x10);
+    if (D_800B18FC.b3)
+        func_8009484C(0xE2, (int)p);
+    func_8008CBE4();
+}
 
 EXTERN_C int D_800B1A5C[];
 EXTERN_C void func_800B7DFC(short *p)

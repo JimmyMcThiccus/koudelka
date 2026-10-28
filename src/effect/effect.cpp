@@ -4487,7 +4487,72 @@ EXTERN_C void func_800E2F2C(void *self)
         func_800E2F2C(FIELD_AT(self, void *, 0x4));
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E31B0);
+#define gte_ldIR123(r0, r1, r2) __asm__ volatile( \
+    "mtc2 %0, $9\n\t" \
+    "mtc2 %1, $10\n\t" \
+    "mtc2 %2, $11" \
+    : : "r"(r0), "r"(r1), "r"(r2))
+#define gte_sqr0() __asm__ volatile("nop\n\tnop\n\t.word 0x4AA00428")
+#define gte_stmac1(r0) __asm__ volatile("swc2 $25, 0(%0)" : : "r"(r0) : "memory")
+#define gte_stmac2(r0) __asm__ volatile("swc2 $26, 0(%0)" : : "r"(r0) : "memory")
+#define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
+
+EXTERN_C Vec4 func_800E3DC4(Vec4 *a, Vec4 *b);
+
+EXTERN_C int func_800E31B0(void *self, void *owner)
+{
+    int dx, dy, dz, r;
+    Vec4 d;
+    Vec4 e;
+    int sq[6];
+    dx = FIELD_AT(self, Vec4, 0x38).x - FIELD_AT(self, Vec4, 0x28).x;
+    dy = FIELD_AT(self, Vec4, 0x38).y - FIELD_AT(self, Vec4, 0x28).y;
+    dz = FIELD_AT(self, Vec4, 0x38).z - FIELD_AT(self, Vec4, 0x28).z;
+    gte_ldIR123(dx, dy, dz);
+    gte_sqr0();
+    gte_stmac1(&sq[0]);
+    gte_stmac2(&sq[1]);
+    gte_stmac3(&sq[2]);
+    if (FIELD_AT(owner, unsigned char, 0x88) >> 7) {
+        ((void (*)(Vec4 *, Vec4 *, Vec4 *))func_800E3DC4)(&e, &FIELD_AT(self, Vec4, 0x48), &FIELD_AT(self, Vec4, 0x28));
+        d = e;
+        gte_ldIR123(d.x, d.y, d.z);
+        gte_sqr0();
+        gte_stmac1(&sq[3]);
+        gte_stmac2(&sq[4]);
+        gte_stmac3(&sq[5]);
+        if (sq[3] + sq[4] + sq[5] < sq[0] + sq[1] + sq[2])
+            return 2;
+    }
+    if (dx == 0 && dy == 0 && dz == 0) {
+        if (FIELD_AT(self, Vec4, 0x48).x == FIELD_AT(self, Vec4, 0x38).x &&
+            FIELD_AT(self, Vec4, 0x48).y == FIELD_AT(self, Vec4, 0x38).y &&
+            FIELD_AT(self, Vec4, 0x48).z == FIELD_AT(self, Vec4, 0x38).z)
+            return 2;
+        return 0;
+    }
+    {
+        int ex = FIELD_AT(self, Vec4, 0x48).x - FIELD_AT(self, Vec4, 0x28).x;
+        int ey = FIELD_AT(self, Vec4, 0x48).y - FIELD_AT(self, Vec4, 0x28).y;
+        int ez = FIELD_AT(self, Vec4, 0x48).z - FIELD_AT(self, Vec4, 0x28).z;
+        int xx = ex * dx;
+        int dot = ey * dy + xx + ez * dz;
+        int len = sq[0] + sq[1] + sq[2];
+        r = (dot << 8) / (len << 4);
+    }
+    if ((unsigned)r <= 0x10) {
+        int px, py, pz;
+        r >>= 4;
+        px = dx * r + FIELD_AT(self, Vec4, 0x28).x;
+        py = dy * r + FIELD_AT(self, Vec4, 0x28).y;
+        pz = dz * r + FIELD_AT(self, Vec4, 0x28).z;
+        if (px == FIELD_AT(self, Vec4, 0x48).x &&
+            py == FIELD_AT(self, Vec4, 0x48).y &&
+            pz == FIELD_AT(self, Vec4, 0x48).z)
+            return 2;
+    }
+    return 0;
+}
 
 EXTERN_C int D_800D63B8[];
 EXTERN_C char D_80010338[];
@@ -4659,7 +4724,58 @@ EXTERN_C Vec4 func_800E3A4C(void *self)
     return Vec4(0, p, 0, 0);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800E3AA4);
+#define gte_ldIR123(r0, r1, r2) __asm__ volatile( \
+    "mtc2 %0, $9\n\t" \
+    "mtc2 %1, $10\n\t" \
+    "mtc2 %2, $11" \
+    : : "r"(r0), "r"(r1), "r"(r2))
+#define gte_sqr0() __asm__ volatile("nop\n\tnop\n\t.word 0x4AA00428")
+#define gte_stmac1(r0) __asm__ volatile("swc2 $25, 0(%0)" : : "r"(r0) : "memory")
+#define gte_stmac2(r0) __asm__ volatile("swc2 $26, 0(%0)" : : "r"(r0) : "memory")
+#define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
+
+EXTERN_C int SquareRoot0(int a);
+
+EXTERN_C Vec4 func_800E3AA4(void *self, Vec4 *v)
+{
+    if (FIELD_AT(self, int, 0x58) || FIELD_AT(self, int, 0x5C))
+        return FIELD_AT(self, Vec4, 0x38);
+    {
+        Vec4 d;
+        Vec4 n;
+        int sq[6];
+        int len1, len2;
+        d.x = FIELD_AT(self, Vec4, 0x38).x - FIELD_AT(self, Vec4, 0x28).x;
+        d.y = FIELD_AT(self, Vec4, 0x38).y - FIELD_AT(self, Vec4, 0x28).y;
+        d.z = FIELD_AT(self, Vec4, 0x38).z - FIELD_AT(self, Vec4, 0x28).z;
+        gte_ldIR123(d.x, d.y, d.z);
+        gte_sqr0();
+        gte_stmac1(&sq[0]);
+        gte_stmac2(&sq[1]);
+        gte_stmac3(&sq[2]);
+        gte_ldIR123(v->x, v->y, v->z);
+        gte_sqr0();
+        len1 = SquareRoot0(sq[0] + sq[1] + sq[2]);
+        if (!len1)
+            len1 = 1;
+        gte_stmac1(&sq[3]);
+        gte_stmac2(&sq[4]);
+        gte_stmac3(&sq[5]);
+        len2 = SquareRoot0(sq[3] + sq[4] + sq[5]);
+        if (!len2)
+            len2 = 1;
+        if (((d.x * v->x + d.y * v->y + d.z * v->z) << 4) / ((len1 * len2) << 2) >= 4) {
+            n.x = v->x * len1 / len2;
+            n.y = v->y * len1 / len2;
+            n.z = v->z * len1 / len2;
+            FIELD_AT(self, Vec4, 0x38).x = FIELD_AT(self, Vec4, 0x28).x + n.x;
+            FIELD_AT(self, Vec4, 0x38).y = FIELD_AT(self, Vec4, 0x28).y + n.y;
+            FIELD_AT(self, Vec4, 0x38).z = FIELD_AT(self, Vec4, 0x28).z + n.z;
+            FIELD_AT(self, int, 0x60) = 1;
+        }
+    }
+    return FIELD_AT(self, Vec4, 0x38);
+}
 
 EXTERN_C Vec4 func_800E3DC4(Vec4 *a, Vec4 *b)
 {
