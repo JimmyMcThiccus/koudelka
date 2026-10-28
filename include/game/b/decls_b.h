@@ -548,7 +548,7 @@ struct Quad_80066388 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80066C7C(void *self);
+EXTERN_C int func_80066C7C(void *self);
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_800154B4[];
@@ -2395,7 +2395,7 @@ EXTERN_C void func_80053848(void *self);
 EXTERN_C void func_8005BF04(void *self, int b, int c);
 EXTERN_C void func_80098E10(void *self);
 EXTERN_C void func_80059800(void *self, int a, int b, int c, int d);
-EXTERN_C void func_80059888(void *self, int b);
+EXTERN_C void func_80059888(void *self, unsigned char *b);
 EXTERN_C void func_80059790(void *self);
 EXTERN_C void func_8005B378(void *self, int b);
 EXTERN_C VObj<0x2C> *func_80063E18(void *self, int a, int b, int c);
@@ -3051,5 +3051,34 @@ static inline void shift_8007F138(Arr_8007F434 *self)
 EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n);
 EXTERN_C void func_80078520(void *self, void *p);
 EXTERN_C void func_800825FC(short *self, int b);
+
+EXTERN_C int D_800B4CF0_w asm("D_800B4CF0");
+struct Q16 { int a, b, c, d; };
+struct Q16o { char pad[0xC]; Q16 q; };
+
+
+EXTERN_C void *D_800B4C18_w asm("D_800B4C18");
+
+struct P_TAG_B { unsigned addr : 24; unsigned len : 8; };
+struct S_OtB {
+    char pad0[0x10];
+    unsigned int count;
+    unsigned long *tab;
+    int add(P_TAG_B *prim, unsigned int i)
+    {
+        if (i && i < count) {
+            prim->addr = tab[i];
+            tab[i] = (unsigned long)prim & 0x00ffffff;
+            return 1;
+        }
+        return 0;
+    }
+};
+EXTERN_C S_OtB *D_800B4CFC;
+EXTERN_C int func_8005F1B4(void *self);
+
+struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
+
+struct V4_B { int x, y, z, w; };
 
 #endif /* GAME_B_DECLS_B_H */

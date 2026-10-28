@@ -202,7 +202,23 @@ EXTERN_C void func_80064428(void *self, int b, int c)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064478);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064570);
+EXTERN_C int func_80064570(void *self)
+{
+    if (func_8005F1B4(self)) {
+        int i = D_800B4CF0_w;
+        int *s = (int *)((char *)self + (((i ^ 1) << 4) + 0x28));
+        int a = s[1];
+        int b = s[2];
+        int c = s[3];
+        int *d = (int *)((char *)self + ((i << 4) + 0x28));
+        d[1] = a;
+        d[2] = b;
+        d[3] = c;
+    }
+    D_800B4CFC->add((P_TAG_B *)((D_800B4CF0_w << 4) + (int)self + 0x28), FIELD_AT(self, unsigned short, 0xA));
+    D_800B4CFC->add((P_TAG_B *)(D_800B4CF0_w * 12 + (char *)self + 0x10), FIELD_AT(self, unsigned short, 0xA));
+    return 2;
+}
 
 EXTERN_C void func_800646D4(void)
 {
@@ -215,7 +231,20 @@ EXTERN_C void func_800646DC(void *self, int flags)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800646FC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064884);
+EXTERN_C void func_80064884(int *s, int a, int b)
+{
+    if ((s[0x12] != b || s[0x11] != a) && !(a < b)) {
+        int hi;
+        s[0x11] = a;
+        hi = s[0x13];
+        s[0x12] = b;
+        if (s[0x11] < hi) {
+            s[0x13] = s[0x11];
+        } else if (hi < b) {
+            s[0x13] = b;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800648E8);
 

@@ -78,3 +78,17 @@ None of these files is built.
 | copy ctors with array members (func_800595F8, 8005C968, 8005DFE8, 8005D754, 8005EF58, 80064478) | — | implicit copy ctor loops (`n = 1; ... while (--n != -1)`). Hand-written loops get unrolled. |
 
 Each `r2_*_near.cpp` file starts with the helper's one-line reason per function.
+
+# Round 3 (main_b1)
+
+`r3_attempts.cpp` holds the near misses (one section per function, with what differs). Landed this round: 23 functions.
+Things that worked and are reusable:
+- `int y = x;` before an `if (x != 0)` call keeps the `addu a2,a1,zero` copy retail has (func_80056B44).
+- Ctor returning `this`: type the object as a struct (not FIELD_AT) and cast the last callee to a value-returning type
+  (func_80065A00, func_8005C26C). With a struct it hoists `addu v0,s0` to right after the call (func_80054B98 gets to 8 differing).
+- Double-buffered prim lists: `idx + i` operand order, `(char*)self + (idx+i)*52` with no block-scope local keeps the rotated loop
+  (func_8005E404); the OT insert is `S_OtB::add` (P_TAG bitfield), but in a loop write the mask form (func_8005B66C).
+- Unaligned 8-byte struct copy -> `struct U8b { char c[8]; }` (lwl/lwr).
+- Stack-passed small structs (`Pt4 {short x,y}`, `Col3 {short r,g,b}` = 6 bytes, 4-byte aligned) as by-value params.
+- Virtual calls where retail loads the vptr first: read the vtable by hand (`VE_B *vt = FIELD_AT(self, VE_B *, 0x2C); vt[8].pfn(...)`).
+- Virtual-base ctors/dtors skipped (in_chrg, 0x50-byte vtable copy): func_800593A0, 80059958, 8005A518, 8005A62C, 8005AFF0, 8005BC84, 8005CB88, 8005CF78, 8005D8C4, 8005DC44, 80062848, 80062C3C, 80062D60, 80062E9C, 80062FA4, 800630BC, 800637A0, 800639F8, 80064188, 800658E0, 80057214, 80057558, 8005BDA4, 80062A90, 8005652C, 80057C7C, 80068380.

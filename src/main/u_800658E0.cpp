@@ -11,7 +11,29 @@ EXTERN_C int D_800B4ED8;
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_800658E0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065A00);
+EXTERN_C void *func_80065A00(void *self)
+{
+    char *m;
+    func_80039A14(self);
+    FIELD_AT(self, void *, 0x0) = D_80015384;
+    func_8003A754((char *)self + 0x48, 0x1000);
+    m = (char *)self + 0x78;
+    {
+        int s = 0x1000;
+        V4_B *v = (V4_B *)((char *)self + 0x68);
+        v->x = s;
+        v->y = s;
+        v->z = s;
+        v->w = 0;
+        func_8003A754(m, s);
+    }
+    func_8003A754((char *)self + 0x98, 0x1000);
+    ((int (*)(void *, int))func_8001AA28)(m, 0x10);
+    FIELD_AT(self, int, 0xB8) = 0x808080;
+    FIELD_AT(self, int, 0x44) = 1;
+    FIELD_AT(self, int, 0xBC) = 1;
+    return self;
+}
 
 EXTERN_C void func_80065AA0(void *self)
 {
@@ -295,7 +317,30 @@ EXTERN_C int func_80066AF0(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066BC0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066C7C);
+EXTERN_C int func_80066C7C(void *self)
+{
+    switch (FIELD_AT(self, int, 0x4C)) {
+    case 2:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x670) = 1;
+        break;
+    case 4:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x56C) = 1;
+        break;
+    case 7: {
+        char *g = FIELD_AT(self, char *, 0x48);
+        char *o = g ? g - 0x124 : 0;
+        FIELD_AT(o, int, 0x230) = 1;
+        break;
+    }
+    case 6:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x678) = 1;
+        break;
+    case 3:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x628) = 1;
+        break;
+    }
+    return 1;
+}
 
 EXTERN_C void func_80066D14(void *self)
 {
