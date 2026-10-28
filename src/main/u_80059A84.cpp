@@ -163,7 +163,26 @@ EXTERN_C void func_8005AF70(VObj<0x2C> *self)
     self->v14();
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005AFF0);
+EXTERN_C void func_8005AFF0(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014450;
+    p->vb->vt = (VEntB *)D_80014400.e;
+    if (!flags) {
+        VTabB50 tmp = D_80014400;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x38;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_80014400.e[1].d + adj;
+        tmp.e[5].d = D_80014400.e[5].d + adj;
+        tmp.e[7].d = D_80014400.e[7].d + adj;
+        tmp.e[9].d = D_80014400.e[9].d + adj;
+    }
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005B0F8);
 
@@ -499,7 +518,26 @@ EXTERN_C void func_8005CEB4(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005CF78);
+EXTERN_C void func_8005CF78(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014858;
+    p->vb->vt = (VEntB *)D_80014808.e;
+    if (!flags) {
+        VTabB50 tmp = D_80014808;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x38;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_80014808.e[1].d + adj;
+        tmp.e[5].d = D_80014808.e[5].d + adj;
+        tmp.e[7].d = D_80014808.e[7].d + adj;
+        tmp.e[9].d = D_80014808.e[9].d + adj;
+    }
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005D080);
 
@@ -623,7 +661,26 @@ EXTERN_C void func_8005DB68(void *self, void *b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005DC44);
+EXTERN_C void func_8005DC44(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014A08;
+    p->vb->vt = (VEntB *)D_800149B8.e;
+    if (!flags) {
+        VTabB50 tmp = D_800149B8;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x38;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_800149B8.e[1].d + adj;
+        tmp.e[5].d = D_800149B8.e[5].d + adj;
+        tmp.e[7].d = D_800149B8.e[7].d + adj;
+        tmp.e[9].d = D_800149B8.e[9].d + adj;
+    }
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005DD4C);
 

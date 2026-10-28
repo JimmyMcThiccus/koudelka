@@ -348,7 +348,26 @@ EXTERN_C void func_80059300(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800593A0);
+EXTERN_C void func_800593A0(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014180;
+    p->vb->vt = (VEntB *)D_80014130.e;
+    if (!flags) {
+        VTabB50 tmp = D_80014130;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x44;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_80014130.e[1].d + adj;
+        tmp.e[5].d = D_80014130.e[5].d + adj;
+        tmp.e[7].d = D_80014130.e[7].d + adj;
+        tmp.e[9].d = D_80014130.e[9].d + adj;
+    }
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800594A8);
 

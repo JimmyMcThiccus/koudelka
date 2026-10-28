@@ -3090,4 +3090,19 @@ struct U8bw { char c[8]; };
 EXTERN_C void *func_8005DD4C(void *p, Rc8 r, int c, int d);
 EXTERN_C void *func_80064290(void *p, Pt4w r, int c, int d);
 
+struct VEntB { short d; short i; void *f; };
+struct VTabB50 { VEntB e[10]; };
+struct S_VBB { VEntB *vt; };
+struct S_DtorB { S_VBB *vb; char pad4[0x28]; void **vt2C; };
+EXTERN_C const VTabB50 D_80014130;
+EXTERN_C const VTabB50 D_80014808;
+EXTERN_C const VTabB50 D_800149B8;
+EXTERN_C const VTabB50 D_8001506C;
+EXTERN_C void *D_80014180[];
+EXTERN_C void *D_80014858[];
+EXTERN_C void *D_80014A08[];
+EXTERN_C void *D_800150BC[];
+EXTERN_C const VTabB50 D_80014400;
+EXTERN_C void *D_80014450[];
+
 #endif /* GAME_B_DECLS_B_H */
