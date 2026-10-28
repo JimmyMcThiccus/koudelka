@@ -311,7 +311,40 @@ EXTERN_C int func_800665C8(void *self)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066690);
+EXTERN_C void func_80066690_def(void *self) asm("func_80066690");
+EXTERN_C void func_80066690_def(void *self)
+{
+    switch (FIELD_AT(self, int, 0x4C)) {
+    case 2:
+        if (func_800667C8_i(self)) {
+            func_800BCA58_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    case 4:
+        func_80066A54_i(self);
+        func_800B92B0_v(FIELD_AT(self, void *, 0x48));
+        break;
+    case 7:
+        if (func_80066AF0_i(self)) {
+            char *o = 0;
+            if (FIELD_AT(self, int, 0x48) != 0) {
+                o = FIELD_AT(self, char *, 0x48) - 0x124;
+            }
+            func_8006B988_v(o);
+        }
+        break;
+    case 6:
+        if (func_80066BC0_i(self)) {
+            func_800BCA88_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    case 3:
+        if (func_8006692C_i(self)) {
+            func_800BF018_v(FIELD_AT(self, void *, 0x48));
+        }
+        break;
+    }
+}
 
 EXTERN_C void func_80066798(void *self)
 {

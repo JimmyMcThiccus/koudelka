@@ -3258,4 +3258,15 @@ EXTERN_C void func_80054708_v(void *p, int a) asm("func_80054708");
 EXTERN_C void func_800538CC_v(void *p, char *s, int n) asm("func_800538CC");
 EXTERN_C void func_80053DDC_v(void *p, void *q) asm("func_80053DDC");
 
+EXTERN_C int func_800667C8_i(void *p) asm("func_800667C8");
+EXTERN_C int func_8006692C_i(void *p) asm("func_8006692C");
+EXTERN_C int func_80066A54_i(void *p) asm("func_80066A54");
+EXTERN_C int func_80066AF0_i(void *p) asm("func_80066AF0");
+EXTERN_C int func_80066BC0_i(void *p) asm("func_80066BC0");
+EXTERN_C void func_800BCA58_v(void *p) asm("func_800BCA58");
+EXTERN_C void func_800BCA88_v(void *p) asm("func_800BCA88");
+EXTERN_C void func_800BF018_v(void *p) asm("func_800BF018");
+EXTERN_C void func_800B92B0_v(void *p) asm("func_800B92B0");
+EXTERN_C void func_8006B988_v(void *p) asm("func_8006B988");
+
 #endif /* GAME_B_DECLS_B_H */
