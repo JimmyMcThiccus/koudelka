@@ -62,7 +62,18 @@ EXTERN_C void func_80020BE0(char *p, int flags)
     func_800198AC(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80020C64);
+EXTERN_C S_20C64 *func_80020C64(S_20C64 *p)
+{
+    List *l;
+    p->vtbl = D_800105B4;
+    p->unk4 = 0;
+    new (&p->a) S_Vec5(8);
+    new (&p->b) S_Vec5(4);
+    p->unk4A = 30; p->unk50 = 6; p->unk52 = 30; p->unk48 = 0;
+    l = &D_800AC6C4;
+    func_80019A6C(l, (int)p, l->count);
+    return p;
+}
 
 EXTERN_C void func_80020D24(S_80020D24 *p, int v)
 {
@@ -719,7 +730,24 @@ EXTERN_C void func_80022F98(void *p, int a)
     func_8001A610(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_80022FB8);
+EXTERN_C S_22FB8 *func_80022FB8(S_22FB8 *p, int n)
+{
+    init_20C64(&p->base);
+    func_80023B94(&p->m58, n << 4);
+    p->m58.vtbl = D_8001075C;
+    p->base.vtbl = D_80010774;
+    p->unk104 = 2;
+    p->unk106 = n;
+    p->unkC0 = 1;
+    unsigned short *q = p->bits;
+    unsigned short m = 1;
+    do {
+        *q++ = m;
+        m <<= 1;
+    } while (m);
+    memset(p->unkE4, 0xFF, 0x20);
+    return p;
+}
 
 EXTERN_C void func_800230E8(char *p, int a)
 {

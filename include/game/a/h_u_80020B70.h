@@ -585,4 +585,31 @@ struct S_PalTbl {
     int unk18;
 };
 
+struct S_22FB8 {
+    S_20C64 base;
+    char pad54[4];
+    S_80023B94 m58;
+    char pad9C[0xC0 - 0x9C];
+    unsigned char unkC0;
+    char padC1[0xE4 - 0xC1];
+    unsigned char unkE4[0x20];
+    short unk104;
+    short unk106;
+    unsigned short bits[16];
+};
+inline void init_20C64(S_20C64 *p)
+{
+    List *l;
+    p->vtbl = D_800105B4;
+    p->unk4 = 0;
+    new (&p->a) S_Vec5(8);
+    new (&p->b) S_Vec5(4);
+    p->unk4A = 30;
+    p->unk50 = 6;
+    p->unk52 = 30;
+    p->unk48 = 0;
+    l = &D_800AC6C4;
+    func_80019A6C(l, (int)p, l->count);
+}
+
 #endif /* GAME_A_H_U_80020B70_H */

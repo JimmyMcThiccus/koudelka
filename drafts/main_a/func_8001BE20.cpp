@@ -1,25 +1,26 @@
-// func_8001BE20: list-filter callback: unlink and kill a finished node. Same size; retail tests the
-// inlined dead() result with beqz (no xori) and returns n through a copy in $a1 (11 instructions differ).
-struct S_8001BE20_N {
+// func_8001BE20 (u_8001986C): list-filter callback: unlink and kill a finished node. Down to 4 instructions:
+// dead() as `int r = 0; if (unkA == 1) r = unk10 == 0;` and a copy `m = n` give retail's shape, but retail
+// returns n through the copy ($a1) and uses $a2 for the rest; this has the roles swapped (return via $a2).
+struct S_BE20_N {
     virtual void f0();
     virtual void kill();
 };
-struct S_8001BE20 : S_8001BE20_N {
-    bool dead() { return unkA == 1 && unk10 == 0; }
-    S_8001BE20 *next;
+struct S_BE20 : S_BE20_N {
+    int dead() { int r = 0; if (unkA == 1) r = unk10 == 0; return r; }
+    S_BE20 *next;
     short unk8;
     unsigned short unkA;
     int unkC;
     int unk10;
 };
-
-extern "C" S_8001BE20 *func_8001BE20(void *self, S_8001BE20 *prev, S_8001BE20 *n)
+EXTERN_C S_BE20 *func_8001BE20(void *self, S_BE20 *prev, S_BE20 *n)
 {
+    S_BE20 *m = n;
     if (!n->dead())
         return n;
     if (prev)
-        prev->next = n->next;
-    n->next = 0;
-    n->kill();
+        prev->next = m->next;
+    m->next = 0;
+    m->kill();
     return prev;
 }

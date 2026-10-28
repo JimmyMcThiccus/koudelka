@@ -131,7 +131,24 @@ EXTERN_C void func_8001C89C(S_VDel *p)
     delete p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C8D8);
+EXTERN_C void func_8001C8D8(S_8001C8D8 *c, S_8001C8D8 *n)
+{
+    func_800186E8(&D_800A451C);
+    while (1) {
+        S_8001C8D8 *a = c->next;
+        S_8001C8D8 *nx = a;
+        int r = 0;
+        if (a)
+            r = !(a->key < n->key);
+        if (!r)
+            break;
+        c = nx;
+    }
+    if (c->next && n)
+        func_8001A864((S_Lnk *)n, (S_Lnk *)c->next);
+    c->next = n;
+    func_80018788(&D_800A451C);
+}
 
 EXTERN_C S_Node *func_8001C974(S_Node *p)
 {
