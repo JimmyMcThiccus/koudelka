@@ -120,4 +120,10 @@ EXTERN_C void func_80054F30(void *p, int a, void *sv, int b);
 EXTERN_C void func_80054E18(void *p, void *q);
 EXTERN_C void func_80053CD8(void *p);
 struct C_80054584b : C_80053928 { int u1c, u20, u24; C_80054584b(int a) asm("func_80054584"); };
+EXTERN_C void func_800530B8(void *p, void *a);
+EXTERN_C void func_8005388C(void *p, int a);
+EXTERN_C void *D_800A4578_a[] asm("D_800A4578");
+extern "C++" int f53874(void *p) asm("func_80053874");
+extern "C++" int f53830(void *p) asm("func_80053830");
+EXTERN_C void func_8002B174(void *a, void *b, int c);
 #endif /* GAME_A2B_A2B_H */

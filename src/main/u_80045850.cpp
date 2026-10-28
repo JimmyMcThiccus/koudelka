@@ -2007,9 +2007,58 @@ EXTERN_C void func_800525EC(void *p, int a)
     func_80052E40(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052640);
+EXTERN_C void func_80052640(void *p, void *a)
+{
+    A2VObj<0x18> *o = AT(p, A2VObj<0x18> *, 0x58);
+    if (o == 0) {
+        func_80052FB8(p);
+    } else {
+        o->v02();
+        o = AT(p, A2VObj<0x18> *, 0x58);
+        if (o)
+            o->v00(3);
+        o = AT(p, A2VObj<0x18> *, 0x5C);
+        AT(p, int, 0x58) = 0;
+        if (o)
+            o->v00(3);
+        o = AT(p, A2VObj<0x18> *, 0x64);
+        AT(p, int, 0x5C) = 0;
+        if (o)
+            o->v00(3);
+        o = AT(p, A2VObj<0x18> *, 0x60);
+        AT(p, int, 0x64) = 0;
+        if (o)
+            o->v00(3);
+        AT(p, int, 0x60) = 0;
+    }
+    func_800530B8(p, a);
+    func_8005388C(p ? (char *)p + 0x38 : 0, 0x30);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052778);
+EXTERN_C void func_80052778(void *p)
+{
+    char *b = 0;
+    int r;
+    if (p) b = (char *)p + 0x38;
+    if (f53874(b) == 0x10) {
+        func_8002B174(D_800A4578_a[0], p, -1);
+        ((A2VObj<0x2C> *)p)->v27();
+        ((A2VObj<0x2C> *)p)->v03();
+        b = 0;
+    } else {
+        b = 0;
+        if (p) b = (char *)p + 0x38;
+        if (f53874(b) < 0x10) {
+            b = 0;
+            if (p) b = (char *)p + 0x38;
+            r = f53874(b);
+            ((A2VObj<0x2C> *)p)->v28(((0x10 - r) << 3) & 0xF8);
+        }
+        b = 0;
+    }
+    if (p) b = (char *)p + 0x38;
+    f53830(b);
+}
 
 EXTERN_C void func_8005287C(void *p, unsigned char a)
 {
