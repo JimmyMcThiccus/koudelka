@@ -2,6 +2,7 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a/h_main_a.h"
 
 EXTERN_C S_800186B0 *func_800186B0(S_800186B0 *s)
 {
@@ -19,17 +20,55 @@ EXTERN_C void func_800186E8(Holder *h)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_80018788);
+EXTERN_C void func_80018788(Holder *h)
+{
+    if (D_800B4BFC == 1) {
+        D_800B4BFC = 0;
+        for (int i = 0; i < count_of(h); i++)
+            ((S_Item2 *)func_80019F64(h, i))->stop();
+        func_800949A0();
+    } else if (D_800B4BFC > 1) {
+        D_800B4BFC--;
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_80018840);
+EXTERN_C void func_80018840(Holder *h)
+{
+    D_800B4BFC = 0;
+    for (int i = 0; i < count_of(h); i++)
+        ((S_Item2 *)func_80019F64(h, i))->stop();
+    func_800949A0();
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_800188D4);
+EXTERN_C void func_800188D4(Holder *h)
+{
+    if (++D_800B4BFC == 1) {
+        for (int i = 0; i < count_of(h); i++)
+            func_80019F64(h, i)->run();
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_80018970);
+EXTERN_C void func_80018970(Holder *h)
+{
+    if (D_800B4BFC == 1) {
+        D_800B4BFC = 0;
+        for (int i = 0; i < count_of(h); i++)
+            ((S_Item2 *)func_80019F64(h, i))->stop();
+    } else if (D_800B4BFC > 1) {
+        D_800B4BFC--;
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_80018A20);
+EXTERN_C void func_80018A20(Holder *h, int a)
+{
+    List *l = h;
+    func_80019A6C(l, a, l->count);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/main_a", func_80018A58);
+EXTERN_C int func_80018A58(Holder *h, int v)
+{
+    return func_80019CFC(h, v);
+}
 
 EXTERN_C void func_80018A88()
 {
