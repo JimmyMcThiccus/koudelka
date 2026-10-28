@@ -1348,7 +1348,26 @@ EXTERN_C int func_80088DEC(char *self, char *b)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80088F34);
+EXTERN_C int func_80088F34(void *self, void *m)
+{
+    switch (FIELD_AT(m, unsigned short, 0x10)) {
+    case 0x1001:
+        return ((VObj<0x9C> *)self)->v06(FIELD_AT(m, int, 8));
+    case 0x1002:
+        return func_800D9970_i(self, FIELD_AT(m, int, 8));
+    case 0x1003:
+        return func_800883A0_i(self, FIELD_AT(m, int, 8));
+    case 0x1004:
+        return func_80088794_i(self, FIELD_AT(m, int, 8));
+    case 0x1005:
+        return func_800D9CB0_i(self, FIELD_AT(m, int, 8));
+    case 0x1006:
+        return func_8008891C_i(self, FIELD_AT(m, int, 8));
+    case 0x1007:
+        return func_80088C8C_i(self, FIELD_AT(m, int, 8));
+    }
+    return 0;
+}
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80085168", D_80017CB4);
 

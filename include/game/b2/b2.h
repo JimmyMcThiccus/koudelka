@@ -40,4 +40,16 @@ EXTERN_C void func_8008022C_def(void *self, int a, int b) asm("func_8008022C");
 
 EXTERN_C void *D_800B4D38_w asm("D_800B4D38");
 
+EXTERN_C int func_800D9970_i(void *self, int b) asm("func_800D9970");
+
+EXTERN_C int func_800883A0_i(void *self, int b) asm("func_800883A0");
+
+EXTERN_C int func_80088794_i(void *self, int b) asm("func_80088794");
+
+EXTERN_C int func_800D9CB0_i(void *self, int b) asm("func_800D9CB0");
+
+EXTERN_C int func_8008891C_i(void *self, int b) asm("func_8008891C");
+
+EXTERN_C int func_80088C8C_i(void *self, int b) asm("func_80088C8C");
+
 #endif /* GAME_B2_B2_H */
