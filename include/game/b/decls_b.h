@@ -3192,4 +3192,15 @@ EXTERN_C void func_8006BD34_v(void *a) asm("func_8006BD34");
 EXTERN_C void func_8008E70C_v(void *a, int b) asm("func_8008E70C");
 EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d) asm("func_80066FB0");
 
+struct S_SubB { S_VBB *vb; void *vptr; };
+EXTERN_C const VTabB50 D_80010538;
+EXTERN_C void *D_80010508[];
+EXTERN_C void *D_800118DC[];
+EXTERN_C const VTabB50 D_80013C00;
+EXTERN_C void *D_80013C50[];
+EXTERN_C void *D_80013C70[];
+EXTERN_C void *func_80054AF0_v(void *p, int b) asm("func_80054AF0");
+EXTERN_C void *func_80054A4C_v(void *p, int b, int c) asm("func_80054A4C");
+EXTERN_C void *func_80054094_v(void *p, int b) asm("func_80054094");
+
 #endif /* GAME_B_DECLS_B_H */
