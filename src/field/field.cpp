@@ -1584,7 +1584,35 @@ EXTERN_C void func_800C2A0C(Unk_800C2A0C* p) {
     func_80053FB0(p->unkC4, 0, 0x130);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C2A6C);
+EXTERN_C void func_800C2A6C(void* vp, int v) {
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    int k = D_800B4D5C[0];
+    Unk_800C2A6C_e* e = (Unk_800C2A6C_e*)base(o)->unk8[k];
+    Unk_W4 a;
+    for (unsigned int j = 0; j < 4; j++) {
+        ((int*)&a)[j] = e->unk550[j];
+    }
+    int idx = ((Unk_800C2A6C*)vp)->unk20;
+    int* ap = idx + (int*)&a;
+    int saved = *ap;
+    *ap = v;
+    func_8008B150(e, a);
+    func_8008687C(e, 0);
+    for (unsigned int i = 0; i < 8; i++) {
+        int c = *(D_80015904[i] + e->unk43C);
+        if (func_800549D8(&((Unk_800C2A6C*)vp)->unk1B4[i]) < c) {
+            func_8005408C(&((Unk_800C2A6C*)vp)->unk4F4[i], 5);
+        } else if (c < func_800549D8(&((Unk_800C2A6C*)vp)->unk1B4[i])) {
+            func_8005408C(&((Unk_800C2A6C*)vp)->unk4F4[i], 9);
+        } else {
+            func_8005408C(&((Unk_800C2A6C*)vp)->unk4F4[i], 1);
+        }
+        func_80054708(&((Unk_800C2A6C*)vp)->unk4F4[i], c);
+    }
+    ((int*)&a)[idx] = saved;
+    func_8008B150(e, a);
+    func_800697A4(((Unk_800C2A6C*)vp)->unk150);
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C2C3C);
 
@@ -1753,7 +1781,34 @@ EXTERN_C void func_800C3C08(Unk_800C3C08* p) {
     func_8008EF40(13);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C3C54);
+EXTERN_C int func_800C3C54(Unk_800C3C54* p, Unk_FlagArg* q) {
+    if (p->unk68) {
+        func_8001FC78((int)q, 0, 0);
+        unsigned short f = q->unk18;
+        if (p->unkD8) {
+            if (f & 0x80) {
+                func_800C41E0(p->unkDC, (unsigned char)D_800B4D5C[0], 1, 0);
+            } else if (f & 0x20) {
+                func_800C41E0(p->unkDC, (unsigned char)D_800B4D5C[0], -1, 0);
+            } else if (f & 0x10) {
+                func_800C41E0(p->unkDC, (unsigned char)D_800B4D5C[0], 0, 1);
+            } else if (f & 0x40) {
+                func_800C41E0(p->unkDC, (unsigned char)D_800B4D5C[0], 0, -1);
+            } else if (f & 0x6000) {
+                func_800C43DC(p->unkDC, D_800B4D5C[0], (p->unkD8 = 0, 0x80));
+            }
+        } else {
+            if (f & 0xC00) {
+                func_800C08D4((int)q);
+            } else if (f & 0x2000) {
+                func_800C43DC(p->unkDC, D_800B4D5C[0], (p->unkD8 = 1, 0xC0));
+            } else if (f & 0x4000) {
+                p->vf02();
+            }
+        }
+    }
+    return 1;
+}
 
 EXTERN_C int func_800C3DC0(void* p, int a) {
     func_8001FC78(a, 0, 0);
@@ -1810,7 +1865,27 @@ EXTERN_C void func_800C402C(Unk_800C402C* self, int in_chrg) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C41E0);
+EXTERN_C void func_800C41E0(void* vp, unsigned char sel, int dx, int dy) {
+    VAt<0x2C>* o = (VAt<0x2C>*)at_800C41E0(&((Unk_800C41E0*)vp)->unk30, sel);
+    int k = func_800C46E4((Unk_800C46E4*)o);
+    int row = k / 5;
+    if ((unsigned int)(k - row * 5 + dx) < 5 && row + dy >= 0 && row + dy < 3 && ((Unk_800C41E0*)vp)->unk5C[k + dx + dy * 5]) {
+        ((Unk_800C41E0*)vp)->unk5C[k] = 1;
+        o->vf29(dx, dy);
+        ((Unk_800C41E0*)vp)->unk5C[k + dx + dy * 5] = 0;
+        func_8008EF40(1);
+    }
+    int n = first(&((Unk_800C41E0*)vp)->unk30)->unk4;
+    if (n >= 2) {
+        for (int r = 1; r >= 0; r--) {
+            for (int i = 0; i < n; i++) {
+                if (func_800C46E4((Unk_800C46E4*)at_800C41E0(&((Unk_800C41E0*)vp)->unk30, i)) / 5 == r) {
+                    ((VAt<0x2C>*)at_800C41E0(&((Unk_800C41E0*)vp)->unk30, i))->vf27();
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C43DC);
 
@@ -1902,7 +1977,28 @@ EXTERN_C void func_800C5060(void* p) { func_800C5408(operator new(0x70), p); }
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C5094);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C52A0);
+EXTERN_C void func_800C52A0(Unk_800C52A0* p, unsigned char mode) {
+    int b = D_800B4CF0[0];
+    int k = 3;
+    char* t;
+    switch (mode) {
+    case 1:
+        k = 4;
+        break;
+    case 2:
+        k = 5;
+        break;
+    }
+    t = D_800AE640;
+    SetDrawMode(p->unk10, 0, 0, func_80060154(t, k), 0);
+    SetDrawMode(p->unk1C, 0, 0, func_80060154(t, k), 0);
+    p->unk28[b].u0 = func_80060188(t, k).x;
+    p->unk28[b].v0 = func_80060188(t, k).y;
+    p->unk28[b].clut = func_800600A4(t, k);
+    p->unk50[b].u0 = func_80060188(t, 2).x;
+    p->unk50[b].v0 = func_80060188(t, 2).y;
+    p->unk50[b].clut = func_800600A4(t, 2);
+}
 
 EXTERN_C void func_800C5400() {}
 
@@ -2182,7 +2278,32 @@ EXTERN_C int func_800C6380(Unk_800C6104* p, Unk_800C6380_arg* q) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C63F8);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C66D4);
+EXTERN_C void func_800C66D4(Unk_800C66D4* p, int i, int j) {
+    if (i == j) {
+        return;
+    }
+    func_80061AAC(D_800B4DD0[0], p->unk68[i], p->unk68[j]);
+    Unk_E6C_800C66D4* a = &p->unk9C[i];
+    Unk_800C66D4_t t;
+    func_800538CC(&t, func_80053BC0(a), 0);
+    func_80054094(&t, !func_8005409C(a));
+    Unk_E6C_800C66D4* b = &p->unk9C[j];
+    func_80053C6C(a, b);
+    func_80053C6C(b, &t);
+    Unk_Elem40* c = &((Unk_Elem40*)((char*)p + 0x1548))[i];
+    func_80053C6C(&t, c);
+    Unk_Pt q = ((Unk_Pt (*)(void*))func_80054054)(c);
+    Unk_Elem40* d = &((Unk_Elem40*)((char*)p + 0x1548))[j];
+    func_80053C6C(c, d);
+    func_8005457C(c, 0);
+    func_80053F48(c, q);
+    q = ((Unk_Pt (*)(void*))func_80054054)(d);
+    func_80053C6C(d, &t);
+    func_8005457C(d, 0);
+    func_80053F48(d, q);
+    func_80054CE4(p);
+    func_80053964(&t, 2);
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C68AC);
 
@@ -2905,11 +3026,40 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800CB418);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CB74C);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800CBA70);
+EXTERN_C void func_800CBA70(void* vp) {
+    int x0 = ((Unk_800CBA70*)vp)->unkBC;
+    int y0 = ((Unk_800CBA70*)vp)->unkC0;
+    int n = func_80053874((Unk_800CBA70*)vp);
+    if (n == 0x13 && first(&((Unk_800CBA70*)vp)->unk84)->unk4 >= 3) {
+        at_800CBA70(&((Unk_800CBA70*)vp)->unk84, func_800CAF84((Unk_800CAF84*)vp, ((Unk_800CBA70*)vp)->unk5C + 1))->vf04();
+        if (first(&((Unk_800CBA70*)vp)->unk84)->unk4 >= 4) {
+            at_800CBA70(&((Unk_800CBA70*)vp)->unk84, func_800CAF84((Unk_800CAF84*)vp, ((Unk_800CBA70*)vp)->unk5C + 2))->vf04();
+        }
+    }
+    func_800CBCCC(vp, n * 2, 20, x0 + (((Unk_800CBA70*)vp)->unk68 - x0) * n / 20, y0 + (((Unk_800CBA70*)vp)->unk6A - y0) * n * (n * 8 - 100) / 1200);
+    if (n == 1) {
+        VAt<0x2C>* o = at_800CBA70(&((Unk_800CBA70*)vp)->unk84, ((Unk_800CBA70*)vp)->unk5C);
+        short x = ((Unk_800CBA70*)vp)->unkBC, y = ((Unk_800CBA70*)vp)->unkC0, z = ((Unk_800CBA70*)vp)->unk6C, w = ((Unk_800CBA70*)vp)->unk6E;
+        Unk_S4_800CBA70 r;
+        r.x = x;
+        r.y = y;
+        r.z = z;
+        r.w = w;
+        ((void (*)(void*, Unk_S4_800CBA70, void*))func_800D0608)(o, r, ((Unk_800CBA70*)vp)->unkA4);
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CBCCC);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800CC138);
+EXTERN_C void func_800CC138(Unk_800CC138* p, int a, int b, int c) {
+    int x = p->unk68 + 0x1A;
+    int y = p->unk6A + 0x100;
+    func_800D04E4(at_800CC138(&p->unk84, p->unk5C), a, x, y);
+    func_800D04E4(at_800CC138(&p->unk84, func_800CAF84((Unk_800CAF84*)p, p->unk5C + 1)), b, x, y);
+    if (first(&p->unk84)->unk4 >= 4) {
+        func_800D04E4(at_800CC138(&p->unk84, func_800CAF84((Unk_800CAF84*)p, p->unk5C + 2)), c, x, y);
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CC28C);
 
@@ -3375,7 +3525,39 @@ EXTERN_C void func_800CDE70(Unk_800CDE70* p, int a) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CDEEC);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800CDF68);
+EXTERN_C void func_800CDF68(Unk_800CDF68* p) {
+    if (!p->unk140) {
+        return;
+    }
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    int k = p->unk50;
+    Unk_Ent400s* e = (Unk_Ent400s*)base(o)->unk8[k];
+    func_8008687C(e, 0);
+    if (e->unk410 < p->unk54) {
+        e->unk410 = p->unk54;
+    } else if (p->unk54 < e->unk410) {
+        p->unk54 = e->unk410;
+    }
+    if (e->unk420 < p->unk56) {
+        e->unk420 = p->unk56;
+    } else if (p->unk56 < e->unk420) {
+        p->unk56 = e->unk420;
+    }
+    ((VAt<0x9C>*)(Unk_800CDF68_v*)e)->vf01();
+    func_80064884(p->unk140, e->unk412, 0);
+    if (func_800549C4(p->unkF0, e->unk410)) {
+        ((void (*)(void*, int))func_800648E8)(p->unk140, e->unk410);
+        func_80054708(p->unkF0, e->unk410);
+    }
+    p->unk140->vf14();
+    func_80064884(p->unk144, e->unk422, 0);
+    if (func_800549C4(p->unk118, e->unk420)) {
+        ((void (*)(void*, int))func_800648E8)(p->unk144, e->unk420);
+        func_80054708(p->unk118, e->unk420);
+    }
+    p->unk144->vf14();
+    func_80054CE4(p);
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CE154);
 
@@ -3888,7 +4070,30 @@ EXTERN_C void func_800D103C(Unk_800D1004* p, Unk_800D103C_arg* a) {
 
 EXTERN_C void func_800D1078(void* p) { func_800557C8(p, 1, 11); }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D109C);
+EXTERN_C void func_800D109C(Unk_800D109C* p) {
+    p->unk6C = 1;
+    if (p->unk68) {
+        func_80053F48(p, Unk_Pt(8, 0x5C));
+        func_800566E4(p);
+        func_800D1490(p);
+        func_8008EF40(0xC);
+    }
+    func_80054FC0(p);
+    if (p->unk70) {
+        p->unk70->vf27();
+    }
+    VAt<0x2C>* o = (VAt<0x2C>*)func_800D18F4((Unk_800D18F4*)operator new(0x4C), 1, 1, 2);
+    o->vf07(p->unk68 ? 0xAC : 0x2B, 2);
+    Unk_800D109C_t t;
+    func_80069D1C(&t, (p->unk64 - 1) * 9 + 0x14BBD, 0x4800);
+    func_800D1BA4(o, &t);
+    func_80069E60(&t, 2);
+    func_8005800C(p->unk3C, o);
+    if (p->unk78) {
+        p->unk78->vf27();
+    }
+    p->unk7C = ((volatile Unk_800A4534*)&D_800A4534)->unkC;
+}
 
 EXTERN_C void func_800D122C(Unk_800D122C* p) {
     if (p->unk7C > 0) {
@@ -4540,7 +4745,31 @@ EXTERN_C void func_800D56BC(Unk_800D56BC* p, int a) { p->unkA40 = a; }
 
 EXTERN_C void func_800D56C4(void* p) { func_800557C8(p, 1, 10); }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D56E8);
+EXTERN_C void func_800D56E8(Unk_800D56E8* p) {
+    p->unk5C = 1;
+    func_800D5E24(p);
+    func_8005457C(p, 1);
+    Unk_Pt t(0x30, 0xD0);
+    p->vf03(t);
+    p->unkB3C = 0;
+    p->unkB38 = 1;
+    func_800631D4(p);
+    func_800588C8(p->unk3C);
+    func_800C0860(0);
+    func_80053BCC(p->unkAE4, (int)(func_80061188(D_800B4DD0[0], p->unkA40) + 0x1C), 0);
+    func_800540A8(p->unkAE4);
+    func_80054FC0(p->unkA44);
+    func_80053BCC(p->unkB00, (int)(func_80061188(D_800B4DD0[0], p->unkA40) + 0x1C), 1);
+    func_80053C6C(p->unkB1C, p->unkB00);
+    for (int n = func_80053BB4(p->unkB00) - 1; n > 0; n--) {
+        func_80053B68(p->unkB1C);
+    }
+    for (unsigned int i = 0; i < 12; i++) {
+        func_800601D8(&t, D_800B8F2C);
+        func_800539D0(p->unkB1C, &t);
+    }
+    func_80054FC0(p->unkA94);
+}
 
 EXTERN_C void func_800D5844(Unk_800D5844* p) {
     func_80054FE0(p->unkA44);
@@ -4744,7 +4973,44 @@ EXTERN_C void func_800D6D44(Unk_800CD3C8* p) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D6DA4);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D72B8);
+EXTERN_C void func_800D72B8(Unk_800D72B8* p) {
+    func_80055330(0);
+    ((void (*)(void*, int, const Unk_R_800D72B8&, int))func_80054F30)(p->unk68, 7, Unk_R_800D72B8(0, 1, 0, 2), 0);
+    func_80054FC0(p->unk68);
+    func_8005457C(p, 1);
+    func_800566E4(p);
+    if (!p->unkD8) {
+        func_800D7B6C((Unk_800D7B6C*)p);
+        func_800D7F10((Unk_800D7F10*)p);
+        func_800D7FB4((Unk_800D7FB4*)p);
+    }
+    if (!p->unk100) {
+        p->unk100 = ((void* (*)(void*, int, const Unk_R_800D72B8&, int))func_800646FC)(operator new(0x58), 1, Unk_R_800D72B8(0x1C, 0x3B, 0x4C, 4), 2);
+        p->unk104 = ((void* (*)(void*, int, const Unk_R_800D72B8&, int))func_800646FC)(operator new(0x58), 1, Unk_R_800D72B8(0x1C, 0x4F, 0x4C, 4), 2);
+        p->unkFC = (VAt<0x2C>*)func_800D8FD4((Unk_800D8FD4*)operator new(0x44), 1, 2);
+    }
+    p->unkFC->vf07(0x10, 4);
+    p->vf04();
+    func_80054FC0(p);
+    func_8005800C(p->unk3C, p->unkFC);
+    func_8005800C(p->unk3C, p->unk100);
+    func_8005800C(p->unk3C, p->unk104);
+    p->unkD4 = 0;
+    p->unkD8->vf01();
+    func_800C0860(0);
+    func_800C0814(0, 0);
+    func_800C0890(0);
+    if (!p->unkF8) {
+        p->unkF8 = func_800638A8(operator new(0x64), 1);
+        func_8002B174(D_800A4578[0], p->unkF8, -1);
+        p->unkF8->vf27();
+        ((void (*)(void*, const Unk_Pt&, int))func_80063B14)(p->unkF8, Unk_Pt(4, 0xBA), 1);
+        ((void (*)(void*, const Unk_Pt&, int))func_80063B14)(p->unkF8, Unk_Pt(0x132, 0xBA), 2);
+        p->unkF8->vf3();
+    }
+    p->unk64 = ((volatile Unk_800A4534*)&D_800A4534)->unkC;
+    func_8008EF40(0xC);
+}
 
 EXTERN_C void func_800D75B4(Unk_800D75B4* p) {
     unsigned int i = 0;
@@ -4909,7 +5175,19 @@ INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9134);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D82E0);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D876C);
+EXTERN_C void func_800D876C(Unk_800D876C* p, int flag) {
+    p->vtbl18 = D_800B917C;
+    delete[] p->unk6C;
+    p->unk6C = 0;
+    delete[] p->unk70;
+    p->unk70 = 0;
+    delete[] p->unk74;
+    p->unk74 = 0;
+    delete[] p->unk78;
+    p->unk78 = 0;
+    func_80053964(p->unk50, 2);
+    ((void (*)(void*, int))func_80054C34)(p, flag);
+}
 
 EXTERN_C void func_800D8970(Unk_800D8970* p, int i, void* a) { func_80053C6C(&p->unk70[i], a); }
 
@@ -5145,7 +5423,21 @@ EXTERN_C void func_800D949C(Unk_Sprt28* p, int x, int y) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D94F4);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D95F8);
+EXTERN_C int func_800D95F8(Unk_800D95F8* p) {
+    if (func_8005F1B4(p)) {
+        int b = D_800B4CF0[0];
+        Unk_Dr20_800D95F8* src = &p->unk28[b ^ 1];
+        Unk_Dr20_800D95F8* dst = &p->unk28[b];
+        int x = src->body.a, y = src->body.b, z = src->body.c, w = src->body.d;
+        dst->body.a = x;
+        dst->body.b = y;
+        dst->body.c = z;
+        dst->body.d = w;
+    }
+    addPrimN(p->unkA, &p->unk28[D_800B4CF0[0]]);
+    addPrimN(p->unkA, &p->unk10[D_800B4CF0[0]]);
+    return 2;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D9778);
 
@@ -5243,7 +5535,27 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800D9EE0);
 
 EXTERN_C void func_800DA204(Unk_800DA204* p) { func_800DB618(p->unk22F0); }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DA224);
+EXTERN_C void func_800DA224(Unk_800DA224* p) {
+    if (!func_800DB9F8((Unk_800DB9F8*)p->unk22F0)) {
+        p->vf02();
+        return;
+    }
+    p->unk246C = func_80056E0C(operator new(0xB4), 1);
+    func_8002B174(D_800A4578[0], p->unk246C, -1);
+    p->unk246C->vf27();
+    p->unk246C->vf03();
+    func_80054FC0(p->unk2284);
+    for (unsigned int i = 0; i < D_800B4DD0[0]->unk1FB; i++) {
+        p->unk2470[i] = func_800CDBB4(operator new(0x148));
+        func_800CDE70((Unk_800CDE70*)p->unk2470[i], i);
+        p->unk2470[i]->vf03(Unk_Pt(i * 0x48 + 8, 0x1E));
+        p->unk2470[i]->vf01();
+    }
+    func_80068E60(p);
+    func_8005783C(10);
+    func_800DAD54((Unk_800DAD54*)p);
+    func_80055330(0);
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DA3E4);
 
@@ -5434,7 +5746,32 @@ EXTERN_C void func_800DBA24(Unk_800DBA24* p) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DBA84);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DBDD8);
+EXTERN_C int func_800DBDD8(Unk_800DBDD8* p, Unk_FlagArg* q) {
+    if (func_8005618C(q)) {
+        return 1;
+    }
+    if (!p->unk3C) {
+        return 1;
+    }
+    if (q->unk18 & 0x2000) {
+        int i = p->unk20;
+        if (i == 0) {
+            p->vf02();
+            return 1;
+        }
+        if (!(p->unk70[i - 1].unk8B >> 7)) {
+            void* o = func_800550BC(p);
+            func_80054094(o, func_8005409C(func_800550BC(p)) != 0);
+            p->vf04();
+            func_8008EF40(0xC);
+            return 1;
+        }
+        func_8008EF40(0xE);
+        return 1;
+    }
+    func_80063340(p, q);
+    return 1;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DBF0C);
 
@@ -5462,7 +5799,31 @@ EXTERN_C void func_800DCB4C(Unk_800DCB4C* p) {
     func_8006BDE0(D_800B4ED8[0]);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DCC0C);
+EXTERN_C void func_800DCC0C(Unk_800DCC0C* p) {
+    func_80054FE0(p);
+    p->unk3DC = 0;
+    p->unk3E0 = 0;
+    p->unk3E4 = 0;
+    func_80054FE0(p->unk38C);
+    func_8002B27C(p->unk3EC, p->unk3F0);
+    p->unk3F0 = 0;
+    func_8002B27C(D_800A4578[0], p->unk3EC);
+    p->unk3EC = 0;
+    func_80054FE0(p->unk320);
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    int k = D_800B4D5C[0];
+    Unk_800DCC0C_e* e = (Unk_800DCC0C_e*)base(o)->unk8[k];
+    char* c = (char*)e + 0x424;
+    for (unsigned int i = 0; i < 8; i++) {
+        c[D_80015904[i]] = func_800549D8(&p->unk3FC[i]);
+        func_8005408C(&p->unk3FC[i], 2);
+        func_8005408C(&p->unk64[i], 2);
+    }
+    ((VAt<0x9C>*)e)->vf01();
+    Unk_Ent400* f = (Unk_Ent400*)e;
+    f->unk410 = f->unk412;
+    f->unk420 = f->unk422;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DCD7C);
 
@@ -5581,7 +5942,20 @@ EXTERN_C void func_800DEF98(Unk_800DF32C* p, short a, int b) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DEFF8);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DF098);
+EXTERN_C void func_800DF098(Unk_800DF098* p, int a, Unk_W3 s, int x, int y) {
+    if (p->unk55C) {
+        return;
+    }
+    p->unk55C = (void*)func_800D0CDC((Unk_800D0CDC*)operator new(0x88), 1, a, 1);
+    func_800DEED4(p, s);
+    if (*(int*)((char*)((Unk_800DF098_e*)base(p->unk328)->unk8[0])->unk1B8 + 0x38) - s.b < 400) {
+        func_8008299C((char*)base(p->unk328)->unk8[0] + 0x2A0, 0x28, 5, 0, 0, 0, 0);
+    } else {
+        func_8008299C((char*)base(p->unk328)->unk8[0] + 0x2A0, 0x28, 6, 0, 0, 0, 0);
+    }
+    func_80082E14((char*)base(p->unk328)->unk8[0] + 0x2A0, 0);
+    func_80081820(D_800AFA74, 0x4B, (y << 16) | 0x20C8, 2, p, p);
+}
 
 EXTERN_C void func_800DF1DC(Unk_800DF1DC_p* p, int a) {
     if (p->unk55C) {
@@ -5741,7 +6115,31 @@ EXTERN_C void func_800E0838(void* p) {
     func_8005549C(9, p, 0, -1);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800E0888);
+EXTERN_C void func_800E0888(Unk_800E0888* p) {
+    delete p->unk88;
+    p->unk88 = 0;
+    func_80054FE0(p->unk8C);
+    func_80054FE0(p->unk1BC);
+    for (int i = 0; i < 15; i++) {
+        p->unk244[i].vf02();
+    }
+    p->unk84 = 0;
+    func_8006323C(p);
+    func_80062160(D_800B4DD0[0]);
+    int v = p->unk7C;
+    Unk_800BCA88* o = (Unk_800BCA88*)func_8001CA10(0x14);
+    o->vtbl = D_80010178;
+    o->unk4 = 0;
+    o->vtbl = D_80010300;
+    o->unk8 = 2;
+    o->unkA = 7;
+    o->unkC = p;
+    o->vtbl = D_800102D0;
+    o->unk10 = v;
+    func_8001EFE4(p->unk80, o);
+    func_800E77AC();
+    func_8002798C();
+}
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9ADC);
 
@@ -6147,19 +6545,34 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800E4D8C);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800E4E70);
 
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9FA8);
-
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9FD8);
-
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA028);
-
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA048);
-
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA090);
-
-INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA098);
-
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800E5024);
+EXTERN_C int func_800E5024(Unk_800E556C* p) {
+    char path[7];
+    struct DIRENTRY d;
+    Unk_C13_800E5024 pat;
+    int nfree, used;
+    *(Unk_C5*)path = *(Unk_C5*)(!p->unk38 ? D_800BA090 : D_800BA098);
+    nfree = 15;
+    used = 0;
+    path[6] = 0;
+    pat = D_800BA0A4;
+    path[5] = D_800BA0A0[0];
+    for (int r = firstfile(path, &d) != 0; r; r = nextfile(&d) != 0) {
+        int same = 1;
+        for (int i = 11; i >= 0; i--) {
+            if (!same) {
+                break;
+            }
+            if (((signed char*)d.name)[i] != ((signed char*)pat.c)[i]) {
+                same = 0;
+            }
+        }
+        if (!same) {
+            used += 1 + (d.size - 1) / 8192;
+        }
+        nfree -= 1 + (d.size - 1) / 8192;
+    }
+    return (nfree << 4) + used;
+}
 
 EXTERN_C int func_800E51A4(Unk_800E51A4* p) { return *p->unk4 == 0; }
 
@@ -6486,6 +6899,22 @@ EXTERN_C void func_800E61D8() {
     func_8005F248(o, 2);
 }
 
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9FA8);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B9FD8);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA028);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA048);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA090);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA098);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA0A0);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA0A4);
+
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA0B8);
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA0E0);
@@ -6801,7 +7230,41 @@ INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA4C8);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800E8640);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800E88D0);
+EXTERN_C int func_800E88D0(Unk_800E88D0* p, Unk_FlagArg* q) {
+    func_8001FC78((int)q, 0, 0);
+    if (func_8005618C(q)) {
+        return 1;
+    }
+    unsigned short f = q->unk18;
+    if (f & 0x80) {
+        func_8001FC78((int)q, (int)(Unk_800E88D0_b*)p, 1);
+        p->unk20 = ((int (*)(void*, int))func_80058270)(p->unk3C, -1);
+    } else if (f & 0x20) {
+        func_8001FC78((int)q, (int)(Unk_800E88D0_b*)p, 1);
+        p->unk20 = ((int (*)(void*, int))func_80058270)(p->unk3C, 1);
+    } else if (f & 0x1000) {
+        int ok = 0;
+        if (func_80060230(func_80053AE4(p->unk8C, 0), D_800BA544)) {
+            ok = func_80060230(func_80053AE4(p->unk8C, 1), D_800BA548) != 0;
+        }
+        if (ok) {
+            func_8007E47C(((Unk_EntOwner*)func_800787B4())->unk328);
+            p->unkFC = func_800DFC8C(operator new(0x2F08), 1, D_800B4D60[0], 4, 1);
+            p->unkFC->vf01();
+        }
+    } else if (f & 0x2000) {
+        if (first(&p->unk1C)->unk4 == p->unkE0) {
+            p->vf02();
+        } else {
+            VAt<0x18>* o = (VAt<0x18>*)func_800550BC(p);
+            if (o && func_8005409C(o)) {
+                func_8008EF40(0xC);
+                o->vf01();
+            }
+        }
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800E8AF0);
 
@@ -7017,11 +7480,36 @@ EXTERN_C Unk_800E9DC8* func_800E9DC8(Unk_800E9DC8* s) {
     return o;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800E9ECC);
+EXTERN_C int func_800E9ECC(Unk_800E9ECC* p) {
+    int b = D_800B4CF0[0];
+    int nb = b ^ 1;
+    unsigned int i;
+    if (func_8005F1B4(p)) {
+        for (i = 0; i < 0x90; i += 2) {
+            int* s = (int*)&p->unk10[i + nb];
+            int* d = (int*)&p->unk10[i + b];
+            int w0 = s[1], w1 = s[2], w2 = s[3], w3 = s[4];
+            d[1] = w0;
+            d[2] = w1;
+            d[3] = w2;
+            d[4] = w3;
+        }
+    }
+    Unk_Ot* ot = D_800B4CFC[0];
+    for (i = 0; i < 0x90; i += 2) {
+        addPrimOt_800E9ECC(ot, p->unkA, &p->unk10[i] + b);
+    }
+    addPrimOt2_800E9ECC(ot, p->unkA, &p->unkB50[b]);
+    return 0x49;
+}
 
 EXTERN_C void func_800EA080() {}
 
 EXTERN_C void func_800EA088(void* p, int a) { func_8005F120(p, a); }
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA544);
+
+INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA548);
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800BA550);
 
