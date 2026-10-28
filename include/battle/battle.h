@@ -522,7 +522,6 @@ EXTERN_C int func_80068A5C(void *p);
 EXTERN_C void func_800553D8(int a);
 struct T_D1C50 { char pad[0x87C]; char f87C[0x2288]; char f2B04[0x2A70]; char f5574[4]; };
 EXTERN_C void func_8005C088(void *p, int a, int b);
-EXTERN_C void *func_800D43B0(void *p, int a);
 EXTERN_C void func_8005388C(void *p, int a);
 EXTERN_C void func_8002DA94(int a, Holder *h);
 struct T_D41D4 { char pad[8]; int f8; char padC[0x10]; unsigned short h1C; char pad1E[0x12]; Holder *f30; char pad34[4]; char f38[0xC]; int f44; char pad48[0xA]; SVec4 s52; };
@@ -1306,5 +1305,10 @@ EXTERN_C T_B98C8 *func_800B98C8(T_B98C8 *p, int x);
 
 struct T_BC294_l { void *f0; int f4; void *f8; };
 EXTERN_C T_BC294 *func_800BC294(T_BC294 *p, int x);
+
+struct T_D43B0n_s { unsigned addr:24; unsigned len:8; unsigned char r, g, b, code; short x, y; unsigned char u, v; unsigned short clut; short w, h; };
+struct T_D43B0n { VTable *vtbl; char pad4[0xC]; int f10; char dm[2][0xC]; T_D43B0n_s s[2]; SVec4 s54; short h5C, h5E; };
+EXTERN_C void *f4518_2(void *p, int a) __asm__("func_800D4518");
+EXTERN_C void *func_800D43B0(void *vp, int a1);
 
 #endif /* BATTLE_BATTLE_H */

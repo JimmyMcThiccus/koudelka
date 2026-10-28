@@ -457,7 +457,34 @@ EXTERN_C void func_800D4290(T_D4290 *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D43B0);
+EXTERN_C void *func_800D43B0(void *vp, int a1) {
+    T_D43B0n *p = (T_D43B0n *)vp;
+    ((F_5F0E4)func_8005F0E4)(p, a1);
+    p->vtbl = D_800B7D84;
+    p->f10 = 0;
+    SVec4 *v = &p->s54;
+    v->x = 0; v->y = 0; v->z = 0; v->w = 0;
+    p->h5C = 0; p->h5E = 0;
+    SetDrawMode(&p->dm[0], 0, 0, (unsigned short)func_80060154(D_800AE640, 0x40), 0);
+    SetDrawMode(&p->dm[1], 0, 0, (unsigned short)func_80060154(D_800AE640, 0x40), 0);
+    p->s[0].len = 4;
+    p->s[0].code = 0x64;
+    p->s[1].code = 0x64;
+    p->s[1].len = 4;
+    int i = D_800B4CF0[0];
+    p->s[i].b = 0x20;
+    p->s[i].x = 0x78;
+    p->s[i].y = 4;
+    p->s[i].h = 8;
+    p->s[i].clut = func_800600A4(D_800AE640, 0x40);
+    f4518_2(p, 4);
+    register T_D43B0n *r asm("$2") = p;
+    T_D43B0n_s *a = &r->s[i];
+    T_D43B0n_s *b = &r->s[i ^ 1];
+    int w1 = ((int *)a)[1], w2 = ((int *)a)[2], w3 = ((int *)a)[3], w4 = ((int *)a)[4];
+    ((int *)b)[1] = w1; ((int *)b)[2] = w2; ((int *)b)[3] = w3; ((int *)b)[4] = w4;
+    return r;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D4518);
 
