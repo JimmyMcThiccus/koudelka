@@ -52,4 +52,8 @@ EXTERN_C int func_8008891C_i(void *self, int b) asm("func_8008891C");
 
 EXTERN_C int func_80088C8C_i(void *self, int b) asm("func_80088C8C");
 
+EXTERN_C char D_80015E5C[];
+
+EXTERN_C int D_800B4ED8_p asm("D_800B4ED8");
+
 #endif /* GAME_B2_B2_H */
