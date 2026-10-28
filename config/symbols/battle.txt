@@ -10,3 +10,6 @@ __builtin_vec_delete = 0x800A0D0C; // type:func
 D_800B75F0 = 0x800B75F0; // force_not_migration:True
 D_800B7620 = 0x800B7620; // force_not_migration:True
 D_800B75A0 = 0x800B75A0; // force_not_migration:True
+D_800B7964 = 0x800B7964; // force_not_migration:True
+D_800B7A84 = 0x800B7A84; // force_not_migration:True
+D_800B7A8C = 0x800B7A8C; // force_not_migration:True

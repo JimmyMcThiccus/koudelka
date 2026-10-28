@@ -815,7 +815,24 @@ EXTERN_C void func_800BE6B8(T_BE6B8 *p, int flags) {
     if (flags & 1) operator delete(p);
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE7A4);
+EXTERN_C void func_800BE7A4(T_BE7A4 *p, int id, void *x, unsigned short d, int e, unsigned short f) {
+    unsigned short ii = id; void *r = func_8003912C(x, 9);
+    unsigned short k = func_800BE928_b(p, ii);
+    T_BFB18_t t;
+    func_8003A150(&t, r, 0);
+    T_BE7A4_e *pe = &p->e30[k];
+    T_BE7A4_o *o = p->f4;
+    func_80024FEC(o, (int)p->f8[k]);
+    int v;
+    if (!o->fC) v = o->s10 & 0x3F;
+    else if (o->fC->v3()) v = (o->s10 << 1) & 0x7F;
+    else v = o->s10 << 2;
+    T_BE7A4_c c(v, o->s12);
+    void *n = operator new(0x38);
+
+    int h1C = o->h1C; int h8 = p->f8[k]->h8;
+    func_800BEBE0((T_BEBE0 *)n, p->f28, e, f, &t, d, &pe->y, &pe->z, &c, h1C, h8);
+}
 
 EXTERN_C int func_800BE928(void *self, int b) { if (b & 0x8000) return 1; if (b & 0x4000) return 2; if (b & 0x2000) return 3; if (b & 0x1000) return 4; if (b & 0x800) return 5; if (b & 0x400) return 6; return 0; }
 
