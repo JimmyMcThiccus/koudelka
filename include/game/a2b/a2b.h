@@ -14,7 +14,7 @@ EXTERN_C int D_800B4CF0;
 struct S_A2B_Ent { int a, b, c, d; };
 struct S_A2B_Buf { char pad[8]; short mode; };
 #define E_(p, i) ((S_A2B_Ent *)((char *)(p) + (i) * 16 + 0xC))
-struct S_A2B_Ch2 { char c[2]; S_A2B_Ch2() asm("func_800601C8"); S_A2B_Ch2(const S_A2B_Ch2 &) asm("func_80060200"); };
+struct S_A2B_Ch2 { signed char c[2]; S_A2B_Ch2() asm("func_800601C8"); S_A2B_Ch2(const S_A2B_Ch2 &) asm("func_80060200"); };
 struct S_A2B_Str { char pad[0x10]; S_A2B_Ch2 *p; unsigned len; };
 extern "C++" S_A2B_Ch2 f53AE4(S_A2B_Str *s, unsigned i) asm("func_80053AE4");
 struct C_8005226C { C_8005226C(int a, void *b) asm("func_8005226C"); char pad[0x70]; };
@@ -91,4 +91,5 @@ struct C_8003D9FC : C_8001E40C {
 extern "C++" void *f40294(void *p, int a) asm("func_80040294");
 extern "C++" void *f4025C(void *p, int a, int b) asm("func_8004025C");
 EXTERN_C int func_8003ED10(void *p, int b, int c, int d, int e);
+extern "C++" int f53BB4(S_A2B_Str *s) asm("func_80053BB4");
 #endif /* GAME_A2B_A2B_H */

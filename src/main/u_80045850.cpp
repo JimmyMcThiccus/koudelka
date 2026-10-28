@@ -2236,7 +2236,16 @@ EXTERN_C void func_80053CD8(void *p)
     func_80053BCC(p, &D_800B4D64, 1);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80053D00);
+extern "C++" int f53D00(S_A2B_Str *s, S_A2B_Str *t) asm("func_80053D00");
+int f53D00(S_A2B_Str *s, S_A2B_Str *t)
+{
+    int r = (s->len == f53BB4(t));
+    unsigned i;
+    for (i = 0; r != 0 && i < s->len; i++) {
+        r = s->p[i].c[0] == f53AE4(t, i).c[0] && s->p[i].c[1] == f53AE4(t, i).c[1];
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80053DDC);
 
