@@ -1644,5 +1644,10 @@ struct Unk_800C7FC8 : Unk_Hdr38d, Unk_Base { char pad3C[0x10]; int unk4C; };
 struct Unk_800CDEEC_p { char pad0[0x400]; Unk_Base unk400; char pad404[0xC]; unsigned short unk410; char pad412[0xE]; unsigned short unk420; };
 struct Unk_800CDEEC { char pad0[0x50]; int unk50; unsigned short unk54; unsigned short unk56; };
 inline Unk_800CDEEC_p* ent_800CDEEC(Unk_EntTabObj* o, int i) { return (Unk_800CDEEC_p*)base(o)->unk8[i]; }
+struct Unk_800E7B40 { void* vtbl; int unk4; short unk8; short unkA; int unkC; Unk_W3 unk10[2]; Unk_W5_800D4CC0 unk28[2]; };
+EXTERN_C char D_800BA4C8[];
+struct Unk_800D94F4 { void* vtbl; int unk4; short unk8; short unkA; int unkC; Unk_W3 unk10[2]; Unk_W5_800D4CC0 unk28[2]; };
+EXTERN_C char D_800B93D4[];
+EXTERN_C Unk_Vt50_800CDAAC D_800B806C_t asm("D_800B806C");
 
 #endif /* FIELD_FIELD_H */
