@@ -681,3 +681,104 @@ EXTERN_C void func_80076CD0(void *p, int flags)
     if (flags & 1)
         __builtin_delete(p);
 }
+
+/* ---- round 3, fourth batch (Ghidra-assisted) ---- */
+//// func_8006C4EC
+EXTERN_C void func_8006C4EC(void *self, int b)
+{
+    M32_B m;
+    V16_B v50;
+    V16_B v40;
+    char buf[16];
+    int al[2];
+    func_8003A7A4(&m);
+    func_8003BBD8(&m);
+    *(M32_B *)((char *)self + 0x98) = m;
+    func_8003B310_c(buf, b);
+    func_8006C61C(&v40, buf);
+    v50 = v40;
+    func_8003B2F0(&m, &v50);
+    SetRotMatrix((MATRIX_B *)&m);
+    SetTransMatrix((MATRIX_B *)&m);
+    v50.w[0] = 0;
+    v50.w[1] = 0;
+    v50.w[2] = 0;
+    v50.w[3] = 0;
+    v40.w[0] = 0;
+    v40.w[1] = 0;
+    v40.w[2] = 0;
+    v40.w[3] = 0;
+    TransRot_32(&v40, &v50, al);
+    func_8003B2F0((char *)self + 0x98, &v50);
+}
+//// func_8006D768
+EXTERN_C void func_8006D768(void *self, int flags)
+{
+    char *vb = 0;
+    char *p;
+    char *q;
+    void *r;
+    FIELD_AT(self, void *, 0) = D_80015EA0;
+    if (FIELD_AT(self, int, 4) != 0) {
+        vb = FIELD_AT(self, char *, 4) - 0x124;
+    }
+    char *m = (char *)self + 0x14;
+    func_8002DD34(FIELD_AT(vb, void *, 0x254), m, 0);
+    char *g;
+    p = (char *)__builtin_new(0xC);
+    g = 0;
+    r = func_8002E600(m ? FIELD_AT(self, void *, 0x14) : 0);
+    FIELD_AT(p, void *, 0) = D_80010160;
+    FIELD_AT(p, int, 4) = 1;
+    if (D_800AC57C) {
+        g = D_800AC57C + 0xF8;
+    }
+    q = (char *)__builtin_new(0x14);
+    FIELD_AT(q, void *, 0) = D_80010178;
+    FIELD_AT(q, void *, 0) = D_80010338;
+    FIELD_AT(q, int, 4) = 0;
+    FIELD_AT(q, void *, 8) = p;
+    FIELD_AT(q, short, 0xC) = 0x80;
+    FIELD_AT(q, int, 0x10) = 1;
+    func_8001D150(g, q);
+    FIELD_AT(p, void *, 0) = D_80010148;
+    FIELD_AT(p, void *, 8) = r;
+    FIELD_AT(self, int, 0x38) = 0;
+    FIELD_AT(self, int, 0x3C) = 0;
+    if (FIELD_AT(self, void *, 0x34) != 0) {
+        func_80024FEC(FIELD_AT(self, void *, 0x34), 0);
+        if (FIELD_AT(self, void *, 0x34) != 0) {
+            ((VObj0 *)FIELD_AT(self, void *, 0x34))->v00(3);
+        }
+    }
+    FIELD_AT((void *)D_800B4ED8_p, int, 0x224) = 0;
+    func_80019920(FIELD_AT(self, void *, 0x14), 0);
+    func_8001D024(self, flags);
+}
+//// func_8006F8B4
+EXTERN_C int func_8006F8B4_def(void *self, int a1, int a2, int a3, int a4, int a5, int a6, V4_Cx v, int a11)
+{
+    switch (D_800AF410.state) {
+    case 0:
+    case 1:
+    case 2:
+    case 4:
+    case 5:
+    case 6:
+        func_8006F3DC_i(self, a1, a2, a3, a5, a6);
+        break;
+    case 3:
+        if (!func_8006FE30_b((char *)self + 4, a1, a2, a3)) {
+            func_8006F3DC_i(self, a1, a2, a3, a5, a6);
+            break;
+        }
+        func_8006FE6C_x((char *)self + 4, 2, a4, v, a11);
+        func_8006F194(self);
+        return 1;
+    default:
+        return 0;
+    }
+    func_8006FE6C_x((char *)self + 4, 2, a4, v, a11);
+    D_800AF408_w = 1;
+    return 1;
+}

@@ -248,7 +248,51 @@ EXTERN_C void func_80072970(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800729E8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80072B84);
+EXTERN_C void func_80072B84(void *self, int a)
+{
+    char buf[64];
+    if ((a & 0xF0) != 0) {
+        short s = a;
+        if (FIELD_AT(self, unsigned short, 0x5DC) != s) {
+            func_800729E8(self, s);
+        }
+        void *x = D_800B4D38_w;
+        int b = FIELD_AT(self, short, 0x144);
+        unsigned short t = FIELD_AT(self, unsigned short, 0x140);
+        int c = FIELD_AT(self, short, 0x118);
+        FIELD_AT(self, unsigned short, 0x5DC) = t;
+        func_8003FA50(self, x, b, c);
+        if (FIELD_AT(self, int, 0x13C) != 0) {
+            if (FIELD_AT(self, unsigned char, 0x120) != 0) {
+                func_8003E198(self, FIELD_AT(self, int, 0x13C), (FIELD_AT(self, short, 0x1BC) << 25) >> 16);
+            } else {
+                int r = func_8003E170(self);
+                func_8003ED90(buf, self);
+                if ((short)r != 0) {
+                    FIELD_AT(self, short, 0x11E) = 1;
+                    func_8003ECFC(self, 0, 0);
+                }
+            }
+        } else {
+            func_8003E124(self);
+        }
+        if (FIELD_AT(self, int, 0x1B8) != 0 && FIELD_AT(self, short, 0x5CC) != 0 && D_800B4EDC != 0) {
+            int t = FIELD_AT(self, int, 0x218) - 1;
+            FIELD_AT(self, int, 0x218) = t;
+            if (FIELD_AT(self, unsigned char, 0x10C) == 0) {
+                if (t < 0) {
+                    func_800745B0(self);
+                    func_80079918(D_800AF470_w);
+                    FIELD_AT(self, short, 0x5CC) = 0;
+                }
+            } else if (t < 0x5A) {
+                FIELD_AT(self, int, 0x218) = 0x5A;
+            }
+        }
+    } else {
+        func_8003E124(self);
+    }
+}
 
 EXTERN_C int func_80072CFC(void *self)
 {
