@@ -1140,4 +1140,32 @@ EXTERN_C const Unk800C5380T D_800B8214;
 EXTERN_C const char D_800B8284[], D_800B8264[], D_800B82B4[];
 EXTERN_C void func_800C91A0(Unk800C5380*, int);
 
+/* func_800C1BF8 */
+struct Unk800C1BF8N8 { s16 d[4]; };
+struct Unk800C1BF8N12 { s16 d[6]; };
+struct Unk800C1BF8N14 { s16 d[7]; };
+struct Unk800C1BF8N16 { s16 d[8]; };
+struct Unk800C1BF8G { char pad[0x1C4]; s32 x1C4; };
+EXTERN_C const Unk800C1BF8N12 D_800B7B40, D_800B7B80, D_800B7B90;
+EXTERN_C const Unk800C1BF8N14 D_800B7B50, D_800B7BB4;
+EXTERN_C const Unk800C1BF8N8 D_800B7B60[];
+EXTERN_C const Unk800C1BF8N16 D_800B7B6C, D_800B7BA0;
+EXTERN_C s32 func_800619F4(void*);
+EXTERN_C void func_8008EF40(s32);
+
+/* func_800C6D80 */
+struct Unk800C6D80EV { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); };
+struct Unk800C6D80E : Unk800C6D80EV { char p2[0x50 - 0x1C]; };
+struct Unk800C6D80S { char d[0x1C]; };
+struct Unk800C6D80T { char d[0x20]; };
+struct Unk800C6D80 { char p0[0x20]; s32 x20; char p1[0x3C - 0x24]; void* x3C; char p2[0x68 - 0x40]; s32 x68; char p3[0x74 - 0x6C]; Unk800C6D80E x74[8]; Unk800C6D80S x2F4[8];
+  char p4[0x4B4 - 0x3D4]; Unk800C7740O* x4B4; Unk800C7740O* x4B8; s32 x4BC, x4C0; char p5[0x568 - 0x4C4]; char x568[4]; };
+struct Unk800C6D80C { char pad[0x1C]; u16 x1C; };
+struct Unk800C6D80G { char pad[0x120]; Unk800C6D80C* x120; char p2[0x1F8 - 0x124]; s8 x1F8; };
+EXTERN_C void func_800C7740(Unk800C7740*);
+EXTERN_C s32 func_800C910C(Unk800C910C*, Unk800C910CB*);
+EXTERN_C void func_80061138(void*);
+EXTERN_C void func_80061114(void*, s32, s32);
+EXTERN_C void* func_80053BC0(void*);
+
 #endif /* MOVIE_H */
