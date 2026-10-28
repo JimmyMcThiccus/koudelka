@@ -169,7 +169,19 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_8006BFE4", D_80015E5C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006BFE4", func_8006C95C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006BFE4", func_8006C9F8);
+EXTERN_C void func_8006C9F8(void *self, int b)
+{
+    char tmp[8];
+    FIELD_AT(self, void *, 0) = D_80015E5C;
+    if (FIELD_AT(self, int, 0x1C) == 0) {
+        func_8006B7B8((void *)D_800B4ED8_p);
+    }
+    if (FIELD_AT(self, int, 8) != 0xCD) {
+        func_800BE09C(tmp);
+        func_800BE18C(tmp, (char *)D_800B4ED8_p + 0x2A0);
+    }
+    func_8001D024(self, b);
+}
 
 EXTERN_C int func_8006CA80(void *self)
 {

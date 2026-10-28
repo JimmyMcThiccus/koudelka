@@ -110,7 +110,35 @@ EXTERN_C void func_80071C78(void *self, void *b)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80071D90);
+EXTERN_C void func_80071D90(void *self, void *b, int c)
+{
+    if (FIELD_AT(self, void *, 0x298) != 0) {
+        func_80071F08(self);
+        if ((short)c != 0) {
+            char *p = (char *)__builtin_new(0xC);
+            void *x = FIELD_AT(self, void *, 0x298);
+            char *q;
+            FIELD_AT(p, void *, 0) = D_800127E4;
+            FIELD_AT(p, int, 4) = 4;
+            void *mg = &D_800A4544;
+            FIELD_AT(p, void *, 8) = x;
+            q = (char *)__builtin_new(0x14);
+            FIELD_AT(q, void *, 0) = D_80010178;
+            FIELD_AT(q, int, 4) = 0;
+            FIELD_AT(q, void *, 0) = D_80010338;
+            FIELD_AT(q, short, 0xC) = 0x80;
+            FIELD_AT(q, void *, 8) = p;
+            FIELD_AT(q, int, 0x10) = 1;
+            func_8001D150(mg, q);
+            int n1 = D_800B4D28_w;
+            int n2 = D_800B4D30_w;
+            FIELD_AT(self, int, 0x298) = 0;
+            D_800B4D28_w = n1 + 1;
+            D_800B4D30_w = n2 + 1;
+        }
+        FIELD_AT(self, short, 0x5D2) = c;
+    }
+}
 
 EXTERN_C void func_80071E90(void *self)
 {
@@ -269,7 +297,43 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007398C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80073C04);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80074468);
+EXTERN_C int func_80074468(void *self)
+{
+    int ret = 0;
+    int r = func_80073C04(self);
+    if (r != 0) {
+        func_800435E8(self);
+        switch (r) {
+        case 1:
+            func_800437A4(self, 0x1F);
+            break;
+        case 2:
+            func_800437A4(self, 0x20);
+            break;
+        case 3:
+            func_800437A4(self, 0x10);
+            break;
+        case 4:
+            func_800437A4(self, 0xB);
+            break;
+        case 5:
+            func_800437A4(self, 0x15);
+            break;
+        case 6:
+            func_800437A4(self, 0x1A);
+            break;
+        case 7:
+            func_800437A4(self, 0x26);
+            break;
+        case 8:
+            func_800437A4(self, 0x23);
+            break;
+        }
+        func_800437CC(self, 1, 0, 0);
+        ret = 1;
+    }
+    return ret;
+}
 
 EXTERN_C void func_80074564(void *self)
 {
@@ -367,7 +431,45 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800165E0);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80071A74", D_800165F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800749B0);
+EXTERN_C void func_800749B0(void *self)
+{
+    Rgb_B c;
+    switch (FIELD_AT(self, unsigned char, 0x545)) {
+    case 1:
+        c.v[0] = 0x40;
+        c.v[1] = 0;
+        c.v[2] = 0;
+        break;
+    case 2:
+        c.v[0] = 0;
+        c.v[1] = 0;
+        c.v[2] = 0x40;
+        break;
+    case 3:
+        c.v[0] = 0;
+        c.v[1] = 0x40;
+        c.v[2] = 0;
+        break;
+    case 4:
+        c.v[0] = 0x40;
+        c.v[1] = 0x40;
+        c.v[2] = 0;
+        break;
+    case 5:
+        c.v[0] = 0x80;
+        c.v[1] = 0x80;
+        c.v[2] = 0x80;
+        break;
+    case 6:
+        c.v[0] = 0;
+        c.v[1] = 0;
+        c.v[2] = 0;
+        break;
+    }
+    if (FIELD_AT(self, unsigned char, 0x545) != 0) {
+        func_8003D358_c(FIELD_AT(FIELD_AT(self, char *, 0x1B8), void *, 0x68), 1, c);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80074AB4);
 
@@ -1774,7 +1876,26 @@ EXTERN_C void func_80079D64(void *self, int a1)
     func_8007A1F4(self, 4);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80079E8C);
+EXTERN_C void func_80079E8C(void *self)
+{
+    int m = D_800AF410.state;
+    if (m == 4 || m == 1 || m == 2 || m == 5 || m == 6) {
+        return;
+    }
+    if (FIELD_AT(D_800AF470.p, int, 0x540) != 0) {
+        return;
+    }
+    if (func_800771D4(&D_800AF414)) {
+        return;
+    }
+    if (FIELD_AT(self, signed char, 0x360) != 0) {
+        return;
+    }
+    VObj<0x18> *p = FIELD_AT(self, VObj<0x18> *, 0x330);
+    if (p != 0) {
+        p->v01();
+    }
+}
 
 EXTERN_C int func_80079F48(void *self)
 {

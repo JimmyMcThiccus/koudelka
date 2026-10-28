@@ -196,7 +196,26 @@ EXTERN_C Bytes8_80089A4C func_80089A4C(unsigned char *src, int d)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_80089AC0);
+EXTERN_C unsigned char *func_80089AC0(unsigned char *a, unsigned char *b, unsigned char *c, unsigned int d, unsigned int e, unsigned int f)
+{
+    int new_var;
+    unsigned int range = f - e + 1;
+    unsigned int span = d - e;
+    unsigned char *dst = a;
+    unsigned int i = 0;
+    while (i < 8) {
+        if (range) {
+            i++;
+        } else {
+            i++;
+        }
+        int lo = *b++;
+        int hi = *c++;
+        new_var = (hi - lo + 1) * span;
+        *dst++ = new_var / range + lo;
+    }
+    return a;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_80089B44);
 
