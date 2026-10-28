@@ -3059,4 +3059,22 @@ struct Q16o { char pad[0xC]; Q16 q; };
 
 EXTERN_C void *D_800B4C18_w asm("D_800B4C18");
 
+struct P_TAG_B { unsigned addr : 24; unsigned len : 8; };
+struct S_OtB {
+    char pad0[0x10];
+    unsigned int count;
+    unsigned long *tab;
+    int add(P_TAG_B *prim, unsigned int i)
+    {
+        if (i && i < count) {
+            prim->addr = tab[i];
+            tab[i] = (unsigned long)prim & 0x00ffffff;
+            return 1;
+        }
+        return 0;
+    }
+};
+EXTERN_C S_OtB *D_800B4CFC;
+EXTERN_C int func_8005F1B4(void *self);
+
 #endif /* GAME_B_DECLS_B_H */
