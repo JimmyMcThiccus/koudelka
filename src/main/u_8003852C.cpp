@@ -748,11 +748,69 @@ EXTERN_C void *func_8003A7D0(void *p, int a)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A7FC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003ABEC);
+extern "C++" S_A2_Sv0 f3abec(MATRIX *m) asm("func_8003ABEC");
+S_A2_Sv0 f3abec(MATRIX *m)
+{
+    S_A2_Sv0 r;
+    int a;
+    short *s = (short *)m;
+    a = ratan2(-s[6], SquareRoot0(s[0] * s[0] + s[3] * s[3]));
+    r.y = a;
+    if ((unsigned short)(a - 0x3FB) < 0xB) {
+        if (s[0] < 0) {
+            r.x = ratan2(s[1], s[2]) - 0x800;
+            r.z = -0x800;
+        } else {
+            r.x = ratan2(s[1], s[2]);
+            r.z = 0;
+        }
+    } else if ((unsigned short)(a + 0x405) < 0xB) {
+        if (s[0] < 0) {
+            r.x = -ratan2(s[1], -s[2]) - 0x800;
+            r.z = -0x800;
+        } else {
+            r.x = -ratan2(s[1], -s[2]);
+            r.z = 0;
+        }
+    } else {
+        r.x = ratan2(s[7], s[8]);
+        r.z = ratan2(s[3], s[0]);
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003AD78);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B168);
+extern "C++" S_A2_Sv0 f3b168(MATRIX *m) asm("func_8003B168");
+S_A2_Sv0 f3b168(MATRIX *m)
+{
+    S_A2_Sv0 r;
+    int a;
+    short *s = (short *)m;
+    a = ratan2(s[2], SquareRoot0(s[0] * s[0] + s[1] * s[1]));
+    r.y = a;
+    if ((unsigned short)(a - 0x3FB) < 0xB) {
+        if (s[0] < 0) {
+            r.x = ratan2(s[3], -s[6]) - 0x800;
+            r.z = -0x800;
+        } else {
+            r.x = ratan2(s[3], -s[6]);
+            r.z = 0;
+        }
+    } else if ((unsigned short)(a + 0x405) < 0xB) {
+        if (s[0] < 0) {
+            r.x = -ratan2(s[3], s[6]) - 0x800;
+            r.z = -0x800;
+        } else {
+            r.x = -ratan2(s[3], s[6]);
+            r.z = 0;
+        }
+    } else {
+        r.x = ratan2(-s[5], s[8]);
+        r.z = ratan2(-s[1], s[0]);
+    }
+    return r;
+}
 
 EXTERN_C S_8003B2F0 *func_8003B2F0(S_8003B2F0 *p, S_8003B2F0_V *v)
 {

@@ -344,4 +344,5 @@ struct S_A2_S8 { short v; short pad[3]; S_A2_S8() {} S_A2_S8(const S_A2_S8 &o) {
 struct S_A2_Sv4c { short x, y, z, w; S_A2_Sv4c(S_A2_S8 a, S_A2_S8 b, S_A2_S8 c, S_A2_S8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
 struct S_A2_I8 { int v; int pad; S_A2_I8() {} S_A2_I8(const S_A2_I8 &o) { v = o.v; } };
 struct S_A2_Iv4c { int x, y, z, w; S_A2_Iv4c(S_A2_I8 a, S_A2_I8 b, S_A2_I8 c, S_A2_I8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
+EXTERN_C int SquareRoot0(int a);
 #endif /* GAME_A2_A2_H */
