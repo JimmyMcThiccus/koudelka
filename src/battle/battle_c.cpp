@@ -155,7 +155,7 @@ EXTERN_C void func_800D0598(void *self) { func_8005F440(func_800787B4(), 0x1262)
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D05C4);
 
-EXTERN_C void func_800D0BCC(void *q) { T_D0BCC *p = (T_D0BCC *)q; func_800D119C(p->f54); delete p->f54; p->f54 = 0; for (unsigned i = 0; i < 3; i++) { if (p->f58[i]) { func_8002B27C(p->f64, p->f58[i]); p->f58[i] = 0; } } func_8002B27C(D_800A4578[0], p->f64); p->f64 = 0; }
+EXTERN_C void func_800D0BCC(void *q) { T_D0BCC *p = (T_D0BCC *)q; func_800D119C((T_D119C *)p->f54); delete p->f54; p->f54 = 0; for (unsigned i = 0; i < 3; i++) { if (p->f58[i]) { func_8002B27C(p->f64, p->f58[i]); p->f58[i] = 0; } } func_8002B27C(D_800A4578[0], p->f64); p->f64 = 0; }
 
 EXTERN_C void func_800D0C88(void *self) {}
 
@@ -169,7 +169,23 @@ EXTERN_C void func_800D10D4(T_D10D4 *p, int m, int a) { if (m & 1) func_80054094
 
 EXTERN_C void func_800D1148(T_D1148 *p) { D_800B4DA6[0] = 6; func_80063714(p, count_of(&p->h1C)); func_800D1458(p); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D119C);
+EXTERN_C void func_800D119C(T_D119C *p) {
+    func_80054FE0(p);
+    for (unsigned i = 0; i < ((T_4DD0d *)D_800B4DD0[0])->b1FB; i++) p->e[i].v3();
+    D_800B4DA6[0] = 3;
+    void *g = func_800787B4();
+    switch (p->f5754) {
+    case 4: mk_D119C(p, g, 0x106E); break;
+    case 5: mk_D119C(p, g, 0x10D3); break;
+    case 6: mk_D119C(p, g, 0x119A); break;
+    case 7: mk_D119C(p, g, 0x11FE); break;
+    case 8: mk_D119C(p, g, func_800D5740((T_D5740 *)((char *)p + 0x2B04))); break;
+    case 9: mk_D119C(p, g, func_800D23C0((T_D23C0 *)((char *)p + 0x87C))); break;
+    case 10: mk_D119C(p, g, func_800D4E68((T_D4E68 *)((char *)p + 0x31DC))); break;
+    }
+    p->f5754 = 3;
+    func_800553D8(0);
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D1458);
 
@@ -540,7 +556,7 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D3ED0);
 
 EXTERN_C void func_800D401C(T_D401C *p) { T_D401C_M *m = p->f30; T_D401C_V *v = m; func_800D4518(v->count ? v->items[0] : 0); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_c", func_800D407C);
+EXTERN_C void func_800D407C(T_D407C *p, int a, int b) { int t1, t2; if (p) { t2 = (t1 = a >> 24); p->f44 = 1; p->b50 = t2; p->f48 = b; } else { t2 = (t1 = a >> 24); p->f44 = 1; p->b50 = t2; p->f48 = b; } }
 
 EXTERN_C void func_800D4094(T_D4094 *p, SVec4 *v) { p->f52 = *v; }
 
