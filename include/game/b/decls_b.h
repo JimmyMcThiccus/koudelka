@@ -2472,4 +2472,179 @@ EXTERN_C void func_80038654(void *self, void *b, int c);
 EXTERN_C void func_8005DEA4(void *self, int b);
 EXTERN_C void func_800536F0(void *self, void *b);
 
+struct Ent_8007AB78 {
+    LNode_B *next;
+    LNode_B *prev;
+    int pad8;
+    int idC;
+    int id10;
+};
+struct List_8007AB78 {
+    LNode_B *head;
+    LNode_B *cur;
+    bool IsEmpty() { return head == 0; }
+    bool IsLast() { return IsEmpty() ? false : head->prev == cur; }
+    void Next()
+    {
+        if (!IsEmpty()) {
+            if (!IsLast()) {
+                cur = cur->next;
+            }
+        }
+    }
+    void First() { cur = head; }
+    Ent_8007AB78 *Cur() { return (Ent_8007AB78 *)cur; }
+};
+struct Arr_8007F434 {
+    char pad[0x10C];
+    B16_B a[16];
+};
+struct Arr_8007BB48 {
+    char pad[8];
+    char *o[3];
+};
+struct Q4_8007C55C {
+    int a, b, c, d;
+};
+struct Msg_8007EF90 {
+    void *vt;
+    int next;
+    short type;
+    short sub;
+    int c;
+    int d;
+};
+struct Bits_8007FE4C {
+    unsigned char *buf;
+    int len;
+};
+
+EXTERN_C void func_80078658(void *self);
+EXTERN_C void func_8003DEA8(void *p);
+EXTERN_C void func_80080530(void *self, int a, int b, int c);
+EXTERN_C void func_80080AE8(void *self, int b);
+EXTERN_C void func_80080B60(void *self, int b);
+EXTERN_C void func_8007BDB4(void *self, int a, int b, int c);
+EXTERN_C void *func_8007AB78(List_8007AB78 *l, int x);
+EXTERN_C void *func_8007AC38(List_8007AB78 *l, int x);
+EXTERN_C void func_8007F434(void *self);
+EXTERN_C int func_800785A8(void *self);
+EXTERN_C void func_80077444(void *self, int b);
+EXTERN_C void *func_80077538(void *self, int b);
+EXTERN_C void func_80076DF8(void *self, int flags);
+EXTERN_C void func_80078610(void *self, int b);
+EXTERN_C void *func_8006F04C(void *self);
+EXTERN_C void *func_8007A960(void *self);
+EXTERN_C void func_8007AF5C(void *self);
+EXTERN_C short func_800729E8(void *self, int b);
+EXTERN_C void func_80044990(void *p, int a, int b, int c, int d, int e);
+EXTERN_C void func_80035EB4(void *p);
+EXTERN_C void func_80075828(void *self, int flags);
+EXTERN_C void func_80035304(void *self, int b);
+EXTERN_C char D_800167C8[];
+EXTERN_C char D_80016740[];
+EXTERN_C char D_80016758[];
+EXTERN_C char D_80016708[];
+EXTERN_C char D_800167E0[];
+EXTERN_C char D_80012294[];
+EXTERN_C char D_80012224[];
+EXTERN_C void func_8007CAB4(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_B s, int a12);
+EXTERN_C void func_8007D24C(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_B s, int a12);
+EXTERN_C void func_8007589C(void *self);
+EXTERN_C void *func_800775F0(void *self);
+EXTERN_C int func_800771D4(void *self);
+EXTERN_C int func_80076FD8(void *self);
+EXTERN_C char D_80016878[];
+EXTERN_C void func_800DF604(void *n, V4_80085578 s, int e);
+EXTERN_C void *func_800DF37C(void *p, int k, V4_80085578 s, int e);
+EXTERN_C void func_80048D54(void *buf);
+EXTERN_C int func_80046658(void *buf, int a, int b, void *c);
+EXTERN_C int *func_80049398(void *buf);
+EXTERN_C void func_80048D2C(void *buf, int f);
+EXTERN_C void func_80071E90(void *self);
+EXTERN_C int func_8006F630(void);
+EXTERN_C void func_80043DC0(void *p);
+EXTERN_C void func_80072970(void *self);
+
+static inline int empty_8007768C(void *self)
+{
+    return FIELD_AT(self, int, 0x0) == 0;
+}
+
+static inline void clear_80076EF8(void *l)
+{
+    FIELD_AT(l, int, 0x4) = FIELD_AT(l, int, 0x0);
+    while (!empty_8007768C(l)) {
+        func_80076E60(l);
+    }
+}
+
+static inline bool idle_800770B4(void *self)
+{
+    return FIELD_AT(self, int, 0x20) == 0 && FIELD_AT(self, int, 0x24) == 0 && FIELD_AT(self, int, 0x10) == 0;
+}
+
+EXTERN_C void func_80087764(void *self, void *b, int c);
+EXTERN_C void func_80086B70(void *self, int c);
+EXTERN_C void func_800890F0(void *self, void *b, int c);
+EXTERN_C void func_800874C4(void *self, void *b, int c);
+EXTERN_C void func_800D96F8(void *self, void *b, int c);
+EXTERN_C void func_8008816C(void *self, void *b, int c);
+EXTERN_C void func_80086CAC(void *self, int c);
+EXTERN_C void func_80087620(void *self, void *b, int c);
+EXTERN_C void func_800873A8(void *self, void *b, int c);
+EXTERN_C void func_80087C2C(void *self, void *b, int c, int d);
+EXTERN_C void *func_8003CEB4(void *self, void *b);
+EXTERN_C Col_800899AC *func_800899AC(Col_800899AC *out, Col_800899AC *a, signed char *b);
+EXTERN_C void func_80089D80(unsigned char *p, int n);
+EXTERN_C void func_800867B0(void *self, Snap_800867B0 *s);
+
+struct U16_8008B4E8 {
+    unsigned short v;
+    int hi() { return v >> 10; }
+} __attribute__((packed));
+
+EXTERN_C void *func_8001FC38(void *self, int b, void *c, int d);
+EXTERN_C void func_8008687C(char *self, int b);
+static inline int muldiv2_80086EF0(int a, int b, unsigned char c) { return (long long)a * b / c; }
+EXTERN_C void *func_80082798(void *self, int b, int c);
+
+EXTERN_C char D_80017CB4[];
+EXTERN_C char D_80010118[];
+struct S_8008B084 { char pad[0x20]; unsigned char a; char p; short b; int c; short d[12]; short e[16]; };
+struct D_8008B084 { char pad[0x477]; unsigned char a; char p[0x54A - 0x478]; short b; int c; char q[0x560 - 0x550]; short d[12]; short e[16]; };
+EXTERN_C Snap_800867B0 *func_80086814(void *self, Snap_800867B0 *s);
+
+EXTERN_C void func_800827C4(void *self, int flags);
+EXTERN_C char D_80017690[];
+
+EXTERN_C Obj_80082714 *func_80082714(Obj_80082714 *self, int b, int c, int d, int e, int f, int g);
+EXTERN_C void func_8008B5B4(Unpacked_8008B5B4 *d, Packed_8008B5B4 *s);
+struct H_80082D44 { char pad[0xDA]; short h[32][2]; };
+struct W20_80089658 { int w[5]; };
+struct C20_80089658 { char c[20]; };
+
+EXTERN_C Packed_8008B5B4 *func_8008B630(Unpacked_8008B5B4 *s, Packed_8008B5B4 *d);
+EXTERN_C void func_80086F94(void *self, int b, int c);
+EXTERN_C int func_800D9048(void *self, int b, int c);
+EXTERN_C int func_8008A54C(void *self, int b);
+EXTERN_C int func_8008B4E8(U16_8008B4E8 *p, int b);
+struct T_8008A858 { char pad[0x560]; U16_8008B4E8 d[12]; U16_8008B4E8 e[16]; };
+
+EXTERN_C unsigned char *func_80089AC0(unsigned char *a, unsigned char *b, unsigned char *c, unsigned int d, unsigned int e, unsigned int f);
+EXTERN_C signed char *func_80089B44(signed char *a, signed char *b, signed char *c);
+EXTERN_C Vec_80086670 *func_80086578(Vec_80086670 *a, void *b);
+EXTERN_C Obj_80082470 *func_80082470(Obj_80082470 *self);
+EXTERN_C void *func_80082690(void *self);
+EXTERN_C void *func_80082768(void *self);
+EXTERN_C void func_80083EB4(Obj_80083EB4 *self);
+struct O_800827EC { char pad[0x46]; short d[4]; short e; short f[2]; };
+
+/* defined later in the units, called earlier */
+EXTERN_C int func_800560E4(int a);
+EXTERN_C void *func_800787B4(void);
+EXTERN_C void func_8005D228(void *self, int b);
+EXTERN_C int func_8005F87C(void *self);
+EXTERN_C Ent_800620D8 *func_800620D8(void *self, unsigned int i);
+
 #endif /* GAME_B_DECLS_B_H */
