@@ -1234,4 +1234,13 @@ EXTERN_C char D_800AC86C[];
 struct Unk800C7D60R { s16 x, y, w, h; };
 struct Unk800C7D60 { Unk800C8114V* x0; char pad[0xC - 4]; Unk800C7D60R xC; char p1[0x2C - 0x14]; const void* x2C; char p2[0x38 - 0x30]; s16 x38, x3A; Unk800C8114V x3C; };
 
+/* func_800BC714 */
+struct Unk800BC714P { s16 x, y; };
+struct Unk800BC714R { Unk800BC714P pos; Unk800BC714P size; Unk800BC714R(Unk800BC714P p, Unk800BC714P s) : pos(p), size(s) {} };
+struct Unk800BC714V { virtual void f1(); virtual void f2(); virtual void f3(); virtual Unk800BC714P f4(Unk800BC714P size); };
+struct Unk800BC714 { const void* x0; void* x4[2]; s32 xC[2]; Unk800BC714R x14[2]; s32 x24[2]; s32 x2C, x30, x34; char* x38; char* x3C; char* x40; s32 x44, x48, x4C; Unk800BC714P x50; Unk800BDFA8B* x54; char x58[4]; };
+EXTERN_C char D_800B7644[];
+EXTERN_C Unk800BC714V* D_800B4C54[];
+EXTERN_C void DecDCTvlcBuild(void*);
+
 #endif /* MOVIE_H */

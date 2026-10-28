@@ -243,7 +243,62 @@ INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B75CC);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B75E4);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BC714);
+EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, Unk800BDFA8B* o, void* buf) {
+#define self ((Unk800BC714*)p)
+  self->x0 = D_800B7644;
+  {
+    Unk800BC714R* r = self->x14;
+    s32 n = 1;
+    do { r->pos.x = 0; r->pos.y = 0; r->size.x = 0; r->size.y = 0; r++; } while (--n != -1);
+  }
+  self->x50.x = 0; self->x50.y = 0;
+  self->x54 = o; self->x50.x = w; self->x50.y = h; self->x4C = mode;
+  DecDCTvlcBuild(self->x58);
+  switch (mode) {
+  case 0:
+    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    self->x38 = (char*)func_800A0D2C(self->x50.y * 64);
+    self->x3C = self->x38 + self->x50.y * 32;
+    break;
+  case 1:
+    if (buf == 0) self->x40 = (char*)func_800A0D2C(self->x50.x * self->x50.y * 4); else self->x40 = (char*)buf;
+    self->x38 = (char*)func_800A0D2C(self->x50.y * 128);
+    self->x3C = self->x38 + self->x50.y * 64;
+    break;
+  case 3: {
+    Unk800BC714R r(D_800B4C54[0]->f4(self->x50), self->x50);
+    self->x14[1] = r;
+  }
+  case 2:
+    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    {
+    Unk800BC714R r(D_800B4C54[0]->f4(self->x50), self->x50);
+    self->x14[0] = r;
+    }
+    self->x3C = (self->x38 = self->x40) + self->x50.y * 32;
+    break;
+  case 4:
+    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    self->x3C = (self->x38 = self->x40) + self->x50.y * 32;
+    break;
+  case 5:
+    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y * 3) / 4 * 4); else self->x40 = (char*)buf;
+    self->x3C = (self->x38 = self->x40) + self->x50.y * 48;
+    break;
+  }
+  self->xC[0] = func_800CBA80(bs) + 0x20;
+  self->x4[0] = func_800A0D2C(self->xC[0] * 4);
+  self->xC[1] = self->xC[0];
+  self->x4[1] = func_800A0D2C(self->xC[1] * 4);
+  self->x44 = 0;
+  self->x30 = 0;
+  self->x2C = 1;
+  self->x48 = DecDCTvlc2(bs, self->x4[0], self->x58);
+  self->x24[0] = 1;
+  self->x24[1] = 0;
+  return (Unk800BCCAC*)self;
+#undef self
+}
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BCB14);
 
