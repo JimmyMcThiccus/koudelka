@@ -149,7 +149,37 @@ EXTERN_C void func_800DF34C(Unk_800DF32C* p, int a, int b) {
     func_800C010C((Unk_800C0054*)p->unk380, a, t);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800DF37C);
+EXTERN_C He_F_p* func_800DF37C(He_F_p* p, int a, Unk_W4 w, int b) {
+    char it[0x28];
+    p->vtbl = D_80010178;
+    p->unk4 = 0;
+    p->vtbl = D_800171D0;
+    func_80048D54(it);
+    p->unk8 = 0;
+    p->unkC = 0;
+    a--;
+    if ((unsigned)a < 0x8C) {
+        void* ea = D_800AF5F8[a].a;
+        int eb = D_800AF5F8[a].b;
+        if (ea) {
+            p->unk8 = a;
+            while (!((bool (*)(void*, void*, int, void*))func_80046658)(it, ea, eb, D_800B4C18[0])) {
+            }
+            Unk_800DF604_o* o = *func_80049398(it);
+            if (o) {
+                o->unk34 = w;
+                func_80039DD8(o);
+                Unk_Short4v v(0, (b & 7) << 9, 0, 0);
+                o->unk2C = v;
+                func_80039DD8(o);
+                func_80039BEC(D_800B4ED8[0] ? (char*)D_800B4ED8[0] + 0x50 : 0, o);
+                p->unkC = o;
+            }
+        }
+    }
+    func_80048D2C(it, 2);
+    return p;
+}
 
 EXTERN_C void func_800DF4F4(Unk_800DF4F4* p, int flag) {
     p->vtbl = D_800171D0;
