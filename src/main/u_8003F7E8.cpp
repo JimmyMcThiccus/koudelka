@@ -899,4 +899,60 @@ EXTERN_C short func_80044890(void *p, int a)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80044990);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80044A3C);
+extern "C++" int f44A3C(int *p, void *q) asm("func_80044A3C");
+int f44A3C(int *p, void *q)
+{
+    int r;
+    int c;
+    int x;
+    int neg;
+    int res;
+    int new_var;
+    if (p[5] == 2) {
+        p[5] = 0;
+        p[4] = func_80041C18(p + 7);
+    }
+    r = func_80041C18(p + 7);
+    new_var = p[4];
+    c = p[3];
+    if (r >= new_var + c) {
+        if (q != 0 && p[6] == 0) {
+            void *m;
+            p[6] = 1;
+            m = func_8001CA10(0x14);
+            AT(m, void **, 0) = D_80010178;
+            AT(m, int, 4) = 0;
+            AT(m, void **, 0) = D_80010300;
+            AT(m, short, 8) = 2;
+            AT(m, short, 0xA) = 8;
+            AT(m, int, 0x10) = 10;
+            AT(m, int, 0xC) = 0;
+            AT(m, void **, 0) = D_800102D0;
+            func_8001EFE4(q, m);
+        }
+        res = p[0] + p[1];
+        if (res >= 0x1000)
+            res -= 0x1000;
+        else if (res < 0)
+            res += 0x1000;
+        return res;
+    } else {
+        neg = 0;
+        x = p[1];
+        if (x < 0) {
+            neg = 1;
+            x = ~x + neg;
+        }
+        x = (x << 4) * (r - p[4]);
+        x /= c;
+        x >>= 4;
+        if (neg)
+            x = ~x + 1;
+        res = p[0] + x;
+        if (res >= 0x1000)
+            res -= 0x1000;
+        else if (res < 0)
+            res += 0x1000;
+        return res;
+    }
+}
