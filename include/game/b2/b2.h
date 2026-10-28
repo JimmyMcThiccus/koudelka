@@ -56,4 +56,16 @@ EXTERN_C char D_80015E5C[];
 
 EXTERN_C int D_800B4ED8_p asm("D_800B4ED8");
 
+static inline char *IDX16(void *self) { return (char *)self + D_800B4CF0_w * 16; }
+
+static inline char *IDX40(void *self) { return (char *)self + D_800B4CF0_w * 40; }
+
+struct W3_B {
+    int a, b, c;
+};
+
+EXTERN_C void func_80028184(void *self);
+
+EXTERN_C void func_800DE760_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int b1, int b2, int b3) asm("func_800DE760");
+
 #endif /* GAME_B2_B2_H */
