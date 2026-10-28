@@ -3238,4 +3238,10 @@ struct S_CpB48 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; Q16
 EXTERN_C char D_80014278[];
 EXTERN_C char D_800151B4[];
 
+struct B52q { int w[13]; };
+struct S_CpD0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; Q16 b[2]; Q16 c[2]; Q16 d[2]; };
+struct S_CpE0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; W3q b[2]; B52q c[4]; int unk110; };
+EXTERN_C char D_80014950[];
+EXTERN_C char D_80014B68[];
+
 #endif /* GAME_B_DECLS_B_H */

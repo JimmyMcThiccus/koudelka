@@ -774,7 +774,63 @@ EXTERN_C void func_8005D734(void *self, int b)
     func_8005D228(self, b);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005D754);
+EXTERN_C S_CpD0 *func_8005D754_def(S_CpD0 *o, S_CpD0 *p) asm("func_8005D754");
+EXTERN_C S_CpD0 *func_8005D754_def(S_CpD0 *o, S_CpD0 *p)
+{
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    Q16 *d4;
+    Q16 *s4;
+    int n4;
+    Q16 *d2;
+    Q16 *s2;
+    int n2;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_80014950;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d2 = o->c;
+    n2 = 1;
+    s2 = p->c;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d4 = o->d;
+    n4 = 1;
+    s4 = p->d;
+    do {
+        *d4 = *s4;
+        d4++;
+        s4++;
+    } while (--n4 != -1);
+    return o;
+}
 
 EXTERN_C void func_8005D8A4(void *self, int flags)
 {
@@ -1020,7 +1076,56 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EB30);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EDF4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005EF58);
+EXTERN_C S_CpE0 *func_8005EF58_def(S_CpE0 *o, S_CpE0 *p) asm("func_8005EF58");
+EXTERN_C S_CpE0 *func_8005EF58_def(S_CpE0 *o, S_CpE0 *p)
+{
+    W3q *d = o->a;
+    int n = 1;
+    W3q *s = p->a;
+    W3q *d2;
+    W3q *s2;
+    int n2;
+    B52q *d3;
+    B52q *s3;
+    int n3;
+    int t;
+    short u;
+    int w;
+    o->vtbl = D_80010178;
+    t = p->unk4;
+    o->vtbl = D_800111BC;
+    o->unk4 = t;
+    o->unk8 = p->unk8;
+    u = p->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkA = u;
+    w = p->unkC;
+    o->vtbl = D_80014B68;
+    o->unkC = w;
+    do {
+        *d = *s;
+        d++;
+        s++;
+    } while (--n != -1);
+    d2 = o->b;
+    n2 = 1;
+    s2 = p->b;
+    do {
+        *d2 = *s2;
+        d2++;
+        s2++;
+    } while (--n2 != -1);
+    d3 = o->c;
+    n3 = 3;
+    s3 = p->c;
+    do {
+        *d3 = *s3;
+        d3++;
+        s3++;
+    } while (--n3 != -1);
+    o->unk110 = p->unk110;
+    return o;
+}
 
 EXTERN_C void func_8005F090(void *self, int flags)
 {
