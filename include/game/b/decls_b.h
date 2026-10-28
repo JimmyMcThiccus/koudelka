@@ -3224,4 +3224,9 @@ EXTERN_C const VTabB50 D_80014FFC;
 EXTERN_C void *D_8001504C[];
 EXTERN_C void *D_80014EEC[];
 
+struct S_Ct44 { S_VBB *vb; char pad4[0x40]; S_VBobjB vobj; };
+EXTERN_C void *func_80058EE8_v(void *p, int a, int b) asm("func_80058EE8");
+EXTERN_C const VTabB50 D_80014130;
+EXTERN_C void *D_80014180[];
+
 #endif /* GAME_B_DECLS_B_H */
