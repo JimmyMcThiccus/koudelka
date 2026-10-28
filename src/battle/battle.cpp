@@ -189,7 +189,31 @@ EXTERN_C int func_800B9844(void *p) {
 
 EXTERN_C int func_800B98B8() { return D_800D5D7C; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800B98C8);
+EXTERN_C T_B98C8 *func_800B98C8(T_B98C8 *p, int x) {
+    func_8001E40C(p, x, 2, 0x1000, 0);
+    func_800514C8(&p->vtblF8);
+    T_B98C8_s *a = &p->f3E8;
+    p->vtbl8C = D_800B6F2C;
+    p->vtblF8 = D_800B6F14;
+    p->vtbl = D_800B6F44;
+    func_800BA564((T_VObj8 *)a, 0, 0);
+    T_B98C8_s *b = &p->f3F8;
+    func_800BDE2C((T_VObj8 *)b);
+    T_B98C8_s *c = &p->f408;
+    func_800BC094((T_VObj *)c, 0, 0);
+    T_BE390 *g = D_800B4ED8[0];
+    register T_B98C8 *r asm("$2") = p;
+    r->f274 = 1;
+    r->b100 = 0;
+    r->b101 = 0;
+    r->s3D8 = 0;
+    r->s3DA = 0;
+    r->f278 = g;
+    c->f4 = 0;
+    a->f4 = 0;
+    b->f4 = 0;
+    return r;
+}
 
 EXTERN_C void func_800B99A4(T_B99A4 *p, int flags) {
     p->vtbl8C = D_800B6F2C;
@@ -478,7 +502,19 @@ EXTERN_C int func_800BC1F8(S_800BA6B4 *p) { if (p->fC == 300) return 1; else { v
 
 EXTERN_C int func_800BC270(T_BC270 *p) { func_800B9654(p->f4); return 1; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BC294);
+EXTERN_C T_BC294 *func_800BC294(T_BC294 *p, int x) {
+    func_800B98C8((T_B98C8 *)p, x);
+    p->vtbl8C = D_800B7184;
+    p->vtblF8 = D_800B716C;
+    p->vtbl = D_800B719C;
+    T_BC294_l *l = (T_BC294_l *)&p->f4C0;
+    l->f8 = (char *)p + 0x4CC;
+    p->f4C0 = (char *)p + 0x4CC;
+    func_800198E0(l->f8, 0x10, 0);
+    l->f4 = 0;
+    p->f4E0 = 0;
+    return p;
+}
 
 EXTERN_C void func_800BC310(T_BC310 *p, int flags) {
     p->vtbl8C = D_800B7184;

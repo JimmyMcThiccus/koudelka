@@ -226,7 +226,21 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C51D0);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C5474);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C54D8);
+EXTERN_C int func_800C54D8(void *vp, void *vk) {
+    T_It *it = (T_It *)vp;
+    int key = (int)vk;
+    if (it->empty()) return 0;
+    goto start;
+found:
+    { S_800D00B8 *n = f752B8_1(it); n->prev = n; n->next = n; n->fC = 0; return key; }
+start:
+    it->cur = it->head;
+    while (1) {
+        if (key == it->cur->f14) goto found;
+        if (it->is_last()) return 0;
+        it->next();
+    }
+}
 
 EXTERN_C void func_800C55C4(T_C55C4 *p) {
     memset(p->e110, 0xFF, 0x1C);
