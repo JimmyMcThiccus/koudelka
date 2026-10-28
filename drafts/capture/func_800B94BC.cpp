@@ -1,4 +1,4 @@
-// func_800B94BC: 9 differ: destructor; scheduling of the three vtable stores (retail materialises 0x800112F4 first).
+// func_800B94BC (dtor of C_800B9470): 9 differ: scheduling only; retail materialises &D_800112F4 into $v1 before &D_800B6E9C. Store order and values match. Tried temporaries, struct fields, store reordering, real C++ dtor chain (B0 out-of-line / B1 inline / member with dtor): always materialised in store order.
 #include "common.h"
 #include "capture/capture.h"
 
