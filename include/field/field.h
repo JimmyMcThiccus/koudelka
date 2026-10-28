@@ -1858,5 +1858,90 @@ EXTERN_C void* func_800DB5A4_c(void*, int) asm("func_800DB5A4");
 EXTERN_C void func_800614BC(void*, int);
 EXTERN_C void func_80061758(void*, void*);
 EXTERN_C Unk_800B4DD0* D_800B4DD0_s asm("D_800B4DD0");
+struct Unk_800D9EE0 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x2220]; int unk227C; int unk2280; char pad2284[0x34C]; Unk_VbObj vobj; };
+EXTERN_C char D_800B96BC[];
+EXTERN_C char D_800B972C[];
+EXTERN_C char D_800B970C[];
+EXTERN_C char D_800B975C[];
+EXTERN_C char D_800B9584[];
+EXTERN_C char D_800B95A4[];
+EXTERN_C char D_800B95B4[];
+EXTERN_C Unk_800D9EE0* func_800D9EE0(Unk_800D9EE0* self, int in_chrg, int a2, int a3, int a4);
+struct Unk_VbHdrH { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; };
+struct Unk_800C38E0; EXTERN_C void func_800C38E0(Unk_800C38E0*, int);
+struct Unk_800D80F0; EXTERN_C void func_800D80F0(Unk_800D80F0*, int);
+EXTERN_C void func_800C3468(void*, int);
+struct Unk_800C59D8; EXTERN_C void func_800C59D8(Unk_800C59D8*, int);
+struct Unk_800CD6BC; EXTERN_C void func_800CD6BC(Unk_800CD6BC*, int);
+struct Unk_800CF11C; EXTERN_C void func_800CF11C(Unk_800CF11C*, int);
+struct Unk_800C94D4;
+EXTERN_C void func_800C94D4(Unk_800C94D4*, int);
+EXTERN_C void func_800C0C8C(Unk_800C09F0* self, int in_chrg);
+static inline void d_69A8(Unk_800C7110* self, int in_chrg, Unk_VTbl10& vt) {
+    self->vt54 = D_800B7A34;
+    self->vt58 = D_800B7A14;
+    self->vt18 = D_800B7A64;
+    self->vb->vptr = (Unk_VTbl10*)&D_800B79C4;
+    if (!in_chrg) {
+        vt = D_800B79C4;
+        char* full;
+        int adj;
+        self->vb->vptr = &vt;
+        vt.e[1].delta = (*(const Unk_VTbl10*)&D_800B79C4).e[1].delta + (adj = (char*)self - (full = (char*)self->vb - 0xDC));
+        vt.e[6].delta = (*(const Unk_VTbl10*)&D_800B79C4).e[6].delta + adj;
+    }
+    func_80053964(self->unkB4, 2);
+    ((void (*)(void*, int))func_80054C34)(self->unk64, 2);
+    func_8005652C(self, 0);
+    if (in_chrg & 2) {
+        func_8001A610(self->vb, 0);
+    }
+    if (in_chrg & 1) {
+        operator delete(self);
+    }
+}
+static inline void d_DC(Unk_VbHdrH* s) {
+    s->vt58 = D_800B8694;
+    s->vt18 = D_800B8664;
+    func_80053964((char*)s + 0x144, 2);
+    func_80053964((char*)s + 0x128, 2);
+    func_80053964((char*)s + 0x10C, 2);
+    func_80053964((char*)s + 0xF0, 2);
+    func_80053964((char*)s + 0xD4, 2);
+    func_80053964((char*)s + 0xAC, 2);
+    func_80053964((char*)s + 0x84, 2);
+    func_80053964((char*)s + 0x5C, 2);
+    func_800537DC((char*)s + 0x50, 0);
+    ((void (*)(void*, int))func_80054C34)(s, 2);
+}
+static inline void d_6C(Unk_VbHdrH* s, int in_chrg, Unk_VTbl10& vt) {
+    s->vt54 = D_800B80DC;
+    s->vt58 = D_800B80BC;
+    s->vt18 = D_800B810C;
+    s->vb->vptr = (Unk_VTbl10*)&D_800B806C;
+    if (!in_chrg) {
+        vt = (*(const Unk_VTbl10*)&D_800B806C);
+        s->vb->vptr = &vt;
+    }
+    func_8005652C(s, 0);
+    if (in_chrg & 2) {
+        func_8001A610(s->vb, 0);
+    }
+}
+struct Unk_800CB418 : Unk_Pad50, Unk_Base { char pad54[8]; int unk5C; int unk60; char pad64[8]; short unk6C; short unk6E; int unk70; int unk74; int unk78; char pad7C[4]; int unk80; Unk_DualList unk84; char pad90[0x14]; char unkA4[8]; char unkAC[8]; char unkB4[8]; int unkBC; int unkC0; };
+EXTERN_C void func_800D0704_i(void*, void*) asm("func_800D0704");
+struct Unk_800C7A7C : Unk_Hdr38d, Unk_Base { char pad3C[8]; int unk44; int unk48; int unk4C; };
+struct Unk_C7A7C_e { char pad0[0x14C]; int unk14C; };
+struct Unk_C7A7C_o { char pad0[0x328]; Unk_C7A7C_e* unk328; };
+EXTERN_C void func_800D3B28(void*, int);
+EXTERN_C int func_800C7A7C(Unk_800C7A7C* p);
+struct Unk_800C7230_q { char pad0[0x14C]; int unk14C; };
+struct Unk_800C7230_p { char pad0[0x328]; Unk_800C7230_q* unk328; };
+struct Unk_800C7230 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; char unk38[0x8]; void* unk40; int unk44; int unk48; int unk4C; Unk_VbObj vobj; };
+EXTERN_C unsigned char D_800EA0BC[];
+EXTERN_C char D_800B7AA4[];
+EXTERN_C char D_800B7BEC[];
+EXTERN_C void func_800D31E8(int);
+EXTERN_C Unk_800C7230* func_800C7230_i(Unk_800C7230* self, int in_chrg, unsigned short a) asm("func_800C7230");
 
 #endif /* FIELD_FIELD_H */
