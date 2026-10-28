@@ -4157,7 +4157,28 @@ EXTERN_C void func_80081204(Obj_80081204 *self, void *o, int c)
     self->q[0].d = 0xFF;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80081260);
+EXTERN_C void func_80081260(Obj_80081190 *self, void *o, void *t, int d, int e, int f)
+{
+    int k = (FIELD_AT(o, signed char, 0x4BC) << 4) | 3;
+    int v;
+    if (t == 0) {
+        v = 0xFF;
+    } else {
+        v = FIELD_AT(t, signed char, 0x4BC);
+    }
+    if (e != 0) {
+        d |= 0x80;
+    }
+    int g = f != 0;
+    int i;
+    for (i = 0x1F; i > 0; i--) {
+        self->q[i] = self->q[i - 1];
+    }
+    self->q[0].a = k;
+    self->q[0].b = v;
+    self->q[0].c = d;
+    self->q[0].d = g;
+}
 
 EXTERN_C void func_800812E4(Obj_800812E4 *self, void *o, void *t)
 {

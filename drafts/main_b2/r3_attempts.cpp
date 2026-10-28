@@ -595,3 +595,89 @@ EXTERN_C void func_80075EC8(void *self, int b)
         func_80075FD4(self);
     }
 }
+
+/* ---- round 3, third batch ---- */
+//// func_800766F8
+EXTERN_C void func_800766F8(void *self, int a1, int a2, int a3, int a4)
+{
+    char *n;
+    char *m;
+    char *s;
+    int x;
+    int y;
+    int e;
+    FIELD_AT(self, int, 0x1BC) = 1;
+    e = a4;
+    n = (char *)func_80075744(__builtin_new(0x24), a1, a2, a3, e);
+    m = (char *)__builtin_new(0x28);
+    x = FIELD_AT(n, int, 0x8);
+    y = FIELD_AT(n, int, 0xC);
+    s = m + 8;
+    FIELD_AT(m, void *, 0x0) = D_80011FE4;
+    FIELD_AT(m, void *, 0x8) = D_800100F8;
+    FIELD_AT(m, void *, 0xC) = D_80010198;
+    FIELD_AT(s, void *, 0x4) = D_800101C0;
+    FIELD_AT(m, void *, 0x8) = D_800101B0;
+    FIELD_AT(s, short, 0xC) = 6;
+    FIELD_AT(s, short, 0xE) = 4;
+    FIELD_AT(s, short, 0x10) = 5;
+    FIELD_AT(s, short, 0x12) = 2;
+    FIELD_AT(s, void *, 0x8) = self;
+    FIELD_AT(m, void *, 0xC) = D_80012104;
+    FIELD_AT(m, void *, 0x8) = D_800120F4;
+    FIELD_AT(m, void *, 0x0) = D_8001211C;
+    FIELD_AT(m, int, 0x20) = 0;
+    FIELD_AT(m, int, 0x1C) = x;
+    FIELD_AT(m, int, 0x24) = y;
+    func_80075894(n, (int)m);
+    func_8001A678((char *)self + 0x150, n);
+    func_8003546C(self ? (char *)self + 0xF8 : 0, m);
+}
+//// func_8007698C
+EXTERN_C void func_8007698C(void *self, int a1, int a2, int a3)
+{
+    char *n;
+    char *m;
+    char *s;
+    FIELD_AT(self, int, 0x1BC) = 1;
+    n = (char *)func_80075788(__builtin_new(0x24), a1, a2, a3, 1);
+    m = (char *)__builtin_new(0x2C);
+    s = m + 8;
+    FIELD_AT(m, void *, 0x0) = D_80011FE4;
+    FIELD_AT(m, void *, 0x8) = D_800100F8;
+    FIELD_AT(m, void *, 0xC) = D_80010198;
+    FIELD_AT(s, void *, 0x4) = D_800101C0;
+    FIELD_AT(m, void *, 0x8) = D_800101B0;
+    FIELD_AT(s, short, 0xC) = 6;
+    FIELD_AT(s, short, 0xE) = 4;
+    FIELD_AT(s, short, 0x10) = 5;
+    FIELD_AT(s, short, 0x12) = 2;
+    FIELD_AT(s, void *, 0x8) = self;
+    FIELD_AT(m, void *, 0xC) = D_80012104;
+    FIELD_AT(m, void *, 0x8) = D_800120F4;
+    FIELD_AT(m, void *, 0x0) = D_8001211C;
+    FIELD_AT(m, void *, 0x24) = m + 0x28;
+    FIELD_AT(m, void *, 0x8) = D_80016820;
+    FIELD_AT(m, int, 0x1C) = a1;
+    FIELD_AT(m, int, 0x20) = 0;
+    FIELD_AT(m, void *, 0x0) = D_80016830;
+    func_80075894(n, (int)m);
+    func_8001A678((char *)self + 0x150, n);
+    func_8003546C(self ? (char *)self + 0xF8 : 0, m);
+}
+//// func_80076CD0
+EXTERN_C void func_80076CD0(void *p, int flags)
+{
+    char *b = (char *)p + 8;
+    void *vt = D_80012104;
+    FIELD_AT(p, void *, 8) = D_80016820;
+    FIELD_AT(p, void *, 0) = D_80016830;
+    FIELD_AT(p, void *, 8) = D_800120F4;
+    FIELD_AT(p, void *, 0) = D_8001211C;
+    FIELD_AT(p, void *, 0xC) = vt;
+    FIELD_AT(b, void *, 4) = D_800101C0;
+    FIELD_AT(b, void *, 0) = D_800101B0;
+    func_800198AC(b, 0);
+    if (flags & 1)
+        __builtin_delete(p);
+}

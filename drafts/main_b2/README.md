@@ -35,3 +35,11 @@ func_800824C8 (the header prototype has one argument, the asm uses two).
 | func_80081ED0 / func_8006AE68 | 50+ | loop and switch shape right, constants (`2`, vtables) hoisted differently |
 
 Note for the integrator: `func_8006C95C`'s switch needs one `case` per jump-table entry (separate bodies) to get a table.
+
+## Third batch
+
+| Function | Diff | What differs |
+|---|---|---|
+| func_800766F8 | 6 | twin of func_80076848; retail loads the stack arg `lw s0,0x40(sp)` and `li a0,0x24` after the `0x1BC` store, we hoist them |
+| func_8007698C | 18 | twin of func_80076848; retail computes `D_80012104`'s address early (before the `D_800120F4` store) and stores it late |
+| func_80076CD0 | 18 | twin of func_80035A28 plus two more vtable stores; same early `D_80012104` address in retail |
