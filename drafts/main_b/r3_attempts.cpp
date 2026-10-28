@@ -181,3 +181,104 @@ EXTERN_C int func_80063584(void *self, unsigned short *b)
     return 1;
 }
 
+// ===== func_80066E7C: 52 differing: 4-way compare chain (0x64 handled first, loads of D_800B4ED8/D_800EA0B0, then 0x66/<0x67/0x65/0x67); my switch/if forms lay the blocks out differently
+EXTERN_C int func_80066E7C(void *self)
+{
+    int c = FIELD_AT(self, int, 0xC);
+    char *s1;
+    char *s0;
+    if (c == 0x64) return 1;
+    s1 = (char *)D_800B4ED8;
+    s0 = (char *)D_800EA0B0_w;
+    if (c == 0x65) {
+        if (!func_80066F8C()) return 0;
+        func_80036D8C(FIELD_AT(s1, void *, 0x2DC));
+        FIELD_AT(s1, int, 0x2DC) = 0;
+        return 1;
+    } else if (c == 0x66) {
+        if (!func_80066F8C()) return 0;
+        func_80036D8C(FIELD_AT(s1, void *, 0x2DC));
+        FIELD_AT(s1, int, 0x2DC) = 0;
+        func_8006BB04(s1);
+        return 1;
+    } else if (c == 0x67) {
+        if (!func_80066F8C()) return 0;
+        if (!s0) return 1;
+        func_80036D8C(FIELD_AT(s0, void *, 0x674));
+        FIELD_AT(s0, int, 0x674) = 0;
+        func_8007F6C4(func_800787B4());
+        return 1;
+    }
+    return 0;
+}
+
+// ===== func_800594A8: 35 differing: ctor with stack args; struct typing fixes the prologue regs, but retail keeps `sh s3,0xA(s0)` in the delay slot of the last call and the vtable/zero stores in a different order
+EXTERN_C O594 *func_800594A8(O594 *self, int a, int b, int c, int d, unsigned char *e, int f)
+{
+    self->vt = D_80010178;
+    self->vt = D_800111BC;
+    self->i4 = 0;
+    self->s8 = 0;
+    self->vt = D_80014278;
+    self->sA = f;
+    func_80098E10((char *)self + 0xC);
+    func_80098E10((char *)self + 0x1C);
+    func_80059800(self, a, b, c, d);
+    func_80059888(self, e);
+    self->sA = f;
+    ((int (*)(void *))func_80059790)(self);
+    return self;
+}
+
+// ===== func_8005717C: 3 differing: `c = A0 ? 0 : 0xFF` as ternary gives the 0xFF/`beqz` sense backwards; the if-form moves the lw before the 0xFF
+EXTERN_C void func_8005717C(void *self, int a, int b)
+{
+    FIELD_AT(self, int, 0x9C) = a / 2;
+    FIELD_AT(self, int, 0xA8) = b;
+    FIELD_AT(self, int, 0xA4) = 0;
+    if (FIELD_AT(self, int, 0x8) == 0) {
+        func_8002B174(D_800A4578.p, self, -1);
+        ((VObj<0x2C> *)self)->v27();
+        func_8002A210(self);
+        int c = 0xFF;
+        if (FIELD_AT(self, int, 0xA0) != 0) {
+            c = 0;
+        }
+        func_8005D9D4((char *)self + 0x5C, c);
+    }
+}
+
+// ===== func_8005854C: 37 differing: retail keeps a separate pseudo for the `(u16)a != 0` test (addu s2,s1) and s4=b,s3=c
+EXTERN_C void func_8005854C(void *self, int a, void *b, int c)
+{
+    int t = a;
+    if (FIELD_AT(self, int, 0x140) != 0) {
+        ((VObj<8> *)((char *)self + 0x50))->v02();
+    }
+    FIELD_AT(self, short, 0x144) = a;
+    if ((unsigned short)t != 0) {
+        FIELD_AT(self, U8b, 0x148) = *(U8b *)b;
+        FIELD_AT(self, short, 0x146) = c;
+    }
+}
+
+// ===== func_80061A20: 30 differing: loop shape matches (test at bottom `beqz found`), but self=s2/b=s1 in retail, s1/s2 swapped here
+EXTERN_C int func_80061A20(void *self, unsigned char *b)
+{
+    int found = 0;
+    if (b[0x18] == 4) {
+        unsigned n = func_800619F4((Obj_800619F4 *)self);
+        unsigned i = 0;
+        unsigned char *p = (unsigned char *)self;
+        while (i < n) {
+            if (p[0x23F] == b[0x1B]) {
+                found = 1;
+            }
+            p += 0x94;
+            i++;
+            if (found) break;
+        }
+    }
+    return found;
+}
+
