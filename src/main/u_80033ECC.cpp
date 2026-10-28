@@ -622,7 +622,53 @@ EXTERN_C void func_8003635C()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036364);
+extern "C++" void f36364(S_A2_St *p, int t, unsigned char *buf) asm("func_80036364");
+void f36364(S_A2_St *p, int t, unsigned char *buf)
+{
+    unsigned char loc[16];
+    t &= 0xFF;
+    switch (t) {
+    case 1: {
+        int b0 = buf[0];
+        if (b0 & 0x1D) goto fin;
+        if (AT(p, signed char, 0x34) != 5) return;
+        if (AT(p, unsigned, 0x30) < AT(p, unsigned, 0x28)) {
+            CdGetSector(loc, 3);
+            int pos = CdPosToInt(loc);
+            if (pos == AT(p, unsigned, 0x24)) {
+                AT(p, unsigned, 0x24) = AT(p, unsigned, 0x24) + 1;
+                if (AT(p, unsigned, 0x2C)) {
+                    CdGetSector((void *)(AT(p, unsigned, 0x2C) + AT(p, unsigned, 0x30)), 0x200);
+                } else {
+                    if (!count_of(&p->h)) goto zero;
+                    List *l = &p->h;
+                    A2VObj0 *s = l->count ? AT(l, A2VObj0 **, 0)[0] : 0;
+                    s->v02(0x800);
+                }
+                p->v08();
+                return;
+            zero:
+                p->v07(buf[0]);
+                AT(p, unsigned, 0x28) = AT(p, unsigned, 0x30);
+                return;
+            }
+            if (pos + 1 == AT(p, unsigned, 0x24)) return;
+            AT(p, signed char, 0x34) = 0xE;
+            func_8009CAE0(0);
+            return;
+        }
+        p->v07(b0);
+        return;
+    }
+    case 5:
+    fin:
+        func_8009CAE0(0);
+        p->v12(buf);
+        return;
+    default:
+        return;
+    }
+}
 
 extern "C++" void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf) asm("func_80036554");
 void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf)
