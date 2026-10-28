@@ -1311,4 +1311,20 @@ struct T_D43B0n { VTable *vtbl; char pad4[0xC]; int f10; char dm[2][0xC]; T_D43B
 EXTERN_C void *f4518_2(void *p, int a) __asm__("func_800D4518");
 EXTERN_C void *func_800D43B0(void *vp, int a1);
 
+struct T_C0EB8_e { int a, b; };
+struct T_C0EB8_t { char pad[0x814]; int f814; T_C0EB8_e *f818; };
+struct T_C0EB8_g { char pad[0x328]; char *f328; T_C0EB8_t *f32C; };
+struct T_C0EB8_4D38 { char pad[0xF8]; int f[1]; };
+struct T_C0EB8 {
+    char pad0[0x144]; short s144; char pad146[0x15A]; char f2A0[0x170]; char pad410[0x9D]; char b4AD; char b4AE; char pad4AF[0xD];
+    signed char b4BC; signed char b4BD; char pad4BE[8]; short s4C6; short pad4C8; short s4CA; char pad4CC[0x19]; signed char b4E5; signed char b4E6; char pad4E7; int f4E8; int f4EC; char pad4F0[0x1C]; short s50C;
+};
+struct T_C0EB8_v { int x, y, z, w; T_C0EB8_v() { x = 0; y = 0; z = 0; w = 0; } };
+EXTERN_C T_C0EB8_4D38 *D_800B4D38[];
+EXTERN_C T_C0EB8_g *D_800AF470g[] __asm__("D_800AF470");
+EXTERN_C void f7FF58(void *a, int b, int c, int d) __asm__("func_8007FF58");
+EXTERN_C void func_80086088(void *p, int a);
+EXTERN_C void func_800C1254(T_C1340 *p);
+EXTERN_C int func_800C0EB8(T_C0EB8 *p);
+
 #endif /* BATTLE_BATTLE_H */
