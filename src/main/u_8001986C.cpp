@@ -842,9 +842,47 @@ EXTERN_C int func_8001B8C8(S_Link *p)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B910);
+EXTERN_C void func_8001B910(int a)
+{
+    S_8001BBBC *p = (S_8001BBBC *)a;
+    if (D_800AC809[0])
+        return;
+    if (D_800B4CF0) {
+        S_800101F8 *o = new S_800101F8(1);
+        int *l = D_800A4544;
+        func_8001D150(l, new S_8001D684((int)o, 0xC0, 1));
+    } else {
+        D_800B4C54->f5(org0_986C());
+        S_Pt4c_986C sz(p->rect.size.x * 3 / 2, p->rect.size.y);
+        S_Pt4_986C r1 = D_800B4C54->f4(sz);
+        S_Pt4_986C r2 = D_800B4C54->f4(sz);
+        func_8002D020(&r1, &r2, &sz.pt(), &p->rect.size);
+        func_8002D24C(p->v12(), &S_RectPS_986C(sz.pt()));
+        void *x = p->unk8->unk14;
+        func_8002D24C(x, &S_RectPS_986C(sz.pt()));
+        func_8002900C(operator new(0x3C), 0, 0, 0, 2, 0);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BBBC);
+EXTERN_C void func_8001BBBC(int a)
+{
+    S_8001BBBC *p = (S_8001BBBC *)a;
+    if (!D_800AC809[0])
+        return;
+    if (D_800B4CF0) {
+        D_800B4C54->f5(org0_986C());
+        D_800B4C54->f5(org1_986C());
+        S_RectPS_986C r(D_800B4C54->f4(S_Pt4c_986C(p->rect.size.x * 2, p->rect.size.y)), p->getRect().size);
+        func_8002CDC0(&r);
+        func_8002D24C(p->v12(), &p->rect);
+        func_8002D24C(p->unk8->unk14, &p->rect);
+        func_8002900C(operator new(0x3C), 0, 0, 0, 2, 0);
+    } else {
+        S_800101F8 *o = new S_800101F8(0);
+        int *l = D_800A4544;
+        func_8001D150(l, new S_8001D684((int)o, 0xC0, 1));
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BE20);
 

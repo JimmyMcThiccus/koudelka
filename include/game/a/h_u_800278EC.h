@@ -70,4 +70,47 @@ struct C_800279C0 {
     C_800279C0();
 };
 
+EXTERN_C void func_80035CF8();
+EXTERN_C int func_80036FC0(void *o, int a, int b);
+EXTERN_C void func_8003546C(void *o, void *p);
+EXTERN_C void func_8003714C(void *o);
+EXTERN_C void func_80035C28();
+EXTERN_C void func_8001B1C8(void *p);
+EXTERN_C void *func_8001B134(unsigned int size);
+EXTERN_C int func_8008B888();
+EXTERN_C void func_8009EAE0();
+EXTERN_C void _96_init();
+EXTERN_C long LoadExec(char *file, unsigned long sp, unsigned long size);
+EXTERN_C void start();
+EXTERN_C long StopRCnt(unsigned long spec);
+EXTERN_C int VSync(int mode);
+EXTERN_C char D_80011154[];
+EXTERN_C void *D_80012154[];
+EXTERN_C void *D_8001201C[];
+EXTERN_C void *D_80012034[];
+EXTERN_C void *D_80012294[];
+EXTERN_C void *D_80012224[];
+struct S_80027A60_VB { short unk0; short unk2; int unk4; };
+struct S_80027A60_O {
+    void **vt;
+    S_80027A60_VB *vb;
+    void **vt8;
+    int *p;
+    int data[6];
+    int unk28;
+    int unk2C;
+    char pad30[0xC];
+    S_80027A60_VB vbase;
+};
+struct S_80027A60 {
+    VEnt *vt;
+    int unk4;
+    int unk8;
+    int state;
+    VObj *unk10;
+    int unk14;
+    int unk18;
+    char *unk1C;
+};
+
 #endif /* GAME_A_H_U_800278EC_H */
