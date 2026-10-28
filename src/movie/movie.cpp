@@ -227,11 +227,56 @@ EXTERN_C void func_800BBF7C(Unk800BBF7C* self, s32 in_chrg) {
   if (in_chrg & 1) operator delete(self);
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BC12C);
+EXTERN_C s32 func_800BC12C(Unk800BC12C* p, Unk800BC12CP* pad) {
+  s32 b = ~pad->x1A;
+  switch (p->x10A) {
+  case 1: case 2:
+    break;
+  case 3: case 4:
+    if (b & 0x2000) { p->x10A = 4; p->x130 = 9; }
+    break;
+  case 5:
+    if (b & 0x2000) p->x130 = 9;
+    break;
+  case 7:
+    if (b & 0x2008) { p->x148->f3(); p->x10C = 2; }
+    break;
+  case 13: case 14:
+    p->x132 = 0x14;
+    break;
+  case 24: {
+    s32 k = b & 8; k |= 0xF001; if (k) { p->x10A = 0x1B; p->x10C = 0; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    } break;
+  case 27:
+    if (b & 0x20) { p->x10A = 0x1C; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    else if (b & 0x4000) { p->x10A = 0x15; Unk800BC12C_ev(p); func_8008EF40(0xD); }
+    else if ((b & 0x2000) && p->x130 == 0) { p->x10A = 0x18; p->x134 = 0; p->x130 = 0x63; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 1); }
+    else if (b & 0x40) { p->x10A = 0x1D; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    break;
+  case 28:
+    if (b & 0x40) { p->x10A = 0x1D; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    else if (b & 0x80) { p->x10A = 0x1B; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    else if (b & 0x4000) { p->x10A = 0x15; Unk800BC12C_ev(p); func_8008EF40(0xD); }
+    else if ((b & 0x2000) && p->x130 == 0) { p->x10A = 0x18; p->x130 = 0x60; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 2); }
+    break;
+  case 29:
+    if (b & 0x80) { p->x10A = 0x1B; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    else if (b & 0x20) { p->x10A = 0x1C; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 4); }
+    else if (b & 0x4000) { p->x10A = 0x15; Unk800BC12C_ev(p); func_8008EF40(0xD); }
+    else if (b & 0x2000) { p->x10A = 0x18; p->x130 = 0x5E; Unk800BC12C_ev(p); func_8008EF40(p->x13C << 16 | 3); }
+    break;
+  case 25:
+    if ((b & 0x2000) && p->x130 == 0) p->x130 = 9;
+    break;
+  }
+  return 1;
+}
 
 EXTERN_C int func_800BC54C() { return 1; }
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BC554);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7530);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7534);
 

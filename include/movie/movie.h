@@ -1243,4 +1243,10 @@ EXTERN_C char D_800B7644[];
 EXTERN_C Unk800BC714V* D_800B4C54[];
 EXTERN_C void DecDCTvlcBuild(void*);
 
+/* func_800BC12C */
+struct Unk800BC12CO { virtual void f1(); virtual void f2(); virtual void f3(); };
+struct Unk800BC12CP { char pad[0x1A]; u16 x1A; };
+struct Unk800BC12C { char pad[0x10A]; s16 x10A, x10C; char p1[0x130 - 0x10E]; s16 x130, x132, x134; char p2[0x13C - 0x136]; u16 x13C; char p3[0x148 - 0x13E]; Unk800BC12CO* x148; };
+inline void Unk800BC12C_ev(Unk800BC12C* p) { Unk800CA59CT* t = func_8001CA10(0x14); Unk800CA59C_ctor3(t); func_8001EFE4(p, t); }
+
 #endif /* MOVIE_H */
