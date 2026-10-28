@@ -65,4 +65,6 @@ struct S_UV2 { unsigned char u, v; S_UV2(int u_, int v_) { u = u_; v = v_; } };
 struct S_Pt16 { short x, y; };
 EXTERN_C S_Pt16 D_800B4C50_pt asm("D_800B4C50");
 
+inline void setPos_80025BE0(S_Img *p, S_XYc v) { p->unk10 = v; }
+
 #endif /* GAME_A_H_U_80025854_H */

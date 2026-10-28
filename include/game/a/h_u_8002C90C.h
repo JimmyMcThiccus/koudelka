@@ -128,4 +128,15 @@ struct S_D780 {
     char d58[0xC];
 };
 
+EXTERN_C void SetDefDrawEnv(DRAWENV *env, int x, int y, int w, int h);
+EXTERN_C void SetDefDispEnv(DISPENV *env, int x, int y, int w, int h);
+struct S_Pt2c { short x, y; S_Pt2c(short ax, short ay) { x = ax; y = ay; } };
+struct S_Rect2c {
+    S_Pt2c pos;
+    S_Pt2c size;
+    S_Rect2c(short px, short py, short sx, short sy) : pos(px, py), size(sx, sy) { }
+};
+
+struct S_RectXYWH { short x, y, w, h; };
+
 #endif /* GAME_A_H_U_8002C90C_H */

@@ -72,4 +72,8 @@ struct S_Arr5 {
     S_Arr5() { q = buf; p = q; func_800198E0(q, 5, 0); n = 0; }
 };
 
+struct S_Pt2h { short x, y; };
+EXTERN_C S_Pt2h D_800B4CF8;
+EXTERN_C S_Pt2h D_800B4CF4;
+
 #endif /* GAME_A_H_U_8002DED8_H */

@@ -462,7 +462,14 @@ EXTERN_C void func_80030414()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8003041C);
+EXTERN_C void func_8003041C(S_Tri *t)
+{
+    func_8002F90C((S_8002F90C *)t);
+    S_Tri_V *e = t->e;
+    S_Tri_V *v = t->v;
+    for (int i = 0; i < 3; i++)
+        edge_sub(&e[i], v, D_800B4D08[i], &v[i]);
+}
 
 EXTERN_C int func_800304B4(S_Tri *t, int x, int z)
 {
