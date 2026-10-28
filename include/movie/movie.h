@@ -1179,4 +1179,12 @@ inline s32 Unk800C02D8_open(Unk800C02D8* p) { s32 r; if ((r = func_800C2AF0((Unk
 /* func_800C2848 */
 struct Unk800C2848 { void* x0; StreamStat* x4; void* x8; void* xC; char x10[0x24 - 0x10]; void* x24; StreamStat* x28; s32 x2C, x30, x34, x38, x3C; void* x40; void* x44; s32 x48, x4C, x50, x54, x58, x5C; StreamStat x60; };
 
+/* func_800C21B8 */
+struct Unk800C21B8B { char pad[0x9C]; virtual void v1(); virtual void v2(); };
+struct Unk800C21B8A { char pad[0x400]; };
+struct Unk800C21B8C : Unk800C21B8A, Unk800C21B8B { };
+struct Unk800C21B8L { char pad[8]; Unk800C21B8C* x8[3]; };
+struct Unk800C21B8D { char p[0x410]; s16 x410, x412; char p1[0xC]; s16 x420, x422; u8 x424[8]; };
+struct Unk800C21B8G { char pad[0x328]; char* x328; };
+
 #endif /* MOVIE_H */

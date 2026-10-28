@@ -732,7 +732,27 @@ EXTERN_C void func_800C1BF8() {
 #undef NAME
 #undef LOAD
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C21B8);
+EXTERN_C void func_800C21B8() {
+  if (*(s32*)((char*)D_800B4DD0[0] + 0x1C4) == 0x7309) {
+    u32 i = 0;
+    while (1) {
+      if (!(i < 3)) break;
+      char* g = ((Unk800C21B8G*)func_800787B4())->x328;
+      Unk800C21B8L* l = (Unk800C21B8L*)(g ? g + 0xB8 : 0);
+      Unk800C21B8D* d = (Unk800C21B8D*)l->x8[i];
+      u8* best = &d->x424[0];
+      u8* q = &d->x424[1];
+      for (u32 k = 1; k < 8; k++, q++) if (*best < *q) best = q;
+      *best += d->x424[7]; if (*best >= 100) *best = 99;
+      d->x424[7] >>= 1;
+      ((Unk800C21B8C*)d)->v2();
+      d->x410 = d->x412;
+      d->x420 = d->x422;
+      i++;
+    }
+    func_8008EF40(0x13);
+  }
+}
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C22E8);
 
