@@ -827,7 +827,7 @@ EXTERN_C int func_800CACD8(T_CAD5C *p) {
     int r = func_800C07F8(&q, 0);
     if (r < 0) return 0;
     p->f900 = q.s514 + 1;
-    func_800CADDC(p, 0);
+    func_800CADDC((T_CADDC *)p, 0);
     if (r) p->f900++;
     return 1;
 }
@@ -837,12 +837,69 @@ EXTERN_C int func_800CAD5C(T_CAD5C *p) {
     int r = func_800C13CC(&q);
     if (r < 0) return 0;
     p->f900 = q.s514 + 1;
-    func_800CADDC(p, 0);
+    func_800CADDC((T_CADDC *)p, 0);
     if (r) p->f900++;
     return 1;
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CADDC);
+EXTERN_C void func_800CADDC(T_CADDC *p, int st) {
+    p->f904 = st;
+    switch (st) {
+    case 0:
+        if (p->fA0->b4BD == 2) func_8008EF40(0x17);
+        else if (p->fA0->s50C == 2) func_8008EF40(0x18);
+        cf_CFB08(p, 0);
+        cf_CBB54(p);
+        break;
+    case 1:
+        if (p->f900 <= 0) break;
+        if (--p->f900 > 0) break;
+    case 2:
+        p->f938 = 1;
+        cf_CEC70(p);
+        break;
+    case 3:
+        cf_CEB04(p);
+        cf_CEB5C(p, D_FAA0, D_800D5DAC, 0);
+        cf_CEBC4(p, 0, 0x640, 0x10000);
+        break;
+    case 4: {
+        cf_CDAC8(p, 0);
+        p->f914 = cf_D9928(operator new(0x188), p->f7D8);
+        for (int i = 0; i < p->f848; i++) {
+            T_CADDC_t *t = (T_CADDC_t *)cf_E4434(operator new(0x18));
+            p->f918[i] = t;
+            p->f918[i]->f0 = (int)p->fA0;
+            p->f918[i]->f4 = (char *)cf_C9E58(p, i);
+            if (p->f918[i]->f4[0x46D] & 8) p->f918[i]->f8 = p->fA0;
+        }
+        int a, b;
+        if (p->fA0->b4BC < 3) cf_C3E84(p->fA0, &a, &b);
+        else cf_C3F84(p->fA0, &a, &b);
+        cf_DA84C(p->f914, a, b);
+        break;
+    }
+    case 5: {
+        if (p->fA0->b4BD == 2) cf_8FB80(0x17, 0x60);
+        else if (p->fA0->s50C == 2) cf_8FB80(0x18, 0x60);
+        for (int i = 0; i < p->f848; i++) {
+            if (i == 0) cf_DAE98(p->f914, cf_DABA8(p->f914, p->f918[0]), (void *)p->f918[i]->f0, p->f918[i]->f4, 1);
+            else cf_DAE98(p->f914, cf_DAC88(p->f914, p->f918[i]), (void *)p->f918[i]->f0, p->f918[i]->f4, 0);
+            delete p->f918[i];
+        }
+        T_CADDC_o *o = p->fA0;
+        cf_DB978(p->f914, o->f4D8, o->f4DC, o, (void *)o->f4D0);
+        int k = p->fA0->f4D8;
+        int c = 0;
+        if (k != 5) if (k != 6) if (k != 7) c = k != 11;
+        if (c) cf_C1158(p->fA0);
+        func_80082E14(p->fA0 ? (char *)p->fA0 + 0x2A0 : 0, 0);
+        func_8001E848(D_800B4C18[0], p->f914);
+        cf_DAFF0(p->f914);
+        break;
+    }
+    }
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CB174);
 
@@ -1117,7 +1174,7 @@ EXTERN_C void func_800CEBC4(T_CEBC4 *p, int a, int b, int c) { if (p->f90C) { p-
 
 EXTERN_C void func_800CEC00(T_CEBC4 *p) { func_800766D8(p->f90C); }
 
-EXTERN_C void func_800CEC24(T_CEBC4 *p) { if (p->f910 == 0) { func_800CEC00(p); func_800CADDC(p, 4); } }
+EXTERN_C void func_800CEC24(T_CEBC4 *p) { if (p->f910 == 0) { func_800CEC00(p); func_800CADDC((T_CADDC *)p, 4); } }
 
 EXTERN_C void func_800CEC68() {}
 
