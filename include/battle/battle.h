@@ -1614,4 +1614,19 @@ struct T_D3ED0n { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; ch
 EXTERN_C void f5BC84_4(void *p, int a, int b, int c) __asm__("func_8005BC84");
 EXTERN_C T_D3ED0n *func_800D3ED0(T_D3ED0n *self, int in_chrg, unsigned short x);
 
+struct T_D0D1C { char pad0[0x18]; VTable *vt18; char pad1C[0x34]; T_VBase *vb50; VTable *vt54; VTable *vt58; char pad5C[0xC]; int f68pad; char pad6C[0x6C]; char fD8[0x158 * 3]; };
+EXTERN_C const T_VTable10 D_800B7884;
+EXTERN_C VTable D_800B78D4[], D_800B78F4[], D_800B7924[];
+EXTERN_C char D_800B783C[];
+EXTERN_C int D_800B4D60[];
+EXTERN_C void f630BC_d(void *p, int a, int b) __asm__("func_800630BC");
+EXTERN_C void f2778_d(void *p) __asm__("func_800D2778");
+EXTERN_C void f3044_d(void *p, int a) __asm__("func_800D3044");
+EXTERN_C void f20E0_d(void *p, int a, int b) __asm__("func_800D20E0");
+EXTERN_C void f5328_d(void *p, int a, int b) __asm__("func_800D5328");
+EXTERN_C void f4BFC_d(void *p, int a, int b) __asm__("func_800D4BFC");
+EXTERN_C void f62848_d(void *p, int a, void *b, int c, int d, int e) __asm__("func_80062848");
+EXTERN_C void f53F28_d(void *p, SVec2C v) __asm__("func_80053F28");
+EXTERN_C void *func_800D0D1C(T_D0D1C *self, int in_chrg, int a);
+
 #endif /* BATTLE_BATTLE_H */
