@@ -1336,4 +1336,14 @@ inline Unk800BC554* Unk800BC554_fin(Unk800BC554* t) { t->x8C = D_800B75CC; t->xF
 extern "C" void VSync(s32);
 extern "C" void func_8009A470();
 
+/* func_800C60E8 */
+struct Unk800C60E8DM { u32 tag; u32 code[2]; };
+struct Unk800C60E8W { char pad[8]; u16 x8; };
+struct Unk800C60E8G { char pad[0x1C]; u16 x1C; };
+struct Unk800C60E8S { u32 tag; u32 w1, w2, w3, w4; };
+struct Unk800C60E8 { void* x0; char pad[0x10 - 4]; Unk800C60E8DM x10[2]; SPRT x28[2]; };
+struct Unk800C60E8Q { char pad[0x28]; SPRT s; };
+EXTERN_C Unk800C60E8W* D_800CBADC[];
+EXTERN_C void func_800C62E4(Unk800C62E4* p, Unk800C62E4B* q);
+
 #endif /* MOVIE_H */

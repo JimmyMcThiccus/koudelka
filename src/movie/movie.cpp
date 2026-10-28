@@ -1817,7 +1817,28 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C5E34);
 
 EXTERN_C void func_800C6024() { if (D_800CBACC[0]) { func_80024FEC(D_800CBACC[0], 0); func_8005F5F4(operator new(0x14), D_800CBACC[0], 2); D_800CBACC[0] = 0; for (u32 i = 0; i < 4; i++) { func_800215E8(D_800B4C38[0], D_800CBAD0[i]); if (D_800CBAD0[i]) D_800CBAD0[i]->v1(3); D_800CBAD0[i] = 0; } } }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C60E8);
+#define p ((Unk800C60E8*)vp_)
+EXTERN_C void* func_800C60E8(void* vp_, s32 idx, Unk800C10BCP* pos, s32 tp) {
+  func_8005F0E4(p, tp);
+  ((u8*)&p->x28[0])[3] = 4; p->x28[0].code = 0x64;
+  ((u8*)&p->x28[1])[3] = 4; p->x28[1].code = 0x64;
+  p->x0 = D_800B80D4;
+  void** g = D_800CBACC;
+  SetDrawMode(&p->x10[0], 0, 0, ((Unk800C60E8G*)*g)->x1C, 0);
+  SetDrawMode(&p->x10[1], 0, 0, ((Unk800C60E8G*)*g)->x1C, 0);
+  s32 i = D_800B4CF0[0];
+  Unk800C60E8Q* q = (Unk800C60E8Q*)((char*)p + i * 20);
+  q->s.x0 = pos->x; q->s.y0 = pos->y;
+  if ((u32)idx < 16) { q->s.h = 0x28; q->s.w = 0x1E; q->s.u0 = idx * 32; q->s.v0 = 0; q->s.clut = ((Unk800C60E8W*)D_800CBAD0[idx])->x8; }
+  else { q->s.h = 0x10; q->s.w = 0x80; q->s.v0 = (idx & 0xF) * 16 + 0x40; q->s.u0 = 0; q->s.clut = D_800CBADC[0]->x8; }
+  // func_800C62E4 is called as value-returning (call_value): GCC then copies the return value p into $v0 right
+  // after the call and the tail addresses use $v0. The clut store sits in both branches; cross-jumping merges them.
+  ((s32 (*)(Unk800C62E4*, Unk800C62E4B*))func_800C62E4)((Unk800C62E4*)p, (Unk800C62E4B*)D_800B4C88);
+  Unk800C60E8S* a = (Unk800C60E8S*)&p->x28[i]; Unk800C60E8S* d = (Unk800C60E8S*)&p->x28[i ^ 1];
+  u32 w1 = a->w1, w2 = a->w2, w3 = a->w3, w4 = a->w4; d->w1 = w1; d->w2 = w2; d->w3 = w3; d->w4 = w4;
+  return p;
+}
+#undef p
 
 EXTERN_C void func_800C6298(Unk800C6298* p, s32 dx, s32 dy) { s32 i = D_800B4CF0[0]; p->x2C[i].x += dx; p->x2C[i].y += dy; func_8005F1D8(p, dx, dy); }
 
