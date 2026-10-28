@@ -95,7 +95,23 @@ EXTERN_C void func_80032B14(S_Rgb *a, S_Rgb *b)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032B2C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032BD8);
+EXTERN_C int func_80032BD8(void *p, short *r)
+{
+    short *q = (short *)((char *)p + 8);
+    int maxx = 0, maxy = 0;
+    int minx = r[2], miny = r[3];
+    int i, x, y;
+    for (i = 4; i; i--) {
+        x = q[0];
+        if (x < minx) minx = x;
+        if (maxx < x) maxx = x;
+        y = q[1];
+        if (y < miny) miny = y;
+        if (maxy < y) maxy = y;
+        q += 2;
+    }
+    return minx == r[2] || !maxx || miny == r[3] || !maxy;
+}
 
 EXTERN_C S_A2_32C80 *func_80032C80(S_A2_32C80 *p)
 {
