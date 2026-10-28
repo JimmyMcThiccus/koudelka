@@ -1022,7 +1022,7 @@ struct Unk800C7290 : Unk800C7290V { char p0[0x20 - 0x1C]; s32 x20; char p1[0x74 
   Unk800C7290S x3D4, x3F0, x40C, x428, x444, x460, x47C, x498; Unk800C7740O* x4B4; s32 x4B8, x4BC; char p4[0x568 - 0x4C0]; char x568[0x610 - 0x568]; Unk800C7740O* x610; };
 struct Unk800C7290G { char pad[0x1D4]; u16 x1D4[16]; char p2[0x1F8 - 0x1F4]; s8 x1F8; };
 EXTERN_C void func_80053C6C(void*, void*);
-EXTERN_C void* func_800C7D60(void*, s32, Unk800C10BCP, s32, s32);
+EXTERN_C void* func_800C7D60(void*, s32, Unk800C10BCP, s32, u16);
 EXTERN_C void func_80054DA8(void*, void*);
 
 /* func_800C96C0 */
@@ -1203,5 +1203,79 @@ struct Unk800C3B88S5 { char c[5]; };
 struct Unk800C3B88S13 { char c[13]; };
 EXTERN_C char D_800B7CBC[], D_800B7CC0[];
 EXTERN_C DIRENTRY* nextfile(DIRENTRY*);
+
+/* func_800C0EA4 */
+struct Unk800C0EA4V { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800C0EA4O { virtual void v1(); virtual void v2(); virtual void v3(); };
+struct Unk800C0EA4 : Unk800C0EA4V { char p1[0x6C - 0x1C]; s32 x6C; char p2[0x78 - 0x70]; Unk800C0EA4O* x78; char x7C[0xE8 - 0x7C]; char xE8[0x18C - 0xE8]; s32 x18C; char p3[0x1F0 - 0x190]; char x1F0[0x25D8 - 0x1F0]; char x25D8[0x25F8 - 0x25D8]; s32 x25F8; char p4[0x2718 - 0x25FC]; s32 x2718; };
+EXTERN_C s32 func_80063744(void*, s32);
+EXTERN_C void func_80060588(void*, s32);
+EXTERN_C void func_800C16C8(Unk800C0EA4*);
+EXTERN_C void func_800C02D8(Unk800C02D8*);
+EXTERN_C void func_800C1278(Unk800C0EA4*);
+EXTERN_C void func_800C06BC(Unk800C0EA4*);
+EXTERN_C void func_800C10BC(Unk800C10BC* p, void* a, s32 b, void* c, s32 d);
+EXTERN_C void func_80054CE4(void*);
+EXTERN_C const char D_800B7810[];
+EXTERN_C char D_800B7A40[];
+
+/* func_800C16C8 */
+struct Unk800C16C8C { s32 d[0x14]; };
+struct Unk800C16C8R { char p0[3]; u8 x3; char p1[0x18 - 4]; Unk800C16C8C x18; char p2[0x94 - 0x18 - 0x50]; };
+struct Unk800C16C8G { char pad[0x202]; s8 x202, x203; char p2[0x23C - 0x204]; Unk800C16C8R x23C[1]; };
+EXTERN_C void func_800C1690(void* p, s32* a, s32* b, s32* c, s32* d);
+EXTERN_C s32 func_800619F4(void*);
+EXTERN_C void func_800C1BF8();
+EXTERN_C void func_800C21B8();
+EXTERN_C s32 func_800382A4(void*, s32, s32);
+EXTERN_C char D_800AC86C[];
+
+/* func_800C7D60 */
+struct Unk800C7D60R { s16 x, y, w, h; };
+struct Unk800C7D60 { Unk800C8114V* x0; char pad[0xC - 4]; Unk800C7D60R xC; char p1[0x2C - 0x14]; const void* x2C; char p2[0x38 - 0x30]; s16 x38, x3A; Unk800C8114V x3C; };
+
+/* func_800BC714 */
+struct Unk800BC714P { s16 x, y; };
+struct Unk800BC714R { Unk800BC714P pos; Unk800BC714P size; Unk800BC714R(Unk800BC714P p, Unk800BC714P s) : pos(p), size(s) {} };
+struct Unk800BC714V { virtual void f1(); virtual void f2(); virtual void f3(); virtual Unk800BC714P f4(Unk800BC714P size); };
+struct Unk800BC714 { const void* x0; void* x4[2]; s32 xC[2]; Unk800BC714R x14[2]; s32 x24[2]; s32 x2C, x30, x34; char* x38; char* x3C; char* x40; s32 x44, x48, x4C; Unk800BC714P x50; Unk800BDFA8B* x54; char x58[4]; };
+EXTERN_C char D_800B7644[];
+EXTERN_C Unk800BC714V* D_800B4C54[];
+EXTERN_C void DecDCTvlcBuild(void*);
+
+/* func_800BC12C */
+struct Unk800BC12CO { virtual void f1(); virtual void f2(); virtual void f3(); };
+struct Unk800BC12CP { char pad[0x1A]; u16 x1A; };
+struct Unk800BC12C { char pad[0x10A]; s16 x10A, x10C; char p1[0x130 - 0x10E]; s16 x130, x132, x134; char p2[0x13C - 0x136]; u16 x13C; char p3[0x148 - 0x13E]; Unk800BC12CO* x148; };
+inline void Unk800BC12C_ev(Unk800BC12C* p) { Unk800CA59CT* t = func_8001CA10(0x14); Unk800CA59C_ctor3(t); func_8001EFE4(p, t); }
+
+/* func_800C06BC */
+struct Unk800C06BCL { s32 x0; s32 x4; };
+struct Unk800C06BCA { Unk800C06BCL* x0; s32 x4; };
+struct Unk800C06BCB { void* x0; };
+struct Unk800C06BCX : Unk800C06BCA, Unk800C06BCB { };
+struct Unk800C06BCO { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(Unk800C10BCP); };
+struct Unk800C06BC { char p0[0x1C]; Unk800C06BCX x1C; char p1[0x74 - 0x28]; s32 x74; Unk800C02D8C* x78; char x7C[0x18C - 0x7C]; s32 x18C, x190; char x194[0x1F0 - 0x194]; char x1F0[0x278 - 0x1F0]; Unk800C01C4O x278[15]; };
+EXTERN_C const char D_800B78D8[], D_800B7968[];
+EXTERN_C void func_800C5A14(Unk800C5A14* p, s32 v);
+EXTERN_C void func_800C5A60(Unk800C5A60* p);
+EXTERN_C int func_800C38C0(void* p, void* q);
+EXTERN_C char* func_800C4994(char* p);
+EXTERN_C s32 func_800C2F90(Unk800C2F90* p, s32 n);
+EXTERN_C int func_800C3D08(Unk800C3D08* p);
+EXTERN_C s32 func_800C2D4C(Unk800C2D4C* p);
+EXTERN_C void func_800C49BC(Unk800C49BC* p, Unk800C49BCQ* q, s32 flag);
+EXTERN_C s32 func_800C2F04(Unk800C2F04* p);
+EXTERN_C s32 func_800C3B88(Unk800C3B88* p);
+EXTERN_C void func_800C4860(Unk800C4860* p, s32 mode);
+EXTERN_C void func_800C5B30(Unk800C5B30* p);
+EXTERN_C s32 func_800C4854(Unk800C4854* p);
+EXTERN_C s32 func_80019C24(void*, void*);
+EXTERN_C void func_80054D48(void*, s32);
+inline void* Unk800C06BC_list(Unk800C06BC* p) { Unk800C06BCX* x = &p->x1C; Unk800C06BCB* b = x; return b ? b->x0 : 0; }
+inline void Unk800C06BC_rect(Unk800C9364R* r, s16 x, s16 y, s16 w, s16 h) { Unk800C10BC_set(&r->a, x, y); Unk800C10BC_set(&r->b, w, h); }
+struct Unk800C06BCE { s16 d; s16 i; void (*f)(void*, Unk800C10BCP); };
+struct Unk800C06BCOV { char pad[0x18]; Unk800C06BCE* vt; };
+inline void Unk800C06BC_add(Unk800C06BCL* l, void* e) { func_80019A6C(l, e, l->x4); }
 
 #endif /* MOVIE_H */
