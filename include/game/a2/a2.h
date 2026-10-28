@@ -166,7 +166,7 @@ EXTERN_C void func_80025CE0(int a, char *b, int c);
 EXTERN_C void func_80019D40(void *p);
 EXTERN_C int func_800464E4(void *p, int a, int b, void *q);
 EXTERN_C int func_800461F4(void *p, int a, int b, void *q);
-EXTERN_C int func_80036FC0(int e, int a, int b, void *q);
+EXTERN_C int func_80036FC0(void *o, int a, int b);
 struct S_A2_PolyF3 { unsigned char tag[3]; unsigned char len; unsigned char r0, g0, b0, code; short xy[6]; };
 struct S_A2_Pt { short x, y; };
 struct C_80038E34 : C_8003BEF8 { short unk4C, unk4E, unk50, unk52; int pad54; int unk58; short unk5C; char pad5E[10]; int unk68; C_80038E34(short a) asm("func_80038E34"); };
