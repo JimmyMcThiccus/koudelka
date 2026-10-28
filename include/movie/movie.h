@@ -1278,4 +1278,9 @@ struct Unk800C06BCE { s16 d; s16 i; void (*f)(void*, Unk800C10BCP); };
 struct Unk800C06BCOV { char pad[0x18]; Unk800C06BCE* vt; };
 inline void Unk800C06BC_add(Unk800C06BCL* l, void* e) { func_80019A6C(l, e, l->x4); }
 
+/* func_800C39D4 */
+struct Unk800C39D4 { char pad[0x30]; s32 x30, x34, x38, x3C; };
+EXTERN_C s32 _card_clear(s32);
+EXTERN_C s32 _card_load(s32);
+
 #endif /* MOVIE_H */

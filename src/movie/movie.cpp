@@ -848,6 +848,7 @@ EXTERN_C void func_800C06BC(Unk800C0EA4* vp) {
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B79C0);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B79F8);
+
 #undef p
 #undef Unk800C06BC_VC4
 #undef Unk800C06BC_ADD
@@ -1285,7 +1286,51 @@ EXTERN_C s32 func_800C38F0(Unk800C38F0* p) {
   return r;
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C39D4);
+EXTERN_C s32 func_800C39D4(void* pv) {
+  Unk800C39D4* p = (Unk800C39D4*)pv;
+  s32 r;
+  s32 k;
+  if (D_800CBA94[0] != 0) goto fail;
+  if (p->x34 != -1) return -1;
+  r = -1;
+  { void** q = D_800CBA94; *q = p; }
+  _card_info(p->x38 + p->x3C);
+  switch (func_800C3F68((Unk800C3F68*)p)) {
+  case 4: break;
+  case 0x2000:
+    r = 3;
+    { void** q = D_800CBA94; *q = p; }
+    _card_clear(p->x38 + p->x3C);
+    func_800C3F68((Unk800C3F68*)p);
+    break;
+  default:
+    r = 1;
+    goto end;
+  }
+  if (r != 3) r = 0;
+  D_800CBA94[0] = p;
+  k = 30;
+loop:
+  if (!_card_load(p->x38 + p->x3C)) {
+    Unk800C3F68E* e = func_8001ED2C(D_800B4C18[0], 2, 1);
+    if (e) { if (e->xA == 4 && e->xC) e->xC->v1(3); e->v2(); }
+    if (k < 0) goto fail;
+    k--;
+    goto loop;
+  }
+  switch (func_800C3F68((Unk800C3F68*)p)) {
+  case 4: r = r ? 3 : 0; break;
+  case 0x2000: r = 4; break;
+  default: r = -1; break;
+  }
+  goto end;
+fail:
+  return -1;
+end:
+  D_800CBA94[0] = 0;
+  return r;
+
+}
 
 EXTERN_C s32 func_800C3B88(Unk800C3B88* p) {
   char name[7];
