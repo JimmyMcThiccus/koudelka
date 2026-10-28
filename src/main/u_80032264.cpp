@@ -2,12 +2,28 @@
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
+#include "game/a2/a2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032264);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800322C8);
+EXTERN_C void func_800322C8(void *p, int a)
+{
+    AT(p, void **, 0) = D_80011E74;
+    func_8001D324(D_800A4544, func_8001D25C(D_800A4544, (int)p));
+    func_8001D024(p, a);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032334);
+EXTERN_C void *func_80032334(void *p)
+{
+    void *g;
+    AT(p, void **, 0) = D_80011E74;
+    AT(p, int, 8) = 0;
+    AT(p, int, 4) = 0;
+    AT(p, int, 0xC) = 0;
+    g = D_800A4544;
+    func_8001D150(g, new S_A2_X40(p));
+    return p;
+}
 
 EXTERN_C void func_800323C0(S_800323C0 *p, S_800323C0_Node *n)
 {
@@ -27,9 +43,27 @@ EXTERN_C int func_80032920(S_80032920 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_8003292C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032A10);
+EXTERN_C void func_80032A10(void *p, int flags)
+{
+    AT(p, void **, 8) = D_80011DBC;
+    AT(p, void **, 0) = D_80011E24;
+    AT(p, void **, 8) = D_80011D04;
+    AT(p, void **, 0) = D_80011D6C;
+    AT(p, void **, 8) = D_80011AAC;
+    AT(p, void **, 0) = D_80011B14;
+    func_800198AC((char *)p + 8, 0);
+    func_8001A610(p, flags);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032A9C);
+EXTERN_C int func_80032A9C(S_Rgb *s, S_Rgb *a, S_Rgb *b, S_Rgb *c, S_Rgb *d)
+{
+    S_Rgb t = *s;
+    *a = t;
+    *b = t;
+    *c = t;
+    *d = t;
+    return 1;
+}
 
 EXTERN_C void func_80032B14(S_Rgb *a, S_Rgb *b)
 {
@@ -40,7 +74,19 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032B2C);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032BD8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032C80);
+EXTERN_C S_A2_32C80 *func_80032C80(S_A2_32C80 *p)
+{
+    int i;
+    S_A2_PolyF4 *q = p->p;
+    p->rgb = 0x28808080;
+    i = 2;
+    while (i--) {
+        q->len = 5;
+        q->code = 0x28;
+        q++;
+    }
+    return p;
+}
 
 EXTERN_C S_Prim *func_80032CBC(S_Prim *p)
 {
@@ -49,7 +95,17 @@ EXTERN_C S_Prim *func_80032CBC(S_Prim *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032CD4);
+EXTERN_C void func_80032CD4(char *p)
+{
+    if (p) {
+        char *q = p + AT(p, int, -8) * 0x98;
+        while (p != q) {
+            q -= 0x98;
+            ((A2VObj0 *)q)->v00(2);
+        }
+        func_800A0D0C(p - 8);
+    }
+}
 
 EXTERN_C int func_80032D54()
 {
@@ -58,7 +114,12 @@ EXTERN_C int func_80032D54()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032D5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032EB0);
+EXTERN_C void func_80032EB0(S_A2_Node4 *n)
+{
+    if (D_800AC844.unk8)
+        n->unk4 = D_800AC844.unk8;
+    D_800AC844.unk8 = n;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032ED4);
 
@@ -68,12 +129,37 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033404);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800338A4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033D34);
+EXTERN_C char *func_80033D34(void *p, char *src)
+{
+    func_80030AA8(p, src);
+    func_80034854(p ? (char *)p + 0x34 : 0, src + 0x2C);
+    return src + 0x38;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033D7C);
+EXTERN_C void func_80033D7C(void *p, int a)
+{
+    func_8003488C(p ? (char *)p + 0x34 : 0, a);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033DAC);
+EXTERN_C void func_80033DAC(void *p)
+{
+    func_800348E4(p ? (char *)p + 0x34 : 0);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033DDC);
+EXTERN_C void func_80033DDC()
+{
+    AT(&D_800AC844, void **, 0) = D_80011F44;
+    func_8001D324(D_800A4544, func_8001D25C(D_800A4544, (int)&D_800AC844));
+    func_8001D024(&D_800AC844, 2);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033E40);
+EXTERN_C void func_80033E40()
+{
+    void *g;
+    AT(&D_800AC844, void **, 0) = D_80011F44;
+    AT(&D_800AC844, int, 8) = 0;
+    AT(&D_800AC844, int, 4) = 0;
+    AT(&D_800AC844, int, 0xC) = 0;
+    g = D_800A4544;
+    func_8001D150(g, new S_A2_X40(&D_800AC844));
+}
