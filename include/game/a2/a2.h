@@ -17,7 +17,7 @@ EXTERN_C void func_800361C8(void *p);
 EXTERN_C void func_80036364(void *p, unsigned char a);
 EXTERN_C void func_80036554(void *p, unsigned char a);
 EXTERN_C int func_80036850(void *p);
-EXTERN_C void func_80019CFC(void *p, int a);
+EXTERN_C int func_80019CFC(void *p, int a);
 EXTERN_C void func_8004A98C(void *p, int a);
 EXTERN_C int func_8004A9E4(void *p);
 EXTERN_C void func_8001A744(void *p, int a);
@@ -178,7 +178,8 @@ struct C_8004D678 : C_8004CF20 { char pad10[0xC]; S_A2_F4x2 m; C_8004D678() asm(
 struct C_8004DB8C : C_8004CF20 { char pad10[0xC]; S_A2_F4x2 m; C_8004DB8C() asm("func_8004DB8C"); };
 struct S_A2_At3540 { char pad[0x1B8]; S_A2_At34 *q; char pad1BC[0x44]; int unk200, unk204; char pad208[0x18]; short unk220; char pad222[4]; short unk226; char pad228[0x30]; S_A2_Pt unk258; S_A2_V4 unk25C; };
 struct A2V_53F48 : A2VPad<0x18> { virtual int s0(); virtual int s1(); virtual int s2(); virtual void s3(S_A2_Pt); };
-EXTERN_C void func_800376D0(void *p);
+EXTERN_C int func_800376D0(void *p);
+EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C void *D_800126F4[];
 EXTERN_C int func_8003C908(void *p, void *a);
 EXTERN_C void *func_8001CA10(int n);
@@ -332,4 +333,83 @@ EXTERN_C void *D_80010148[];
 EXTERN_C void func_80039A88(void *p, int a);
 EXTERN_C void func_8003C0D0(void *p, int a);
 EXTERN_C void func_8003BF30(void *p, int a);
+EXTERN_C unsigned char D_800B4D10[4];
+EXTERN_C void f3635C_alt(void *p, unsigned char a) asm("func_8003635C");
+struct S_A2_N14 { int p0; S_A2_N14 *next; char pad[0xC]; int f14; };
+EXTERN_C void SetRotMatrix(MATRIX *m);
+EXTERN_C void SetTransMatrix(MATRIX *m);
+struct S_A2_SvI { short x, y, z, w; S_A2_SvI() { x = 0; y = 0; z = 0; w = 0; } S_A2_SvI(short a, short b, short c) { x = a; y = b; z = c; w = 0; } };
+EXTERN_C long RotTrans(S_A2_SvI *v0, S_A2_V4 *v1, long *flag);
+struct S_A2_S8 { short v; short pad[3]; S_A2_S8() {} S_A2_S8(const S_A2_S8 &o) { v = o.v; } };
+struct S_A2_Sv4c { short x, y, z, w; S_A2_Sv4c(S_A2_S8 a, S_A2_S8 b, S_A2_S8 c, S_A2_S8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
+struct S_A2_I8 { int v; int pad; S_A2_I8() {} S_A2_I8(const S_A2_I8 &o) { v = o.v; } };
+struct S_A2_Iv4c { int x, y, z, w; S_A2_Iv4c(S_A2_I8 a, S_A2_I8 b, S_A2_I8 c, S_A2_I8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
+EXTERN_C int SquareRoot0(int a);
+struct S_A2_V4s { short x, y, z, w; void clear() { x = 0; y = 0; z = 0; w = 0; } };
+struct S_A2_Base { void **vt; S_A2_V4s v; };
+struct S_A2_PF4 { unsigned char p0, p1, p2, len, r, g, b, code; char rest[0x10]; };
+struct S_A2_C28 { void **vt; int unk4; S_A2_Base b; S_A2_V4s arr[4]; int color; S_A2_PF4 prim[2]; };
+EXTERN_C void *D_80011A44[];
+struct S_A2_PFT4 { unsigned char p0, p1, p2, len, r, g, b, code; char rest[0x20]; };
+struct S_A2_E4 { int pad; S_A2_E4() {} };
+struct S_A2_C98S { int color; S_A2_E4 e[4]; S_A2_PFT4 prim[2]; };
+struct S_A2_C98 { void **vt; int unk4; S_A2_Base b; S_A2_V4s arr[4]; S_A2_C98S s; };
+inline S_A2_C28 *a2_init_C28(S_A2_C28 *p)
+{
+    int i, j;
+    S_A2_V4s *q;
+    S_A2_PF4 *f;
+    p->vt = D_80010178;
+    p->b.vt = D_80011A44;
+    p->unk4 = 0;
+    p->b.v.clear();
+    p->b.vt = D_80011AAC;
+    p->vt = D_80011B14;
+    q = p->arr;
+    for (i = 3; i != -1; i--) {
+        q->x = 0; q->y = 0; q->z = 0; q->w = 0; q++;
+    }
+    p->b.vt = D_80011D04;
+    p->vt = D_80011D6C;
+    p->color = 0x28808080;
+    f = p->prim;
+    for (j = 1; j != -1; j--) {
+        f->len = 5; f->code = 0x28; f++;
+    }
+    p->b.vt = D_80011DBC;
+    p->vt = D_80011E24;
+    return p;
+}
+inline S_A2_C98 *a2_init_C98(S_A2_C98 *p)
+{
+    int i, j, n;
+    S_A2_V4s *q;
+    S_A2_PFT4 *f;
+    S_A2_C98S *s;
+    p->vt = D_80010178;
+    p->b.vt = D_80011A44;
+    p->unk4 = 0;
+    p->b.v.clear();
+    p->b.vt = D_80011AAC;
+    p->vt = D_80011B14;
+    q = p->arr;
+    for (i = 3; i != -1; i--) {
+        q->x = 0; q->y = 0; q->z = 0; q->w = 0; q++;
+    }
+    p->b.vt = D_80011D04;
+    p->vt = D_80011D6C;
+    s = &p->s;
+    s->color = 0x2C808080;
+    for (n = 3; n != -1; n--)
+        ;
+    f = s->prim;
+    for (j = 1; j != -1; j--) {
+        f->len = 9; f->code = 0x2C; f++;
+    }
+    p->b.vt = D_80011E8C;
+    p->vt = D_80011EF4;
+    return p;
+}
+struct S_A2_Pool { int unk0; S_A2_C28 *head; };
+struct S_A2_Pool98 { int unk0; S_A2_C98 *head; };
 #endif /* GAME_A2_A2_H */

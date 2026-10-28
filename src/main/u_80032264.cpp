@@ -4,7 +4,18 @@
 #include "game/a/decls_a.h"
 #include "game/a2/a2.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032264);
+EXTERN_C int func_80032264(void *p)
+{
+    int a = AT(p, int, 0xC);
+    if (a) {
+        if (AT(p, void *, 4)) func_8001A678(AT(p, void *, 4), a);
+        else AT(p, int, 4) = a;
+    }
+    int b = AT(p, int, 8);
+    AT(p, int, 8) = 0;
+    AT(p, int, 0xC) = b;
+    return 0;
+}
 
 EXTERN_C void func_800322C8(void *p, int a)
 {
@@ -32,7 +43,16 @@ EXTERN_C void func_800323C0(S_800323C0 *p, S_800323C0_Node *n)
     p->unk8 = n;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800323DC);
+EXTERN_C S_A2_C28 *func_800323DC(S_A2_Pool *pool)
+{
+    S_A2_C28 *n = pool->head;
+    if (n) {
+        pool->head = (S_A2_C28 *)n->unk4;
+        n->unk4 = 0;
+        return n;
+    }
+    return a2_init_C28(new S_A2_C28);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032504);
 
@@ -41,7 +61,10 @@ EXTERN_C int func_80032920(S_80032920 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_8003292C);
+EXTERN_C S_A2_C28 *func_8003292C(S_A2_C28 *p)
+{
+    return a2_init_C28(p);
+}
 
 EXTERN_C void func_80032A10(void *p, int flags)
 {
@@ -112,7 +135,17 @@ EXTERN_C int func_80032D54()
     return 0x2C;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032D5C);
+EXTERN_C void *func_80032D5C()
+{
+    S_A2_Pool98 *pool = (S_A2_Pool98 *)&D_800AC844;
+    S_A2_C98 *n = pool->head;
+    if (n) {
+        pool->head = (S_A2_C98 *)n->unk4;
+        n->unk4 = 0;
+    } else
+        n = a2_init_C98((S_A2_C98 *)operator new(sizeof(S_A2_C98)));
+    return n ? (void *)&n->b : 0;
+}
 
 EXTERN_C void func_80032EB0(S_A2_Node4 *n)
 {
