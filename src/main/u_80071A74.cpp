@@ -897,7 +897,6 @@ EXTERN_C void func_800766D8(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800766F8);
 
-// PROTOFIX: header has void func_80076848(void *self, int b); it takes (self, a1, a2, a3).
 EXTERN_C void func_80076848(void *self, int a1, int a2, int a3)
 {
     char *n;
@@ -1122,7 +1121,6 @@ EXTERN_C int func_80077234(void *self, void *b)
     return func_80075448(self, b);
 }
 
-// PROTOFIX: header has void func_80077254(void *self); it returns void* (the node or 0).
 EXTERN_C void *func_80077254(void *self)
 {
     char *n;
@@ -1612,7 +1610,6 @@ EXTERN_C void func_80079910(void)
 {
 }
 
-// PROTOFIX: needs D_800B4ED8 declared as void *D_800B4ED8[] (see func_8007B108).
 EXTERN_C void *D_800B4ED8[];
 EXTERN_C void func_8007CC14(Derived_8007CC14 *self);
 EXTERN_C void func_8007CCB4(void *self);
@@ -1759,7 +1756,6 @@ EXTERN_C int func_80079F48(void *self)
     return 0;
 }
 
-// PROTOFIX: header has void func_80079F6C(void *self, int b); it returns int. Also calls func_8006283C (declared (void)) with buf in a0.
 EXTERN_C void *func_800DBFC4(void *p, int a, void *b, int c, int d);
 EXTERN_C void *func_800D9EE0(void *p, int a, void *b, int c, int d);
 EXTERN_C void func_800894AC(void *out, void *a, int b, int c);
@@ -1864,7 +1860,6 @@ EXTERN_C void func_8007A994(void *self, int b)
     func_80074F78(self, b);
 }
 
-// PROTOFIX: header has void *func_8007A9DC(void *self); real = (List_8007AB78 *l, int x). func_8007ADCC passes its own a1 through, so it should become (void *self, int b) and call func_8007A9DC(self, b).
 EXTERN_C void *func_8007A9DC(List_8007AB78 *l, int x)
 {
     Ent_8007AB78 *c;
@@ -2107,7 +2102,6 @@ EXTERN_C void func_8007B0C8(void *self)
     func_80019D40(h ? FIELD_AT(h, List *, 0x0) : 0);
 }
 
-// PROTOFIX: needs D_800B4ED8 declared as void *D_800B4ED8[] (lui/%lo access); decls_b.h has int D_800B4ED8 (gp). effect.h/battle.h already use the array form.
 EXTERN_C void *D_800B4ED8[];
 EXTERN_C void func_8007B108(void *self, int flag)
 {
@@ -2312,7 +2306,6 @@ EXTERN_C void func_8007C070(void *self, int b)
     }
 }
 
-// PROTOFIX: header has void func_8007C0A8(void *self, int b); retail keeps v0 live at exit, i.e. it is int-returning (returns the v02() result on that path).
 EXTERN_C int func_8007B1FC(void *self, int x, int kind);
 EXTERN_C void func_80085C00(void *self);
 EXTERN_C void func_80085E14(void *self);
@@ -2393,7 +2386,6 @@ EXTERN_C int func_8007C0A8(void *self, int i)
     }
 }
 
-// PROTOFIX: header has void func_8007C3C8(void *self, int b); it returns int.
 struct St_8007C3C8 {
     char pad[0x1F];
     signed char st[3];
@@ -4210,7 +4202,6 @@ EXTERN_C void func_800817C8(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80081820);
 
-// PROTOFIX: header has void func_80081970(void *self, int b); it returns int (-1 or node->C - list->0x10).
 EXTERN_C int func_80081970(void *self, void *x)
 {
     List_8007AB78 *l = (List_8007AB78 *)self;

@@ -2135,7 +2135,8 @@ struct Derived_80089F84 : Base0_80089F84, Base1_80089F84 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800870E4(void *self, int b);
+struct W20_80089658;
+EXTERN_C int func_800870E4(char *self, void *b, W20_80089658 *c, int d);
 
 /* from u_80082174.cpp */
 EXTERN_C int func_8008B444(int n);
