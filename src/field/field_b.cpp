@@ -353,7 +353,35 @@ INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800E1F28);
 
 INCLUDE_RODATA("asm/field/nonmatchings/field_b", D_800B9EC0);
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800E26C8);
+EXTERN_C void func_800E26C8(char* p, int k) {
+    switch (k) {
+    case 7:
+        *(int*)(p + 0x84) = 0;
+        func_800E2A6C(p, (int)D_800B9E2C, 0x14, (int)D_800B9BB4, 0);
+        break;
+    case 4:
+        func_800E2A6C(p, (int)D_800B9E58, 0x1B, (int)D_800B9BB4, 0);
+        break;
+    case 1:
+        *(int*)(p + 0x84) = 0;
+        func_800E2A6C(p, (int)D_800B9BF8, 0x18, (int)D_800B9BB4, 0);
+        break;
+    case 3:
+        *(int*)(p + 0x84) = 0;
+        func_800E2A6C(p, (int)D_800B9BB8, 0x1E, (int)D_800B9BB4, 0);
+        break;
+    case -1:
+    default:
+        *(int*)(p + 0x84) = 0;
+        func_800E2A6C(p, (int)D_800B9EC0, 0xF, (int)D_800B9BB4, 0);
+        break;
+    }
+    if (func_80054E90(p + 0x1BC)) {
+        func_80054CE4(p + 0x1BC);
+    } else {
+        func_80054FC0(p + 0x1BC);
+    }
+}
 
 EXTERN_C void func_800E27C0(Unk_800E27C0* p, int a) {
     if (p->unk84 == 0 && a != 0) {

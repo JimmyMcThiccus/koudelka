@@ -1612,5 +1612,13 @@ EXTERN_C Unk_800D8FD4* func_800D8FD4(Unk_800D8FD4*, int, unsigned short);
 
 EXTERN_C int func_800DB9F8(Unk_800DB9F8* p);
 EXTERN_C void func_800E77AC();
+struct Unk_800BF6E4 { char pad0[8]; int unk8; short unkC; };
+EXTERN_C char D_800B9E2C[];
+EXTERN_C char D_800B9E58[];
+EXTERN_C char D_800B9BB4[];
+EXTERN_C char D_800B9BF8[];
+EXTERN_C char D_800B9BB8[];
+EXTERN_C char D_800B9EC0[];
+EXTERN_C int func_80054E90(void*);
 
 #endif /* FIELD_FIELD_H */

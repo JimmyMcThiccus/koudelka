@@ -1009,7 +1009,34 @@ INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B6F3C);
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B6F4C);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800BF6E4);
+EXTERN_C int func_800BF6E4(Unk_800BF6E4* p) {
+    Unk_800BF204* g;
+    if (p->unk8 == 100) {
+        return 1;
+    }
+    g = (Unk_800BF204*)D_800EA0B0[0];
+    switch (p->unk8) {
+    case 101:
+        func_800BC7BC(g, p->unkC);
+        return 1;
+    case 102:
+        func_800BC864(g, p->unkC);
+        return 1;
+    case 103:
+        func_800BC774(g, p->unkC);
+        return 1;
+    case 104:
+        func_800BC908(g, p->unkC);
+        return 1;
+    case 105:
+        func_800BC9AC(g, p->unkC, 0);
+        return 1;
+    case 106:
+        func_800BC9AC(g, p->unkC, 1);
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800BF7C0);
 
