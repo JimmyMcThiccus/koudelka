@@ -157,6 +157,9 @@ with your unit's real flags, and keeps whatever scores closer to retail:
 - The permuter parses C only. `setup` keeps the C parts of your headers and drops C++ classes (pointers to
   them still work), but the function itself must be plain C: no member functions, virtual calls, `this`,
   references or `new`/`delete`. If it isn't, `setup` says so.
+- Read every result before you use it. The permuter will happily read uninitialised variables, put statements
+  after `return`, or drop side effects to get a better score. Code like that is not a match, even when
+  `try_compile` says 0. Keep only rewrites that do the same thing as the draft.
 - Give it 20–60 minutes per function. If the score doesn't move, the difference is probably not one the
   permuter can reach.
 
