@@ -955,7 +955,6 @@ struct T_C8EE4 { char pad[0x2C8]; signed char b2C8[1][5]; };
 typedef int (*F_C8D9C)(void *p, int a, int *b, int *c);
 struct T_C65C8 { char pad[0xA0]; char *fA0; T_C5474 fA4; };
 typedef void (*F_C51D0)(void *a, void *b, int c);
-EXTERN_C char *func_800C5474(T_C5474 *p);
 EXTERN_C void func_800D94F4(void *p);
 EXTERN_C void func_800D05C4(T_D0404 *p);
 struct T_CCB98 { SVec2 f0; int pad4; int pad8; int fC; int f10; int f14; };
@@ -1029,7 +1028,6 @@ inline void c6050_reset(T_C6050 *p, T_C6050_c *c) {
     ((F_C51D0)func_800C51D0)(&p->fA4, c, c->h480);
 }
 struct T_CA7D4 { char pad[0xA0]; T_C9284 *fA0; char padA4[0x850]; int f8F4[24]; unsigned char b954; unsigned char b955; };
-EXTERN_C void func_800CA918(void *p, int a);
 inline bool moved(T_C9284 *q, int x, int y) { return x != q->s4C6 || y != q->s4CA; }
 EXTERN_C void func_800C8BA4(T_C9A4C *p, int x1, int y1, int x, int y);
 /* battle.h declares func_800C7764 with void *p; the cast copy changes register allocation. */
@@ -1234,7 +1232,6 @@ struct T_C3DAC { char pad[0x14]; T_C3E34_r r; };
 struct T_EBD4 { char pad[0x44]; T_BE0F8 e[9]; };
 EXTERN_C T_C3E34 *func_800C9E58_b(void *p, int a) __asm__("func_800C9E58");
 EXTERN_C T_C3DAC *func_80061188(void *p, int a);
-EXTERN_C void func_800C3D2C(T_C3E34 *p, int i, int k, int *o1, int *o2);
 EXTERN_C void func_800C3E34(T_C3E34 *p, int i, int j, int *o1, int *o2);
 EXTERN_C void func_800C3F14(T_C3E34 *p, int *o1, int *o2);
 struct T_C4784_e { char pad[8]; short x, y; char padC[4]; };
@@ -1376,5 +1373,21 @@ EXTERN_C void func_800D2D60(T_D2D60 *p);
 
 struct S4 { short x, y, z, w; };
 EXTERN_C T_D4BFC *func_800D4BFC(T_D4BFC *self, int in_chrg, int a);
+
+struct R3D2C { char pad[0x44]; T_BE0F8 e[9]; char pad2[0x8C - 0x44 - 72]; };
+EXTERN_C R3D2C T_tab[] __asm__("D_800AEBD4");
+EXTERN_C void func_800C3D2C(T_C3E34 *p, int i, int k, int *o1, int *o2);
+
+EXTERN_C char *func_800C5474(T_C5474 *p);
+
+struct T_CA918_cc { unsigned char r, g, b, a; T_CA918_cc() {} };
+EXTERN_C void func_8003FB88x(void *p, int a, T_CA918_cc c) __asm__("func_8003FB88");
+EXTERN_C void func_800CA918(void *pp, int a);
+
+struct T_CEFE8_g { char pad[0x328]; char *f328; void *f32C; };
+EXTERN_C void func_800CF080_1(void *p) __asm__("func_800CF080");
+EXTERN_C void func_8007C070(void *p, int a);
+struct T_CEFE8 { char pad[0x808]; char *f808[1]; };
+EXTERN_C void func_800CEFE8(T_CEFE8 *p, char *q0, int x, int i0);
 
 #endif /* BATTLE_BATTLE_H */
