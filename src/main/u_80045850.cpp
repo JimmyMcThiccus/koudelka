@@ -2032,7 +2032,33 @@ EXTERN_C void func_8005287C(void *p, unsigned char a)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8005294C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052B60);
+EXTERN_C void func_80052B60(void *p)
+{
+    C_80054AF0 *o = new C_80054AF0(2);
+    C_80053928 *q;
+    C_80054584b *r;
+    C_80053928 *s;
+    AT(p, void *, 0x58) = o;
+    func_80054EB4(o, 0x130, 0x13);
+    ((A2B_V53 *)AT(p, void *, 0x58))->s3(S_A2B_Pt(8, 0x70));
+    {
+        S_A2_Sv sv;
+        sv.x = 0; sv.y = 0; sv.z = 0; sv.pad = 0;
+        func_80054F30(AT(p, void *, 0x58), 0, &sv, 0);
+    }
+    q = new C_80053928;
+    AT(p, void *, 0x5C) = q;
+    func_80053CD8(q);
+    r = new C_80054584b(0);
+    AT(p, void *, 0x64) = r;
+    func_80053CD8(r);
+    s = new C_80053928;
+    AT(p, void *, 0x60) = s;
+    func_80053CD8(s);
+    func_80054E18(AT(p, void *, 0x58), AT(p, void *, 0x5C));
+    func_80054E18(AT(p, void *, 0x58), AT(p, void *, 0x64));
+    func_80054E18(AT(p, void *, 0x58), AT(p, void *, 0x60));
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052C8C);
 

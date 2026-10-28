@@ -114,4 +114,10 @@ EXTERN_C S_A2B_OtB *D_800B4CFC;
 struct S_A2B_StrC { char pad[0x10]; S_A2_Ch *p; unsigned len; };
 EXTERN_C void *func_80048D64(void *p, int a, int b, int c, int d, int e);
 EXTERN_C void func_80036D8C(void *p);
+struct C_80054AF0 { C_80054AF0(int a) asm("func_80054AF0"); char pad[0x50]; };
+EXTERN_C void func_80054EB4(void *p, int a, int b);
+EXTERN_C void func_80054F30(void *p, int a, void *sv, int b);
+EXTERN_C void func_80054E18(void *p, void *q);
+EXTERN_C void func_80053CD8(void *p);
+struct C_80054584b : C_80053928 { int u1c, u20, u24; C_80054584b(int a) asm("func_80054584"); };
 #endif /* GAME_A2B_A2B_H */
