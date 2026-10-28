@@ -698,17 +698,36 @@ EXTERN_C int func_800BE084(S_800BE068 *p) { return p->b8; }
 
 EXTERN_C int func_800BE090(S_800BE068 *p) { return p->sA; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE09C);
+EXTERN_C T_BE0F8 *func_800BE09C(T_BE0F8 *p) {
+    T_4DD0 *g = D_800B4DD0[0];
+    p->f0 = 1;
+    p->f4 = ((((short *)func_80062118(g))[1] + 0x200) & 0xFFF) / 1024;
+    return p;
+}
 
 EXTERN_C T_BE0F8 *func_800BE0F8(T_BE0F8 *p, T_BE0F8 *q) { p->f0 = q->f0; return p; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE108);
+EXTERN_C T_BE0F8 *func_800BE108(T_BE0F8 *p, void *qv) {
+    unsigned short v = ((T_BE108 *)qv)->h18;
+    if (v & 0x400) func_800BE29C(&p->f0, -1);
+    else if (v & 0x800) func_800BE29C(&p->f0, 1);
+    else if (v & 0x100) func_800BE2EC(&p->f0, -1);
+    else if (v & 0x200) func_800BE2EC(&p->f0, 1);
+    return p;
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE18C);
+EXTERN_C T_BE0F8 *func_800BE18C(T_BE0F8 *p, void *x) {
+    func_80062120(D_800B4DD0[0], x);
+    p->f4 = ((((short *)func_80062118(D_800B4DD0[0]))[1] + 0x200) & 0xFFF) / 1024;
+    return p;
+}
 
 EXTERN_C T_BE0F8 *func_800BE1F8(T_BE0F8 *p, int *out) { *out = p->f4; return p; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE208);
+EXTERN_C T_BE0F8 *func_800BE208(T_BE0F8 *p, T_BE208 *out) {
+    *out = *func_80062118(D_800B4DD0[0]);
+    return p;
+}
 
 EXTERN_C void func_800BE274() { func_8006B850(D_800B4ED8[0]); }
 
@@ -724,9 +743,41 @@ EXTERN_C void func_800BE390() { T_BE390 *p = D_800B4ED8[0]; int old = D_800D5D80
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE3B4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE484);
+EXTERN_C T_BE484 *func_800BE484(T_BE484 *p, int a) {
+    func_800756F8(p);
+    p->vtbl = D_800B7384;
+    p->f28 = a;
+    new (p->e30) T_BE484_e[7];
+    T_BE484_c t;
+    T_BE484_c *tp = &t;
+    be484_set(&p->e30[0], t, tp);
+    be484_set(&p->e30[1], t, tp);
+    be484_set(&p->e30[2], t, tp);
+    be484_set(&p->e30[3], t, tp);
+    be484_set(&p->e30[4], t, tp);
+    be484_set(&p->e30[5], t, tp);
+    be484_set(&p->e30[6], t, tp);
+    p->f4 = 0;
+    for (int i = 6; i >= 0; i--) p->f8[i] = 0;
+    p->s26 = 0;
+    p->s24 = 0;
+    void *x = func_800758F8(operator new(0x1C8), 1, D_800B4C18[0], p);
+    void *d = D_800B4C18[0];
+    p->f2C = x;
+    func_8001E848(d, x);
+    func_8007669C(p->f2C, 0x7535, 0x9000);
+    return p;
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE6B8);
+EXTERN_C void func_800BE6B8(T_BE6B8 *p, int flags) {
+    p->vtbl = D_800B7384;
+    if (p->f4) {
+        func_80024FEC(p->f4, 0);
+        delete p->f4;
+    }
+    for (int i = 0; i < p->s26; i++) delete p->f8[i];
+    if (flags & 1) operator delete(p);
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BE7A4);
 
@@ -738,13 +789,40 @@ EXTERN_C void func_800BEBD8() {}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BEBE0);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BEDE8);
+EXTERN_C void func_800BEDE8(T_BEDE8 *p, int flags) {
+    p->vtbl = D_800B73A4;
+    delete p->f14;
+    func_8001D024(p, flags);
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BEE50);
+EXTERN_C void func_800BEE50(T_BEBE0 *pv, T_BEE50_r *a, T_BEE50_r *b) {
+    T_BEE50 *p = (T_BEE50 *)pv;
+    int cols = 2;
+    int rows = 8 / cols;
+    int w = (p->b12 - p->b10 + 1) / cols;
+    int row = (signed char)p->b24 / cols;
+    int h = (p->b13 - p->b11 + 1) / rows;
+    a->x = p->b10 + w * (p->b24 - row * cols);
+    a->y = p->b11 + h * row;
+    b->x = a->x + w - 1;
+    b->y = a->y + h - 1;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BEF98);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF1D0);
+EXTERN_C T_VEC func_800BF1D0(void *self, T_VEC *b) {
+    T_VEC c = ((T_BF1D0_g *)D_800B4ED8[0])->v2C8;
+    T_VEC r;
+    r = func_800BF3B4(&c, b);
+    int len = SquareRoot0(r.x * r.x + r.y * r.y + r.z * r.z);
+    int x = r.x * 1000 / len;
+    int y = r.y * 1000 / len;
+    int z = r.z * 1000 / len;
+    r.x = x + b->x;
+    r.y = y + b->y;
+    r.z = z + b->z;
+    return r;
+}
 
 /* GCC named return value: the result is built in place. */
 EXTERN_C T_VEC func_800BF3B4(T_VEC *a, T_VEC *b) return r
@@ -767,17 +845,97 @@ EXTERN_C void func_800BF404() {}
 
 EXTERN_C void func_800BF40C() {}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF414);
+EXTERN_C void func_800BF414(T_BF5FC *p) {
+    T_BF5FC_n *a = (T_BF5FC_n *)func_800BFCB8((T_BFCB8 *)p, 0);
+    if (!a) return;
+    T_BF5FC_n *b = (T_BF5FC_n *)func_800BFCB8((T_BFCB8 *)p, (int *)a);
+    if (!b) return;
+    T_AFA58 *o[4];
+    T_AFA58 *d[4];
+    T_BF414_x x;
+    int team = p->b4BC;
+    T_C19BC_g *g = (T_C19BC_g *)D_800AF470[0];
+    for (int i = 0; i < 3; i++) {
+        T_BF414_b *q = g->f328 ? (T_BF414_b *)g->f328->fB8 : 0;
+        o[i] = q->f8[i];
+        d[i] = D_800AFA58[i];
+        x.e[i] = o[i] ? (T_AFA58 *)o[i]->f1B8 : 0;
+        x.e[i + 3] = d[i] ? (T_AFA58 *)d[i]->f1B8 : 0;
+    }
+    p->f4C0 = func_800D7048(operator new(0x24), team, x.e[0], x.e[1], x.e[2], x.e[3], x.e[4], x.e[5]);
+    a->sC = (a->sC + b->sC) / 2;
+    a->sE = (a->sE + b->sE) / 2;
+    func_8008299C(p ? p->f2A0 : 0, 9, a->sC, a->sE, p->b4E4 != 0, 0, 0);
+    func_800BFC18((T_BFCB8 *)p);
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF5FC);
+EXTERN_C int func_800BF5FC(T_BF5FC *p) {
+    T_BF5FC_n *a = (T_BF5FC_n *)func_800BFCB8((T_BFCB8 *)p, 0);
+    if (!a) {
+        func_8008299C(p ? p->f2A0 : 0, 0xB, p->b4E4 != 0, 0, 0, 0, 0);
+        if (p->b4BD == 1) func_8008299C(p ? p->f2A0 : 0, 0x1E, 0x800, 0x14, 0, 0, 0);
+        else func_8008299C(p ? p->f2A0 : 0, 0x1E, 0, 0x14, 0, 0, 0);
+        return 0;
+    }
+    T_BF5FC_n *b = (T_BF5FC_n *)func_800BFCB8((T_BFCB8 *)p, (int *)a);
+    if (!b) {
+        func_8008299C(p ? p->f2A0 : 0, 0xA, a->sC, a->sE, p->b4E4 != 0, 0, 0);
+    } else {
+        a->sC = (a->sC + b->sC) / 2;
+        a->sE = (a->sE + b->sE) / 2;
+        func_8008299C(p ? p->f2A0 : 0, 0xA, a->sC, a->sE, p->b4E4 != 0, 0, 0);
+    }
+    func_800BFC18((T_BFCB8 *)p);
+    return 1;
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF76C);
+EXTERN_C void func_800BF76C(T_BF76C *p, SVec2 pos, int flag) {
+    func_800D8F98(p ? p->f400 : 0);
+    p->f4B4 += p->h480;
+    p->h4B8 |= 1;
+    if (flag) {
+        func_8008299C(p ? p->f2A0 : 0, 0x19, 3, 0, 0, 0, 0);
+        T_VEC v;
+        T_VEC *q = &v;
+        v.x = 0;
+        q->y = 0;
+        q->z = 0;
+        q->w = 0;
+        v.x = (pos.x - 2) * 0x960;
+        v.y = 0;
+        v.z = (3 - pos.y) * 0x960;
+        func_8008299C(p ? p->f2A0 : 0, 0x1D, v.x, v.y, v.z, 0, 0);
+    } else {
+        func_800CAAF8(((T_C19BC_g *)D_800AF470[0])->f32C, p, &pos);
+        func_800BF414((T_BF5FC *)p);
+        while (func_800BF5FC((T_BF5FC *)p)) ;
+    }
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF8B4);
+EXTERN_C void func_800BF8B4(T_BF968 *p, int mode, short x, short y) {
+    SVec2C v(x, y);
+    if (p->b4E4 == 0) {
+        switch (mode) {
+        case 0: func_80043460(p, v, 0, 0); break;
+        case 1: func_80043460(p, v, 0, 1); break;
+        }
+    } else {
+        func_80043540(p, v, 0x14);
+    }
+}
 
 EXTERN_C void func_800BF968(T_BF968 *p) { if (p->f4C0) { delete p->f4C0; p->f4C0 = 0; } if (p->b4E4 == 0) { p->fF8 = 0; p->s220 = 0; p->b120++; } }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BF9DC);
+EXTERN_C void func_800BF9DC(T_C1158 *p, int a, int b) {
+    SVec4 *r = &p->f1B8->v2C;
+    short d = SquareRoot0(r->x * r->x + r->y * r->y + r->z * r->z);
+    T_VEC pos = p->f1B8->f34;
+    int c = -func_80026014(d) * a;
+    int sn = -func_800260A4(d) * a;
+    int dx = c / 4096;
+    int dz = sn / 4096;
+    func_80043540(p, SVec2C(pos.x + dx, pos.z + dz), b);
+}
 
 EXTERN_C void func_800BFB18(T_BFB18 *p, int a, int b) { T_BFB18_t t; func_8003A150(&t, func_8003912C(p->f1B8, 9), 0); func_800C3FF4(operator new(0x60), 1, &t, a, b); }
 
@@ -795,11 +953,32 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800BFCD8);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C02C8);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C0608);
+EXTERN_C void func_800C0608(T_C1340 *p, SVec2 v, int a) {
+    p->f4D0 = grid_at((T_CFD98 *)((T_C19BC_g *)D_800AF470[0])->f32C, v);
+    func_800C0694_t((T_C0694 *)p, a);
+}
 
 EXTERN_C void func_800C0670(T_B9268 *p, void *a, int b) { p->f4D0 = a; func_800C0694(p, b); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C0694);
+EXTERN_C int func_800C0694_t(T_C0694 *p, int a) {
+    int n;
+    if (p->b4BD == 1) {
+        n = e_bits(&((T_C0694_e *)p->b578)[p->s53E]);
+        if (n >= 3) n = 2;
+    } else {
+        n = 2;
+    }
+    void *g = ((T_C19BC_g *)D_800AF470[0])->f32C;
+    if (!func_800C9D6C(g, p, p->f4D0, p->f4D4, p->f4D8, n)) return 0;
+    p->s53C = 2;
+    p->s50C = 2;
+    if (!a) (p ? (T_C0694_B *)p->f400 : 0)->v10(p->s53E);
+    p->b4AD = 1;
+    if (p->b4BD == 1) func_8008299C(p ? p->f2A0 : 0, 0, 0, 0, 0, 0, 0);
+    func_8008299C(p ? p->f2A0 : 0, 0x13, 0, 0, 0, 0, 0);
+    func_80085F90(p);
+    return 1;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C07F8);
 
@@ -807,11 +986,30 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C0EB8);
 
 EXTERN_C void func_800C1118(T_C1340 *p) { if (p->s410 == 0) func_80082E14(p ? p->f2A0 : 0, 0); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1158);
+EXTERN_C void func_800C1158(T_C1158 *p) {
+    if (p->f4D0) {
+        T_VEC a = p->f1B8->f34;
+        T_VEC b = p->f4D0->f1B8->f34;
+        int dz = b.z - a.z;
+        int dx = b.x - a.x;
+        if (dz || dx) {
+            int ang = ratan2(dx, dz);
+            while (ang < 0) ang += 0x1000;
+            ang = (ang + 0x800) & 0xFFF;
+            func_8008299C(p ? p->f2A0 : 0, 0x1E, ang, 0x14, 0, 0, 0);
+        }
+    }
+}
 
 EXTERN_C void func_800C1254(T_C1340 *p) { if (p->f4D0) { if (p->b4BD == 1) func_8008299C(p ? p->f2A0 : 0, 0x1E, 0x800, 0x14, 0, 0, 0); else func_8008299C(p ? p->f2A0 : 0, 0x1E, 0x1000, 0x14, 0, 0, 0); } }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C12D0);
+EXTERN_C void func_800C12D0(T_C1340 *p, SVec2 v) {
+    T_C19BC_g *g = (T_C19BC_g *)D_800AF470[0];
+    p->s53C = 3;
+    p->s50C = 3;
+    p->f4D0 = grid_at((T_CFD98 *)g->f32C, v);
+    func_800C1360(p);
+}
 
 EXTERN_C void func_800C1340(T_C1340 *p, int v) { p->f4D0 = v; func_800C1360(p); }
 
@@ -819,17 +1017,37 @@ EXTERN_C int func_800C1360(T_C1340 *p) { p->s53C = 3; p->s50C = 3; p->s480 = 0; 
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C13CC);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C18B4);
+EXTERN_C void func_800C18B4(T_C19BC *p, int x) {
+    func_800C19BC(p, x, p->f4D0);
+    func_800BE7A4((T_BE7A4 *)((T_C19BC_g *)D_800AF470[0])->f328->f114, p->h490, p->f4D0->f1B8, 0x10, 0, 0);
+    func_800CBB84_b(((T_C19BC_g *)D_800AF470[0])->f32C);
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1924);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C19BC);
+EXTERN_C void func_800C19BC(T_C19BC *a, int unused, T_C19BC *b) {
+    short s = a->s50C;
+    b->b50E = 1;
+    b->s50C = s;
+    if (b) func_800C1BE4(b, a);
+    func_800CBB84_b(((T_C19BC_g *)D_800AF470[0])->f32C);
+}
 
 EXTERN_C T_C1A44 *func_800C1A10(T_C1A44 *p) { func_80074F58(p); p->vtblC = D_80017904; return p; }
 
 EXTERN_C void func_800C1A44(T_C1A44 *p, int flags) { p->vtblC = D_80017904; func_80074F78(p, flags); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1A6C);
+EXTERN_C void *func_800C1A6C_2(void *lv, int team) {
+    T_C1A6C *l = (T_C1A6C *)lv;
+    if (!l->head) return 0;
+    l->cur = l->head;
+    for (;;) {
+        if (l->get()->b4BC == team) return l->get();
+        if (l->is_last()) break;
+        l->next();
+    }
+    return 0;
+}
 
 EXTERN_C void func_800C1B48(void *p) { T_Obj0 *q; while ((q = func_800C1B48_pop(p)) != 0) delete q; }
 
@@ -901,7 +1119,27 @@ INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B73A4);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1BE4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1E44);
+EXTERN_C int func_800C1E44(T_C1E44 *p, int *out) {
+    int r = func_80089024(p ? p->f400 : 0);
+    *out = r;
+    if (r != (int)0x80000000) {
+        if (r < 0) p->b512 = 1;
+        int r2 = func_8008906C(p ? p->f400 : 0);
+        if (r2 != (int)0x80000000 && r2 < 0) p->b513 = 1;
+        func_800890B4(p ? p->f400 : 0);
+        return 0;
+    }
+    int r2 = func_8008906C(p ? p->f400 : 0);
+    *out = r2;
+    if (r2 != (int)0x80000000) {
+        if (r2 < 0) p->b513 = 1;
+        func_800890B4(p ? p->f400 : 0);
+        return 1;
+    }
+    int r3 = func_800890B4(p ? p->f400 : 0);
+    *out = r3;
+    return r3 != (int)0x80000000 ? 2 : 0;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C1F5C);
 
@@ -933,23 +1171,79 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3D2C);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3DAC);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3E34);
+EXTERN_C void func_800C3E34(T_C3E34 *p, int i, int j, int *o1, int *o2) {
+    C3E34_get(&p->r[i], j, o1, o2);
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3E84);
+EXTERN_C void func_800C3E84(T_C3E34 *p, int *o1, int *o2) {
+    if (p->s53C == 3) {
+        func_800C3F14(p, o1, o2);
+    } else {
+        T_C3E34 *q = func_800C9E58_b(((T_C19BC_g *)D_800AF470[0])->f32C, 0);
+        int eq = p->b4BD == q->b4BD;
+        func_800C3D2C(p, p->s53E, eq, o1, o2);
+    }
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3F14);
+EXTERN_C void func_800C3F14(T_C3E34 *p, int *o1, int *o2) {
+    T_C3E34 *q = func_800C9E58_b(((T_C19BC_g *)D_800AF470[0])->f32C, 0);
+    func_800C3DAC(p, p->f540, p->b4BD == q->b4BD, o1, o2);
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3F84);
+EXTERN_C void func_800C3F84(T_C3E34 *p, int *o1, int *o2) {
+    T_C3E34 *q = func_800C9E58_b(((T_C19BC_g *)D_800AF470[0])->f32C, 0);
+    int eq = p->b4BD == q->b4BD;
+    func_800C3E34(p, p->s53E, eq, o1, o2);
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C3FF4);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C41AC);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C435C);
+EXTERN_C void func_800C435C(T_C435C *p, int x) {
+    if (p->f8) {
+        func_8005C088(p, x, 1);
+        List *l = p->f30;
+        func_80019A6C(l, (int)func_800C4510((T_C4510 *)operator new(0x3C), (SVec4 *)p->f44, p->f4C, p->f50), count_of(l));
+        func_8002DA94(x, p->f30);
+    }
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C43F0);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C4510);
+EXTERN_C T_C4510 *func_800C4510(T_C4510 *p, SVec4 *pos, int a, int flags) {
+    ((F_5F0E4)func_8005F0E4)(p, 2);
+    p->vtbl = D_800B7538;
+    p->f10 = *pos;
+    p->f18.x = 0;
+    p->f18.y = 0;
+    p->f34 = 1;
+    SetDrawMode(&p->f1C[0], 0, 0, (unsigned short)func_80060154(D_800AE640, 0x40), 0);
+    SetDrawMode(&p->f1C[1], 0, 0, (unsigned short)func_80060154(D_800AE640, 0x40), 0);
+    if (a == (int)0x80000000) func_800C4EC4(p);
+    else func_800C4B70(p, a, flags & 0xFFFB);
+    if (flags & 4) {
+        T_BCB6C_c *c = D_800B4CB0;
+        for (unsigned int i = 0; i < p->f34; i += 2) {
+            int k = i + D_800B4CF0[0];
+            p->f38[k].b.r = c->r;
+            p->f38[k].b.g = c->g;
+            p->f38[k].b.b = c->b;
+        }
+    }
+    int cur = D_800B4CF0[0];
+    int oth = cur ^ 1;
+    for (unsigned int i = 0; i < p->f34; i += 2) {
+        T_C4510_q *src = (T_C4510_q *)&p->f38[i + cur];
+        int a = src->a, b = src->b, c = src->c;
+        T_C4510_q *dst = (T_C4510_q *)&p->f38[i + oth];
+        dst->a = a;
+        dst->b = b;
+        dst->c = c;
+    }
+    func_8005F1D8(p);
+    return p;
+}
 
 EXTERN_C void func_800C46F0(T_C46F0 *p, int flags) { p->vtbl = D_800B7538; if (p->f38) delete[] (char *)p->f38; p->f38 = 0; func_8005F120(p, flags); }
 
@@ -957,27 +1251,90 @@ EXTERN_C void func_800C4748(T_C4748 *p, int a, int b) { p->s18 += a; p->s1A += b
 
 EXTERN_C void func_800C477C() {}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C4784);
+EXTERN_C void func_800C4784(T_C4784 *p, int a, int b) {
+    int i = D_800B4CF0[0];
+    p->v11(a - p->f38[i].x, b - p->f38[i].y);
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C47D8);
+EXTERN_C T_C47D8 *func_800C47D8(T_C47D8 *p) {
+    T_C47D8 *q = (T_C47D8 *)operator new(0x3C);
+    q->vtbl = D_80010178;
+    int t4 = p->f4;
+    q->vtbl = D_800111BC;
+    q->f4 = t4;
+    q->s8 = p->s8;
+    short tA = p->sA;
+    q->vtbl = D_80014BD0;
+    q->sA = tA;
+    int tC = p->fC;
+    q->vtbl = D_800B7538;
+    q->fC = tC;
+    q->f10 = p->f10;
+    q->f18 = p->f18;
+    T_C47D8_1C *d = q->f1C;
+    int n = 1;
+    T_C47D8_1C *src = p->f1C;
+    do {
+        *d = *src;
+        d++;
+        n--;
+        src++;
+    } while (n != -1);
+    q->f34 = p->f34;
+    q->f38 = p->f38;
+    return q;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C48D8);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C4B70);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C4EC4);
+EXTERN_C void func_800C4EC4(T_C4510 *p) {
+    T_BCB6C_c *c = D_800B4C88;
+    p->f34 = 8;
+    p->f38 = (T_C4510_p *)func_800A0D2C(0x80);
+    for (unsigned int i = 0; i < p->f34; i++) {
+        ((T_C4EC4_s *)p->f38)[i].len = 3;
+        ((T_C4EC4_s *)p->f38)[i].code = 0x74;
+    }
+    int tp = func_800600A4(D_800AE640, 0x40);
+    for (unsigned int i = 0; i < p->f34; i += 2) {
+        int h = i >> 1;
+        int k = i + D_800B4CF0[0];
+        ((T_C4EC4_s *)p->f38)[k].r = c->r;
+        ((T_C4EC4_s *)p->f38)[k].g = c->g;
+        ((T_C4EC4_s *)p->f38)[k].b = c->b;
+        ((T_C4EC4_s *)p->f38)[k].x = -(h * 8);
+        ((T_C4EC4_s *)p->f38)[k].y = 0;
+        int u = 0x98 - h * 8;
+        ((T_C4EC4_s *)p->f38)[k].u = u;
+        ((T_C4EC4_s *)p->f38)[k].v = 0;
+        ((T_C4EC4_s *)p->f38)[k].clut = tp;
+    }
+}
 
 EXTERN_C void func_800C5018() {}
 
-INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B73D0);
-
-INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7420);
-
-INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7518);
-
-INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7538);
-
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5020);
+EXTERN_C void *func_800C5020(void *pv, char *str, int n) {
+    T_C5020 *p = (T_C5020 *)pv;
+    func_800537C0(p);
+    p->vtbl8 = D_800B75A0;
+    func_800538CC(p->fC, str, 0);
+    func_80054AF0(p->f28, 1);
+    func_8005388C(p, n);
+    func_80053FB0(p->fC, 1, 0x130);
+    func_80054E18(p->f28, p->fC);
+    func_80055020(p->f28, SVec2C(0xC, 0xA));
+    func_80054EB4(p->f28, 0x130, 0x10);
+    SVec4 v;
+    v.x = 0;
+    v.y = 0;
+    v.z = 0;
+    v.w = 3;
+    func_80054F30(p->f28, 5, &v, 0);
+    func_80054FC0(p->f28);
+    return p;
+}
 
 EXTERN_C int func_800C5124(T_C5124 *p) { if (func_80053830(p)) return 1; func_80054FE0(p->f28); delete p; return 0; }
 
@@ -989,25 +1346,113 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5474);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C54D8);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C55C4);
+EXTERN_C void func_800C55C4(T_C55C4 *p) {
+    memset(p->e110, 0xFF, 0x1C);
+    p->cur = p->head;
+    int i = 0;
+    for (;;) {
+        S_800D00B8 *n = p->cur;
+        int t = team_of((void *)n->f14);
+        p->e110[i].b3 = t;
+        int v = n->f10;
+        p->e110[i].s0 = v;
+        if (p->is_last()) break;
+        i++;
+        p->next();
+    }
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C56A8);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5880);
+EXTERN_C void func_800C5880(T_C5880 *p, int flags) {
+    p->vtbl = D_800B7748;
+    func_800C1BA8(p->f4);
+    reset_nodes((T_D0054 *)&p->fA4);
+    func_800D0588(p->f908);
+    operator delete(p->f908);
+    T_C5880_e *a = p->a3E8;
+    if (a) {
+        T_C5880_e *e = a + 41;
+        if (a != e) {
+            T_C5880_e *s = a;
+            do { --e; } while (s != e);
+        }
+    }
+    T_D019C *m = &p->fA4;
+    m->vtblC = D_800B7768;
+    func_800D0074((T_D0054 *)m);
+    T_D019C_e *b = m->nodes;
+    if (b) {
+        T_D019C_e *e = b + 10;
+        if (b != e) {
+            T_D019C_e *s = b;
+            do { (--e)->~T_D019C_e(); } while (s != e);
+        }
+    }
+    func_80074F78(m, 2);
+    func_800C1A44((T_C1A44 *)p->f4, 2);
+    if (flags & 1) operator delete(p);
+}
 
 EXTERN_C void func_800C59B8(T_C59B8 *p, T_C59B8_q *q) { func_8007505C(p->f4, q ? q->f4A0 : 0); }
 
 EXTERN_C int func_800C59EC(T_C59EC *p) { int r; void *v = func_800C1A6C(p->f4); if (v) r = func_800C5A30(p, v); else r = 0; return r; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5A30);
+EXTERN_C int func_800C5A30(void *pv, void *qv) {
+    T_C5E1C *p = (T_C5E1C *)pv;
+    T_C5A30_q *q = (T_C5A30_q *)qv;
+    if (!q) return 0;
+    if (q->b4C4) {
+        p->f14[q->s4CA][q->s4C6] = 0;
+        func_80085A58(q);
+    }
+    if (p->fA0 == q) p->fA0 = 0;
+    func_800C54D8(p->fA4, q);
+    char *r = func_80075448((char *)p + 4, q->f4A0);
+    return r ? (int)(r - 0x4A0) : 0;
+}
 
 EXTERN_C void func_800C5AD0(T_C5AD0 *p, T_C5B18_q *q) { if (q && q->b4C4) { if (p->fA0 == q) p->fA0 = 0; func_800C54D8(p->fA4, q); } }
 
 EXTERN_C void func_800C5B18(T_C5B18 *p, T_C5B18_q *q) { if (q && q->b4C4) func_800C51D0(p->fA4, q); }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5B4C);
+EXTERN_C int func_800C5B4C(T_C5E1C *p, int team, int x, int y, int a, int b) {
+    if (p->f14[y][x]) return 0;
+    T_C5B4C_q *q = (T_C5B4C_q *)func_800C1A6C_2((char *)p + 4, team);
+    if (!q) return 0;
+    if (!q->b4C4) {
+        p->f14[y][x] = (T_C1340 *)q;
+        SVec4 pos;
+        SVec4 *pp = &pos;
+        pos.x = x;
+        pp->y = a;
+        pp->z = y;
+        pp->w = 0;
+        func_80085A08(q, pos, b);
+        T_VEC v;
+        int f = q->b4BD == 1;
+        v.x = (x - 2) * 0x960;
+        v.z = (3 - y) * 0x960;
+        v.y = 0;
+        v.w = 0;
+        func_800849D0(q, v, f << 11, 1);
+        pos.x = x;
+        pp->y = y;
+        func_800CDED8_b(&p->f3D8, (SVec2 *)pp, q);
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C5CC4);
+EXTERN_C int func_800C5CC4(T_C5E1C *p, int a, int x, int y) {
+    if (p->f14[y][x]) return 0;
+    T_C5A30_q *q = (T_C5A30_q *)func_800C1A6C_2((char *)p + 4, a);
+    if (!q) return 0;
+    p->f14[q->s4CA][q->s4C6] = 0;
+    p->f14[y][x] = (T_C1340 *)q;
+    func_80085A60(q, SVec2C(x, y));
+    return 1;
+}
 
 EXTERN_C T_C5D84 *func_800C5D84_r(T_C5E1C *p, int a) {
     T_C5D84 *q = (T_C5D84 *)func_800C1A6C((char *)p + 4);
@@ -1052,6 +1497,16 @@ EXTERN_C int func_800C65C8(T_C65C8 *p, int a) {
 }
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C666C);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B73D0);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7420);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7518);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B7538);
+
+INCLUDE_RODATA("asm/battle/nonmatchings/battle", D_800B75A0);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle", func_800C68D8);
 
