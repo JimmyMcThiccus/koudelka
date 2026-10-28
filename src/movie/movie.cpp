@@ -2026,91 +2026,100 @@ EXTERN_C void func_800C65FC() {}
 
 EXTERN_C void func_800C6604(void* p) { func_8005F120(p); }
 
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B24);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B28);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B34);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B40);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B50);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B60);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B6C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B80);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B90);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BA0);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BB4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BC4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BF4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C44);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C64);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CAC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CB4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CBC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CC0);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CD4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CFC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D14);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D54);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D60);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D64);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D6C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D78);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D94);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DD0);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DE4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DEC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7E1C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7E6C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7F64);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7F8C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7FB4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8004);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8024);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8054);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8094);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B80C4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B80D4);
-
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C6624);
+EXTERN_C Unk800C6624* func_800C6624(Unk800C6624* self, s32 in_chrg, s32 a) {
+  Unk800C5380T vt;
+  char* full; int adj;
+  if (in_chrg) {
+    self->x50 = &self->x614;
+    Unk800C5380V* v = self->x50;
+    v->vptr = D_80010178; v->x4 = 0; v->vptr = D_800104A8;
+  }
+  func_800630BC(self, 0, 3);
+  self->x50->vptr = &D_800B8214;
+  if (!in_chrg) {
+    vt = D_800B8214;
+    self->x50->vptr = &vt;
+    vt.e[1].delta = D_800B8214.e[1].delta + (adj = (char*)self - (full = (char*)self->x50 - 0x614));
+    vt.e[6].delta = D_800B8214.e[6].delta + adj;
+  }
+  self->x54 = D_800B8284; self->x58 = D_800B8264; self->x18 = D_800B82B4;
+  self->x68 = 0;
+  { Unk800C6624E* q = self->x74; s32 n = 7; do { func_80054B98(q); q++; } while (--n != -1); }
+  { Unk800C6624S* q = self->x2F4; s32 n = 7; do { func_80053928(q); q++; } while (--n != -1); }
+  { Unk800C6624S* q = self->x3D4; s32 n = 7; do { func_80053928(q); q++; } while (--n != -1); }
+  self->x4BC = 0;
+  self->x4C0 = 0;
+  func_80054AF0(self->x4C4, 1);
+  func_80053928(self->x514);
+  func_800538CC(self->x530, (void*)D_800B813C, 8);
+  func_800538CC(self->x54C, (void*)D_800B8150, 6);
+  func_800C8E64((Unk800C8E64*)self->x568, 1);
+  if (D_800CBAC8[0] == 0) {
+    Unk800C5B80A t;
+    D_800CBAC8[0] = 1;
+    func_8005F238(&t);
+    func_8005F298(&t, 0x14349, 0x2000);
+    func_80060588(D_800B4DD0[0], func_8005F28C(&t));
+    func_8005F3E0(&t);
+    func_8005F248(&t, 2);
+  }
+  self->x6C = a;
+  self->x610 = 0;
+  self->x4B4 = 0;
+  self->x4B8 = 0;
+  func_80053BCC(self, (void*)D_800B8160, 7);
+  func_80053C6C(self->x514, self);
+  func_8005457C(self->x514, 0);
+  func_80053FB0(self->x514, 0, 0x130);
+  func_80054E18(self->x4C4, self->x514);
+  {
+    u32 i = 0;
+    Unk800C10BCP t;
+    Unk800C10BCP* tp = &t;
+    t.x = 8; tp->y = 0xC;
+    func_80055020(self->x4C4, t);
+    func_80054EB4(self->x4C4, 0x130, 0x10);
+    while (1) {
+      if (!(i < 4)) break;
+      Unk800C10BCP* tp = &t; /* loop-local pointer (loop.c hoists it; keeps the outer tp's set early and spilled) */
+      func_80054EB4(&self->x74[i], 0x64, 0x16);
+      t.y = 0x86 + i * 0x18; t.x = 0xD2;
+      func_80053F48(&self->x74[i], t);
+      func_8005408C(&self->x2F4[i], 2);
+      tp->y = 4; t.x = 0x60;
+      func_80053F48(&self->x2F4[i], t);
+      func_80054E18(&self->x74[i], &self->x2F4[i]);
+      func_80054EB4(&self->x74[i + 4], 0x68, 0x16);
+      t.y = 0x1E + i * 0x18; t.x = 0xD0;
+      func_80053F48(&self->x74[i + 4], t);
+      func_8005408C(&self->x2F4[i + 4], 2);
+      t.x = 0x60; tp->y = 4;
+      func_80053F48(&self->x2F4[i + 4], t);
+      func_80054E18(&self->x74[i + 4], &self->x2F4[i + 4]);
+      i++;
+    }
+  }
+  {
+    func_80053BCC(self->x3D4[0].d, (void*)D_800B8170, 10);
+    func_80053BCC(self->x3D4[1].d, (void*)D_800B8188, 9);
+    func_80053BCC(self->x3D4[2].d, (void*)D_800B819C, 9);
+    func_80053BCC(self->x3D4[3].d, (void*)D_800B81B0, 7);
+    func_80053BCC(self->x3D4[4].d, (void*)D_800B81C0, 8);
+    func_80053BCC(self->x3D4[5].d, (void*)D_800B81D4, 8);
+    func_80053BCC(self->x3D4[6].d, (void*)D_800B81E8, 8);
+    func_80053BCC(self->x3D4[7].d, (void*)D_800B81FC, 9);
+    func_80054EB4(self, 0x54, 0x21);
+    Unk800C10BCP t;
+    Unk800C10BCP* tp = &t;
+    t.x = 9; tp->y = 2;
+    func_80053F48(self->x54C, t);
+    t.x = 9; tp->y = 0xF;
+    func_80053F48(self->x530, t);
+    func_80054E18(self, self->x54C);
+    func_80054E18(self, self->x530);
+  }
+  return self;
+}
 
 EXTERN_C void func_800C6B94(Unk800C6B94* p) { RECT r; u32 i; p->x68 = 0; func_800566E4(p); func_80055330(0); RECT* rp = &r; r.x = 0; rp->y = 1; r.w = 0; r.h = 2; func_80054F30(p->x4C4, 7, &r, 0); func_80054FC0(p->x4C4); for (i = 0; i < 8; i++) func_8005556C(2, 1); func_8005549C(3, p, 0, -1); }
 
@@ -2334,6 +2343,112 @@ EXTERN_C void func_800C7C3C(Unk800C7C3C* self, int in_chrg) {
   if (in_chrg & 2) func_8001A610(self->x0, 0);
   if (in_chrg & 1) operator delete(self);
 }
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B24);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B28);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B34);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B40);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B50);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B60);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B6C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B80);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7B90);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BA0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BB4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BC4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7BF4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C44);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7C64);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CAC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CB4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CBC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CC0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CD4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7CFC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D14);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D54);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D60);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D64);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D6C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D78);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7D94);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DD0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DE4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7DEC);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7E1C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7E6C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7F64);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7F8C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7FB4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8004);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8024);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8054);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8094);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B80C4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B80D4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B813C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8150);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8160);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8170);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8188);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B819C);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B81B0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B81C0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B81D4);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B81E8);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B81FC);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B8214);
 

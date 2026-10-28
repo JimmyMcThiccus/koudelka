@@ -1381,4 +1381,17 @@ struct Unk800BCB14E { s16 delta; s16 index; s32 (*pfn)(void*, Unk800C10BCP); };
 struct Unk800BCB14O { Unk800BCB14E* vt; };
 inline Unk800C10BCP Unk800BCB14_pos(Unk800C595CR* q) { Unk800C595CR r = *q; return r.xy; }
 
+/* func_800C6624 */
+/* ctor of the func_800C77F0 object; virtual base at 0x614 */
+struct Unk800C6624S { char d[0x1C]; };
+struct Unk800C6624E { char d[0x50]; };
+struct Unk800C6624 { char p0[0x18]; const void* x18; char p1[0x50 - 0x1C]; Unk800C5380V* x50; const void* x54; const void* x58; char p2[0x68 - 0x5C]; s32 x68; s32 x6C; char p3[0x74 - 0x70];
+  Unk800C6624E x74[8]; Unk800C6624S x2F4[8]; Unk800C6624S x3D4[8]; Unk800C7740O* x4B4; s32 x4B8, x4BC, x4C0; char x4C4[0x514 - 0x4C4]; char x514[0x1C]; char x530[0x1C]; char x54C[0x1C];
+  char x568[0x610 - 0x568]; s32 x610; Unk800C5380V x614; };
+EXTERN_C const char D_800B813C[], D_800B8150[], D_800B8160[], D_800B8170[], D_800B8188[], D_800B819C[], D_800B81B0[], D_800B81C0[], D_800B81D4[], D_800B81E8[], D_800B81FC[];
+EXTERN_C void func_80054B98(void*);
+EXTERN_C void func_80053FB0(void*, s32, s32);
+EXTERN_C void func_80055020(void*, Unk800C10BCP);
+EXTERN_C Unk800C8E64* func_800C8E64(Unk800C8E64*, s32);
+
 #endif /* MOVIE_H */
