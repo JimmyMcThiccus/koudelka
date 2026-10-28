@@ -1366,4 +1366,13 @@ EXTERN_C void func_80025444(void*, void*, s32);
 
 EXTERN_C void func_800BEED4(Unk800BEED4*);
 
+/* func_800BEF3C */
+struct Unk800BEF3CV { const void* vptr; s32 x4; };
+struct Unk800BEF3CE { char d[0x254]; };
+struct Unk800BEF3CO { const void* x0; const void* x4; void* x8; s16 xC, xE, x10, x12; };
+struct Unk800BEF3C { char p0[0x18 - 0x0]; const void* x18; char p1[0x50 - 0x1C]; Unk800BEF3CV* x50; const void* x54; const void* x58; char p2[0x68 - 0x5C]; s32 x68; s32 x6C; s32 x70; s32 x74; s32 x78; char x7C[0x50]; char xCC[0x1C]; char xE8[0x1C]; char x104[0x1C]; char x120[0x1C]; char x13C[0x28]; char x164[0x28]; s32 x18C; s32 x190; char x194[0x5C]; char x1F0[0x50]; char x240[0x1C]; char x25C[0x1C]; Unk800BEF3CE x278[15]; s32 x2564; char x2568[0x60]; s32 x25C8; char p3[0x25D8 - 0x25CC]; char x25D8[0x5C]; s32 x2634; s32 x2638; char p4[0x26BC - 0x263C]; char x26BC[0x6C]; char x2728[0x5C]; s32 x2784; char p5[0x27A0 - 0x2788]; char x27A0[0x5C]; s32 x27FC; char p6[0x2818 - 0x2800]; void* x2818; Unk800BEF3CV x281C; };
+EXTERN_C char D_800B776C[], D_800B77B0[];
+EXTERN_C void* D_800B4D60[];
+EXTERN_C void func_80062C3C(void*, s32, void*, s32, s32);
+
 #endif /* MOVIE_H */
