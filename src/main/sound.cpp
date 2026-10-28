@@ -1577,7 +1577,56 @@ EXTERN_C void func_8008DD50(char *drv, unsigned int mask)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008DEE4);
+EXTERN_C void func_8008E024(void *drv);
+EXTERN_C void func_80093A40(void *t, int bits);
+
+EXTERN_C void func_8008DEE4(char *drv, int idx)
+{
+    unsigned char *p;
+    int n;
+    int off;
+    int j;
+    int m;
+    int k;
+    char *t;
+
+    if (drv == 0) {
+        return;
+    }
+    func_8008E024(drv);
+    p = FIELD_AT(drv, unsigned char *, 0x18);
+    if (p == 0) {
+        return;
+    }
+    n = (FIELD_AT(p, unsigned short, 0x6) >> 8) + ((FIELD_AT(p, unsigned short, 0x6) & 0xFF) << 8);
+    if (n == 0) {
+        func_8009482C(0x30, 0);
+        return;
+    }
+    if (n - 1 < idx) {
+        func_8009482C(0x31, 0);
+        return;
+    }
+    off = *(unsigned short *)((idx << 1) + p + 8);
+    if (off == 0) {
+        return;
+    }
+    p += off;
+    n = (FIELD_AT(p, unsigned short, 0x2) >> 8) + ((FIELD_AT(p, unsigned short, 0x2) & 0xFF) << 8);
+    for (j = 0; j < n; j++) {
+        t = FIELD_AT(drv, char *, 0xC) + p[6] * 0x160;
+        FIELD_AT(t, short, 0x70) = p[10];
+        FIELD_AT(t, short, 0x72) = p[11];
+        p += 8;
+    }
+    t = FIELD_AT(drv, char *, 0xC) + 0x160;
+    k = FIELD_AT(drv, unsigned char, 0x2A) - 1;
+    while (k != 0) {
+        k--;
+        func_80093A40(t, 4);
+        t += 0x160;
+    }
+}
 
 EXTERN_C void func_8008E024(void *drv)
 {

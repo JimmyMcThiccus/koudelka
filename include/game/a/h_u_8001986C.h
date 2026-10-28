@@ -19,7 +19,7 @@ EXTERN_C int D_800A4578[];
 EXTERN_C void *func_800A0D2C(int size);
 EXTERN_C void func_800A0D0C(void *p);
 EXTERN_C int func_80019B2C(void *p, int v, int start);
-EXTERN_C void func_80019D5C(void *p, int i, int v, int n);
+EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n);
 EXTERN_C void func_8001B910(int a);
 EXTERN_C void func_8001BBBC(int a);
 EXTERN_C void func_8001C9D0();

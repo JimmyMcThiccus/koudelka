@@ -612,4 +612,18 @@ inline void init_20C64(S_20C64 *p)
     func_80019A6C(l, (int)p, l->count);
 }
 
+
+EXTERN_C void *D_80010828[];
+EXTERN_C void *D_800103D0[];
+EXTERN_C char D_800A4554[];
+EXTERN_C void func_8001E03C(void *l, void *n);
+struct S_N3D0 : S_Obj178 {
+    void *unk8;
+    short unkC;
+    int unk10;
+    int unk14;
+    S_N3D0(void *a) { vtbl = D_800103D0; unk8 = a; unkC = -0x8000; unk10 = 0; unk14 = 0; }
+};
+struct S_Vt0 { void **vtbl; };
+
 #endif /* GAME_A_H_U_80020B70_H */

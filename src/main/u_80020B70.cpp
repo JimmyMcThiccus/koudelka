@@ -1352,13 +1352,14 @@ EXTERN_C int func_80025268(S_80025268 *p)
     return 0;
 }
 
-INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_800107C8);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_800107F0);
-
-INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_80010800);
-
-INCLUDE_ASM("asm/main/nonmatchings/u_80020B70", func_800252F8);
+EXTERN_C void *func_800252F8(void *v)
+{
+    S_Vt0 *p = (S_Vt0 *)v;
+    p->vtbl = D_80010828;
+    char *l = D_800A4554;
+    func_8001E03C(l, new S_N3D0(p));
+    return p;
+}
 
 EXTERN_C int func_8002537C(char *p)
 {
@@ -1391,6 +1392,14 @@ EXTERN_C void func_80025830()
 {
     func_800252F8(&D_800B4C48);
 }
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_800107C8);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_800107F0);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_80010800);
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_80010828);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80020B70", D_80010840);
 

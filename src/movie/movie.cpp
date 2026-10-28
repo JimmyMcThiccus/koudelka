@@ -3194,4 +3194,4 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", DecDCTvlcBuild);
 
 INCLUDE_ASM("asm/movie/nonmatchings/movie", BUILD_OBJ_AC);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800CBA80);
+EXTERN_C int func_800CBA80(void *p) { return *(u16 *)p; }

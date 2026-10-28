@@ -203,4 +203,9 @@ struct S_TimerIterR {
     }
 };
 
+
+struct VE_201 { short delta; short idx; int (*pfn)(void *); };
+struct S_201DC { void **vt; VE_201 *vt4; };
+struct S_Ev10 { char pad[0x10]; unsigned short id; };
+
 #endif /* GAME_A_H_U_8001F1A8_H */

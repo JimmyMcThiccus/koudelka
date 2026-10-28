@@ -557,7 +557,19 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_8001F1A8", D_80010538);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_8001F1A8", D_80010588);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001F1A8", func_800201DC);
+EXTERN_C int func_800201DC(S_201DC *p, S_Ev10 *e)
+{
+    int r;
+    switch (e->id) {
+    case 0x201: r = p->vt4[1].pfn((char *)p + p->vt4[1].delta); break;
+    case 0x202: r = p->vt4[2].pfn((char *)p + p->vt4[2].delta); break;
+    case 0x203: r = p->vt4[3].pfn((char *)p + p->vt4[3].delta); break;
+    case 0x204: r = p->vt4[4].pfn((char *)p + p->vt4[4].delta); break;
+    case 0x205: r = p->vt4[5].pfn((char *)p + p->vt4[5].delta); break;
+    default: r = 0;
+    }
+    return r;
+}
 
 EXTERN_C int func_800202B4()
 {

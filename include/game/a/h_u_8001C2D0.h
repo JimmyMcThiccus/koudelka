@@ -212,4 +212,9 @@ inline void dtor_8002C6D4(S_8001C38C *p, int flags)
         operator delete(p);
 }
 
+EXTERN_C void *D_800102E8[];
+EXTERN_C void *D_80010360[];
+struct S_E300 { void **vtbl; int unk4; short unk8; short unkA; void *unkC; int unk10; };
+struct S_D720 { void **vtbl; S_Vobj4 in; };
+
 #endif /* GAME_A_H_U_8001C2D0_H */
