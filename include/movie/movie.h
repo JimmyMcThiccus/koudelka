@@ -1249,4 +1249,33 @@ struct Unk800BC12CP { char pad[0x1A]; u16 x1A; };
 struct Unk800BC12C { char pad[0x10A]; s16 x10A, x10C; char p1[0x130 - 0x10E]; s16 x130, x132, x134; char p2[0x13C - 0x136]; u16 x13C; char p3[0x148 - 0x13E]; Unk800BC12CO* x148; };
 inline void Unk800BC12C_ev(Unk800BC12C* p) { Unk800CA59CT* t = func_8001CA10(0x14); Unk800CA59C_ctor3(t); func_8001EFE4(p, t); }
 
+/* func_800C06BC */
+struct Unk800C06BCL { s32 x0; s32 x4; };
+struct Unk800C06BCA { Unk800C06BCL* x0; s32 x4; };
+struct Unk800C06BCB { void* x0; };
+struct Unk800C06BCX : Unk800C06BCA, Unk800C06BCB { };
+struct Unk800C06BCO { char pad[0x18]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(Unk800C10BCP); };
+struct Unk800C06BC { char p0[0x1C]; Unk800C06BCX x1C; char p1[0x74 - 0x28]; s32 x74; Unk800C02D8C* x78; char x7C[0x18C - 0x7C]; s32 x18C, x190; char x194[0x1F0 - 0x194]; char x1F0[0x278 - 0x1F0]; Unk800C01C4O x278[15]; };
+EXTERN_C const char D_800B78D8[], D_800B7968[];
+EXTERN_C void func_800C5A14(Unk800C5A14* p, s32 v);
+EXTERN_C void func_800C5A60(Unk800C5A60* p);
+EXTERN_C int func_800C38C0(void* p, void* q);
+EXTERN_C char* func_800C4994(char* p);
+EXTERN_C s32 func_800C2F90(Unk800C2F90* p, s32 n);
+EXTERN_C int func_800C3D08(Unk800C3D08* p);
+EXTERN_C s32 func_800C2D4C(Unk800C2D4C* p);
+EXTERN_C void func_800C49BC(Unk800C49BC* p, Unk800C49BCQ* q, s32 flag);
+EXTERN_C s32 func_800C2F04(Unk800C2F04* p);
+EXTERN_C s32 func_800C3B88(Unk800C3B88* p);
+EXTERN_C void func_800C4860(Unk800C4860* p, s32 mode);
+EXTERN_C void func_800C5B30(Unk800C5B30* p);
+EXTERN_C s32 func_800C4854(Unk800C4854* p);
+EXTERN_C s32 func_80019C24(void*, void*);
+EXTERN_C void func_80054D48(void*, s32);
+inline void* Unk800C06BC_list(Unk800C06BC* p) { Unk800C06BCX* x = &p->x1C; Unk800C06BCB* b = x; return b ? b->x0 : 0; }
+inline void Unk800C06BC_rect(Unk800C9364R* r, s16 x, s16 y, s16 w, s16 h) { Unk800C10BC_set(&r->a, x, y); Unk800C10BC_set(&r->b, w, h); }
+struct Unk800C06BCE { s16 d; s16 i; void (*f)(void*, Unk800C10BCP); };
+struct Unk800C06BCOV { char pad[0x18]; Unk800C06BCE* vt; };
+inline void Unk800C06BC_add(Unk800C06BCL* l, void* e) { func_80019A6C(l, e, l->x4); }
+
 #endif /* MOVIE_H */
