@@ -1266,4 +1266,24 @@ struct T_C1A6C {
     T_C1A6C_o *get() { return cur ? (T_C1A6C_o *)((char *)cur - 0x4A0) : 0; }
 };
 
+typedef int (*F_CMP3)(void *, void *, void *);
+EXTERN_C int func_800C9284(T_C9A4C *p, int a, T_C9284 *q, int c);
+EXTERN_C int func_800C9584(T_C9A4C *p, int a, T_C9284 *q, int c);
+EXTERN_C int func_800C9794(T_C9A4C *p, T_C9284 *q, int b, int c);
+EXTERN_C int func_800C98F0(T_C9A4C *p, T_C9284 *q, int b, int c);
+EXTERN_C int func_800C9A4C(T_C9A4C *p, int a, int b, int c);
+EXTERN_C int func_800C9B04(T_C9A4C *p, T_C9284 *q, int b, int c);
+EXTERN_C int func_800C9674(T_C9A4C *p, T_C9284 *q1, T_C9284 *q2, int c);
+EXTERN_C int func_800C9BFC(T_C9A4C *p, T_C9284 *q, int b, int c);
+typedef int (*F_GRID5)(T_C9A4C *, int, int, int, int);
+EXTERN_C int func_800CE910(SVec2 *a, SVec2 *b, SVec2 *c);
+EXTERN_C int func_800C8F78(T_C9A4C *p, int a, int b, int c, int d);
+EXTERN_C int func_800C9374(T_C9A4C *p, int a, int b, int c, int d);
+EXTERN_C int func_800CE9B8(void *self, T_CE9B8 *a, T_CE9B8 *b);
+EXTERN_C int func_800CEA00(void *self, T_CE9B8 *a, T_CE9B8 *b);
+EXTERN_C int func_800CEA48();
+EXTERN_C int func_800CEA50(void *self, S_800CEA50 *a, S_800CEA50 *b);
+EXTERN_C int func_800CEA60(void *self, S_800CEA50 *a, S_800CEA50 *b);
+EXTERN_C int func_800CEA70(void *self, S_800CEA50 *a, S_800CEA50 *b);
+
 #endif /* BATTLE_BATTLE_H */

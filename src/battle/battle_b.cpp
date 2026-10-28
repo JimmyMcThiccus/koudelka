@@ -588,7 +588,22 @@ EXTERN_C int func_800C9BFC(T_C9A4C *p, T_C9284 *q, int b, int c) {
     return p->f848;
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C9D6C);
+EXTERN_C int func_800C9D6C(void *pp, void *aa, int b, int c, int mode, int x) {
+    int r = 0;
+    switch (mode) {
+    case 1: r = func_800C8F78((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 2: r = ((F_GRID5)func_800C9284)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 3: r = func_800C9374((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 4: r = ((F_GRID5)func_800C9584)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 5: r = ((F_GRID5)func_800C9794)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 6: r = ((F_GRID5)func_800C98F0)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 7: r = ((F_GRID5)func_800C9A4C)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 8: r = ((F_GRID5)func_800C9B04)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 9: r = ((F_GRID5)func_800C9674)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    case 11: r = ((F_GRID5)func_800C9BFC)((T_C9A4C *)pp, (int)aa, b, c, x); break;
+    }
+    return r;
+}
 
 EXTERN_C int func_800C9E58(T_C9E58 *p, int i) { if (i < p->f848) return p->f84C[i]; return 0; }
 
@@ -903,7 +918,18 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CE4E4);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CE7A4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CE854);
+EXTERN_C int func_800CE854(T_CE154_k *p, T_CDD0C_e *a, T_CDD0C_e *b) {
+    switch (*(int *)((char *)p + 4)) {
+    case 0: return ((F_CMP3)func_800CE910)(p, a, b);
+    case 1: return ((F_CMP3)func_800CE9B8)(p, a, b);
+    case 2: return ((F_CMP3)func_800CEA00)(p, a, b);
+    case 3: return ((F_CMP3)func_800CEA48)(p, a, b);
+    case 4: return ((F_CMP3)func_800CEA50)(p, a, b);
+    case 5: return ((F_CMP3)func_800CEA60)(p, a, b);
+    case 6: return ((F_CMP3)func_800CEA70)(p, a, b);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CE910);
 
