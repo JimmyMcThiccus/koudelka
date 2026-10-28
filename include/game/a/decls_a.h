@@ -10,7 +10,7 @@ typedef struct S_800186B0 {
 } S_800186B0;
 
 /* from main_a.cpp */
-EXTERN_C void func_800198E0(void *a, int b, int c);
+EXTERN_C void *func_800198E0(void *a, int b, int c);
 
 /* from main_a.cpp */
 EXTERN_C int D_800B4BFC; // call counter, in .sdata
