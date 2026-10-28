@@ -10,7 +10,6 @@ here) on line 1, the diff summary on line 2. To retry one, copy it to `scratch_c
 | func_80091B38 | 6 | registers of p[0]/p[1] swapped (a1/v1) |
 | func_8008D97C | 9 | final size sum: `prod + (a + (b + 0xE0))` gives the right shape; retail has the loaded byte in $v1, the product in $v0 and the sum in $v1 (here swapped) |
 | func_8008BE08, func_8008C6B0 | 15 | list unlink: retail copies the head into its own register |
-| func_8008C52C | 16 | register allocation in the record-copy loop |
 | func_8008D5E8 | 17 | temp register reuse in the last bit-field extract; store order |
 | func_8008BECC (memcpy) | ~25 | dst/src register choice and copies after the byte-loop guard |
 | func_8008BF78 (memset) | ~29 | which pointer gets strength-reduced (+1 insn) |
