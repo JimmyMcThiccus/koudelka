@@ -15,9 +15,9 @@ units, so two sessions never edit the same file.
 | `main_a2` | `main/u_80032264` … `main/u_8003C510.cpp` (5 units, `0x80032264`–`0x80054A2C`) | 549 | `config/symbols/main_a2.txt` | `include/game/a2/` |
 | `main_b` | `main/main_b.cpp`, `main/u_80056E0C` … `main/u_80082174.cpp` (7 units, `0x80054A2C`–`0x8008B6B0`) | 552 | `config/symbols/main_b.txt` | `include/game/b/` |
 | `sound` | `main/sound.cpp` (the sound driver: PsyQ 4.1, `0x8008B6B0`–`0x80094910`) | 180 | `config/symbols/sound.txt` | `include/game/sound/` |
-| `field` | `field/field.cpp` | 468 | `config/symbols/field.txt` | `include/field/` |
-| `battle` | `battle/battle.cpp` | 283 | `config/symbols/battle.txt` | `include/battle/` |
-| `effect_capture` | `effect/effect.cpp`, `capture/capture.cpp` | 138 + 86 | `effect.txt`, `capture.txt` | `include/effect/`, `include/capture/` |
+| `field` | `field/field.cpp`, `field/field_b.cpp` (from `0x800DE3B8`) | 468 | `config/symbols/field.txt` | `include/field/` |
+| `battle` | `battle/battle.cpp`, `battle/battle_b.cpp` (from `0x800C1E44`), `battle/battle_c.cpp` (from `0x800CF764`) | 283 | `config/symbols/battle.txt` | `include/battle/` |
+| `effect_capture` | `effect/effect.cpp`, `capture/capture.cpp` (PsyQ 4.1), `capture/capture_b.cpp` | 138 + 86 | `effect.txt`, `capture.txt` | `include/effect/`, `include/capture/` |
 | `movie_gameend` | `movie/movie.cpp`, `gameend/gameend.cpp` | 135 (28 are Sony library code: leave them) + 1 | `movie.txt`, `gameend.txt` | `include/movie/`, `include/gameend/` |
 
 Headers outside your folder are **read-only** for you, including ones your units already include: `main_a2`
@@ -90,10 +90,14 @@ under `drafts/<area>/func_XXXXXXXX.cpp`, and add a one-line note on what differs
   `undefined reference to D_XXXXXXXX`. Fix it in **your** symbols file: `D_XXXXXXXX = 0xXXXXXXXX;
   // force_not_migration:True`, then re-split. (For the EXE, the existing ones are in
   `config/symbols/main_keep_rodata.txt`.)
-- **Rodata the compiler emits** (a `switch` jump table, a string literal). It goes into your unit's `.rodata`. If
-  that unit has no rodata segment in the yaml, or its rodata start isn't 8-aligned, the table lands in the wrong
-  place and the matching check fails. Don't change the yaml: leave the function as a draft and say so in your
-  report.
+- **Jump tables.** GCC puts `.align 3` before each one, aligning it to 8 *relative to its object's rodata*, so all
+  tables of one original file share an address mod 8. `tools/jtbl_classes.py` lists the runs; a change of
+  remainder is a file boundary, and every unit's rodata starts at its first table. If your function's table is
+  4 bytes off in the full build, its unit is wrong: leave it as a draft and report it (don't change the yaml).
+- **String literals and other const data written in C.** With `-G8` GCC emits a file's data before its
+  functions, so a literal lands at the start of the unit's rodata instead of beside its function. Refer to the
+  retail symbol instead (`EXTERN_C const char D_XXXXXXXX[];`) and keep it with `force_not_migration` in your
+  symbols file. Data of 8 bytes or less would go to `.sdata` and break the link.
 
 ## Globals in overlays
 

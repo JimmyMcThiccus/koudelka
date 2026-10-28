@@ -59,7 +59,20 @@ EXTERN_C S_Rgb func_80025A64(S_80025A64 *p)
     return p->unk10;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80025A84);
+EXTERN_C S_XYc func_80025A84(S_Tex *p)
+{
+    int x = p->unk14;
+    int r;
+    VObj *o = p->unkC;
+    if (o) {
+        if (vcall3(o))
+            r = x >> 1;
+        else
+            r = x >> 2;
+    } else
+        r = x;
+    return S_XYc(r, p->unk16);
+}
 
 EXTERN_C S_Rgb func_80025B0C(S_80025A64 *p)
 {
@@ -76,9 +89,36 @@ EXTERN_C int func_80025B38(S_800259F8 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80025B44);
+EXTERN_C S_Img *func_80025B44(S_Img *p, int x, short y, short z, int a, int b)
+{
+    p->vt = D_80010178;
+    p->unk4 = 0;
+    p->unk8 = D_80010888;
+    p->vt = D_800108A0;
+    p->unkC = a;
+    setPos_80025BE0(p, S_XYc(-1, -1));
+    p->unk14.x = 0;
+    p->unk14.y = 0;
+    p->unk18 = 0;
+    p->unk1E = b;
+    func_80024BF0(p, x, y, z);
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80025BE0);
+EXTERN_C S_Img *func_80025BE0(S_Img *p, int a, int b)
+{
+    p->vt = D_80010178;
+    p->unk4 = 0;
+    p->unk8 = D_80010888;
+    p->vt = D_800108A0;
+    p->unkC = a;
+    setPos_80025BE0(p, S_XYc(-1, -1));
+    p->unk14.x = 0;
+    p->unk14.y = 0;
+    p->unk18 = 0;
+    p->unk1E = b;
+    return p;
+}
 
 EXTERN_C void func_80025C50(unsigned short *a, unsigned short *b)
 {
@@ -274,11 +314,50 @@ EXTERN_C int func_80026920(S_80026920 *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_800269B8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80027408);
+EXTERN_C void func_80027408(void *vp, void *vc)
+{
+    S_TNode *p = (S_TNode *)vp;
+    S_TNode *c = (S_TNode *)vc;
+    if (c == p->c0) {
+        p->c0 = 0;
+        c->parent = 0;
+        if (!p->c1)
+            tnode_collapse(p);
+    } else if (c == p->c1) {
+        p->c1 = 0;
+        c->parent = 0;
+        if (!p->c0)
+            tnode_collapse(p);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_8002758C);
+EXTERN_C void func_8002758C(void *vp, void *vc)
+{
+    S_TNode *p = (S_TNode *)vp;
+    S_TNode *c = (S_TNode *)vc;
+    if (c == p->c0) {
+        p->c0 = 0;
+        c->parent = 0;
+        vdel((S_Del *)c);
+        if (!p->c1)
+            tnode_collapse(p);
+    } else if (c == p->c1) {
+        p->c1 = 0;
+        c->parent = 0;
+        vdel((S_Del *)c);
+        if (!p->c0)
+            tnode_collapse(p);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80027754);
+EXTERN_C int func_80027754(S_80027754 *p, S_XYc pt)
+{
+    if (p->o10 && in_rect(&p->r8, pt))
+        return send_80027754(p->o10, pt);
+    if (p->o1C && in_rect(&p->r14, pt))
+        return send_80027754(p->o1C, pt);
+    return 0;
+}
 
 EXTERN_C void func_800278D8()
 {

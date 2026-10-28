@@ -120,9 +120,15 @@ EXTERN_C S_Arr5 *func_8002E564()
     return new S_Arr5;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E5B0);
+EXTERN_C S_Pt2h func_8002E5B0()
+{
+    return D_800B4CF8;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002DED8", func_8002E5D0);
+EXTERN_C S_Pt2h func_8002E5D0()
+{
+    return D_800B4CF4;
+}
 
 EXTERN_C int func_8002E5F0()
 {

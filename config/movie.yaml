@@ -44,7 +44,10 @@ segments:
     start: 0x0
     vram: 0x800B6DF0
     subsegments:
-      - [0x0, .rodata, movie] # overlay id + entry table, jump tables, strings
+      - [0x0, rodata] # overlay id + entry table and data, reached by global symbol
+      # movie.cpp's rodata starts at its first jump table: GCC aligns tables to 8 relative to the
+      # object's rodata, and all 12 of MOVIE's sit at 4 mod 8 (tools/jtbl_classes.py)
+      - [0x4FC, .rodata, movie] # 0x800B72EC
       - [0x1CC4, cpp, movie]
       - [0x14C9C, data]
 

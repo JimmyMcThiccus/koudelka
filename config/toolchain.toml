@@ -24,9 +24,18 @@ cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files 
 "src/field/field.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/battle/battle.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/movie/movie.cpp" = { cflags = "-O2 -G8", as_G = 0 }
-"src/capture/capture.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+# CAPTURE's first file (0x800B758C-0x800B85B4) is GCC 2.7.2 / PsyQ 4.1 like the sound driver: its functions are
+# the only overlay ones whose epilogue leaves the `jr $ra` delay slot empty (func_800B76E4 matches only under 4.1).
+# It has no divs, so expand_div follows the sound driver.
+"src/capture/capture.cpp" = { psyq = "bin/psyq4.1", aspsx = "2.67", cflags = "-O2 -G8", as_G = 0, expand_div = false }
+"src/capture/capture_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/gameend/gameend.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/effect/effect.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+# Further overlay files, split where the jump tables' alignment changes (tools/jtbl_classes.py)
+"src/effect/effect_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/field/field_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/battle/battle_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/battle/battle_c.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 
 [maspsx]
 url = "https://github.com/mkst/maspsx/archive/4ffa8b5106f9780d5d4aa7609f184949433ddbbc.zip"

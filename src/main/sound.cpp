@@ -917,7 +917,67 @@ EXTERN_C void func_8008CDA8(int v)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008CE18);
+EXTERN_C int D_800AFCFC[];
+EXTERN_C void func_800A0A10(long *type); // SpuGetReverbModeType
+EXTERN_C long SpuSetReverbModeType(long mode);
+EXTERN_C void SpuSetReverbModeDelayTime(long delay);
+EXTERN_C void SpuSetReverbModeFeedback(long feedback);
+EXTERN_C int func_8008C3AC(int id);
+EXTERN_C int func_8008C27C(int size, int addr, unsigned short id);
+EXTERN_C void func_8008D08C(int a, int b);
+
+EXTERN_C void func_8008CE18(int mode, int depth, int delay, int feedback)
+{
+    SoundState *s;
+    int realloc = 0;
+    int addr;
+    long cur;
+    int id;
+
+    if (mode == -2) {
+        return;
+    }
+    if (mode == 0) {
+        depth = delay = feedback = 0;
+    } else if (mode == -1) {
+        mode = FIELD_AT(&D_800B18FC, signed char, 0x1BD);
+    }
+    func_800A0A10(&cur);
+    if (cur != mode || mode == 0) {
+        s = &D_800B18FC;
+        id = FIELD_AT(s, int, 0x1C8);
+        if (id != -1) {
+            func_8008C3AC(id);
+        }
+        addr = D_800AFCFC[mode];
+        id = func_8008C27C(addr, 0x80000 - addr, 5);
+        FIELD_AT(s, int, 0x1C8) = id;
+        if (id == 0) {
+            func_8009482C(0x20, 0);
+            mode = 0;
+            depth = delay = feedback = mode;
+        }
+        realloc = 1;
+    }
+    s = &D_800B18FC;
+    FIELD_AT(s, unsigned char, 0x1BD) = mode;
+    FIELD_AT(s, unsigned char, 0x1C2) = delay;
+    FIELD_AT(s, unsigned char, 0x1C3) = feedback;
+    FIELD_AT(s, short, 0x19C) = depth;
+    func_8008CFD4();
+    if (realloc) {
+        func_800A0800(0, 0);
+        SpuSetReverbModeType(mode);
+        if (addr < D_800AFCFC[cur]) {
+            addr = D_800AFCFC[cur];
+        }
+        func_8008D08C(0x80000 - addr, addr);
+    } else {
+        func_800A0800(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
+        SpuSetReverbModeDelayTime(delay);
+        SpuSetReverbModeFeedback(feedback);
+    }
+}
 
 EXTERN_C void func_8008CFD4(void)
 {

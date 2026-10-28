@@ -408,7 +408,16 @@ EXTERN_C void func_8001EFE4(char *obj, void *e)
         func_8001E6AC(obj);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001DDF4", func_8001F048);
+EXTERN_C int func_8001F048()
+{
+    S_8001F1BC *c = D_800B4C1C;
+    int r;
+    if (!c)
+        r = 0;
+    else
+        r = c->unk94 > D_800B4C18->unk94;
+    return r;
+}
 
 EXTERN_C void func_8001F074(char *p, int a)
 {

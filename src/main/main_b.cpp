@@ -159,11 +159,6 @@ EXTERN_C void func_80054FE0(void *self)
     }
 }
 
-struct SV2C_80055020 {
-    short x, y;
-    SV2C_80055020(short a, short b) : x(a), y(b) {}
-};
-EXTERN_C void func_80053F28(void *self, SV2C_80055020 v);
 EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
 {
     char *o;
@@ -340,7 +335,7 @@ EXTERN_C void func_8005591C(void *self)
         switch (FIELD_AT(e, unsigned short, 0xA)) {
         case 4:
             if (FIELD_AT(self, int, 0x4500) != 0) {
-                func_80055F98(FIELD_AT(e, void *, 0xC));
+                func_80055F98(FIELD_AT(e, char *, 0xC));
             }
             {
                 VObj0 *o = FIELD_AT(FIELD_AT(self, char *, 0x44EC), VObj0 *, 0xC);

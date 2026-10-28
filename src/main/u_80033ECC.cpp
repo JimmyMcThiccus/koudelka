@@ -494,7 +494,17 @@ EXTERN_C void func_80036674(S_A2_H0C *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_800366F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036780);
+EXTERN_C void func_80036780(A2VObj0 *p, unsigned char *b)
+{
+    if ((b[0] & 0x10) || ((b[0] & 1) && (b[1] & 0x40))) {
+        p->v07(b[0]);
+        func_80036674((S_A2_H0C *)p);
+        func_8003831C(&D_800AC86C, b[0] ^ 2);
+    } else {
+        void *q = p ? AT(p, void *, 4) : 0;
+        AT(p, char, 0x35) = (((AT(q, unsigned short, 0) >> 4) ^ 1) & 1) ? 0xD : 0x12;
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036850);
 

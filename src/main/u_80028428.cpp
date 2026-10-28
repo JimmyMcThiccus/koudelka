@@ -34,7 +34,12 @@ EXTERN_C S_Spr2 *func_800284D4(S_Spr2 *p, S_Spr2 *q)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_800285CC);
+EXTERN_C void func_800285CC(S_80028FD8 *p, int a)
+{
+    p->vtC = D_800112F4;
+    p->vt = D_8001126C;
+    base_28FD8(p, a);
+}
 
 EXTERN_C void *func_8002860C(void *a, void *r, int b, int c, void *col)
 {
@@ -240,7 +245,22 @@ EXTERN_C S_8002972C *func_80029758(S_8002972C *p, S_8002972C *c)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80028428", func_80029850);
+EXTERN_C S_8002972C *func_80029850(S_8002972C *p, S_8002972C *c)
+{
+    int t;
+    int r = 0;
+    t = c->unk5 * 7 / 10;
+    if (t > 0)
+        r = t;
+    int g = 0;
+    t = c->unk6 * 7 / 10;
+    if (t > 0)
+        g = t;
+    t = c->unk7 * 7 / 10;
+    int pos = t > 0;
+    func_8002972C(p, r, g, t & -pos, 1);
+    return p;
+}
 
 EXTERN_C void func_8002991C()
 {

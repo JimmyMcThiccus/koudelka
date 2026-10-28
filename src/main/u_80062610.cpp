@@ -219,7 +219,25 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064884);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800648E8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064B3C);
+EXTERN_C int func_80064B3C(void *self)
+{
+    char *v;
+    char *e;
+    void *r;
+    if (func_80053830(self ? (char *)self + 0x38 : 0)) {
+        ((VObj<0x2C> *)self)->v28(func_80053874(self ? (char *)self + 0x38 : 0) & 0xFF);
+        return 1;
+    }
+    e = (char *)func_80019F64(h8_80064B3C(FIELD_AT(self, char *, 0x30)), 6);
+    v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
+    ((void (*)(void *, void *))func_80019CFC)(v ? *(void **)v : 0, e);
+    r = (void *)((VObj<0x2C> *)self)->v11();
+    func_8002DC34(r, (int)e, 0);
+    FIELD_AT(e, int, 0x4) = 0;
+    func_8005F50C((Pool_8005F50C *)__builtin_new(0x14), (int)e, 1, 1);
+    ((VObj<0x2C> *)self)->v14();
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80064C78);
 

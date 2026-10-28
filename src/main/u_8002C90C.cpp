@@ -90,9 +90,42 @@ EXTERN_C void func_8002CC60(S_Drawable *p)
     new S_DeleteObj(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002CDC0);
+EXTERN_C void func_8002CDC0(S_RectXYWH *r)
+{
+    SetDefDrawEnv(&D_800AC740[0], r->x, r->y, r->w, r->h);
+    SetDefDispEnv(&D_800AC7F8[1], r->x, r->y, r->w, r->h);
+    *(S_Rect2c *)&D_800AC730[0] = S_Rect2c(r->x, r->y, r->w, r->h);
+    *(S_Pt2c *)&D_800B4CF4[0] = S_Pt2c(r->x, r->y);
+    if (r->h <= 240) {
+        SetDefDrawEnv(&D_800AC740[1], r->x + r->w, r->y, r->w, r->h);
+        SetDefDispEnv(&D_800AC7F8[0], r->x + r->w, r->y, r->w, r->h);
+        *(S_Rect2c *)&D_800AC730[1] = S_Rect2c(r->x + r->w, r->y, r->w, r->h);
+        *(S_Pt2c *)&D_800B4CF4[1] = S_Pt2c(r->x + r->w, r->y);
+    } else {
+        SetDefDrawEnv(&D_800AC740[1], r->x, r->y, r->w, r->h);
+        SetDefDispEnv(&D_800AC7F8[0], r->x, r->y, r->w, r->h);
+        *(S_Rect2c *)&D_800AC730[1] = S_Rect2c(r->x, r->y, r->w, r->h);
+        *(S_Pt2c *)&D_800B4CF4[1] = S_Pt2c(r->x, r->y);
+    }
+    D_800AC740[1].b[0x16] = 1;
+    D_800AC740[0].b[0x16] = 1;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002C90C", func_8002D020);
+EXTERN_C void func_8002D020(S_Pt2 *p0, S_Pt2 *p1, S_Pt2 *ds, S_Pt2 *dp)
+{
+    SetDefDrawEnv(&D_800AC740[0], p0->x, p0->y, ds->x, ds->y);
+    SetDefDispEnv(&D_800AC7F8[1], p0->x, p0->y, dp->x, dp->y);
+    *(S_Rect2c *)&D_800AC730[0] = S_Rect2c(p0->x, p0->y, ds->x, ds->y);
+    *(S_Pt2 *)&D_800B4CF4[0] = *p0;
+    SetDefDrawEnv(&D_800AC740[1], p1->x, p1->y, ds->x, ds->y);
+    SetDefDispEnv(&D_800AC7F8[0], p1->x, p1->y, dp->x, dp->y);
+    *(S_Rect2c *)&D_800AC730[1] = S_Rect2c(p1->x, p1->y, ds->x, ds->y);
+    *(S_Pt2 *)&D_800B4CF4[1] = *p1;
+    D_800AC740[1].b[0x16] = 1;
+    D_800AC740[0].b[0x16] = 1;
+    D_800AC7F8[1].b[0x11] = 1;
+    D_800AC7F8[0].b[0x11] = 1;
+}
 
 EXTERN_C void func_8002D1E0()
 {

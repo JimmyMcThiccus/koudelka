@@ -247,7 +247,36 @@ EXTERN_C int func_8002F5D0(S_8002F5D0 *p)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002F614);
+EXTERN_C int func_8002F614(S_F614 *p)
+{
+    S_F614_O *objs[4];
+    int i;
+    int n;
+    char *r;
+    S_F614_O *o;
+    for (i = 0; i < 4; i++) {
+        r = ((char *(*)(void *))p->vt[2].pfn)((char *)p + p->vt[2].delta);
+        o = 0;
+        if (r)
+            o = (S_F614_O *)(r - 8);
+        objs[i] = o;
+    }
+    n = 0;
+    if (((int (*)(void *, S_F614_O **))p->vt[4].pfn)((char *)p + p->vt[4].delta, objs)) {
+        for (i = 0; i < 4; i++) {
+            VCALL0(objs[i], 6);
+            objs[i]->blk = p->blk;
+            VCALL0(objs[i], 3);
+            n += VCALL0I(objs[i], 5);
+        }
+    } else {
+        for (i = 0; i < 4; i++)
+            VCALL0(objs[i], 3);
+    }
+    if (p->unk4)
+        VCALL0(p->unk4, 6);
+    return n;
+}
 
 EXTERN_C void func_8002F7D4(S_8002F5D0 *p)
 {
@@ -462,7 +491,14 @@ EXTERN_C void func_80030414()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8003041C);
+EXTERN_C void func_8003041C(S_Tri *t)
+{
+    func_8002F90C((S_8002F90C *)t);
+    S_Tri_V *e = t->e;
+    S_Tri_V *v = t->v;
+    for (int i = 0; i < 3; i++)
+        edge_sub(&e[i], v, D_800B4D08[i], &v[i]);
+}
 
 EXTERN_C int func_800304B4(S_Tri *t, int x, int z)
 {

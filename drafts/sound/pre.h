@@ -1,0 +1,7 @@
+#include "common.h"
+#include "shared/vbase.h"
+#include "game/b/field.h"
+#include "game/b/globals.h"
+#include "game/b/sound.h"
+#include "game/b/vcall.h"
+#include "game/sound/sound.h"

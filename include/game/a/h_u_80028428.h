@@ -105,4 +105,6 @@ struct C_80028454 : B_8002860C {
     C_80028454(int a, int b, int c) asm("func_80028454");
 };
 
+inline void base_28FD8(S_80028FD8 *p, int a) { p->vtC = D_800112F4; p->vt = D_80011304; func_8001A610(p, a); }
+
 #endif /* GAME_A_H_U_80028428_H */
