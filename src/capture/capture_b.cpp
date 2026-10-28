@@ -50,10 +50,6 @@ EXTERN_C void **func_800B86F0(void **p)
     return p;
 }
 
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6DF0);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6DF4);
-
 INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800B870C);
 
 EXTERN_C char D_80010348[];
@@ -1012,20 +1008,6 @@ EXTERN_C void func_800BA4AC(char *p, int in_chrg)
 EXTERN_C void func_800BDFE0(char *);
 EXTERN_C void func_800BA514(char *p) { func_800BDFE0(*(char **)(p + 0x168)); }
 
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6E54);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6E6C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6E7C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6E9C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6F04);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6F1C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B6F8C);
-
 INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800BA538);
 
 EXTERN_C void func_800BB03C(char *p)
@@ -1785,34 +1767,6 @@ EXTERN_C void func_800BE1C4(char *p)
     *(int *)(p + 0x484) = -((*(short *)(p + 0x278) - 320) / 2);
     *(int *)(p + 0x488) = -((*(short *)(p + 0x27A) - 240) / 2);
 }
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B7134);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B714C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B7164);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B717C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B7194);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B71AC);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B71C4);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B71F4);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B7244);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B725C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B7274);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B728C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B729C);
-
-INCLUDE_RODATA("asm/capture/nonmatchings/capture_b", D_800B72BC);
 
 INCLUDE_ASM("asm/capture/nonmatchings/capture_b", func_800BE204);
 

@@ -1,6 +1,7 @@
 """Split a C/C++ source unit in two at a function start.
 
-  python tools/split_unit.py <target> <segment> <address> <new_segment> [--ext c|cpp] [--dry-run]
+  python tools/split_unit.py <target> <segment> <address> <new_segment> [--ext c|cpp]
+         [--rodata-start ADDR | --no-rodata] [--dry-run]
 
 For example `split_unit.py slus_010.51 main_b 0x8008B6A0 sound` moves every function of
 src/main/main_b.cpp from 0x8008B6A0 on into src/main/sound.cpp, and updates
@@ -10,7 +11,9 @@ config/<target>.yaml:
 
 Rodata ownership comes from the INCLUDE_RODATA lines (by position in the source) and from
 rodata that splat migrated into each function's .s file. The split is refused if the two sides'
-rodata interleaves; that means the address is not a real file boundary.
+rodata interleaves; that means the address is not a real file boundary. With --rodata-start the
+check is skipped: only jump tables (and other rodata the compiler emits) must sit with their code,
+and each unit's rodata must start on its tables' address mod 8 (tools/jtbl_classes.py).
 
 The new file starts with "common.h" plus every #include the old file has. Declarations that the
 moved code took from the old file's body have to be copied over by hand; the first build says
@@ -30,6 +33,8 @@ DEF = re.compile(r'^(?:EXTERN_C\s+|extern\s+"C"\s+|static\s+|inline\s+)*[\w\s\*&
 
 
 def addr_of(name, named):
+    if name.startswith("__maspsx"):  # INCLUDE_ASM/padding hack blocks, not functions
+        return None
     m = re.search(r"_([0-9A-F]{8})$", name)
     return int(m.group(1), 16) if m else named.get(name)
 
@@ -41,6 +46,9 @@ def main():
     ap.add_argument("address", type=lambda x: int(x, 0))
     ap.add_argument("new")
     ap.add_argument("--ext", choices=["c", "cpp"])
+    ap.add_argument("--rodata-start", type=lambda x: int(x, 0),
+                    help="the new unit's .rodata start (skips the ownership check)")
+    ap.add_argument("--no-rodata", action="store_true", help="give the new unit no .rodata segment")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
 
@@ -116,7 +124,13 @@ def main():
                 if ad is not None:
                     side.add(ad)
     ro_line = None
-    if own_tail:
+    if a.rodata_start is not None:
+        # Set explicitly, e.g. from tools/jtbl_classes.py: the first jump table of the new unit's run.
+        # Shared rodata is reached by global symbol, so only compiled-rodata placement matters.
+        ro_line = f"      - [{a.rodata_start - vram + rom0:#X}, .rodata, {a.new}]".replace("0X", "0x")
+    elif a.no_rodata:
+        pass
+    elif own_tail:
         if own_head and max(own_head) > min(own_tail):
             bad = sorted(x for x in own_tail if x < max(own_head))[:5]
             sys.exit(f"rodata interleaves: the tail owns {[hex(x) for x in bad]} below the head's "

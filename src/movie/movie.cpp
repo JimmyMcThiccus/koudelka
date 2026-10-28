@@ -206,28 +206,6 @@ EXTERN_C s32 func_800BA598(Unk800BA598* p) { return p->x4; }
 
 EXTERN_C void func_800BA5A4(void* p) { func_800386B8(p); }
 
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6DF0);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6DF4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6E44);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6F34);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6F4C);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6FBC);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B6FF4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7044);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7134);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B71E4);
-
-INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B723C);
-
 INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BA5C4);
 
 EXTERN_C void func_800BBF74(Unk800BBF74* p) { p->x108 = 0; }
@@ -670,7 +648,26 @@ INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B7968);
 
 INCLUDE_RODATA("asm/movie/nonmatchings/movie", jtbl_800B799C);
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C0DA4);
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B79C0);
+
+INCLUDE_RODATA("asm/movie/nonmatchings/movie", D_800B79F8);
+
+EXTERN_C const char D_800B7810[], D_800B7814[], D_800B7854[], D_800B792C[], D_800B79C0[], D_800B79F8[];
+EXTERN_C void func_800C10BC(Unk800C10BC* p, void* a, s32 b, void* c, s32 d);
+EXTERN_C s32 func_80054E90(void*);
+EXTERN_C void func_80054CE4(void*);
+EXTERN_C void func_800C0DA4(Unk800C0DA4* p, s32 n) {
+  switch (n) {
+  case 7: p->x74 = 0; func_800C10BC((Unk800C10BC*)p, (void*)D_800B792C, 0x1C, (void*)D_800B7810, 0); break;
+  case 4: func_800C10BC((Unk800C10BC*)p, (void*)D_800B79C0, 0x1B, (void*)D_800B7810, 0); break;
+  case 1: p->x74 = 0; func_800C10BC((Unk800C10BC*)p, (void*)D_800B7854, 0x18, (void*)D_800B7810, 0); break;
+  case 3: p->x74 = 0; func_800C10BC((Unk800C10BC*)p, (void*)D_800B7814, 0x1E, (void*)D_800B7810, 0); break;
+  case -1: case 0: case 2: case 5: case 6:
+  default: p->x74 = 0; func_800C10BC((Unk800C10BC*)p, (void*)D_800B79F8, 0xF, (void*)D_800B7810, 0); break;
+  }
+  void* o = p->x1F0;
+  if (func_80054E90(o)) func_80054CE4(o); else func_80054FC0(o);
+}
 
 EXTERN_C void func_800C0E9C() {}
 

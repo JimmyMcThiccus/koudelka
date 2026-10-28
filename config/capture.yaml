@@ -44,7 +44,10 @@ segments:
     start: 0x0
     vram: 0x800B6DF0
     subsegments:
-      - [0x0, .rodata, capture_b] # overlay id + entry table, jump tables, strings (all from the 4.4 file)
+      - [0x0, rodata] # overlay id + entry table and data, reached by global symbol
+      # capture_b.cpp's rodata starts at its jump table (4 mod 8, func_800BE204's): GCC aligns tables to 8
+      # relative to the object's rodata (tools/jtbl_classes.py)
+      - [0x50C, .rodata, capture_b] # 0x800B72FC
       # 0x800B758C-0x800B85B4: GCC 2.7.2 / PsyQ 4.1 (see config/toolchain.toml). Every function here with a stack
       # frame ends `addiu $sp; jr $ra; nop` (the 2.7.2 epilogue, delay slot unfilled), and only these in all
       # overlays do; func_800B76E4 matches byte-for-byte under 4.1 and not under 4.4. The file has no rodata.

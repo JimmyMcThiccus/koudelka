@@ -44,8 +44,16 @@ segments:
     start: 0x0
     vram: 0x800B6DF0
     subsegments:
-      - [0x0, .rodata, battle] # overlay id + entry table, jump tables, strings
+      - [0x0, rodata] # overlay id + entry table and data, reached by global symbol
+      # Original files, from jump-table alignment (tools/jtbl_classes.py): GCC aligns tables to 8 relative
+      # to its object's rodata, so all tables of one file share an address mod 8, and each unit's rodata
+      # starts at its first table. battle then battle_b / battle_c (code cut at 0x800C1E44 / 0x800CF764; rodata at 0x800B73BC, 0x800B75C0 / 0x800B7844).
+      - [0x5CC, .rodata, battle] # 0x800B73BC
+      - [0x7D0, .rodata, battle_b]
+      - [0xA54, .rodata, battle_c]
       - [0x120C, cpp, battle]
+      - [0xB054, cpp, battle_b]
+      - [0x18974, cpp, battle_c]
       - [0x1EF88, data]
 
   - [0x1EFBC]

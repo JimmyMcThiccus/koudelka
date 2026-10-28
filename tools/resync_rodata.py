@@ -47,7 +47,7 @@ def entries(lines):
                 break
             if seen and depth <= 0:
                 break
-        if not decl:
+        if not decl and not d.group(1).startswith("__maspsx"):  # hack blocks are not functions
             yield "FUNC", d.group(1), i, end
         i = end + 1
 

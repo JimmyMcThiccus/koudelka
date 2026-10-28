@@ -117,6 +117,7 @@ exactly there, so the EXE has **no room to grow**. A decompiled function may be 
 | `tools/split_unit.py` | split a source file in two at a function start (yaml, source, paired rodata) |
 | `tools/resync_rodata.py` | re-place `INCLUDE_RODATA` lines after a change in what splat migrates |
 | `tools/hoist_decls.py` | move units' inline declarations into one shared header (used after splitting) |
+| `tools/jtbl_classes.py` | find original-file boundaries from jump-table alignment (address mod 8 per run) |
 | `tools/epilogue_scan.py` | fingerprint each unit's compiler by its epilogues (GCC 2.7.2 leaves `jr $ra`'s delay slot empty) |
 | `tools/check.py` | pad to retail size, compare SHA-1 |
 
