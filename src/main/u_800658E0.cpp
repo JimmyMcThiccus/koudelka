@@ -9,7 +9,28 @@
 /* $gp here: this file defines it (lui with the array form elsewhere) */
 EXTERN_C int D_800B4ED8;
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_800658E0);
+EXTERN_C void func_800658E0(S_DtorB *p, int flags)
+{
+    FIELD_AT(p, void **, 0x40) = D_80015364;
+    p->vt2C = D_8001526C;
+    p->vb->vt = (VEntB *)D_8001521C.e;
+    if (!flags) {
+        VTabB50 tmp = D_8001521C;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x50;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_8001521C.e[1].d + adj;
+        tmp.e[5].d = D_8001521C.e[5].d + adj;
+        tmp.e[7].d = D_8001521C.e[7].d + adj;
+        tmp.e[9].d = D_8001521C.e[9].d + adj;
+    }
+    func_800537DC((char *)p + 0x38, 0);
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void *func_80065A00(void *self)
 {

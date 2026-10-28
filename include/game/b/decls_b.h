@@ -3105,4 +3105,17 @@ EXTERN_C void *D_800150BC[];
 EXTERN_C const VTabB50 D_80014400;
 EXTERN_C void *D_80014450[];
 
+EXTERN_C void func_800537DC(void *self, int b);
+EXTERN_C void func_80063BE4(void *self);
+EXTERN_C void func_80057558(void *self, int b);
+EXTERN_C void func_8005BDA4(void *self, int b);
+EXTERN_C const VTabB50 D_800142B8;
+EXTERN_C void *D_80014308[];
+EXTERN_C const VTabB50 D_8001521C;
+EXTERN_C void *D_80015364[];
+EXTERN_C void *D_8001526C[];
+EXTERN_C const VTabB50 D_80014FFC;
+EXTERN_C void *D_8001504C[];
+EXTERN_C void *D_80014EEC[];
+
 #endif /* GAME_B_DECLS_B_H */

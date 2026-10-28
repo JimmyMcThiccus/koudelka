@@ -118,7 +118,27 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005A120);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005A31C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005A518);
+EXTERN_C void func_8005A518(S_DtorB *p, int flags)
+{
+    p->vt2C = D_80014308;
+    p->vb->vt = (VEntB *)D_800142B8.e;
+    if (!flags) {
+        VTabB50 tmp = D_800142B8;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x64;
+        int adj = (char *)p - q;
+        tmp.e[1].d = D_800142B8.e[1].d + adj;
+        tmp.e[5].d = D_800142B8.e[5].d + adj;
+        tmp.e[7].d = D_800142B8.e[7].d + adj;
+        tmp.e[9].d = D_800142B8.e[9].d + adj;
+    }
+    func_80053964((char *)p + 0x40, 2);
+    func_8005BDA4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80059A84", func_8005A62C);
 
