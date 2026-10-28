@@ -338,16 +338,16 @@ EXTERN_C void func_800C1BB8(Unk_800C0814*);
 EXTERN_C void func_800C20B0(void*, int);
 EXTERN_C void func_800C2A6C(void*, int);
 EXTERN_C void func_800C3E00(Unk_800C3C08*);
-EXTERN_C void func_800C5408(void*, void*);
+EXTERN_C void* func_800C5408(void*, void*);
 EXTERN_C int func_800C9DD4(Unk_800C9D60*);
 EXTERN_C void func_800C9FAC(void*);
 EXTERN_C void func_800CA038(void*);
 struct Unk_800CE820;
 EXTERN_C void func_800CE820(Unk_800CE820*);
-EXTERN_C void func_800D29D8(void*, void*);
+EXTERN_C void* func_800D29D8(void*, void*);
 struct Unk_800D3D54;
 EXTERN_C void func_800D3D54(Unk_800D3D54*);
-EXTERN_C void func_800D44D4(void*, void*);
+EXTERN_C void* func_800D44D4(void*, void*);
 EXTERN_C void func_800D9C84(void*, int);
 struct Unk_800D9E4C;
 EXTERN_C void func_800D9E4C(Unk_800D9E4C*);
@@ -494,7 +494,7 @@ struct Unk_Pad10 { char pad0[0x10]; };
 struct Unk_800D5C60_arg { char pad0[0x1A]; unsigned short unk1A; };
 EXTERN_C bool func_800557A0(void*);
 struct Unk_800E6E64 { char pad0[0x3C]; void* unk3C; char pad40[0x10]; int unk50; char pad54[0x54]; signed char unkA8; signed char unkA9; };
-EXTERN_C void* func_800E714C(void*, int, int, int, int);
+struct Unk_800E714C; EXTERN_C Unk_800E714C* func_800E714C(Unk_800E714C*, int, int, int, unsigned short);
 EXTERN_C void func_8005800C(void*, void*);
 struct Unk_800C5734 { char pad0[0x68]; Unk_Elem28 unk68[4]; char padD8_[0]; };
 EXTERN_C void func_8006897C(void*, unsigned short, int);
@@ -685,7 +685,7 @@ EXTERN_C int func_800BC2B0(void*);
 struct Unk_800BCAFC { char pad0[0x654]; int unk654; char pad658[0x10]; int unk668; };
 struct Unk_800C3B0C { char pad0[0x6C]; char unk6C[0x70]; VAt<0x2C>* unkDC; };
 EXTERN_C VAt<0x2C>* func_800C3E40(void*, int);
-EXTERN_C void func_800C41E0(void*, int, int, int);
+EXTERN_C void func_800C41E0(void*, unsigned char, int, int);
 struct Unk_800C89BC_e : VAt<0x18> { char pad1C[0x34]; };
 struct Unk_800C89BC { char pad0[0x6C]; int unk6C; Unk_800C89BC_e unk70[8]; char pad2F0[0x1C0]; void* unk4B0; char pad4B4[0xC]; char unk4C0[0xA4]; char unk564[4]; };
 EXTERN_C void func_80061058(void*);
@@ -1035,7 +1035,590 @@ struct Unk_800DE3B8_g { char pad0[0x378]; int unk378; };
 struct Unk_800DE3B8 : Unk_PadB8, Unk_800DE59C_b { char padC4[0x88]; int unk14C; char pad150[4]; Unk_W4 unk154; int unk164; int unk168; int unk16C; int unk170; int unk174; int unk178; int unk17C; char pad180[0x24]; int unk1A4; char pad1A8[4]; int unk1AC; };
 inline Unk_800DE59C_b* base(Unk_800DE3B8* p) { return p; }
 inline Unk_W4 getW(Unk_800DE3B8* p) { return base(p)->unk8->unk1B8->unk34; }
-EXTERN_C void func_800DDE6C(void*, int, int, int, int, int, int);
+EXTERN_C int func_800DDE6C(void*, int, int, int, int, int, int);
 EXTERN_C void func_8007B538(void*, int, int, int, int, int);
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+struct Unk_800D8FD4 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; unsigned char unk38; char pad39[0x3]; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80068770(void*, int);
+struct Unk_800CD8D8 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x2220]; void* unk227C; Unk_VbObj vobj; };
+EXTERN_C const Unk_VTbl10 D_800B75D4;
+EXTERN_C char D_800B7624[];
+EXTERN_C char D_800B7644[];
+struct Unk_800C4CA0 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; char unk38[8]; void* vt40; };
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_800B79C4;
+EXTERN_C char D_800B7A34[];
+EXTERN_C char D_800B7A14[];
+EXTERN_C char D_800B7A64[];
+struct Unk_800C7110 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; char unk64[0x50]; char unkB4[4]; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C const Unk_VTbl10 D_800B9534;
+EXTERN_C char D_800B943C[];
+struct Unk_800D98D0 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; int unk38; int unk3C; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C int D_800EA11C[];
+EXTERN_C void func_800CF32C();
+struct Unk_800CF9A8 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C const Unk_VTbl10 D_800B8C3C;
+EXTERN_C char D_800B8B44[];
+struct Unk_800D18F4 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; int unk38; int unk3C; int unk40; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C const Unk_VTbl10 D_800BA728;
+EXTERN_C char D_800BA778[];
+EXTERN_C char D_800BA630[];
+EXTERN_C void func_800537C0(void*);
+struct Unk_800E936C { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; char unk38[8]; void* vt40; int unk44; int unk48; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C const Unk_VTbl10 D_800B806C;
+EXTERN_C char D_800B8064[];
+EXTERN_C char D_800B80DC[];
+EXTERN_C char D_800B80BC[];
+EXTERN_C char D_800B810C[];
+EXTERN_C void func_80056198(void*, int, void*, int, int);
+struct Unk_800C9B58 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; int unk64; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C const Unk_VTbl10 D_800B891C;
+EXTERN_C char D_800B896C[];
+EXTERN_C void func_800CFF6C();
+struct Unk_800D03B0 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; char unk38; char pad39[0x3]; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80056364(void*, int, int, int);
+struct Unk_800D8A04 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; int unk64; int unk68; int unk6C; int unk70; int unk74; Unk_VbObj vobj; };
+EXTERN_C const Unk_VTbl10 D_800B7B9C;
+EXTERN_C char D_800B7BEC[];
+EXTERN_C char D_800B7AA4[];
+EXTERN_C void func_800D3534();
+struct Unk_800C7740_h { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[8]; };
+struct Unk_800C7740 : Unk_800C7740_h, Unk_Base { int unk3C; void* vt40; };
+EXTERN_C const Unk_VTbl10 D_800B8DEC;
+EXTERN_C char D_800B8CF4[];
+struct Unk_800D2DD8 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; void* unk38; Unk_Deletable* unk3C; };
+EXTERN_C const Unk_VTbl10 D_800B8C3C;
+EXTERN_C char D_800B8B44[];
+struct Unk_800D1A1C { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0xC]; void* unk3C; Unk_Deletable* unk40; };
+EXTERN_C const Unk_VTbl10 D_800BA728;
+EXTERN_C char D_800BA778[];
+EXTERN_C char D_800BA630[];
+struct Unk_800E9498_h { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[8]; };
+struct Unk_800E9498 : Unk_800E9498_h, Unk_Base { int unk3C; void* vt40; void* unk44; Unk_Deletable* unk48; };
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B836C;
+EXTERN_C char D_800B83DC[];
+EXTERN_C char D_800B83BC[];
+EXTERN_C char D_800B840C[];
+struct Unk_800CD060 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; char unk68[0x1C]; char unk84[4]; };
+EXTERN_C const Unk_VTbl10 D_800B7564;
+EXTERN_C char D_800B75B4[];
+EXTERN_C char D_80013E30[];
+EXTERN_C void func_80057558(void*, int);
+struct Unk_800C402C { Unk_VBase* vb; char pad4[0x28]; void* vt2C; Unk_DualList unk30; char pad3C[0x1C]; void* vt58; };
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B74B4;
+EXTERN_C char D_800B7484[];
+EXTERN_C char D_800B7504[];
+EXTERN_C char D_800B7524[];
+struct Unk_800C38E0 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x10]; char unk6C[0x50]; char unkBC[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B86F4;
+EXTERN_C char D_800B8764[];
+EXTERN_C char D_800B8744[];
+EXTERN_C char D_800B8794[];
+struct Unk_800CF11C { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; Unk_EV<0x6C> unk68[3]; char unk1AC[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B77E4;
+EXTERN_C char D_800B7854[];
+EXTERN_C char D_800B7834[];
+EXTERN_C char D_800B7884[];
+EXTERN_C void func_800C68AC(void*, int);
+struct Unk_800C59D8 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; Unk_EV<0x1C> unk68[4]; char unkD8[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B844C;
+EXTERN_C char D_800B849C[];
+EXTERN_C char D_800B84BC[];
+struct Unk_800CD6BC { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; char unk68[0x50]; char unkB8[0x1C]; Unk_EV<0x88> unkD4[8]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_800B9094;
+EXTERN_C char D_800B9104[];
+EXTERN_C char D_800B90E4[];
+EXTERN_C char D_800B9134[];
+struct Unk_800D80F0 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; char unk68[0x50]; char unkB8[4]; char padBC[0x5C]; char unk118[4]; char pad11C[0x18]; char unk134[4]; char pad138[0x18]; char unk150[4]; char pad154[0x18]; char unk16C[4]; char pad170[0x18]; char unk188[4]; char pad18C[0x18]; char unk1A4[4]; char pad1A8[0x24]; char unk1CC[4]; char pad1D0[0x24]; char unk1F4[4]; char pad1F8[0x24]; char unk21C[4]; char pad220[0x24]; char unk244[4]; char pad248[0x24]; Unk_EV<0x1C> unk26C[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B97E4;
+EXTERN_C char D_800B97B4[];
+EXTERN_C char D_800B9834[];
+EXTERN_C char D_800B9854[];
+typedef Unk_EV<0x1C> Unk_800DB318_e;
+struct Unk_800DB318 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x10]; Unk_800DB318_e* unk6C; void* unk70; char pad74[0x4]; Unk_EV<0x1C> unk78[2]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800BA580;
+EXTERN_C char D_800BA550[];
+EXTERN_C char D_800BA5D0[];
+EXTERN_C char D_800BA5F0[];
+struct Unk_800E8144 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x14]; Unk_Deletable18* unk70; Unk_Deletable18* unk74; char pad78[0xC]; void* unk84; char pad88[0x4]; Unk_EV<0x1C> unk8C[3]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B7E1C;
+EXTERN_C char D_800B7E8C[];
+EXTERN_C char D_800B7E6C[];
+EXTERN_C char D_800B7EBC[];
+struct Unk_800CD060;
+EXTERN_C void func_800CD060(Unk_800CD060*, int);
+struct Unk_800C94D4 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x14]; Unk_EV<0x50> unk70[8]; Unk_EV<0x1C> unk2F0[8]; Unk_EV<0x1C> unk3D0[8]; char pad4B0[0x10]; char unk4C0[0x50]; char unk510[0x1C]; char unk52C[0x1C]; char unk548[0x1C]; char unk564[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800BA188;
+EXTERN_C char D_800BA1F8[];
+EXTERN_C char D_800BA1D8[];
+EXTERN_C char D_800BA228[];
+struct Unk_800E5CE8_m { char pad0[0xAC]; Unk_EV<0x1C> unkAC[3]; };
+struct Unk_800E5CE8 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x14]; char unk70[0x50]; char unkC0[0x1C]; Unk_800E5CE8_m unkDC; Unk_EV<0x28> unk1DC[3]; char unk254[0x28]; char unk27C[0x28]; char unk2A4[0x28]; char unk2CC[0x1C]; char unk2E8[0x1C]; char unk304[0x1C]; char unk320[0x1C]; char unk33C[4]; };
+#ifndef UNK_DESTROY_DEFINED
+#define UNK_DESTROY_DEFINED
+struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
+template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
+#endif
+EXTERN_C void func_8005652C(void*, int);
+EXTERN_C const Unk_VTbl10 D_80014E0C;
+EXTERN_C char D_80014E7C[];
+EXTERN_C char D_80014E5C[];
+EXTERN_C char D_80014EAC[];
+EXTERN_C const Unk_VTbl10 D_800B8F34;
+EXTERN_C char D_800B8FA4[];
+EXTERN_C char D_800B8F84[];
+EXTERN_C char D_800B8FD4[];
+struct Unk_800D633C { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; Unk_EV<0x1C> unk68[50]; Unk_EV<0x1C> unk5E0[26]; Unk_EV<0x1C> unk8B8[10]; Unk_EV<0x1C> unk9D0[4]; char padA40[0x4]; char unkA44[0x50]; char unkA94[0x50]; char unkAE4[0x1C]; char unkB00[0x1C]; char unkB1C[4]; };
+EXTERN_C const Unk_VTbl10 D_800B825C;
+EXTERN_C char D_800B82AC[];
+EXTERN_C char D_800B814C[];
+EXTERN_C void func_80057558(void*, int);
+struct Unk_800CA5A4 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; Unk_800BFB64_list unk30; char pad34[0x24]; void* vt58; char pad5C[0x28]; Unk_DualList unk84; char pad90[0x14]; char unkA4[8]; char unkAC[8]; char unkB4[4]; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_800630BC(void*, int, int);
+EXTERN_C void func_80055020(void*, Unk_Pt);
+EXTERN_C const Unk_VTbl10 D_800B74B4;
+EXTERN_C char D_800B7484[];
+EXTERN_C char D_800B7504[];
+EXTERN_C char D_800B7524[];
+struct Unk_800C375C { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; int unk68; char unk6C[0x50]; char unkBC[0x1C]; int unkD8; int unkDC; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80056364(void*, int, int, int);
+EXTERN_C void func_80055020(void*, Unk_Pt);
+EXTERN_C const Unk_VTbl10 D_800B79C4;
+EXTERN_C char D_800B7A34[];
+EXTERN_C char D_800B7A14[];
+EXTERN_C char D_800B7A64[];
+struct Unk_800C6B44 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; char unk64[0x50]; char unkB4[0x1C]; int unkD0; int unkD4; int unkD8; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_800630BC(void*, int, int);
+EXTERN_C const Unk_VTbl10 D_800B77E4;
+EXTERN_C char D_800B7854[];
+EXTERN_C char D_800B7834[];
+EXTERN_C char D_800B7884[];
+struct Unk_800C5BE8;
+EXTERN_C Unk_800C5BE8* func_800C5BE8(Unk_800C5BE8*, int);
+struct Unk_800C5544 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; Unk_Elem28 unk68[4]; char unkD8[4]; char padDC[0x32DC]; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80056364(void*, int, int, int);
+EXTERN_C void func_800D0BB4();
+struct Unk_800D0E90 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; int unk64; int unk68; int unk6C; char pad70[0x4]; int unk74; int unk78; int unk7C; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80056364(void*, int, int, int);
+EXTERN_C void func_800D0BB4();
+EXTERN_C void func_800D1004(Unk_800D1004*, int);
+struct Unk_800D0CDC { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0x8]; int unk64; int unk68; int unk6C; int unk70; int unk74; int unk78; int unk7C; Unk_VbObj vobj; };
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C char D_800B737C[];
+EXTERN_C char D_800B721C[];
+EXTERN_C VAt<0x2C>* func_80057368(void*, int);
+EXTERN_C void func_8005D8C4(void*, int, int);
+struct Unk_800C1D70 { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x28]; void* vt58; int unk5C; int unk60; int unk64; char unk68[0x40]; int unkA8; Unk_VbObj vobj; };
+EXTERN_C const Unk_VTbl10 D_800B732C;
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_800630BC(void*, int, int);
+EXTERN_C void func_80055020(void*, Unk_Pt);
+EXTERN_C char D_800B849C[];
+EXTERN_C char D_800B84BC[];
+struct Unk_800D0E90;
+EXTERN_C Unk_800D0E90* func_800D0E90(Unk_800D0E90*, int);
+struct Unk_EB88 { char pad[0x88]; };
+struct Unk_800CD224 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; char unk68[0x50]; char unkB8[0x1C]; Unk_EB88 unkD4[8]; short unk514; char pad516[0x2]; Unk_VbObj vobj; };
+EXTERN_C char D_80014E7C[];
+EXTERN_C const Unk_VTbl10 D_800B844C;
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_800630BC(void*, int, int);
+EXTERN_C void func_80055020(void*, Unk_Pt);
+EXTERN_C void func_800E62C8(void*);
+EXTERN_C void func_800E66F0(struct Unk_800E6750*, unsigned int);
+struct Unk_800E580C { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; int unk68; int unk6C; char unk70[0x50]; char unkC0[0x1C]; char unkDC[0x27C]; Unk_VbObj vobj; };
+EXTERN_C const Unk_VTbl10 D_800BA188;
+EXTERN_C char D_800BA1D8[];
+EXTERN_C char D_800BA1F8[];
+EXTERN_C char D_800BA228[];
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_800630BC(void*, int, int);
+EXTERN_C void func_80063270(void*, Unk_Pt);
+struct Unk_800CCD24 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; char unk68[0x1C]; char unk84[0x1C]; Unk_VbObj vobj; };
+EXTERN_C char D_800B8334[];
+EXTERN_C char D_800B8350[];
+EXTERN_C const Unk_VTbl10 D_800B836C;
+EXTERN_C char D_800B83BC[];
+EXTERN_C char D_800B83DC[];
+EXTERN_C char D_800B840C[];
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_80062FA4(void*, int, int, int);
+EXTERN_C void func_80062D60(void*, int);
+struct Unk_800CEA30_e { char pad0[0x5C]; int unk5C; char pad60[0xC]; };
+struct Unk_800CEA30 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* vb; void* vt54; void* vt58; char pad5C[0xC]; Unk_800CEA30_e unk68[3]; char unk1AC[0x1C]; int unk1C8; int unk1CC; int unk1D0; Unk_VbObj vobj; };
+EXTERN_C char D_800B86B4[];
+EXTERN_C char D_800B86C4[];
+EXTERN_C char D_800B86D8[];
+EXTERN_C char D_800B86E8[];
+EXTERN_C const Unk_VTbl10 D_800B86F4;
+EXTERN_C char D_800B8744[];
+EXTERN_C char D_800B8764[];
+EXTERN_C char D_800B8794[];
+EXTERN_C char D_800EA77E[];
+struct Unk_800D7FB4 { char pad0[0xE0]; Unk_800D7F10_o* unkE0; Unk_800D7F10_o* unkE4; };
+struct Unk_800D3090 { char pad0[8]; int unk8; char padC[0x10]; unsigned short unk1C; char pad1E[0x12]; Unk_800BFB64_list* unk30; char pad34[4]; int unk38; };
+struct Unk_800D3090_r { Unk_Pt a, b; Unk_800D3090_r(short x, short y, short w, short h) : a(x, y), b(w, h) {} };
+struct Unk_800D8B40 { char pad0[0x68]; int unk68; VAt<0x2C>* unk6C; void* unk70; int unk74; };
+EXTERN_C VAt<0x2C>* func_80057368(void*, int);
+struct Unk_800D98D0; EXTERN_C Unk_800D98D0* func_800D98D0(Unk_800D98D0* self, int in_chrg, unsigned short a);
+EXTERN_C void* D_800EA120[];
+EXTERN_C void* D_800EA124[];
+EXTERN_C Unk_Deletable* D_800EA128[];
+EXTERN_C Unk_Deletable* D_800EA12C[];
+EXTERN_C Unk_Deletable* D_800EA130[];
+struct Unk_800D3EAC_c { char pad0[5]; unsigned char r, g, b; };
+struct Unk_800D3EAC { char pad0[0x1C]; int unk1C; char pad20[0x30]; SPRT unk50[10]; SPRT_16 unk118[0x60]; SPRT_16 unk718[2]; };
+struct Unk_800E9178 { char pad0[0xE4]; int unkE4; int unkE8; int unkEC; int unkF0; VAt<0x2C>* unkF4; VAt<0x2C>* unkF8; };
+EXTERN_C VAt<0x2C>* func_80057368(void*, int);
+struct Unk_800E936C; EXTERN_C Unk_800E936C* func_800E936C(Unk_800E936C* self, int in_chrg, unsigned short a);
+EXTERN_C void func_80069D1C(void*, int, int);
+EXTERN_C void func_800E9650(void*, void*);
+EXTERN_C void func_80069E60(void*, int);
+struct Unk_C1A_800E4920 { char c[0x1A]; };
+struct Unk_800E4920 : VAt0 { short* unk4; char pad8[0x2C]; int unk34; };
+EXTERN_C int func_800E4034(void*, int, int);
+EXTERN_C int erase(char*);
+struct Unk_800BAAA0 : VAt0 { char pad4[4]; short unk8; unsigned short unkA; Unk_Dr12 unkC[2]; TILE unk24[2]; int unk44; int unk48; };
+struct Unk_800C6F0C { char pad0[0x64]; char unk64[0x6C]; VAt<0x2C>* unkD0; VAt<0x2C>* unkD4; int unkD8; };
+EXTERN_C VAt<0x2C>* func_80057368(void*, int);
+EXTERN_C VAt<0x2C>* func_800C7230(void*, int, int);
+EXTERN_C void func_800CF32C();
+EXTERN_C void func_800CFF6C();
+struct Unk_800D75B4_a : Unk_Deletable18 { };
+struct Unk_800D75B4_b : Unk_Deletable18 { char pad1C[0xC]; };
+struct Unk_800D75B4 { char pad0[0x68]; char unk68[0x70]; Unk_800DF26C_obj* unkD8[4]; char padE8[0x10]; void* unkF8; int unkFC; int unk100; int unk104; char pad108[4]; Unk_800D75B4_a* unk10C; Unk_800D75B4_b* unk110; Unk_800D75B4_b* unk114; };
+struct Unk_800D1490 : VAt<0x18> { char pad1C[0x4C]; Unk_800D1304_s* unk68; unsigned int unk6C; VAt<0x2C>* unk70; VAt<0x2C>* unk74; Unk_800C9D60_sub* unk78; int unk7C; };
+EXTERN_C VAt<0x2C>* func_80057368(void*, int);
+struct Unk_800D18F4; EXTERN_C Unk_800D18F4* func_800D18F4(Unk_800D18F4* self, int in_chrg, int b, unsigned short a);
+EXTERN_C void func_80069D1C(void*, int, int);
+EXTERN_C void func_800D1BA4(void*, void*);
+EXTERN_C void func_80069E60(void*, int);
+struct Unk_800D7B6C_a { char pad0[0x1C]; Unk_800D7B6C_a() { func_80053928(this); } ~Unk_800D7B6C_a(); };
+EXTERN_C void* func_8005464C(void*);
+struct Unk_800D7B6C_b { char pad0[0x28]; Unk_800D7B6C_b() { func_8005464C(this); } ~Unk_800D7B6C_b(); };
+struct Unk_800D7B6C { char pad0[0xD8]; VAt<0x18>* unkD8; char padDC[0x30]; Unk_800D7B6C_a* unk10C; Unk_800D7B6C_b* unk110; Unk_800D7B6C_b* unk114; };
+EXTERN_C VAt<0x18>* func_800694BC(void*, int, int, int);
+EXTERN_C void func_800549EC(void*, int);
+EXTERN_C void func_800549E4(void*, int);
+EXTERN_C void func_8005408C(void*, int);
+EXTERN_C char D_800B9078[];
+EXTERN_C char D_800B9084[];
+struct Unk_800DABA8 : VAt<0x18> { char pad1C[0x20]; void* unk3C; char pad40[0x22B0]; char unk22F0[0x178]; int unk2468; char pad246C[0x10]; VAt<0x18>* unk247C; void* unk2480; void* unk2484; };
+EXTERN_C int func_800DB8D8(void*);
+EXTERN_C void* func_8005464C(void*);
+EXTERN_C void func_80057F20(void*, int);
+
+EXTERN_C void func_800DAD54(Unk_800DAD54* p);
+EXTERN_C void func_800DADD4(Unk_800DADD4* p, int a);
+#ifndef UNK_VBOBJ_DEFINED
+#define UNK_VBOBJ_DEFINED
+struct Unk_VbObj { void* vptr; int unk4; };
+#endif
+EXTERN_C void func_8005BC84(void*, int, int, int);
+EXTERN_C const Unk_VTbl10 D_800BA380;
+EXTERN_C char D_800BA3D0[];
+struct Unk_800E714C { Unk_VBase* vb; char pad4[0x28]; void* vt2C; char pad30[0x8]; int unk38; int unk3C; Unk_VbObj vobj; };
+EXTERN_C char D_800B773C[];
+struct Unk_W5 { int a, b, c, d, e; };
+struct Unk_800C5408 { void* vtbl; int unk4; short unk8; short unkA; int unkC; Unk_W3 unk10[2]; Unk_W5 unk28[2]; Unk_W4 unk50[2]; };
+EXTERN_C char D_800B8C8C[];
+struct Unk_800D29D8 { void* vtbl; int unk4; short unk8; short unkA; int unkC; POLY_GT4 unk10[2]; Unk_W3 unk78[2]; Unk_W3 unk90[2]; short unkA8; };
+EXTERN_C char D_80013B00[];
+struct Unk_800D44D4_h { void* vtbl; int unk4; short unk8; short unkA; int unkC; };
+struct Unk_800D44D4_b { int a; int b; void* vt; };
+struct Unk_800D44D4 : Unk_800D44D4_h, Unk_800D44D4_b { int unk1C; Unk_W3 unk20[4]; Unk_W5 unk50[10]; Unk_W4 unk118[0x60]; Unk_W4 unk718[2]; };
+struct Unk_800DBDD8_e { char pad0[0x8B]; unsigned char unk8B; char pad8C[8]; };
+struct Unk_800DBDD8 : VAt<0x18> { char pad1C[4]; int unk20; char pad24[0x18]; void* unk3C; char pad40[0x30]; Unk_800DBDD8_e* unk70; };
+struct Unk_800E0888_d { virtual int vf00(...); virtual int vf01(...); virtual int vf02(...); virtual int vf03(...); virtual ~Unk_800E0888_d(); };
+struct Unk_800E0888 { char pad0[0x7C]; int unk7C; void* unk80; int unk84; Unk_800E0888_d* unk88; char unk8C[0x130]; char unk1BC[0x88]; Unk_800E1174_e unk244[15]; };
+EXTERN_C void func_8002798C();
+struct Unk_800DF098_e { char pad0[0x1B8]; Unk_800E83B8* unk1B8; };
+struct Unk_800DF098 : Unk_EntOwner { char pad32C[0x230]; void* unk55C; };
+struct Unk_800D0CDC; EXTERN_C Unk_800D0CDC* func_800D0CDC(Unk_800D0CDC* self, int in_chrg, int a, int b);
+EXTERN_C void func_800DEED4(void*, Unk_W3);
+EXTERN_C void func_80081820(void*, int, int, int, void*, void*);
+EXTERN_C char D_800AFA74[];
+struct Unk_800CC138 { char pad0[0x5C]; int unk5C; char pad60[8]; short unk68; short unk6A; char pad6C[0x18]; Unk_DualList unk84; };
+EXTERN_C void func_800D04E4(Unk_800D04E4*, int, int, int);
+inline Unk_800D04E4* at_800CC138(Unk_List2* l, int i) { return (Unk_800D04E4*)func_80019F64(first2(l), i); }
+struct Unk_800C52A0 { char pad0[0x10]; char unk10[0xC]; char unk1C[0xC]; SPRT unk28[2]; SPRT_16 unk50[2]; };
+EXTERN_C unsigned short func_80060154(char*, int);
+EXTERN_C Unk_Short2 func_80060188(char*, int);
+EXTERN_C unsigned short func_800600A4(char*, int);
+EXTERN_C char D_800AE640[];
+struct Unk_800D56E8 : VAt<0x18> { char pad1C[0x20]; void* unk3C; char pad40[0x1C]; int unk5C; char pad60[0x9E0]; int unkA40; char unkA44[0x50]; char unkA94[0x50]; char unkAE4[0x1C]; char unkB00[0x1C]; char unkB1C[0x1C]; int unkB38; int unkB3C; };
+EXTERN_C void func_800D5E24(void*);
+EXTERN_C void func_800588C8(void*);
+EXTERN_C char* func_80061188(void*, int);
+EXTERN_C void func_800540A8(void*);
+EXTERN_C int func_80053BB4(void*);
+EXTERN_C void func_80053B68(void*);
+EXTERN_C void func_800601D8(void*, char*);
+EXTERN_C void func_800539D0(void*, void*);
+EXTERN_C char D_800B8F2C[];
+struct Unk_800C3C54 : VAt<0x18> { char pad1C[0x4C]; int unk68; char pad6C[0x6C]; int unkD8; void* unkDC; };
+EXTERN_C void func_800C43DC(void*, unsigned char, unsigned char);
+struct Unk_800DCC0C_e : Unk_Pad400, VAt<0x9C> { };
+struct Unk_800DCC0C { char pad0[0x64]; Unk_Elem40 unk64[8]; char pad1A4[0x17C]; char unk320[0x6C]; char unk38C[0x50]; int unk3DC; int unk3E0; int unk3E4; char pad3E8[4]; void* unk3EC; void* unk3F0; char pad3F4[8]; Unk_Elem40* unk3FC; };
+EXTERN_C void func_8005408C(void*, int);
+EXTERN_C short D_80015904[];
+struct Unk_Dr20_800D95F8 { unsigned int tag; Unk_W4 body; };
+struct Unk_800D95F8 { char pad0[0xA]; unsigned short unkA; char padC[4]; Unk_Dr12 unk10[2]; Unk_Dr20_800D95F8 unk28[2]; };
+struct Unk_800D109C_t { int w[10]; };
+struct Unk_800D109C { char pad0[0x3C]; void* unk3C; char pad40[0x24]; int unk64; int unk68; int unk6C; VAt<0x2C>* unk70; char pad74[4]; VAt<0x2C>* unk78; int unk7C; };
+EXTERN_C void func_80069D1C(void*, int, int);
+EXTERN_C void func_800D1BA4(void*, void*);
+EXTERN_C void func_80069E60(void*, int);
+struct Unk_C13_800E5024 { char c[13]; };
+EXTERN_C struct DIRENTRY* nextfile(struct DIRENTRY*);
+EXTERN_C char D_800BA0A0[];
+EXTERN_C Unk_C13_800E5024 D_800BA0A4;
+struct Unk_800E9ECC { char pad0[0xA]; unsigned short unkA; char padC[4]; SPRT unk10[0x90]; Unk_Dr12 unkB50[2]; };
+inline void addPrimOt_800E9ECC(Unk_Ot* ot, unsigned int n, void* prim) {
+    if (n && n < ot->unk10) {
+        *(unsigned int*)prim = (*(unsigned int*)prim & 0xFF000000) | (ot->unk14[n] & 0xFFFFFF);
+        ot->unk14[n] = (unsigned int)prim & 0xFFFFFF;
+    }
+}
+inline void addPrimOt2_800E9ECC(Unk_Ot* ot, unsigned int n, void* prim) {
+    if (n && n < ot->unk10) {
+        ((Unk_PTag*)prim)->addr = ot->unk14[n];
+        ot->unk14[n] = (unsigned int)prim & 0xFFFFFF;
+    }
+}
+struct Unk_800DA224 : VAt<0x18> { char pad1C[0x2268]; char unk2284[0x6C]; char unk22F0[0x17C]; VAt<0x2C>* unk246C; VAt<0x18>* unk2470[1]; };
+EXTERN_C VAt<0x18>* func_800CDBB4(void*);
+EXTERN_C void func_800CDE70(Unk_800CDE70*, int);
+EXTERN_C void func_800DAD54(Unk_800DAD54*);
+struct Unk_800C2A6C_e : Unk_Pad400, Unk_Base { char pad404[0x38]; unsigned char unk43C[0x114]; int unk550[4]; };
+struct Unk_800C2A6C { char pad0[0x20]; int unk20; char pad24[0x12C]; char unk150[0x64]; Unk_Elem40 unk1B4[8]; char pad2F4[0x200]; Unk_Elem40 unk4F4[8]; };
+EXTERN_C void func_8008B150(void*, Unk_W4);
+EXTERN_C void func_800697A4(void*);
+EXTERN_C void func_8005408C(void*, int);
+EXTERN_C short D_80015904[];
+struct Unk_E6C_800C66D4 { char pad0[0x6C]; };
+struct Unk_800C66D4_t { int w[8]; };
+struct Unk_800C66D4 { char pad0[0x68]; signed char unk68[0x34]; Unk_E6C_800C66D4 unk9C[0x30]; char pad1BDC[0]; };
+EXTERN_C void func_80061AAC(void*, int, int);
+EXTERN_C void* func_80053BC0(void*);
+struct Unk_800CDF68_v : Unk_Pad400, VAt<0x9C> { };
+struct Unk_800CDF68 { char pad0[0x50]; int unk50; short unk54; short unk56; char pad58[0x98]; char unkF0[0x28]; char unk118[0x28]; VAt<0x2C>* unk140; VAt<0x2C>* unk144; };
+EXTERN_C int func_800549C4(void*, int);
+struct Unk_800C41E0 { char pad0[0x30]; Unk_DualList unk30; char pad3C[0x20]; int unk5C[15]; };
+EXTERN_C int func_800C46E4(Unk_800C46E4*);
+inline void* at_800C41E0(Unk_List2* l, int i) { return func_80019F64(first2(l), i); }
+struct Unk_800D876C_e28 : Unk_Deletable18 { char pad1C[0xC]; };
+struct Unk_800D876C { char pad0[0x18]; void* vtbl18; char pad1C[0x34]; char unk50[0x1C]; Unk_Deletable18* unk6C; Unk_Deletable18* unk70; Unk_800D876C_e28* unk74; Unk_800D876C_e28* unk78; };
+EXTERN_C char D_800B917C[];
+struct Unk_800E88D0_h : VAt<0x18> { Unk_800BFB64_list unk1C; int unk20; char pad24[0x18]; void* unk3C; char pad40[0x18]; };
+struct Unk_800E88D0_b { int unk0; };
+struct Unk_800E88D0 : Unk_800E88D0_h, Unk_800E88D0_b { char pad5C[0x30]; char unk8C[0x54]; int unkE0; char padE4[0x18]; VAt<0x18>* unkFC; };
+EXTERN_C Unk_W2 func_80053AE4(void*, int);
+EXTERN_C int func_80060230(const Unk_W2&, char*);
+EXTERN_C char D_800BA544[];
+EXTERN_C char D_800BA548[];
+EXTERN_C void* D_800B4D60[];
+struct Unk_800CBA70 : Unk_Pad50, Unk_Base { char pad54[8]; int unk5C; char pad60[8]; short unk68; short unk6A; short unk6C; short unk6E; char pad70[0x14]; Unk_DualList unk84; char pad90[0x14]; char unkA4[0x18]; int unkBC; int unkC0; };
+EXTERN_C void func_800CBCCC(void*, int, int, int, int);
+EXTERN_C void func_800D0608(Unk_800D0704*, Unk_Short2, Unk_Short2, int);
+inline VAt<0x2C>* at_800CBA70(Unk_List2* l, int i) { return (VAt<0x2C>*)func_80019F64(first2(l), i); }
+struct Unk_S4_800CBA70 { short x, y, z, w; };
+struct Unk_R_800D72B8 { Unk_Pt a, b; Unk_R_800D72B8(short x, short y, short w, short h) : a(x, y), b(w, h) {} };
+struct Unk_800D72B8 : VAt<0x18> { char pad1C[0x20]; void* unk3C; char pad40[0x24]; int unk64; char unk68[0x6C]; int unkD4; VAt<0x18>* unkD8; char padDC[0x1C]; Unk_800C9D60_sub* unkF8; VAt<0x2C>* unkFC; void* unk100; void* unk104; };
+struct Unk_800D7B6C; EXTERN_C void func_800D7B6C(Unk_800D7B6C* p);
+EXTERN_C void func_800D7F10(Unk_800D7F10*);
+struct Unk_800D7FB4; EXTERN_C void func_800D7FB4(Unk_800D7FB4* p);
+EXTERN_C Unk_800D8FD4* func_800D8FD4(Unk_800D8FD4*, int, unsigned short);
+
+EXTERN_C int func_800DB9F8(Unk_800DB9F8* p);
+EXTERN_C void func_800E77AC();
+struct Unk_800BF6E4 { char pad0[8]; int unk8; short unkC; };
+EXTERN_C char D_800B9E2C[];
+EXTERN_C char D_800B9E58[];
+EXTERN_C char D_800B9BB4[];
+EXTERN_C char D_800B9BF8[];
+EXTERN_C char D_800B9BB8[];
+EXTERN_C char D_800B9EC0[];
+EXTERN_C int func_80054E90(void*);
 
 #endif /* FIELD_FIELD_H */
