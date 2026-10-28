@@ -416,4 +416,8 @@ struct S_A2_VD { virtual ~S_A2_VD(); };
 struct S_A2_VH0C : A2VObj0 { char pad[8]; Holder h; };
 EXTERN_C int func_8009C9E0();
 EXTERN_C void *func_800A0D2C(int n);
+struct S_A2_V4i { int a, b, c, d; S_A2_V4i(int x, int y, int z) { a = x; b = y; c = z; d = 0; } };
+EXTERN_C long TransRot_32(S_A2_V4 *v0, S_A2_V4 *v1, long *flag);
+EXTERN_C void func_8003A7FC(MATRIX *m, S_A2_SvI *v);
+struct S_A2_Lv { char pad[0x4C]; short s4C, s4E; };
 #endif /* GAME_A2_A2_H */

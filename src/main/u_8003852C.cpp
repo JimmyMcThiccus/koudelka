@@ -212,7 +212,27 @@ EXTERN_C int func_80038EF0(S_80038EF0 *p)
     return p->unk24;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_80038EFC);
+EXTERN_C void func_80038EFC(S_A2_Lv *p, S_A2_Lv *q)
+{
+    if (p != q) {
+        S_A2_Lv *a;
+        q->s4C = (unsigned short)p->s4E + 1;
+        q->s4E = (unsigned short)p->s4E + 1;
+        a = p;
+        if (p) {
+            do {
+                if (a->s4E < q->s4C)
+                    a->s4E = (unsigned short)q->s4C;
+                if (!a->s4C) a = 0;
+                else a = (S_A2_Lv *)func_80038EF0((S_80038EF0 *)a);
+            } while (a);
+        }
+        func_80039BEC(p, q);
+    } else {
+        p->s4C = 0;
+        p->s4E = 0;
+    }
+}
 
 EXTERN_C void *func_80038FB8(void *p, short a)
 {
@@ -573,7 +593,27 @@ EXTERN_C void func_80039F80(void *p, int a, S_A2_Sv *d)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003A010);
+EXTERN_C S_A2_V4 *func_8003A010(S_A2_V4 *r, char *m, S_A2_V4 *v)
+{
+    MATRIX t;
+    MATRIX *tp;
+    long flag;
+    func_8003A754(&t, 0x1000);
+    {
+        S_A2_SvI sv = S_A2_SvI(-AT(m, unsigned short, 0x2C), -AT(m, unsigned short, 0x2E), -AT(m, unsigned short, 0x30));
+        func_8003A7FC(&t, &sv);
+        S_A2_V4i nv(-AT(m, int, 0x34), -AT(m, int, 0x38), -AT(m, int, 0x3C));
+        func_8003B2F0((S_8003B2F0 *)&t, (S_8003B2F0_V *)&nv);
+    }
+    tp = &t;
+    SetRotMatrix(tp);
+    SetTransMatrix(tp);
+    S_A2_V4z out;
+    S_A2_V4z in = v ? *(S_A2_V4z *)v : S_A2_V4z();
+    TransRot_32((S_A2_V4 *)&in, (S_A2_V4 *)&out, &flag);
+    *r = *(S_A2_V4 *)&out;
+    return r;
+}
 
 EXTERN_C S_A2_V4 *func_8003A150(S_A2_V4 *r, char *m, S_A2_V4 *v)
 {
