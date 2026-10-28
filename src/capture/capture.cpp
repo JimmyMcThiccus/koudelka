@@ -3987,7 +3987,34 @@ EXTERN_C void func_800C277C(void **p, int in_chrg)
     func_8001A610(p, in_chrg);
 }
 
-INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800C27A4);
+EXTERN_C void func_80027FEC(void *, void *);
+EXTERN_C S_800C2D5C *func_800C27A4(S_800C2D5C *s, S_800C2D5C *d)
+{
+    func_80027FEC(s, d);
+    {
+        E16 *de = d->e;
+        int n = 1;
+        E16 *se = s->e;
+        while (n != -1) {
+            *de = *se;
+            de++;
+            se++;
+            n--;
+        }
+    }
+    {
+        E12 *da = d->a;
+        int n = 1;
+        E12 *sa = s->a;
+        while (n != -1) {
+            *da = *sa;
+            da++;
+            sa++;
+            n--;
+        }
+    }
+    return d;
+}
 
 struct OT_800C2850 {
     char pad[0x10];
