@@ -1176,4 +1176,7 @@ EXTERN_C const char D_800B77B8[], D_800B7888[], D_800B78B8[];
 EXTERN_C s32 func_800C39D4(void*);
 inline s32 Unk800C02D8_open(Unk800C02D8* p) { s32 r; if ((r = func_800C2AF0((Unk800C3228*)p->x78, func_800C4994(p->x2564), 1)) != 0) return r; return (func_800C2F04((Unk800C2F04*)p->x78) == 0) << 1; }
 
+/* func_800C2848 */
+struct Unk800C2848 { void* x0; StreamStat* x4; void* x8; void* xC; char x10[0x24 - 0x10]; void* x24; StreamStat* x28; s32 x2C, x30, x34, x38, x3C; void* x40; void* x44; s32 x48, x4C, x50, x54, x58, x5C; StreamStat x60; };
+
 #endif /* MOVIE_H */

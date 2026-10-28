@@ -776,7 +776,24 @@ EXTERN_C void* func_800C2624(void* vp, s32 in_chrg, s32 size, s32 a, s32 b, cons
 #undef p
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C2848);
+EXTERN_C Unk800C2848* func_800C2848(Unk800C2848* p, s32 f, Unk800C2848* o) {
+  if (f) {
+    p->x4 = p->x28 = &p->x60;
+    StreamStat* v = p->x28;
+    v->x0 = 0x10; v->x2 = 0; v->x4 = -1;
+  }
+  p->x0 = D_80012154; p->x8 = D_8001201C; p->x0 = D_80012034; p->xC = p->x10;
+  func_800198E0(p->x10, 4, 0);
+  p->x24 = D_800121AC; p->x8 = D_80012074; p->x24 = D_8001208C; p->x0 = D_800120B4;
+  p->x8 = D_800B7CFC; p->x24 = D_800B7CD4; p->x0 = D_800B7D14;
+  p->x30 = -1; p->x34 = -1; p->x38 = o->x38; p->x3C = o->x3C; p->x50 = o->x50; p->x40 = 0;
+  func_800C3D90((Unk800C3D90*)p, (char*)o->x40);
+  void* b = func_800A0D2C(func_800C40B8(p)); p->x44 = b; void* s = o->x44;
+  func_80025CE0(b, s, func_800C40B8(p));
+  p->x2C = 0; p->x48 = 0; p->x4C = 0; p->x54 = 0; p->x5C = 0;
+  func_800C407C((Unk800C407C*)p);
+  return p;
+}
 
 EXTERN_C void func_800C29C0(Unk800C29C0* p, s32 f) {
     p->x8 = D_800B7CFC; p->x24 = D_800B7CD4; p->x0 = D_800B7D14;
