@@ -33,7 +33,30 @@ INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C2814);
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C2B70);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C2ECC);
+EXTERN_C int func_800C2ECC(S2ECC *self, S2ECC *other) {
+    if (self->s4E2 != 2 || !other) return 0;
+    if (other == self) self->b50A = 0;
+    G2ECC *g = D_AF470_2ECC[0];
+    int a = (self->b4BC << 4) | 3;
+    int b = other->b4BC;
+    int c = (self->s502 + 1 == self->s500) << 7;
+    int d = self->b506 != 0;
+    for (int i = 0x1F; i > 0; i--) g->t[i] = g->t[i - 1];
+    g->t[0].b[0] = a; g->t[0].b[1] = b; g->t[0].b[2] = c; g->t[0].b[3] = d;
+    self->a4F6[self->s502] = 0;
+    if (!self->s410) { self->b4AD = 0; self->b4AE = 0; }
+    if (self->s502 + 1 == self->s500) func_80085C00(self);
+    if (self->b516) {
+        func_8008299C(base_of(self), 0x18, 0x15, 0, 0, 0, 0);
+        func_8008299C(base_of(self), 0, 2, 0, 0, 0, 0);
+    }
+    if (other->s50C != 1) func_80082C68(base_of(self), 0x21, D_AF470_2ECC[0], 0x2035, 2);
+    else func_80082D44(base_of(self), 0x22, base_of(other), 0, 0);
+    func_80082E14(base_of(self), 0);
+    if (self->s504) self->h508++;
+    self->s502++;
+    return 0;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C30F0);
 
@@ -101,7 +124,27 @@ EXTERN_C void func_800C3F84(T_C3E34 *p, int *o1, int *o2) {
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C3FF4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C41AC);
+EXTERN_C int func_800C41AC(T_41AC *p) {
+    if (!f_53830(p)) {
+        void *s0 = func_800621F8(D_800B4DD0[0]);
+        if (s0) { func_800C5020(operator new(0x78), (char *)s0, 0x3C); func_80062214(D_800B4DD0[0]); }
+        delete p;
+        return 0;
+    }
+    short t = D_800A4534.fC - p->h54;
+    if (t > 0x3C) {
+        ((T_41AC_B *)p)->m3();
+    } else {
+        short s0 = t < 12 ? t * 2 : t / 2 + 0x12;
+        T_41AC_X *x = p->f30;
+        T_41AC_Y *y = x;
+        T_41AC_Z *z = y ? y->f0 : 0;
+        T_41AC_W *w = z->f4 ? z->f0->f0 : 0;
+        w->m11(0, p->s56 - (short)s0);
+        p->s56 = s0;
+    }
+    return 1;
+}
 
 EXTERN_C void func_800C435C(T_C435C *p, int x) {
     if (p->f8) {

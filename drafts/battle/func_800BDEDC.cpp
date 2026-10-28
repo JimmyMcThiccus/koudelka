@@ -1,8 +1,7 @@
-// func_800BDEDC: NOT MATCHING. 4 instructions differ: the SVec2C(-1,-1) temp lands at sp+0x218 (8-aligned after the 0x204-byte buffer); retail has it at sp+0x214.
-// Round-2 scratch prelude below; many of its types are now in battle.h.
-// Near misses from agent A. Each needs the agentA.cpp prelude.
-// func_800B9480: 9 instructions differ: register allocation only (retail loads n->f10 into a1 and copies to s1; node in s0)
-//@ func_800BDEDC
+// func_800BDEDC: 4 differing instructions: the SVec2C(-1,-1) temp lands at sp+0x218 (BLK temp 8-aligned after buf[0x204]); retail has it at sp+0x214
+#include "common.h"
+#include "battle/battle.h"
+//@ func_800BDEDC base
 EXTERN_C void func_800BDEDC(T_BDEDC *p, void *a, int b, int c) {
     char buf[0x204];
     T_BA5FC_o *o = (T_BA5FC_o *)operator new(0x20C);

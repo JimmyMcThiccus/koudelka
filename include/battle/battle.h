@@ -1403,4 +1403,33 @@ inline int l_cnt(T_L2EC *l) { return l->f8C; }
 inline void l_rst(T_L2EC *l) { l->f90 = 0; }
 EXTERN_C int func_800CCDCC(T_C9A4C *p, SVec2I *out, T_CCDCC_in *in, int a3, int s5, int flag);
 
+struct T_41AC_W { virtual ~T_41AC_W(); virtual void m2(); virtual void m3(); virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7(); virtual void m8(); virtual void m9(); virtual void m10(); virtual void m11(int a, int b); };
+struct T_41AC_Q { T_41AC_W *f0; };
+struct T_41AC_Z { T_41AC_Q *f0; T_41AC_Q *f4; };
+struct T_41AC_Y { T_41AC_Z *f0; };
+struct T_41AC_X0 { int a, b; };
+struct T_41AC_X : T_41AC_X0, T_41AC_Y {};
+struct T_41AC_A { char pad[0x30]; T_41AC_X *f30; int pad34; };
+struct T_41AC_B { int d0, d1; virtual ~T_41AC_B(); virtual void m2(); virtual void m3(); };
+struct T_41AC : T_41AC_A, T_41AC_B { char pad44[0x10]; unsigned short h54; short s56; virtual ~T_41AC(); };
+EXTERN_C int f_53830(T_41AC_B *p) __asm__("func_80053830");
+EXTERN_C void *func_800621F8(void *p);
+EXTERN_C void func_80062214(void *p);
+EXTERN_C int func_800C41AC(T_41AC *p);
+
+struct B2A0 { int pad; };
+struct W4 { char b[4]; };
+struct G2ECC { char pad[0x3B0]; W4 t[0x20]; };
+EXTERN_C G2ECC *D_AF470_2ECC[] __asm__("D_800AF470");
+struct S2ECC {
+    char pad0[0x2A0]; B2A0 b2A0; char pad2A4[0x16C];
+    short s410; char pad412[0x9B]; char b4AD; char b4AE; char pad4AF[0xD]; signed char b4BC; char pad4BD[0x25]; short s4E2; char pad4E4[0x12];
+    short a4F6[5]; short s500; short s502; short s504; signed char b506; char pad507; unsigned short h508; signed char b50A; char pad50B; short s50C; char pad50E[8]; signed char b516;
+};
+EXTERN_C void func_80082C68(B2A0 *p, int a, void *g, int c, int d);
+EXTERN_C void func_80082D44(B2A0 *p, int a, B2A0 *b, int c, int d);
+EXTERN_C void func_80085C00(void *p);
+inline B2A0 *base_of(S2ECC *s) { return s ? &s->b2A0 : 0; }
+EXTERN_C int func_800C2ECC(S2ECC *self, S2ECC *other);
+
 #endif /* BATTLE_BATTLE_H */
