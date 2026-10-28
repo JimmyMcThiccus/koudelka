@@ -107,6 +107,17 @@ class modelling, which the integrator does. List the ones you meet in your repor
   tables of one original file share an address mod 8. `tools/jtbl_classes.py` lists the runs; a change of
   remainder is a file boundary, and every unit's rodata starts at its first table. If your function's table is
   4 bytes off in the full build, its unit is wrong: leave it as a draft and report it (don't change the yaml).
+- **A jump table in the middle of the unit's rodata.** A decompiled function's table is emitted at the
+  function's place in the source. Rodata comes out in source order: `INCLUDE_RODATA` lines, rodata that splat
+  migrated into an `INCLUDE_ASM` function's `.s`, and compiled tables. So when the table's retail address falls
+  inside a run of other rodata, do this:
+  1. Move the `INCLUDE_RODATA` lines for everything above the table's address so they come after the function.
+  2. Rodata that sits inside an earlier `INCLUDE_ASM` function's `.s` can't move. Give it
+     `force_not_migration` in your symbols file and re-split, which turns it into its own `INCLUDE_RODATA`
+     line; then move that line too.
+
+  Keep the lines in address order. Check with the full build, not just `try_compile`, which can't see this.
+  Example: `func_8007C6A8`'s `jtbl_80017048` (main_b2).
 - **String literals and other const data written in C.** With `-G8` GCC emits a file's data before its
   functions, so a literal lands at the start of the unit's rodata instead of beside its function. Refer to the
   retail symbol instead (`EXTERN_C const char D_XXXXXXXX[];`) and keep it with `force_not_migration` in your
@@ -156,6 +167,7 @@ with your unit's real flags, and keeps whatever scores closer to retail:
 .venv/Scripts/python.exe tools/permute.py run permuter/func_X -j 8 --stop-on-zero --best-only
 ```
 
+- `tools/twins.py asm/<target>` lists functions still in asm that nearly match one already decompiled, which is often the same source with other constants. Check it before starting a function from scratch.
 - Use at most `-j 8`: seven sessions share the machine's 40 threads, and each candidate takes about 0.7 s.
 - Results land in `permuter/func_X/output-<score>-<n>/source.c` (`permuter/` is git-ignored). Score 0 is a
   match. Copy the function back into your scratch file and confirm with `try_compile.py` before landing it.
