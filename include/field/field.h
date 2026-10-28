@@ -986,5 +986,12 @@ EXTERN_C char D_800B9604[];
 EXTERN_C char D_800B9634[];
 EXTERN_C char D_800B9660[];
 EXTERN_C char D_800B968C[];
+EXTERN_C Unk_Deletable* D_800EA134[];
+EXTERN_C Unk_Deletable* D_800EA138[];
+EXTERN_C Unk_Deletable* D_800EA13C[];
+EXTERN_C Unk_Deletable* D_800EA140[];
+EXTERN_C Unk_Deletable* D_800EA144[];
+struct Unk_800C57C4 { char pad0[0x20]; int unk20; char pad24[0x18]; Unk_800C9D90_sub* unk3C; char pad40[0x98]; char unkD8[4]; };
+EXTERN_C void func_800C5F68(void*);
 
 #endif /* FIELD_FIELD_H */

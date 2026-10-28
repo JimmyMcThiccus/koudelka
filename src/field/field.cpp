@@ -1700,7 +1700,37 @@ EXTERN_C void func_800C5734(char* p) {
     func_800631D4(p);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800C57C4);
+EXTERN_C int func_800C57C4(Unk_800C57C4* p, Unk_FlagArg* q) {
+    int f;
+    func_8001FC78((int)q, 0, 0);
+    if (func_8005618C(q)) {
+        return 1;
+    }
+    if (p->unk3C && !func_80053880((char*)p->unk3C + 0x50)) {
+        p->unk3C->vf02();
+    }
+    f = q->unk18;
+    if (f & 0x10) {
+        p->unk20 = ((int (*)(void*, int))func_80058270)(p->unk3C, -1);
+    } else if (f & 0x40) {
+        p->unk20 = ((int (*)(void*, int))func_80058270)(p->unk3C, 1);
+    } else if (f & 0x2000) {
+        if (func_8005409C(func_800550BC(p))) {
+            func_8006897C(p->unkD8, *(volatile int*)&p->unk20 + 1, 0);
+            func_800C5F68(p->unkD8);
+            return 1;
+        }
+        func_8008EF40(14);
+    } else if (f & 0xC00) {
+        if (D_800B4DD0[0]->unk1FB < 2) {
+            return 1;
+        }
+        if (func_800C08D4((int)q)) {
+            func_8008EF40(2);
+        }
+    }
+    return 1;
+}
 
 EXTERN_C void func_800C5928(char* p, int a) {
     if (a == 1) {
@@ -2775,7 +2805,25 @@ EXTERN_C void func_800CFE64(Unk_VbDtor2C* self, int in_chrg) {
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800CFF6C);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D0248);
+EXTERN_C void func_800D0248() {
+    if (D_800EA134[0]) {
+        func_80024FEC(D_800EA134[0], 0);
+        func_8005F5F4(operator new(0x14), D_800EA134[0], 2);
+        D_800EA134[0] = 0;
+        func_800215E8(D_800B4C38[0], D_800EA13C[0]);
+        delete D_800EA13C[0];
+        D_800EA13C[0] = 0;
+        func_800215E8(D_800B4C38[0], D_800EA140[0]);
+        delete D_800EA140[0];
+        D_800EA140[0] = 0;
+        func_800215E8(D_800B4C38[0], D_800EA144[0]);
+        delete D_800EA144[0];
+        D_800EA144[0] = 0;
+        func_800215E8(D_800B4C38[0], D_800EA138[0]);
+        delete D_800EA138[0];
+        D_800EA138[0] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D03B0);
 
