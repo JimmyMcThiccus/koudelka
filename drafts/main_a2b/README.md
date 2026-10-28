@@ -1,14 +1,10 @@
 # main_a2b drafts (round 3)
 
-Near misses for `src/main/u_8003C510.cpp`; each file's first line says what differs. None are built.
+Near misses for the four `u_8003C510`..`u_80045850` units; each file's first line says what differs. None are built.
+Two ctors with the same shape as func_800499D0 (func_8004D0F4: `lb 1(src)`, 4 iterations, `src+0xC`/`+0x14`) are
+not saved; take func_800499D0 and change those constants.
 
-Blocked by the unit layout, not the source: the small globals below are reached with `$gp` in some functions
-and with `lui` (assembler macro) in others of this one unit, so `--gp-from` (symbols the unit's retail asm reaches
-through `%gp_rel`) can only be right for one group. The unit holds more than one original source file.
-- `D_800B4D38`: `$gp` in `func_80044BE4`; `lui` in `func_8004297C`, `func_80043060`, `func_80043680`, `func_800436C0`,
-  `func_80043700`, `func_80043DF0`, `func_80045850`, `func_800459D4`, `func_80046948`. So boundaries lie between
-  `func_80043DF0` and `func_80044BE4`, and between `func_80044BE4` and `func_80045850`.
-- `D_800B4D28` / `D_800B4D30`: `$gp` in `func_800419F4`, `func_80041B54` (and `D_800B4D30` in `func_80041B44`);
-  `lui` in `func_8003DC54`, `func_8003DEA8`. So a boundary lies between `func_8003DEA8` and `func_800419F4`.
-Affected, unlanded: func_80043680, func_800436C0, func_80043700, func_80046948 (tiny; lui form), and likely the
-bigger users above.
+Not attempted because the toolchain can't express them yet:
+- `new T[n]` functions (func_800544AC, func_80054258, func_80053DDC): they need `__builtin_vec_new` named at
+  0x800A0D2C in `config/symbols/main.txt`, but every caller of `func_800A0D2C` would then lose its name.
+- virtual-base ctors: func_80045EB8, func_8005226C, func_80052100.
