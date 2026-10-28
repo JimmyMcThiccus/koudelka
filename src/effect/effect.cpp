@@ -1157,14 +1157,14 @@ EXTERN_C void func_800D9D08(void *self)
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800D9D68);
 
-EXTERN_C void func_800DB4BC(void *self);
+EXTERN_C void func_800DB4BC(SlotSet *self);
 
 EXTERN_C void func_800DA03C(void *self)
 {
     SubNode *n;
     int m;
     if (FIELD_AT(self, signed char, 0x163) && FIELD_AT(self, void *, 0x130) && FIELD_AT(FIELD_AT(self, void *, 0x130), short, 0x24) == 1)
-        func_800DB4BC(self);
+        func_800DB4BC((SlotSet *)self);
     n = FIELD_AT(self, SubNode *, 0x104);
     if (n) {
         if (FIELD_AT(self, void *, 0x108))
@@ -1180,7 +1180,7 @@ EXTERN_C void func_800DA03C(void *self)
                 if (!(FIELD_AT(self, unsigned int, 0x160) & 0xFFFF0000) && FIELD_AT(self, void *, 0x130)) {
                     if (FIELD_AT(self, signed char, 0x161))
                         FIELD_AT(FIELD_AT(self, void *, 0x130), short, 0x24) = m;
-                    func_800DB4BC(self);
+                    func_800DB4BC((SlotSet *)self);
                 }
                 return;
             }
@@ -1632,11 +1632,197 @@ EXTERN_C void func_800DB0FC(void *pv)
     ((Fn_800DB0FC)vt[34].pfn)((char *)p + vt[34].delta, &ang, &w);
 }
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DB4BC);
+EXTERN_C void func_80099C80(int a);
+EXTERN_C void func_800DB788(SlotSet *self, SVec4 *ang, Vec4 *pos);
+
+typedef void (*Fn_800DB4BC)(void *, SVec4 *, Vec4 *);
+
+EXTERN_C void func_800DB4BC(SlotSet *self)
+{
+    Vec4 pos;
+    SVec4 ang;
+    int code;
+    vec4_zero(&pos);
+    ang.x = 0;
+    ang.y = 0;
+    ang.z = 0;
+    ang.w = 0;
+    if (FIELD_AT(self, signed char, 0x165))
+        return;
+    FIELD_AT(self, char, 0x165) = 1;
+    pos = FIELD_AT(self, Vec4, 0x16C);
+    ang.z = 0;
+    code = 0x203;
+    switch ((short)(FIELD_AT(self, short, 0x166) - 1)) {
+    case 0:
+    case 9:
+        switch (FIELD_AT(self, short, 0x168)) {
+        case 1:
+            func_800DB788(self, &ang, &pos);
+            code = 0x15E;
+            break;
+        case 2:
+            ang.x = -0xA3;
+            ang.y = -0x608;
+            pos.x += 0x2137;
+            pos.y += -0x1019;
+            pos.z += 0x2224;
+            break;
+        case 3:
+            ang.x = -0xA3;
+            ang.y = -0x664;
+            pos.x += 0x2AFE;
+            pos.y += -0x18AD;
+            pos.z += 0x3896;
+            break;
+        }
+        break;
+    case 2:
+        switch (FIELD_AT(self, short, 0x168)) {
+        case 1:
+            func_800DB788(self, &ang, &pos);
+            code = 0x15E;
+            break;
+        case 2:
+            goto c7;
+        case 3:
+            ang.x = -0x15D;
+            ang.y = 0x62B;
+            pos.x += -0x280A;
+            pos.y += -0x2692;
+            pos.z += 0x2C99;
+            break;
+        }
+        break;
+    case 4:
+        ang.x = -0x129;
+        ang.y = -0x575;
+        pos.x += -0x311B;
+        pos.y += 0x1A6F;
+        pos.z += 0x18E4;
+        break;
+    case 5:
+        ang.x = -0xFB;
+        ang.y = -0x524;
+        pos.x += 0x31B4;
+        pos.y += -0x158D;
+        pos.z += 0x13F9;
+        break;
+    case 6:
+    case 10:
+        ang.x = -0x17D;
+        ang.y = 0;
+        pos.y += -0x3671;
+        pos.z += -0x5235;
+        break;
+    case 7:
+    c7:
+        ang.x = -0xEB;
+        ang.y = 0x659;
+        pos.x += -0x1ADD;
+        pos.y += -0x1438;
+        pos.z += 0x2442;
+        break;
+    case 1:
+    case 3:
+    case 8:
+        func_800DB788(self, &ang, &pos);
+        code = 0x15E;
+        break;
+    }
+    func_80099C80(code);
+    void *p = D_800B4ED8[0];
+    FIELD_AT(p, int, 0x11C) = code;
+    VtEntry *vt = FIELD_AT(p, VtEntry *, 0x2C);
+    ((Fn_800DB4BC)vt[34].pfn)((char *)p + vt[34].delta, &ang, &pos);
+}
 
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DB788);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DB978);
+EXTERN_C Vec4 func_800DBD1C(Vec4 *a, Vec4 *b);
+
+EXTERN_C void func_800DB978(void *self, short kind, short sub, void *a, void *b)
+{
+    Vec4 pa;
+    Vec4 pb;
+    Vec4 t;
+    if (a)
+        pa = FIELD_AT(FIELD_AT(a, void *, 0x1B8), Vec4, 0x34);
+    else
+        vec4_zero(&pa);
+    if (b) {
+        pb = FIELD_AT(FIELD_AT(b, void *, 0x1B8), Vec4, 0x34);
+    } else {
+        pb.x = 0;
+        pb.y = 0;
+        pb.z = 0;
+        pb.w = 0;
+    }
+    FIELD_AT(self, short, 0x166) = kind;
+    FIELD_AT(self, short, 0x168) = sub + 1;
+    switch (FIELD_AT(self, short, 0x166)) {
+    case 1:
+    case 2:
+    case 3:
+    case 10:
+        FIELD_AT(self, Vec4, 0x16C) = pb;
+        break;
+    case 4: {
+        t = func_800DBD1C(&pa, &Vec4(0, 0, -0x2EE0, 0));
+        pa = t;
+        if (pa.z < -0x1C20)
+            pa.z = -0x1C20;
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    }
+    case 5: {
+        t = func_800DBD1C(&pa, &Vec4(0x960, 0, -0x960, 0));
+        pa = t;
+        if (pa.x > 0x12C0)
+            pa.x = 0x12C0;
+        if (pa.z < -0x1C20)
+            pa.z = -0x1C20;
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    }
+    case 6: {
+        t = func_800DBD1C(&pa, &Vec4(-0x960, 0, -0x960, 0));
+        pa = t;
+        if (pa.x < -0x12C0)
+            pa.x = -0x12C0;
+        if (pa.z < -0x1C20)
+            pa.z = -0x1C20;
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    }
+    case 7:
+        t.x = 0;
+        t.y = 0;
+        t.z = 0;
+        t.w = 0;
+        FIELD_AT(self, Vec4, 0x16C) = t;
+        break;
+    case 8:
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    case 9: {
+        t = func_800DBD1C(&pa, &Vec4(0, 0, -0x2EE0, 0));
+        pa = t;
+        if (pa.z < -0x1C20)
+            pa.z = -0x1C20;
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    }
+    case 11: {
+        t = func_800DBD1C(&pa, &Vec4(0, 0, -0x960, 0));
+        pa = t;
+        if (pa.z < -0x1C20)
+            pa.z = -0x1C20;
+        FIELD_AT(self, Vec4, 0x16C) = pa;
+        break;
+    }
+    }
+}
 
 EXTERN_C void func_800DDC98(void *p, int on);
 
@@ -1725,6 +1911,17 @@ EXTERN_C char *func_800DBEBC(void *self, char *src)
     return src + 4;
 }
 
+/* Retail has a zero word after func_800DB978's jump table, before the vtables from D_800D6228.
+   Kept in order like INCLUDE_RODATA. */
+void __maspsx_include_asm_hack_rodata_pad_800D6224()
+{
+    __asm__(
+        ".section .rodata # maspsx-keep\n"
+        "\t.word 0 # maspsx-keep\n"
+        ".text # maspsx-keep\n"
+    );
+}
+
 INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6228);
 
 INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6240);
@@ -1733,7 +1930,49 @@ INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6268);
 
 INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6280);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DBEDC);
+EXTERN_C int func_8003912C(void *p, int n);
+EXTERN_C Vec4 func_8003A150(int h, int n);
+
+EXTERN_C void func_800DBEDC(void *self, void *a, void *b)
+{
+    int h;
+    switch (FIELD_AT(self, signed char, 0x2)) {
+    case 0:
+    case 3:
+        break;
+    case 1:
+    case 4:
+        h = func_8003912C(FIELD_AT(a, void *, 0x1B8), 5);
+        if (h)
+            FIELD_AT(self, Vec4, 0x4) = func_8003A150(h, 0);
+        h = func_8003912C(FIELD_AT(b, void *, 0x1B8), 5);
+        if (h)
+            FIELD_AT(self, Vec4, 0x14) = func_8003A150(h, 0);
+        break;
+    case 2:
+    case 5:
+        h = func_8003912C(FIELD_AT(b, void *, 0x1B8), 5);
+        if (h)
+            FIELD_AT(self, Vec4, 0x4) = func_8003A150(h, 0);
+        h = func_8003912C(FIELD_AT(a, void *, 0x1B8), 5);
+        if (h)
+            FIELD_AT(self, Vec4, 0x14) = func_8003A150(h, 0);
+        break;
+    }
+    if (a == b) {
+        if (FIELD_AT(a, signed char, 0x4BC) >= 3)
+            FIELD_AT(self, int, 0x1C) -= 0x960;
+        else
+            FIELD_AT(self, int, 0x1C) += 0x960;
+    }
+    if (FIELD_AT(self, signed char, 0x2)) {
+        VtEntry *vt = FIELD_AT(self, VtEntry *, 0x28);
+        ((void (*)(void *))vt[4].pfn)((char *)self + vt[4].delta);
+    } else {
+        VtEntry *vt = FIELD_AT(self, VtEntry *, 0x28);
+        ((void (*)(void *))vt[5].pfn)((char *)self + vt[5].delta);
+    }
+}
 
 EXTERN_C void *func_800DC08C(void *self)
 {
@@ -3510,6 +3749,268 @@ INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6418);
 
 INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6468);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DF974);
+EXTERN_C void *func_800E4CAC(void *self, short id);
+EXTERN_C void *func_800E5030(void *self, short id);
+EXTERN_C void *func_800E5254(void *self, short id);
+EXTERN_C void *func_800E5450(void *self, short id);
 
-INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DFEBC);
+EXTERN_C char *func_800DF974(void *self, char *src, void *obj)
+{
+    char *next = 0;
+    void *p = 0;
+    Key *k = 0;
+    VtEntry *vt;
+    char *h = src;
+    switch ((short)(FIELD_AT(h, short, 0x0) - 1)) {
+    case 0:
+        {
+            short t = FIELD_AT(h, short, 0x8);
+            FIELD_AT(obj, int, 0x6C) = FIELD_AT(h, short, 0x4);
+            FIELD_AT(obj, short, 0x74) = t;
+        }
+        next = h + 0xC;
+        break;
+    case 1:
+        switch (FIELD_AT(h, short, 0x2) >> 8) {
+        case 0:
+            p = func_800E4CAC(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 1:
+            p = func_800E5030(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 2:
+            p = func_800E5254(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 3:
+            p = func_800E5450(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        }
+        vt = FIELD_AT(p, VtEntry *, 0x0);
+        next = ((char *(*)(void *, char *))vt[2].pfn)((char *)p + vt[2].delta, src);
+        FIELD_AT(obj, void *, 0x2C) = p;
+        break;
+    case 2:
+        switch (FIELD_AT(h, short, 0x2) >> 8) {
+        case 0:
+            p = func_800E4CAC(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 1:
+            p = func_800E5030(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 2:
+            p = func_800E5254(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        case 3:
+            p = func_800E5450(operator new(0x48), FIELD_AT(obj, short, 0x8));
+            break;
+        }
+        vt = FIELD_AT(p, VtEntry *, 0x0);
+        next = ((char *(*)(void *, char *))vt[2].pfn)((char *)p + vt[2].delta, src);
+        FIELD_AT(obj, void *, 0x30) = p;
+        break;
+    case 3:
+        switch (FIELD_AT(h, short, 0x2)) {
+        case 0: {
+            KeyVec *kv = (KeyVec *)operator new(0x20);
+            keyvec_init(kv, 0);
+            k = kv;
+            break;
+        }
+        case 1: {
+            KeyInt *ki = (KeyInt *)operator new(0x10);
+            key_init(ki, 1);
+            ki->vptr = D_800D6138;
+            ki->value = 0;
+            k = ki;
+            break;
+        }
+        case 2: {
+            KeyInt *ki = (KeyInt *)operator new(0x10);
+            key_init(ki, 2);
+            ki->vptr = D_800D6110;
+            ki->value = 0;
+            k = ki;
+            break;
+        }
+        case 5:
+            k = (Key *)operator new(0xC);
+            key_init(k, 5);
+            k->vptr = D_800D60E8;
+            break;
+        case 6:
+            k = (Key *)operator new(0xC);
+            key_init(k, 6);
+            k->vptr = D_800D60C0;
+            break;
+        case 8:
+            k = (Key *)operator new(0xC);
+            key_init(k, 8);
+            k->vptr = D_800D6098;
+            break;
+        case 10: {
+            KeyVec *kv = (KeyVec *)operator new(0x20);
+            keyvec_init(kv, 10);
+            kv->vptr = D_800D6070;
+            k = kv;
+            break;
+        }
+        case 11: {
+            KeyVec *kv = (KeyVec *)operator new(0x20);
+            keyvec_init(kv, 11);
+            kv->vptr = D_800D6048;
+            k = kv;
+            break;
+        }
+        }
+        vt = (VtEntry *)k->vptr;
+        next = ((char *(*)(void *, char *))vt[2].pfn)((char *)k + vt[2].delta, src);
+        FIELD_AT(obj, Key *, 0x50) = k;
+        break;
+    case 4:
+        FIELD_AT(obj, int, 0x70) = FIELD_AT(h, short, 0x4);
+        next = h + 0xC;
+        break;
+    case 5:
+        FIELD_AT(obj, short, 0x7A) = FIELD_AT(h, short, 0x4);
+        FIELD_AT(obj, short, 0x7C) = FIELD_AT(h, short, 0x6);
+        FIELD_AT(obj, short, 0x7E) = FIELD_AT(h, short, 0x8);
+        next = h + 0xC;
+        break;
+    case 6:
+        FIELD_AT(obj, char, 0x86) = FIELD_AT(h, char, 0x4);
+        FIELD_AT(obj, char, 0x87) = FIELD_AT(h, char, 0x5);
+        FIELD_AT(obj, char, 0x88) = FIELD_AT(h, char, 0x6);
+        next = h + 8;
+        break;
+    case 7:
+        FIELD_AT(obj, short, 0x80) = FIELD_AT(h, short, 0x2);
+        FIELD_AT(obj, short, 0x82) = FIELD_AT(h, short, 0x4);
+        FIELD_AT(obj, short, 0x84) = FIELD_AT(h, short, 0x6);
+        next = h + 8;
+        break;
+    case 8:
+        {
+            char *p = h;
+            h += 4;
+            FIELD_AT(obj, short, 0x78) = FIELD_AT(p, short, 0x2);
+            next = h;
+        }
+        break;
+    }
+    return next;
+}
+
+EXTERN_C IdArray *func_800DDF58(IdArray *self, short id, short count, short def);
+EXTERN_C IdArray *func_800DE180(IdArray *self, short id, short count, short def);
+EXTERN_C void func_800DE0E4(void *self, int i, Color c);
+EXTERN_C void func_800DE364(void *self, int i, SVec4 v);
+EXTERN_C char *func_800D7A14(RandVal *self, char *src);
+EXTERN_C void *func_800E01B0(short kind, short b, void *owner);
+
+struct Col_800DFEBC {
+    unsigned char x, y, z, w;
+    Col_800DFEBC() {}
+};
+
+struct SV_800DFEBC {
+    short x, y, z, w;
+    SV_800DFEBC() {}
+};
+
+struct ColRec_800DFEBC {
+    int idx;
+    Col_800DFEBC c;
+};
+
+struct SvRec_800DFEBC {
+    int idx;
+    SV_800DFEBC v;
+};
+
+inline void rv_init_800DFEBC(RandVal *r)
+{
+    r->vptr = D_800D6038;
+    r->base = 0;
+    r->step = 0;
+    r->range = 0;
+    r->phase = 0;
+}
+
+/* RandVal seen as a real polymorphic class (g++ 2.8 puts the vptr after the members, at 0xC):
+   its synthesized operator= copies the object and restores the old vptr through a stack temp,
+   which is the retail sequence. f() is never defined, so no vtable is emitted. */
+struct RVP_800DFEBC {
+    short base, step, range, phase, spread;
+    virtual void f();
+};
+
+inline void rv_set_800DFEBC(void *obj, RandVal *s)
+{
+    FIELD_AT(obj, RVP_800DFEBC, 0x3C) = *(RVP_800DFEBC *)s;
+}
+
+EXTERN_C char *func_800DFEBC(void *self, char *src, void *obj)
+{
+    RandVal rv;
+    char *next = 0;
+    rv_init_800DFEBC(&rv);
+    switch ((short)(FIELD_AT(src, short, 0x0) - 100)) {
+    case 0: {
+        int i;
+        char *h = src;
+        IdArray *a = func_800DDF58((IdArray *)operator new(0x14), FIELD_AT(obj, short, 0x8),
+                                   FIELD_AT(h, short, 0x4), FIELD_AT(h, short, 0x6));
+        ColRec_800DFEBC *p = (ColRec_800DFEBC *)(h + 8);
+        for (i = 0; i < FIELD_AT(h, short, 0x4); i++) {
+            ((void (*)(void *, int, Col_800DFEBC))func_800DE0E4)(a, i, p->c);
+            p++;
+        }
+        FIELD_AT(obj, IdArray *, 0x34) = a;
+        next = (char *)p;
+        break;
+    }
+    case 2: {
+        int i;
+        char *h = src;
+        IdArray *a = func_800DE180((IdArray *)operator new(0x14), FIELD_AT(obj, short, 0x8),
+                                   FIELD_AT(h, short, 0x4), FIELD_AT(h, short, 0x6));
+        SvRec_800DFEBC *p = (SvRec_800DFEBC *)(h + 8);
+        for (i = 0; i < FIELD_AT(h, short, 0x4); i++) {
+            ((void (*)(void *, int, SV_800DFEBC))func_800DE364)(a, i, p->v);
+            p++;
+        }
+        FIELD_AT(obj, IdArray *, 0x38) = a;
+        next = (char *)p;
+        break;
+    }
+    case 4: {
+        func_800D7A14(&rv, src);
+        next = src + 0xC;
+        rv_set_800DFEBC(obj, &rv);
+        break;
+    }
+    case 5:
+        FIELD_AT(obj, short, 0x76) = FIELD_AT(src, short, 0x4);
+        next = src + 8;
+        break;
+    case 6: {
+        IdNode *n = 0;
+        short id = FIELD_AT(src, short, 0x4);
+        if (id - 1 >= 0)
+            n = func_800D67F4(FIELD_AT(self, IdNode *, 0x4), id - 1);
+        {
+            char *rec = (char *)self + FIELD_AT(obj, short, 0x8) * 12;
+            FIELD_AT(obj, void *, 0x54) = func_800E01B0(FIELD_AT(rec, short, 0x1C), FIELD_AT(rec, short, 0x18), n);
+        }
+        next = src + 8;
+        break;
+    }
+    case 7:
+        next = func_800E40E4((char *)obj + 0x5C, src);
+        break;
+    case 8:
+        next = func_800E4110((char *)obj + 0x5C, src);
+        break;
+    }
+    return next;
+}
