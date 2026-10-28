@@ -1,8 +1,8 @@
-// ~16 differ: GCC keeps -1 in a callee-saved register (one extra saved reg); retail
-// rematerialises -1 into $v0 before each compare.
+// NEAR (18 differ): CSE reuses the first -1 pseudo for the second compare (bne skips the call block via cse-skip-blocks), so -1 lives in a callee-saved reg; retail rematerialises -1 in $v0. NOTE: scratch_c/near/effect/func_800DA514.cpp holds func_800D7524 code by mistake; this is the real draft.
+#include "common.h"
 #include "effect/effect.h"
 
-EXTERN_C int func_800DA514(SlotSet *self, int value, int slot)
+EXTERN_C int func_800DA514(SlotSet *self, int obj, int slot)
 {
     if (slot == -1)
         slot = func_800DA584(self);
@@ -10,6 +10,6 @@ EXTERN_C int func_800DA514(SlotSet *self, int value, int slot)
         return -1;
     if (slot < self->first)
         self->first = slot;
-    self->slots[slot] = value;
+    self->slots[slot] = obj;
     return slot;
 }

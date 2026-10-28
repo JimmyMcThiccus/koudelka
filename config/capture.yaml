@@ -44,8 +44,13 @@ segments:
     start: 0x0
     vram: 0x800B6DF0
     subsegments:
-      - [0x0, .rodata, capture] # overlay id + entry table, jump tables, strings
-      - [0x79C, cpp, capture]
+      - [0x0, .rodata, capture_b] # overlay id + entry table, jump tables, strings (all from the 4.4 file)
+      # 0x800B758C-0x800B85B4: GCC 2.7.2 / PsyQ 4.1 (see config/toolchain.toml). Every function here with a stack
+      # frame ends `addiu $sp; jr $ra; nop` (the 2.7.2 epilogue, delay slot unfilled), and only these in all
+      # overlays do; func_800B76E4 matches byte-for-byte under 4.1 and not under 4.4. The file has no rodata.
+      - [0x79C, cpp, capture] # 0x800B758C
+      # 0x800B85B8 on: PsyQ 4.4 (GCC 2.8.1) like the rest of the game code
+      - [0x17C8, cpp, capture_b] # 0x800B85B8
       - [0xC3EC, data]
 
   - [0xC42C]
