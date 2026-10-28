@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 /* defined in u_800658E0.cpp; reached with lui here */
 EXTERN_C void *D_800B4ED8[];
@@ -284,7 +285,14 @@ EXTERN_C void func_800745A8(void *self, int b)
     FIELD_AT(self, short, 0x5CE) = b;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800745B0);
+EXTERN_C void func_800745B0(void *self)
+{
+    if (func_80061E9C(D_800B4DD0_w, 0x87)) {
+        FIELD_AT(self, short, 0x5CE) = 0x4B0;
+    }
+    short s = FIELD_AT(self, short, 0x5CE);
+    FIELD_AT(self, int, 0x218) = (short)(int)func_8008B4B4((char *)(s + 0x2F0), (char *)(s + 0x42B));
+}
 
 EXTERN_C Vec_8007460C *func_8007460C(Vec_8007460C *out, Vec_8007460C *a, Vec_8007460C *b)
 {
@@ -4294,7 +4302,10 @@ EXTERN_C void func_80082058(void *self, int flags)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800820B4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_80082128);
+EXTERN_C void func_80082128(void)
+{
+    func_80081780(&D_800AFA74, 2);
+}
 
 EXTERN_C void func_80082150(void)
 {

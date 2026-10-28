@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 EXTERN_C int func_8006CBCC(void *self, int id)
 {
@@ -594,7 +595,11 @@ EXTERN_C int func_800711FC(void *self, int b)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_80071224);
+EXTERN_C int func_80071224(void *self)
+{
+    func_80071398(self, (int)D_80016248, 0, 0x101);
+    return 0;
+}
 
 EXTERN_C int func_80071250(void)
 {
@@ -809,6 +814,8 @@ EXTERN_C void func_80071A40(void)
     D_800AF414.a = 0;
     D_800AF414.b = 0;
 }
+
+INCLUDE_RODATA("asm/main/nonmatchings/u_8006CBCC", D_80016248);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_8006CBCC", D_80016270);
 

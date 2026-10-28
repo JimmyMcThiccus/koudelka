@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80085168);
 
@@ -485,7 +486,13 @@ EXTERN_C int func_800864B4(void *self)
     return FIELD_AT(self, int, 0x4D0);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_800864C0);
+EXTERN_C void func_800864C0(void *self)
+{
+    VObj<8> *p;
+    while ((p = (VObj<8> *)func_800751AC(self)) != 0) {
+        p->v00(3);
+    }
+}
 
 EXTERN_C void func_80086518(void *self, short *b)
 {
@@ -746,7 +753,18 @@ EXTERN_C void func_80086DB4(Obj_80086DB4 *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_80086E14);
+EXTERN_C void func_80086E14(char *self)
+{
+    FIELD_AT(self, void *, 0) = (void *)func_80079F48(D_800AF470_w);
+    func_800898F0(self + 0x34);
+    func_8008655C((short *)(self + 0x58));
+    func_80086DB4((Obj_80086DB4 *)self);
+    self[0x6D] = 0;
+    self[0x7B] = 0;
+    self[0x7A] = 0;
+    self[0x79] = 0;
+    self[0x78] = 0;
+}
 
 EXTERN_C void func_80086E74(void *self)
 {

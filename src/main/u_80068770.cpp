@@ -5,6 +5,7 @@
 #include "game/b/sound.h"
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
+#include "game/b2/b2.h"
 
 EXTERN_C int D_800B4ED8; // defined in this file: reached through $gp here (func_8006BF94)
 
@@ -22,7 +23,16 @@ EXTERN_C void func_8006897C(void *self, int b, int c)
     FIELD_AT(self, int, 0x1CFC) = c;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_800689E0);
+EXTERN_C void func_800689E0(void *self)
+{
+    int i = FIELD_AT(self, int, 0x20);
+    if (i < FIELD_AT(self, unsigned short, 0x1CF0)) {
+        func_80061188((Obj_80061188 *)D_800B4DD0_w, FIELD_AT((char *)self + i, signed char, 0x68));
+    } else {
+        int j = FIELD_AT(self, unsigned short, 0x1D00);
+        func_80061164(D_800B4DD0_w, j ? j - 1 : 0);
+    }
+}
 
 EXTERN_C int func_80068A50(void *self)
 {
