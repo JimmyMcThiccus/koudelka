@@ -450,4 +450,33 @@ EXTERN_C void func_80059938(void *self, int flags)
     func_8001A610(self, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80059958);
+EXTERN_C S_CtorB64 *func_80059958(S_CtorB64 *p, int in_chrg, int a2)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    p->vb->vt = (VEntB *)D_800142B8.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_800142B8;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_800142B8.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x64));
+        tmp.e[5].d = D_800142B8.e[5].d + adj;
+        tmp.e[7].d = D_800142B8.e[7].d + adj;
+        tmp.e[9].d = D_800142B8.e[9].d + adj;
+    }
+    p->vt2C = D_80014308;
+    func_80053928((char *)p + 0x40);
+    p->i5C = 1;
+    p->i60 = 0;
+    p->i38 = 0;
+    p->i3C = 0;
+    return p;
+}

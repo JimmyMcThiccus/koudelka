@@ -3129,4 +3129,23 @@ EXTERN_C void *D_80014E5C[];
 EXTERN_C void *D_80014EAC[];
 EXTERN_C const VTabB50 D_80014E0C;
 
+struct S_VBobjB { void *vptr; int unk4; };
+struct S_CtorB38 { S_VBB *vb; char pad4[0x28]; void **vt2C; int unk30, unk34; S_VBobjB vobj; };
+struct S_CtorB64 { S_VBB *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int i38, i3C; char pad40[0x1C]; int i5C, i60; S_VBobjB vobj; };
+struct Pt4q { short x, y; };
+EXTERN_C char D_800104A8[];
+EXTERN_C short D_800B4D9E;
+EXTERN_C void *func_8005BC84_v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
+EXTERN_C const VTabB50 D_80014750;
+EXTERN_C void *D_80014658[];
+EXTERN_C const VTabB50 D_800149B8;
+EXTERN_C void *D_80014A08[];
+EXTERN_C const VTabB50 D_80014808;
+EXTERN_C void *D_80014858[];
+EXTERN_C const VTabB50 D_800142B8;
+EXTERN_C void *D_80014308[];
+EXTERN_C const VTabB50 D_80014400;
+EXTERN_C void *D_80014450[];
+EXTERN_C void func_8002A4C8(void *p, int a, int b);
+
 #endif /* GAME_B_DECLS_B_H */
