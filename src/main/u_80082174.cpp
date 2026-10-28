@@ -331,7 +331,33 @@ EXTERN_C void func_80082EB0(char *self, int b, int c)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_80082F5C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_8008316C);
+EXTERN_C void func_8008316C(void *self)
+{
+    if (FIELD_AT(self, short, 0x54) >= 0) {
+        func_80083F40(self, FIELD_AT(self, short, 0x54));
+        FIELD_AT(self, short, 0x54) = -2;
+    }
+    if (FIELD_AT(self, short, 0x4E) >= 0) {
+        func_80083F40(self, FIELD_AT(self, short, 0x4E));
+        FIELD_AT(self, short, 0x4E) = -2;
+    }
+    if (FIELD_AT(self, short, 0x44) >= 0) {
+        func_80083F40(self, FIELD_AT(self, short, 0x44));
+        FIELD_AT(self, short, 0x44) = -2;
+    }
+    if (FIELD_AT(self, signed char, 0x56) && FIELD_AT(self, signed char, 0x57)) {
+        int i;
+        FIELD_AT(self, char, 0x56) = 0;
+        FIELD_AT(self, char, 0x57) = 0;
+        for (i = 0; i < 4; i++) {
+            if (((A46_8008316C *)self)->e[i] >= 0) {
+                func_80083F40(self, ((A46_8008316C *)self)->e[i]);
+                ((A46_8008316C *)self)->e[i] = -2;
+            }
+        }
+    }
+    func_80083310(self);
+}
 
 EXTERN_C void func_80083268(void *self)
 {
@@ -1172,7 +1198,40 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_80086A20);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_80086B70);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_80086CAC);
+EXTERN_C void func_80086CAC(void *self, int v)
+{
+    int n;
+    if (v < -0x7FFF) {
+        v = -0x7FFF;
+    } else if (v > 0x7FFF) {
+        v = 0x7FFF;
+    }
+    if (FIELD_AT(self, unsigned short, 0x14) & 0x100) {
+        if (FIELD_AT(self, short, 0x20) < -v) {
+            v = -FIELD_AT(self, short, 0x20);
+        }
+    }
+    n = v;
+    if (((H16_80086CAC *)self)->h[FIELD_AT(self, signed char, 0x76)] != -0x8000) {
+        n = v + ((H16_80086CAC *)self)->h[FIELD_AT(self, signed char, 0x76)];
+        if (n < -0x7FFF) {
+            n = -0x7FFF;
+        } else if (n > 0x7FFF) {
+            n = 0x7FFF;
+        }
+    }
+    ((H16_80086CAC *)self)->h[FIELD_AT(self, signed char, 0x76)] = n;
+    if ((FIELD_AT(self, unsigned char, 0x6D) & 2) && v > 0) {
+        v = 0;
+    }
+    v += FIELD_AT(self, short, 0x20);
+    if (v < 0) {
+        v = 0;
+    } else if (v > FIELD_AT(self, short, 0x22)) {
+        v = FIELD_AT(self, short, 0x22);
+    }
+    FIELD_AT(self, short, 0x20) = v;
+}
 
 EXTERN_C void func_80086DB4(Obj_80086DB4 *self)
 {

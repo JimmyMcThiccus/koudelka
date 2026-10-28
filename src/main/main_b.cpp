@@ -159,11 +159,6 @@ EXTERN_C void func_80054FE0(void *self)
     }
 }
 
-struct SV2C_80055020 {
-    short x, y;
-    SV2C_80055020(short a, short b) : x(a), y(b) {}
-};
-EXTERN_C void func_80053F28(void *self, SV2C_80055020 v);
 EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
 {
     char *o;

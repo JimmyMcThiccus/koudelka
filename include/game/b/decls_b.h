@@ -2647,4 +2647,156 @@ EXTERN_C void func_8005D228(void *self, int b);
 EXTERN_C int func_8005F87C(void *self);
 EXTERN_C Ent_800620D8 *func_800620D8(void *self, unsigned int i);
 
+EXTERN_C void func_80065AD0(void *self);
+EXTERN_C void func_80099C60(int a, int b);
+struct GW_800B4D00 { int v; int pad[2]; };
+EXTERN_C GW_800B4D00 D_800B4D00;
+EXTERN_C char D_800153FC[];
+EXTERN_C char D_800153C4[];
+EXTERN_C char D_80015414[];
+EXTERN_C char D_80012294[];
+EXTERN_C char D_80012224[];
+EXTERN_C void func_80035EB4(void *p);
+EXTERN_C void func_80035304(void *self, int b);
+EXTERN_C int func_80036FC0(void *self, int a, int b);
+EXTERN_C void func_80035DE0(void *p);
+EXTERN_C void *func_80066D2C(void *self, int b);
+EXTERN_C Vec_80066220 *func_80066220(Vec_80066220 *out, Vec_80066220 *a, Vec_80066220 *b);
+EXTERN_C void func_8003A7FC(void *m, void *b);
+EXTERN_C void func_8003B450(void *out, void *m, void *v);
+struct SV3_80065E10 { short x, y, z; };
+struct SV2_80069F74 { short w, h; };
+
+struct SVr_658 { short x, y, z, w; };
+struct Vr_658 { int x, y, z, w; };
+struct SVp_658 {
+    short x, y, z, w;
+    SVp_658(const SVr_658 &o) { *(SVr_658 *)this = o; }
+    SVp_658(const SVp_658 &o) { *(SVr_658 *)this = *(const SVr_658 *)&o; }
+};
+struct Vp_658 {
+    int x, y, z, w;
+    Vp_658(const Vr_658 &o) { *(Vr_658 *)this = o; }
+    Vp_658(const Vp_658 &o) { *(Vr_658 *)this = *(const Vr_658 *)&o; }
+};
+extern SVr_658 sv_neg_658(const SVr_658 *a) __asm__("func_800662D4");
+extern Vr_658 v_neg_658(const Vr_658 *a) __asm__("func_80066260");
+extern Vr_658 v_sub_658(const Vr_658 *a, const Vr_658 *b) __asm__("func_80066294");
+extern void m_rot_658(MATRIX_B *m, SVp_658 r) __asm__("func_8003A7FC");
+extern Vr_658 m_apply_658(MATRIX_B *m, Vp_658 v) __asm__("func_8003B450");
+
+struct SV2C_80055020 {
+    short x, y;
+    SV2C_80055020(short a, short b) : x(a), y(b) {}
+};
+EXTERN_C void func_80055020(void *self, SV2C_80055020 v);
+EXTERN_C void *func_80054F28(void *self);
+EXTERN_C void func_8005457C(void *self, int b);
+EXTERN_C void func_80053F48(void *self, SV2C_80055020 v);
+EXTERN_C void func_80053F28(void *self, SV2C_80055020 v);
+EXTERN_C void SetDrawMode(void *p, int a, int b, int c, int d);
+EXTERN_C void func_80098DC0(void *p, int b);
+EXTERN_C void func_8006EACC(void *self, int a, short b);
+EXTERN_C void func_8006EBB0(void *self, int a);
+EXTERN_C void func_8006EC70(void *self, int a);
+EXTERN_C void func_8006EDD8(void *self, void *b);
+EXTERN_C void func_8006EE94(void *self);
+EXTERN_C void *func_800787B4(void);
+EXTERN_C void *func_8008E360(void *p);
+EXTERN_C void func_8008E590(void *p, int a, int b);
+EXTERN_C void *func_800663EC(void *self, int vb, void *a, int b, int c, int d);
+EXTERN_C int func_800665C8(void *self);
+struct Obj_8006E73C { void *vt; int f4; short f8, fA; char pad[0x68]; int f74; };
+struct A_80069978 { char b[0x1C]; };
+struct B_80069978 { char b[0x28]; };
+struct O_80069978 { char pad[0x64]; B_80069978 b[8]; char pad2[0x1A4 - 0x64 - 0x140]; A_80069978 a[8]; };
+
+EXTERN_C void func_8006B350(void *self, int b);
+EXTERN_C void func_8006B390(void *self, int b);
+EXTERN_C void func_8006B2F8(void *self, int b);
+EXTERN_C void func_8006B258(void *self, int b);
+EXTERN_C void func_800770B4(void *self, int a1, int a2);
+static inline void *copy_80071B24(void *self, void *src)
+{
+    int *v;
+    func_80074E28(self);
+    FIELD_AT(self, void *, 0x8) = D_80016270;
+    v = (int *)((char *)self + 0x1C);
+    v[0] = 0;
+    v[1] = 0;
+    v[2] = 0;
+    v[3] = 0;
+    FIELD_AT(self, int, 0xC) = FIELD_AT(src, int, 0xC);
+    FIELD_AT(self, int, 0x10) = FIELD_AT(src, int, 0x10);
+    FIELD_AT(self, int, 0x14) = FIELD_AT(src, int, 0x14);
+    FIELD_AT(self, int, 0x18) = FIELD_AT(src, int, 0x18);
+    FIELD_AT(self, B16_B, 0x1C) = FIELD_AT(src, B16_B, 0x1C);
+    FIELD_AT(self, int, 0x2C) = FIELD_AT(src, int, 0x2C);
+    FIELD_AT(self, int, 0x30) = FIELD_AT(src, int, 0x30);
+    return self;
+}
+
+struct A46_8008316C { char pad[0x46]; short e[4]; };
+struct S16_800849D0 { int a, b, c, d; };
+struct H16_80086CAC { char pad[0x16]; short h[5]; };
+
+struct B48_658 { int w[12]; };
+
+EXTERN_C char D_80012154[];
+
+EXTERN_C char D_8001201C[];
+
+EXTERN_C char D_80012034[];
+
+EXTERN_C char D_80011FE4[];
+
+EXTERN_C void func_8006A3C0(VObj0 *self, void *b);
+
+EXTERN_C void func_8006A588(VObj0 *self, void *b);
+
+EXTERN_C void func_8006A440(void *self, void *b);
+
+EXTERN_C void func_80098DF0(void *p);
+
+EXTERN_C void func_8006A608(void *self, int b);
+
+EXTERN_C void func_8006A6D4(void *self);
+
+struct Sub_8007192C { int a, b, c; void *vt; };
+
+static inline void sub_copy_8007192C(Sub_8007192C *d, const Sub_8007192C *s, void *vt)
+{
+    d->vt = D_800166B8;
+    d->a = s->a;
+    d->b = s->b;
+    d->c = s->c;
+    d->vt = vt;
+}
+
+struct B16c_658 { char b[16]; };
+
+struct R8_658 { SV2_80069F74 pos; SV2_80069F74 size; };
+
+static inline SV2_80069F74 pos_658(R8_658 r) { return r.pos; }
+
+struct Rect_658 : SV2_80069F74 { short w2, h2; };
+
+struct SV4_658 { short x, y, z, w; };
+
+struct V3_658 { int x, y, z; };
+
+EXTERN_C int func_80069F74(void *self, int n, SV2_80069F74 s, void *src);
+
+EXTERN_C void func_8002E714(void *self, int b);
+
+EXTERN_C char D_800117A4[];
+
+EXTERN_C void func_8002D780(void *self, SV2_80069F74 p);
+
+EXTERN_C void func_8002D24C(void *self, void *r);
+
+EXTERN_C void func_8002DB50(void *self, int b);
+
+EXTERN_C void ApplyMatrixLV(MATRIX_B *m, void *v, void *out);
+
 #endif /* GAME_B_DECLS_B_H */
