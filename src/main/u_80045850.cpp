@@ -2021,9 +2021,85 @@ EXTERN_C void func_800520BC(void *p)
         func_80054CA0(q);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052100);
+EXTERN_C S_A2B_C68 *func_80052100(S_A2B_C68 *p, int in_chrg, int a2)
+{
+    if (in_chrg) {
+        S_A2B_VObj *v;
+        p->vb = (S_A2B_VBp *)&p->vobj;
+        v = (S_A2B_VObj *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    f5BC84v(p, 0, 2, 0x10);
+    f537C0((char *)p + 0x38);
+    p->vb->vt = (S_A2B_VEnt *)D_80013A38_t.e;
+    S_A2B_VTab50 tmp;
+    if (!in_chrg) {
+        char *q;
+        int adj;
+        tmp = D_80013A38_t;
+        p->vb->vt = tmp.e;
+        tmp.e[1].d = D_80013A38_t.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x68));
+        tmp.e[5].d = D_80013A38_t.e[5].d + adj;
+        tmp.e[7].d = D_80013A38_t.e[7].d + adj;
+        tmp.e[9].d = D_80013A38_t.e[9].d + adj;
+    }
+    p->vt40 = D_80013A88;
+    p->vt2C = D_80013940;
+    func_80055330(0);
+    p->i58 = 0;
+    p->i5C = 0;
+    p->i64 = 0;
+    p->i60 = 0;
+    func_800530B8(p, (void *)a2);
+    p->i44 = 0;
+    func_8005388C(p ? (char *)p + 0x38 : 0, 0x30);
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8005226C);
+EXTERN_C S_A2B_C68 *func_8005226C(S_A2B_C68 *p, int in_chrg, int a2)
+{
+    if (in_chrg) {
+        S_A2B_VObj *v;
+        p->vb = (S_A2B_VBp *)&p->vobj;
+        v = (S_A2B_VObj *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    f5BC84v(p, 0, 2, 0x10);
+    f537C0((char *)p + 0x38);
+    p->vb->vt = (S_A2B_VEnt *)D_80013A38_t.e;
+    S_A2B_VTab50 tmp;
+    if (!in_chrg) {
+        char *q;
+        int adj;
+        tmp = D_80013A38_t;
+        p->vb->vt = tmp.e;
+        tmp.e[1].d = D_80013A38_t.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x68));
+        tmp.e[5].d = D_80013A38_t.e[5].d + adj;
+        tmp.e[7].d = D_80013A38_t.e[7].d + adj;
+        tmp.e[9].d = D_80013A38_t.e[9].d + adj;
+    }
+    p->vt40 = D_80013A88;
+    p->vt2C = D_80013940;
+    func_80055330(0);
+    {
+        unsigned i = 0;
+        int *q = (int *)p;
+        p->i44 = 0;
+        do {
+            q[0x12] = 0;
+            i++;
+            q++;
+        } while (i < 3);
+    }
+    p->i54 = 0;
+    func_80052B60(p);
+    func_80052E40(p, a2);
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800523DC);
 

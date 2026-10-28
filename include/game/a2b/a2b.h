@@ -135,4 +135,15 @@ extern "C++" void f5457Cb(void *p, int a) asm("func_8005457C");
 extern "C++" void f53FB0(void *p, int a, int b) asm("func_80053FB0");
 extern "C++" void f53BCC(void *p, int a, int b) asm("func_80053BCC");
 extern "C++" void f53CD8(void *p) asm("func_80053CD8");
+struct S_A2B_VEnt { short d; short i; void *f; };
+struct S_A2B_VTab50 { S_A2B_VEnt e[10]; };
+struct S_A2B_VBp { S_A2B_VEnt *vt; };
+struct S_A2B_VObj { void *vptr; int unk4; };
+EXTERN_C const S_A2B_VTab50 D_80013A38_t asm("D_80013A38");
+EXTERN_C void *D_80013A88[];
+EXTERN_C void *D_80013940[];
+EXTERN_C void *f5BC84v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
+extern "C++" void f537C0(void *p) asm("func_800537C0");
+EXTERN_C void func_80055330(int a);
+struct S_A2B_C68 { S_A2B_VBp *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int i38; char pad3C[0x4]; void **vt40; int i44; char pad48[0xC]; int i54, i58, i5C, i60, i64; S_A2B_VObj vobj; };
 #endif /* GAME_A2B_A2B_H */
