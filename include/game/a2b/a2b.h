@@ -146,4 +146,6 @@ EXTERN_C void *f5BC84v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
 extern "C++" void f537C0(void *p) asm("func_800537C0");
 EXTERN_C void func_80055330(int a);
 struct S_A2B_C68 { S_A2B_VBp *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int i38; char pad3C[0x4]; void **vt40; int i44; char pad48[0xC]; int i54, i58, i5C, i60, i64; S_A2B_VObj vobj; };
+struct S_A2B_CpB2C { void *vtbl; int unk4; short unk8, unkA; S_A2B_Q16 arr[2]; };
+extern "C++" S_A2B_CpB2C *f53360(S_A2B_CpB2C *p) asm("func_80053360");
 #endif /* GAME_A2B_A2B_H */
