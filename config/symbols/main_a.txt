@@ -2,3 +2,11 @@
 // Format: name = 0xADDRESS; // type:func   (see config/symbols/main.txt)
 // Own function (prologue at 0x800518A8); after the main_a/main_b split splat took it for an alternate entry of func_800515F4.
 func_800518A8 = 0x800518A8; // type:func
+// C++ constructors (mangled names)
+__10C_800279C0 = 0x800279C0; // type:func
+__10S_8002F4D8Pv = 0x8002F4D8; // type:func
+__10S_80020538UsssiUsi = 0x80020538; // type:func
+__10S_8002C9D4RC10S_8002C9D4 = 0x8002C9D4; // type:func
+__10S_8002C9D4RC10S_8002C9D4P7S_Rect8 = 0x8002CA64; // type:func
+__10S_8002E4E8iii = 0x8002E4E8; // type:func
+__10S_80030534 = 0x80030534; // type:func
