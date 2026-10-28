@@ -33,7 +33,7 @@ EXTERN_C void func_80082214(void)
 
 EXTERN_C void func_80082238(int b)
 {
-    func_80081970(&D_800AFA74, b);
+    func_80081970(&D_800AFA74, (void *)b);
 }
 
 EXTERN_C void func_80082260(int a, int b, unsigned short c, int d, int e)

@@ -717,7 +717,6 @@ struct Blk_8006BEA0 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C int D_800B4ED8;
 
 /* from u_800658E0.cpp */
 EXTERN_C int D_800B4ED4;
@@ -899,7 +898,7 @@ struct V_800704F8 {
 EXTERN_C void func_8007AD14(void *self, int b, int c, int d, int e, int f, int g);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_8007ADCC(void *self);
+EXTERN_C int func_8007ADCC(void *self, int b);
 
 /* from u_800658E0.cpp */
 EXTERN_C void func_8007D744(void *self);
@@ -1272,7 +1271,7 @@ EXTERN_C void func_8007EDAC(void *self, int b, int c);
 EXTERN_C void func_8007A1F4(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80079F6C(void *self, int b);
+EXTERN_C int func_80079F6C(void *self, int k);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80017370[];
@@ -1281,7 +1280,8 @@ EXTERN_C char D_80017370[];
 EXTERN_C void func_8007AF04(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_8007A9DC(void *self);
+struct List_8007AB78;
+EXTERN_C void *func_8007A9DC(List_8007AB78 *l, int x);
 
 /* from u_80071A74.cpp */
 struct Set_8007AFD0 {
@@ -1323,7 +1323,7 @@ EXTERN_C void func_8001E848(void *self, void *b);
 EXTERN_C void func_800766F8(void *self, int b, int c, int d, int e);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80076848(void *self, int b);
+EXTERN_C void func_80076848(void *self, int a1, int a2, int a3);
 
 /* from u_80071A74.cpp */
 EXTERN_C void func_8007698C(void *self, int b, int c, int d);
@@ -1348,8 +1348,8 @@ struct Obj_8007BFA8 {
 EXTERN_C void func_800CF080(void *a, void *b, int c);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007C0A8(void *self, int b);
-EXTERN_C void func_8007C3C8(void *self, int b);
+EXTERN_C int func_8007C0A8(void *self, int i);
+EXTERN_C int func_8007C3C8(void *p, int i);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800172E8[];
@@ -1707,7 +1707,7 @@ EXTERN_C void func_80081BA4(void *self, int b);
 EXTERN_C void func_80081A74(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081970(void *self, int b);
+EXTERN_C int func_80081970(void *self, void *x);
 
 /* from u_80082174.cpp */
 EXTERN_C void func_80081820(Global_800AFA74 *p, int a, int b, int c, int d, int e);
@@ -2274,7 +2274,7 @@ EXTERN_C char D_80012104[];
 EXTERN_C char D_800101C0[];
 EXTERN_C char D_800101B0[];
 EXTERN_C void func_800198AC(void *self, int b);
-EXTERN_C void func_80077254(void *self);
+EXTERN_C void *func_80077254(void *self);
 EXTERN_C void func_8001A678(void *self, void *b);
 EXTERN_C void func_800C68D8(void *self, int b);
 EXTERN_C void func_800C6DF4(void *self, int b);
@@ -2989,5 +2989,62 @@ struct R_800894AC { unsigned short a; unsigned char b; char pad; unsigned short 
 // Matches only if the header prototype is changed to: int func_80086F94(char *self, void *b, int c)
 // (currently decls_b.h has void func_80086F94(void *self, int b, int c); verified with a #define-rename test, scratch_c/ag_u_80082174/_proto_86F94.cpp)
 EXTERN_C void func_8008691C(void *self);
+
+EXTERN_C void func_8006F67C(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, V4_80085578 v, int a12);
+
+EXTERN_C void func_8003FC48(void *self);
+
+EXTERN_C void func_800D6740(void *p, int b);
+
+EXTERN_C void func_80084824(void *p, int b);
+
+EXTERN_C void func_80094908(void);
+
+EXTERN_C void func_800798EC(void *self, int b);
+
+static inline int any2_80072CFC(void *self)
+{
+    return FIELD_AT(FIELD_AT(self, char *, 0x13C), unsigned char, 0x12) != 0 || FIELD_AT(FIELD_AT(self, char *, 0x13C), unsigned char, 0x13) != 0;
+}
+
+EXTERN_C void func_8006F0E4(void *self, int b);
+
+EXTERN_C void func_8006F0F4(void *self, int b, int c, int d, int e);
+
+EXTERN_C void func_8006F8B4(void *self, int a1, int a2, int a3, int a4, int a5, int a6, V4_80085578 v, int a11);
+
+EXTERN_C void func_8006FCC0(void *self, int a1, int a2, int a3);
+
+EXTERN_C void func_8007B08C(void *self);
+
+EXTERN_C void func_8007F138(void *self);
+
+EXTERN_C void func_800BCBE8(void *p, int *out);
+
+EXTERN_C void func_800BCC00(void *p, int *out);
+
+EXTERN_C void func_800BCC30(void *p, void *out);
+
+EXTERN_C void func_800BCC18(void *p, void *out);
+
+EXTERN_C void func_80080990(void *self, int a, int b, int c);
+
+EXTERN_C void func_800715B0(void *self, int a, int b, int c);
+
+EXTERN_C void func_8007F0A8(void *self, int a, int b, int c, int d);
+
+EXTERN_C int func_8007D024(void *self, int a, int b, int c);
+
+static inline void shift_8007F138(Arr_8007F434 *self)
+{
+    int i;
+    for (i = 15; i > 0; i--) {
+        self->a[i] = self->a[i - 1];
+    }
+}
+
+// near.cpp: best attempts. Sections marked PROTOFIX match exactly (0 diffs) once the noted
+// header prototype/declaration is corrected (verified with the header decl renamed away).
+// Types used here (List_8007AB78, V4_80085578, ...) are already in include/game/b/decls_b.h.
 
 #endif /* GAME_B_DECLS_B_H */
