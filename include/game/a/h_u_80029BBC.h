@@ -154,4 +154,8 @@ inline void S_Rc8::unite(const S_Rc8 &r)
 struct S_Box2 { S_XY a; S_XY b; S_Box2(short x, short y, const S_XY &s) : a(x, y), b(s) {} };
 inline S_Box2 box_at_origin(S_XY s) { return S_Box2(0, 0, s); }
 
+/* D_800AC710 (declared as a Holder in main_a.h) used directly as its iterator; > 8 bytes so it isn't on $gp. */
+struct S_CollG12 : S_CollG { int pad8; };
+EXTERN_C S_CollG12 D_800AC710_g asm("D_800AC710");
+
 #endif /* GAME_A_H_U_80029BBC_H */

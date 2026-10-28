@@ -978,7 +978,17 @@ EXTERN_C void func_8002C6D4(S_8002C6D4 *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80029BBC", func_8002C7DC);
+EXTERN_C void func_8002C7DC()
+{
+    VObj *c;
+    D_800AC710_g.toEnd();
+    while ((c = D_800AC710_g.prev()) != 0) {
+        VEnt *e = &c->vt[2];
+        ((void (*)(void *))e->f)((char *)c + e->d);
+    }
+    func_80019D40((S_80019D40 *)(List *)&D_800AC710);
+    D_800B4CF0 ^= 1;
+}
 
 EXTERN_C void func_8002C8A4()
 {
