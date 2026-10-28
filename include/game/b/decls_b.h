@@ -3172,4 +3172,10 @@ EXTERN_C const VTabB50 D_80014750;
 EXTERN_C void *D_80014658[];
 EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags) asm("func_8005BDA4");
 
+EXTERN_C const VTabB50 D_80013F40;
+EXTERN_C void *D_80013F90[];
+EXTERN_C void *D_80013E30[];
+EXTERN_C void func_8002AFEC(void *p, int a);
+EXTERN_C void func_80057558_def(S_DtorB *p, int flags) asm("func_80057558");
+
 #endif /* GAME_B_DECLS_B_H */

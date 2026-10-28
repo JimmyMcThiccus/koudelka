@@ -62,7 +62,32 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057214);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057368);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057558);
+EXTERN_C void func_80057558_def(S_DtorB *p, int flags)
+{
+    FIELD_AT(p, void **, 0x58) = D_80013F90;
+    p->vt2C = D_80013E30;
+    p->vb->vt = (VEntB *)D_80013F40.e;
+    if (!flags) {
+        VTabB50 tmp = D_80013F40;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80013F40.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x5C));
+        tmp.e[5].d = D_80013F40.e[5].d + adj;
+        tmp.e[7].d = D_80013F40.e[7].d + adj;
+        tmp.e[9].d = D_80013F40.e[9].d + adj;
+    }
+    if (FIELD_AT(p, VObj0 *, 0x8) != 0) {
+        FIELD_AT(p, VObj0 *, 0x8)->v00(3);
+    }
+    FIELD_AT(p, int, 0x8) = 0;
+    func_800537DC((char *)p + 0x50, 0);
+    func_8002AFEC(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C void func_800576A8(void *self)
 {
