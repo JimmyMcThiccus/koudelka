@@ -1375,4 +1375,10 @@ EXTERN_C char D_800B776C[], D_800B77B0[];
 EXTERN_C void* D_800B4D60[];
 EXTERN_C void func_80062C3C(void*, s32, void*, s32, s32);
 
+/* func_800BCB14 */
+// slot 5 returns a value: calling it as call_value is what gives retail's register choice (vt a2, pfn v0)
+struct Unk800BCB14E { s16 delta; s16 index; s32 (*pfn)(void*, Unk800C10BCP); };
+struct Unk800BCB14O { Unk800BCB14E* vt; };
+inline Unk800C10BCP Unk800BCB14_pos(Unk800C595CR* q) { Unk800C595CR r = *q; return r.xy; }
+
 #endif /* MOVIE_H */

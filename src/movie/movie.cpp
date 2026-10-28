@@ -384,7 +384,24 @@ EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, U
 #undef self
 }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800BCB14);
+EXTERN_C void func_800BCB14(Unk800BC714* self, s32 f) {
+  void* q;
+  self->x0 = D_800B7644;
+  if (self->x4[0]) func_800A0D0C(self->x4[0]);
+  if (self->x4[1]) func_800A0D0C(self->x4[1]);
+  switch (self->x4C) {
+  case 0: case 1:
+    q = self->x38;
+    goto free;
+  case 3: { Unk800BCB14O* o = (Unk800BCB14O*)D_800B4C54[0]; Unk800BCB14E* e = o->vt; void* t = (char*)o + e[5].delta; e[5].pfn(t, Unk800BCB14_pos((Unk800C595CR*)&self->x14[1])); }
+  case 2: { Unk800BCB14O* o = (Unk800BCB14O*)D_800B4C54[0]; Unk800BCB14E* e = o->vt; void* t = (char*)o + e[5].delta; e[5].pfn(t, Unk800BCB14_pos((Unk800C595CR*)&self->x14[0])); }
+  case 4: case 5:
+    q = self->x40;
+  free:
+    if (q) func_800A0D0C(q);
+  }
+  func_800198AC((Unk800BE5F8T*)self, f);
+}
 
 EXTERN_C s32 func_800BCCAC(Unk800BCCAC* p, void* bs) {
   if (p->x24[p->x2C] && DecDCTinSync(1)) return 0;
