@@ -140,7 +140,34 @@ EXTERN_C int func_8004616C(void *p, int i, void *q)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800461F4);
+EXTERN_C int func_800461F4(void *p, int a, int b, void *cc)
+{
+    void *o1 = func_80048D64(p, a, b, (int)cc, 0, 0);
+    AT(p, void *, 4) = o1;
+    { void *t = AT(o1, void *, 4); AT(p, int, 8) = AT(p, int, 0xC) = AT(o1, int, 0x2C) + AT(t, int, 4); }
+    while (AT(AT(p, int *, 8), int, 0) != 0x32313130) {
+        void *q = AT(p, void *, 4);
+        void *o;
+        ((A2VObj0 *)q)->v02();
+        func_80036D8C(AT(p, void *, 4));
+        o = func_80048D64(p, a, b, (int)cc, 0, 0);
+        AT(p, void *, 4) = o;
+        AT(p, int, 8) = AT(p, int, 0xC) = AT(o, int, 0x2C) + AT(AT(o, void *, 4), int, 4);
+    }
+    int ret;
+    AT(p, int, 0) = func_80046998(p, p);
+    if (AT(p, int, 0)) {
+        AT(cc, int, 0x138) = func_80046948(p, p, AT(cc, short, 0x144));
+        ((A2VObj0 *)AT(p, void *, 4))->v02();
+        func_80036D8C(AT(p, void *, 4));
+        ret = 1;
+    } else {
+        ((A2VObj0 *)AT(p, void *, 4))->v02();
+        func_80036D8C(AT(p, void *, 4));
+        ret = 0;
+    }
+    return ret;
+}
 
 EXTERN_C int func_8004637C(void *p, int a, int b, int c)
 {
