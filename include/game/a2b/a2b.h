@@ -126,4 +126,5 @@ EXTERN_C void *D_800A4578_a[] asm("D_800A4578");
 extern "C++" int f53874(void *p) asm("func_80053874");
 extern "C++" int f53830(void *p) asm("func_80053830");
 EXTERN_C void func_8002B174(void *a, void *b, int c);
+EXTERN_C void ApplyRotMatrix(SVECTOR *v0, S_A2_V4 *v1);
 #endif /* GAME_A2B_A2B_H */
