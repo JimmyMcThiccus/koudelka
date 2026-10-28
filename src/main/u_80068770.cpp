@@ -306,7 +306,25 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A608);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A6D4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A784);
+struct W3_B {
+    int a, b, c;
+};
+EXTERN_C void func_8006A784(char *self)
+{
+    int i = D_800B4CF0_w;
+    char *d = self + i * 12;
+    char *s = self + (i ^ 1) * 12;
+    *(W3_B *)(d + 0xC) = *(W3_B *)(s + 0xC);
+    int j = D_800B4CF0_w;
+    char *s2 = self + ((j ^ 1) * 16 + 0x24);
+    int k = j * 16 + 0x24;
+    int x = FIELD_AT(s2, int, 4);
+    int y = FIELD_AT(s2, int, 8);
+    int z = FIELD_AT(s2, int, 0xC);
+    FIELD_AT(self + k, int, 4) = x;
+    FIELD_AT(self + k, int, 8) = y;
+    FIELD_AT(self + k, int, 0xC) = z;
+}
 
 EXTERN_C void func_8006A80C(void *self)
 {

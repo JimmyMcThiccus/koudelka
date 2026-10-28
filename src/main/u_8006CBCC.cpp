@@ -566,9 +566,19 @@ EXTERN_C int func_80070E60(void *self, int b, int c, int d, int e, int f)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_80070E98);
+EXTERN_C int func_80070E98(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int x, int y, int z, int a12)
+{
+    void *o = FIELD_AT(D_800AF470.p, void *, 0x328);
+    func_8007D24C_c(o, a1, a2, a3, a4, a5, a6, a7, B16_C(x, y, z), a12);
+    return 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_80070F30);
+EXTERN_C int func_80070F30(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int x, int y, int z, int a12)
+{
+    void *o = FIELD_AT(D_800AF470.p, void *, 0x328);
+    func_8007CAB4_c(o, a1, a2, a3, a4, a5, a6, a7, B16_C(x, y, z), a12);
+    return 0;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_80070FC8);
 
@@ -579,9 +589,19 @@ EXTERN_C int func_80071080(void *self, int b, int c, int d, int e, int f, int g)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_800710C0);
+EXTERN_C int func_800710C0(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int x, int y, int z, int a12)
+{
+    void *o = FIELD_AT(D_800AF470.p, void *, 0x328);
+    func_8007D498_c(o, a1, a2, a3, a4, a5, a6, B16_C(x, y, z), a12);
+    return 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_80071148);
+EXTERN_C int func_80071148(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int x, int y, int z, int a12)
+{
+    void *o = FIELD_AT(D_800AF470.p, void *, 0x328);
+    func_800DE59C_c(o, a1, a2, a3, a4, a5, a6, B16_C(x, y, z), a12);
+    return 0;
+}
 
 EXTERN_C int func_800711D0(void)
 {
