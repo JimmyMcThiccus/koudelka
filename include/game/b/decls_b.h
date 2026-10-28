@@ -3079,4 +3079,6 @@ EXTERN_C int func_8005F1B4(void *self);
 
 struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
 
+struct V4_B { int x, y, z, w; };
+
 #endif /* GAME_B_DECLS_B_H */

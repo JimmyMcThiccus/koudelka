@@ -745,7 +745,14 @@ EXTERN_C void func_8005C238(V_8005C238 *self)
     self->v14();
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005C26C);
+EXTERN_C void *func_8005C26C(void *self, void *b, int c)
+{
+    ((int (*)(void *, void *, int))func_80038654)(self, b, c);
+    FIELD_AT(self, void *, 0x0) = D_800145B0;
+    FIELD_AT(self, void *, 0x30) = b;
+    FIELD_AT(b, void *, 0x30) = (char *)self + 0x10;
+    return self;
+}
 
 EXTERN_C void func_8005C2B8(void *self, int b)
 {
