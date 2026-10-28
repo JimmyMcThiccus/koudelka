@@ -3187,4 +3187,9 @@ struct S_CollB {
 };
 struct S_WB { char pad0[0x30]; S_CollB coll; };
 
+EXTERN_C void func_8006A4E4_v(void *a, int b) asm("func_8006A4E4");
+EXTERN_C void func_8006BD34_v(void *a) asm("func_8006BD34");
+EXTERN_C void func_8008E70C_v(void *a, int b) asm("func_8008E70C");
+EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d) asm("func_80066FB0");
+
 #endif /* GAME_B_DECLS_B_H */

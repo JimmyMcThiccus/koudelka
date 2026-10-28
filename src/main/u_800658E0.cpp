@@ -444,7 +444,38 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154D4);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154EC);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066FB0);
+EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d)
+{
+    FIELD_AT(self, void *, 0x0) = D_800154EC;
+    FIELD_AT(self, int, 0x8) = a;
+    FIELD_AT(self, int, 0x10) = b;
+    FIELD_AT(self, int, 0xC) = c;
+    if (c == 0) {
+        FIELD_AT(self, int, 0xC) = FIELD_AT(self, int, 0x8);
+    }
+
+    FIELD_AT(self, int, 0x14) = d;
+    switch (b) {
+    case 0x65:
+    case 0x6B:
+    case 0x6C:
+        FIELD_AT(self, int, 0x4) = 0xFF;
+        break;
+    case 0x6F:
+        func_8008E70C_v(FIELD_AT((char *)D_800B4ED8, void *, 0x248), 0xF0);
+    case 0x66:
+    case 0x69:
+    case 0x6A:
+    case 0x6D:
+    case 0x6E:
+        FIELD_AT(self, int, 0x4) = 0;
+        break;
+    }
+    char *g = (char *)D_800B4ED8;
+    func_8006A4E4_v(FIELD_AT(g, void *, 0x250), FIELD_AT(self, unsigned char, 0x4));
+    func_8006BD34_v(g);
+    return self;
+}
 
 EXTERN_C void func_8006707C(void *self, int b)
 {
