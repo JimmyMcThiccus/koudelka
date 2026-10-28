@@ -51,7 +51,104 @@ C_800279C0::C_800279C0()
     unkC = 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800278EC", func_80027A60);
+EXTERN_C int func_80027A60(S_80027A60 *s)
+{
+    int st = s->state;
+    switch (st) {
+    case 0: {
+        VObj *o = s->unk10;
+        VEnt *e = &o->vt[3];
+        ((void (*)(void *))e->f)((char *)o + e->d);
+        s->unk14 = 0x18000;
+        s->unk18 = 0;
+        func_80035CF8();
+        if (!func_80036FC0(s->unk10, 0x17F, 0x18000)) {
+            func_8001B1C8(s->unk1C);
+            if (s) {
+                VEnt *e = &s->vt[1];
+                ((void (*)(void *, int))e->f)((char *)s + e->d, 3);
+            }
+            D_800B4C5C = 0;
+            return 1;
+        }
+        func_8003546C(s->unk10, s ? (char *)s + 4 : 0);
+        func_8003714C(s->unk10);
+        s->state = 2;
+        break;
+    }
+    case 1: {
+        char *buf = (char *)func_8001B134(0x18000);
+        s->unk1C = buf;
+        if (buf) {
+            S_80027A60_O *o = (S_80027A60_O *)operator new(0x44);
+            S_80027A60_VB *vb = &o->vbase;
+            o->vb = vb;
+            vb->unk0 = 0x10;
+            vb->unk4 = -1;
+            vb->unk2 = st;
+            o->vt = D_80012154;
+            o->vt8 = D_8001201C;
+            o->vt = D_80012034;
+            o->p = o->data;
+            func_800198E0(o->data, 4, 0);
+            o->vt8 = D_80012294;
+            o->vt = D_80012224;
+            o->unk28 = 0;
+            o->unk2C = 0;
+            s->unk10 = (VObj *)o;
+            s->unk14 = 0x18000;
+            s->unk18 = 0;
+            func_80035CF8();
+            if (func_80036FC0(s->unk10, 0x17F, 0x18000)) {
+                func_8003546C(s->unk10, s ? (char *)s + 4 : 0);
+                func_8003714C(s->unk10);
+                s->state = 2;
+                break;
+            }
+            s->state = 0;
+            break;
+        }
+        DrawSync(0);
+        StopRCnt(0xF2000000);
+        StopRCnt(0xF2000001);
+        StopRCnt(0xF2000002);
+        StopRCnt(0xF2000003);
+        func_80094990();
+        func_8008B888();
+        func_8009EAE0();
+        PadStopCom();
+        ResetGraph(0);
+        StopCallback();
+        _96_init();
+        LoadExec(D_80011154, 0x80018000, 0x1000);
+        return 1;
+    }
+    case 2:
+        break;
+    case 3:
+        DrawSync(0);
+        VSync(0);
+        SetDispMask(0);
+        StopRCnt(0xF2000000);
+        StopRCnt(0xF2000001);
+        StopRCnt(0xF2000002);
+        StopRCnt(0xF2000003);
+        func_80094990();
+        func_8008B888();
+        func_8009EAE0();
+        PadStopCom();
+        func_80035C28();
+        ResetGraph(0);
+        StopCallback();
+        func_80094990();
+        func_8001A8F0((void *)0x8009D000, (int)s->unk1C, 0x6000);
+        start();
+        break;
+    default:
+        return 0;
+    }
+    return 0;
+}
 
 EXTERN_C int func_80027D90(S_80027D90 *p)
 {

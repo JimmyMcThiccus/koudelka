@@ -713,7 +713,27 @@ EXTERN_C S_Link *func_8001AEFC(S_Link *head, S_Link *n)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001AF8C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B0C0);
+EXTERN_C int func_8001B0C0(void *v, void *q)
+{
+    S_Heap *h = (S_Heap *)v;
+    char *p = (char *)q;
+    while (1) {
+        if (p < (char *)h->e) {
+            h = (S_Heap *)h->unk4;
+            if (h)
+                continue;
+            break;
+        }
+        if (p < (char *)h + 0x4008)
+            goto found;
+        break;
+    }
+    return func_80018DF4((int *)p);
+found:
+    if (!p)
+        return 0;
+    return ((unsigned short *)p)[-1] - 4;
+}
 
 EXTERN_C void *func_8001B134(unsigned int size)
 {
@@ -811,7 +831,54 @@ EXTERN_C void func_8001B424()
     StartCARD();
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B46C);
+EXTERN_C void *func_8001B46C(S_8001B46C *p, int in_chrg, const S_Size_986C &sz, int mode, int arg)
+{
+    VTab50_986C tmp;
+    if (in_chrg) {
+        p->vb = (S_VB_986C *)((char *)p + 0x3AC);
+        new ((char *)p + 0x3AC) S_VB_986C;
+    }
+    func_8002C2B8(p, 0);
+    func_8001E40C((char *)p + 0x50, 0, (unsigned short)mode, arg, 0);
+    p->vt148 = D_80010498;
+    p->vb->vt = (VEnt_986C *)D_80010210.e;
+    if (!in_chrg) {
+        tmp = D_80010210;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x3AC;
+        tmp.e[1].d = D_80010210.e[1].d + ((char *)p - q);
+        tmp.e[5].d = D_80010210.e[5].d + ((char *)p - q);
+        tmp.e[7].d = D_80010210.e[7].d + ((char *)p - q);
+        tmp.e[9].d = D_80010210.e[9].d + ((char *)p - q);
+    }
+    p->vtDC = D_80010260;
+    p->vt50 = D_80010288;
+    p->vt148 = D_80010278;
+    p->vt2C = (VEnt_986C *)D_8001167C;
+    p->unk14C = 0;
+    func_80022FB8(p->unk154, 0);
+    func_80022FB8(p->unk280, 1);
+    SsUtReverbOff();
+    PadInitDirect(p->unk1F0, p->unk31C);
+    func_80035BF8();
+    new S_8002900C_986C(0, 0, 0, 2, S_Rect2_986C(0, 0, sz.w * 2, sz.h));
+    if (!D_800B4C54)
+        func_80026214(S_Rect2_986C(0x400, 0x200));
+    short x = (sz.w + 127) / 128 * 256;
+    S_Pt4_986C pos = D_800B4C54->f4(S_Pt4c_986C(x, sz.h));
+    if (!D_800B4C38) {
+        S_Pt4c_986C pt(x, 0x100 - sz.h);
+        func_80021300(&S_RectPS_986C(D_800B4C54->f4(pt), pt.pt()), 0);
+    }
+    D_800B4C54->f5(pos);
+    func_8002CDC0(&S_RectPS_986C(D_800B4C54->f4(S_Pt4c_986C(sz.w * 2, sz.h)), *(S_Pt4_986C *)&sz));
+    ((S_8001B46C *)p)->v9(sz.w, sz.h);
+    func_8002A400(p, D_800B4C90);
+    func_8002A37C(p, D_800B4C80);
+    while (func_8001E07C(D_800A4554, -0x8000))
+        ;
+    return p;
+}
 
 EXTERN_C int func_8001B8C8(S_Link *p)
 {
@@ -822,11 +889,60 @@ EXTERN_C int func_8001B8C8(S_Link *p)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B910);
+EXTERN_C void func_8001B910(int a)
+{
+    S_8001BBBC *p = (S_8001BBBC *)a;
+    if (D_800AC809[0])
+        return;
+    if (D_800B4CF0) {
+        S_800101F8 *o = new S_800101F8(1);
+        int *l = D_800A4544;
+        func_8001D150(l, new S_8001D684((int)o, 0xC0, 1));
+    } else {
+        D_800B4C54->f5(org0_986C());
+        S_Pt4c_986C sz(p->rect.size.x * 3 / 2, p->rect.size.y);
+        S_Pt4_986C r1 = D_800B4C54->f4(sz);
+        S_Pt4_986C r2 = D_800B4C54->f4(sz);
+        func_8002D020(&r1, &r2, &sz.pt(), &p->rect.size);
+        func_8002D24C(p->v12(), &S_RectPS_986C(sz.pt()));
+        void *x = p->unk8->unk14;
+        func_8002D24C(x, &S_RectPS_986C(sz.pt()));
+        func_8002900C(operator new(0x3C), 0, 0, 0, 2, 0);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BBBC);
+EXTERN_C void func_8001BBBC(int a)
+{
+    S_8001BBBC *p = (S_8001BBBC *)a;
+    if (!D_800AC809[0])
+        return;
+    if (D_800B4CF0) {
+        D_800B4C54->f5(org0_986C());
+        D_800B4C54->f5(org1_986C());
+        S_RectPS_986C r(D_800B4C54->f4(S_Pt4c_986C(p->rect.size.x * 2, p->rect.size.y)), p->getRect().size);
+        func_8002CDC0(&r);
+        func_8002D24C(p->v12(), &p->rect);
+        func_8002D24C(p->unk8->unk14, &p->rect);
+        func_8002900C(operator new(0x3C), 0, 0, 0, 2, 0);
+    } else {
+        S_800101F8 *o = new S_800101F8(0);
+        int *l = D_800A4544;
+        func_8001D150(l, new S_8001D684((int)o, 0xC0, 1));
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BE20);
+EXTERN_C S_BE20 *func_8001BE20(void *self, S_BE20 *prev, S_BE20 *n)
+{
+    // Register variable: the only form found where GCC keeps retail's copy of n (returned through $a1).
+    register S_BE20 *m asm("$5") = n;
+    if (!n->dead())
+        return m;
+    if (prev)
+        prev->next = n->next;
+    n->next = 0;
+    n->kill();
+    return prev;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001BE9C);
 

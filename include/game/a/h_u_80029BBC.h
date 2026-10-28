@@ -158,4 +158,6 @@ inline S_Box2 box_at_origin(S_XY s) { return S_Box2(0, 0, s); }
 struct S_CollG12 : S_CollG { int pad8; };
 EXTERN_C S_CollG12 D_800AC710_g asm("D_800AC710");
 
+struct S_8002C2B8 : S_8002C188 { };
+
 #endif /* GAME_A_H_U_80029BBC_H */

@@ -106,4 +106,7 @@ inline int send_80027754(VObj *o, const S_XYc &pt)
     return ((int (*)(void *, S_XYc))e->f)((char *)o + e->d, pt);
 }
 
+struct S_Rect16 { short x, y, w, h; };
+struct S_80026420 { void **vt; void *unk4; };
+
 #endif /* GAME_A_H_U_80025854_H */

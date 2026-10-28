@@ -301,7 +301,26 @@ EXTERN_C S_XYc func_800263C0(VObj *p, int u, S_XYc x)
     return ((S_XYc (*)(void *, S_XYc))e->f)((char *)p + e->d, x);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80026420);
+EXTERN_C void *func_80026420(void *o, S_Rect16 *r, S_XYc sz)
+{
+    if (r->w < sz.x || r->h < sz.y)
+        return 0;
+    if (r->w == sz.x && r->h == sz.y) {
+        int mx = r->x;
+        mx = (short)(mx % 64);
+        if (mx && mx + r->w > 64)
+            return 0;
+        short my = r->y % 256;
+        if (my && my + sz.y > 256)
+            return 0;
+        S_80026420 *p = (S_80026420 *)operator new(8);
+        p->vt = D_80011124;
+        p->unk4 = o;
+        p->vt = D_800110F4;
+        return p;
+    }
+    return func_80026274((S_80026274 *)operator new(0x20), (S_8b *)r, (int)o);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80025854", func_80026558);
 

@@ -189,4 +189,31 @@ EXTERN_C void func_8001A7B4(void *a, void *b);
 EXTERN_C int func_80018F0C(void *jb, void *v);
 EXTERN_C void func_8001E9A8(void *p);
 
+/* Real polymorphic classes, named after their retail vtables, for code that needs the compiler's own
+   vptr handling (e.g. the vptr-preserving copy in `*e = C_80010300(...)`). Their virtual functions are
+   declared, never defined, so no vtable is emitted; GCC's vtable and dtor symbols are equated to the
+   retail ones below (no storage). */
+struct C_800100F8 { virtual ~C_800100F8(); };
+struct C_80010178 : C_800100F8 { void *unk4; C_80010178() { unk4 = 0; } ~C_80010178(); virtual void f2() = 0; };
+struct C_80010300 : C_80010178 {
+    unsigned short unk8;
+    short unkA;
+    void *unkC;
+    int unk10;
+    C_80010300(int d, void *c, unsigned short a) { unk8 = a; unkA = 2; unk10 = d; unkC = c; }
+    void f2();
+};
+__asm__(".set _vt.10C_800100F8, D_800100F8\n"
+        ".set _vt.10C_80010178, D_80010178\n"
+        ".set _vt.10C_80010300, D_80010300\n"
+        ".set _._10C_80010178, func_8001A610\n");
+struct S_8001EBD8 { char pad[0x98]; void *unk98; };
+
+inline S_Iter *iter_reset(S_Iter *i)
+{
+    i->idx = 0;
+    return i;
+}
+EXTERN_C void func_800190A0(void *a, void *b);
+
 #endif /* GAME_A_H_U_8001DDF4_H */

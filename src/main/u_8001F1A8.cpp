@@ -256,7 +256,17 @@ EXTERN_C void func_8001F98C(S_8001F930 *p, int a)
     func_800198AC(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001F1A8", func_8001F9C0);
+EXTERN_C void func_8001F9C0()
+{
+    Item *it;
+    if (D_800B4C34) {
+        func_80018AF4();
+        ((S_TimerIterR *)D_800B4C34)->idx = 0;
+        while ((it = ((S_TimerIterR *)D_800B4C34)->next()) != 0)
+            it->run();
+        func_80018B18();
+    }
+}
 
 EXTERN_C int func_8001FA6C(Holder *h, void *item)
 {

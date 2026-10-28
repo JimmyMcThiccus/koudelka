@@ -24,7 +24,31 @@ EXTERN_C void func_8001C36C(void *p, int a)
     func_8001D024(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C38C);
+EXTERN_C void func_8001C38C(S_8001C38C *p, int flags)
+{
+    p->vtDC = D_80010260;
+    p->vt50 = D_80010288;
+    p->vt148 = D_80010278;
+    p->vt2C = D_8001167C;
+    p->vb->vt = (VEnt_C38C *)D_80010210.e;
+    if (!flags) {
+        VTab50_C38C tmp = D_80010210;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x3AC;
+        tmp.e[1].d = D_80010210.e[1].d + ((char *)p - q);
+        tmp.e[5].d = D_80010210.e[5].d + ((char *)p - q);
+        tmp.e[7].d = D_80010210.e[7].d + ((char *)p - q);
+        tmp.e[9].d = D_80010210.e[9].d + ((char *)p - q);
+    }
+    func_80023AEC(p->unk280, 2);
+    func_80023AEC(p->unk154, 2);
+    func_8001E508((char *)p + 0x50, 0);
+    dtor_8002C6D4(p, 0);
+    if (flags & 2)
+        func_8001A610(p->vb, 0);
+    if (flags & 1)
+        operator delete(p);
+}
 
 EXTERN_C S_Node *func_8001C580(S_Node *p)
 {
@@ -698,9 +722,38 @@ EXTERN_C void func_8001D8A4(S_8001D8A4 *p)
     func_80018788(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D9F4);
+EXTERN_C void func_8001D9F4(S_8001D8A4 *p)
+{
+    for (;;) {
+        int t = 0;
+        if (p->list) {
+            int count;
+            int low = 0;
+            if (func_80018E10(&count) > 0x7FFFF && count < 8)
+                low = func_8001A6E8((S_8001A6E8 *)p->list) < 4;
+            if (low)
+                count = 0;
+            do {
+                int r;
+                func_8001D8A4(p);
+                r = GetRCnt(0xF2000001);
+                if (r < t)
+                    count = 0;
+                t = r;
+                if (!p->list)
+                    break;
+            } while (count || t < 0xF7);
+        }
+        func_8001EAAC(p);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001DACC);
+EXTERN_C int func_8001DACC(void *a)
+{
+    char *g = D_800A4578_p;
+    func_8001E848(g ? g + 0x50 : 0, a);
+    return 1;
+}
 
 EXTERN_C void func_8001DB04()
 {
