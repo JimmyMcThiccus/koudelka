@@ -43,7 +43,16 @@ EXTERN_C void func_80034028(S_800323C0 *p, S_800323C0_Node *n)
     p->unk8 = n;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034044);
+EXTERN_C S_A2_C98 *func_80034044(S_A2_Pool98 *pool)
+{
+    S_A2_C98 *n = pool->head;
+    if (n) {
+        pool->head = (S_A2_C98 *)n->unk4;
+        n->unk4 = 0;
+        return n;
+    }
+    return a2_init_C98((S_A2_C98 *)operator new(sizeof(S_A2_C98)));
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034184);
 
@@ -52,7 +61,10 @@ EXTERN_C int func_80034608(S_80034608 *p)
     return p->unk4;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80034614);
+EXTERN_C S_A2_C98 *func_80034614(S_A2_C98 *p)
+{
+    return a2_init_C98(p);
+}
 
 EXTERN_C void func_80034710(void *p, int flags)
 {

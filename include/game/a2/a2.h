@@ -345,4 +345,71 @@ struct S_A2_Sv4c { short x, y, z, w; S_A2_Sv4c(S_A2_S8 a, S_A2_S8 b, S_A2_S8 c, 
 struct S_A2_I8 { int v; int pad; S_A2_I8() {} S_A2_I8(const S_A2_I8 &o) { v = o.v; } };
 struct S_A2_Iv4c { int x, y, z, w; S_A2_Iv4c(S_A2_I8 a, S_A2_I8 b, S_A2_I8 c, S_A2_I8 d) { x = a.v; y = b.v; z = c.v; w = d.v; } };
 EXTERN_C int SquareRoot0(int a);
+struct S_A2_V4s { short x, y, z, w; void clear() { x = 0; y = 0; z = 0; w = 0; } };
+struct S_A2_Base { void **vt; S_A2_V4s v; };
+struct S_A2_PF4 { unsigned char p0, p1, p2, len, r, g, b, code; char rest[0x10]; };
+struct S_A2_C28 { void **vt; int unk4; S_A2_Base b; S_A2_V4s arr[4]; int color; S_A2_PF4 prim[2]; };
+EXTERN_C void *D_80011A44[];
+struct S_A2_PFT4 { unsigned char p0, p1, p2, len, r, g, b, code; char rest[0x20]; };
+struct S_A2_E4 { int pad; S_A2_E4() {} };
+struct S_A2_C98S { int color; S_A2_E4 e[4]; S_A2_PFT4 prim[2]; };
+struct S_A2_C98 { void **vt; int unk4; S_A2_Base b; S_A2_V4s arr[4]; S_A2_C98S s; };
+inline S_A2_C28 *a2_init_C28(S_A2_C28 *p)
+{
+    int i, j;
+    S_A2_V4s *q;
+    S_A2_PF4 *f;
+    p->vt = D_80010178;
+    p->b.vt = D_80011A44;
+    p->unk4 = 0;
+    p->b.v.clear();
+    p->b.vt = D_80011AAC;
+    p->vt = D_80011B14;
+    q = p->arr;
+    for (i = 3; i != -1; i--) {
+        q->x = 0; q->y = 0; q->z = 0; q->w = 0; q++;
+    }
+    p->b.vt = D_80011D04;
+    p->vt = D_80011D6C;
+    p->color = 0x28808080;
+    f = p->prim;
+    for (j = 1; j != -1; j--) {
+        f->len = 5; f->code = 0x28; f++;
+    }
+    p->b.vt = D_80011DBC;
+    p->vt = D_80011E24;
+    return p;
+}
+inline S_A2_C98 *a2_init_C98(S_A2_C98 *p)
+{
+    int i, j, n;
+    S_A2_V4s *q;
+    S_A2_PFT4 *f;
+    S_A2_C98S *s;
+    p->vt = D_80010178;
+    p->b.vt = D_80011A44;
+    p->unk4 = 0;
+    p->b.v.clear();
+    p->b.vt = D_80011AAC;
+    p->vt = D_80011B14;
+    q = p->arr;
+    for (i = 3; i != -1; i--) {
+        q->x = 0; q->y = 0; q->z = 0; q->w = 0; q++;
+    }
+    p->b.vt = D_80011D04;
+    p->vt = D_80011D6C;
+    s = &p->s;
+    s->color = 0x2C808080;
+    for (n = 3; n != -1; n--)
+        ;
+    f = s->prim;
+    for (j = 1; j != -1; j--) {
+        f->len = 9; f->code = 0x2C; f++;
+    }
+    p->b.vt = D_80011E8C;
+    p->vt = D_80011EF4;
+    return p;
+}
+struct S_A2_Pool { int unk0; S_A2_C28 *head; };
+struct S_A2_Pool98 { int unk0; S_A2_C98 *head; };
 #endif /* GAME_A2_A2_H */
