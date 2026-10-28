@@ -765,7 +765,22 @@ EXTERN_C void *func_800CC1B0(T_CC1B0 *p) { for (T_CE044_10 *e = func_800CE044(&p
 
 EXTERN_C T_CE044_10 *func_800CC220(T_CC1B0 *p, void *a) { for (T_CE044_10 *e = func_800CE044(&p->f3D8); e; e = func_800CE090(&p->f3D8)) if ((e->h8 & 1) && e->p4 == a) return e; return 0; }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CC298);
+EXTERN_C T_CE044_10 *func_800CC298(T_CC1B0 *p, unsigned mode, unsigned short mask) {
+    T_CE044_10 *e = 0;
+    switch (mode) {
+    case 0: e = func_800CE00C(&p->f3D8); break;
+    case 1: e = func_800CE044(&p->f3D8); D_800D5DA4[0] = 1; break;
+    case 2: e = func_800CE064(&p->f3D8); D_800D5DA4[0] = -1; break;
+    case 3: e = func_800CE090(&p->f3D8); D_800D5DA4[0] = 1; break;
+    case 4: e = func_800CE0D4(&p->f3D8); D_800D5DA4[0] = -1; break;
+    }
+    while ((e->h8 & mask) != mask) {
+        T_CE044 *l = &p->f3D8;
+        if (D_800D5DA4[0] > 0) { e = func_800CE090(&p->f3D8); if (e) continue; func_800CE064(&p->f3D8); return 0; }
+        e = func_800CE0D4(&p->f3D8); if (e) continue; func_800CE044(&p->f3D8); return 0;
+    }
+    return e;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800CC3DC);
 
@@ -880,7 +895,7 @@ EXTERN_C T_CE044_10 *func_800CE00C(T_CE044 *p) { return p->fC ? &p->f10[p->f8] :
 
 EXTERN_C T_CE044_10 *func_800CE044(T_CE044 *p) { p->f8 = 0; return func_800CE00C(p); }
 
-EXTERN_C void func_800CE064(T_CE044 *p) { p->f8 = p->fC - 1; func_800CE00C(p); }
+EXTERN_C T_CE044_10 *func_800CE064(T_CE044 *p) { p->f8 = p->fC - 1; return func_800CE00C(p); }
 
 EXTERN_C T_CE044_10 *func_800CE090(T_CE044 *p) { T_CE044_10 *r; if (p->f8 < p->fC - 1) { p->f8++; r = func_800CE00C(p); } else r = 0; return r; }
 

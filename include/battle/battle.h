@@ -1286,4 +1286,8 @@ EXTERN_C int func_800CEA50(void *self, S_800CEA50 *a, S_800CEA50 *b);
 EXTERN_C int func_800CEA60(void *self, S_800CEA50 *a, S_800CEA50 *b);
 EXTERN_C int func_800CEA70(void *self, S_800CEA50 *a, S_800CEA50 *b);
 
+EXTERN_C T_CE044_10 *func_800CE064(T_CE044 *p);
+EXTERN_C T_CE044_10 *func_800CE0D4(T_CE044 *p);
+EXTERN_C int D_800D5DA4[];
+
 #endif /* BATTLE_BATTLE_H */
