@@ -1021,5 +1021,21 @@ EXTERN_C void func_800BAED8(Unk_Sprt16_24c* p, Unk_ColorSrc* c);
 EXTERN_C void func_800BB128(Unk_Sprt16_24* p, int u, int v);
 EXTERN_C void func_800BB1BC(Unk_800BB1BC* p, Unk_800BB1BC_arg* a);
 EXTERN_C void func_800E6E64(Unk_800E6E64* p);
+struct Unk_800DE59C_v { short x, y, z, w; };
+struct Unk_800DE59C_y { char pad0[0x2C]; Unk_800DE59C_v unk2C; Unk_W4 unk34; };
+struct Unk_800DE59C_x { char pad0[0x1B8]; Unk_800DE59C_y* unk1B8; };
+struct Unk_800DE59C_b { int unk0; int unk4; Unk_800DE59C_x* unk8; };
+struct Unk_800DE59C_h { char pad0[0x14C]; int unk14C; char pad150[4]; Unk_W4 unk154; int unk164; int unk168; int unk16C; int unk170; int unk174; int unk178; int unk17C; char pad180[0x24]; int unk1A4; char pad1A8[4]; int unk1AC; };
+struct Unk_800DE59C : Unk_PadB8, Unk_800DE59C_b { };
+inline Unk_800DE59C_b* base(Unk_800DE59C* p) { return p; }
+inline Unk_W4 getW(Unk_800DE59C* p) { return base(p)->unk8->unk1B8->unk34; }
+EXTERN_C int SquareRoot0(int);
+EXTERN_C void func_800DE1E8(void*, int, int, int, int, int, int, Unk_W4, int);
+struct Unk_800DE3B8_g { char pad0[0x378]; int unk378; };
+struct Unk_800DE3B8 : Unk_PadB8, Unk_800DE59C_b { char padC4[0x88]; int unk14C; char pad150[4]; Unk_W4 unk154; int unk164; int unk168; int unk16C; int unk170; int unk174; int unk178; int unk17C; char pad180[0x24]; int unk1A4; char pad1A8[4]; int unk1AC; };
+inline Unk_800DE59C_b* base(Unk_800DE3B8* p) { return p; }
+inline Unk_W4 getW(Unk_800DE3B8* p) { return base(p)->unk8->unk1B8->unk34; }
+EXTERN_C void func_800DDE6C(void*, int, int, int, int, int, int);
+EXTERN_C void func_8007B538(void*, int, int, int, int, int);
 
 #endif /* FIELD_FIELD_H */

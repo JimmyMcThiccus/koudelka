@@ -3943,9 +3943,51 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800DDFB0);
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DE1E8);
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DE3B8);
+EXTERN_C void func_800DE3B8(Unk_800DE3B8* p, int a, int n, int b, int c, int d, int e) {
+    Unk_800DE59C_v* y;
+    if (n <= 0) {
+        n = -1;
+    }
+    p->unk168 = n;
+    p->unk16C = b;
+    p->unk154 = getW(p);
+    y = &base(p)->unk8->unk1B8->unk2C;
+    p->unk164 = (((short)SquareRoot0(y->x * y->x + y->y * y->y + y->z * y->z) + 0x100) / 512) & 7;
+    p->unk174 = c;
+    p->unk178 = d;
+    p->unk17C = e;
+    p->unk170 = p->unk14C;
+    if (p->unk1AC) {
+        p->unk1A4 = 4;
+    }
+    func_800DDE6C(p, a, n, b, c, d, e);
+    if ((unsigned int)(((Unk_800DE3B8_g*)D_800AF470[0])->unk378 - 3) < 2) {
+        func_8007B538((Unk_800DE59C_b*)p, 1, 1, 0, 0, 0);
+    }
+    p->unk1AC = 0;
+}
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800DE59C);
+EXTERN_C void func_800DE59C(Unk_800DE59C* q, int a, int n, int b, int c, int d, int e, Unk_W4 v, int x) {
+    Unk_800DE59C_h* p = (Unk_800DE59C_h*)q;
+    Unk_800DE59C_v* y;
+    if (n <= 0) {
+        n = -1;
+    }
+    p->unk168 = n;
+    p->unk16C = b;
+    p->unk154 = getW(q);
+    y = &base(q)->unk8->unk1B8->unk2C;
+    p->unk164 = (((short)SquareRoot0(y->x * y->x + y->y * y->y + y->z * y->z) + 0x100) / 512) & 7;
+    p->unk174 = c;
+    p->unk178 = d;
+    p->unk17C = e;
+    p->unk170 = p->unk14C;
+    if (p->unk1AC) {
+        p->unk1A4 = 5;
+    }
+    func_800DE1E8(q, a, n, b, c, d, e, v, x);
+    p->unk1AC = 0;
+}
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800DE760);
 
