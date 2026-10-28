@@ -160,4 +160,9 @@ struct C_8001D7B0 : B_8001E40C {
     C_8001D7B0() asm("func_8001D7B0");
 };
 
+EXTERN_C unsigned int func_80018E10(int *count);
+EXTERN_C void func_8001EAAC(void *s);
+EXTERN_C int GetRCnt(int spec);
+EXTERN_C char *D_800A4578_p asm("D_800A4578") __attribute__((section(".data")));
+
 #endif /* GAME_A_H_U_8001C2D0_H */

@@ -10,3 +10,5 @@ __10S_8002C9D4RC10S_8002C9D4 = 0x8002C9D4; // type:func
 __10S_8002C9D4RC10S_8002C9D4P7S_Rect8 = 0x8002CA64; // type:func
 __10S_8002E4E8iii = 0x8002E4E8; // type:func
 __10S_80030534 = 0x80030534; // type:func
+// Own function after func_8001D9F4's endless loop (splat had merged them).
+func_8001DACC = 0x8001DACC; // type:func

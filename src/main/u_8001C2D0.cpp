@@ -698,7 +698,38 @@ EXTERN_C void func_8001D8A4(S_8001D8A4 *p)
     func_80018788(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D9F4);
+EXTERN_C void func_8001D9F4(S_8001D8A4 *p)
+{
+    for (;;) {
+        int t = 0;
+        if (p->list) {
+            int count;
+            int low = 0;
+            if (func_80018E10(&count) > 0x7FFFF && count < 8)
+                low = func_8001A6E8((S_8001A6E8 *)p->list) < 4;
+            if (low)
+                count = 0;
+            do {
+                int r;
+                func_8001D8A4(p);
+                r = GetRCnt(0xF2000001);
+                if (r < t)
+                    count = 0;
+                t = r;
+                if (!p->list)
+                    break;
+            } while (count || t < 0xF7);
+        }
+        func_8001EAAC(p);
+    }
+}
+
+EXTERN_C int func_8001DACC(void *a)
+{
+    char *g = D_800A4578_p;
+    func_8001E848(g ? g + 0x50 : 0, a);
+    return 1;
+}
 
 EXTERN_C void func_8001DB04()
 {
