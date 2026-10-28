@@ -4,7 +4,18 @@
 #include "game/a/decls_a.h"
 #include "game/a2/a2.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80032264);
+EXTERN_C int func_80032264(void *p)
+{
+    int a = AT(p, int, 0xC);
+    if (a) {
+        if (AT(p, void *, 4)) func_8001A678(AT(p, void *, 4), a);
+        else AT(p, int, 4) = a;
+    }
+    int b = AT(p, int, 8);
+    AT(p, int, 8) = 0;
+    AT(p, int, 0xC) = b;
+    return 0;
+}
 
 EXTERN_C void func_800322C8(void *p, int a)
 {

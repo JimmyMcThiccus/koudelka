@@ -752,7 +752,16 @@ EXTERN_C MATRIX *func_8003B3C0(MATRIX *p, MATRIX *q)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B3EC);
+EXTERN_C MATRIX *func_8003B3EC(MATRIX *r, MATRIX *a, MATRIX *b)
+{
+    MATRIX t;
+    MATRIX *tp;
+    func_8003A7A4(&t, (int)a);
+    tp = &t;
+    CompMatrix(a, b, tp);
+    func_8003A7A4(r, (int)tp);
+    return r;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003B450);
 
@@ -876,7 +885,19 @@ EXTERN_C MATRIX *func_8003BB78(MATRIX *m, int s)
     return m;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003BBD8);
+EXTERN_C short *func_8003BBD8(short *p)
+{
+    short a = p[1];
+    short b = p[3];
+    p[3] = a; p[1] = b;
+    a = p[2];
+    b = p[6];
+    p[6] = a; p[2] = b;
+    a = p[5];
+    b = p[7];
+    p[7] = a; p[5] = b;
+    return p;
+}
 
 EXTERN_C void *func_8003BC10(void *p, int a)
 {

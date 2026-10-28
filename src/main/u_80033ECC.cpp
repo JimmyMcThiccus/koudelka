@@ -4,7 +4,18 @@
 #include "game/a/decls_a.h"
 #include "game/a2/a2.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80033ECC);
+EXTERN_C int func_80033ECC(void *p)
+{
+    int a = AT(p, int, 0xC);
+    if (a) {
+        if (AT(p, void *, 4)) func_8001A678(AT(p, void *, 4), a);
+        else AT(p, int, 4) = a;
+    }
+    int b = AT(p, int, 8);
+    AT(p, int, 8) = 0;
+    AT(p, int, 0xC) = b;
+    return 0;
+}
 
 EXTERN_C void func_80033F30(void *p, int a)
 {
@@ -411,9 +422,20 @@ EXTERN_C void func_80035C28()
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035C30);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035CA8);
+EXTERN_C int func_80035CA8()
+{
+    int a = 0xFF;
+    int i;
+    for (i = 0; i < 3; i++) a &= D_800B4D10[i];
+    return a != 0;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035CD8);
+EXTERN_C void func_80035CD8()
+{
+    int i = 3;
+    unsigned char *p = &D_800B4D10[3];
+    do { *p-- = 0; } while (--i >= 0);
+}
 
 EXTERN_C void func_80035CF8()
 {
@@ -468,11 +490,34 @@ EXTERN_C void func_80035F18()
     func_80018970(&D_800A451C);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035F80);
+EXTERN_C void func_80035F80(unsigned char a, int b)
+{
+    func_800188D4(&D_800A451C);
+    if (D_800B4D0C)
+        ((A2VObj0 *)D_800B4D0C)->v09(a, b);
+    else
+        func_8009CAE0(0);
+    func_80018970(&D_800A451C);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036000);
+EXTERN_C void func_80036000(unsigned char a, int b, int c)
+{
+    func_800188D4(&D_800A451C);
+    if (D_800B4D0C)
+        ((A2VObj0 *)D_800B4D0C)->v10(a, b, c);
+    else
+        func_8009D030(0);
+    func_80018970(&D_800A451C);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036090);
+EXTERN_C void func_80036090(unsigned char a, int b)
+{
+    func_800188D4(&D_800A451C);
+    func_8009CAC0(0);
+    if (D_800B4D0C)
+        ((A2VObj0 *)D_800B4D0C)->v11(a, b);
+    func_80018970(&D_800A451C);
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80036110);
 

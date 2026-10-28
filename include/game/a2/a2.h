@@ -332,4 +332,6 @@ EXTERN_C void *D_80010148[];
 EXTERN_C void func_80039A88(void *p, int a);
 EXTERN_C void func_8003C0D0(void *p, int a);
 EXTERN_C void func_8003BF30(void *p, int a);
+EXTERN_C unsigned char D_800B4D10[4];
+EXTERN_C void f3635C_alt(void *p, unsigned char a) asm("func_8003635C");
 #endif /* GAME_A2_A2_H */

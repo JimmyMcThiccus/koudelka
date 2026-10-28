@@ -75,7 +75,10 @@ EXTERN_C void func_80037524(void *p, unsigned char a)
         func_80036364(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037554);
+EXTERN_C void func_80037554(void *p, unsigned char a)
+{
+    if (!AT(p, signed char, 0x37)) f3635C_alt(p, a);
+}
 
 EXTERN_C void func_80037584(void *p, unsigned char a)
 {
@@ -92,7 +95,20 @@ EXTERN_C int func_800375B4(void *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800375E4);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_80037688);
+extern "C++" void *f37688_alt(void *p) asm("func_80037688");
+void *f37688_alt(void *p)
+{
+    AT(p, void **, 0) = D_80011FE4;
+    AT(p, void **, 8) = D_800123EC;
+    AT(p, void **, 0) = D_80012404;
+    AT(p, int, 0x10) = 0;
+    AT(p, int, 0x14) = 0;
+    AT(p, int, 0x18) = 0;
+    AT(p, int, 0x1C) = 0;
+    AT(p, int, 0x28) = 0;
+    AT(p, int, 0x2C) = 1;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800372C0", func_800376D0);
 
