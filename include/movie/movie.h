@@ -1219,4 +1219,15 @@ EXTERN_C void func_80054CE4(void*);
 EXTERN_C const char D_800B7810[];
 EXTERN_C char D_800B7A40[];
 
+/* func_800C16C8 */
+struct Unk800C16C8C { s32 d[0x14]; };
+struct Unk800C16C8R { char p0[3]; u8 x3; char p1[0x18 - 4]; Unk800C16C8C x18; char p2[0x94 - 0x18 - 0x50]; };
+struct Unk800C16C8G { char pad[0x202]; s8 x202, x203; char p2[0x23C - 0x204]; Unk800C16C8R x23C[1]; };
+EXTERN_C void func_800C1690(void* p, s32* a, s32* b, s32* c, s32* d);
+EXTERN_C s32 func_800619F4(void*);
+EXTERN_C void func_800C1BF8();
+EXTERN_C void func_800C21B8();
+EXTERN_C s32 func_800382A4(void*, s32, s32);
+EXTERN_C char D_800AC86C[];
+
 #endif /* MOVIE_H */
