@@ -993,5 +993,21 @@ EXTERN_C Unk_Deletable* D_800EA140[];
 EXTERN_C Unk_Deletable* D_800EA144[];
 struct Unk_800C57C4 { char pad0[0x20]; int unk20; char pad24[0x18]; Unk_800C9D90_sub* unk3C; char pad40[0x98]; char unkD8[4]; };
 EXTERN_C void func_800C5F68(void*);
+struct Unk_PtS { short x, y; Unk_PtS(short a, short b) { x = a; y = b; } };
+struct Unk_800C2D40 : VAt<0x18> { char pad1C[0x4C]; unsigned short unk68; unsigned short unk6A; void* unk6C; char unk74_[4]; char unk74[0xDC]; char unk150[4]; };
+EXTERN_C void func_80069978(void*, const Unk_PtS&, int, int, int);
+EXTERN_C void func_80069914(void*);
+EXTERN_C void* func_8006753C(void*, int);
+struct Unk_Sprt20 { int tag; Unk_W4 body; };
+struct Unk_800E7C44 { char pad0[0xA]; unsigned short unkA; char padC[4]; Unk_Dr12 unk10[2]; Unk_Sprt20 unk28[2]; };
+struct Unk_PTag { unsigned int addr : 24; unsigned int len : 8; };
+inline void addPrimN(unsigned int n, void* prim) {
+    Unk_Ot* ot = D_800B4CFC[0];
+    if (n && n < ot->unk10) {
+        ((Unk_PTag*)prim)->addr = ot->unk14[n];
+        ot->unk14[n] = (unsigned int)prim & 0xFFFFFF;
+    }
+}
+EXTERN_C int func_8005F1B4(void*);
 
 #endif /* FIELD_FIELD_H */
