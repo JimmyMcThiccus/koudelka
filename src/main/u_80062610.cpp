@@ -60,7 +60,34 @@ EXTERN_C int func_8006283C(void)
     return D_800B4E34;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062848);
+EXTERN_C S_C50_70 *func_80062848(S_C50_70 *p, int in_chrg, int a2, int a3, int e, int f)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80062C3C_v(p, 0, a2, -1, f);
+    p->vb->vt = (VEntB *)D_80014CAC.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014CAC;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014CAC.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x70));
+        tmp.e[6].d = D_80014CAC.e[6].d + adj;
+    }
+    FIELD_AT(p, void **, 0x54) = D_80013BD0;
+    FIELD_AT(p, void **, 0x58) = D_80014CFC;
+    FIELD_AT(p, void **, 0x18) = D_80014D1C;
+    FIELD_AT(p, int, 0x68) = e;
+    FIELD_AT(p, int, 0x6C) = 0;
+    FIELD_AT(p, int, 0x64) = a3;
+    return p;
+}
 
 EXTERN_C int func_80062978(void *self)
 {
@@ -73,9 +100,58 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062988);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062A90);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062C3C);
+EXTERN_C S_C50_64 *func_80062C3C(S_C50_64 *p, int in_chrg, int a2, int a3, int e)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80056198(p, 0, a2, e, 1);
+    p->vb->vt = (VEntB *)D_80014D5C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014D5C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014D5C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x64));
+        tmp.e[6].d = D_80014D5C.e[6].d + adj;
+    }
+    FIELD_AT(p, void **, 0x54) = D_80013BD0;
+    FIELD_AT(p, void **, 0x58) = D_80014DAC;
+    FIELD_AT(p, void **, 0x18) = D_80014DCC;
+    FIELD_AT(p, int, 0x5C) = a3;
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062D60);
+EXTERN_C S_C50_64 *func_80062D60(S_C50_64 *p, int in_chrg)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80056364(p, 0, 0, 0);
+    p->vb->vt = (VEntB *)D_80014D5C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014D5C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014D5C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x64));
+        tmp.e[6].d = D_80014D5C.e[6].d + adj;
+    }
+    FIELD_AT(p, void **, 0x54) = D_80013BD0;
+    FIELD_AT(p, void **, 0x58) = D_80014DAC;
+    FIELD_AT(p, void **, 0x18) = D_80014DCC;
+    return p;
+}
 
 EXTERN_C void func_80062E70(void *self)
 {
@@ -104,9 +180,59 @@ EXTERN_C void func_80062E9C(S_Dtor50 *p, int flags)
         operator delete(p);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80062FA4);
+EXTERN_C S_C50_68 *func_80062FA4(S_C50_68 *p, int in_chrg, int a2, int a3)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80056198(p, 0, a2, 0, a3);
+    p->vb->vt = (VEntB *)D_80014E0C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014E0C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014E0C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x68));
+        tmp.e[6].d = D_80014E0C.e[6].d + adj;
+    }
+    FIELD_AT(p, void **, 0x54) = D_80014E7C;
+    FIELD_AT(p, void **, 0x58) = D_80014E5C;
+    FIELD_AT(p, void **, 0x18) = D_80014EAC;
+    FIELD_AT(p, int, 0x64) = -1;
+    return p;
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_800630BC);
+EXTERN_C S_C50_68 *func_800630BC(S_C50_68 *p, int in_chrg, int a2)
+{
+    if (in_chrg) {
+        p->vb = (S_VBB *)&p->vobj;
+        S_VBobjB *v = (S_VBobjB *)p->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80056364(p, 0, 0, a2);
+    p->vb->vt = (VEntB *)D_80014E0C.e;
+    VTabB50 tmp;
+    if (!in_chrg) {
+        tmp = D_80014E0C;
+        p->vb->vt = tmp.e;
+        char *q;
+        int adj;
+        tmp.e[1].d = D_80014E0C.e[1].d + (adj = (char *)p - (q = (char *)p->vb - 0x68));
+        tmp.e[6].d = D_80014E0C.e[6].d + adj;
+    }
+    FIELD_AT(p, void **, 0x54) = D_80014E7C;
+    FIELD_AT(p, void **, 0x58) = D_80014E5C;
+    FIELD_AT(p, void **, 0x18) = D_80014EAC;
+    FIELD_AT(p, int, 0x64) = -1;
+    return p;
+}
 
 EXTERN_C void func_800631D4(void *self)
 {
