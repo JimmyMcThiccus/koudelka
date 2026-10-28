@@ -717,5 +717,21 @@ EXTERN_C char D_800B9F34[];
 EXTERN_C void func_800C206C(Unk_800C206C*, unsigned char);
 struct Unk_800C20B0_h : Unk_Base { int unk4; };
 struct Unk_800C20B0 : Unk_Pad50, VWith<Unk_800C20B0_h> { int unk5C; int unk60; int unk64; char pad68[0x40]; void* unkA8; };
+struct Unk_800CED70_q { char pad0[0x1B]; unsigned char unk1B; };
+EXTERN_C int func_8008A5C8(void*, void*, void*);
+struct Unk_Ent400s : Unk_Pad400, Unk_Base { char pad404[0xC]; short unk410; short unk412; char pad414[0xC]; short unk420; short unk422; };
+struct Unk_800C2EB8 { char pad0[0x68]; short unk68; short unk6A; Unk_Deletable18* unk6C; char unk70[4]; char unk74[0xDC]; char unk150[4]; };
+EXTERN_C void func_80069958(void*);
+struct Unk_800E1174_e : VAt<0x18> { char pad1C[0x260]; };
+struct Unk_800E1174 { char pad0[0x1C]; Unk_800BFB64_list unk1C; char pad20[0x64]; int unk84; char pad88[0xD0]; int unk158; char pad15C[0xE8]; Unk_800E1174_e unk244[15]; };
+EXTERN_C void* func_800550BC(void*);
+EXTERN_C int func_80054D78(void*);
+EXTERN_C int D_800B4D90[];
+struct Unk_800D04E4 { char pad0[8]; int unk8; short unkC; short unkE; short unk10; short unk12; char pad14[0x1C]; Unk_DualList* unk30; };
+EXTERN_C void func_800CC534(void*, int);
+struct Unk_800C1000 { char pad0[0x68]; int unk68; Unk_800C9D60 unk6C; char padD4[0x168]; Unk_DualList unk23C; char pad248[0x6E58]; void* unk70A0; };
+EXTERN_C void func_800C9D20(Unk_800C9D60*);
+EXTERN_C void func_800CF830();
+EXTERN_C void func_800D0248();
 
 #endif /* FIELD_FIELD_H */
