@@ -1269,7 +1269,31 @@ EXTERN_C char *func_8008D5A8(unsigned short id)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008D5E8);
+EXTERN_C void func_8008D5E8(void *v, void *b, short idx)
+{
+    char *e = FIELD_AT(b, char *, 0x14) + (idx << 4);
+    int a = FIELD_AT(e, int, 0x0);
+    char *pd;
+    unsigned int w;
+
+    FIELD_AT(v, int, 0xD0) = a + FIELD_AT(b, int, 0xC);
+    FIELD_AT(v, int, 0xD4) = a + (FIELD_AT(e, unsigned short, 0x4) << 3);
+    w = FIELD_AT(e, unsigned short, 0xC);
+    FIELD_AT(v, unsigned char, 0xD8) = w & 7;
+    FIELD_AT(v, unsigned char, 0xD9) = (w >> 4) & 7;
+    FIELD_AT(v, unsigned char, 0xDA) = (w >> 8) & 7;
+    w = FIELD_AT(e, unsigned int, 0x8);
+    FIELD_AT(v, unsigned char, 0xC) = idx;
+    FIELD_AT(v, unsigned char, 0xDB) = w & 0x7F;
+    FIELD_AT(v, unsigned char, 0xDC) = (w >> 8) & 0xF;
+    FIELD_AT(v, unsigned char, 0xDD) = (w >> 16) & 0x7F;
+    pd = (char *)v + 0xD;
+    FIELD_AT(v, unsigned char, 0xDE) = (w >> 24) & 0x1F;
+    FIELD_AT(v, unsigned char, 0xDF) = (w >> 12) & 0xF;
+    *(unsigned char *)pd = FIELD_AT(e, unsigned char, 0xE);
+    FIELD_AT(v, unsigned short, 0xE) = FIELD_AT(e, unsigned short, 0x6);
+    FIELD_AT(v, unsigned char, 0xA) |= 0x20;
+}
 
 struct SndNode_800B1A58 { int unk0; unsigned short unk4; char pad6[6]; int unkC; char pad10[0x10]; SndNode_800B1A58 *next; };
 struct GlobalPtr_800B1A58 { SndNode_800B1A58 *p; int pad[2]; };
