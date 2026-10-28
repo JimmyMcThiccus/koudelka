@@ -1606,4 +1606,9 @@ EXTERN_C void cf_CBA80(void *p, int a, int b, int c) __asm__("func_800CBA80");
 inline int empty_C6194(T_C6194 *p) { return !p->fA4.f0 && !p->fA0; }
 EXTERN_C void func_800C6194(T_C6194 *p);
 
+struct T_C43F0 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; };
+EXTERN_C const T_VTable10 D_800B73D0;
+EXTERN_C VTable D_800B7518[], D_800B7420[];
+EXTERN_C void func_800C43F0(T_C43F0 *self, int in_chrg);
+
 #endif /* BATTLE_BATTLE_H */
