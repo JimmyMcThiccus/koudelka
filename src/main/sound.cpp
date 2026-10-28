@@ -1269,7 +1269,31 @@ EXTERN_C char *func_8008D5A8(unsigned short id)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008D5E8);
+EXTERN_C void func_8008D5E8(void *v, void *b, short idx)
+{
+    char *e = FIELD_AT(b, char *, 0x14) + (idx << 4);
+    int a = FIELD_AT(e, int, 0x0);
+    char *pd;
+    unsigned int w;
+
+    FIELD_AT(v, int, 0xD0) = a + FIELD_AT(b, int, 0xC);
+    FIELD_AT(v, int, 0xD4) = a + (FIELD_AT(e, unsigned short, 0x4) << 3);
+    w = FIELD_AT(e, unsigned short, 0xC);
+    FIELD_AT(v, unsigned char, 0xD8) = w & 7;
+    FIELD_AT(v, unsigned char, 0xD9) = (w >> 4) & 7;
+    FIELD_AT(v, unsigned char, 0xDA) = (w >> 8) & 7;
+    w = FIELD_AT(e, unsigned int, 0x8);
+    FIELD_AT(v, unsigned char, 0xC) = idx;
+    FIELD_AT(v, unsigned char, 0xDB) = w & 0x7F;
+    FIELD_AT(v, unsigned char, 0xDC) = (w >> 8) & 0xF;
+    FIELD_AT(v, unsigned char, 0xDD) = (w >> 16) & 0x7F;
+    pd = (char *)v + 0xD;
+    FIELD_AT(v, unsigned char, 0xDE) = (w >> 24) & 0x1F;
+    FIELD_AT(v, unsigned char, 0xDF) = (w >> 12) & 0xF;
+    *(unsigned char *)pd = FIELD_AT(e, unsigned char, 0xE);
+    FIELD_AT(v, unsigned short, 0xE) = FIELD_AT(e, unsigned short, 0x6);
+    FIELD_AT(v, unsigned char, 0xA) |= 0x20;
+}
 
 struct SndNode_800B1A58 { int unk0; unsigned short unk4; char pad6[6]; int unkC; char pad10[0x10]; SndNode_800B1A58 *next; };
 struct GlobalPtr_800B1A58 { SndNode_800B1A58 *p; int pad[2]; };
@@ -3469,7 +3493,110 @@ EXTERN_C void func_80090550(void *drv)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_80090724);
+struct Ent_80090A88;
+EXTERN_C Ent_80090A88 *func_80090A88(Ent_80090A88 *e, int x);
+EXTERN_C void func_80093F40(Slot_80093D8C *s);
+EXTERN_C void func_8008D5E8(void *v, void *song, short idx);
+
+EXTERN_C void func_80090724(void *drv, SeqTrack *t, unsigned char *ev)
+{
+    char *v;
+    char *prev;
+    int n;
+    short note;
+    unsigned char *d;
+    unsigned char key;
+    unsigned char *e;
+    char *song;
+    char *smp;
+    int base;
+    unsigned short nf;
+    Node_80093800 *nd;
+
+    if (t->flags & 0x800) {
+        n = FIELD_AT(t, unsigned char, 0x8);
+        v = FIELD_AT(t, char *, 0x24);
+        while (n--) {
+            if (FIELD_AT(v, unsigned char, 0xA) & 2) {
+                return;
+            }
+            v += 0xE4;
+        }
+        if (n < 0) {
+            v = FIELD_AT(t, char *, 0x2C);
+        }
+    } else {
+        v = FIELD_AT(t, char *, 0x2C);
+        if (v != 0) {
+            FIELD_AT(t, char *, 0x2C) = FIELD_AT(v, char *, 0xB0);
+        } else {
+            v = FIELD_AT(t, char *, 0x28);
+            prev = 0;
+            while (FIELD_AT(v, char *, 0xAC) != 0) {
+                prev = v;
+                v = FIELD_AT(v, char *, 0xAC);
+            }
+            if (prev != 0) {
+                FIELD_AT(prev, char *, 0xAC) = 0;
+            } else {
+                FIELD_AT(v, char *, 0xAC) = 0;
+                FIELD_AT(t, char *, 0x28) = 0;
+            }
+            func_80093F40((Slot_80093D8C *)(v + 0xB4));
+        }
+    }
+    note = ev[3];
+    if (t->flags & 1) {
+        key = note;
+        d = FIELD_AT(drv, unsigned char *, 0x14) + (key * 4 - 0x60);
+        if (FIELD_AT(t, unsigned char, 0x53) != key || FIELD_AT(v, unsigned char, 0xC) != d[0]) {
+            FIELD_AT(t, unsigned char, 0x53) = note;
+            func_8008D5E8(v, FIELD_AT(t, char *, 0x30), d[0]);
+            FIELD_AT(v, unsigned char, 0xD) = d[2];
+            FIELD_AT(t, int, 0x60) = d[3] << 16;
+        }
+        note = d[1];
+    } else {
+        if (FIELD_AT(t, signed char, 0x4E) >= 0 && !(FIELD_AT(v, unsigned char, 0xA) & 2)) {
+            e = (unsigned char *)func_80090A88(FIELD_AT(t, Ent_80090A88 *, 0x34), note);
+            song = FIELD_AT(t, char *, 0x30);
+            smp = FIELD_AT(song, char *, 0x14) + e[0] * 16;
+            base = FIELD_AT(smp, int, 0x0);
+            FIELD_AT(v, int, 0xD0) = base + FIELD_AT(song, int, 0xC);
+            FIELD_AT(v, int, 0xD4) = base + FIELD_AT(smp, unsigned short, 0x4) * 8;
+            FIELD_AT(v, unsigned char, 0xC) = e[0];
+            FIELD_AT(v, unsigned char, 0xD) = FIELD_AT(smp, unsigned char, 0xE) * e[4] / 127;
+            FIELD_AT(v, unsigned short, 0xE) = FIELD_AT(smp, unsigned short, 0x6);
+            FIELD_AT(v, unsigned char, 0xA) |= 0x20;
+            FIELD_AT(v, unsigned char, 0x9) = 0x3C - e[1];
+        }
+        FIELD_AT(t, unsigned char, 0x53) = note;
+    }
+    if (FIELD_AT(v, unsigned char, 0xA) & 0x20) {
+        FIELD_AT(v, short, 0xBA) = 0x7FFF;
+        FIELD_AT(v, unsigned char, 0xA) &= ~0x20;
+    }
+    FIELD_AT(v, int, 0x0) = FIELD_AT(ev, int, 0x4);
+    FIELD_AT(v, short, 0x4) = FIELD_AT(v, unsigned short, 0xE) + ((note + (signed char)FIELD_AT(v, unsigned char, 0x9)) << 8);
+    FIELD_AT(v, short, 0x6) = ev[2] * FIELD_AT(v, unsigned char, 0xD);
+    FIELD_AT(v, char *, 0xAC) = FIELD_AT(t, char *, 0x28);
+    FIELD_AT(t, char *, 0x28) = v;
+    for (nd = FIELD_AT(v, Node_80093800 *, 0xA8); nd != 0; nd = nd->next) {
+        nf = nd->flags;
+        if (nf & 0x10) {
+            nd->unk8 = 0;
+            nd->unk14 = 1;
+            nd->flags = nf & ~0x60;
+            nd->unk18 = nd->unk1A;
+            nd->unk1C = nd->unk1E;
+        }
+    }
+    FIELD_AT(v, unsigned char, 0xB) = (FIELD_AT(v, unsigned char, 0xB) | 0xD) & ~2;
+    FIELD_AT(v, unsigned char, 0xA) |= 0x80;
+    if (t->flags & 0x800) {
+        FIELD_AT(v, unsigned char, 0xA) |= 2;
+    }
+}
 
 struct Ent_80090A88 {
     char pad[3];
@@ -3863,7 +3990,21 @@ EXTERN_C unsigned char *func_80091AB4(void *t, void *drv, unsigned char *p)
     return p + 2;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_80091B38);
+// duplicated store of a: found by the permuter, reproduces retail register allocation
+EXTERN_C unsigned char *func_80091B38(void *t, void *drv, unsigned char *p)
+{
+    short a = p[0];
+    short b = p[1];
+    short q = 0xC0 / a;
+
+    FIELD_AT(t, short, 0x64) = a;
+    FIELD_AT(t, short, 0x60) = b;
+    FIELD_AT(t, short, 0x64) = a;
+    FIELD_AT(t, short, 0x66) = b;
+    FIELD_AT(t, short, 0x62) = q;
+    FIELD_AT(t, short, 0x5E) = q;
+    return p + 2;
+}
 
 EXTERN_C unsigned char *func_80091B68(void *drv, SeqTrack *t, unsigned char *p)
 {
