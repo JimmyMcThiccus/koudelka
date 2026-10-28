@@ -569,7 +569,31 @@ EXTERN_C int func_80062280(void *self, int b)
     return old;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8006228C);
+EXTERN_C void func_8006228C(void *self, unsigned char *b)
+{
+    U8bw loc;
+    unsigned i;
+    char *nm;
+    signed char *p;
+    for (i = 0; i < 8; i++) {
+        loc.c[i] = 0;
+    }
+    nm = (char *)b + 0x1E;
+    loc = *(U8bw *)nm;
+    for (i = 0; i < 9; i++) {
+        nm[i] = 0;
+    }
+    if (b[0x18] == 1) {
+        func_8006237C(self, b, nm);
+    } else {
+        func_800624A4(self, b, nm);
+    }
+    p = (signed char *)nm;
+    while (*p) {
+        p++;
+    }
+    *(U8bw *)p = loc;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8005F238", func_8006237C);
 

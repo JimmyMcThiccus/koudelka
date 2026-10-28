@@ -372,7 +372,19 @@ EXTERN_C Obj_80059584 *func_80059584(Obj_80059584 *self, Obj_80059584 *out)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800595F8);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_800596A4);
+EXTERN_C int func_800596A4(void *self)
+{
+    switch (FIELD_AT(self, short, 8)) {
+    case 1: {
+        int i = D_800B4CF0_w;
+        ((Q16o *)((char *)self + (i << 4)))->q = ((Q16o *)((char *)self + ((i ^ 1) << 4)))->q;
+    }
+    case 2:
+        FIELD_AT(self, short, 8) = FIELD_AT(self, short, 8) - 1;
+    }
+    D_800B4CFC->add((P_TAG_B *)((D_800B4CF0_w << 4) + (int)self + 0xC), FIELD_AT(self, unsigned short, 0xA));
+    return 1;
+}
 
 EXTERN_C void func_80059790(void *self)
 {
