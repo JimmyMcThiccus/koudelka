@@ -1,8 +1,13 @@
-// func_800B8210: NOT MATCHING. 8 instructions differ: scheduling only (where `addiu a0,0x38` and the base u/v split land among the stack stores).
-// Round-2 scratch prelude below; many of its types are now in battle.h.
-// Near misses from agent A. Each needs the agentA.cpp prelude.
-// func_800B9480: 9 instructions differ: register allocation only (retail loads n->f10 into a1 and copies to s1; node in s0)
-//@ func_800B8210
+// func_800B8210: 8 differing instructions (scheduling only: addiu a0,0x38 / t1=base / andi-srl of base placed later than retail among the stack stores)
+#include "common.h"
+#include "battle/battle.h"
+struct UVO { unsigned char u, v; short pad; };
+struct T_B8210x { char pad[0x38]; UVO e38[4]; char pad48[0x54]; UVH uv9C; };
+inline void put_uv(UVO *o, UVH base, UVH uv) {
+    o->u = uv.h + base.h;
+    o->v = (uv.h >> 8) + (base.h >> 8);
+}
+//@ func_800B8210 best
 EXTERN_C void func_800B8210(T_B8210x *p, UVB *a, UVB *b) {
     UVH base = p->uv9C;
     UVH uv[4];

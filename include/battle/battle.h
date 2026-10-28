@@ -207,7 +207,8 @@ EXTERN_C void func_800BC0C0(T_VObj *p, int flags);
 EXTERN_C void func_800C0694(void *p, int a);
 EXTERN_C int func_800C1360(T_C1340 *p);
 EXTERN_C int func_800C757C(void *p, int a);
-EXTERN_C void func_800CC110(void *p);
+struct T_CC110;
+EXTERN_C int func_800CC110(T_CC110 *p);
 EXTERN_C T_CE044_10 *func_800CE00C(T_CE044 *p);
 EXTERN_C T_CE044_10 *func_800CE044(T_CE044 *p);
 EXTERN_C T_CE044_10 *func_800CE090(T_CE044 *p);
@@ -292,7 +293,6 @@ EXTERN_C T_VObj *func_800BC094(T_VObj *p, int a, int b);
 EXTERN_C void *func_800C1A6C(void *p);
 EXTERN_C int func_800C5A30(void *p, void *q);
 EXTERN_C void func_800CADDC(void *p, int a);
-EXTERN_C void func_800C54D8(void *p, void *q);
 
 struct T_CE9B8_x { char pad[0x410]; short s410; char pad412[0xE]; short s420; };
 struct T_CE9B8 { int f0; T_CE9B8_x *p4; unsigned short h8; };
@@ -522,7 +522,6 @@ EXTERN_C int func_80068A5C(void *p);
 EXTERN_C void func_800553D8(int a);
 struct T_D1C50 { char pad[0x87C]; char f87C[0x2288]; char f2B04[0x2A70]; char f5574[4]; };
 EXTERN_C void func_8005C088(void *p, int a, int b);
-EXTERN_C void *func_800D43B0(void *p, int a);
 EXTERN_C void func_8005388C(void *p, int a);
 EXTERN_C void func_8002DA94(int a, Holder *h);
 struct T_D41D4 { char pad[8]; int f8; char padC[0x10]; unsigned short h1C; char pad1E[0x12]; Holder *f30; char pad34[4]; char f38[0xC]; int f44; char pad48[0xA]; SVec4 s52; };
@@ -603,7 +602,6 @@ EXTERN_C char D_800A454C[];
 EXTERN_C char *func_8001CA10(int n);
 EXTERN_C void func_8001EFE4(void *a, void *b);
 EXTERN_C void func_8001D150(void *a, void *b);
-EXTERN_C void func_800B98C8(void *p);
 EXTERN_C void func_800198E0(void *l, int a, int b);
 struct T_B8474 { int pad0; int f4; T_Obj0 *f8; };
 struct T_B9844 { VTable *vtbl; int f4; short s8; short sA; void *fC; int f10; };
@@ -957,7 +955,6 @@ struct T_C8EE4 { char pad[0x2C8]; signed char b2C8[1][5]; };
 typedef int (*F_C8D9C)(void *p, int a, int *b, int *c);
 struct T_C65C8 { char pad[0xA0]; char *fA0; T_C5474 fA4; };
 typedef void (*F_C51D0)(void *a, void *b, int c);
-EXTERN_C char *func_800C5474(T_C5474 *p);
 EXTERN_C void func_800D94F4(void *p);
 EXTERN_C void func_800D05C4(T_D0404 *p);
 struct T_CCB98 { SVec2 f0; int pad4; int pad8; int fC; int f10; int f14; };
@@ -1013,7 +1010,6 @@ struct T_CDD0C2 {
 };
 EXTERN_C int func_800C7DD0(void *p, int h, int a, int b);
 EXTERN_C void func_800C8EE4(T_C8EE4 *p, int a);
-EXTERN_C void func_800C7B5C(void *p, int a, void *b, int x, int y);
 EXTERN_C void *func_80085AD4(void *p, short x, short y);
 /* battle.h declares func_800C78EC as void; retail returns the count. */
 EXTERN_C int func_800C78EC_i(T_C9A4C *p, int a) __asm__("func_800C78EC");
@@ -1031,7 +1027,6 @@ inline void c6050_reset(T_C6050 *p, T_C6050_c *c) {
     ((F_C51D0)func_800C51D0)(&p->fA4, c, c->h480);
 }
 struct T_CA7D4 { char pad[0xA0]; T_C9284 *fA0; char padA4[0x850]; int f8F4[24]; unsigned char b954; unsigned char b955; };
-EXTERN_C void func_800CA918(void *p, int a);
 inline bool moved(T_C9284 *q, int x, int y) { return x != q->s4C6 || y != q->s4CA; }
 EXTERN_C void func_800C8BA4(T_C9A4C *p, int x1, int y1, int x, int y);
 /* battle.h declares func_800C7764 with void *p; the cast copy changes register allocation. */
@@ -1203,7 +1198,6 @@ EXTERN_C T_VEC func_800BF1D0(void *self, T_VEC *b);
 struct T_BEBE0 { VTable *vtbl; int f4; int f8; short sC; short sE; short s10; short s12; T_V0 *f14; void *f18; int f1C; int f20;
     signed char b24; signed char b25; signed char b26; char pad27; T_VEC v28; };
 EXTERN_C void func_800BEE50(T_BEBE0 *p, T_BEE50_r *a, T_BEE50_r *b);
-EXTERN_C void *func_800B7FFC(void *n, int a, int b, T_BE7A4_c *c, T_BEE50_r *d, T_BEE50_r *e, int f, int g);
 struct T_BE484_c { signed char a; unsigned char b; T_BE484_c() {} T_BE484_c(int x, int y) { T_BE484_c *t = this; a = x; t->b = y; } };
 struct T_BE484_e { short s; T_BE484_c c1; T_BE484_c c2; T_BE484_e() {} };
 inline void be484_set(T_BE484_e *e, T_BE484_c &t, T_BE484_c *tp) { e->s = 0; t.a = 0; tp->b = 0; e->c1 = t; t.a = 0x7F; tp->b = 0xFF; e->c2 = t; }
@@ -1223,7 +1217,6 @@ EXTERN_C void *func_800D7048(void *n, int team, void *a, void *b, void *c, void 
 EXTERN_C void func_80043460(void *p, SVec2C v, int a, int b);
 EXTERN_C void func_80043540(void *p, SVec2C v, int a);
 struct T_BE7A4;
-EXTERN_C void func_800BE7A4(T_BE7A4 *p, int id, void *x, unsigned short d, int e, unsigned short f);
 EXTERN_C VTable D_800B73A4[];
 struct T_BEDE8 { VTable *vtbl; int pad[4]; T_Obj0 *f14; };
 inline int grid_at(T_CFD98 *p, SVec2 v) { return p->f14[v.y][v.x]; }
@@ -1237,8 +1230,6 @@ struct T_C3DAC { char pad[0x14]; T_C3E34_r r; };
 struct T_EBD4 { char pad[0x44]; T_BE0F8 e[9]; };
 EXTERN_C T_C3E34 *func_800C9E58_b(void *p, int a) __asm__("func_800C9E58");
 EXTERN_C T_C3DAC *func_80061188(void *p, int a);
-EXTERN_C void func_800C3DAC(T_C3E34 *p, int a, int eq, int *o1, int *o2);
-EXTERN_C void func_800C3D2C(T_C3E34 *p, int i, int k, int *o1, int *o2);
 EXTERN_C void func_800C3E34(T_C3E34 *p, int i, int j, int *o1, int *o2);
 EXTERN_C void func_800C3F14(T_C3E34 *p, int *o1, int *o2);
 struct T_C4784_e { char pad[8]; short x, y; char padC[4]; };
@@ -1289,5 +1280,163 @@ EXTERN_C int func_800CEA70(void *self, S_800CEA50 *a, S_800CEA50 *b);
 EXTERN_C T_CE044_10 *func_800CE064(T_CE044 *p);
 EXTERN_C T_CE044_10 *func_800CE0D4(T_CE044 *p);
 EXTERN_C int D_800D5DA4[];
+
+struct T_CC110 { char pad[0xA0]; T_C9284 *fA0; char padA4[0x334]; char f3D8[0x3E8]; T_CDD0C_e e7C0; };
+EXTERN_C void ce154_1(void *p) __asm__("func_800CE154");
+
+struct T_B98C8_s { int f0; int f4; int f8; int fC; };
+struct T_B98C8 { VTable *vtbl; char pad4[0x88]; VTable *vtbl8C; char pad90[0x68]; VTable *vtblF8; char padFC[4]; char b100; char b101; char pad102[0x172]; int f274; T_BE390 *f278; char pad27C[0x15C]; short s3D8; short s3DA; char pad3DC[0xC]; T_B98C8_s f3E8; T_B98C8_s f3F8; T_B98C8_s f408; };
+EXTERN_C void *func_8001E40C(void *p, int a, int b, int c, int d);
+EXTERN_C void func_800514C8(void *p);
+EXTERN_C T_VObj8 *func_800BA564(T_VObj8 *p, char a, short b);
+EXTERN_C T_VObj8 *func_800BDE2C(T_VObj8 *p);
+
+EXTERN_C S_800D00B8 *f752B8_1(void *p) __asm__("func_800752B8");
+EXTERN_C int func_800C54D8(void *vp, void *vk);
+
+EXTERN_C T_B98C8 *func_800B98C8(T_B98C8 *p, int x);
+
+struct T_BC294_l { void *f0; int f4; void *f8; };
+EXTERN_C T_BC294 *func_800BC294(T_BC294 *p, int x);
+
+struct T_D43B0n_s { unsigned addr:24; unsigned len:8; unsigned char r, g, b, code; short x, y; unsigned char u, v; unsigned short clut; short w, h; };
+struct T_D43B0n { VTable *vtbl; char pad4[0xC]; int f10; char dm[2][0xC]; T_D43B0n_s s[2]; SVec4 s54; short h5C, h5E; };
+EXTERN_C void *f4518_2(void *p, int a) __asm__("func_800D4518");
+EXTERN_C void *func_800D43B0(void *vp, int a1);
+
+struct T_C0EB8_e { int a, b; };
+struct T_C0EB8_t { char pad[0x814]; int f814; T_C0EB8_e *f818; };
+struct T_C0EB8_g { char pad[0x328]; char *f328; T_C0EB8_t *f32C; };
+struct T_C0EB8_4D38 { char pad[0xF8]; int f[1]; };
+struct T_C0EB8 {
+    char pad0[0x144]; short s144; char pad146[0x15A]; char f2A0[0x170]; char pad410[0x9D]; char b4AD; char b4AE; char pad4AF[0xD];
+    signed char b4BC; signed char b4BD; char pad4BE[8]; short s4C6; short pad4C8; short s4CA; char pad4CC[0x19]; signed char b4E5; signed char b4E6; char pad4E7; int f4E8; int f4EC; char pad4F0[0x1C]; short s50C;
+};
+struct T_C0EB8_v { int x, y, z, w; T_C0EB8_v() { x = 0; y = 0; z = 0; w = 0; } };
+EXTERN_C T_C0EB8_4D38 *D_800B4D38[];
+EXTERN_C T_C0EB8_g *D_800AF470g[] __asm__("D_800AF470");
+EXTERN_C void f7FF58(void *a, int b, int c, int d) __asm__("func_8007FF58");
+EXTERN_C void func_80086088(void *p, int a);
+EXTERN_C void func_800C1254(T_C1340 *p);
+EXTERN_C int func_800C0EB8(T_C0EB8 *p);
+
+EXTERN_C void func_800BE7A4(T_BE7A4 *p, int id, void *x, unsigned short d, int e, unsigned short f);
+
+EXTERN_C void func_800C3DAC(void *p, int a, int j, int *o1, int *o2);
+
+struct T_2C { char d[0x2C]; };
+EXTERN_C char D_800D5DAC[];
+struct T_CED08 { char pad[0x7DC]; short s7DC; char pad7DE[0x156]; int f934; };
+struct T_4DD0d { char pad[0x1FB]; signed char b1FB; };
+EXTERN_C int func_800CED08(T_CED08 *p);
+
+struct T_CFEF4_e { char pad[0x18]; ~T_CFEF4_e() {} };
+struct T_CFEF4b { char pad[0x10]; T_CFEF4_e e[41]; };
+EXTERN_C void func_800CFEF4(T_CFEF4b *p, int flags);
+
+EXTERN_C void func_80068B14(void *p);
+EXTERN_C int func_8008A5C8(void *a, void *b, void *c);
+struct T_D2254_x { char pad[0x1B]; unsigned char b1B; char pad1C[0x6F]; unsigned char b8B; };
+struct T_D2254_a { char d[0x6C]; };
+struct T_D2254_b { char d[0x28]; };
+struct T_D2254 { char pad[0x68]; signed char b68[0x34]; T_D2254_a a9C[1]; };
+struct T_D2254b { char pad[0x1548]; T_D2254_b b1548[1]; };
+struct T_D2254_y { char pad[0x1B]; char b1B; char pad1C[0x6F]; unsigned char b8B; };
+struct T_D2254c { char pad[0x1CF0]; unsigned short h1CF0; };
+struct T_D2254_B { int pad[2]; void *items[3]; };
+struct T_D2254_D : T_D0390_A, T_D2254_B {};
+struct T_D2254_G { char pad[0x328]; T_D2254_D *f328; };
+EXTERN_C void func_800D2254(T_D2254 *p);
+
+EXTERN_C char D_800B7964[];
+struct T_D23C0_x { char pad[0x1B]; unsigned char b1B; };
+struct T_VE3 { short delta; short index; void (*pfn)(void *, void *, void *, int); };
+struct T_D23C0_b4 { char pad[0x9C]; T_VE3 *vt; };
+struct T_D23C0_i { char pad[0x400]; T_D23C0_b4 b400; };
+struct T_D23C0_B { int pad[2]; T_D23C0_i *items[3]; };
+struct T_D23C0_D : T_D0390_A, T_D23C0_B {};
+struct T_D23C0_G { char pad[0x328]; T_D23C0_D *f328; };
+struct T_D23C0 { char pad[0x20]; int f20; };
+struct T_4DD0e { char pad[0x1F4]; short s1F4; };
+inline int kindOf(T_D23C0_x *x) { return x->b1B; }
+struct VB23 { int pad[0x27]; virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(void *, void *, int); };
+struct T_D23C0_j { char pad[0x400]; VB23 b400; };
+EXTERN_C int func_800D23C0(T_D23C0 *p);
+
+struct S4m { SVec2C a, b; S4m(short x, short y, short z, short w) : a(x, y), b(z, w) {} };
+inline void fm(void *p, int a, const S4m &v, int b) { func_80054F30(p, a, (SVec4 *)&v, b); }
+EXTERN_C T_D2778 *func_800D2778(T_D2778 *p);
+
+EXTERN_C void func_800D2D60(T_D2D60 *p);
+
+struct S4 { short x, y, z, w; };
+EXTERN_C T_D4BFC *func_800D4BFC(T_D4BFC *self, int in_chrg, int a);
+
+struct R3D2C { char pad[0x44]; T_BE0F8 e[9]; char pad2[0x8C - 0x44 - 72]; };
+EXTERN_C R3D2C T_tab[] __asm__("D_800AEBD4");
+EXTERN_C void func_800C3D2C(T_C3E34 *p, int i, int k, int *o1, int *o2);
+
+EXTERN_C char *func_800C5474(T_C5474 *p);
+
+struct T_CA918_cc { unsigned char r, g, b, a; T_CA918_cc() {} };
+EXTERN_C void func_8003FB88x(void *p, int a, T_CA918_cc c) __asm__("func_8003FB88");
+EXTERN_C void func_800CA918(void *pp, int a);
+
+struct T_CEFE8_g { char pad[0x328]; char *f328; void *f32C; };
+EXTERN_C void func_800CF080_1(void *p) __asm__("func_800CF080");
+EXTERN_C void func_8007C070(void *p, int a);
+struct T_CEFE8 { char pad[0x808]; char *f808[1]; };
+EXTERN_C void func_800CEFE8(T_CEFE8 *p, char *q0, int x, int i0);
+
+struct UVHc { unsigned short h; UVHc(const UVHc &o) { h = o.h; } UVHc(unsigned short v) { h = v; } };
+EXTERN_C void func_800B8210_c(T_B8210 *p, UVHc a, UVHc b) __asm__("func_800B8210");
+EXTERN_C T_B7FFC *func_800B7FFC(T_B7FFC *p, short a, short b, UVB *c, unsigned short *d, unsigned short *e, unsigned short f, unsigned short g);
+
+struct T_CCDCC_in { SVec2 xy; int pad4; unsigned short h8; };
+EXTERN_C int f_CCD70(T_C9A4C *p, SVec2C v) __asm__("func_800CCD70");
+EXTERN_C void f_CCC4C(T_C9A4C *p, SVec2C v, int a) __asm__("func_800CCC4C");
+EXTERN_C void f_800C(T_C9A4C *p, SVec2I v, int a, int b, int c) __asm__("func_800C800C");
+inline SVec2I l_cur(T_L2EC *l) { return *(SVec2I *)&l->f0[l->f90]; }
+inline SVec2C in_c(T_CCDCC_in *i) { return *(SVec2C *)&i->xy; }
+inline int l_cnt(T_L2EC *l) { return l->f8C; }
+inline void l_rst(T_L2EC *l) { l->f90 = 0; }
+EXTERN_C int func_800CCDCC(T_C9A4C *p, SVec2I *out, T_CCDCC_in *in, int a3, int s5, int flag);
+
+struct T_41AC_W { virtual ~T_41AC_W(); virtual void m2(); virtual void m3(); virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7(); virtual void m8(); virtual void m9(); virtual void m10(); virtual void m11(int a, int b); };
+struct T_41AC_Q { T_41AC_W *f0; };
+struct T_41AC_Z { T_41AC_Q *f0; T_41AC_Q *f4; };
+struct T_41AC_Y { T_41AC_Z *f0; };
+struct T_41AC_X0 { int a, b; };
+struct T_41AC_X : T_41AC_X0, T_41AC_Y {};
+struct T_41AC_A { char pad[0x30]; T_41AC_X *f30; int pad34; };
+struct T_41AC_B { int d0, d1; virtual ~T_41AC_B(); virtual void m2(); virtual void m3(); };
+struct T_41AC : T_41AC_A, T_41AC_B { char pad44[0x10]; unsigned short h54; short s56; virtual ~T_41AC(); };
+EXTERN_C int f_53830(T_41AC_B *p) __asm__("func_80053830");
+EXTERN_C void *func_800621F8(void *p);
+EXTERN_C void func_80062214(void *p);
+EXTERN_C int func_800C41AC(T_41AC *p);
+
+struct B2A0 { int pad; };
+struct W4 { char b[4]; };
+struct G2ECC { char pad[0x3B0]; W4 t[0x20]; };
+EXTERN_C G2ECC *D_AF470_2ECC[] __asm__("D_800AF470");
+struct S2ECC {
+    char pad0[0x2A0]; B2A0 b2A0; char pad2A4[0x16C];
+    short s410; char pad412[0x9B]; char b4AD; char b4AE; char pad4AF[0xD]; signed char b4BC; char pad4BD[0x25]; short s4E2; char pad4E4[0x12];
+    short a4F6[5]; short s500; short s502; short s504; signed char b506; char pad507; unsigned short h508; signed char b50A; char pad50B; short s50C; char pad50E[8]; signed char b516;
+};
+EXTERN_C void func_80082C68(B2A0 *p, int a, void *g, int c, int d);
+EXTERN_C void func_80082D44(B2A0 *p, int a, B2A0 *b, int c, int d);
+EXTERN_C void func_80085C00(void *p);
+inline B2A0 *base_of(S2ECC *s) { return s ? &s->b2A0 : 0; }
+EXTERN_C int func_800C2ECC(S2ECC *self, S2ECC *other);
+
+struct P7B5C { char pad[0x2C8]; signed char b2C8[7][5]; char pad2EB[0x549]; int f834; int f838; int f83C; int f840; int f844; };
+EXTERN_C int D_800D5D84[];
+EXTERN_C int D_800D5D94[];
+EXTERN_C int func_800C9EF4(void *p, int a, int b, int c, int d, int e, int f);
+EXTERN_C bool func_800C7B5C_b(P7B5C *p, int a, void *l, int x, int y) __asm__("func_800C7B5C");
+inline bool valid7b5c(int x, int y) { if (x < 0 || y < 0 || x >= 5 || y >= 7) return false; return true; }
+EXTERN_C bool func_800C7B5C(P7B5C *p, int a, void *l, int x, int y);
 
 #endif /* BATTLE_BATTLE_H */
