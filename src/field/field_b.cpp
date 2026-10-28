@@ -798,7 +798,58 @@ EXTERN_C int func_800E4920(Unk_800E4920* p, int a) {
     return r;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800E4B10);
+#define p ((Unk_800E4620*)vp)
+EXTERN_C int func_800E4B10(void* vp) {
+        int i;
+    int ret = -1;
+    int cont = 1;
+    while (cont) {
+        cont = 0;
+        ret = func_800E4D8C(p);
+        if (ret == 0) {
+            D_800EA7B0[0] = (int)p;
+            i = 30;
+            for (; !_card_load(p->unk38 + p->unk3C); i--) {
+                Unk_800E5404_e* e = (Unk_800E5404_e*)func_8001ED2C(D_800B4C18[0], 2, 1);
+                if (e) {
+                    if (e->unkA == 4 && e->unkC) {
+                        e->unkC->vf00(3);
+                    }
+                    e->vf01();
+                }
+                if (i < 0) return -1;
+            }
+            int v = func_800E5404((Unk_800E5404*)p);
+            switch (v) { case 4: ret = 0; break; case 0x2000: ret = 4; break; default: cont = 1; }
+            D_800EA7B0[0] = 0;
+        } else if (ret == 3) {
+            int ca = p->unk38, cb = p->unk3C;
+            D_800EA7B0[0] = (int)p;
+            _card_clear(ca + cb);
+            if (func_800E5404((Unk_800E5404*)p) != 4) {
+                cont = 1;
+            } else {
+                i = 30;
+                D_800EA7B0[0] = (int)p;
+                for (; !_card_load(p->unk38 + p->unk3C); i--) {
+                    Unk_800E5404_e* e = (Unk_800E5404_e*)func_8001ED2C(D_800B4C18[0], 2, 1);
+                    if (e) {
+                        if (e->unkA == 4 && e->unkC) {
+                            e->unkC->vf00(3);
+                        }
+                        e->vf01();
+                    }
+                    if (i < 0) return -1;
+                }
+                int v = func_800E5404((Unk_800E5404*)p);
+                switch (v) { case 4: ret = 3; break; case 0x2000: ret = 4; break; default: cont = 1; }
+            }
+            D_800EA7B0[0] = 0;
+        }
+    }
+    return ret;
+}
+#undef p
 
 EXTERN_C int func_800E4D5C(Unk_800E556C* p, void* s) {
     struct DIRENTRY d;
