@@ -1287,4 +1287,10 @@ EXTERN_C s32 _card_load(s32);
 EXTERN_C s32 func_800260A4(s32);
 EXTERN_C s32 func_80026014(s32);
 
+/* func_800B9DB4 */
+EXTERN_C void func_80027FEC(void*, void*);
+struct Unk800B9DB4M { s32 v[6]; };
+struct Unk800B9DB4 { char pad[0xC]; Unk800B9DB4M xC[2]; RECT x3C; RECT x44; };
+inline Unk800B9DB4* base(Unk800B9DB4* self, Unk800B9DB4* out) { func_80027FEC(self, out); Unk800B9DB4M* d = out->xC; s32 i = 1; Unk800B9DB4M* s = self->xC; do { *d = *s; d++; s++; i--; } while (i != -1); return out; }
+
 #endif /* MOVIE_H */

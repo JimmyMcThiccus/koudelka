@@ -159,7 +159,10 @@ EXTERN_C void func_800B9CF8(void* p) { func_800386B8(p); }
 
 EXTERN_C Unk800B9D18* func_800B9D18(Unk800B9D18* p, RECT* r1, RECT* r2, u16 n) { *(void* volatile*)&p->x0 = D_80010178; *(void* volatile*)&p->x0 = D_800111BC; p->x4 = 0; p->x8 = 0; p->xA = n; p->x0 = D_800B71E4; p->x3C.x = 0; p->x3C.y = 0; p->x3C.w = 0; p->x3C.h = 0; p->x44.x = 0; p->x44.y = 0; p->x44.w = 0; p->x44.h = 0; p->x44 = *r2; func_800BA40C((Unk800BA40C*)p, r1); return p; }
 
-INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800B9DB4);
+EXTERN_C Unk800B9DB4* func_800B9DB4(Unk800B9DB4* p, Unk800B9DB4* q) {
+  // r is set twice (dead 0 first) so cse makes it the canonical copy of q after the loop: it lands in $v0
+  Unk800B9DB4* r = 0;
+  base(p, q); r = q; r->x3C = p->x3C; r->x44 = p->x44; return r; }
 
 EXTERN_C Unk800B9E78* func_800B9E78(Unk800B9E78* s) {
   Unk800B9E78* p = (Unk800B9E78*)operator new(0x4C);
