@@ -3081,4 +3081,13 @@ struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
 
 struct V4_B { int x, y, z, w; };
 
+EXTERN_C int func_80060118_i(void *self, int b) asm("func_80060118");
+EXTERN_C int func_800600A4_i(void *self, int b) asm("func_800600A4");
+
+struct Rc8 { short x, y, w, h; };
+struct Pt4w { short x, y; };
+struct U8bw { char c[8]; };
+EXTERN_C void *func_8005DD4C(void *p, Rc8 r, int c, int d);
+EXTERN_C void *func_80064290(void *p, Pt4w r, int c, int d);
+
 #endif /* GAME_B_DECLS_B_H */

@@ -162,7 +162,24 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063E18);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063F3C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80062610", func_80063FFC);
+EXTERN_C void func_80063FFC(void *self, void *b)
+{
+    if (FIELD_AT(self, int, 0x8) != 0) {
+        List *l;
+        void *p;
+        func_8005C088(self, (int)b, 1);
+        l = FIELD_AT(self, char *, 0x30) ? *FIELD_AT(self, List **, 0x30) : 0;
+        p = operator new(0x48);
+        {
+            int d = FIELD_AT(self, unsigned short, 0x1C);
+            Pt4w u;
+            U8bw t = *(U8bw *)((char *)self + 0xC);
+            u = *(Pt4w *)&t;
+            func_80019A6C(l, (int)func_80064290(p, u, FIELD_AT(self, unsigned short, 0x38), d), l->count);
+        }
+        func_8002DA94(b, FIELD_AT(self, void *, 0x30));
+    }
+}
 
 EXTERN_C void func_800640D0(void *self)
 {
