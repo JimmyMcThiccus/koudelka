@@ -205,7 +205,35 @@ EXTERN_C void func_80055330(int a)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_800553D8);
+EXTERN_C void func_800553D8(int a)
+{
+    char *o = (char *)D_800B4D84;
+    if (FIELD_AT(o, int, 0x44FC) != 0) {
+        if (a != 0) {
+            View_80072970 *g = (View_80072970 *)&D_800A4534;
+            func_800232A0((char *)g->p + 0x154, o);
+            Tgt_80072970 *p = g->p;
+            int t = FIELD_AT((char *)D_800B4D84, int, 0x6798);
+            p->c = t;
+            FIELD_AT((char *)D_800B4D84, int, 0x44FC) = 0;
+        } else {
+            View_80072970 *g = (View_80072970 *)&D_800A4534;
+            int t;
+            FIELD_AT(o, int, 0x4500) = 1;
+            func_800230E8((char *)g->p + 0x154, o);
+            {
+                Sub_80055330 *v = (Sub_80055330 *)((char *)g->p + 0x154);
+                t = v->v;
+                v->v = 0;
+            }
+            if (FIELD_AT((char *)D_800B4D84, int, 0x6798) < t) {
+                FIELD_AT((char *)D_800B4D84, int, 0x6798) = t;
+            }
+        }
+    } else if (a == 0) {
+        func_800232A0((char *)D_800A4578.p + 0x154, 0);
+    }
+}
 
 EXTERN_C void func_8005549C(int a, void *b, void *c, int d)
 {
@@ -235,7 +263,20 @@ EXTERN_C void func_8005549C(int a, void *b, void *c, int d)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_8005556C);
+EXTERN_C void func_8005556C(void *a, int b)
+{
+    void *s = D_800B4C18_w;
+    char *v = (char *)func_8001ED2C(s, a, b);
+    if (v) {
+        if (FIELD_AT(v, unsigned short, 0xA) == 4 && FIELD_AT(v, void *, 0xC) != 0) {
+            ((VObj0 *)FIELD_AT(v, void *, 0xC))->v00(3);
+        }
+        ((VObj0 *)v)->v01();
+    }
+    if (s == D_800B4D84) {
+        func_80055D78(s);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055624);
 

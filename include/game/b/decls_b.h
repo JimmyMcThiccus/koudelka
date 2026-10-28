@@ -548,7 +548,7 @@ struct Quad_80066388 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80066C7C(void *self);
+EXTERN_C int func_80066C7C(void *self);
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_800154B4[];
@@ -3056,5 +3056,7 @@ EXTERN_C int D_800B4CF0_w asm("D_800B4CF0");
 struct Q16 { int a, b, c, d; };
 struct Q16o { char pad[0xC]; Q16 q; };
 
+
+EXTERN_C void *D_800B4C18_w asm("D_800B4C18");
 
 #endif /* GAME_B_DECLS_B_H */

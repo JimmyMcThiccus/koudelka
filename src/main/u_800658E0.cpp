@@ -295,7 +295,30 @@ EXTERN_C int func_80066AF0(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066BC0);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066C7C);
+EXTERN_C int func_80066C7C(void *self)
+{
+    switch (FIELD_AT(self, int, 0x4C)) {
+    case 2:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x670) = 1;
+        break;
+    case 4:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x56C) = 1;
+        break;
+    case 7: {
+        char *g = FIELD_AT(self, char *, 0x48);
+        char *o = g ? g - 0x124 : 0;
+        FIELD_AT(o, int, 0x230) = 1;
+        break;
+    }
+    case 6:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x678) = 1;
+        break;
+    case 3:
+        FIELD_AT(FIELD_AT(self, char *, 0x48), int, 0x628) = 1;
+        break;
+    }
+    return 1;
+}
 
 EXTERN_C void func_80066D14(void *self)
 {
