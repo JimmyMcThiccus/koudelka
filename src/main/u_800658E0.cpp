@@ -6,6 +6,9 @@
 #include "game/b/vcall.h"
 #include "game/b/decls_b.h"
 
+/* $gp here: this file defines it (lui with the array form elsewhere) */
+EXTERN_C int D_800B4ED8;
+
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_800658E0);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80065A00);
@@ -2243,14 +2246,14 @@ EXTERN_C int func_80070DA0(int a, int b, int c, int d, int e, int f, int g)
     return 0;
 }
 
-EXTERN_C int func_80070DF8(void)
+EXTERN_C int func_80070DF8(int a, int b)
 {
     char *p = FIELD_AT(D_800AF470.p, char *, 0x328);
     char *q = 0;
     if (p != 0) {
         q = p + 0xA8;
     }
-    func_8007ADCC(q);
+    func_8007ADCC(q, b);
     return 0;
 }
 

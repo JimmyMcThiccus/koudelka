@@ -33,7 +33,7 @@ EXTERN_C void func_80082214(void)
 
 EXTERN_C void func_80082238(int b)
 {
-    func_80081970(&D_800AFA74, b);
+    func_80081970(&D_800AFA74, (void *)b);
 }
 
 EXTERN_C void func_80082260(int a, int b, unsigned short c, int d, int e)
@@ -1456,10 +1456,37 @@ EXTERN_C int func_80086F94(char *self, void *b, int c)
     return 1;
 }
 
-// Matches only with prototype: int func_800870E4(char *self, void *b, W20_80089658 *c, int d)
 // (decls_b.h has void func_800870E4(void *self, int b); verified via scratch_c/ag_u_80082174/_proto_870E4.cpp)
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_800870E4);
+EXTERN_C int func_800870E4(char *self, void *b, W20_80089658 *c, int d)
+{
+    func_80086DB4((Obj_80086DB4 *)self);
+    FIELD_AT(self, char, 0x76) = 0;
+    FIELD_AT(self, char, 0x75) = d;
+    FIELD_AT(self, unsigned char, 0x6D) &= 0xE2;
+    FIELD_AT(self, W20_80089658, 0x84) = *c;
+    if (c == 0) {
+        FIELD_AT(self, char *, 0x98) = 0;
+    } else {
+        FIELD_AT(self, char *, 0x98) = (char *)c + 0x14;
+    }
+    func_8008687C(self, FIELD_AT(self, unsigned char, 0x97) == 0 || FIELD_AT(self, unsigned char, 0x97) == 3);
+    FIELD_AT(self, short, 0x80) = muldiv2_80086EF0(FIELD_AT(FIELD_AT(self, unsigned char *, 0x98), unsigned char, 0), 0x100, FIELD_AT(self, unsigned char, 0x3E));
+    func_8008691C(self);
+    void *n = __builtin_new(0x14);
+    void *r = func_8001FC38(n, (FIELD_AT(self, unsigned short, 0x90) & 0x80) ? 0x1002 : (FIELD_AT(self, unsigned short, 0x90) & 0x40) ? 0x1003 : 0x1004, func_8008672C(self), 0);
+    char *p = (char *)func_8001CA10(0x14);
+    FIELD_AT(p, void *, 0) = D_80010178;
+    FIELD_AT(p, int, 4) = 0;
+    FIELD_AT(p, void *, 0) = D_80010300;
+    FIELD_AT(p, short, 8) = 2;
+    FIELD_AT(p, short, 0xA) = 4;
+    FIELD_AT(p, int, 0x10) = 0;
+    FIELD_AT(p, void *, 0xC) = r;
+    FIELD_AT(p, void *, 0) = D_800102D0;
+    func_8001EFE4(b, p);
+    return 1;
+}
 
 EXTERN_C int func_80087284(void *self, void *b)
 {
@@ -2340,14 +2367,14 @@ EXTERN_C void func_8008A858(char *self, int b, int c)
     func_80086F94(self ? self + 0x400 : 0, (void *)b, c);
 }
 
-EXTERN_C void func_8008A93C(void *self, int b, int c)
+EXTERN_C void func_8008A93C(void *self, int b, int c, int d)
 {
     char *q = 0;
     FIELD_AT(self, int, 0x544) = c;
     if (self != 0) {
         q = (char *)self + 0x400;
     }
-    func_800870E4(q, b);
+    func_800870E4(q, (void *)b, (W20_80089658 *)c, d);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80082174", func_8008A96C);
