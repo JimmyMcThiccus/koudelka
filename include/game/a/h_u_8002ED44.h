@@ -178,4 +178,9 @@ struct S_8002EEC4 {
 };
 struct S_8002F4D8 : S_8002EEC4 { int unk14; S_8002F4D8(void *s); };
 
+inline void edge_sub(S_Tri_V *e, S_Tri_V *v, int j, S_Tri_V *b) { S_Tri_V *a = &v[j]; e->x = a->x - b->x; e->y = a->y - b->y; e->z = a->z - b->z; }
+
+struct S_F614_O { VtE *vt; char pad4[8]; S_Blk8 blk; };
+struct S_F614 { VtE *vt; S_VObj *unk4; char pad8[4]; S_Blk8 blk; };
+
 #endif /* GAME_A_H_U_8002ED44_H */

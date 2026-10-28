@@ -99,4 +99,59 @@ inline void del_vb(void *c)
     }
 }
 
+struct VTab50 { VEnt e[10]; };
+EXTERN_C const VTab50 D_8001162C;
+EXTERN_C void *D_8001167C[];
+struct S_VB50 { VEnt *vt; };
+struct S_8002AFEC { S_VB50 *vb; char pad4[0x28]; void **vt2C; List *unk30; };
+struct S_8002C6D4 : S_8002AFEC { };
+EXTERN_C void func_8002AFEC(S_8002AFEC *p, int a);
+
+EXTERN_C const VTab50 D_800114CC;
+EXTERN_C void *D_8001151C[];
+EXTERN_C void func_80029D74(S_W *p, int a);
+EXTERN_C void func_8002B36C(S_W *p);
+
+EXTERN_C const VTab50 D_8001147C;
+EXTERN_C void *D_80011394[];
+EXTERN_C void func_8002B27C(S_W *p, S_W *c);
+inline void vdel_80029D74(VObj *o)
+{
+    if (o) {
+        VEnt *e = &o->vt[1];
+        ((void (*)(void *, int))e->f)((char *)o + e->d, 3);
+    }
+}
+
+EXTERN_C char D_800B4C98[];
+EXTERN_C char D_800B4C80[];
+struct S_VB30 {
+    void **vt;
+    int unk4;
+    S_VB30() { vt = D_80010178; unk4 = 0; vt = D_800104A8; }
+};
+inline void *operator new(unsigned int, void *p) { return p; }
+
+struct S_8002C188m { void *vb; int idx; void *vbp; char vbase[0x14]; };
+struct S_8002C188 : S_8002AFEC { };
+
+struct S_Rc8 {
+    short x, y, w, h;
+    S_Rc8() {}
+    S_Rc8(short a, short b, short c, short d) { x = a; y = b; w = c; h = d; }
+    void unite(const S_Rc8 &r);
+    int operator==(const S_Rc8 &o) { return x == o.x && y == o.y && w == o.w && h == o.h; }
+};
+inline int max_8002BDFC(int a, int b) { return b > a ? b : a; }
+inline void S_Rc8::unite(const S_Rc8 &r)
+{
+    S_XY tl(x < r.x ? x : r.x, y < r.y ? y : r.y);
+    w = max_8002BDFC(r.x + r.w, x + w) - tl.x;
+    h = max_8002BDFC(r.y + r.h, y + h) - tl.y;
+    *(S_XY *)this = tl;
+}
+
+struct S_Box2 { S_XY a; S_XY b; S_Box2(short x, short y, const S_XY &s) : a(x, y), b(s) {} };
+inline S_Box2 box_at_origin(S_XY s) { return S_Box2(0, 0, s); }
+
 #endif /* GAME_A_H_U_80029BBC_H */

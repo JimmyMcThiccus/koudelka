@@ -131,7 +131,24 @@ EXTERN_C void func_8001C89C(S_VDel *p)
     delete p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001C8D8);
+EXTERN_C void func_8001C8D8(S_8001C8D8 *c, S_8001C8D8 *n)
+{
+    func_800186E8(&D_800A451C);
+    while (1) {
+        S_8001C8D8 *a = c->next;
+        S_8001C8D8 *nx = a;
+        int r = 0;
+        if (a)
+            r = !(a->key < n->key);
+        if (!r)
+            break;
+        c = nx;
+    }
+    if (c->next && n)
+        func_8001A864((S_Lnk *)n, (S_Lnk *)c->next);
+    c->next = n;
+    func_80018788(&D_800A451C);
+}
 
 EXTERN_C S_Node *func_8001C974(S_Node *p)
 {
@@ -635,7 +652,22 @@ EXTERN_C void func_8001D76C(void *p, int flags)
     func_8001D024(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001D7B0);
+C_8001D7B0::C_8001D7B0() : B_8001E40C(0, 1, 0x400, 0)
+{
+    vtF8 = D_80010328;
+    vt100 = D_80010348;
+    vt8C = D_80010388;
+    vtF8 = D_80010378;
+    vt100 = D_800103A0;
+    vt = D_800103B8;
+    unkFC = 0;
+    unk104 = 0;
+    unk108 = 0;
+    char *q = (char *)&vt100;
+    char *b = this ? q : 0;
+    int *o = D_800A4544;
+    func_8001D150(o, new S_8001D684b((int)b, 0x80, 0));
+}
 
 EXTERN_C void func_8001D8A4(S_8001D8A4 *p)
 {
@@ -687,7 +719,7 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8001C2D0", func_8001DBB8);
 
 EXTERN_C void func_8001DDD0()
 {
-    func_8001D7B0(&D_800AC57C);
+    new (&D_800AC57C) C_8001D7B0;
 }
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_8001C2D0", D_80010378);

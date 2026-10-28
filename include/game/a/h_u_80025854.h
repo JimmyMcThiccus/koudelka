@@ -65,4 +65,45 @@ struct S_UV2 { unsigned char u, v; S_UV2(int u_, int v_) { u = u_; v = v_; } };
 struct S_Pt16 { short x, y; };
 EXTERN_C S_Pt16 D_800B4C50_pt asm("D_800B4C50");
 
+inline void setPos_80025BE0(S_Img *p, S_XYc v) { p->unk10 = v; }
+
+struct S_R16 { short x, y, w, h; };
+struct S_TNode {
+    void **vt;
+    S_TNode *parent;
+    S_R16 r;
+    S_TNode *c0;
+    S_R16 r2;
+    S_TNode *c1;
+};
+inline int max_int(int a, int b) { return a > b ? a : b; }
+inline void rect_unite(S_R16 *a, S_R16 *b)
+{
+    S_XYc tl(a->x < b->x ? a->x : b->x, a->y < b->y ? a->y : b->y);
+    a->w = max_int(a->x + a->w, b->x + b->w) - tl.x;
+    a->h = max_int(a->y + a->h, b->y + b->h) - tl.y;
+    *(S_XYc *)a = tl;
+}
+inline void tnode_collapse(S_TNode *p)
+{
+    if (p->parent)
+        func_8002758C(p->parent, p);
+    else
+        rect_unite(&p->r, &p->r2);
+}
+
+struct S_Rc16 {
+    short x, y, w, h;
+};
+inline int in_rect(S_Rc16 *r, S_XYc pt)
+{
+    return r->x <= pt.x && pt.x < r->x + r->w && r->y <= pt.y && pt.y < r->y + r->h;
+}
+struct S_80027754 { char pad0[8]; S_Rc16 r8; VObj *o10; S_Rc16 r14; VObj *o1C; };
+inline int send_80027754(VObj *o, const S_XYc &pt)
+{
+    VEnt *e = &o->vt[5];
+    return ((int (*)(void *, S_XYc))e->f)((char *)o + e->d, pt);
+}
+
 #endif /* GAME_A_H_U_80025854_H */
