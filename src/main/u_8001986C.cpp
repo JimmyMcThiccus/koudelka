@@ -154,7 +154,37 @@ EXTERN_C void func_80019D40(S_80019D40 *p)
         p->unk4 = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_80019D5C);
+EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n)
+{
+    int v;
+    int *tmp;
+    if (from < 0)
+        from += a->count;
+    if (from < a->count && from >= 0) {
+        if (to < 0)
+            to += a->count;
+        if (to < a->count && to >= 0 && from != to && !a->unk10 && n > 0) {
+            if (n == 1) {
+                v = a->data[from];
+                if (from < to)
+                    func_8001A8F0(&a->data[from], (int)(&a->data[from] + 1), to - from);
+                else
+                    func_8001A970(&a->data[to] + 1, &a->data[to], from - to);
+                a->data[to] = v;
+            } else {
+                tmp = (int *)func_800A0D2C(n * 4);
+                func_8001A8F0(tmp, (int)&a->data[from], n);
+                if (from < to)
+                    func_8001A8F0(&a->data[from], (int)(&a->data[from] + n), to - from);
+                else
+                    func_8001A970(&a->data[to] + 1, &a->data[to], from - to);
+                func_8001A8F0(&a->data[to], (int)tmp, n);
+                if (tmp)
+                    func_800A0D0C(tmp);
+            }
+        }
+    }
+}
 
 EXTERN_C int func_80019F0C(S_Array *a, int v, int x)
 {
