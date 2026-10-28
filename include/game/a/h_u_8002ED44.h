@@ -188,4 +188,6 @@ struct S_Sv4 { short v[4]; };
 #define VX(p, k) (((S_Sv4 *)(p))[k].v[i])
 #define NEAR64(a, b) ((unsigned)((a) - (b)) < 64 || (unsigned)((b) - (a)) < 64)
 
+inline int edge_side(S_Tri_V *v, int j, S_Tri_V *b, int x, int z) { S_Tri_V *a = &v[j]; int p = (a->x - b->x) * (z - b->z); int q = (a->z - b->z) * (x - b->x); return q < p; }
+
 #endif /* GAME_A_H_U_8002ED44_H */

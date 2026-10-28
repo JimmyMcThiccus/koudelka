@@ -831,7 +831,54 @@ EXTERN_C void func_8001B424()
     StartCARD();
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8001986C", func_8001B46C);
+EXTERN_C void *func_8001B46C(S_8001B46C *p, int in_chrg, const S_Size_986C &sz, int mode, int arg)
+{
+    VTab50_986C tmp;
+    if (in_chrg) {
+        p->vb = (S_VB_986C *)((char *)p + 0x3AC);
+        new ((char *)p + 0x3AC) S_VB_986C;
+    }
+    func_8002C2B8(p, 0);
+    func_8001E40C((char *)p + 0x50, 0, (unsigned short)mode, arg, 0);
+    p->vt148 = D_80010498;
+    p->vb->vt = (VEnt_986C *)D_80010210.e;
+    if (!in_chrg) {
+        tmp = D_80010210;
+        p->vb->vt = tmp.e;
+        char *q = (char *)p->vb - 0x3AC;
+        tmp.e[1].d = D_80010210.e[1].d + ((char *)p - q);
+        tmp.e[5].d = D_80010210.e[5].d + ((char *)p - q);
+        tmp.e[7].d = D_80010210.e[7].d + ((char *)p - q);
+        tmp.e[9].d = D_80010210.e[9].d + ((char *)p - q);
+    }
+    p->vtDC = D_80010260;
+    p->vt50 = D_80010288;
+    p->vt148 = D_80010278;
+    p->vt2C = (VEnt_986C *)D_8001167C;
+    p->unk14C = 0;
+    func_80022FB8(p->unk154, 0);
+    func_80022FB8(p->unk280, 1);
+    SsUtReverbOff();
+    PadInitDirect(p->unk1F0, p->unk31C);
+    func_80035BF8();
+    new S_8002900C_986C(0, 0, 0, 2, S_Rect2_986C(0, 0, sz.w * 2, sz.h));
+    if (!D_800B4C54)
+        func_80026214(S_Rect2_986C(0x400, 0x200));
+    short x = (sz.w + 127) / 128 * 256;
+    S_Pt4_986C pos = D_800B4C54->f4(S_Pt4c_986C(x, sz.h));
+    if (!D_800B4C38) {
+        S_Pt4c_986C pt(x, 0x100 - sz.h);
+        func_80021300(&S_RectPS_986C(D_800B4C54->f4(pt), pt.pt()), 0);
+    }
+    D_800B4C54->f5(pos);
+    func_8002CDC0(&S_RectPS_986C(D_800B4C54->f4(S_Pt4c_986C(sz.w * 2, sz.h)), *(S_Pt4_986C *)&sz));
+    ((S_8001B46C *)p)->v9(sz.w, sz.h);
+    func_8002A400(p, D_800B4C90);
+    func_8002A37C(p, D_800B4C80);
+    while (func_8001E07C(D_800A4554, -0x8000))
+        ;
+    return p;
+}
 
 EXTERN_C int func_8001B8C8(S_Link *p)
 {

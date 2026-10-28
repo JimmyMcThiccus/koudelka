@@ -357,7 +357,18 @@ EXTERN_C int func_8002FA50(S_Plane *t, int x, int z)
                       : t->v[0].y - ((x - t->v[0].x) * t->nx + (z - t->v[0].z) * t->nz) / t->ny;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8002ED44", func_8002FAF8);
+EXTERN_C int func_8002FAF8(S_Tri *t, int x, int z)
+{
+    if (t->n <= 0)
+        return 0;
+    for (int i = 0; i < 3; i++) {
+        int j = D_800B4D08[i];
+        S_Tri_V *v = t->v;
+        if (edge_side(v, j, &v[i], x, z))
+            return 0;
+    }
+    return 1;
+}
 
 EXTERN_C int func_8002FB8C(S_Plane *t, short a)
 {
