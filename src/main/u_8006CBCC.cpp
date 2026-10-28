@@ -182,7 +182,23 @@ EXTERN_C void func_8006EBB0_def(void *self, void *m)
     FIELD_AT(self, short, 8) = 2;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EC70);
+EXTERN_C void func_8006EC70_def(void *self, void *m) asm("func_8006EC70");
+
+EXTERN_C void func_8006EC70_def(void *self, void *m)
+{
+    if (FIELD_AT(self, short, 8) == 1) {
+        func_8006EF84(self);
+    }
+    FIELD_AT(IDX40(self), unsigned char, 0x30) = FIELD_AT(m, unsigned char, 0);
+    FIELD_AT(IDX40(self), unsigned char, 0x31) = FIELD_AT(m, unsigned char, 1);
+    FIELD_AT(IDX40(self), unsigned char, 0x38) = FIELD_AT(m, unsigned char, 2);
+    FIELD_AT(IDX40(self), unsigned char, 0x39) = FIELD_AT(m, unsigned char, 3);
+    FIELD_AT(IDX40(self), unsigned char, 0x40) = FIELD_AT(m, unsigned char, 4);
+    FIELD_AT(IDX40(self), unsigned char, 0x41) = FIELD_AT(m, unsigned char, 5);
+    FIELD_AT(IDX40(self), unsigned char, 0x48) = FIELD_AT(m, unsigned char, 6);
+    FIELD_AT(IDX40(self), unsigned char, 0x49) = FIELD_AT(m, unsigned char, 7);
+    FIELD_AT(self, short, 8) = 2;
+}
 
 EXTERN_C void func_8006EDD8(void *self, void *m)
 {
@@ -347,7 +363,38 @@ EXTERN_C int func_8006F570(void *self, int *a, int *b)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006F5B4);
+EXTERN_C int func_8006F5B4(void *self, int *a, int *b, int *c)
+{
+    if (D_800AF410.state == 0) {
+        return 0;
+    }
+    *a = FIELD_AT(self, int, 8);
+    *b = FIELD_AT(self, int, 0xC);
+    switch (FIELD_AT(self, unsigned, 4)) {
+    case 0:
+        *c = 1;
+        break;
+    case 1:
+        *c = 0;
+        break;
+    case 2:
+        *c = 0;
+        break;
+    case 3:
+        *c = 0;
+        break;
+    case 4:
+        *c = 1;
+        break;
+    case 5:
+        *c = 1;
+        break;
+    default:
+        *c = 1;
+        break;
+    }
+    return 1;
+}
 
 EXTERN_C int func_8006F630(void)
 {

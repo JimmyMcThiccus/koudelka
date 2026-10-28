@@ -91,4 +91,14 @@ EXTERN_C short func_80073C04(void *self);
 
 EXTERN_C void func_800DDFB0_c(void *self, int a, int b, int c, int d, int e, int f, int g, B16_B s, int h) asm("func_800DDFB0");
 
+EXTERN_C void *func_800550BC_r(void *self) asm("func_800550BC");
+
+EXTERN_C void func_80067ABC(void *self, void *b);
+
+EXTERN_C void func_800680A0(void *self);
+
+EXTERN_C int func_80058488(void *self, int b);
+
+EXTERN_C void func_80063340(void *self, void *m);
+
 #endif /* GAME_B2_B2_H */

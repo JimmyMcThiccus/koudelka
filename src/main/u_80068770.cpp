@@ -85,7 +85,53 @@ EXTERN_C void func_80068EE8(Obj_80068EE8 *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_80068F3C);
+EXTERN_C int func_80068F3C(void *self, void *m)
+{
+    if (func_8005618C(m)) {
+        return 1;
+    }
+    if (FIELD_AT(self, int, 0x1CF8) == 0) {
+        return 1;
+    }
+    func_8001FC78(m, 0, 0);
+    unsigned k = FIELD_AT(m, unsigned short, 0x18);
+    if (k & 0x2000) {
+        char *t = FIELD_AT(self, char *, 0x3C);
+        if (!func_80053880(t ? t + 0x50 : 0)) {
+            return 1;
+        }
+        void *p = func_800550BC_r(self);
+        if (func_8005409C(p)) {
+            FIELD_AT(self, int, 0x1D04) = 1;
+            ((VObj<0x18> *)p)->v01();
+        } else {
+            func_8008EF40(0xE);
+        }
+        return 1;
+    }
+    if (k & 0x20) {
+        int b;
+        if (FIELD_AT(self, unsigned short, 0x1D00) >= 4) {
+            return 1;
+        }
+        b = FIELD_AT((char *)self + FIELD_AT(self, int, 0x20), signed char, 0x68);
+        if (b == -1) {
+            return 1;
+        }
+        char *s = (char *)self + 0x1D08;
+        func_80067ABC(s, func_80061188((Obj_80061188 *)D_800B4DD0_w, b));
+        func_800680A0(s);
+        return 1;
+    }
+    if (k & 0x400) {
+        FIELD_AT(self, int, 0x20) = func_80058488(FIELD_AT(self, void *, 0x3C), -1);
+    } else if (k & 0x800) {
+        FIELD_AT(self, int, 0x20) = func_80058488(FIELD_AT(self, void *, 0x3C), 1);
+    } else {
+        func_80063340(self, m);
+    }
+    return 1;
+}
 
 EXTERN_C int func_800690C8(void *self, void *b)
 {
