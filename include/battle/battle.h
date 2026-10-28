@@ -1016,7 +1016,6 @@ struct T_C6050_n { T_C6050_n *next; T_C6050_n *prev; int pad8; int fC; };
 struct T_C6050 { char pad[0xA4]; T_C5474 fA4; char pad1D4[0x65C]; int f830; };
 EXTERN_C void func_80086E14(void *p);
 EXTERN_C void func_800D8FF8(void *p);
-EXTERN_C void func_800C6194(T_C6050 *p);
 inline void c6050_reset(T_C6050 *p, T_C6050_c *c) {
     func_80086E14(c->f400);
     c->f4B0 = 3; c->s4B8 = 0; c->f4B4 = 0; c->b4AD = 0; c->b4AE = 0;
@@ -1579,5 +1578,32 @@ EXTERN_C T_7158_o *D_7158_64[] __asm__("D_800AFA64");
 EXTERN_C T_7158_o *D_7158_58[] __asm__("D_800AFA58");
 EXTERN_C T_7158_G2 *D_7158_70[] __asm__("D_800AF470");
 EXTERN_C void func_800C7158(T_7158 *self, int st);
+
+// NEAR: 2 differing instructions: in the `n = 1` arm (c->s410 == 0) retail has "addu $a0,$s2,$zero" (delay slot of the bnez) BEFORE "addiu $a1,$zero,1"; ours has them swapped.
+struct T_C6194_V {
+    virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+    virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(int *a);
+};
+struct T_C6194_w { char pad[0x16]; unsigned char b16; unsigned char b17; };
+struct T_C6194_d : T_C6194_V { char pad4[0x40c]; short s410; char pad412[0x5b]; unsigned char b46D; char pad46E[0x12]; unsigned short h480; char pad482[0x2b]; signed char b4AD; signed char b4AE; char pad4AF[0x1]; int f4B0; int f4B4; unsigned short s4B8; char pad4BA[0x2]; signed char b4BC; signed char b4BD; char pad4BE[0x27]; signed char b4E5; char pad4E6[0x6a]; T_C6194_w * f550; };
+struct T_C6194_x { char pad0[0x3d0]; int f3D0; char pad3D4[0x404]; int f7D8; short s7DC; };
+struct T_C6194 { char pad[0xA0]; T_C6194_d *fA0; T_C5474 fA4; };
+EXTERN_C int cf_666C(void *p) __asm__("func_800C666C");
+EXTERN_C void cf_68D8(void *p, int a) __asm__("func_800C68D8");
+EXTERN_C int cf_7528(void *p) __asm__("func_800C7528");
+EXTERN_C void cf_6DF4(void *p, int a) __asm__("func_800C6DF4");
+EXTERN_C int cf_65C8(void *p, int a) __asm__("func_800C65C8");
+EXTERN_C void cf_538B4(int a) __asm__("func_800538B4");
+EXTERN_C void cf_CA7D4(void *p, int a, int b, int c, int d) __asm__("func_800CA7D4");
+EXTERN_C bool cf_CACD8(void *p, int a) __asm__("func_800CACD8");
+EXTERN_C bool cf_CAD5C(void *p) __asm__("func_800CAD5C");
+EXTERN_C void cf_85E14(void *p) __asm__("func_80085E14");
+EXTERN_C void cf_8299C(void *p, int a, int b, int c, int d, int e, int f) __asm__("func_8008299C");
+EXTERN_C void cf_CFB08(void *p, int a) __asm__("func_800CFB08");
+EXTERN_C int cf_CA75C(void *p) __asm__("func_800CA75C");
+EXTERN_C void cf_CA9D0(void *p, int a, int b) __asm__("func_800CA9D0");
+EXTERN_C void cf_CBA80(void *p, int a, int b, int c) __asm__("func_800CBA80");
+inline int empty_C6194(T_C6194 *p) { return !p->fA4.f0 && !p->fA0; }
+EXTERN_C void func_800C6194(T_C6194 *p);
 
 #endif /* BATTLE_BATTLE_H */
