@@ -2138,7 +2138,42 @@ EXTERN_C void func_80052B60(void *p)
     func_80054E18(AT(p, void *, 0x58), AT(p, void *, 0x60));
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80052C8C);
+EXTERN_C void func_80052C8C(void *p, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+{
+    int n = 3;
+    char st[0x28];
+    char *sp;
+    f53FB0(AT(p, void *, 0x5C), 3, 0x130);
+    f5457Cb(AT(p, void *, 0x5C), 0);
+    f53BCC(AT(p, void *, 0x5C), a2, a3);
+    if (a5 != 0) {
+        f54584c(st, a1);
+        sp = st;
+        f53DDCb(AT(p, void *, 0x5C), sp);
+        f53964(sp, 2);
+        f538CC(sp, a4, a5);
+        f53DDCb(AT(p, void *, 0x5C), sp);
+        f53964(sp, 2);
+    }
+    f53FB0(AT(p, void *, 0x5C), 3, 0x130);
+    if (a7 != 0) {
+        f5457Cb(AT(p, void *, 0x64), 0);
+        f53BCC(AT(p, void *, 0x64), a6, a7);
+        f53FB0(AT(p, void *, 0x64), 0x10, 0x130);
+    } else {
+        n = 2;
+        f53CD8(AT(p, void *, 0x64));
+    }
+    if (a9 != 0) {
+        f5457Cb(AT(p, void *, 0x60), 0);
+        f53BCC(AT(p, void *, 0x60), a8, a9);
+        f53FB0(AT(p, void *, 0x60), 0x1D, 0x130);
+    } else {
+        n = n - 1;
+        f53CD8(AT(p, void *, 0x60));
+    }
+    func_80054EB4(AT(p, void *, 0x58), 0x130, n * 13 + 6);
+}
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_80045850", D_800137C0);
 

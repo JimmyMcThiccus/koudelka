@@ -127,4 +127,12 @@ extern "C++" int f53874(void *p) asm("func_80053874");
 extern "C++" int f53830(void *p) asm("func_80053830");
 EXTERN_C void func_8002B174(void *a, void *b, int c);
 EXTERN_C void ApplyRotMatrix(SVECTOR *v0, S_A2_V4 *v1);
+extern "C++" void *f54584c(void *p, int a) asm("func_80054584");
+extern "C++" void f53DDCb(void *a, void *b) asm("func_80053DDC");
+extern "C++" void f53964(void *p, int a) asm("func_80053964");
+extern "C++" void f538CC(void *p, int a, int b) asm("func_800538CC");
+extern "C++" void f5457Cb(void *p, int a) asm("func_8005457C");
+extern "C++" void f53FB0(void *p, int a, int b) asm("func_80053FB0");
+extern "C++" void f53BCC(void *p, int a, int b) asm("func_80053BCC");
+extern "C++" void f53CD8(void *p) asm("func_80053CD8");
 #endif /* GAME_A2B_A2B_H */
