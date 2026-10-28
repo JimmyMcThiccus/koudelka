@@ -3077,4 +3077,6 @@ struct S_OtB {
 EXTERN_C S_OtB *D_800B4CFC;
 EXTERN_C int func_8005F1B4(void *self);
 
+struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
+
 #endif /* GAME_B_DECLS_B_H */

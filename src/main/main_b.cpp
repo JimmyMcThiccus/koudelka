@@ -449,7 +449,17 @@ EXTERN_C void func_80056B3C(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80056B44);
+EXTERN_C int func_80056B44(void *self, int x)
+{
+    int r;
+    int y = x;
+    if (x != 0) {
+        r = (self ? FIELD_AT(self, VObj0 *, 0x50) : 0)->v02(y);
+    } else {
+        r = 0;
+    }
+    return r;
+}
 
 EXTERN_C int func_80056BA8(VObj<0x18> *self, void *b)
 {
