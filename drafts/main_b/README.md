@@ -103,3 +103,12 @@ Round 3, batch 3 (virtual-base ctors/dtors, found via tools/twins.py against fun
 - Coll iterator (S_CollB{S_ArrB*vb; int idx}) at +0x30: `reset(); while((c=next())) ...` or, when the first next() is folded,
   `for (c = next(); c; c = next())`.
 - A definition whose header prototype differs is written with `EXTERN_C void f_def(T *p, int n) asm("func_X")`.
+
+Round 3, batch 4:
+- Reading `self->8` back from memory (`if (c == 0) self->0xC = self->8`) reproduces retail's `addu v0,a1; sw v0` (func_80066FB0).
+- Two-stage vb ctors (func_80056364/56198) and dtors (func_8005652C): the first, unconditional stage is an inlined sub-object ctor
+  on `m = p+0x50` with its own tmp table (declare both `VTabB50`s at function scope so they get separate stack slots when retail does).
+- Header prelude declarations can collide with another area's definitions (main_b2 includes decls_b.h): declare helpers as
+  `f_v(...) asm("func_X")` aliases.
+- func_80057214 / func_80057C7C (composite dtors with member dtors) are still open; Ghidra shows the shape but retail keeps the member
+  pointer in a callee-saved register and reads member->vb through it, which GCC folds into p+const here.
