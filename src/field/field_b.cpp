@@ -208,7 +208,19 @@ EXTERN_C void func_800DF6F0(Unk_800DF6F0* p) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800DF758);
+EXTERN_C void func_800DF758(Unk_800DF82C* p, int a, int b, int e) {
+    int f;
+    func_80074564(base(D_800AF470[0]->unk328)->unk8[0]);
+    func_800DF6F0((Unk_800DF6F0*)p);
+    p->unk10 = func_800E7DEC(operator new(0x108), 1, a, 0);
+    if (e < 0) {
+        f = 1;
+    } else {
+        f = (e << 16) | 0x201E;
+    }
+    func_800E83B8(p->unk10, (int)D_800AF470[0], f);
+    ((VAt<0x18>*)p->unk10)->vf01();
+}
 
 EXTERN_C void func_800DF82C(Unk_800DF82C* p, int a, int b, int c, int e) {
     int f;
@@ -1246,7 +1258,18 @@ EXTERN_C Unk_800E714C* func_800E714C(Unk_800E714C* self, int in_chrg, int a, int
     return self;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field_b", func_800E72B0);
+#define p ((Unk_Hdr38d*)vp)
+EXTERN_C void func_800E72B0(void* vp, unsigned char a) {
+    if (p->unk8) {
+        Unk_W2 t;
+        func_8002972C(&t, a, a, a, 1);
+        for (int i = ((Unk_800BFB64_node*)(p->unk30 ? p->unk30->Unk_800BFB64_list::head : 0))->unk4 - 1; i >= 0; i--) {
+            ((VAt0*)func_80019F64(first2(p->unk30), i))->vf11(&t);
+        }
+        func_800198AC(&t, 2);
+    }
+}
+#undef p
 
 EXTERN_C void func_800E7384(Unk_800E7384* p, void* a) {
     if (p->unk8) {

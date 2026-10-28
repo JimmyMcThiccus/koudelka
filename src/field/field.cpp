@@ -3315,7 +3315,29 @@ EXTERN_C void func_800CCA90(Unk_Ft4_10* p, int x, int y) {
     p->vf10(x - p->unk10[D_800B4CF0[0]].x0, y - p->unk10[D_800B4CF0[0]].y0);
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800CCAE8);
+EXTERN_C Unk_800CCAE8* func_800CCAE8(Unk_800CCAE8* s) {
+    Unk_800CCAE8* o = (Unk_800CCAE8*)operator new(0x64);
+    o->vtbl = D_80010178;
+    o->unk4 = s->unk4;
+    o->vtbl = D_800111BC;
+    o->unk8 = s->unk8;
+    o->unkA = s->unkA;
+    o->vtbl = D_80014BD0;
+    o->unkC = s->unkC;
+    o->vtbl = D_800B82CC;
+    {
+        POLY_FT4* d = o->unk10;
+        int n = 1;
+        POLY_FT4* q = s->unk10;
+        do {
+            *d = *q;
+            d++;
+            q++;
+        } while (--n != -1);
+    }
+    o->unk60 = s->unk60;
+    return o;
+}
 
 EXTERN_C int func_800CCBD8(Unk_Ft4_10* p) {
     if (func_8005F1B4(p)) {
@@ -5681,7 +5703,26 @@ EXTERN_C int func_800D95F8(Unk_800D95F8* p) {
     return 2;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D9778);
+EXTERN_C void func_800D9778(Unk_800D9778* p, unsigned char mode) {
+    int b = D_800B4CF0[0];
+    int k = 7;
+    char* t;
+    switch (mode) {
+    case 1:
+        k = 8;
+        break;
+    case 2:
+        k = 9;
+        p->unk28[b].h = 0x18;
+        break;
+    }
+    t = D_800AE640;
+    SetDrawMode(p->unk10, 0, 0, func_80060154(t, k), 0);
+    SetDrawMode(p->unk1C, 0, 0, func_80060154(t, k), 0);
+    p->unk28[b].u0 = func_80060188(t, k).x;
+    p->unk28[b].v0 = func_80060188(t, k).y;
+    p->unk28[b].clut = func_800600A4(t, k);
+}
 
 EXTERN_C void func_800D98A8() {}
 

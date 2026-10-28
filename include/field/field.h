@@ -1651,5 +1651,8 @@ EXTERN_C char D_800B93D4[];
 EXTERN_C Unk_Vt50_800CDAAC D_800B806C_t asm("D_800B806C");
 struct Unk_E1C_D5E24 { char c[0x1C]; };
 struct Unk_800D5E24 { char pad0[0x68]; Unk_E1C_D5E24 unk68[50]; Unk_E1C_D5E24 unk5E0[26]; Unk_E1C_D5E24 unk8B8[10]; char pad9D0[0x170]; int unkB40; };
+struct Unk_800D9778 { char pad0[0x10]; char unk10[0xC]; char unk1C[0xC]; SPRT unk28[2]; };
+struct Unk_800CCAE8 { void* vtbl; int unk4; unsigned short unk8; unsigned short unkA; int unkC; POLY_FT4 unk10[2]; unsigned short unk60; };
+EXTERN_C char D_800B82CC[];
 
 #endif /* FIELD_FIELD_H */

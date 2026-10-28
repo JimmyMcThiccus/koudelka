@@ -23,5 +23,5 @@ for r,a in rem.items():
         if abs(len(a)-len(b))>len(a)*0.2: continue
         q=difflib.SequenceMatcher(None,a,b,autojunk=False).ratio()
         if q>best[0]: best=(q,d)
-    if best[0]>=0.72: res.append((best[0],r,best[1],len(a)))
+    if best[0]>=0.6: res.append((best[0],r,best[1],len(a)))
 for q,r,d,n in sorted(res,reverse=True): print(f"{q:.3f} {r} <- {d} ({n})")
