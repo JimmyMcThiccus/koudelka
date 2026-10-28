@@ -1620,5 +1620,19 @@ EXTERN_C char D_800B9BF8[];
 EXTERN_C char D_800B9BB8[];
 EXTERN_C char D_800B9EC0[];
 EXTERN_C int func_80054E90(void*);
+struct Unk_B8_BF950 { char c[8]; };
+inline void cp_BF950(Unk_B8_BF950* d, Unk_B8_BF950* s) { *d = *s; }
+struct Unk_800BF950_d { int unk0; Unk_B8_BF950 unk4; Unk_B8_BF950 unkC; Unk_B8_BF950 unk14[3]; };
+struct Unk_800BF950_s { int unk0; Unk_B8_BF950 unk4; Unk_B8_BF950 unkC[3]; };
+struct Unk_800BC2B0_nb { int unk0; struct Unk_800BC2B0_n* unk4; };
+struct Unk_800BC2B0_n : Unk_800BC2B0_nb, VAt0 { };
+struct Unk_800BC2B0_q { char pad0[4]; short unk4; char pad6[6]; char unkC[4]; };
+struct Unk_800BC2B0 { char pad0[0x498]; Unk_800BC2B0_n* unk498; char pad49C[0x48]; Unk_800BC2B0_q* unk4E4; };
+inline Unk_800BC2B0_n* next(Unk_800BC2B0_n* n) { return n->unk4; }
+EXTERN_C void func_800BD6E8(void*, void*, int);
+struct Unk_E28_DB5A4 { char c[28]; };
+struct Unk_E148_DB5A4 { char c[148]; };
+struct Unk_S6C_DB5A4 { char pad0[0x1C]; Unk_E28_DB5A4 unk1C[1]; };
+struct Unk_800DB5A4 { char pad0[0x6C]; Unk_S6C_DB5A4* unk6C; Unk_E148_DB5A4* unk70; };
 
 #endif /* FIELD_FIELD_H */
