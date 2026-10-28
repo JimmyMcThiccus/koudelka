@@ -976,7 +976,6 @@ struct SVec2I { short x, y; SVec2I(int a, int b) { x = a; y = b; } };
 EXTERN_C void func_800C800C(void *p, SVec2I v, int a, int b, int c);
 EXTERN_C void func_800C7D88(T_Grids *p);
 EXTERN_C bool func_800C8A54(T_C9A4C *p, int x1, int y1, int x, int y);
-EXTERN_C void func_800CE4E4(T_L2EC *l, SVec2C v, int a);
 /* func_800CE4B4 is defined returning int in battle.cpp; the caller's codegen needs a bool return. */
 EXTERN_C bool func_800CE4B4_b(T_L2EC *p) __asm__("func_800CE4B4");
 inline bool l2ec_next(T_L2EC *l) { if (!func_800CE4B4_b(l)) return false; return true; }
@@ -1188,7 +1187,6 @@ struct T_C4510_q { int tag; int a, b, c; };
 struct T_C4510 { VTable *vtbl; int f4; short s8; short sA; int fC; SVec4 f10; SVec2 f18; T_C47D8_1C f1C[2]; unsigned int f34; T_C4510_p *f38; };
 EXTERN_C T_BCB6C_c D_800B4CB0[];
 EXTERN_C void func_800C4EC4(T_C4510 *p);
-EXTERN_C void func_800C4B70(T_C4510 *p, int a, int flags);
 typedef void (*F_5F0E4)(void *p, int a);
 EXTERN_C T_VEC func_800BF3B4(T_VEC *a, T_VEC *b);
 struct T_BF1D0_g { char pad[0x2C8]; T_VEC v2C8; };
@@ -1488,5 +1486,78 @@ EXTERN_C void cf_DAFF0(void *p) __asm__("func_800DAFF0");
 EXTERN_C char D_FAA0[];
 inline int isk(int k) { return k != 5 && k != 6 && k != 7 && k != 11; }
 EXTERN_C void func_800CADDC(T_CADDC *p, int st);
+
+/* node of the result list: T_Obj8 = {next, prev, vptr@8}, position at 0xC */
+struct T_CF_n : T_Obj8 { SVec2 xy; };
+/* list object built by func_80085BA4 / destroyed by func_80085BD8(l, 2): head, cur, count, vptr@0xC */
+struct T_CF_L {
+    T_CF_n *head; T_CF_n *cur; int cnt; void *vt;
+    void step(bool ok) { if (ok && head != cur) cur = (T_CF_n *)cur->prev; }
+};
+EXTERN_C void *func_80085BA4(void *);
+EXTERN_C void func_80085BD8(void *, int);
+EXTERN_C void f_CD250(T_C9A4C *p, SVec2C v, int a, int b) __asm__("func_800CD250");
+EXTERN_C void f_CD354(T_C9A4C *p, void *l, int x, int y, int e) __asm__("func_800CD354");
+EXTERN_C int func_800CCFC0(T_C9A4C *p, SVec2I *out, T_CCDCC_in *in, int flag);
+
+EXTERN_C int func_800CE7A4(T_L2EC *l, SVec2C a, SVec2C b, SVec2C c);
+EXTERN_C int D_800D5DA8[];
+inline SVec2C sv(SVec2 *p) { return *(SVec2C *)p; }
+inline void swp2(SVec2 *a, SVec2 *b) { SVec2 t = *a; *a = *b; *b = t; }
+EXTERN_C void func_800CE4E4(T_L2EC *l, SVec2C v, int a);
+
+struct T_CC98C_e { char pad[0x4D8]; int f4D8; };
+struct T_CC98C_s { int f0; T_CC98C_e *f4; int f8; int fC; int f10; int f14; };
+EXTERN_C void func_800CCB98(T_C5E1C *p, int dx, int dy, T_CCB98 *s);
+#define CB(dx, dy) func_800CCB98(p, dx, dy, (T_CCB98 *)s)
+EXTERN_C void func_800CC98C(T_C5E1C *p, T_CC98C_s *s);
+
+struct T_CF408_q { char pad[0x2A0]; char f2A0[0x170]; short s410; char pad412[0xAB]; signed char b4BD; char pad4BE[0x4C]; signed char b50A; char pad50B[0xB]; signed char b516; };
+struct T_CF408_s { char pad[0x46D]; unsigned char b46D; };
+struct T_CF408_x { char pad[0x2C]; T_CF408_s *f2C; };
+struct T_CF408_m { int f0; int f4; int f8; T_CF408_x *fC; int f10; };
+struct T_CF408_p { char pad[0xA0]; T_CF408_q *fA0; char pad_A4[0x870]; void *f914; };
+EXTERN_C T_CF408_q *D_AFA64q[] __asm__("D_800AFA64");
+EXTERN_C void func_80086028(void *p);
+EXTERN_C void func_800C19BC_q(void *a, int b, void *c) __asm__("func_800C19BC");
+EXTERN_C int func_800C0EB8_q(void *p) __asm__("func_800C0EB8");
+EXTERN_C void func_800CF408(T_CF408_p *p, T_CF408_m *m);
+
+EXTERN_C T_BCB6C_c D_800B4CC0[];
+#define PR(i) (((T_C4EC4_s *)p->f38)[i])
+EXTERN_C void func_800C4B70(T_C4510 *p, int a, int flags);
+
+struct T_6DF4 { char pad[0x3D4]; int f3D4; char pad3D8[0x448]; int f820; int f824; int pad828; int f82C; int f830; };
+struct T_6DF4_B { int pad[2]; void *items[3]; char pad14[8]; signed char b1C[1]; };
+struct T_6DF4_G { char pad[0x328]; T_D0390_A *dummy; };
+struct T_6DF4_D : T_D0390_A, T_6DF4_B {};
+struct T_6DF4_G2 { char pad[0x328]; T_6DF4_D *f328; };
+struct T_6DF4_a { char pad[0x2A0]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+struct T_6DF4_b { char pad[0x1B8]; void *f1B8; char pad1BC[0xE4]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+EXTERN_C void func_8006BE4C(void *p);
+EXTERN_C void func_80086E74(void *p);
+EXTERN_C void func_80082C68(B2A0 *p, int a, void *g, int c, int d);
+EXTERN_C void f_C59EC(void *p, int a) __asm__("func_800C59EC");
+EXTERN_C void func_8007B2E4(T_6DF4_B *a, void *b);
+EXTERN_C void func_80043808(void *p);
+struct T_6DF4_o { char pad0[0x1B8]; void *f1B8; char pad1BC[0xE4]; B2A0 b2A0; char pad2A4[0x15C]; char f400[0x10]; short s410; char pad412[0x9B]; char b4AD; char b4AE; };
+EXTERN_C T_6DF4_o *D_6DF4_64[] __asm__("D_800AFA64");
+EXTERN_C T_6DF4_o *D_6DF4_58[] __asm__("D_800AFA58");
+EXTERN_C T_6DF4_G2 *D_6DF4_70[] __asm__("D_800AF470");
+EXTERN_C void func_800C6DF4(T_6DF4 *self, int st);
+
+struct T_CC3DC_u { char pad[0x410]; short s410; char pad412[0xAB]; signed char b4BD; char pad4BE[7]; signed char b4C5; unsigned short h4C6; short s4C8; unsigned short h4CA; };
+struct T_CC3DC_e { T_CDD0C_v f0; T_CC3DC_u *f4; unsigned short h8; short sA; int fC; int f10; int f14; };
+struct T_CC3DC { char pad0[4]; char f4[0x9C]; T_CC3DC_u *fA0; char padA4[0x224]; signed char b2C8[7][5]; char pad2EB[0xB8]; signed char b3A3[7][5]; char pad3C6[0x12]; T_CE044 f3D8; };
+EXTERN_C void q_7F74(T_CC3DC *p, char v) __asm__("func_800C7F74");
+EXTERN_C void q_800C(T_CC3DC *p, T_CDD0C_v v, int a, int b, int c) __asm__("func_800C800C");
+EXTERN_C void q_CC7DC(T_CC3DC *p, T_CDD0C_v v, int flag) __asm__("func_800CC7DC");
+EXTERN_C void q_7FB8(T_CC3DC *p) __asm__("func_800C7FB8");
+EXTERN_C int q_78EC(T_CC3DC *p, int a) __asm__("func_800C78EC");
+EXTERN_C void q_C98C(T_CC3DC *p, void *e) __asm__("func_800CC98C");
+EXTERN_C void q_DED8(T_CE044 *l, SVec2 *v, void *q) __asm__("func_800CDED8");
+inline T_CC3DC_e *e_first(T_CC3DC *p) { return (T_CC3DC_e *)func_800CE044(&p->f3D8); }
+inline T_CC3DC_e *e_next(T_CC3DC *p) { return (T_CC3DC_e *)func_800CE090(&p->f3D8); }
+EXTERN_C void func_800CC3DC(T_CC3DC *self, T_CDD0C_v pos, int a, int b);
 
 #endif /* BATTLE_BATTLE_H */
