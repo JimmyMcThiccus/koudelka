@@ -2966,4 +2966,10 @@ static inline void setm_658(MATRIX_B *m) { SetRotMatrix(m); SetTransMatrix(m); }
 
 EXTERN_C int func_800619F4(Obj_800619F4 *self);
 
+static inline void *h8_80064B3C(char *h)
+{
+    char *v = h ? h + 8 : 0;
+    return v ? *(void **)v : 0;
+}
+
 #endif /* GAME_B_DECLS_B_H */
