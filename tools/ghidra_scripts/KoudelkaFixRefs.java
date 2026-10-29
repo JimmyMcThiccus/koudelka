@@ -1,11 +1,14 @@
 // Fixes references that cross address spaces, from the facts tools/ghidra_pointer_list.py writes (arg 0, or asked).
 // Five overlays share 0x800B6DF0 and EFFECT loads right after BATTLE, so Ghidra resolves any address in that range
 // to the empty default RAM block. This
-//  1. retargets references into that block: BATTLE -> EFFECT above 0x800D5DAC, EFFECT -> BATTLE below it, and an
-//     EXE reference to the one overlay with a label at that address (left alone when several have one);
+//  1. retargets references into that block: BATTLE -> EFFECT above 0x800D5DAC where EFFECT has a label there,
+//     EFFECT -> BATTLE below it, and an EXE reference to the one overlay with a label at that address (left alone
+//     when several have one). BATTLE also calls modules from MONSTER/BIM.AR that load in EFFECT's place; those
+//     calls stay in the RAM block (and are moved back there if an earlier run sent them to EFFECT);
 //  2. marks every pointer word splat knows (`.word sym` in data) as a pointer to the right space, but only where
 //     the bytes are undefined or already a pointer: it never overwrites code or a type someone set;
-//  3. removes the functions Ghidra made in the RAM block once nothing refers to them.
+//  3. removes the functions Ghidra made in the RAM block once nothing refers to them, and the functions it made in
+//     EFFECT at addresses that are not EFFECT functions (BIM.AR call targets).
 // Run with GhydraMCP's scripts_run or from the Script Manager, then save.
 //@category Koudelka
 import java.io.File;
@@ -62,7 +65,9 @@ public class KoudelkaFixRefs extends GhidraScript {
 			String srcName = src == null ? null : src.isOverlay() ? src.getName() : "ram";
 			String dst = null;
 			if ("BATTLE".equals(srcName) && x >= EFFECT_BASE) {
-				dst = "EFFECT";
+				if (labelSpaces.getOrDefault(x, Collections.emptyList()).contains("EFFECT")) {
+					dst = "EFFECT";
+				}
 			} else if ("EFFECT".equals(srcName) && x < EFFECT_BASE) {
 				dst = "BATTLE";
 			} else if ("ram".equals(srcName)) {
@@ -83,6 +88,38 @@ public class KoudelkaFixRefs extends GhidraScript {
 				rm.setPrimary(n, true);
 			}
 			moved++;
+		}
+
+		// 1b. Undo: BATTLE references into EFFECT where EFFECT has no label (they belong to a BIM.AR module).
+		int undone = 0;
+		AddressSpace effect = space("EFFECT");
+		AddressSet eff = new AddressSet(effect.getAddress(EFFECT_BASE), effect.getAddress(0x800E584BL));
+		List<Reference> wrong = new ArrayList<>();
+		for (Address to : rm.getReferenceDestinationIterator(eff, true)) {
+			if (labelSpaces.getOrDefault(to.getOffset(), Collections.emptyList()).contains("EFFECT")) {
+				continue;
+			}
+			for (Reference r : rm.getReferencesTo(to)) {
+				MemoryBlock b = currentProgram.getMemory().getBlock(r.getFromAddress());
+				if (b != null && b.getName().equals("BATTLE") && r.getReferenceType().isCall()) {
+					wrong.add(r);
+				}
+			}
+		}
+		for (Reference r : wrong) {
+			rm.delete(r);
+			rm.addMemoryReference(r.getFromAddress(), ram.getAddress(r.getToAddress().getOffset()), r.getReferenceType(),
+				SourceType.ANALYSIS, r.getOperandIndex());
+			undone++;
+		}
+		List<Address> fakeEffect = new ArrayList<>();
+		for (Function fn : currentProgram.getFunctionManager().getFunctions(eff, true)) {
+			if (!labelSpaces.getOrDefault(fn.getEntryPoint().getOffset(), Collections.emptyList()).contains("EFFECT")) {
+				fakeEffect.add(fn.getEntryPoint());
+			}
+		}
+		for (Address a : fakeEffect) {
+			currentProgram.getFunctionManager().removeFunction(a);
 		}
 
 		// 2. Pointer words.
@@ -144,6 +181,8 @@ public class KoudelkaFixRefs extends GhidraScript {
 			currentProgram.getFunctionManager().removeFunction(fn.getEntryPoint());
 			removed++;
 		}
+		println(String.format("KoudelkaFixRefs: BIM.AR calls moved back from EFFECT %d, fake EFFECT functions removed %d", undone,
+			fakeEffect.size()));
 		println(String.format("KoudelkaFixRefs: references moved %d (EXE refs left ambiguous %d); pointers created %d, "
 			+ "pointed right %d, skipped %d; RAM-block functions removed %d, still referenced %d",
 			moved, ambiguous, created, retargeted, skipped, removed, kept));

@@ -18,11 +18,12 @@ def main():
     out = Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / "build" / "ghidra_functions.txt")
     rows = set()
     for target, space in SPACES.items():
-        for kind in ("nonmatchings", "matchings"):
-            for s in (ROOT / "asm" / target / kind).glob("*/*.s"):
-                m = GLABEL.search(s.read_text())
-                if m:
-                    rows.add((space, m.group(2).lower(), m.group(1)))
+        # Per-function files, plus whole-segment asm files such as asm/main/psyq.s (the PsyQ library).
+        files = [s for kind in ("nonmatchings", "matchings") for s in (ROOT / "asm" / target / kind).glob("*/*.s")]
+        files += list((ROOT / "asm" / target).glob("*.s"))
+        for s in files:
+            for m in GLABEL.finditer(s.read_text()):
+                rows.add((space, m.group(2).lower(), m.group(1)))
     out.parent.mkdir(exist_ok=True)
     out.write_text("".join(f"{s} {a} {n}\n" for s, a, n in sorted(rows)))
     print(f"{len(rows)} functions -> {out}")
