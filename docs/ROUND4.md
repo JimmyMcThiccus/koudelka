@@ -57,6 +57,41 @@ Tools that now exist:
 - **When:** in parallel with B, since it edits different functions in the same areas. Areas are split by
   function list.
 
+The track C list: 28 functions still in asm, each with a draft 1–4 instructions off, or a little more where the
+shape is right. Drafts are in `drafts/<area>/` (`func_X.cpp`, or a section of `r2_attempts.cpp`/`r3_attempts.cpp`),
+and each `drafts/*/README.md` says what differs.
+
+| Function | Unit (`src/`) | Off by |
+|---|---|---|
+| `func_800C56A8` | `battle/battle_b.cpp` | 2 |
+| `func_800B881C` | `battle/battle.cpp` | 2 |
+| `func_800C8D9C` | `battle/battle_b.cpp` | 3 |
+| `func_800CFDE0` | `battle/battle_c.cpp` | 3 |
+| `func_800BDEDC` | `battle/battle.cpp` | 4 |
+| `func_800C666C` | `battle/battle_b.cpp` | 4 |
+| `func_800BC394` | `field/field.cpp` | 4 |
+| `func_800C0654` | `field/field.cpp` | 4 |
+| `func_800E44D4` | `field/field_b.cpp` | 4 |
+| `func_800E2C08` | `field/field_b.cpp` | 4 |
+| `func_800BE264` | `field/field.cpp` | 4–5 |
+| `func_800BDEA4` | `field/field.cpp` | 4–5 |
+| `func_8003479C` | `main/u_80033ECC.cpp` | 3 |
+| `func_80035C30` | `main/u_80033ECC.cpp` | 3 |
+| `func_80032B2C` | `main/u_80032264.cpp` | small, register allocation |
+| `func_800468D8` | `main/u_80045850.cpp` | 2 |
+| `func_8004A89C` | `main/u_80045850.cpp` | 3 |
+| `func_80054584` | `main/u_80045850.cpp` | 4 |
+| `func_800499D0` | `main/u_80045850.cpp` | ~6, prologue order |
+| `func_8004D0F4` | `main/u_80045850.cpp` | ~6, prologue order |
+| `func_8003C908` | `main/u_8003C510.cpp` | 4 |
+| `func_8006B180` | `main/u_80068770.cpp` | 2 |
+| `func_8008623C` | `main/u_80085168.cpp` | 2 |
+| `func_8008A2A0` | `main/u_80089024.cpp` | 3 |
+| `func_8007FD60` | `main/u_80071A74.cpp` | 3 |
+| `func_8005717C` | `main/u_80056E0C.cpp` | 3 |
+| `func_80026558` | `main/u_80025854.cpp` | 2 |
+| `func_8008D97C` | `main/sound.cpp` (PsyQ 4.1) | ~9, shape right |
+
 **D. PC-port feasibility (optional, read-only, any time).**
 - **What it measures:**
   - which PsyQ functions the game calls, compared with what PsyCross implements
