@@ -20,7 +20,19 @@ INCLUDE_ASM("asm/bim/w0_26a6dc91ab/nonmatchings/w0_26a6dc91ab", func_800DAF84);
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_26a6dc91ab/nonmatchings/w0_26a6dc91ab", func_800DB0E4);
+EXTERN_C int func_800DB47C(void *p, unsigned *flags);
+EXTERN_C int bimf_db5f4bc4_c(void *p, unsigned *flags) asm("bimf_db5f4bc4");
+
+EXTERN_C int func_800DB0E4(BimV *p, unsigned *flags)
+{
+    func_800D7818(p, 0x12C, 0xC8, 0x12C, 0xC8, 0, 0, 0, 0);
+    if (p->v21((int)flags))
+        return 1;
+    if (func_800DB47C(p, flags))
+        return 1;
+    bimf_db5f4bc4_c(p, flags);
+    return 1;
+}
 
 INCLUDE_ASM("asm/bim/w0_26a6dc91ab/nonmatchings/w0_26a6dc91ab", func_800DB180);
 

@@ -57,7 +57,21 @@ INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DB378);
 
 INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DB480);
 
-INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DB620);
+struct BimS52 { char pad[0x52]; short s52; };
+struct BimA { char pad[0x1B8]; void *f1B8; char pad1BC[0x844]; int fA00; int fA04; };
+EXTERN_C void func_800D8204(void *p, int a);
+
+EXTERN_C void func_800DB620(BimA *p)
+{
+    if (p->fA00) {
+        func_800D8204(p, 0xF);
+        ((BimS52 *)func_8003912C(p->f1B8, 0xF))->s52 = 0;
+    }
+    if (p->fA04) {
+        func_800D8204(p, 0x10);
+        ((BimS52 *)func_8003912C(p->f1B8, 0x10))->s52 = 0;
+    }
+}
 
 INCLUDE_RODATA("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", D_800DA86C);
 

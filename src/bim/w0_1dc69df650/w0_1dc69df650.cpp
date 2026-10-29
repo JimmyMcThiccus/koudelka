@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bim/shared.h"
 
 EXTERN_C void *func_800DAB34(void *self, int in_chrg, int a, int b, int c, int d, int e);
 
@@ -21,7 +22,21 @@ INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DAFD8);
 
 INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", bimf_dd77db6b);
 
-INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DB244);
+EXTERN_C int func_800DB244(void *p, unsigned *flags)
+{
+    if (*flags & 2) {
+        func_800D8E64(p, 3);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 1, 0x421);
+        if (q) {
+            func_800D7D64(p, q);
+            *flags &= ~2;
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #include "../shared/bimf_af99c5b3.cpp"
 

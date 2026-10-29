@@ -16,7 +16,13 @@ INCLUDE_ASM("asm/bim/w0_503b29b233/nonmatchings/w0_503b29b233", func_800DAE50);
 
 #include "../shared/bimf_1a38796b.cpp"
 
-INCLUDE_ASM("asm/bim/w0_503b29b233/nonmatchings/w0_503b29b233", func_800DAFF4);
+EXTERN_C void func_800D8F50(void *p, int a, unsigned char b);
+
+EXTERN_C void func_800DAFF4(BimM9 *p, int a, unsigned char b)
+{
+    p->f9FC++;
+    func_800D8F50(p, a, b);
+}
 
 INCLUDE_ASM("asm/bim/w0_503b29b233/nonmatchings/w0_503b29b233", func_800DB020);
 

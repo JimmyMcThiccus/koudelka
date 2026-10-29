@@ -22,7 +22,14 @@ INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB028);
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB104);
 
-INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB260);
+EXTERN_C int func_800DB5F4(void *p);
+
+EXTERN_C int func_800DB260(void *p, unsigned *flags)
+{
+    if (*flags & 2)
+        return func_800DB5F4(p) != 0;
+    return 0;
+}
 
 #include "../shared/bimf_af99c5b3.cpp"
 
