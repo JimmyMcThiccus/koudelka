@@ -13,7 +13,6 @@ struct S_Pt { short x, y; };
 struct S_Vec4 { int a, b, c, d; };
 
 struct S_8002BBD4 { char pad0[0x30]; Holder unk30; };
-EXTERN_C void func_80019F0C(List *l, void *a, int b);
 struct S_8002AC2C { int unk0; S_8002BBD4 *unk4; };
 struct S_8002C8CC { void *p; int n; void *q; int data[1]; };
 struct S_Node2C { char pad0[4]; VObj2C *unk4; };

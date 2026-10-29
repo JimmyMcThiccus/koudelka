@@ -148,6 +148,7 @@ Vr_658 f_80066054(void *self, Vr_658 *c)
 
 extern Vr_658 v_addr_658(const Vr_658 &a, const Vr_658 *b) __asm__("func_80066220");
 extern void m_rotp_658(MATRIX_B *m, const void *r) __asm__("func_8003A7FC");
+// func_8003B450 returns its vector by value as S_A2_V4; this unit reads it as Vr_658.
 extern Vr_658 m_applyp_658(MATRIX_B *m, const Vr_658 *v) __asm__("func_8003B450");
 extern Vp_658 f_80066128(void *self, Vr_658 *c) __asm__("func_80066128");
 Vp_658 f_80066128(void *self, Vr_658 *c)

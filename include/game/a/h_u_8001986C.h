@@ -124,7 +124,6 @@ EXTERN_C void *func_80018C90(unsigned int size);
 EXTERN_C void *func_8001AF8C(S_Heap *h, unsigned int size);
 EXTERN_C void *func_80018D80(unsigned int size);
 EXTERN_C void *func_80027E30(unsigned int size);
-EXTERN_C void func_80027FB0(void *p);
 EXTERN_C int func_80018DF4(int *p);
 EXTERN_C void func_8002D1E0();
 static inline bool above_8001B1C8(S_Heap *h, void *p)
@@ -234,8 +233,6 @@ struct S_8001B46C {
     char unk31C[0x90];
     void v9(int x, int y) { VEnt_986C *e = &vt2C[9]; ((void (*)(void *, int, int))e->f)((char *)this + e->d, x, y); }
 };
-EXTERN_C void func_8002C2B8(void *p, int in_chrg);
-EXTERN_C void func_80022FB8(void *p, int a);
 struct S_Rect2_986C {
     short x, y, w, h;
     S_Rect2_986C(int aw, int ah) { w = aw; x = 0; y = 0; h = ah; }
@@ -245,9 +242,6 @@ struct S_8002900C_986C {
     char pad[0x3C];
     S_8002900C_986C(int a, int b, int c, int d, const S_Rect2_986C &r) asm("func_8002900C");
 };
-EXTERN_C void func_80026214(const S_Rect2_986C &r);
-EXTERN_C void func_80021300(S_RectPS_986C *r, int a);
-EXTERN_C int func_8001E07C(void *p, int a);
 
 struct S_BE20_N {
     virtual void f0();
@@ -261,5 +255,13 @@ struct S_BE20 : S_BE20_N {
     int unkC;
     int unk10;
 };
+
+// func_80027FB0 takes no arguments; this caller passes one.
+EXTERN_C void func_80027FB0_1(void *p) asm("func_80027FB0");
+
+// func_80026214 takes an int; this caller passes a struct by reference.
+EXTERN_C void func_80026214_r(const S_Rect2_986C &r) asm("func_80026214");
+// func_8001E07C takes its id as a short; this caller passes an int unnarrowed.
+EXTERN_C int func_8001E07C_i(void *p, int a) asm("func_8001E07C");
 
 #endif /* GAME_A_H_U_8001986C_H */

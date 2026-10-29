@@ -623,6 +623,7 @@ EXTERN_C void func_8003635C()
 {
 }
 
+// Defined under a C++ name: a2.h also declares the two-argument form its callers use (func_80036364_2).
 extern "C++" void f36364(S_A2_St *p, int t, unsigned char *buf) asm("func_80036364");
 void f36364(S_A2_St *p, int t, unsigned char *buf)
 {

@@ -81,6 +81,7 @@ struct C_8003D9FC : C_8001E40C {
     C_8003D9FC(int a, int b, char *s) asm("func_8003D9FC");
     C_8003D9FC(int a, int b, char *s, S_A2B_V4 *src) asm("func_8003DB1C");
 };
+// Defined in u_8003F7E8 with short arguments and a char * result; these callers pass ints.
 extern "C++" void *f40294(void *p, int a) asm("func_80040294");
 extern "C++" void *f4025C(void *p, int a, int b) asm("func_8004025C");
 EXTERN_C int func_8003ED10(void *p, int b, int c, int d, int e);

@@ -1497,6 +1497,7 @@ EXTERN_C char D_800B7984[];
 EXTERN_C char D_800B78C4[];
 EXTERN_C char D_800B78C8[];
 EXTERN_C char D_800B78D8[];
+// func_80062FA4 (a constructor) takes ints; field passes a pointer as the third argument.
 EXTERN_C void func_80062FA4_i(void*, int, void*, int) asm("func_80062FA4");
 EXTERN_C void func_800D508C(void*, int);
 EXTERN_C void func_800D0CDC_i(void*, int, int, int) asm("func_800D0CDC");

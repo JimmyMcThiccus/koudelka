@@ -80,7 +80,6 @@ EXTERN_C void func_8001E6AC(void *p);
 EXTERN_C int func_8001EEC0(void *a, void *b);
 EXTERN_C void func_8001F3DC(void *p, int flags);
 EXTERN_C void func_80018E88(void *p, int flags);
-EXTERN_C void func_8001F1A8(void *p);
 EXTERN_C char D_800B4C28[];
 EXTERN_C S_Scene *func_8001E758(S_Scene *s);
 
@@ -125,7 +124,6 @@ struct S_Obj4 {
 EXTERN_C void *D_80010408[];
 EXTERN_C void *D_80010420[];
 EXTERN_C S_80018E5C *func_80018E5C(S_80018E5C *p, int a);
-EXTERN_C void *func_8001F360(void *p, void *a, int b);
 EXTERN_C int func_8001E344();
 EXTERN_C void func_8001E840(S_8001E840 *p);
 struct S_Evt408 : S_Evt300 {
@@ -176,7 +174,6 @@ EXTERN_C S_Node *func_8001E248(S_Node *n, void *id);
 
 EXTERN_C void func_8001F544(void *t, int delay, int a, int repeat, int b);
 EXTERN_C int func_8001F598(void *t);
-EXTERN_C void func_8001A7B4(void *a, void *b);
 EXTERN_C int func_80018F0C(void *jb, void *v);
 EXTERN_C void func_8001E9A8(void *p);
 

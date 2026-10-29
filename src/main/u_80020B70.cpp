@@ -779,7 +779,7 @@ EXTERN_C void func_800230E8(char *p, int a)
 EXTERN_C int func_800232A0(char *p, void *)
 {
     void *t = 0;
-    int r = func_800209F4(p);
+    int r = func_800209F4_1(p);
     int ok = 0;
     if (!*(signed char *)(p + 0x9C) && !*(signed char *)(p + 0xC0)) {
         Holder *h = (Holder *)(p + 0x28);

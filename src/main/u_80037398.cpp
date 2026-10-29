@@ -45,7 +45,7 @@ EXTERN_C void func_800374F4(void *p)
 EXTERN_C void func_80037524(void *p, unsigned char a)
 {
     if (!AT(p, signed char, 0x37))
-        func_80036364(p, a);
+        func_80036364_2(p, a);
 }
 
 EXTERN_C void func_80037554(void *p, unsigned char a)

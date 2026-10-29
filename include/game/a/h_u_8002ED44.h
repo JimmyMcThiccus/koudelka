@@ -86,7 +86,6 @@ struct S_Obj34 : S_Obj14, S_Mid34, S_Base34 { };
 struct S_Rect8s { short x, y, w, h; };
 
 EXTERN_C void func_8002F028(void *p);
-EXTERN_C int func_8002A3C0(void *p);
 EXTERN_C void *D_800117A4[];
 struct S_Lay {
     VtE *vt;
@@ -143,7 +142,6 @@ struct S_80030534 {
 
 // Retail reaches D_800B4CFC (and D_800B4CF0) from this file with the assembler macro (lui), not $gp.
 EXTERN_C int D_800B4CFC __attribute__((section(".data")));
-EXTERN_C void func_8002B6FC(void *p, void *o);
 EXTERN_C int func_8002EAF4();
 struct S_8002EF88_O { char pad[0x1C]; int unk1C; };
 struct S_8002EF88 { int a; void *unk4; };
@@ -171,5 +169,8 @@ struct S_Sv4 { short v[4]; };
 #define NEAR64(a, b) ((unsigned)((a) - (b)) < 64 || (unsigned)((b) - (a)) < 64)
 
 inline int edge_side(S_Tri_V *v, int j, S_Tri_V *b, int x, int z) { S_Tri_V *a = &v[j]; int p = (a->x - b->x) * (z - b->z); int q = (a->z - b->z) * (x - b->x); return q < p; }
+
+// func_8002A3C0 is defined void; these callers use $v0 as it leaves it.
+EXTERN_C int func_8002A3C0_i(void *p) asm("func_8002A3C0");
 
 #endif /* GAME_A_H_U_8002ED44_H */
