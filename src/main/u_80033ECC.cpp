@@ -574,7 +574,7 @@ EXTERN_C void func_80036000(unsigned char a, int b, int c)
 EXTERN_C void func_80036090(unsigned char a, int b)
 {
     func_800188D4(&D_800A451C);
-    func_8009CAC0(0);
+    CdSyncCallback(0);
     if (D_800B4D0C)
         ((A2VObj0 *)D_800B4D0C)->v11(a, b);
     func_80018970(&D_800A451C);
@@ -710,7 +710,7 @@ EXTERN_C void func_80036674(S_A2_H0C *p)
 EXTERN_C int func_800366F8(A2VObj0 *p)
 {
     unsigned char buf[8];
-    switch (func_8009CA80(1, buf)) {
+    switch (CdSync(1, buf)) {
     case 2:
         return 1;
     case 5:
@@ -814,12 +814,12 @@ EXTERN_C void func_800370D0(void *p)
     if (g == p) {
         AT(p, char, 0x35) = 0x12;
         AT(p, char, 0x34) = 0;
-        func_8009CAC0(0);
+        CdSyncCallback(0);
         CdReadyCallback(0);
     }
     AT(AT(p, void *, 4), int, 4) = -1;
     if (AT(p, void *, 0x2C))
-        func_800A0D0C(AT(p, void *, 0x2C));
+        __builtin_vec_delete(AT(p, void *, 0x2C));
     AT(p, void *, 0x2C) = 0;
 }
 
@@ -835,7 +835,7 @@ EXTERN_C int func_8003714C(void *vp)
         if (!o->v04(0) && !AT(p, int, 0x2C)) s = 1;
     } else
         s = 1;
-    if (s) AT(p, void *, 0x2C) = func_800A0D2C((((unsigned)AT(p, int, 0x28) + 0x7FF) >> 11) << 11);
+    if (s) AT(p, void *, 0x2C) = __builtin_vec_new((((unsigned)AT(p, int, 0x28) + 0x7FF) >> 11) << 11);
     int *q = AT(p, int *, 4);
     AT(p, int, 0x30) = 0;
     q[1] = 0;

@@ -33,7 +33,7 @@ EXTERN_C void *func_800198E0(void *v, int n, int grow)
     a->cap = n;
     a->count = 0;
     a->unk10 = 0;
-    a->data = (int *)func_800A0D2C(n * 4);
+    a->data = (int *)__builtin_vec_new(n * 4);
     return a;
 }
 
@@ -41,7 +41,7 @@ EXTERN_C void func_80019920(List *l, int flags)
 {
     S_Array *a = (S_Array *)l;
     if (a->data)
-        func_800A0D0C(a->data);
+        __builtin_vec_delete(a->data);
     if (flags & 1)
         operator delete(a);
 }
@@ -52,10 +52,10 @@ EXTERN_C void func_80019974(S_Array *a, int n)
         int c = a->grow ? a->cap + a->grow : a->cap * 2;
         if (c < n)
             c = n;
-        int *d = (int *)func_800A0D2C(c * 4);
+        int *d = (int *)__builtin_vec_new(c * 4);
         func_8001A8F0(d, (int)a->data, a->count);
         if (a->data)
-            func_800A0D0C(a->data);
+            __builtin_vec_delete(a->data);
         a->data = d;
         a->cap = c;
     }
@@ -174,7 +174,7 @@ EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n)
                     func_8001A970(&a->data[to] + 1, &a->data[to], from - to);
                 a->data[to] = v;
             } else {
-                tmp = (int *)func_800A0D2C(n * 4);
+                tmp = (int *)__builtin_vec_new(n * 4);
                 func_8001A8F0(tmp, (int)&a->data[from], n);
                 if (from < to)
                     func_8001A8F0(&a->data[from], (int)(&a->data[from] + n), to - from);
@@ -182,7 +182,7 @@ EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n)
                     func_8001A970(&a->data[to] + 1, &a->data[to], from - to);
                 func_8001A8F0(&a->data[to], (int)tmp, n);
                 if (tmp)
-                    func_800A0D0C(tmp);
+                    __builtin_vec_delete(tmp);
             }
         }
     }

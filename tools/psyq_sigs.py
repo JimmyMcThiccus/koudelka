@@ -49,20 +49,35 @@ class Reader:
 
 
 def read_expr(r):
-    """The symbol index a relocation expression refers to (SYMBOL, or SYMBOL plus a constant), else None."""
+    """What a relocation expression points at: ("sym", symbol index), ("sec", section index, offset) for a
+    place inside this object, or None for anything else. A constant added to either is folded in."""
     op = r.u8()
     if op == 0:
-        r.u32()
-        return None
+        return ("val", r.u32())
     if op == 2:
-        return r.u16()
-    if op in (4, 12, 22):
+        return ("sym", r.u16())
+    if op == 4:
+        return ("sec", r.u16(), 0)
+    if op in (12, 22):
         r.u16()
         return None
     if op in (44, 46, 50) or op >= 32:  # binary operators: two operands
         a, b = read_expr(r), read_expr(r)
-        return (a if b is None else b) if op == 44 else None
+        if op != 44:
+            return None
+        val = sum(x[1] for x in (a, b) if x and x[0] == "val")
+        base = next((x for x in (a, b) if x and x[0] in ("sym", "sec")), None)
+        return ("sec", base[1], base[2] + val) if base and base[0] == "sec" else base
     raise ValueError(f"expression opcode {op}")
+
+
+def target_of(x, names, symnames):
+    """A relocation's target: a symbol name, or (section name, offset) inside the object, or None."""
+    if x and x[0] == "sym":
+        return symnames.get(x[1])
+    if x and x[0] == "sec":
+        return (names.get(x[1], str(x[1])), x[2])
+    return None
 
 
 def parse_obj(data):
@@ -148,7 +163,8 @@ def parse_obj(data):
         else:
             raise ValueError(f"opcode {op} at {r.p - 1:#x}")
     return {names.get(k, str(k)): v for k, v in code.items()}, \
-        [(names.get(s, str(s)), o, m, symnames.get(x)) for s, o, m, x in relocs],         [(names.get(s, str(s)), o, n) for s, o, n in syms]
+        [(names.get(s, str(s)), o, m, target_of(x, names, symnames)) for s, o, m, x in relocs], \
+        [(names.get(s, str(s)), o, n) for s, o, n in syms]
 
 
 def signatures(obj):
@@ -161,7 +177,7 @@ def signatures(obj):
     for s, o, m, sym in relocs:
         if s == ".text":
             masks[o & ~3] = m
-            if m == 0xFC000000 and sym:  # j/jal to a named symbol
+            if m == 0xFC000000 and sym:  # j/jal: to a named symbol, or (section, offset) inside this object
                 calls[o & ~3] = sym
     out = []
     for i, (off, name) in enumerate(starts):
@@ -190,6 +206,9 @@ def main():
     ap.add_argument("--min-words", type=int, default=4)
     ap.add_argument("--range", nargs=2, type=lambda x: int(x, 0), default=(0x80094910, 0x800A4514))
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--prefix", action="store_true",
+                    help="report library functions that match the start of an unnamed EXE function that is longer "
+                         "(splat or Ghidra may have merged two functions); never written")
     a = ap.parse_args()
 
     exe = EXE.read_bytes()
@@ -220,14 +239,22 @@ def main():
         for addr in funcs:
             i = (addr - 0x80010000) // 4
             pad = length[addr] - len(w)
-            if pad < 0 or i + len(w) > len(words) or any(words[i + len(w) + k] for k in range(pad)):
+            if i + len(w) > len(words) or pad < 0:
                 continue
+            if any(words[i + len(w) + k] for k in range(pad)):
+                if not (a.prefix and funcs[addr].startswith("func_")):
+                    continue
             if not all((words[i + k] & m[k]) == (w[k] & m[k]) for k in range(len(w))):
                 continue
             callees, ok = {}, True
             for k, sym in call.items():
                 pc = addr + 4 * k
                 target = (pc & 0xF0000000) | ((words[i + k] & 0x03FFFFFF) << 2)
+                if isinstance(sym, tuple):  # a call inside the object: same distance as in the object
+                    if sym[0] != ".text" or target != addr - src[1] + sym[1]:
+                        ok = False
+                        break
+                    continue
                 have = name_at.get(target)
                 if have is None or (not have.startswith("func_") and have != sym):
                     ok = False
@@ -294,7 +321,7 @@ def main():
     print(f"# {len(funcs)} functions in range; " + ", ".join(f"{k} {v}" for k, v in stats.items()))
     if a.write and new:
         with open(ROOT / "config" / "symbols" / "main.txt", "a") as f:
-            f.write("// Named by tools/psyq_sigs.py (exact masked match against the PsyQ 4.4 SDK libraries)\n")
+            f.write("// Named by tools/psyq_sigs.py (exact masked match against the PsyQ SDK library objects)\n")
             for addr, name in sorted(new.items()):
                 if not a.range[0] <= addr < a.range[1]:
                     # A library call landing in game code: the game supplies that function itself (its own

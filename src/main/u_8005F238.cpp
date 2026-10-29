@@ -91,7 +91,7 @@ EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n)
     self->vt = D_80014C38;
     self->a4 = b;
     self->n = n;
-    self->data = (int *)func_800A0D2C(n << 2);
+    self->data = (int *)__builtin_vec_new(n << 2);
     self->data[0] = a;
     for (i = 1; i < self->n; i++) {
         self->data[i] = 0;
@@ -138,7 +138,7 @@ EXTERN_C void func_8005F698(void *self, int b)
     FIELD_AT(self, void *, 0x0) = D_80014C38;
     p = FIELD_AT(self, void *, 0xC);
     if (p != 0) {
-        func_800A0D0C(p);
+        __builtin_vec_delete(p);
     }
     D_800B4DC4--;
     func_8005F47C();

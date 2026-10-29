@@ -204,7 +204,7 @@ C_8003D9FC::C_8003D9FC(int a, int b, char *s) : C_8001E40C(a, 2, 0x500, 0)
     n = strlen(s);
     if (n)
         func_80025CE0((int)name146, s, n + 1);
-    AT(this, void *, 0x134) = func_800A0D2C(0x190);
+    AT(this, void *, 0x134) = __builtin_vec_new(0x190);
     AT(this, int, 0x190) = 0;
     AT(this, int, 0x194) = 0;
     AT(this, int, 0x198) = 0;
@@ -236,7 +236,7 @@ C_8003D9FC::C_8003D9FC(int a, int b, char *s, S_A2B_V4 *src) : C_8001E40C(a, 2, 
     n = strlen(s);
     if (n)
         func_80025CE0((int)name146, s, n + 1);
-    AT(this, void *, 0x134) = func_800A0D2C(0x190);
+    AT(this, void *, 0x134) = __builtin_vec_new(0x190);
     v190 = *src;
     AT(this, short, 0x1A4) = 0;
 }

@@ -483,7 +483,7 @@ EXTERN_C void func_80030384(S_Obj44 *p)
             e--;
             VCALL1(e, 1, 2);
         }
-        func_800A0D0C((char *)p - 8);
+        __builtin_vec_delete((char *)p - 8);
     }
 }
 
@@ -762,7 +762,7 @@ EXTERN_C void func_800311F8(S_Obj68 *p)
             e--;
             VCALL1(e, 1, 2);
         }
-        func_800A0D0C((char *)p - 8);
+        __builtin_vec_delete((char *)p - 8);
     }
 }
 

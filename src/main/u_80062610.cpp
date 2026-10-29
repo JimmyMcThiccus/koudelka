@@ -12,8 +12,8 @@ EXTERN_C void *func_80062610(void *self)
 {
     if (D_800B4E2C == 0) {
         char o[8];
-        D_800B4E30 = (Entry_800627E8 *)func_800A0D2C(0x5780);
-        D_800B4E34 = (int)func_800A0D2C(0x690);
+        D_800B4E30 = (Entry_800627E8 *)__builtin_vec_new(0x5780);
+        D_800B4E34 = (int)__builtin_vec_new(0x690);
         func_8005F238(o);
         func_8005F298(o, 0x15086, 0x5800);
         {
@@ -36,10 +36,10 @@ EXTERN_C void func_80062764(void *self, int flags)
 {
     if (--D_800B4E2C == 0) {
         if (D_800B4E34 != 0) {
-            func_800A0D0C((void *)D_800B4E34);
+            __builtin_vec_delete((void *)D_800B4E34);
         }
         if (D_800B4E30 != 0) {
-            func_800A0D0C(D_800B4E30);
+            __builtin_vec_delete(D_800B4E30);
         }
     }
     if (flags & 1) {

@@ -265,7 +265,7 @@ EXTERN_C void func_800C4B70(T_C4510 *p, int a, int flags) {
     if (flags > 0) p->f34 += 2;
     unsigned int n = p->f34;
     p->f34 = n * 2;
-    p->f38 = (T_C4510_p *)func_800A0D2C(n << 5);
+    p->f38 = (T_C4510_p *)__builtin_vec_new(n << 5);
     for (unsigned int i = 0; i < p->f34; i++) {
         PR(i).len = 3;
         PR(i).code = 0x74;
@@ -308,7 +308,7 @@ EXTERN_C void func_800C4B70(T_C4510 *p, int a, int flags) {
 EXTERN_C void func_800C4EC4(T_C4510 *p) {
     T_BCB6C_c *c = D_800B4C88;
     p->f34 = 8;
-    p->f38 = (T_C4510_p *)func_800A0D2C(0x80);
+    p->f38 = (T_C4510_p *)__builtin_vec_new(0x80);
     for (unsigned int i = 0; i < p->f34; i++) {
         ((T_C4EC4_s *)p->f38)[i].len = 3;
         ((T_C4EC4_s *)p->f38)[i].code = 0x74;

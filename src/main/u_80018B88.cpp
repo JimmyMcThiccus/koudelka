@@ -127,13 +127,13 @@ EXTERN_C void func_80018E88(S_80018E5C *p, int flags)
 {
     p->vtbl = D_800100C0;
     if (p->unk88)
-        func_800A0D0C((void *)p->unk88);
+        __builtin_vec_delete((void *)p->unk88);
     func_8001A610(p, flags);
 }
 
 EXTERN_C void func_80018EDC(S_80018E5C *p)
 {
-    p->unk88 = (int)func_800A0D2C(p->unk8 * 4);
+    p->unk88 = (int)__builtin_vec_new(p->unk8 * 4);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80018B88", func_80018F0C);

@@ -277,7 +277,7 @@ EXTERN_C void *func_80021348(void *q, int a, int b)
     P->r = *R;
     P->unkC = b;
     n = (R->h * R->w) / 256;
-    arr = (S_80021274 *)func_800A0D2C(n * sizeof(S_80021274));
+    arr = (S_80021274 *)__builtin_vec_new(n * sizeof(S_80021274));
     s = arr;
     i = n - 1;
     if (i >= 0) {
@@ -298,7 +298,7 @@ EXTERN_C void func_8002141C(void *q, int flags)
     S_Buf2 *p = (S_Buf2 *)q;
     p->unk10 = D_80010694;
     if (p->data)
-        func_800A0D0C(p->data);
+        __builtin_vec_delete(p->data);
     if (flags & 1)
         operator delete(p);
 }
@@ -469,7 +469,7 @@ EXTERN_C int func_80022438(S_Ref *p)
         q = p->unk8;
         if (q) {
             if (q->data)
-                func_800A0D0C(q->data);
+                __builtin_vec_delete(q->data);
             operator delete(q);
         }
         return 1;
@@ -486,7 +486,7 @@ EXTERN_C int func_800224A8(S_Ref *p)
         q = p->unk8;
         if (q) {
             if (q->data)
-                func_800A0D0C(q->data);
+                __builtin_vec_delete(q->data);
             operator delete(q);
         }
         return 1;
@@ -497,7 +497,7 @@ EXTERN_C int func_800224A8(S_Ref *p)
 EXTERN_C void func_80022518(S_Buf *p, int flags)
 {
     if (p->data)
-        func_800A0D0C(p->data);
+        __builtin_vec_delete(p->data);
     if (flags & 1)
         operator delete(p);
 }
@@ -505,7 +505,7 @@ EXTERN_C void func_80022518(S_Buf *p, int flags)
 EXTERN_C void func_8002256C(S_Buf *p, int flags)
 {
     if (p->data)
-        func_800A0D0C(p->data);
+        __builtin_vec_delete(p->data);
     if (flags & 1)
         operator delete(p);
 }
@@ -517,7 +517,7 @@ EXTERN_C S_800225C0 *func_800225C0(S_800225C0 *p, int a, int b)
 
 EXTERN_C S_Buf *func_80022670(S_Buf *p, int n)
 {
-    p->data = func_800A0D2C(n << 9);
+    p->data = __builtin_vec_new(n << 9);
     return p;
 }
 
@@ -538,7 +538,7 @@ EXTERN_C S_80022730 *func_80022730(S_80022730 *p, int a, int b)
 
 EXTERN_C S_Buf *func_800227E0(S_Buf *p, int n)
 {
-    p->data = func_800A0D2C(n << 5);
+    p->data = __builtin_vec_new(n << 5);
     return p;
 }
 
@@ -673,7 +673,7 @@ EXTERN_C S_IntVec *func_80022CF0(S_IntVec *p, unsigned int n)
     unsigned int i;
     p->vtbl = D_80010714;
     p->count = n;
-    p->data = (int *)func_800A0D2C(n * 4);
+    p->data = (int *)__builtin_vec_new(n * 4);
     for (i = 0; i < n; i++)
         p->data[i] = 0;
     return p;
@@ -690,7 +690,7 @@ EXTERN_C void func_80022D64(S_IntVec *p, int flags)
             VCALL(o, 1, Fn_vi, 3);
     }
     if (p->data)
-        func_800A0D0C(p->data);
+        __builtin_vec_delete(p->data);
     if (flags & 1)
         operator delete(p);
 }
@@ -1215,7 +1215,7 @@ EXTERN_C void func_80024AF0(void *q, int flags)
     if (P->unk1E != 0xFFFF)
         func_80025714(&D_800B4C48, q);
     if (P->unk18 && P->unk1E != 0xFFFE)
-        func_800A0D0C(P->unk18);
+        __builtin_vec_delete(P->unk18);
     if (P->unkC)
         VCALL(P->unkC, 1, Fn_vi, 3);
     func_8001A610(q, flags);
@@ -1249,7 +1249,7 @@ EXTERN_C char *func_80024BF0(S_80024CA0 *p, char *buf, short w, short h)
     } else
         v = n;
     sz = v * 2;
-    p->unk18 = (short *)func_800A0D2C(sz);
+    p->unk18 = (short *)__builtin_vec_new(sz);
     func_80025CE0(p->unk18, buf, sz);
     return buf + sz;
 }
@@ -1295,7 +1295,7 @@ EXTERN_C void func_80024EE4(char *p)
 EXTERN_C void func_80024FA8(S_80024FA8 *p)
 {
     if (p->unk18) {
-        func_800A0D0C(p->unk18);
+        __builtin_vec_delete(p->unk18);
         p->unk18 = 0;
     }
 }

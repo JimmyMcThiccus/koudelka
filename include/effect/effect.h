@@ -163,8 +163,8 @@ struct Poly {
 };
 
 /* EXE heap and memory helpers */
-EXTERN_C void func_800A0D0C(void *p);
-EXTERN_C void *func_800A0D2C(int size);
+EXTERN_C void __builtin_vec_delete(void *p);
+EXTERN_C void *__builtin_vec_new(int size);
 EXTERN_C void func_80025CE0(void *dst, void *src, int size);
 
 /* EFFECT functions called from code above their definition */

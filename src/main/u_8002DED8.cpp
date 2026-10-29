@@ -189,8 +189,8 @@ EXTERN_C void *func_8002E714(void *vp, int n)
     p->unk4 = 0;
     p->vt = D_800117BC;
     p->count = n;
-    p->buf[0] = (unsigned long *)func_800A0D2C(n * 4);
-    p->buf[1] = (unsigned long *)func_800A0D2C(n * 4);
+    p->buf[0] = (unsigned long *)__builtin_vec_new(n * 4);
+    p->buf[1] = (unsigned long *)__builtin_vec_new(n * 4);
     p->tab = p->buf[D_800B4CF0];
     ClearOTagR(p->tab, n);
     return p;
@@ -200,9 +200,9 @@ EXTERN_C void func_8002E7A8(S_8002E7A8 *p, int flags)
 {
     p->vt = D_800117BC;
     if (p->unk8)
-        func_800A0D0C(p->unk8);
+        __builtin_vec_delete(p->unk8);
     if (p->unkC)
-        func_800A0D0C(p->unkC);
+        __builtin_vec_delete(p->unkC);
     func_8001A610(p, flags);
 }
 

@@ -120,8 +120,8 @@ int f376D0(void *p)
     if (D_800B4D0C || AT(p, int, 0x14)) return 0;
     AT(p, int, 0x28) = AT(p, int, 0x28) + 1;
     func_800279A8();
-    if (AT(p, void *, 0x1C)) func_800A0D0C(AT(p, void *, 0x1C));
-    AT(p, void *, 0x1C) = func_800A0D2C(0x1000);
+    if (AT(p, void *, 0x1C)) __builtin_vec_delete(AT(p, void *, 0x1C));
+    AT(p, void *, 0x1C) = __builtin_vec_new(0x1000);
     AT(p, int, 0x20) = 0;
     AT(p, int, 0xC) = 0;
     void *o = a2_ctor44(operator new(0x44));
@@ -142,7 +142,7 @@ EXTERN_C void func_80037834(void *p)
         AT(p, void *, 0x14) = 0;
     }
     if (AT(p, void *, 0x1C)) {
-        func_800A0D0C(AT(p, void *, 0x1C));
+        __builtin_vec_delete(AT(p, void *, 0x1C));
         AT(p, void *, 0x1C) = 0;
     }
     func_800376D0(p);

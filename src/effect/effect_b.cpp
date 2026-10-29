@@ -1803,7 +1803,7 @@ EXTERN_C void func_8008ECB4(void *p);
 
 EXTERN_C char *func_800E42F4(void *self, char *data)
 {
-    FIELD_AT(self, void *, 0x0) = func_800A0D2C(FIELD_AT(data, int, 0x8));
+    FIELD_AT(self, void *, 0x0) = __builtin_vec_new(FIELD_AT(data, int, 0x8));
     func_80025CE0(FIELD_AT(self, void *, 0x0), data, FIELD_AT(data, int, 0x8));
     func_8008ECB4(FIELD_AT(self, void *, 0x0));
     return data + FIELD_AT(data, int, 0x8);
@@ -1827,7 +1827,7 @@ EXTERN_C void func_800E43A0(void *self)
     if (FIELD_AT(self, void *, 0x0)) {
         func_8008ED44(FIELD_AT(self, void *, 0x0));
         if (FIELD_AT(self, void *, 0x0))
-            func_800A0D0C(FIELD_AT(self, void *, 0x0));
+            __builtin_vec_delete(FIELD_AT(self, void *, 0x0));
         FIELD_AT(self, void *, 0x0) = 0;
     }
     if (FIELD_AT(self, void *, 0x4)) {

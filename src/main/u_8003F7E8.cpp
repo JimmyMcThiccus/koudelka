@@ -172,17 +172,17 @@ EXTERN_C void func_800400D0(void *p, int flags)
 {
     AT(p, void **, 0) = D_800127D4;
     if (AT(p, void *, 0x24))
-        func_800A0D0C(AT(p, void *, 0x24));
+        __builtin_vec_delete(AT(p, void *, 0x24));
     if (AT(p, void *, 0x30))
-        func_800A0D0C(AT(p, void *, 0x30));
+        __builtin_vec_delete(AT(p, void *, 0x30));
     if (AT(p, void *, 0x28))
-        func_800A0D0C(AT(p, void *, 0x28));
+        __builtin_vec_delete(AT(p, void *, 0x28));
     if (AT(p, void *, 0x18) && AT(p, short, 0x36)) {
         func_8008ED44(AT(p, void *, 0x18));
         if (AT(p, void *, 0x20))
             func_8008D4C0(AT(p, void *, 0x20));
         if (AT(p, void *, 0x18))
-            func_800A0D0C(AT(p, void *, 0x18));
+            __builtin_vec_delete(AT(p, void *, 0x18));
     }
     func_8001A610(p, flags);
 }

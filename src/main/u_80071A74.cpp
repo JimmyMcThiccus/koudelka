@@ -915,7 +915,7 @@ EXTERN_C void func_80075828(void *self, int flags)
 {
     FIELD_AT(self, void *, 0x0) = D_800167F8;
     if (FIELD_AT(self, int, 0x10) != 0 && FIELD_AT(self, void *, 0xC) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0xC));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0xC));
     }
     func_8007589C(self);
     func_8001A610(self, flags);
@@ -1511,7 +1511,7 @@ EXTERN_C void func_800777E8(void *self, int b)
     FIELD_AT(self, void *, 0x8) = D_80016BD0;
     p = FIELD_AT(self, void *, 0xC);
     if (p != 0) {
-        func_800A0D0C(p);
+        __builtin_vec_delete(p);
     }
     p = FIELD_AT(self, void *, 0x3C);
     if (p != 0) {
@@ -2903,8 +2903,8 @@ EXTERN_C void func_8007DC00(void *self, int k)
             func_800BCC18(FIELD_AT(D_800AF470.p, void *, 0x380), (char *)self + 0x238);
             if (FIELD_AT(self, int, 0x230) != 0 && FIELD_AT(self, int, 0x238) != 0) {
                 if (FIELD_AT(D_800AF470.p, int, 0x548) != 0) {
-                    void *s1 = func_800A0D2C(FIELD_AT(self, int, 0x234));
-                    void *s0 = func_800A0D2C(FIELD_AT(self, int, 0x23C));
+                    void *s1 = __builtin_vec_new(FIELD_AT(self, int, 0x234));
+                    void *s0 = __builtin_vec_new(FIELD_AT(self, int, 0x23C));
                     func_80025CE0(s1, FIELD_AT(self, int, 0x230), FIELD_AT(self, int, 0x234));
                     func_80025CE0(s0, FIELD_AT(self, int, 0x238), FIELD_AT(self, int, 0x23C));
                     func_80080990((char *)D_800AF470.p + 0x4F0, (int)s1, (int)s0, FIELD_AT(D_800AF470.p, int, 0x548));
@@ -3709,7 +3709,7 @@ EXTERN_C void func_80080530(void *self, int a, int b, int c)
     void *d = D_800B4C18.p;
     FIELD_AT(self, void *, 0x3C) = p;
     func_8001E848(d, p);
-    void *q = func_800A0D2C(c);
+    void *q = __builtin_vec_new(c);
     func_800766F8(FIELD_AT(self, void *, 0x3C), c, q, a, 1);
     func_8007669C(FIELD_AT(self, void *, 0x3C), b, c);
 }
@@ -3731,7 +3731,7 @@ EXTERN_C void func_80080614(void *self, void *a1, int a2, int a3)
         }
     }
     if (a1 != 0) {
-        func_800A0D0C(a1);
+        __builtin_vec_delete(a1);
     }
     func_800766D8(FIELD_AT(self, void *, 0x3C));
 }
@@ -3752,7 +3752,7 @@ EXTERN_C void func_800806F4(void *self)
         FIELD_AT(self, int, 0x38) = 0;
         func_8008ED44(FIELD_AT(self, void *, 0x34));
         if (FIELD_AT(self, void *, 0x34) != 0) {
-            func_800A0D0C(FIELD_AT(self, void *, 0x34));
+            __builtin_vec_delete(FIELD_AT(self, void *, 0x34));
         }
         FIELD_AT(self, void *, 0x34) = 0;
         func_8008D4C0(FIELD_AT(self, void *, 0x30));
@@ -3777,7 +3777,7 @@ EXTERN_C void func_800806F4(void *self)
         }
         FIELD_AT(self, int, 0x10) = 1;
         if (FIELD_AT(self, void *, 0x4) != 0) {
-            func_800A0D0C(FIELD_AT(self, void *, 0x4));
+            __builtin_vec_delete(FIELD_AT(self, void *, 0x4));
             FIELD_AT(self, void *, 0x4) = 0;
         }
         FIELD_AT(self, int, 0xC) = 0;
@@ -3794,7 +3794,7 @@ EXTERN_C void func_80080828(void *self)
         FIELD_AT(self, int, 0x38) = 0;
         func_8008ED44(FIELD_AT(self, void *, 0x34));
         if (FIELD_AT(self, void *, 0x34) != 0) {
-            func_800A0D0C(FIELD_AT(self, void *, 0x34));
+            __builtin_vec_delete(FIELD_AT(self, void *, 0x34));
         }
         FIELD_AT(self, void *, 0x34) = 0;
         func_8008D4C0(FIELD_AT(self, void *, 0x30));
@@ -3821,7 +3821,7 @@ EXTERN_C void func_800808AC(void *self)
         FIELD_AT(self, int, 0x20) = 0;
     }
     if (FIELD_AT(self, void *, 0x1C) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x1C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x1C));
         FIELD_AT(self, void *, 0x1C) = 0;
     }
     if (FIELD_AT(self, int, 0x10) != 0) {
@@ -3829,7 +3829,7 @@ EXTERN_C void func_800808AC(void *self)
         FIELD_AT(self, int, 0x10) = 0;
     }
     if (FIELD_AT(self, void *, 0x4) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x4));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x4));
         FIELD_AT(self, void *, 0x4) = 0;
     }
 }
@@ -3842,7 +3842,7 @@ EXTERN_C void func_80080990(void *self, int a, int b, int c)
     func_8008ECB4(b);
     func_8008C928_s(0x10);
     if (a != 0) {
-        func_800A0D0C((void *)a);
+        __builtin_vec_delete((void *)a);
     }
     {
         unsigned short n = FIELD_AT(FIELD_AT(self, char *, 0x34), unsigned short, 0x14);

@@ -144,7 +144,7 @@ EXTERN_C void func_80032CD4(char *p)
             q -= 0x98;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 

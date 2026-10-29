@@ -264,7 +264,7 @@ EXTERN_C char D_800B6F34[], D_800B6F4C[], D_80012294[], D_80012224[];
 EXTERN_C void func_80035304(void*, s32);
 
 struct Unk800BDDC8 { char pad[0x20]; s16 x20; char p2[0x44 - 0x22]; void* x44; char p3[0x50 - 0x48]; void* x50; };
-EXTERN_C void* func_800A0D2C(s32);
+EXTERN_C void* __builtin_vec_new(s32);
 EXTERN_C s32 func_800B93D8(void*, s32, s32, s32);
 
 struct Unk800C9874 { char pad[0x28]; SPRT x28[4]; };
@@ -284,7 +284,7 @@ EXTERN_C void func_80036674(void*);
 
 struct Unk800C3D90 { char pad[0x40]; char* x40; };
 EXTERN_C s32 strlen(char*);
-EXTERN_C void func_800A0D0C(void*);
+EXTERN_C void __builtin_vec_delete(void*);
 
 struct Unk800C908C { char pad[0x20]; s32 x20; };
 EXTERN_C void func_8002456C(void*);

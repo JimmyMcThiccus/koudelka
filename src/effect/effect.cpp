@@ -1988,11 +1988,11 @@ EXTERN_C void func_800DC0CC(void *self, int flags)
 {
     FIELD_AT(self, int *, 0x28) = D_800D6340;
     if (FIELD_AT(self, void *, 0x2C))
-        func_800A0D0C(FIELD_AT(self, void *, 0x2C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x2C));
     if (FIELD_AT(self, void *, 0x30))
-        func_800A0D0C(FIELD_AT(self, void *, 0x30));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x30));
     if (FIELD_AT(self, void *, 0x34))
-        func_800A0D0C(FIELD_AT(self, void *, 0x34));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x34));
     func_800DBE88(self, flags);
 }
 
@@ -2003,7 +2003,7 @@ struct Rec28 {
 EXTERN_C char *func_800DC150(void *self, char *src)
 {
     char *p = func_800DBEBC(self, src);
-    void *buf = func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(Rec28));
+    void *buf = __builtin_vec_new(FIELD_AT(self, short, 0x0) * sizeof(Rec28));
     int size;
     FIELD_AT(self, void *, 0x2C) = buf;
     size = FIELD_AT(self, short, 0x0) * sizeof(Rec28);
@@ -2057,8 +2057,8 @@ EXTERN_C void func_800DC670(void *self)
         Rec_800DC670 *r;
         int i;
         FIELD_AT(self, Mat_800DC670 *, 0x30) =
-            new (func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(Mat_800DC670))) Mat_800DC670[FIELD_AT(self, short, 0x0)];
-        FIELD_AT(self, int *, 0x34) = (int *)func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(int));
+            new (__builtin_vec_new(FIELD_AT(self, short, 0x0) * sizeof(Mat_800DC670))) Mat_800DC670[FIELD_AT(self, short, 0x0)];
+        FIELD_AT(self, int *, 0x34) = (int *)__builtin_vec_new(FIELD_AT(self, short, 0x0) * sizeof(int));
         r = FIELD_AT(self, Rec_800DC670 *, 0x2C);
         i = 0;
         while (1) {
@@ -2072,7 +2072,7 @@ EXTERN_C void func_800DC670(void *self)
             FIELD_AT(self, int *, 0x34)[i++] = (r++)->h;
         }
         if (FIELD_AT(self, void *, 0x2C))
-            func_800A0D0C(FIELD_AT(self, void *, 0x2C));
+            __builtin_vec_delete(FIELD_AT(self, void *, 0x2C));
         FIELD_AT(self, void *, 0x2C) = 0;
     }
 }
@@ -2092,9 +2092,9 @@ EXTERN_C void func_800DC804(void *self, int flags)
 {
     FIELD_AT(self, int *, 0x28) = D_800D6310;
     if (FIELD_AT(self, void *, 0x2C))
-        func_800A0D0C(FIELD_AT(self, void *, 0x2C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x2C));
     if (FIELD_AT(self, void *, 0x30))
-        func_800A0D0C(FIELD_AT(self, void *, 0x30));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x30));
     func_800DBE88(self, flags);
 }
 
@@ -2105,7 +2105,7 @@ struct Rec20 {
 EXTERN_C char *func_800DC870(void *self, char *src)
 {
     char *p = func_800DBEBC(self, src);
-    void *buf = func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(Rec20));
+    void *buf = __builtin_vec_new(FIELD_AT(self, short, 0x0) * sizeof(Rec20));
     int size;
     FIELD_AT(self, void *, 0x2C) = buf;
     size = FIELD_AT(self, short, 0x0) * sizeof(Rec20);
@@ -2259,7 +2259,7 @@ EXTERN_C void func_800DCE84(void *self)
         int i;
         Vec4 base;
         FIELD_AT(self, SV_800DCE84 *, 0x30) =
-            new (func_800A0D2C(FIELD_AT(self, short, 0x0) * sizeof(SV_800DCE84))) SV_800DCE84[FIELD_AT(self, short, 0x0)];
+            new (__builtin_vec_new(FIELD_AT(self, short, 0x0) * sizeof(SV_800DCE84))) SV_800DCE84[FIELD_AT(self, short, 0x0)];
         base = FIELD_AT(self, Vec4, 0x4);
         r = FIELD_AT(self, Rec_800DCE84 *, 0x2C);
         i = 0;
@@ -2833,7 +2833,7 @@ EXTERN_C IdArray *func_800DDF58(IdArray *self, short id, short count, short def)
     self->vptr = D_800D6408;
     self->count = count;
     self->def = def;
-    self->data = func_800A0D2C(count * sizeof(Color));
+    self->data = __builtin_vec_new(count * sizeof(Color));
     return self;
 }
 
@@ -2858,7 +2858,7 @@ EXTERN_C IdArray *func_800DDFC0(IdArray *self, IdArray *other)
     self->vptr = D_800D6408;
     self->def = other->def;
     self->count = other->count;
-    self->data = func_800A0D2C(self->count * sizeof(Col_800DDFC0));
+    self->data = __builtin_vec_new(self->count * sizeof(Col_800DDFC0));
     i = 0;
     while (1) {
         if (!(i < self->count))
@@ -2883,7 +2883,7 @@ EXTERN_C void func_800DE12C(IdNode *self, int flags)
 {
     self->vptr = D_800D6408;
     if (FIELD_AT(self, void *, 0xC))
-        func_800A0D0C(FIELD_AT(self, void *, 0xC));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0xC));
     func_800D67CC(self, flags);
 }
 
@@ -2893,7 +2893,7 @@ EXTERN_C IdArray *func_800DE180(IdArray *self, short id, short count, short def)
     self->vptr = D_800D63F8;
     self->count = count;
     self->def = def;
-    self->data = func_800A0D2C(count * sizeof(SVec4));
+    self->data = __builtin_vec_new(count * sizeof(SVec4));
     return self;
 }
 
@@ -2918,7 +2918,7 @@ EXTERN_C IdArray *func_800DE1E8(IdArray *self, IdArray *other)
     self->vptr = D_800D63F8;
     self->def = other->def;
     self->count = other->count;
-    self->data = func_800A0D2C(self->count * sizeof(SV_800DE1E8));
+    self->data = __builtin_vec_new(self->count * sizeof(SV_800DE1E8));
     i = 0;
     while (1) {
         if (!(i < self->count))
@@ -2933,7 +2933,7 @@ EXTERN_C void func_800DE310(IdNode *self, int flags)
 {
     self->vptr = D_800D63F8;
     if (FIELD_AT(self, void *, 0xC))
-        func_800A0D0C(FIELD_AT(self, void *, 0xC));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0xC));
     func_800D67CC(self, flags);
 }
 
@@ -3002,7 +3002,7 @@ EXTERN_C IdNode *func_800DE3BC(IdNode *self, short count, int unused, short c)
     FIELD_AT(self, short, 0xE) = count;
     FIELD_AT(self, int, 0x10) = 0;
     FIELD_AT(self, short, 0x20) = 0;
-    buf = func_800A0D2C(0x200);
+    buf = __builtin_vec_new(0x200);
     memset(buf, 0xFF, 0x200);
     o = (Pal_800DE3BC *)operator new(0x20C);
     o->vptr = (char *)D_80010178;
@@ -3017,7 +3017,7 @@ EXTERN_C IdNode *func_800DE3BC(IdNode *self, short count, int unused, short c)
         VtEntry *vt = FIELD_AT(p, VtEntry *, 0x10);
         vt[1].pfn((char *)p + vt[1].delta, (int)o);
     }
-    buf2 = func_800A0D2C(0x100);
+    buf2 = __builtin_vec_new(0x100);
     memset(buf2, 0, 0x100);
     m = (Img_800DE3BC *)operator new(0x20);
     m->vptr = (char *)D_80010178;
@@ -3035,12 +3035,12 @@ EXTERN_C IdNode *func_800DE3BC(IdNode *self, short count, int unused, short c)
     func_80025444(D_800B4C48, FIELD_AT(self, void *, 0x24), 3);
     func_8001ED2C(D_800B4C18[0], 1, 3);
     if (buf)
-        func_800A0D0C(buf);
+        __builtin_vec_delete(buf);
     if (buf2)
-        func_800A0D0C(buf2);
+        __builtin_vec_delete(buf2);
     FIELD_AT(self, int, 0x14) = 0;
     FIELD_AT(self, int, 0x18) = 0;
-    FIELD_AT(self, void *, 0x1C) = func_800A0D2C(FIELD_AT(self, short, 0xE) * sizeof(Color));
+    FIELD_AT(self, void *, 0x1C) = __builtin_vec_new(FIELD_AT(self, short, 0xE) * sizeof(Color));
     return self;
 }
 
@@ -3065,7 +3065,7 @@ EXTERN_C void *func_800DE5B0(void *self, void *other)
     FIELD_AT(self, int, 0x24) = FIELD_AT(other, int, 0x24);
     FIELD_AT(self, int, 0x14) = 0;
     FIELD_AT(self, int, 0x18) = 0;
-    FIELD_AT(self, void *, 0x1C) = func_800A0D2C(FIELD_AT(self, short, 0xE) * sizeof(Color));
+    FIELD_AT(self, void *, 0x1C) = __builtin_vec_new(FIELD_AT(self, short, 0xE) * sizeof(Color));
     i = 0;
     while (1) {
         if (!(i < FIELD_AT(self, short, 0xE)))
@@ -3090,7 +3090,7 @@ EXTERN_C void func_800DE6E8(IdNode *self, int flags)
     if (FIELD_AT(self, void *, 0x18))
         func_800DEA54((S_800DEA54 *)self, 1);
     if (FIELD_AT(self, void *, 0x1C))
-        func_800A0D0C(FIELD_AT(self, void *, 0x1C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x1C));
     func_800D67CC(self, flags);
 }
 
