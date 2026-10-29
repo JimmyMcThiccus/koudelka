@@ -74,3 +74,8 @@ Tricks learned this round:
 - Virtual-base dtors that run in two phases (derived vtables, call, then base vtables with an unconditional stack copy)
   are plain repetition of the recipe; the second phase has no `if (!in_chrg)`.
 - `switch (t) { case 8: ... case 2: ... case 0x16: ... }` gives the "t == 8, t < 9, t == 2, t == 0x16" test tree retail has.
+
+Batch 2 landed: func_800787C4, func_8006AB18, func_8006BFE4 (the last two after the permuter found that reading
+vt.e[7]/e[9] through a `const VEntB *ep = D_xxxx.e;` fixes the 4-instruction scheduling difference of an unguarded
+4-delta vtable copy). Drafts: func_8007E684 (~42: retail computes a0 = self+0x4B0 early and keeps a 16x4 int loop
+unreduced), func_80069B2C (~120: inline array-destroy loops; same shape in func_80069264).

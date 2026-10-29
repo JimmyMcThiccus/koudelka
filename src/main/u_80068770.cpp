@@ -460,7 +460,48 @@ EXTERN_C int func_8006A820(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006A82C);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006AB18);
+EXTERN_C void func_8006AB18_d(S_8006C65C *self, int in_chrg)
+{
+    self->vt50 = D_80015BB4;
+    FIELD_AT(self, void **, 0x1B0) = D_80015B84;
+    FIELD_AT(self, void **, 0x124) = D_80015B9C;
+    self->vt2C = D_80015A14;
+    self->vb->vt = (VEntB *)D_80015B34.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80015B34;
+        self->vb->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80015B34.e[1].d + (adj = (char *)self - (full = (char *)self->vb - 0x2E8));
+        vt.e[5].d = D_80015B34.e[5].d + adj;
+        vt.e[7].d = D_80015B34.e[7].d + adj;
+        vt.e[9].d = D_80015B34.e[9].d + adj;
+    }
+    int k = FIELD_AT(self, int, 0x224);
+    if (k != 0) {
+        func_8001D324(&D_800A4544, func_8001D25C(&D_800A4544, k));
+        FIELD_AT(self, int, 0x224) = 0;
+    }
+    func_8001E508((char *)self + 0x124, 0);
+    self->vt50 = D_80015C5C;
+    self->vt2C = D_80015C9C;
+    self->vb->vt = (VEntB *)D_80015C0C.e;
+    VTabB50 vt2 = D_80015C0C;
+    self->vb->vt = vt2.e;
+    char *full2;
+    int adj2;
+    vt2.e[1].d = D_80015C0C.e[1].d + (adj2 = (char *)self - (full2 = (char *)self->vb - 0x124));
+    vt2.e[5].d = D_80015C0C.e[5].d + adj2;
+    const VEntB *ep = D_80015C0C.e;
+    vt2.e[7].d = ep[7].d + adj2;
+    vt2.e[9].d = ep[9].d + adj2;
+    func_80065AA0((char *)self + 0x50, 0);
+    func_8002AFEC(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb, 0);
+    if (in_chrg & 1)
+        __builtin_delete(self);
+}
 
 EXTERN_C void func_8006AD40(void *self)
 {
