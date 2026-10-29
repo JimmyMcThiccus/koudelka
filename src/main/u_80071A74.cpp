@@ -3848,7 +3848,16 @@ EXTERN_C void func_8007FC90(void *self, int k)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_8007FD60);
+EXTERN_C char D_800AC86C[];
+struct Sub_8007FD60 { char *vt; char *vt2; void *owner; short a, b, c, d;
+    Sub_8007FD60(void *o) { vt = D_800100F8; vt2 = D_800101C0; vt = D_800101B0; a = 0x2032; b = 0x2033; owner = o; c = 2; d = 2; } };
+EXTERN_C void func_8007FD60(void *self, int a1)
+{
+    FIELD_AT(self, char, 0x360) = 1;
+    Sub_8007FD60 *p = new Sub_8007FD60(self);
+    while (func_800382A4(D_800AC86C, a1, (int)(p ? (char *)p + 4 : 0))) {
+    }
+}
 
 EXTERN_C void func_8007FE1C(void *self, int b)
 {

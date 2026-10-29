@@ -134,4 +134,9 @@ EXTERN_C S_A2_V4 func_8004463C(S_A2_V4 *a, S_A2_V4 *b);
 EXTERN_C short D_800B4D34;
 extern "C++" void *f1A744(void *p, void *a) asm("func_8001A744");
 struct S_A2B_Del12 { void *vt; int kind; void *obj; S_A2B_Del12(int k, void *o) { vt = D_800127E4; kind = k; obj = o; } };
+// func_8003C908: null-checked base of a list node, and the 'replace link at +4' step it does twice.
+inline void *a2b_base(void *x) { return x ? (char *)x - 8 : 0; }
+inline void a2b_set4(void *o, void *v) { if (AT(o, void *, 4) && v) func_8001A864(v, AT(o, void *, 4)); AT(o, void *, 4) = v; }
+struct C_8003C5A8 { C_8003C5A8(void *a, int b, int c) asm("func_8003C5A8"); char pad[0x1C]; };
+EXTERN_C A2VObj<4> *D_800B4D04;
 #endif /* GAME_A2B_A2B_H */

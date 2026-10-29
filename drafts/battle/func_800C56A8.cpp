@@ -1,5 +1,7 @@
+// r4c: drafts must #include "shared/exe.h" (without it callees are implicit varargs and the d0230 loop is not rotated). Still 2 (sw fA0/sw f2C4 order). Tried: 120 orders of b954/b955/g/fA0/f2C4 (+ inline g), 1500 random orders of the 16 tail stores: best stays 2.
 // 2 differing: sw fA0 / sw f2C4 order swapped (source order F,M gives 4 diffs: memset a2 hoist differs)
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 //@ func_800C56A8 best
 EXTERN_C T_C56A8 *func_800C56A8(T_C56A8 *p, int a) {

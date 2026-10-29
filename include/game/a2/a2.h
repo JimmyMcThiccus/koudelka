@@ -221,6 +221,15 @@ EXTERN_C void *D_8001265C[];
 EXTERN_C void *D_800126DC[];
 EXTERN_C int func_8003906C(void *p, short a, short b);
 EXTERN_C int func_80034BD4(void *a, void *b, void *c, void *d, void *e);
+// func_8003479C passes each argument through a derived-to-base conversion (null-checked +4); the alias takes the
+// base type so the conversion is implicit, which is what gives retail's branch layout for the stack argument.
+struct S_479C_A { int f0; };
+struct S_479C_B { int f0; };
+struct S_479C_D : S_479C_A, S_479C_B { };
+EXTERN_C int func_80034BD4_b(S_479C_B *a, S_479C_B *b, S_479C_B *c, S_479C_B *d, S_479C_B *e) asm("func_80034BD4");
+EXTERN_C int func_80034B0C(S_Rgb *s, S_Rgb *a, S_Rgb *b, S_Rgb *c, S_Rgb *d);
+// func_8004A89C: same derived-to-base argument conversions as func_8003479C.
+EXTERN_C int func_8004AC04_b(S_479C_B *a, S_479C_B *b, S_479C_B *c, S_479C_B *d, S_479C_B *e) asm("func_8004AC04");
 EXTERN_C void *D_80012364[];
 EXTERN_C void *D_8001237C[];
 struct S_A2_Ch { short c; S_A2_Ch() asm("func_800601C8"); S_A2_Ch &operator=(const S_A2_Ch &o) asm("func_80060218"); };

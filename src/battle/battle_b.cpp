@@ -622,7 +622,52 @@ EXTERN_C int func_800C65C8(T_C65C8 *p, int a) {
     return 1;
 }
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C666C);
+EXTERN_C int func_800C666C(void *self) {
+    signed char *g = (signed char *)D_800AF470g[0]->f328;
+    int ret = 0;
+    T_C666C_o *first = 0;
+    int fl[3];
+    for (int i = 0; i < 3; i++) {
+        fl[i] = 0;
+        T_C666C_o *o = D_800AFA58o[i];
+        if (o) {
+            if (o->b50E) {
+                int st = o->s50C;
+                o->b50E = 0;
+                unsigned char t = (st == 1) << 3;
+                unsigned char f = t;
+                if (st == 2) f = t | 0x10;
+                if (o->b512) f |= 0x20;
+                if (o->b513) f |= 0x40;
+                int a1 = o->s510;
+                o->s50C = 0; o->b512 = 0; o->b513 = 0;
+                o->v18(a1, f & 0xFF);
+            }
+            if (!o->b4F0 && !o->s410) {
+                if (!first) first = o;
+                ret = 1;
+                o->b4F0 = ret;
+                fl[i] = ret;
+                func_8008EF40(0x16);
+                char *base = (char *)o + 0x2A0;
+                func_8008299C(base, 0x29, 0, 0, 0, 0, 0);
+                func_8008299C(base, 0x2C, 0x2D, 0, 0, 0, 0);
+                func_8008299C(base, 0x2F, ret, 0, 0, 0, 0);
+                (g + i)[0xD7] = -1;
+                func_800CF2D0((T_CF2D0 *)self, i);
+            }
+        }
+    }
+    if (first) func_800CFB08((T_CFB08 *)self, (T_CFB08_q *)first);
+    for (int i = 0; i < 3; i++) {
+        if (fl[i]) {
+            char *base = (char *)D_800AFA58o[i] + 0x2A0;
+            func_8008299C(base, 0x2A, 0, 0, 0, 0, 0);
+            func_80082E14(base, 0);
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C68D8);
 
@@ -908,7 +953,32 @@ EXTERN_C bool func_800C8A54(T_C9A4C *p, int x1, int y1, int x, int y) {
 
 INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C8BA4);
 
-INCLUDE_ASM("asm/battle/nonmatchings/battle_b", func_800C8D9C);
+#define p ((T_C8D9C *)vp)
+EXTERN_C int func_800C8D9C(void *vp, int side, int *hi, int *lo) {
+    if (!p->it.head) return -1;
+    int l = 6, h = 0, r;
+    switch (side) {
+    case 1: r = 2; h = 6; break;
+    case 2: r = 1; l = 0; break;
+    default: return -1;
+    }
+    T_C8D9C_it *it = p->it.first();
+    for (;;) {
+        T_C9284 *o = c8d9c_obj(it->cur);
+        if (o->b4BD == side && o->s410) {
+            int y = o->s4CA;
+            l = l < y ? l : y;
+            if (y < h) y = h;
+            h = y;
+        }
+        if (p->it.is_last()) break;
+        p->it.next();
+    }
+    *lo = l;
+    *hi = h;
+    return r;
+}
+#undef p
 
 EXTERN_C void func_800C8EE4(T_C8EE4 *p, int a) {
     int lo, hi;

@@ -1,6 +1,8 @@
+// r4c: still 2 (lw D_800A4534.fC lands in v1, retail a0). Tried: 400 store orders, locals for the value/&D_800A4534, plain D_800D5D7C, no register hint; permuter 11k iterations: no change.
 // func_800B881C: NOT MATCHING. 2 instructions differ: the final lw of D_800A4534.fC lands in v1 (ours) instead of a0 (retail); everything else matches. Uses register-v0 'r' trick for trailing stores.
 // Harness format (scratch_c/battle-batch.py): prelude + //@ section. Needs landed func_800BC294 and T_BC294 from battle.h.
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 struct T_B881C_l { void *f0; int f4; void *f8; };
 struct T_B881C { VTable *vtbl; char pad4[0x88]; VTable *vtbl8C; char pad90[0x68]; VTable *vtblF8; char padFC[0x3E8]; int f4E4; T_B881C_l f4E8; char pad4F4[0x14]; int f508; int f50C; T_B881C_l f510; char pad51C[0x14]; T_B881C_l f530; char pad53C[0x14]; int f550; int f554; int f558; int f55C; int f560; int f564; int f568; int f56C; };

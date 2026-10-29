@@ -1,4 +1,7 @@
+// r4c: still 5. Global-alloc priority: o (3 refs) beats e->a (2 refs); retail is the reverse. Tried: 36 statement orders x 3 types, 48 declaration orders (block and function scope), permuter ~5k iterations. Header now returns int (retail returns r).
 // func_800BDEA4: 5 differing: o and the ushort are in swapped s1/s0. Needs asm alias for the header declaration.
+#include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 struct Unk_BDEA4_e { unsigned short a; };

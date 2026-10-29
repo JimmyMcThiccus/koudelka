@@ -328,7 +328,13 @@ EXTERN_C void func_800468D0()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800468D8);
+EXTERN_C int func_800468D8(void *a, int b, int c, void *d, void *e)
+{
+    int r = func_80036FC0(e, b, c);
+    if (!r) { if (d) func_80035DE0((int)d); return 1; }
+    if (d) ((A2VObj0 *)d)->v00(0);
+    return 0;
+}
 
 EXTERN_C int func_80046948(void *p, void *q, int a)
 {
@@ -499,7 +505,24 @@ EXTERN_C int func_8004991C(void *p, short a)
     return 0x400;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800499D0);
+// shared/exe.h declares func_800499D0(void *, void *) returning void (callers' view); the body takes a third
+// (int *out) argument and returns src + 0x10, so it is defined through this alias.
+extern "C++" void *f499D0(char *p, char *src, int *out) asm("func_800499D0");
+void *f499D0(char *p, char *src, int *out)
+{
+    int i = 0;
+    char *pp = p;
+    char *sr = src;
+    short *s = (short *)sr;
+    *out = ((signed char *)sr)[1];
+    *(S_A2_Sv *)(pp + 4) = *(S_A2_Sv *)(sr + 8);
+    do {
+        *(int *)(pp + 0xC) = D_800B4D04->v01(s[1]);
+        s++; i++;
+        pp += 4;
+    } while (i < 3);
+    return sr + 0x10;
+}
 
 EXTERN_C int func_80049A7C(void *p, int i)
 {
@@ -668,7 +691,12 @@ EXTERN_C void func_8004A874(void *p, int a)
     func_800198AC(p, a);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8004A89C);
+EXTERN_C int func_8004A89C(S_479C_D *a, S_479C_D *b, S_479C_D *c, S_479C_D *d, S_479C_D *e)
+{
+    if (func_80034B0C((S_Rgb *)a, (S_Rgb *)b, (S_Rgb *)c, (S_Rgb *)d, (S_Rgb *)e))
+        return func_8004AC04_b(a, b, c, d, e);
+    return 0;
+}
 
 EXTERN_C void func_8004A954(void *p, void *q)
 {
@@ -1204,7 +1232,23 @@ EXTERN_C int func_8004D040(void *p, short a)
     return 0x400;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8004D0F4);
+// Same shape as func_800499D0 (4 entries, src + 0x14); exe.h's two-argument void prototype is the callers' view.
+extern "C++" void *fD0F4(char *p, char *src, int *out) asm("func_8004D0F4");
+void *fD0F4(char *p, char *src, int *out)
+{
+    int i = 0;
+    char *pp = p;
+    char *sr = src;
+    short *s = (short *)sr;
+    *out = ((signed char *)sr)[1];
+    *(S_A2_Sv *)(pp + 4) = *(S_A2_Sv *)(sr + 0xC);
+    do {
+        *(int *)(pp + 0xC) = D_800B4D04->v01(s[2]);
+        s++; i++;
+        pp += 4;
+    } while (i < 4);
+    return sr + 0x14;
+}
 
 EXTERN_C int func_8004D1A0(void *p, int a)
 {

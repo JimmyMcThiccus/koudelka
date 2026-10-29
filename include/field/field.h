@@ -452,6 +452,16 @@ struct Unk_800E56B4 { char pad0[0x48]; Unk_Blk40* unk48; };
 struct Unk_Blk80 { char v[0x80]; };
 struct Unk_800E5760 { char pad0[0x44]; Unk_Blk80* unk44; };
 EXTERN_C Unk_Short2 func_800BE0C8(void*, short);
+struct He_E_ent { signed char c0; unsigned char c1; unsigned char c2; char pad3; short s4; short s6; };
+struct He_E_n1 { int unk0; He_E_n1* unk4; short unk8; char padA[6]; unsigned char unk10; unsigned char unk11; char pad12[2]; unsigned short unk14; He_E_ent* unk18; };
+struct He_E_X { int unk0; int unk4; };
+struct He_E_Y : He_E_X, Unk_800BFB64_list { };
+struct He_E_n2 { int unk0; struct He_E_n2* unk4; char pad8[4]; He_E_Y unkC; char pad_[0x14]; short unk2C; };
+inline He_E_n1* next(He_E_n1* n) { return n->unk4; }
+inline He_E_n2* next(He_E_n2* n) { return n->unk4; }
+struct He_E_p { char pad0[0x3D8]; unsigned short unk3D8; short unk3DA; char pad3DC[0x38]; He_E_n1* unk414; char pad418[0x3C]; He_E_n2* unk454; char pad458[0x34]; int unk48C; int unk490; };
+
+inline void* at_BE264(Unk_800BFB64_list* l, int i) { return func_80019F64((List *)first(l), i); }
 EXTERN_C void func_800BE264(void*, Unk_Short2);
 struct Unk_W2 { int a, b; };
 struct Unk_W3 { int a, b, c; };
@@ -702,7 +712,7 @@ EXTERN_C void func_800BED4C(Unk_800BED4C*);
 EXTERN_C void func_800BEB2C(void*);
 EXTERN_C void func_800BF0E0(void*);
 EXTERN_C void func_800BE470(void*, void*);
-EXTERN_C void func_800BDEA4(void*, void*);
+EXTERN_C int func_800BDEA4(void*, void*);
 inline Unk_GrpNode* next_800BBE68(Unk_GrpNode* n) { return n->unk4; }
 struct Unk_800D122C { char pad0[0x68]; int unk68; char pad6C[4]; void* unk70; void* unk74; void* unk78; int unk7C; };
 inline void* at0(Unk_Tbl* t) { return t->unk4 ? t->unk0[0] : 0; }

@@ -80,7 +80,12 @@ EXTERN_C void func_80034710(void *p, int flags)
     func_8001A610(p, flags);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_8003479C);
+EXTERN_C int func_8003479C(S_479C_D *a, S_479C_D *b, S_479C_D *c, S_479C_D *d, S_479C_D *e)
+{
+    if (func_80034B0C((S_Rgb *)a, (S_Rgb *)b, (S_Rgb *)c, (S_Rgb *)d, (S_Rgb *)e))
+        return func_80034BD4_b(a, b, c, d, e);
+    return 0;
+}
 
 EXTERN_C void func_80034854(void *p, void *q)
 {
@@ -481,7 +486,21 @@ EXTERN_C void func_80035C28()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035C30);
+EXTERN_C unsigned char func_80035C30(int a)
+{
+    a = (a ^ 2) & 0x12;
+    unsigned char na = a;
+    int m = (unsigned char)a;
+    int i;
+    unsigned char v;
+    for (i = 0; i < 3; i++) {
+        v = (D_800B4D10[i] = D_800B4D10[i + 1]);
+        m &= v;
+    }
+    D_800B4D10[3] = na;
+    if (m) func_8003831C(&D_800AC86C, m);
+    return m;
+}
 
 EXTERN_C int func_80035CA8()
 {
