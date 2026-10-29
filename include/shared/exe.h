@@ -958,7 +958,7 @@ EXTERN_C int func_8008B130(void *self, int b);
 EXTERN_C void func_8008B150(void *, void *, int, int, int);
 EXTERN_C int func_8008B444(int n);
 #ifndef EXE_H_IN_u_80089024
-EXTERN_C void func_800894AC(char *self, char *b, int c, void *d);
+EXTERN_C void func_800894AC(void *a, void *b, int c, void *d);
 EXTERN_C void *func_800899AC(void *out, void *a, signed char *b);
 EXTERN_C int func_8008A5C8(void *self, void *b, void *c);
 EXTERN_C int func_8008B4E8(void *p, int b);
