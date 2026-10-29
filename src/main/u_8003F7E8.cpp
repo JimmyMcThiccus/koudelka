@@ -234,9 +234,95 @@ EXTERN_C char *func_800402A8(void *p, short i)
     return 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_800402E4);
+EXTERN_C void func_800402E4(void *p, void *q)
+{
+    char *s5 = AT(q, char *, 0x2C) + AT(AT(q, char *, 4), int, 4);
+    char *h = s5;
+    char *s7 = 0;
+    char *s4, *s3;
+    char buf[0x28];
+    s5 += 0x10;
+    if (AT(h, short, 0xE)) {
+        s7 = s5;
+        s5 += AT(h, short, 0xE);
+    }
+    int cnt = AT(h, short, 8);
+    AT(p, short, 0xC) = AT(h, short, 6);
+    AT(p, short, 0xE) = AT(h, short, 8);
+    AT(p, short, 0x10) = AT(h, short, 4);
+    AT(p, int, 0x14) = AT(h, short, 0xC);
+    AT(p, char, 0x12) = AT(h, char, 2);
+    s4 = s5;
+    AT(p, char, 0x13) = AT(h, char, 3);
+    s5 += cnt << 4;
+    AT(p, short, 0x2C) = AT(h, short, 0xA);
+    AT(p, short, 0x34) = AT(h, short, 0xE);
+    s3 = s5;
+    if (AT(p, short, 0x34)) {
+        void *v = __builtin_vec_new(AT(p, short, 0x34));
+        AT(p, void *, 0x30) = v;
+        func_80025CE0(v, s7, AT(p, short, 0x34));
+    } else
+        AT(p, void *, 0x30) = 0;
+    AT(p, void *, 0x24) = __builtin_vec_new(AT(p, short, 0xE) * AT(p, short, 0xC) * 12);
+    AT(p, void *, 0x28) = __builtin_vec_new(AT(p, short, 0xE) << 4);
+    { int cw = AT(p, short, 0xC) * 12; func_80025CE0(AT(p, void *, 0x24), s3, AT(p, short, 0xE) * cw); }
+    func_80025CE0(AT(p, void *, 0x28), s4, AT(p, short, 0xE) << 4);
+    s5 += AT(p, short, 0xE) * 12 * AT(p, short, 0xC);
+    if (AT(p, short, 0x36)) {
+        func_80048D54(buf);
+        void *r = func_80049250(buf, s5, (char *)p + 0x20);
+        AT(p, void *, 0x18) = r;
+        if (r)
+            AT(p, unsigned short, 0x1C) = AT(r, unsigned short, 0x14);
+        func_80048D2C(buf, 2);
+    }
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_800404C8);
+EXTERN_C void func_800404C8(void *p, void *q)
+{
+    char *s5 = (char *)q;
+    char *h = s5;
+    char *s7 = 0;
+    char *s4, *s3;
+    char buf[0x28];
+    s5 += 0x10;
+    if (AT(h, short, 0xE)) {
+        s7 = s5;
+        s5 += AT(h, short, 0xE);
+    }
+    int cnt = AT(h, short, 8);
+    AT(p, short, 0xC) = AT(h, short, 6);
+    AT(p, short, 0xE) = AT(h, short, 8);
+    AT(p, short, 0x10) = AT(h, short, 4);
+    AT(p, int, 0x14) = AT(h, short, 0xC);
+    AT(p, char, 0x12) = AT(h, char, 2);
+    s4 = s5;
+    AT(p, char, 0x13) = AT(h, char, 3);
+    s5 += cnt << 4;
+    AT(p, short, 0x2C) = AT(h, short, 0xA);
+    AT(p, short, 0x34) = AT(h, short, 0xE);
+    s3 = s5;
+    if (AT(p, short, 0x34)) {
+        void *v = __builtin_vec_new(AT(p, short, 0x34));
+        AT(p, void *, 0x30) = v;
+        func_80025CE0(v, s7, AT(p, short, 0x34));
+    } else
+        AT(p, void *, 0x30) = 0;
+    AT(p, void *, 0x24) = __builtin_vec_new(AT(p, short, 0xE) * AT(p, short, 0xC) * 12);
+    AT(p, void *, 0x28) = __builtin_vec_new(AT(p, short, 0xE) << 4);
+    { int cw = AT(p, short, 0xC) * 12; func_80025CE0(AT(p, void *, 0x24), s3, AT(p, short, 0xE) * cw); }
+    func_80025CE0(AT(p, void *, 0x28), s4, AT(p, short, 0xE) << 4);
+    s5 += AT(p, short, 0xE) * 12 * AT(p, short, 0xC);
+    if (AT(p, short, 0x36)) {
+        func_80048D54(buf);
+        void *r = func_80049250(buf, s5, (char *)p + 0x20);
+        AT(p, void *, 0x18) = r;
+        if (r)
+            AT(p, unsigned short, 0x1C) = AT(r, unsigned short, 0x14);
+        func_80048D2C(buf, 2);
+    }
+}
 
 EXTERN_C int func_800406A0(S_800406A0 *p)
 {
@@ -512,7 +598,39 @@ EXTERN_C void func_80042830()
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80042838);
+// exe.h declares the second argument as int; it is a pointer (the caller passes an int).
+EXTERN_C void func_80042838_t(void *p, void *q) asm("func_80042838");
+EXTERN_C void func_80042838_t(void *p, void *q)
+{
+    unsigned short t = AT(q, unsigned short, 0xA);
+    if (t == 2) {
+        switch (AT(q, int, 0x10)) {
+        case 8: {
+            void *o;
+            func_8003DEA8(p);
+            o = func_8001CA10(0x14);
+            ((S_A2B_E2D0 *)o)->init(t, 0xC, 0, 9);
+            func_8001EFE4(AT(p, void *, 0x1E8), o);
+            break;
+        }
+        case 7: {
+            void *s0 = AT(p, void *, 0x1D4);
+            void *s1;
+            AT(p, short, 0x294) = 0;
+            s1 = f1A744(s0, s0);
+            while (s0 && s1) {
+                s1 = f1A744(s0, s0);
+                if (s0)
+                    ((A2VObj0 *)s0)->v00(3);
+                s0 = s1;
+            }
+            AT(p, short, 0x21E) = (D_800B4D34 + 1) * 5;
+            D_800B4D34 = D_800B4D34 + 1;
+            break;
+        }
+        }
+    }
+}
 
 EXTERN_C void func_8004296C()
 {
@@ -618,7 +736,32 @@ EXTERN_C int func_80042E20(void *p, int x, int y)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80042EF0);
+EXTERN_C void func_80042EF0(void *p)
+{
+    unsigned s2 = D_800A4534.unkC;
+    unsigned lim = AT(p, unsigned, 0x204);
+    S_A2B_V4 v;
+    S_A2_V4 t;
+    if (lim <= s2) {
+        void *o;
+        s2 = lim;
+        AT(p, short, 0x220) = 0;
+        o = func_8001CA10(0x14);
+        ((S_A2B_E2D0 *)o)->init(2, 8, p, 2);
+        func_8001EFE4(p, o);
+    }
+    v.init();
+    v.a = func_8003ED10(p, AT(p, short, 0x258), AT(p, int, 0x25C), AT(p, int, 0x204) - AT(p, int, 0x200), s2 - AT(p, int, 0x200));
+    v.b = 0;
+    v.c = func_8003ED10(p, AT(p, short, 0x25A), AT(p, int, 0x264), AT(p, int, 0x204) - AT(p, int, 0x200), s2 - AT(p, int, 0x200));
+    {
+        S_A2_V4 r = func_8004463C((S_A2_V4 *)((char *)p + 0x25C), (S_A2_V4 *)&v);
+        t = r;
+        char *h = AT(p, char *, 0x1B8);
+        *(S_A2_V4 *)(h + 0x34) = t;
+        func_80039DD8(h);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_80043060);
 
