@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bim/shared.h"
 
 EXTERN_C void *func_800DAB3C(void *self, int in_chrg, int a, int b, int c, int d, int e);
 
@@ -33,7 +34,26 @@ INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB260);
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB2B0);
+EXTERN_C int func_800D7914_c(void *p, unsigned *flags) asm("func_800D7914");
+EXTERN_C int func_800D7A20_c(void *p, unsigned *flags) asm("func_800D7A20");
+EXTERN_C int func_800D7A4C_c(void *p, unsigned *flags) asm("func_800D7A4C");
+EXTERN_C int func_800D7AC4_c(void *p, unsigned *flags) asm("func_800D7AC4");
+
+EXTERN_C int func_800DB2B0(void *p, unsigned *flags)
+{
+    if (*flags & 1) {
+        func_800D8E64(p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 1, 0x21);
+        if (q)
+            func_800D7AC4(p, q, 1, 0);
+        *flags &= ~1;
+        return 1;
+    }
+    return 0;
+}
+
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB350);
 
