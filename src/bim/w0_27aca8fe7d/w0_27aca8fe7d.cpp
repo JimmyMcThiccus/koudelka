@@ -22,7 +22,7 @@ INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DB204);
 
 INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DB2A0);
 
-INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", bimf_db5f4bc4);
+#include "../shared/bimf_db5f4bc4.cpp"
 
 INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DB3C8);
 

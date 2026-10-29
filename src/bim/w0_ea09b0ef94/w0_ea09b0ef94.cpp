@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", func_800DACE0);
 
 INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", func_800DAE24);
 
-INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", bimf_014cace9);
+#include "../shared/bimf_014cace9.cpp"
 
 #include "../shared/bimf_7434482e.cpp"
 
