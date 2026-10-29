@@ -108,4 +108,39 @@ EXTERN_C short D_800B4EDC;
 
 EXTERN_C void func_80079918(void *a);
 
+struct S_8006C65C { S_VBB *vb; char pad4[0x28]; void **vt2C; char pad30[0x20]; void **vt50; };
+EXTERN_C const VTabB50 D_80015C0C;
+EXTERN_C void *D_80015C5C[];
+EXTERN_C void *D_80015C9C[];
+
+struct S_8008B30C { void **vt0; char pad4[0x88]; void **vt8C; char pad90[0x14C]; S_VBB *vb; void **vt1E0; void **vt1E4; char pad1E8[0x214]; void **vt3FC; char pad400[0x9C]; void **vt49C; char pad4A0[8]; void **vt4A8; };
+EXTERN_C const VTabB50 D_80017CCC;
+EXTERN_C void *D_80017D4C[];
+EXTERN_C void *D_8001262C[];
+EXTERN_C void *D_80017D2C[];
+EXTERN_C void *D_80017ADC[];
+EXTERN_C void *D_80017DFC[];
+EXTERN_C void *D_80017D1C[];
+EXTERN_C void *D_80017D64[];
+
+EXTERN_C const VTabB50 D_80017914;
+EXTERN_C void *D_80017994[];
+EXTERN_C void *D_80017974[];
+EXTERN_C void *D_80017A44[];
+EXTERN_C void *D_80017964[];
+EXTERN_C void *D_800179AC[];
+EXTERN_C const VTabB50 D_8001252C;
+EXTERN_C void *D_8001257C[];
+EXTERN_C void *D_8001260C[];
+EXTERN_C void *D_80012594[];
+EXTERN_C void func_800BFC60(void *self);
+EXTERN_C void func_8008677C_c(void *self, int a) asm("func_8008677C"); // defined in u_80085168 with another signature
+EXTERN_C void func_800828E4_c(void *self, int a) asm("func_800828E4");
+EXTERN_C void func_80042140(void *self, int a);
+
+struct B16Z { int w[4]; };
+EXTERN_C void func_80041E54(void *self, int in_chrg, int a2, int a3, int e, void *p, int f);
+EXTERN_C void func_800827EC_c(void *self) asm("func_800827EC");
+EXTERN_C void func_80086740_c(void *self) asm("func_80086740");
+
 #endif /* GAME_B2_B2_H */

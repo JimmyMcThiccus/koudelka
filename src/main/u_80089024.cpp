@@ -536,7 +536,30 @@ EXTERN_C void *func_8008B258(void *self, int b, int c)
     return self;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_8008B30C);
+EXTERN_C void func_8008B30C(S_8008B30C *self, int in_chrg)
+{
+    self->vt8C = D_80017D4C;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_80017D2C;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_80017DFC;
+    self->vt4A8 = D_80017D1C;
+    self->vt0 = D_80017D64;
+    self->vb->vt = (VEntB *)D_80017CCC.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80017CCC;
+        self->vb->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80017CCC.e[1].d + (adj = (char *)self - (full = (char *)self->vb - 0x598));
+        vt.e[6].d = D_80017CCC.e[6].d + adj;
+    }
+    func_80084454(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb, 0);
+    if (in_chrg & 1)
+        __builtin_delete(self);
+}
 
 EXTERN_C int func_8008B444(int n)
 {

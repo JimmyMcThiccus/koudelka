@@ -110,7 +110,28 @@ EXTERN_C int func_8006C650(void *self)
     return FIELD_AT(self, int, 0x8);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8006BFE4", func_8006C65C);
+EXTERN_C void func_8006C65C(S_8006C65C *self, int in_chrg)
+{
+    self->vt50 = D_80015C5C;
+    self->vt2C = D_80015C9C;
+    self->vb->vt = (VEntB *)D_80015C0C.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80015C0C;
+        self->vb->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80015C0C.e[1].d + (adj = (char *)self - (full = (char *)self->vb - 0x124));
+        vt.e[5].d = D_80015C0C.e[5].d + adj;
+        vt.e[7].d = D_80015C0C.e[7].d + adj;
+        vt.e[9].d = D_80015C0C.e[9].d + adj;
+    }
+    func_80065AA0((char *)self + 0x50, 0);
+    func_8002AFEC(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb, 0);
+    if (in_chrg & 1)
+        __builtin_delete(self);
+}
 
 // func_8002D780 takes its 4-byte point by value as S_Pt2 (defined in main_a); main_b2 passes SV2_80069F74.
 EXTERN_C void func_8002D780_v(void *self, SV2_80069F74 p) asm("func_8002D780");
