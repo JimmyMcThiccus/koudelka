@@ -1149,35 +1149,35 @@ EXTERN_C unsigned PadEnableCom(unsigned);
 EXTERN_C void PadInitDirect(unsigned char *, unsigned char *);
 
 /* PsyQ library functions without a name (0x80094910-0x800B5000) */
-EXTERN_C void func_80094990(void);
-EXTERN_C void func_800949A0(void);
+EXTERN_C void EnterCriticalSection(void);
+EXTERN_C void ExitCriticalSection(void);
 EXTERN_C void func_800949B0(void *);
 EXTERN_C int func_80094A20(void);
-EXTERN_C int func_80094FD0(char *);
+EXTERN_C int strlen(char *);
 EXTERN_C int func_800950A0(int);
-EXTERN_C int func_80098DA0(void *);
-EXTERN_C void func_80098DC0(void *, int);
-EXTERN_C void func_80098DF0(void *);
-EXTERN_C void func_80098E10(void *);
-EXTERN_C void func_80099C60(int, int);
+EXTERN_C int TermPrim(void *);
+EXTERN_C void SetSemiTrans(void *, int);
+EXTERN_C void SetTile(void *);
+EXTERN_C void SetLineF2(void *);
+EXTERN_C void SetGeomOffset(int, int);
 EXTERN_C void func_80099C80(int);
-EXTERN_C void func_8009A470(void);
+EXTERN_C void StUnSetRing(void);
 EXTERN_C int func_8009C9C0(void);
 EXTERN_C int func_8009C9D0(void);
 EXTERN_C int func_8009C9E0(void);
 EXTERN_C int func_8009CA80(int, void *);
 EXTERN_C void func_8009CAC0(int);
-EXTERN_C void func_8009CAE0(int);
-EXTERN_C void func_8009D000(int);
+EXTERN_C void CdReadyCallback(int);
+EXTERN_C void CdDataCallback(int);
 EXTERN_C void func_8009DDC0(int);
-EXTERN_C void func_8009EAE0(void);
-EXTERN_C unsigned long func_8009EBC0(long on_off, unsigned long voice_bit); /* SpuSetNoiseVoice */
-EXTERN_C unsigned long func_8009F0E0(long on_off, unsigned long voice_bit); /* SpuSetReverbVoice */
-EXTERN_C int func_8009F2C0(void);
-EXTERN_C unsigned long func_8009F5E0(unsigned char *, unsigned long);
+EXTERN_C void SpuQuit(void);
+EXTERN_C unsigned long SpuSetNoiseVoice(long on_off, unsigned long voice_bit); /* SpuSetNoiseVoice */
+EXTERN_C unsigned long SpuSetReverbVoice(long on_off, unsigned long voice_bit); /* SpuSetReverbVoice */
+EXTERN_C int SpuGetIRQ(void);
+EXTERN_C unsigned long SpuWrite(unsigned char *, unsigned long);
 EXTERN_C void (*func_8009F6D0(void (*f)(void)))(void);
-EXTERN_C unsigned long func_8009F700(long on_off, unsigned long voice_bit); /* SpuSetPitchLFOVoice */
-EXTERN_C void func_800A0800(int, int);
+EXTERN_C unsigned long SpuSetPitchLFOVoice(long on_off, unsigned long voice_bit); /* SpuSetPitchLFOVoice */
+EXTERN_C void SpuSetReverbModeDepth(int, int);
 EXTERN_C void func_800A0A10(long *type); /* SpuGetReverbModeType */
 EXTERN_C void func_800A0D0C(void *);
 EXTERN_C void *func_800A0D2C(int);

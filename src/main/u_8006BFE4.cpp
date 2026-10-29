@@ -32,7 +32,7 @@ EXTERN_C int D_800B4D00_word asm("D_800B4D00");
 EXTERN_C void func_8006C29C(void *self)
 {
     func_80065AD0(self ? (char *)self + 0x50 : 0);
-    func_80099C60(FIELD_AT(self, int, 0x114), FIELD_AT(self, int, 0x118));
+    SetGeomOffset(FIELD_AT(self, int, 0x114), FIELD_AT(self, int, 0x118));
     func_80099C80(FIELD_AT(self, int, 0x11C));
     D_800B4D00_word = (int)((VObj<0x2C> *)self)->v11();
 }

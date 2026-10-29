@@ -407,7 +407,7 @@ EXTERN_C int func_800B8048(void)
     *(char **)(o + 0x114) = b;
     SpuSetVoiceLoopStartAddr(*(short *)(o + 0xF4), (unsigned long)b);
     (*(int *)(o + 0x40))++;
-    o[0xA] = func_8009F2C0();
+    o[0xA] = SpuGetIRQ();
     *(unsigned long *)(o + 0xC) = SpuGetIRQAddr();
     return 0;
 }
@@ -594,7 +594,7 @@ EXTERN_C void func_800B84E0(S_800B84E0 *p)
     SpuSetVoiceSRAttr(v, p->sr, p->srMode);
     SpuSetVoiceRRAttr(v, p->rr, p->rrMode);
     mask = 1 << v;
-    func_8009F700(0, mask);
-    func_8009EBC0(0, mask);
-    func_8009F0E0(0, mask);
+    SpuSetPitchLFOVoice(0, mask);
+    SpuSetNoiseVoice(0, mask);
+    SpuSetReverbVoice(0, mask);
 }

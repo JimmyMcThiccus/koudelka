@@ -3,6 +3,8 @@ Koudelka_Game_Data/
 Prototype/
 # Sony SDKs (PsyQ 4.4, Net Yaroze): never committed
 Playstation_SDK/
+psyq-sdk/
+PS_Runtime/
 extracted/
 *.bin
 *.cue

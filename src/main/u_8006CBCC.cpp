@@ -140,11 +140,11 @@ EXTERN_C void *func_8006E73C(Obj_8006E73C *self, int a, int b, int c, int e, sho
     FIELD_AT(self, unsigned char, 0x4F) = 9;
     FIELD_AT(self, unsigned char, 0x53) = 0x2C;
     if ((unsigned short)f < 4) {
-        func_80098DC0((char *)self + 0x24, 1);
-        func_80098DC0((char *)self + 0x4C, 1);
+        SetSemiTrans((char *)self + 0x24, 1);
+        SetSemiTrans((char *)self + 0x4C, 1);
     } else {
-        func_80098DC0((char *)self + 0x24, 0);
-        func_80098DC0((char *)self + 0x4C, 0);
+        SetSemiTrans((char *)self + 0x24, 0);
+        SetSemiTrans((char *)self + 0x4C, 0);
     }
     func_8006EACC(self, c, f);
     func_8006EBB0(self, a);

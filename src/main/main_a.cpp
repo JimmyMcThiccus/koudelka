@@ -16,7 +16,7 @@ EXTERN_C S_800186B0 *func_800186B0(S_800186B0 *s)
 EXTERN_C void func_800186E8(Holder *h)
 {
     if (++D_800B4BFC == 1) {
-        func_80094990();
+        EnterCriticalSection();
         for (int i = 0; i < count_of(h); i++)
             ((Item *)func_80019F64(h, i))->run();
     }
@@ -28,7 +28,7 @@ EXTERN_C void func_80018788(Holder *h)
         D_800B4BFC = 0;
         for (int i = 0; i < count_of(h); i++)
             ((S_Item2 *)func_80019F64(h, i))->stop();
-        func_800949A0();
+        ExitCriticalSection();
     } else if (D_800B4BFC > 1) {
         D_800B4BFC--;
     }
@@ -39,7 +39,7 @@ EXTERN_C void func_80018840(Holder *h)
     D_800B4BFC = 0;
     for (int i = 0; i < count_of(h); i++)
         ((S_Item2 *)func_80019F64(h, i))->stop();
-    func_800949A0();
+    ExitCriticalSection();
 }
 
 EXTERN_C void func_800188D4(Holder *h)

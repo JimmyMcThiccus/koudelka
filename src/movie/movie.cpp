@@ -68,7 +68,7 @@ EXTERN_C void func_800B914C(Unk800B93D8T* p) {
   // comparing through a flag keeps cse from recording s == p (combine folds it back into the bne)
   s32 cur = s == p;
   if (!cur) return;
-  if (p->x30 >= 0) { func_8008CD1C(0, 0); VSync(0); func_8009A470(); }
+  if (p->x30 >= 0) { func_8008CD1C(0, 0); VSync(0); StUnSetRing(); }
   p->x36 = 0;
   p->x35 = 0x15;
   *g = 0; // through the local pointer so the p->x3C load can move above it
@@ -1408,9 +1408,9 @@ INCLUDE_ASM("asm/movie/nonmatchings/movie", func_800C2450);
 
 EXTERN_C int func_800C24C8(int x) { return (x + 0x1FFF) / 0x2000; }
 
-EXTERN_C void func_800C24E0() { _bu_init(); func_80094990(); D_800CBA9C[0] = OpenEvent(0xF4000001, 4, 0x1000, (long (*)())func_800C22E8); D_800CBAA0[0] = OpenEvent(0xF4000001, 0x8000, 0x1000, (long (*)())func_800C2360); D_800CBAA4[0] = OpenEvent(0xF4000001, 0x100, 0x1000, (long (*)())func_800C23D8); D_800CBAA8[0] = OpenEvent(0xF4000001, 0x2000, 0x1000, (long (*)())func_800C2450); func_800949A0(); }
+EXTERN_C void func_800C24E0() { _bu_init(); EnterCriticalSection(); D_800CBA9C[0] = OpenEvent(0xF4000001, 4, 0x1000, (long (*)())func_800C22E8); D_800CBAA0[0] = OpenEvent(0xF4000001, 0x8000, 0x1000, (long (*)())func_800C2360); D_800CBAA4[0] = OpenEvent(0xF4000001, 0x100, 0x1000, (long (*)())func_800C23D8); D_800CBAA8[0] = OpenEvent(0xF4000001, 0x2000, 0x1000, (long (*)())func_800C2450); ExitCriticalSection(); }
 
-EXTERN_C void func_800C259C() { func_80094990(); CloseEvent(D_800CBA9C[0]); CloseEvent(D_800CBAA0[0]); CloseEvent(D_800CBAA4[0]); CloseEvent(D_800CBAA8[0]); func_800949A0(); D_800CBA9C[0] = -1; D_800CBAA0[0] = -1; D_800CBAA4[0] = -1; D_800CBAA8[0] = -1; }
+EXTERN_C void func_800C259C() { EnterCriticalSection(); CloseEvent(D_800CBA9C[0]); CloseEvent(D_800CBAA0[0]); CloseEvent(D_800CBAA4[0]); CloseEvent(D_800CBAA8[0]); ExitCriticalSection(); D_800CBA9C[0] = -1; D_800CBAA0[0] = -1; D_800CBAA4[0] = -1; D_800CBAA8[0] = -1; }
 
 EXTERN_C void* func_800C2624(void* vp, s32 in_chrg, s32 size, s32 a, s32 b, const char* name) {
 #define p ((Unk800C2624*)vp)
@@ -1729,7 +1729,7 @@ EXTERN_C s32 func_800C3D50(Unk800C3D50* p) { return p->x38; }
 
 EXTERN_C int func_800C3D5C(Unk800C3D5C* p, s32 v) { if (p->x38 == v || p->x34 != -1) return 0; p->x38 = v; return 1; }
 
-EXTERN_C void func_800C3D90(Unk800C3D90* p, char* s) { s32 n = func_80094FD0(s); if (p->x40) func_800A0D0C(p->x40); p->x40 = (char*)func_800A0D2C(n + 1); func_80025CE0(p->x40, s, n); p->x40[n] = 0; }
+EXTERN_C void func_800C3D90(Unk800C3D90* p, char* s) { s32 n = strlen(s); if (p->x40) func_800A0D0C(p->x40); p->x40 = (char*)func_800A0D2C(n + 1); func_80025CE0(p->x40, s, n); p->x40[n] = 0; }
 
 EXTERN_C void func_800C3E10(Unk800C3E10* p, void* b) { func_80025CE0(p->x54, b, p->x50 * 128); }
 

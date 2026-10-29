@@ -656,21 +656,21 @@ EXTERN_C int func_800E3A0C(int a) { return (a + 0x1FFF) / 0x2000; }
 
 EXTERN_C void func_800E3A24() {
     _bu_init();
-    func_80094990();
+    EnterCriticalSection();
     D_800EA7B8[0] = OpenEvent(0xF4000001, 4, 0x1000, (long (*)())func_800E382C);
     D_800EA7BC[0] = OpenEvent(0xF4000001, 0x8000, 0x1000, (long (*)())func_800E38A4);
     D_800EA7C0[0] = OpenEvent(0xF4000001, 0x100, 0x1000, (long (*)())func_800E391C);
     D_800EA7C4[0] = OpenEvent(0xF4000001, 0x2000, 0x1000, (long (*)())func_800E3994);
-    func_800949A0();
+    ExitCriticalSection();
 }
 
 EXTERN_C void func_800E3AE0() {
-    func_80094990();
+    EnterCriticalSection();
     CloseEvent(D_800EA7B8[0]);
     CloseEvent(D_800EA7BC[0]);
     CloseEvent(D_800EA7C0[0]);
     CloseEvent(D_800EA7C4[0]);
-    func_800949A0();
+    ExitCriticalSection();
     D_800EA7B8[0] = -1;
     D_800EA7BC[0] = -1;
     D_800EA7C0[0] = -1;
@@ -1026,7 +1026,7 @@ EXTERN_C int func_800E51F8(Unk_800E51EC* p, void* a) {
 }
 
 EXTERN_C void func_800E522C(Unk_800E522C* p, char* s) {
-    int n = func_80094FD0(s);
+    int n = strlen(s);
     if (p->unk40) {
         operator delete[](p->unk40);
     }

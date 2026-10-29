@@ -601,11 +601,11 @@ EXTERN_C T_BC704 *func_800BC704(T_BC704 *p, SVec2 *v, T_BCB6C_c *a, T_BCB6C_c *b
     SetDrawMode(&p->dm[0], 0, 1, 0, 0);
     SetDrawMode(&p->dm[1], 0, 1, 0, 0);
     if ((unsigned short)f < 4) {
-        func_80098DC0(&p->prims[0], 1);
-        func_80098DC0(&p->prims[1], 1);
+        SetSemiTrans(&p->prims[0], 1);
+        SetSemiTrans(&p->prims[1], 1);
     } else {
-        func_80098DC0(&p->prims[0], 0);
-        func_80098DC0(&p->prims[1], 0);
+        SetSemiTrans(&p->prims[0], 0);
+        SetSemiTrans(&p->prims[1], 0);
     }
     func_800BCCEC((T_BCA6C *)p, v);
     func_800BCDC0((T_BCA6C *)p, a, b, c, d);

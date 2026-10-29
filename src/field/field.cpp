@@ -25,11 +25,11 @@ EXTERN_C Unk_800BA800* func_800BA800(Unk_800BA800* p, Unk_Short2 xy, Unk_800BA80
     func_800BB128((Unk_Sprt16_24*)p, uv.u, uv.v);
     func_800BAED8((Unk_Sprt16_24c*)p, (Unk_ColorSrc*)col);
     if (b) {
-        func_80098DC0(&p->unk24[0], 1);
-        func_80098DC0(&p->unk24[1], 1);
+        SetSemiTrans(&p->unk24[0], 1);
+        SetSemiTrans(&p->unk24[1], 1);
     } else {
-        func_80098DC0(&p->unk24[0], 0);
-        func_80098DC0(&p->unk24[1], 0);
+        SetSemiTrans(&p->unk24[0], 0);
+        SetSemiTrans(&p->unk24[1], 0);
     }
     func_800BADB4(p);
     func_800198AC(col, 2);

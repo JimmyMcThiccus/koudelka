@@ -323,14 +323,14 @@ EXTERN_C void *func_8006A084(Obj_8006A084 *self, void *b, short c, short d, int 
     func_8006A3C0((VObj0 *)self, b);
     func_8006A588((VObj0 *)self, b);
     func_8006A440(self, b);
-    func_80098DF0((char *)self + 0x24);
-    func_80098DF0((char *)self + 0x34);
+    SetTile((char *)self + 0x24);
+    SetTile((char *)self + 0x34);
     if (c == -1) {
-        func_80098DC0((char *)self + 0x24, 0);
-        func_80098DC0((char *)self + 0x34, 0);
+        SetSemiTrans((char *)self + 0x24, 0);
+        SetSemiTrans((char *)self + 0x34, 0);
     } else {
-        func_80098DC0((char *)self + 0x24, 1);
-        func_80098DC0((char *)self + 0x34, 1);
+        SetSemiTrans((char *)self + 0x24, 1);
+        SetSemiTrans((char *)self + 0x34, 1);
         func_8006A608(self, c);
     }
     func_8006A6D4(self);
@@ -397,12 +397,12 @@ EXTERN_C void func_8006A608(void *self, int v)
         ((VObj0 *)self)->v08();
     }
     if ((short)v >= 0) {
-        func_80098DC0((char *)self + 0x24, 1);
-        func_80098DC0((char *)self + 0x34, 1);
+        SetSemiTrans((char *)self + 0x24, 1);
+        SetSemiTrans((char *)self + 0x34, 1);
         SetDrawMode((char *)self + (D_800B4CF0_w * 12 + 0xC), 0, 1, (v << 21) >> 16, 0);
     } else {
-        func_80098DC0((char *)self + 0x24, 0);
-        func_80098DC0((char *)self + 0x34, 0);
+        SetSemiTrans((char *)self + 0x24, 0);
+        SetSemiTrans((char *)self + 0x34, 0);
     }
     FIELD_AT(self, short, 8) = 2;
 }
