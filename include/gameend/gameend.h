@@ -133,4 +133,14 @@ EXTERN_C const VEntry D_800B6F3C[];
 EXTERN_C const VEntry D_800B6F5C[];
 EXTERN_C const VTable10 D_800B6F9C;
 
+/* EXE functions that gameend calls with another prototype than include/shared/exe.h. */
+// Gameend passes objects that convert to their bases BaseB, BaseC and T94 (and the first argument of
+// func_8002DA94 as an int); exe.h takes void *.
+EXTERN_C void func_8002B174_g(void *, BaseB *, int) asm("func_8002B174");
+EXTERN_C int func_80053830_g(BaseC *) asm("func_80053830");
+EXTERN_C void func_8005C088_g(BaseB *, int, int) asm("func_8005C088");
+EXTERN_C void func_8002DA94_g(int, T94 *) asm("func_8002DA94");
+// Takes a pointer to its rectangle; gameend passes a temporary by reference.
+EXTERN_C void *func_8002860C_g(void *, const Rect &, void *, int, int) asm("func_8002860C");
+
 #endif /* GAMEEND_GAMEEND_H */
