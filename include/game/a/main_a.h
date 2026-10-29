@@ -936,9 +936,6 @@ EXTERN_C void *D_80011384[];
 EXTERN_C void *D_80011B5C[];
 EXTERN_C void *D_80013B00[];
 EXTERN_C void func_8001F094(void *p, int a);
-EXTERN_C void PadEnableCom(int a);
-EXTERN_C void PadStopCom();
-EXTERN_C void PadStartCom();
 
 /* Global objects whose layout isn't known yet; incomplete types keep their lui access. */
 struct Obj_800AC57C;
@@ -999,8 +996,6 @@ typedef struct SVECTOR {
     short vx, vy, vz, pad;
 } SVECTOR;
 
-EXTERN_C MATRIX *MulMatrix(MATRIX *m0, MATRIX *m1);
-EXTERN_C MATRIX *CompMatrix(MATRIX *m0, MATRIX *m1, MATRIX *m2);
 
 EXTERN_C void func_80018788(Holder *h);
 EXTERN_C void func_80018840(Holder *h);

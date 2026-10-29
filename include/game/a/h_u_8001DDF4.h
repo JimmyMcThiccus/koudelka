@@ -43,7 +43,6 @@ struct S_Target {
 };
 typedef int (*Fn_ii)(void *, int);
 typedef void (*Fn_vi)(void *, int);
-EXTERN_C int rand();
 
 struct S_TargetI {
     virtual void f1();

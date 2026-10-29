@@ -15,13 +15,6 @@ EXTERN_C void func_80093AEC(void);
 EXTERN_C int func_8008FDE4(void);
 EXTERN_C void func_8008C9A8(void);
 EXTERN_C void func_8008CB84(void);
-EXTERN_C long OpenEvent(unsigned long desc, long spec, long mode, void (*func)(void));
-EXTERN_C long SetRCnt(unsigned long spec, unsigned short target, long mode);
-EXTERN_C long StartRCnt(unsigned long spec);
-EXTERN_C long EnableEvent(unsigned long event);
-EXTERN_C void SpuSetIRQ(long on_off);
-EXTERN_C void SpuSetIRQCallback(void (*f)(void));
-EXTERN_C long SpuSetReverb(long on_off);
 EXTERN_C void func_8008CC88(int a, int b);
 EXTERN_C void func_8008CDA8(int a);
 EXTERN_C void func_8008CD88(int a, int b);
@@ -58,7 +51,7 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     func_80093AEC();
     func_80094990();
     if (!(flags & 0x2000)) {
-        FIELD_AT(s, long, 0x13C) = OpenEvent(0xF2000002, 2, 0x1000, (void (*)(void))func_8008FDE4);
+        FIELD_AT(s, long, 0x13C) = OpenEvent(0xF2000002, 2, 0x1000, (long (*)())func_8008FDE4);
         SetRCnt(0xF2000002, 0x44E8, 0x1000);
         StartRCnt(0xF2000002);
         EnableEvent(FIELD_AT(s, long, 0x13C));
@@ -87,11 +80,6 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     return p;
 }
 
-EXTERN_C long StopRCnt(unsigned long spec);
-EXTERN_C long CloseEvent(unsigned long event);
-EXTERN_C void SpuSetIRQ(long on_off);
-EXTERN_C void SpuSetIRQCallback(void (*f)(void));
-EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
 
 EXTERN_C int func_8008B888(void)
 {
@@ -134,10 +122,6 @@ EXTERN_C void func_8008B96C(void)
 }
 
 EXTERN_C GlobalWord D_800B4EE0;
-EXTERN_C void SpuSetVoiceVolume(int voice, short l, short r);
-EXTERN_C void SpuSetVoicePitch(int voice, unsigned short pitch);
-EXTERN_C void SpuSetVoiceARAttr(int voice, unsigned short ar, long mode);
-EXTERN_C void SpuSetVoiceSRAttr(int voice, unsigned short sr, long mode);
 
 EXTERN_C void func_8008B9C0(void)
 {
@@ -176,7 +160,6 @@ EXTERN_C void func_8008BAC4(void)
     }
 }
 
-EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
 
 EXTERN_C void func_8008BB20(void)
 {
@@ -354,7 +337,6 @@ struct Snd_8008BFEC {
     char pad[0x14];
     SpuBlk_8008BFEC tbl[16];
 };
-EXTERN_C long SpuInitMalloc(long num, char *top);
 
 EXTERN_C void func_8008BFEC(void)
 {
@@ -834,10 +816,6 @@ EXTERN_C void func_8008C9A8(void)
 }
 
 typedef void (*Cb_8008CA50)(char *);
-EXTERN_C long SpuSetTransferMode(long mode);
-EXTERN_C unsigned long SpuSetTransferStartAddr(unsigned long addr);
-EXTERN_C unsigned long SpuRead(unsigned char *addr, unsigned long size);
-EXTERN_C long SpuReadDecodedData(void *d_data, long flag);
 EXTERN_C void func_8008C9A8(void);
 
 EXTERN_C void func_8008CA50(void)
@@ -971,7 +949,6 @@ EXTERN_C void func_8008CD88(int a, int b)
     D_800B18FC.unk170 |= 0x300;
 }
 
-EXTERN_C long CdMix(void *vol);
 
 EXTERN_C void func_8008CDA8(int v)
 {
@@ -999,9 +976,6 @@ EXTERN_C void func_8008CDA8(int v)
 }
 
 EXTERN_C int D_800AFCFC[];
-EXTERN_C long SpuSetReverbModeType(long mode);
-EXTERN_C void SpuSetReverbModeDelayTime(long delay);
-EXTERN_C void SpuSetReverbModeFeedback(long feedback);
 EXTERN_C int func_8008C27C(int size, int addr, unsigned short id);
 EXTERN_C void func_8008D08C(int a, int b);
 
@@ -1118,8 +1092,6 @@ struct Rv_8008D114 {
     int size;
     void *buf;
 };
-EXTERN_C void SpuSetReverbModeDelayTime(long delay);
-EXTERN_C void SpuSetReverbModeFeedback(long feedback);
 
 EXTERN_C void func_8008D114(char *req)
 {
@@ -3243,7 +3215,6 @@ struct Fade_8008FEAC {
     short count;
     short target;
 };
-EXTERN_C void SpuSetCommonAttr(void *attr);
 EXTERN_C void func_8008FEAC(void)
 {
     SoundState *s;
@@ -5457,14 +5428,6 @@ EXTERN_C void func_80093F98(Slot_80093D8C *s)
     }
 }
 
-EXTERN_C void SpuSetVoiceVolume(int voice, short l, short r);
-EXTERN_C void SpuSetVoicePitch(int voice, unsigned short pitch);
-EXTERN_C void SpuSetVoiceStartAddr(int voice, unsigned long addr);
-EXTERN_C void SpuSetVoiceLoopStartAddr(int voice, unsigned long addr);
-EXTERN_C void SpuSetVoiceARAttr(int voice, unsigned short ar, long mode);
-EXTERN_C void SpuSetVoiceDR(int voice, unsigned short dr);
-EXTERN_C void SpuSetVoiceSL(int voice, unsigned short sl);
-EXTERN_C void SpuSetVoiceSRAttr(int voice, unsigned short sr, long mode);
 
 EXTERN_C void func_80093FE0(void)
 {

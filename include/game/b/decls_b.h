@@ -289,7 +289,6 @@ EXTERN_C void func_8005FB04(Snd_800AE640 *self, int b);
 EXTERN_C void func_8005F8EC(Snd_800AE640 *self);
 
 /* from u_8005F238.cpp */
-EXTERN_C void __builtin_delete(void *p);
 
 /* from u_8005F238.cpp */
 
@@ -1429,7 +1428,6 @@ struct Obj_800813BC {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void *memset(void *dst, int c, unsigned int n);
 
 /* from u_80071A74.cpp */
 struct Obj_800815B4 {
@@ -1835,7 +1833,6 @@ union Col_800899AC {
 struct Bytes8_80089A4C { unsigned char b[8]; int align[0]; };
 
 /* from u_80082174.cpp */
-EXTERN_C int rand(void);
 
 /* from u_80082174.cpp */
 
@@ -1936,7 +1933,6 @@ EXTERN_C void func_8005A020(void *self, int b, int c);
 EXTERN_C int func_80059E90(VObj<0x2C> *self, int b);
 EXTERN_C int func_80059F00(void *self);
 EXTERN_C void func_80058A80(void *self);
-EXTERN_C void *__builtin_new(int size);
 EXTERN_C void *func_8005D080(void *self, void *b, int c, int d);
 EXTERN_C short D_800B4E2C;
 
@@ -1952,10 +1948,7 @@ struct V3s_B {
     short x, y, z;
 };
 
-EXTERN_C void SetColorMatrix(MATRIX_B *m);
-EXTERN_C void SetBackColor(int r, int g, int b);
 EXTERN_C void func_800C0920(void);
-EXTERN_C int SquareRoot0(int a);
 
 
 struct LNode_B {
@@ -2047,11 +2040,6 @@ struct SV4_B {
 
 EXTERN_C char D_80014278[];
 EXTERN_C void func_80063F3C(void *self);
-EXTERN_C void SetLightMatrix(MATRIX_B *m);
-EXTERN_C MATRIX_B *ScaleMatrix(MATRIX_B *m, void *v);
-EXTERN_C void SetRotMatrix(MATRIX_B *m);
-EXTERN_C void SetTransMatrix(MATRIX_B *m);
-EXTERN_C int ratan2(int y, int x);
 
 struct Iter_B {
     List *l;
@@ -2277,7 +2265,6 @@ struct SV2C_80055020 {
     short x, y;
     SV2C_80055020(short a, short b) : x(a), y(b) {}
 };
-EXTERN_C void SetDrawMode(void *p, int a, int b, int c, int d);
 struct Obj_8006E73C { void *vt; int f4; short f8, fA; char pad[0x68]; int f74; };
 struct A_80069978 { char b[0x1C]; };
 struct B_80069978 { char b[0x28]; };
@@ -2353,7 +2340,6 @@ EXTERN_C char D_800117A4[];
 
 
 
-EXTERN_C void ApplyMatrixLV(MATRIX_B *m, void *v, void *out);
 
 struct S_80061F80 {
     char pad[8];
@@ -2490,7 +2476,6 @@ struct V4_658 { int v[4]; };
 struct Vx_658 { int x, y, z, w; };
 
 
-EXTERN_C void TransRot_32(void *v0, void *v1, int *flag);
 
 
 

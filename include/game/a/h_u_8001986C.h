@@ -21,10 +21,6 @@ EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n);
 EXTERN_C void func_8001B910(int a);
 EXTERN_C void func_8001BBBC(int a);
 EXTERN_C void func_8001C9D0();
-EXTERN_C void ResetGraph(int mode);
-EXTERN_C void InitGeom();
-EXTERN_C void InitCARD(int a);
-EXTERN_C void StartCARD();
 struct S_8001AC38 { void **vt; void **vt4; int unk8; short unkC; short unkE; short unk10; short unk12; };
 struct S_8001ACDC { void **vt; int unk4; short unk8; short unkA; short unkC; short unkE; };
 
@@ -131,8 +127,6 @@ EXTERN_C void *func_80027E30(unsigned int size);
 EXTERN_C void func_80027FB0(void *p);
 EXTERN_C int func_80018DF4(int *p);
 EXTERN_C void func_8002D1E0();
-EXTERN_C int DrawSync(int mode);
-EXTERN_C int ResetRCnt(int spec);
 static inline bool above_8001B1C8(S_Heap *h, void *p)
 {
     return (char *)h->e < (char *)p;
@@ -140,7 +134,6 @@ static inline bool above_8001B1C8(S_Heap *h, void *p)
 
 /* This file reads D_800B4C3C with lui (no $gp); main_a.h declares it plainly, so it is reached here by asm name. */
 EXTERN_C int D_800B4C3C_lui asm("D_800B4C3C") __attribute__((section(".data")));
-EXTERN_C void DrawSyncCallback(void (*f)());
 
 struct S_Pt4_986C { short x, y; };
 struct S_Pt4c_986C {
@@ -243,8 +236,6 @@ struct S_8001B46C {
 };
 EXTERN_C void func_8002C2B8(void *p, int in_chrg);
 EXTERN_C void func_80022FB8(void *p, int a);
-EXTERN_C void SsUtReverbOff();
-EXTERN_C void PadInitDirect(void *a, void *b);
 struct S_Rect2_986C {
     short x, y, w, h;
     S_Rect2_986C(int aw, int ah) { w = aw; x = 0; y = 0; h = ah; }

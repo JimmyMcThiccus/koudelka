@@ -32,8 +32,6 @@ EXTERN_C void *D_800A4578[];
 EXTERN_C void func_8001B424();
 EXTERN_C void *func_8001B46C(void *p, int a, const S_Size &sz, int b, int c);
 EXTERN_C void func_8001E360(void *p);
-EXTERN_C void ResetGraph(int mode);
-EXTERN_C void StopCallback();
 
 struct S_App {
     char pad0[0x44];

@@ -83,7 +83,7 @@ EXTERN_C void func_8006C3C8(void *self, int b, Blk_8006B8E8 *c)
     u.y = 0;
     u.z = 0;
     u.w = 0;
-    TransRot_32(&u, &t, &flag);
+    TransRot_32(&u, &t, (long *)&flag);
     FIELD_AT(self, int, 0x84) = t.x;
     FIELD_AT(self, int, 0x88) = t.y;
     FIELD_AT(self, int, 0x8C) = t.z;

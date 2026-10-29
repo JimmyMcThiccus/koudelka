@@ -44,7 +44,6 @@ inline void spr2_copy(S_Spr2 *p, S_Spr2 *q)
     }
 }
 
-EXTERN_C void SetDrawMode(void *p, int dfe, int dtd, int tpage, void *tw);
 struct S_Spr2v { void *volatile vt; int unk4; short unk8; short unkA; void **vtC; S_DrMode dm[2]; S_Sprt sp[2]; char pad48[8]; };
 EXTERN_C void func_80028C80(S_Spr2 *p, void *r);
 EXTERN_C void func_80028DC4(void *p, int a);

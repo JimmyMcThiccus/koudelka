@@ -69,11 +69,6 @@ struct C_800279C0 {
 
 EXTERN_C void func_8001B1C8(void *p);
 EXTERN_C void *func_8001B134(unsigned int size);
-EXTERN_C void _96_init();
-EXTERN_C long LoadExec(char *file, unsigned long sp, unsigned long size);
-EXTERN_C void start();
-EXTERN_C long StopRCnt(unsigned long spec);
-EXTERN_C int VSync(int mode);
 EXTERN_C char D_80011154[];
 EXTERN_C void *D_80012154[];
 EXTERN_C void *D_8001201C[];
