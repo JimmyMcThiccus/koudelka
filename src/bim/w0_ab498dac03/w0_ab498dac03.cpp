@@ -42,7 +42,7 @@ EXTERN_C int func_800D7AC4_c(void *p, unsigned *flags) asm("func_800D7AC4");
 EXTERN_C int func_800DB2B0(void *p, unsigned *flags)
 {
     if (*flags & 1) {
-        func_800D8E64(p, -1);
+        func_800D7914((BimMon *)p, -1);
         func_800D7A20(p, 5);
         func_800D7A20(p, 0);
         void *q = func_800D7A4C(p, 1, 0x21);
