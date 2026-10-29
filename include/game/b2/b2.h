@@ -143,4 +143,6 @@ EXTERN_C void func_80041E54(void *self, int in_chrg, int a2, int a3, int e, void
 EXTERN_C void func_800827EC_c(void *self) asm("func_800827EC");
 EXTERN_C void func_80086740_c(void *self) asm("func_80086740");
 
+EXTERN_C void *func_80084130_8(void *self, int in_chrg, int a2, int a3, int e, int *p, int f, int g) asm("func_80084130");
+
 #endif /* GAME_B2_B2_H */
