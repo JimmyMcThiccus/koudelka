@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80033ECC
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -286,8 +288,7 @@ EXTERN_C void func_80035304(void *p, int flags)
 INCLUDE_ASM("asm/main/nonmatchings/u_80033ECC", func_80035384);
 
 
-extern "C++" int f3546C(void *vp, void *vo) asm("func_8003546C");
-int f3546C(void *vp, void *vo)
+EXTERN_C int func_8003546C(void *vp, void *vo)
 {
     S_A2_VH0C *p = (S_A2_VH0C *)vp;
     A2VObj0 *o = (A2VObj0 *)vo;
@@ -670,8 +671,7 @@ void f36364(S_A2_St *p, int t, unsigned char *buf)
     }
 }
 
-extern "C++" void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf) asm("func_80036554");
-void f36554(A2VObj0 *p, unsigned char t, unsigned char *buf)
+EXTERN_C void func_80036554(A2VObj0 *p, unsigned char t, unsigned char *buf)
 {
     if (t == 2) {
         switch ((signed char)(AT(p, unsigned char, 0x34) - 1)) {
@@ -782,8 +782,7 @@ EXTERN_C int func_80036F54(void *p, int a, int b)
     return b;
 }
 
-extern "C++" int f36FC0(void *p, int a, int b) asm("func_80036FC0");
-int f36FC0(void *p, int a, int b)
+EXTERN_C int func_80036FC0(void *p, int a, int b)
 {
     if (D_800B4D0C) return 0;
     if ((unsigned char)func_80035C30((unsigned char)func_8009C9C0())) return 0;
@@ -824,8 +823,7 @@ EXTERN_C void func_800370D0(void *p)
     AT(p, void *, 0x2C) = 0;
 }
 
-extern "C++" int f3714C(void *vp) asm("func_8003714C");
-int f3714C(void *vp)
+EXTERN_C int func_8003714C(void *vp)
 {
     S_A2_VH0C *p = (S_A2_VH0C *)vp;
     if (D_800B4D0C != (int)p) return 0;

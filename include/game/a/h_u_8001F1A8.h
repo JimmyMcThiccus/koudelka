@@ -3,16 +3,12 @@
 
 /* Declarations for src/main/u_8001F1A8.cpp only. */
 
-EXTERN_C int func_80019C24(List *l, void *item);
-EXTERN_C int func_80019CFC(List *l, void *item);
-EXTERN_C void *func_8001A744(void *list, void *item);
 EXTERN_C void *D_800B4C30;
 EXTERN_C void *D_800B4C34;
 EXTERN_C void *D_800100F8[];
 EXTERN_C void *D_80010470[];
 EXTERN_C void *D_80010480[];
 EXTERN_C void *D_800104F8[];
-EXTERN_C void func_800186E8(Holder *h);
 EXTERN_C int VSyncCallback(void (*f)());
 EXTERN_C void func_8001F9C0();
 struct S_8001F930 {
@@ -64,9 +60,6 @@ struct S_TimerIter {
         return 0;
     }
 };
-EXTERN_C S_Timer *func_8001A864(S_Timer *a, S_Timer *b);
-EXTERN_C void func_80018AF4();
-EXTERN_C void func_80018B18();
 EXTERN_C void func_8001F514(void *item);
 
 EXTERN_C void *D_800102D0[];
@@ -141,8 +134,6 @@ struct S_80020304 {
     unsigned short unk18;
     unsigned short unk1A;
 };
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *p, void *o);
 EXTERN_C S_8001FC38 *func_8001FC38(S_8001FC38 *p, int a, int b, int c);
 
 EXTERN_C void func_8001F788(S_TimerBase8 *b, S_TimerBase8 *x);

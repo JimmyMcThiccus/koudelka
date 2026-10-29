@@ -3,10 +3,8 @@
 
 /* Declarations for src/main/u_80020368.cpp only. */
 
-EXTERN_C int func_80019CFC(List *l, void *item);
 struct S_Arr8 { int *p; int n; int *q; int buf[8]; };
 
-EXTERN_C int func_80019C24(List *l, void *item);
 struct S_80020884 { int a; int unk4; char pad[0x40]; short unk48; short unk4A; unsigned int unk4C; };
 struct S_80020884_Out { char pad[0x14]; int unk14; };
 struct S_80020984 { char pad[0x28]; Holder h; };
@@ -28,7 +26,6 @@ struct S_800207C4_R { char pad[8]; void *unk8; char padC[8]; int unk14; };
 struct S_800207C4 { int a; S_VObj *unk4; char pad[0x40]; short unk48; short unk4A; unsigned int unk4C; short unk50; short unk52; int unk54; };
 struct S_80020A30 { int a; S_VObj *unk4; S_Iter iter; };
 
-EXTERN_C void *func_8001FC38(void *p, int a, int b, int c);
 EXTERN_C void *D_800105DC[];
 EXTERN_C void *D_80010588[];
 struct S_80020538 { void **vt; char pad[0x10]; int unk14; short unk18; short unk1A;

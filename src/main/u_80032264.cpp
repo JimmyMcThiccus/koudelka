@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80032264
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -178,9 +180,12 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_80033404);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80032264", func_800338A4);
 
+// func_80030AA8 takes three arguments; retail passes two here and leaves $a2 as it is.
+EXTERN_C void *func_80030AA8_2(void *p, void *q) asm("func_80030AA8");
+
 EXTERN_C char *func_80033D34(void *p, char *src)
 {
-    func_80030AA8(p, src);
+    func_80030AA8_2(p, src);
     func_80034854(p ? (char *)p + 0x34 : 0, src + 0x2C);
     return src + 0x38;
 }

@@ -1,12 +1,17 @@
 #include "common.h"
+#define EXE_H_IN_u_8002DED8
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
 #include "game/a/h_u_8002DED8.h"
 
+// func_8002DD34 takes three arguments; retail passes two here and leaves $a2 as it is.
+EXTERN_C void *func_8002DD34_2(void *p, int a) asm("func_8002DD34");
+
 EXTERN_C void func_8002DED8(void *p, int a)
 {
-    func_8002DD34(p, a);
+    func_8002DD34_2(p, a);
 }
 
 EXTERN_C void func_8002DEF8(void *p, int a, int b)
@@ -376,7 +381,7 @@ EXTERN_C void func_8002EC40(S_8002EC40 *p)
         VCALL0(p, 4);
 }
 
-EXTERN_C void func_8002EC90(S_8002EC40 *p)
+EXTERN_C void func_8002EC90(S_8002EC40 *p, void *)
 {
     if (func_8002A2D8(p->unk4))
         VCALL0(p, 4);

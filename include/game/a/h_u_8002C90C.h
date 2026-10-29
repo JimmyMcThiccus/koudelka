@@ -13,10 +13,6 @@ EXTERN_C S_Sh2 D_800B4CF4[2];
 
 struct VtE { short delta; short index; void *pfn; };
 struct S_VObj { VtE *vt; };
-EXTERN_C void func_8001D150(void *sched, void *timer);
-EXTERN_C void *func_8001A744(void *list, void *item);
-EXTERN_C int func_80019CFC(List *l, void *item);
-EXTERN_C void func_8001A864(void *a, void *b);
 EXTERN_C void func_8002E7A8(void *p, int flags);
 EXTERN_C void *D_80010148[];
 EXTERN_C void *D_80010160[];
@@ -57,11 +53,8 @@ struct S_Iter {
 };
 #define DRW(p) ((S_Drawable *)(p))
 
-EXTERN_C void *func_8002E714(void *p, int n);
-EXTERN_C void func_8002D24C(void *p, void *rect);
 struct S_Pt2 { short x, y; };
 struct S_Rect8 { S_Pt2 pos; S_Pt2 size; };
-EXTERN_C void func_8002D780(void *p, S_Pt2 pos);
 struct S_Blk8 { unsigned char b[8]; };
 struct S_8002C9D4 {
     void **vt;

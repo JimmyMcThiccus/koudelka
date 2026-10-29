@@ -28,7 +28,6 @@ struct S_8002F180 { char pad[0x10]; void *unk10; };
 struct S_8002F5D0 { int a; S_VObj *o; };
 struct S_Blk8 { unsigned char b[8]; };
 struct S_Blk4 { unsigned char b[4]; };
-EXTERN_C void *func_80030AA8(void *p, void *q, int *out);
 struct S_8003212C_Q { char pad[0x2C]; S_Blk4 c2C; int unk30; };
 struct S_8003212C_P { char pad[0x34]; S_Blk4 c34; };
 struct S_8002F824 { void **vt; int unk4; S_8002F558 b; };
@@ -41,12 +40,9 @@ struct S_8002F90C { char pad[0xC]; S_Blk8 c; };
 EXTERN_C void func_8002D94C(void *p);
 struct S_8002F1BC { char pad[0x10]; void *unk10; void *unk14; };
 inline void add_710(void *item) { List *l = &D_800AC710; func_80019A6C(l, (int)item, l->count); }
-EXTERN_C int func_8001D25C(void *a, void *b);
-EXTERN_C void func_8001D324(void *a, int b);
 EXTERN_C void *D_80011E74[];
 EXTERN_C char D_800A4544[];
 EXTERN_C void *D_800118FC[];
-EXTERN_C int func_80019CFC(void *l, void *item);
 struct S_8002FCF4_Q { char a; signed char b1; char pad[2]; S_Blk8 c4; S_Blk8 cC[3]; };
 struct S_80030AA8_Q { char a; signed char b1; char pad[2]; S_Blk8 c4; S_Blk8 cC[4]; };
 
@@ -54,13 +50,8 @@ EXTERN_C void *D_80011B8C[];
 EXTERN_C void *D_80011BF4[];
 EXTERN_C void *D_80011D04[];
 EXTERN_C void *D_80011D6C[];
-EXTERN_C void func_800A0D0C(void *p);
-EXTERN_C void func_8002EADC(void *p);
-EXTERN_C void func_8002EAE8(void *p);
-EXTERN_C void func_8002D24C(void *p, void *rect);
 struct S_Pt2 { short x, y; };
 struct S_Rect8 { S_Pt2 pos; S_Pt2 size; };
-EXTERN_C void func_8002D780(void *p, S_Pt2 pos);
 struct S_8002F21C { char pad[8]; S_Rect8 rect; void *unk10; };
 struct S_Obj44 { VtE *vt; char pad[0x40]; };
 struct S_Obj68 { VtE *vt; char pad[0x64]; };
@@ -76,7 +67,6 @@ EXTERN_C bool func_80030C70(S_Base14 *a, S_Base14 *b, S_Base14 *c, S_Base14 *d, 
 EXTERN_C void *D_80011C44[];
 EXTERN_C void *D_80011CAC[];
 EXTERN_C void *D_80010338[];
-EXTERN_C void func_8001D150(void *sched, void *timer);
 struct S_Timer14 {
     void **vt;
     int unk4;
@@ -92,17 +82,13 @@ struct S_Plane { char pad[0xC]; short nx, ny, nz, pad12; S_Tri_V v[4]; };
 struct S_Mid34 { char pad[0x34 - 0x18]; };
 struct S_Base34 { int x; };
 struct S_Obj34 : S_Obj14, S_Mid34, S_Base34 { };
-EXTERN_C int func_80032A9C(S_Base34 *a, S_Base34 *b, S_Base34 *c, S_Base34 *d, S_Base34 *e);
 
-EXTERN_C int func_80026014(int a);
-EXTERN_C int func_800260A4(int a);
 EXTERN_C int ratan2(int y, int x);
 struct S_Rect8s { short x, y, w, h; };
 
 EXTERN_C void SetDispMask(int mask);
 EXTERN_C void func_8002F028(void *p);
 EXTERN_C int func_8002A3C0(void *p);
-EXTERN_C void *func_8002E714(void *p, int n);
 EXTERN_C void *D_800117A4[];
 struct S_Lay {
     VtE *vt;
@@ -164,10 +150,8 @@ EXTERN_C int func_8002EAF4();
 struct S_8002EF88_O { char pad[0x1C]; int unk1C; };
 struct S_8002EF88 { int a; void *unk4; };
 
-EXTERN_C void *func_8002EA70(void *p, void *src);
 EXTERN_C void *D_8001199C[];
 EXTERN_C char D_800B4C88[];
-EXTERN_C void func_8002EC90(void *p, void *a);
 struct S_8002EEC4 {
     void **vt;
     void *src;

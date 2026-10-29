@@ -3,7 +3,6 @@
 
 /* Declarations for src/main/u_8001C2D0.cpp only. */
 
-EXTERN_C void func_800186E8(Holder *h);
 struct S_VDel {
     virtual ~S_VDel();
 };
@@ -41,8 +40,6 @@ EXTERN_C void func_8001CA58(void *p, int size);
 EXTERN_C bool func_8001D6C8(S_8001D6C8 *p);
 EXTERN_C void func_8001D6E0(S_8001D6C8 *p, int a);
 EXTERN_C S_Node *func_8001D0E4(S_Node *p, int key);
-EXTERN_C void *func_8001A744(void *self, void *p);
-EXTERN_C void func_8001D150(void *self, void *b);
 struct S_8001D5C0_V {
     virtual void f0();
     virtual int f1();
@@ -100,7 +97,6 @@ struct S_8001D684b {
 };
 EXTERN_C void *D_800101F8[];
 EXTERN_C int D_800A4544[];
-EXTERN_C S_Lnk *func_8001A864(S_Lnk *p, S_Lnk *a);
 EXTERN_C S_Lnk *func_8001CF68(S_Lnk *head, S_Lnk *n);
 static inline S_Pool14 *newpool_8001C718()
 {
@@ -133,7 +129,6 @@ EXTERN_C void *D_80010388[];
 EXTERN_C void *D_80010378[];
 EXTERN_C void *D_800103A0[];
 EXTERN_C void *D_800103B8[];
-EXTERN_C void func_8001E508(void *p, int a);
 
 struct S_8001D8A4 {
     char pad0[0xFC];
@@ -161,7 +156,6 @@ struct C_8001D7B0 : B_8001E40C {
 };
 
 EXTERN_C unsigned int func_80018E10(int *count);
-EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C int GetRCnt(int spec);
 EXTERN_C char *D_800A4578_p asm("D_800A4578") __attribute__((section(".data")));
 
@@ -189,7 +183,6 @@ struct S_8001C38C {
     char unk280[0x4];
 };
 EXTERN_C void func_80023AEC(void *p, int flags);
-EXTERN_C void func_8002AFEC(void *p, int flags);
 inline void dtor_8002C6D4(S_8001C38C *p, int flags)
 {
     p->vt2C = D_8001167C;

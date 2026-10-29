@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8002C90C
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"

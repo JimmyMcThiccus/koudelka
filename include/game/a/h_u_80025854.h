@@ -29,7 +29,6 @@ EXTERN_C S_80026274 *func_80026274(S_80026274 *p, S_8b *r, int b);
 EXTERN_C short D_800108C0[];
 EXTERN_C void *D_80010888[];
 EXTERN_C void *D_800108A0[];
-EXTERN_C void func_80024BF0(void *p, int a, int b, int c);
 struct S_UV { unsigned char u, v; S_UV(unsigned char u_, unsigned char v_) { u = u_; v = v_; } };
 struct S_Tex { char pad0[0xC]; VObj *unkC; short unk10; short unk12; short unk14; short unk16; };
 struct S_80026920 { char pad0[0x10]; VObj *unk10; char pad14[8]; VObj *unk1C; };

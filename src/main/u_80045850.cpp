@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80045850
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -928,8 +930,7 @@ EXTERN_C int func_8004C30C()
     return 0x34;
 }
 
-extern "C++" char *func_8004C314_(void *p, char *src) asm("func_8004C314");
-char *func_8004C314_(void *p, char *src)
+EXTERN_C char *func_8004C314(void *p, char *src)
 {
     func_800499D0(p, src);
     func_8004AE24(p ? (char *)p + 0x18 : 0, src + 0x10);
@@ -1481,8 +1482,7 @@ EXTERN_C int func_8004F9DC()
     return 0x3C;
 }
 
-extern "C++" char *func_8004F9E4_(void *p, char *src) asm("func_8004F9E4");
-char *func_8004F9E4_(void *p, char *src)
+EXTERN_C char *func_8004F9E4(void *p, char *src)
 {
     func_8004D0F4(p, src);
     func_80034EBC(p ? (char *)p + 0x1C : 0, src + 0x14);
@@ -2031,8 +2031,8 @@ EXTERN_C S_A2B_C68 *func_80052100(S_A2B_C68 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    f5BC84v(p, 0, 2, 0x10);
-    f537C0((char *)p + 0x38);
+    func_8005BC84(p, 0, 2, 0x10);
+    func_800537C0((char *)p + 0x38);
     p->vb->vt = (S_A2B_VEnt *)D_80013A38_t.e;
     S_A2B_VTab50 tmp;
     if (!in_chrg) {
@@ -2068,8 +2068,8 @@ EXTERN_C S_A2B_C68 *func_8005226C(S_A2B_C68 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    f5BC84v(p, 0, 2, 0x10);
-    f537C0((char *)p + 0x38);
+    func_8005BC84(p, 0, 2, 0x10);
+    func_800537C0((char *)p + 0x38);
     p->vb->vt = (S_A2B_VEnt *)D_80013A38_t.e;
     S_A2B_VTab50 tmp;
     if (!in_chrg) {
@@ -2145,7 +2145,7 @@ EXTERN_C void func_80052778(void *p)
     char *b = 0;
     int r;
     if (p) b = (char *)p + 0x38;
-    if (f53874(b) == 0x10) {
+    if (func_80053874(b) == 0x10) {
         func_8002B174(D_800A4578_a[0], p, -1);
         ((A2VObj<0x2C> *)p)->v27();
         ((A2VObj<0x2C> *)p)->v03();
@@ -2153,16 +2153,16 @@ EXTERN_C void func_80052778(void *p)
     } else {
         b = 0;
         if (p) b = (char *)p + 0x38;
-        if (f53874(b) < 0x10) {
+        if (func_80053874(b) < 0x10) {
             b = 0;
             if (p) b = (char *)p + 0x38;
-            r = f53874(b);
+            r = func_80053874(b);
             ((A2VObj<0x2C> *)p)->v28(((0x10 - r) << 3) & 0xF8);
         }
         b = 0;
     }
     if (p) b = (char *)p + 0x38;
-    f53830(b);
+    func_80053830(b);
 }
 
 EXTERN_C void func_8005287C(void *p, unsigned char a)
@@ -2219,34 +2219,34 @@ EXTERN_C void func_80052C8C(void *p, int a1, int a2, int a3, int a4, int a5, int
     int n = 3;
     char st[0x28];
     char *sp;
-    f53FB0(AT(p, void *, 0x5C), 3, 0x130);
-    f5457Cb(AT(p, void *, 0x5C), 0);
+    func_80053FB0(AT(p, void *, 0x5C), 3, 0x130);
+    func_8005457C(AT(p, void *, 0x5C), 0);
     f53BCC(AT(p, void *, 0x5C), a2, a3);
     if (a5 != 0) {
-        f54584c(st, a1);
+        func_80054584(st, a1);
         sp = st;
-        f53DDCb(AT(p, void *, 0x5C), sp);
-        f53964(sp, 2);
+        func_80053DDC(AT(p, void *, 0x5C), sp);
+        func_80053964(sp, 2);
         f538CC(sp, a4, a5);
-        f53DDCb(AT(p, void *, 0x5C), sp);
-        f53964(sp, 2);
+        func_80053DDC(AT(p, void *, 0x5C), sp);
+        func_80053964(sp, 2);
     }
-    f53FB0(AT(p, void *, 0x5C), 3, 0x130);
+    func_80053FB0(AT(p, void *, 0x5C), 3, 0x130);
     if (a7 != 0) {
-        f5457Cb(AT(p, void *, 0x64), 0);
+        func_8005457C(AT(p, void *, 0x64), 0);
         f53BCC(AT(p, void *, 0x64), a6, a7);
-        f53FB0(AT(p, void *, 0x64), 0x10, 0x130);
+        func_80053FB0(AT(p, void *, 0x64), 0x10, 0x130);
     } else {
         n = 2;
-        f53CD8(AT(p, void *, 0x64));
+        func_80053CD8(AT(p, void *, 0x64));
     }
     if (a9 != 0) {
-        f5457Cb(AT(p, void *, 0x60), 0);
+        func_8005457C(AT(p, void *, 0x60), 0);
         f53BCC(AT(p, void *, 0x60), a8, a9);
-        f53FB0(AT(p, void *, 0x60), 0x1D, 0x130);
+        func_80053FB0(AT(p, void *, 0x60), 0x1D, 0x130);
     } else {
         n = n - 1;
-        f53CD8(AT(p, void *, 0x60));
+        func_80053CD8(AT(p, void *, 0x60));
     }
     func_80054EB4(AT(p, void *, 0x58), 0x130, n * 13 + 6);
 }
@@ -2331,6 +2331,9 @@ EXTERN_C int func_8005340C(void *self)
     return 1;
 }
 
+// func_80028184 takes one argument; retail calls it with none here and leaves $a0 as it is.
+EXTERN_C void func_80028184_0() asm("func_80028184");
+
 EXTERN_C void func_800534F8(void *p)
 {
     if (AT(p, short, 8)) {
@@ -2339,7 +2342,7 @@ EXTERN_C void func_800534F8(void *p)
         S_A2_V4 *s = (S_A2_V4 *)((char *)p + i * 16 + 0xC);
         *d = *s;
     }
-    func_80028184();
+    func_80028184_0();
 }
 
 EXTERN_C void func_80053568(S_A2B_Buf *p, int a, int b)
@@ -2518,8 +2521,7 @@ EXTERN_C void func_800539C8()
 {
 }
 
-extern "C++" S_A2B_Str *f539D0(S_A2B_Str *s, S_A2B_Ch2 *c) asm("func_800539D0");
-S_A2B_Str *f539D0(S_A2B_Str *s, S_A2B_Ch2 *c)
+EXTERN_C S_A2B_Str *func_800539D0(S_A2B_Str *s, S_A2B_Ch2 *c)
 {
     S_A2B_Ch2 *d, *dd; unsigned i;
     int n = s->len;

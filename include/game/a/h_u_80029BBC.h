@@ -67,10 +67,7 @@ struct S_CollG {
     void toEnd() { idx = vb->count; }
     VObj *prev() { return idx > 0 ? (VObj *)vb->items[--idx] : 0; }
 };
-EXTERN_C void func_80019D40(S_80019D40 *p);
 EXTERN_C int D_800B4CF0;
-EXTERN_C void func_8002EEC4(void *p, void *q);
-EXTERN_C void func_8002EC90(void *p, void *q);
 EXTERN_C char D_800B4C88[];
 EXTERN_C void *D_8001199C[];
 struct S_8002C498 { void **vt; char pad4[0x10]; int unk14; char pad18[4]; };
@@ -86,8 +83,6 @@ struct S_XY { short x, y; S_XY() {} S_XY(short x_, short y_) { x = x_; y = y_; }
 inline List *coll_list(S_Coll *c) { return c ? (List *)c->vb : 0; }
 inline Holder *coll_h(S_Coll *c) { return c ? (Holder *)((char *)c + 8) : 0; }
 
-EXTERN_C int func_80019CFC(List *l, void *item);
-EXTERN_C int func_80019C24(List *l, void *item);
 EXTERN_C void func_8002F464(void *p);
 inline void coll_end(S_Coll *c) { c->idx = coll_list(c)->count; }
 inline void del_vb(void *c)

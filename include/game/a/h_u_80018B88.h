@@ -57,8 +57,6 @@ struct S_8001921C {
 };
 EXTERN_C void *D_800100D0[];
 EXTERN_C void *D_80010328[];
-EXTERN_C void *func_800A0D2C(int size);
-EXTERN_C void func_800A0D0C(void *p);
 
 /* This file reaches D_800B4C34, D_800EA8A0 and D_800B4C08 with lui (no $gp): explicit sections keep them off $gp. */
 EXTERN_C void *D_800B4C34 __attribute__((section(".data")));

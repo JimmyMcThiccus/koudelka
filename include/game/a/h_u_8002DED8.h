@@ -19,9 +19,7 @@ EXTERN_C int func_8002A2D8(void *p);
 struct S_8002EC40 { VtE *vt; void *unk4; };
 
 struct S_Lnk64 { int a; S_Lnk64 *next; };
-EXTERN_C void func_8001A864(void *a, void *b);
 struct S_8002DF38 { char pad[0x64]; S_Lnk64 *unk64; };
-EXTERN_C void func_800A0D0C(void *p);
 EXTERN_C void *D_800117BC[];
 struct S_8002E7A8 { void **vt; int a; void *unk8; void *unkC; };
 struct P_TAG { unsigned addr : 24; unsigned len : 8; };
@@ -34,7 +32,6 @@ struct S_8002EB68_M { int a; S_8002EB68_O *unk4; };
 struct S_8002EB68 { int a; S_8002EB68_M *unk4; };
 struct S_Rect { short x, y, w, h; S_Rect(short ax, short ay) { x = ax; y = ay; } };
 
-EXTERN_C void *func_8002E714(void *p, int n);
 EXTERN_C void *D_800117A4[];
 struct S_8002E4E8 {
     void **vt;
@@ -52,7 +49,6 @@ struct S_8002E4E8 {
 // Retail reaches D_800B4CF0 and D_800B4CFC from this file with the assembler macro (lui), not $gp.
 EXTERN_C int D_800B4CF0 __attribute__((section(".data")));
 EXTERN_C int D_800B4CFC __attribute__((section(".data")));
-EXTERN_C void *func_800A0D2C(int size);
 EXTERN_C void ClearOTagR(unsigned long *ot, int n);
 EXTERN_C void DrawOTag(unsigned long *ot);
 struct S_OT {

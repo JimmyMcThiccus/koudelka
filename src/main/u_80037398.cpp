@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80037398
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -51,10 +53,13 @@ EXTERN_C void func_80037554(void *p, unsigned char a)
     if (!AT(p, signed char, 0x37)) f3635C_alt(p, a);
 }
 
+// func_80036554 takes three arguments; retail passes two here and leaves $a2 as it is.
+EXTERN_C void func_80036554_2(void *p, unsigned char a) asm("func_80036554");
+
 EXTERN_C void func_80037584(void *p, unsigned char a)
 {
     if (!AT(p, signed char, 0x37))
-        func_80036554(p, a);
+        func_80036554_2(p, a);
 }
 
 EXTERN_C int func_800375B4(void *p)
@@ -74,8 +79,7 @@ EXTERN_C void func_800375E4()
     }
 }
 
-extern "C++" void *f37688_alt(void *p) asm("func_80037688");
-void *f37688_alt(void *p)
+EXTERN_C void *func_80037688(void *p)
 {
     AT(p, void **, 0) = D_80011FE4;
     AT(p, void **, 8) = D_800123EC;
@@ -89,7 +93,6 @@ void *f37688_alt(void *p)
     return p;
 }
 
-extern "C++" void f279A8() asm("func_800279A8");
 static inline void *a2_ctor44(void *p)
 {
     char *b = (char *)p + 0x3C;
@@ -116,7 +119,7 @@ int f376D0(void *p)
 {
     if (D_800B4D0C || AT(p, int, 0x14)) return 0;
     AT(p, int, 0x28) = AT(p, int, 0x28) + 1;
-    f279A8();
+    func_800279A8();
     if (AT(p, void *, 0x1C)) func_800A0D0C(AT(p, void *, 0x1C));
     AT(p, void *, 0x1C) = func_800A0D2C(0x1000);
     AT(p, int, 0x20) = 0;
