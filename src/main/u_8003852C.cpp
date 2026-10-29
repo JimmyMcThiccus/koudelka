@@ -157,7 +157,7 @@ EXTERN_C int func_80038C20(void *p)
 {
     int r;
     if (AT(p, int, 4) == 0) {
-        func_80038E2C(AT(p, void *, 8));
+        func_80038E2C_1(AT(p, void *, 8));
         r = 1;
     } else {
         AT(p, int, 4)--;
@@ -1131,6 +1131,7 @@ EXTERN_C void func_8003BCE0(MATRIX *m, int i, SVECTOR *v)
     m->m[2][i] = v->vz;
 }
 
+// Defined below returning S_Short; this caller reads the same 2 bytes as S_A2_S8.
 extern "C++" S_A2_S8 a2_be68(S_A2_S8 *a, S_A2_S8 *b) asm("func_8003BE68");
 #define S8(p, i) ((S_A2_S8 *)((short *)(p) + (i)))
 EXTERN_C S_A2_Sv4c func_8003BD08(short *a, short *b)
@@ -1142,6 +1143,7 @@ EXTERN_C S_A2_Sv4c func_8003BD08(short *a, short *b)
     return S_A2_Sv4c(x, y, z, w);
 }
 
+// Defined below with its own types; this caller reads the same 4 bytes as S_A2_I8.
 extern "C++" S_A2_I8 a2_be84(S_A2_I8 *a, S_A2_I8 *b) asm("func_8003BE84");
 #define I8(p, i) ((S_A2_I8 *)((int *)(p) + (i)))
 EXTERN_C S_A2_Iv4c func_8003BDB8(int *a, int *b)

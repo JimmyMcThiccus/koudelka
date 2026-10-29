@@ -2259,6 +2259,7 @@ extern SVr_658 sv_neg_658(const SVr_658 *a) __asm__("func_800662D4");
 extern Vr_658 v_neg_658(const Vr_658 *a) __asm__("func_80066260");
 extern Vr_658 v_sub_658(const Vr_658 *a, const Vr_658 *b) __asm__("func_80066294");
 extern void m_rot_658(MATRIX_B *m, SVp_658 r) __asm__("func_8003A7FC");
+// func_8003B450 returns its vector by value; this unit passes the vector by value too (exe.h: a pointer).
 extern Vr_658 m_apply_658(MATRIX_B *m, Vp_658 v) __asm__("func_8003B450");
 
 struct SV2C_80055020 {
@@ -2579,6 +2580,7 @@ struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
 
 struct V4_B { int x, y, z, w; };
 
+// func_80060118 returns unsigned short; these callers read an int.
 EXTERN_C int func_80060118_i(void *self, int b) asm("func_80060118");
 
 struct Rc8 { short x, y, w, h; };
@@ -2695,6 +2697,7 @@ EXTERN_C void *D_8001504C[];
 EXTERN_C void *D_80014EEC[];
 
 struct S_Ct44 { S_VBB *vb; char pad4[0x40]; S_VBobjB vobj; };
+// func_80058EE8 is defined void; these callers use $v0.
 EXTERN_C void *func_80058EE8_v(void *p, int a, int b) asm("func_80058EE8");
 EXTERN_C const VTabB50 D_80014130;
 EXTERN_C void *D_80014180[];

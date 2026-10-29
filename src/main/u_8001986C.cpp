@@ -786,7 +786,7 @@ EXTERN_C void func_8001B1C8(void *p)
 {
     func_800186E8(&D_800A451C);
     if ((char *)p < (char *)D_800EA8A0) {
-        func_80027FB0(p);
+        func_80027FB0_1(p);
     } else {
         S_Heap *h = (S_Heap *)D_800B4C04;
         while (!above_8001B1C8(h, p))
@@ -810,9 +810,9 @@ EXTERN_C void *func_8001B26C(unsigned int size)
     return r;
 }
 
-EXTERN_C void func_8001B2D8(void *p)
+EXTERN_C int func_8001B2D8(void *p)
 {
-    func_8001B0C0(D_800B4C04, p);
+    return func_8001B0C0(D_800B4C04, p);
 }
 
 EXTERN_C int func_8001B300(char *a, char *b)
@@ -895,7 +895,7 @@ EXTERN_C void *func_8001B46C(S_8001B46C *p, int in_chrg, const S_Size_986C &sz, 
     func_80035BF8();
     new S_8002900C_986C(0, 0, 0, 2, S_Rect2_986C(0, 0, sz.w * 2, sz.h));
     if (!D_800B4C54)
-        func_80026214(S_Rect2_986C(0x400, 0x200));
+        func_80026214_r(S_Rect2_986C(0x400, 0x200));
     short x = (sz.w + 127) / 128 * 256;
     S_Pt4_986C pos = D_800B4C54->f4(S_Pt4c_986C(x, sz.h));
     if (!D_800B4C38) {
@@ -907,7 +907,7 @@ EXTERN_C void *func_8001B46C(S_8001B46C *p, int in_chrg, const S_Size_986C &sz, 
     ((S_8001B46C *)p)->v9(sz.w, sz.h);
     func_8002A400(p, D_800B4C90);
     func_8002A37C(p, D_800B4C80);
-    while (func_8001E07C(D_800A4554, -0x8000))
+    while (func_8001E07C_i(D_800A4554, -0x8000))
         ;
     return p;
 }

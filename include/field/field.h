@@ -1497,6 +1497,7 @@ EXTERN_C char D_800B7984[];
 EXTERN_C char D_800B78C4[];
 EXTERN_C char D_800B78C8[];
 EXTERN_C char D_800B78D8[];
+// func_80062FA4 (a constructor) takes ints; field passes a pointer as the third argument.
 EXTERN_C void func_80062FA4_i(void*, int, void*, int) asm("func_80062FA4");
 EXTERN_C void func_800D508C(void*, int);
 EXTERN_C void func_800D0CDC_i(void*, int, int, int) asm("func_800D0CDC");
@@ -1675,7 +1676,7 @@ EXTERN_C int func_80053874_b(Unk_Base*) asm("func_80053874");
 EXTERN_C void func_8008687C_b(Unk_Base*, int) asm("func_8008687C");
 EXTERN_C void func_80065E10_b(HK_B *g, int i) asm("func_80065E10");
 EXTERN_C struct Unk_800DF32C* func_800787B4_t() asm("func_800787B4");
-// func_8006897C takes an int and func_80065D20 shorts; field narrows (or does not narrow) its arguments as these say.
+// func_8006897C takes an int; field narrows its argument to an unsigned short. func_80065D20: field passes an HK_B.
 EXTERN_C void func_8006897C_s(void*, unsigned short, int) asm("func_8006897C");
 EXTERN_C void func_80065D20_i(HK_B *g, int i, int x, int y, int z, int r, int gg, int b) asm("func_80065D20");
 

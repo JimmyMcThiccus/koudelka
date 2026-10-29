@@ -97,7 +97,7 @@ EXTERN_C S_8002EC18 *func_8002EF70(S_8002EC18 *p)
 EXTERN_C void func_8002EF88(S_8002EF88 *p, S_8002EF88_O *o)
 {
     func_8002DB50(o, 1);
-    o->unk1C = func_8002A3C0(p->unk4);
+    o->unk1C = func_8002A3C0_i(p->unk4);
     S_IntVec *v = (S_IntVec *)&D_800AC820;
     func_80019A6C(v, (int)o, v->count);
     D_800B4CFC = (int)o;
@@ -165,7 +165,7 @@ EXTERN_C void func_8002F338(S_8002F338 *p)
     r = p->rect;
     pos = r.pos;
     func_8002D780(p->unk14, pos);
-    p->unk14->unk1C = func_8002A3C0(p->unk4);
+    p->unk14->unk1C = func_8002A3C0_i(p->unk4);
 }
 
 EXTERN_C void func_8002F464(S_8002F1BC *p)

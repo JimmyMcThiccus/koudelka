@@ -27,6 +27,7 @@ struct B16_C {
 // main_b2 passes its 16-byte block by value as B16_C; exe.h uses main_b's B16_B.
 EXTERN_C void func_8007D24C_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int a12) asm("func_8007D24C");
 
+// main_b2 passes its 16-byte block by value as B16_C; exe.h uses main_b's B16_B.
 EXTERN_C void func_8007CAB4_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int a12) asm("func_8007CAB4");
 
 EXTERN_C void func_8007D498_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, B16_C s, int a12) asm("func_8007D498");

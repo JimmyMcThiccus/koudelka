@@ -30,7 +30,6 @@ EXTERN_C void *D_80010338[];
 EXTERN_C int D_800A4544[];
 EXTERN_C void *D_800A4578[];
 EXTERN_C void func_8001B424();
-EXTERN_C void *func_8001B46C(void *p, int a, const S_Size &sz, int b, int c);
 EXTERN_C void func_8001E360(void *p);
 
 struct S_App {
@@ -82,5 +81,8 @@ static inline void own_dtor_800194A8(S_Own *m)
     func_800198AC(m, 2);
 }
 #define GAME_800196C8 (((S_App *)&D_800A4534)->unk44 ? ((S_App *)&D_800A4534)->unk44 + 0x50 : 0)
+
+// Takes its size by reference as S_Size_986C (u_8001986C); this unit passes S_Size.
+EXTERN_C void *func_8001B46C_s(void *p, int a, const S_Size &sz, int b, int c) asm("func_8001B46C");
 
 #endif /* GAME_A_H_U_8001949C_H */

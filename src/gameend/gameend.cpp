@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "gameend/gameend.h"
 
 // Overlay id word, read by the EXE through ovl_header; it has to be the first
@@ -11,29 +12,6 @@ EXTERN_C const int D_80010178[];
 EXTERN_C const int D_800104A8[];
 EXTERN_C int D_800B4C74[];
 
-EXTERN_C void func_80056364(BaseA *, int, int, int);
-EXTERN_C void func_8005652C(BaseA *, int);
-EXTERN_C void func_8005BC84(BaseB *, int, int, int);
-EXTERN_C void func_8005BDA4(BaseB *, int);
-EXTERN_C void func_800537C0(BaseC *);
-EXTERN_C void func_800537DC(BaseC *, int);
-EXTERN_C void func_8001A610(VBase *, int);
-EXTERN_C int func_80053830(BaseC *);
-EXTERN_C void func_80055330(int);
-EXTERN_C void func_80027948();
-EXTERN_C void func_8001FC78(Ev *, int, int);
-EXTERN_C void *func_80056E0C(void *, int);
-EXTERN_C void func_8002B174(void *, BaseB *, int);
-EXTERN_C void func_80056F9C(void *, int, int);
-EXTERN_C void func_80056FE0(void *);
-EXTERN_C void func_8002972C(Color *, int, int, int, int);
-EXTERN_C Item *func_80019F64(List *, int);
-EXTERN_C void func_80028D10(Item *, Color *);
-EXTERN_C void func_800198AC(Color *, int);
-EXTERN_C void func_8005C088(BaseB *, int, int);
-EXTERN_C void *func_8002860C(void *, const Rect &, void *, int, int);
-EXTERN_C void func_80019A6C(Q *, void *, int);
-EXTERN_C void func_8002DA94(int, T94 *);
 
 // Base-class constructors and destructors take the subobject without the
 // null check a pointer conversion would add.
@@ -99,10 +77,10 @@ EXTERN_C void func_800B753C(GameEnd *self)
 
 EXTERN_C int func_800B7568(GameEnd *self)
 {
-    if (func_80053830(self))
+    if (func_80053830_g(self))
         return 1;
     self->f2AC = func_80056E0C(operator new(0xB4), 1);
-    func_8002B174(self->f2AC, self, -1);
+    func_8002B174_g(self->f2AC, self, -1);
     func_80056F9C(self->f2AC, 0x78, 0);
     func_80056FE0(self->f2AC);
     return 0;
@@ -125,11 +103,11 @@ EXTERN_C void func_800B75F4(GameEnd *self, unsigned char c)
 EXTERN_C void func_800B76C0(GameEnd *self, int a1)
 {
     if (self->f6C) {
-        func_8005C088(self, a1, 1);
-        add_to(self->f94, func_8002860C(operator new(0x50), Rect(0, 0, 0x80, 0xF0), self->f2B0[0], ((BaseB *)self)->f1C, D_800B4C74[0]));
-        add_to(self->f94, func_8002860C(operator new(0x50), Rect(0x80, 0, 0x80, 0xF0), self->f2B0[1], ((BaseB *)self)->f1C, D_800B4C74[0]));
-        add_to(self->f94, func_8002860C(operator new(0x50), Rect(0x100, 0, 0x40, 0xF0), self->f2B0[2], ((BaseB *)self)->f1C, D_800B4C74[0]));
-        func_8002DA94(a1, self->f94);
+        func_8005C088_g(self, a1, 1);
+        add_to(self->f94, func_8002860C_g(operator new(0x50), Rect(0, 0, 0x80, 0xF0), self->f2B0[0], ((BaseB *)self)->f1C, D_800B4C74[0]));
+        add_to(self->f94, func_8002860C_g(operator new(0x50), Rect(0x80, 0, 0x80, 0xF0), self->f2B0[1], ((BaseB *)self)->f1C, D_800B4C74[0]));
+        add_to(self->f94, func_8002860C_g(operator new(0x50), Rect(0x100, 0, 0x40, 0xF0), self->f2B0[2], ((BaseB *)self)->f1C, D_800B4C74[0]));
+        func_8002DA94_g(a1, self->f94);
     }
 }
 
@@ -178,52 +156,6 @@ EXTERN_C void func_800B7944(GameEnd *self, int in_chrg)
 
 // The vtables. Data is output in source order ahead of all functions, so
 // these follow D_800B6DF0. Slot 0 holds the offset to the complete object.
-EXTERN_C void func_8001FD00();
-EXTERN_C void func_8001FD90();
-EXTERN_C void func_8001FE20();
-EXTERN_C void func_8001FF40();
-EXTERN_C void func_800201DC();
-EXTERN_C void func_800202C4();
-EXTERN_C void func_800202CC();
-EXTERN_C void func_800202D4();
-EXTERN_C void func_80029EC0();
-EXTERN_C void func_80029EC8();
-EXTERN_C void func_80029F30();
-EXTERN_C void func_80029FC0();
-EXTERN_C void func_8002A004();
-EXTERN_C void func_8002A09C();
-EXTERN_C void func_8002A0D0();
-EXTERN_C void func_8002A118();
-EXTERN_C void func_8002A168();
-EXTERN_C void func_8002A1BC();
-EXTERN_C void func_8002A210();
-EXTERN_C void func_8002A37C();
-EXTERN_C void func_8002A400();
-EXTERN_C void func_8002A484();
-EXTERN_C void func_8002A4C8();
-EXTERN_C void func_8002A55C();
-EXTERN_C void func_8002A65C();
-EXTERN_C void func_8002A698();
-EXTERN_C void func_8002A728();
-EXTERN_C void func_8002A7B8();
-EXTERN_C void func_8002A864();
-EXTERN_C void func_8002A910();
-EXTERN_C void func_8002A9BC();
-EXTERN_C void func_8002AA8C();
-EXTERN_C void func_8002AB5C();
-EXTERN_C void func_8002AC2C();
-EXTERN_C void func_80053848();
-EXTERN_C void func_80054CE4();
-EXTERN_C void func_80055020();
-EXTERN_C void func_80056B3C();
-EXTERN_C void func_80056B44();
-EXTERN_C void func_80056D60();
-EXTERN_C void func_80056D9C();
-EXTERN_C void func_8005BF04();
-EXTERN_C void func_8005BF50();
-EXTERN_C void func_8005BFA4();
-EXTERN_C void func_8005BFE4();
-EXTERN_C void func_8005C238();
 
 EXTERN_C const VEntry D_800B6DF4[4] = {
     { -0x58, 0, 0 },

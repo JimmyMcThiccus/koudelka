@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "capture/capture.h"
 
 struct E_800B758C {
@@ -9,10 +10,6 @@ struct H_800B758C {
     char pad4[0x1C];
     E_800B758C e[0x7C];
 };
-EXTERN_C char *func_8008C060(int, int);
-EXTERN_C void func_8009482C(int, void *);
-EXTERN_C char *func_8008BC0C(int);
-EXTERN_C void func_8008C724(char *, void *, int, void *);
 EXTERN_C void func_800B758C(char *p, char *buf)
 {
     int i, j;
@@ -62,8 +59,6 @@ EXTERN_C void func_800B758C(char *p, char *buf)
         func_8008C724(*(char **)(p + 0x10) + i * 0xFC0, *(void **)(p + 0x124), 0x7E0, 0);
 }
 
-EXTERN_C void func_8008BE08(void *);
-EXTERN_C void func_8008C3AC(void *);
 EXTERN_C void func_800B76E4(char *p)
 {
     func_8008BE08(*(void **)(p + 0x124));
@@ -87,7 +82,6 @@ struct S_800B18FC {
     unsigned char b1A3;
 };
 EXTERN_C S_800B18FC D_800B18FC;
-EXTERN_C void func_8009484C(int, int);
 EXTERN_C int func_800B7728(void)
 {
     char *o = (char *)D_800B18FC.f160;
@@ -149,10 +143,6 @@ struct S_800B77D8 {
     char padC6[0x2E];
     short vF4;
 };
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void SpuSetIRQAddr(unsigned long);
-EXTERN_C void SpuSetKey(int, unsigned long);
-EXTERN_C void func_8009484C(int, int);
 EXTERN_C void func_800B7B28(unsigned char *);
 EXTERN_C void func_800B7B90(char *);
 EXTERN_C void func_800B7E6C(char *, unsigned char *);
@@ -273,13 +263,7 @@ EXTERN_C void func_800B7B90(char *p)
 }
 
 EXTERN_C S_800B18FC D_800B18FC;
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void func_8008BF78(void *, int);
 EXTERN_C void func_800B8488(char *p, short a, char b);
-EXTERN_C void func_80093D8C(void *);
-EXTERN_C void func_8008C928(int);
-EXTERN_C void func_8009484C(int, int);
-EXTERN_C void func_8008CBE4(void);
 EXTERN_C void func_800B7C34(char *p, int, int a2, int a3)
 {
     int vol = a2;
@@ -358,11 +342,6 @@ EXTERN_C void func_800B7E0C(void *p, int)
 INCLUDE_ASM("asm/capture/nonmatchings/capture", func_800B7E6C);
 
 EXTERN_C S_800B18FC D_800B18FC;
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void SpuSetIRQAddr(unsigned long);
-EXTERN_C void SpuSetKey(int, unsigned long);
-EXTERN_C void SpuSetVoiceStartAddr(int, unsigned long);
-EXTERN_C void SpuSetVoiceLoopStartAddr(int, unsigned long);
 EXTERN_C int func_800B8048(void);
 EXTERN_C void func_800B7F10(unsigned char *a)
 {
@@ -397,11 +376,6 @@ EXTERN_C void func_800B7F10(unsigned char *a)
 }
 
 EXTERN_C S_800B18FC D_800B18FC;
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void SpuSetIRQAddr(unsigned long);
-EXTERN_C unsigned long SpuGetIRQAddr(void);
-EXTERN_C void SpuSetVoiceLoopStartAddr(int, unsigned long);
-EXTERN_C int SpuGetIRQ(void);
 EXTERN_C int func_800B8048(void)
 {
     char *o;
@@ -458,7 +432,6 @@ struct S_800B815C {
     char pad4A[0x42];
     B_800B815C blk;
 };
-EXTERN_C void func_8008C724(char *, void *, int, void *);
 EXTERN_C void func_800B7F10(unsigned char *);
 EXTERN_C void func_800B82AC(char *);
 EXTERN_C void func_800B815C(char *pc, char *sc)
@@ -517,10 +490,6 @@ EXTERN_C char *func_800B8280(char *p, int v)
 
 EXTERN_C int D_800B1A3C[];
 EXTERN_C int D_800B1A5C[];
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void SpuSetIRQAddr(unsigned long);
-EXTERN_C void SpuSetKey(int, unsigned long);
-EXTERN_C void func_80093E80(void *);
 EXTERN_C void func_800B82AC(char *p)
 {
     *(unsigned short *)p &= 0x9FFF;
@@ -540,13 +509,6 @@ EXTERN_C void func_800B82AC(char *p)
 }
 
 EXTERN_C S_800B18FC D_800B18FC;
-EXTERN_C void SpuSetIRQ(int);
-EXTERN_C void SpuSetIRQAddr(unsigned long);
-EXTERN_C void SpuSetKey(int, unsigned long);
-EXTERN_C void func_80093E80(void *);
-EXTERN_C void func_8008BAC4(void);
-EXTERN_C void func_8008BA68(void);
-EXTERN_C void func_8008C928(int);
 EXTERN_C void func_800B8360(char *p)
 {
     D_800B18FC.f160 = 0;
@@ -618,18 +580,6 @@ struct S_800B84E0 {
     int loop;
     unsigned char arMode, srMode, rrMode, ar, dr, sr, rr, sl;
 };
-EXTERN_C void SpuSetVoiceVolume(int, short, short);
-EXTERN_C void SpuSetVoicePitch(int, unsigned short);
-EXTERN_C void SpuSetVoiceStartAddr(int, unsigned long);
-EXTERN_C void SpuSetVoiceLoopStartAddr(int, unsigned long);
-EXTERN_C void SpuSetVoiceARAttr(int, unsigned short, long);
-EXTERN_C void SpuSetVoiceDR(int, unsigned short);
-EXTERN_C void SpuSetVoiceSL(int, unsigned short);
-EXTERN_C void SpuSetVoiceSRAttr(int, unsigned short, long);
-EXTERN_C void SpuSetVoiceRRAttr(int, unsigned short, long);
-EXTERN_C void SpuSetPitchLFOVoice(int, int);
-EXTERN_C void SpuSetNoiseVoice(int, int);
-EXTERN_C void SpuSetReverbVoice(int, int);
 EXTERN_C void func_800B84E0(S_800B84E0 *p)
 {
     int v = p->voice;

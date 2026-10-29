@@ -453,7 +453,6 @@ struct S_2510C {
 };
 
 EXTERN_C int func_80023CB8(void *p, int a, int b);
-EXTERN_C void func_80020984(void *p, int a);
 EXTERN_C void *D_80010588[];
 inline void *S_first(List *l) { return l->count ? *(void **)*(void ***)l : 0; }
 struct S_ItemV {
@@ -486,7 +485,6 @@ struct S_C588n {
     }
 };
 
-EXTERN_C int func_800209F4(void *p);
 struct S_C588m {
     void **vtbl;
     char pad4[0x10];
@@ -598,5 +596,8 @@ struct S_N3D0 : S_Obj178 {
     S_N3D0(void *a) { vtbl = D_800103D0; unk8 = a; unkC = -0x8000; unk10 = 0; unk14 = 0; }
 };
 struct S_Vt0 { void **vtbl; };
+
+// func_800209F4 takes two arguments; this caller passes one and leaves $a1 as it is.
+EXTERN_C int func_800209F4_1(char *p) asm("func_800209F4");
 
 #endif /* GAME_A_H_U_80020B70_H */

@@ -32,11 +32,6 @@ struct ListRef {
 
 inline List *list_of(ListRef *r) { return r ? r->list : 0; }
 
-EXTERN_C void func_800198E0(List *l, int elem_size, int arg);
-EXTERN_C void func_80019920(List *l, int arg);
-EXTERN_C void func_80019A6C(List *l, void *item, int index);
-EXTERN_C void func_80019C68(List *l, int index);
-EXTERN_C void *func_80019F64(List *l, int index);
 
 /* Node with an id in a singly linked chain; base class from the EXE (vtable D_80010178). */
 struct IdNode {
@@ -101,8 +96,6 @@ struct Link {
     Link *next;
 };
 
-EXTERN_C void func_8001A678(Link *a, Link *b);
-EXTERN_C Link *func_8001A744(Link *a, Link *b);
 
 struct SubNodeHead {
     int pad[6];
@@ -163,9 +156,6 @@ struct Poly {
 };
 
 /* EXE heap and memory helpers */
-EXTERN_C void __builtin_vec_delete(void *p);
-EXTERN_C void *__builtin_vec_new(int size);
-EXTERN_C void func_80025CE0(void *dst, void *src, int size);
 
 /* EFFECT functions called from code above their definition */
 EXTERN_C IdNode *func_800D67F4(IdNode *self, short id);
@@ -295,6 +285,15 @@ EXTERN_C Params_800E2704 D_1F800000;
 
 struct C_800D6C94;
 EXTERN_C C_800D6C94 *func_800D6C94(C_800D6C94 *self);
-EXTERN_C Vec4 func_8003A150(int h, int n);
+
+/* EXE functions that effect calls with another prototype than include/shared/exe.h. */
+// Defined with an explicit return slot (r, m, v); effect returns the Vec4 by value and passes the matrix as an int.
+EXTERN_C Vec4 func_8003A150_v(int h, int n) asm("func_8003A150");
+// Takes two arguments; effect passes one and leaves $a1 as it is.
+EXTERN_C void func_8001D024_1(void *self) asm("func_8001D024");
+
+// Effect passes nodes that convert to their base Link (and back), adjusting the pointer; exe.h takes void *.
+EXTERN_C Link *func_8001A744_l(Link *a, Link *b) asm("func_8001A744");
+EXTERN_C void func_8001A678_l(Link *a, Link *b) asm("func_8001A678");
 
 #endif /* EFFECT_EFFECT_H */

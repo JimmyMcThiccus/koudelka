@@ -11,7 +11,8 @@ EXTERN_C void func_8003488C(void *p, int a);
 EXTERN_C int func_800348E4(void *p);
 EXTERN_C void func_800375E4();
 EXTERN_C void func_800361C8(void *p);
-EXTERN_C void func_80036364(void *p, unsigned char a);
+// func_80036364 takes three arguments; this caller passes two and leaves $a2 as it is.
+EXTERN_C void func_80036364_2(void *p, unsigned char a) asm("func_80036364");
 EXTERN_C void func_80034EBC(void *p, void *q);
 EXTERN_C void *D_80012154[];
 EXTERN_C void *D_800121AC[];
@@ -48,7 +49,6 @@ EXTERN_C void *D_80013808[];
 EXTERN_C void *D_800B4D40;
 EXTERN_C void *D_800123EC[];
 EXTERN_C void *D_80012404[];
-EXTERN_C void func_80038E2C(void *p);
 EXTERN_C void *D_8001276C[];
 EXTERN_C void *D_80012BF8[];
 EXTERN_C void *D_800B4D4C;
@@ -228,6 +228,7 @@ EXTERN_C void *D_80010148[];
 EXTERN_C void func_8003C0D0(void *p, int a);
 EXTERN_C void func_8003BF30(void *p, int a);
 EXTERN_C unsigned char D_800B4D10[4];
+// func_8003635C is an empty function taking no arguments; this caller passes two.
 EXTERN_C void f3635C_alt(void *p, unsigned char a) asm("func_8003635C");
 struct S_A2_N14 { int p0; S_A2_N14 *next; char pad[0xC]; int f14; };
 struct S_A2_SvI { short x, y, z, w; S_A2_SvI() { x = 0; y = 0; z = 0; w = 0; } S_A2_SvI(short a, short b, short c) { x = a; y = b; z = c; w = 0; } };
@@ -309,4 +310,7 @@ struct S_A2_Lv { char pad[0x4C]; short s4C, s4E; };
 struct S_A2_Strm : A2VObj0 { char pad[0x18]; unsigned end, cur; };
 struct S_A2_E80 { char pad[4]; MATRIX m; char pad2[8]; S_A2_SvI sv2C; S_A2_V4 v34; };
 struct S_A2_St : A2VObj0 { char pad[8]; Holder h; };
+// func_80038E2C takes no arguments; this caller passes one.
+EXTERN_C void func_80038E2C_1(void *p) asm("func_80038E2C");
+
 #endif /* GAME_A2_A2_H */

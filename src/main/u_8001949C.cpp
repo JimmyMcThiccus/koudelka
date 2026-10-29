@@ -28,7 +28,7 @@ int main()
 {
     func_8001B424();
     void *mem = operator new(0x3B4);
-    void *p = func_8001B46C(mem, 1, S_Size(320, 240), 3, 0x1000);
+    void *p = func_8001B46C_s(mem, 1, S_Size(320, 240), 3, 0x1000);
     D_800A4578[0] = p;
     func_8001E360(p ? (char *)p + 0x50 : 0);
     ResetGraph(1);
