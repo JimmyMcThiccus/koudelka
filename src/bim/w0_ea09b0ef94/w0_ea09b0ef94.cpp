@@ -51,7 +51,25 @@ INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", func_800DB208);
 
 INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", func_800DB348);
 
-INCLUDE_ASM("asm/bim/w0_ea09b0ef94/nonmatchings/w0_ea09b0ef94", func_800DB458);
+EXTERN_C int func_800DB458(void *p, unsigned *flags)
+{
+    if (*flags & 2) {
+        func_800D7818(p, 0x190, 0x258, 0, 0, 0, 0, 0, 0);
+        int id = func_800D8E64(p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 1, 0x421);
+        if (q) {
+            if (id == 2)
+                func_800D81FC(p, 3);
+            if (func_800D7D64(p, q)) {
+                *flags &= ~2;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 #include "../shared/bimf_af99c5b3.cpp"
 

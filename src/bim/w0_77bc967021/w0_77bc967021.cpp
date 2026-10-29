@@ -47,7 +47,21 @@ INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DAE04);
 
 INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DAFDC);
 
-INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DB1A0);
+EXTERN_C int func_800DB1A0(void *p, unsigned *flags)
+{
+    if (*flags & 2) {
+        func_800D7818(p, 0x12C, 0x12C, 0x190, 0, 0, 0, 0, 0);
+        func_800D8E64(p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 1, 0x421);
+        if (q && func_800D7D64(p, q)) {
+            *flags &= ~2;
+            return 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DB264);
 
