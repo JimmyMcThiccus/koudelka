@@ -23,6 +23,7 @@ options:
     - config/symbols/main_b2.txt
     - config/symbols/sound.txt
     - config/symbols/bim_base.txt
+    - config/symbols/bim/w1_b36bd7b839.txt
   undefined_funcs_auto_path: build/linkers/bim/undefined_funcs_auto.w1_b36bd7b839.txt
   undefined_syms_auto_path: build/linkers/bim/undefined_syms_auto.w1_b36bd7b839.txt
 

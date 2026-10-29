@@ -4,25 +4,29 @@ INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DAAC0);
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DAB3C);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DACFC);
+INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", bimf_8a9e0866);
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DAE40);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DAF88);
+INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", bimf_014cace9);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB008);
+#include "../shared/bimf_7434482e.cpp"
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB028);
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB1A0);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB2B8);
+INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", bimf_131b36e3);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB350);
+#include "../shared/bimf_af99c5b3.cpp"
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB358);
+#define bimf_af99c5b3 bimf_af99c5b3_1
+#include "../shared/bimf_af99c5b3.cpp"
+#undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB360);
+#define bimf_af99c5b3 bimf_af99c5b3_2
+#include "../shared/bimf_af99c5b3.cpp"
+#undef bimf_af99c5b3
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB368);
 
@@ -30,17 +34,23 @@ INCLUDE_RODATA("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", D_800DA86C);
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB404);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB52C);
+INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", bimf_db5f4bc4);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB574);
+INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", bimf_06b4d1a5);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB624);
+#define bimf_af99c5b3 bimf_af99c5b3_3
+#include "../shared/bimf_af99c5b3.cpp"
+#undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB62C);
+#define bimf_af99c5b3 bimf_af99c5b3_4
+#include "../shared/bimf_af99c5b3.cpp"
+#undef bimf_af99c5b3
 
 INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB634);
 
-INCLUDE_ASM("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", func_800DB718);
+#define bimf_af99c5b3 bimf_af99c5b3_5
+#include "../shared/bimf_af99c5b3.cpp"
+#undef bimf_af99c5b3
 
 INCLUDE_RODATA("asm/bim/w0_2966c8e7b8/nonmatchings/w0_2966c8e7b8", D_800DA8B8);
 

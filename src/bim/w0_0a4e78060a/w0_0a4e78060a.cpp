@@ -4,33 +4,33 @@ INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAAB8);
 
 INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAB34);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DACFC);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_a85220b1);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAE40);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_c9eb637c);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAF40);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_014cace9);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAFC0);
+#include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DAFE0);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_127a353f);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB14C);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_063a8822);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB20C);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_5098c06c);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB294);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_a1b3cda8);
 
 INCLUDE_RODATA("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", D_800DA86C);
 
 INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB31C);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB418);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_bf5e5e80);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB590);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_06b4d1a5);
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB640);
+#include "../shared/bimf_af99c5b3.cpp"
 
-INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", func_800DB648);
+INCLUDE_ASM("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", bimf_81cee1ab);
 
 INCLUDE_RODATA("asm/bim/w0_0a4e78060a/nonmatchings/w0_0a4e78060a", D_800DA8B8);
 

@@ -154,7 +154,11 @@ Not done yet. Order and shape:
 3. **Targets 2…86: one per distinct tail / W1 / W2 content**, generated from a template by a `tools/gen_bim_yaml.py`
    (a loop over `manifest.json`). Each gets `base_path`, `vram`, the same symbol lists plus `bim_base.txt`,
    and `DEPENDS` on `bim_base`. Use `[0x0, rodata]` for the id word and pointer table of W1/W2.
-4. **Shared source.** A function that appears in several tails or W1/W2 modules at different addresses should be
+4. **Shared source: done (2026-10-29).** `tools/bim_shared.py` names 111 shared functions (`bimf_<hash>`, with
+   `_1`, `_2`... for repeats inside one module) covering 1,103 of the 1,518 module functions, so all modules together
+   need 526 definitions; `tools/bim_sync.py` swaps a written one in everywhere (see `docs/PARALLEL.md`, "BIM.AR
+   modules"). The first two (`bimf_af99c5b3`, 365 copies; `bimf_7434482e`, 84) replaced 449 `INCLUDE_ASM` lines. The
+   proposal was: **Shared source.** A function that appears in several tails or W1/W2 modules at different addresses should be
    written once. Splat names functions by address, so have the generator write a per-module symbol file that names
    every function by its **masked-body hash** (`bimf_<hash>`); the same function in different modules then has one
    name, one `src/bim/<family>.cpp` definition, and per-module differences are only link addresses. Modules

@@ -1,0 +1,17 @@
+// w1_8e7b89df33: functions shared with other BIM.AR modules (tools/bim_shared.py; do not edit)
+bimf_ff339051 = 0x800DC014; // type:func
+bimf_2b913bf0 = 0x800DC158; // type:func
+bimf_014cace9 = 0x800DC278; // type:func
+bimf_7434482e = 0x800DC2F8; // type:func
+bimf_cb8fde67 = 0x800DC318; // type:func
+bimf_0ae2aad9 = 0x800DC498; // type:func
+bimf_5663c35c = 0x800DC5A0; // type:func
+bimf_af99c5b3 = 0x800DC638; // type:func
+bimf_af99c5b3_1 = 0x800DC640; // type:func
+bimf_af99c5b3_2 = 0x800DC648; // type:func
+bimf_a1b3cda8 = 0x800DC650; // type:func
+bimf_9b3b5928 = 0x800DC808; // type:func
+bimf_06b4d1a5 = 0x800DC958; // type:func
+bimf_af99c5b3_3 = 0x800DCA08; // type:func
+bimf_af99c5b3_4 = 0x800DCA10; // type:func
+bimf_a6f0c006 = 0x800DCA18; // type:func

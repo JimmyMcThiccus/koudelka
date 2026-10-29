@@ -54,7 +54,10 @@ def main():
              .replace("src_path: src/bim_base", f"src_path: src/bim/{name}")
              .replace("ld_script_path: build/linkers/bim_base.ld", f"ld_script_path: build/linkers/bim/{name}.ld")
              .replace("undefined_funcs_auto.bim_base.txt", f"bim/undefined_funcs_auto.{name}.txt")
-             .replace("undefined_syms_auto.bim_base.txt", f"bim/undefined_syms_auto.{name}.txt"))
+             .replace("undefined_syms_auto.bim_base.txt", f"bim/undefined_syms_auto.{name}.txt")
+             # the functions it shares with other modules, named once for all of them (tools/bim_shared.py)
+             .replace("    - config/symbols/bim_base.txt\n",
+                      f"    - config/symbols/bim_base.txt\n    - config/symbols/bim/{name}.txt\n"))
         uses = f"{e['blocks']} block{'s' if e['blocks'] != 1 else ''}"
         ids = f", SECT.DAT ids {e['sect_ids']}" if e.get("sect_ids") else ""
         text = (f"name: BIM.AR module {name}\n"

@@ -1,0 +1,6 @@
+// w1_67172ba75f: functions shared with other BIM.AR modules (tools/bim_shared.py; do not edit)
+bimf_89f158d5 = 0x800DBFC8; // type:func
+bimf_014cace9 = 0x800DC1DC; // type:func
+bimf_7434482e = 0x800DC25C; // type:func
+bimf_227b9b39 = 0x800DC27C; // type:func
+bimf_db5f4bc4 = 0x800DC29C; // type:func

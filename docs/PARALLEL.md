@@ -155,6 +155,24 @@ overlay header as one struct).
 After a build, `tools/func_diff.py <target>` lists the functions that no longer match retail, which helps when the
 matching check fails.
 
+## BIM.AR modules: write shared functions once
+
+The 85 module targets (`config/bim/`, `src/bim/<module>/`) repeat most of their code. `tools/bim_shared.py` names
+each function that appears more than once `bimf_<hash>`, the same in every module, with `_1`, `_2`, ... for a
+repeat inside one module. Only functions whose references all name the same thing everywhere get a shared name.
+111 shared names cover 1,103 of the 1,518 module functions. To do one:
+
+1. Pick any module that has it, and iterate with `tools/try_compile.py f.cpp bimf_<hash> --unit
+   src/bim/<module>/<module>.cpp` until it reports 0 differing instructions.
+2. Save the function as `src/bim/shared/bimf_<hash>.cpp`, self-contained: `#include "common.h"` plus whatever
+   it needs, then the function under its `bimf_` name.
+3. Run `tools/bim_sync.py`. It replaces the `INCLUDE_ASM` line in every module that has the function.
+4. Rebuild both modes. Every one of those modules is checked.
+
+A function in only one module, or one that reads its module's own data, stays a `func_` in that module's
+`.cpp`, as usual. Don't edit `config/bim/` or `config/symbols/bim/`: both are generated, by `gen_bim_targets.py`
+and `bim_shared.py`.
+
 ## Virtual-base constructors and destructors
 
 These are no longer skipped. Write them out by hand: the explicit form matches, real `virtual` inheritance
