@@ -25,7 +25,8 @@ struct BimMon {
     unsigned short s80;
     char pad82[0x38E];
     short s410;
-    char pad412[0xAA];
+    short s412;
+    char pad414[0xA8];
     signed char b4BC;
     char pad4BD[0x9];
     short s4C6;
@@ -61,8 +62,34 @@ struct BimVec4 { int x, y, z, w; };
 
 EXTERN_C BimBattle *D_800AF470[];
 
+/* Short-lived controller object: stack of up to six candidate ids, total offsets, a scheduler hook. */
+struct BimHook { void *vtbl; int f4; void *f8; short sC; short sE; int f10; };
+struct BimXYZW { int x, y, z, w; };
+struct BimCtl {
+    void *vtbl;
+    int f4;
+    short s8;
+    short pad8;
+    int v[4];
+    int f1C;
+    int f20;
+};
+struct BimGlobal { char pad[0x26C]; int f26C; char pad270[8]; int f278; };
+EXTERN_C char D_80010178[], D_80010338[], D_800D5DC8[];
+EXTERN_C char D_800A4544[];
+EXTERN_C BimGlobal *D_800B4ED8[];
+EXTERN_C void func_800D731C(BimCtl *p);
+
+struct BimF18 { char pad[0x18]; void *f18; };
+struct BimClock { char pad[0xC]; unsigned fC; };
+struct BimObj { virtual void v0(); virtual void v1(); };
+EXTERN_C BimClock D_800A4534;
+EXTERN_C void *D_800B4C18[];
+EXTERN_C void func_800D6D08(void *p);
+
 struct BimPos { short x, y; };
 EXTERN_C BimMon *D_800AFA58[];
+EXTERN_C BimMon *D_800AFA64[];
 /* func_800D83D4 as called with only the object in $a0 */
 EXTERN_C int func_800D83D4_a(void *) asm("func_800D83D4");
 EXTERN_C int func_800CC220(void *p);
