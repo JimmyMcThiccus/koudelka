@@ -246,9 +246,23 @@ After import, two analysis passes and seeding:
 | CAPTURE | 125 | 0 | 28,108 |
 | GAMEEND | 0 | — | — |
 
-Known gaps:
-- GAMEEND makes no `jal` into itself; its functions have to be created from the entry pointers in its header
-  (for example `0x800B7944`).
-- 107 one-byte "functions" sit in the uninitialized `RAM` block. These are calls into the overlay range that Ghidra
-  resolved to the default address space instead of an overlay (likely EFFECT calling BATTLE). They are artifacts;
-  the targets need to be re-pointed at the right overlay space.
+Then two scripts bring it in line with splat. Both are idempotent; rerun them after a re-split, then save.
+1. **`KoudelkaSeedFunctions.java`, with the list from `tools/ghidra_function_list.py`.** It creates every function
+   splat knows (5,493; Ghidra's analysis had found 3,375), GAMEEND's included. It also gives the default-named ones
+   our `func_XXXXXXXX` names.
+2. **`KoudelkaFixRefs.java`, with the list from `tools/ghidra_pointer_list.py`.** It fixes references that cross
+   address spaces: five overlays share `0x800B6DF0`, and EFFECT loads after BATTLE, so Ghidra had sent any
+   address in that range to its empty default `RAM` block. It does three things:
+   - **Retargets references.** BATTLE references above `0x800D5DAC` now go to EFFECT, EFFECT references below it
+     go to BATTLE, and EXE references go to the one overlay with a label at that address. The first run moved 218.
+   - **Marks pointers.** It marks the 10,495 pointer words splat knows (vtables, jump tables, script tables) as
+     pointers into the right space; 3,335 were new.
+   - **Removes artifacts.** It deletes the one-byte "functions" those references had created in `RAM` (102).
+
+Left after that: 23 EXE calls into the overlay range.
+- Six target an address where two overlays both have a function (for example `0x800BCCC0`, in FIELD and CAPTURE);
+  the EXE calls whichever is loaded.
+- The rest go to addresses no overlay has a function at, which probably means Ghidra disassembled data in `.text`.
+
+GhydraMCP runs scripts only when Ghidra is started with `GHYDRA_ALLOW_SCRIPTS=1`, and the folder
+`%USERPROFILE%\ghidra_scripts` has to exist before Ghidra starts.
