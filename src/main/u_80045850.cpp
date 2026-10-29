@@ -83,7 +83,45 @@ EXTERN_C char *func_80045E6C(void *p, int n)
     return r;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80045EB8);
+EXTERN_C void *D_80011FE4[];
+EXTERN_C void *D_800100F8[];
+EXTERN_C void *D_80010198[];
+EXTERN_C void *D_800101C0[];
+EXTERN_C void *D_800101B0[];
+EXTERN_C void *D_800129AC[];
+EXTERN_C void *D_8001299C[];
+EXTERN_C void *D_800129C4[];
+struct S_A2B_Sub8 { void *vt; void *vt4; int x; short s0, s1, s2, s3; };
+struct S_A2B_C45 { void *vt0; int pad4; S_A2B_Sub8 b; int u1C, u20, u24, u28, u2C, u30, u34, u38; };
+static inline void mb1(S_A2B_C45 *p) { p->b.vt = D_800100F8; p->b.vt4 = D_80010198; }
+static inline void mb2(S_A2B_C45 *p, int a, short f, short g, short h, short e)
+{
+    S_A2B_Sub8 *s = &p->b;
+    mb1(p);
+    s->vt4 = D_800101C0; p->b.vt = D_800101B0; s->x = a; s->s0 = f; s->s1 = g; s->s2 = h; s->s3 = e;
+}
+static inline void mb3(S_A2B_C45 *p, int a, short f, short g, short h, short e)
+{
+    mb2(p, a, f, g, h, e);
+    p->b.vt4 = D_800129AC;
+    p->b.vt = D_8001299C;
+}
+extern "C++" S_A2B_C45 *f45EB8(S_A2B_C45 *p, int a, int b, int c, int d, short e, short f, short g, short h) asm("func_80045EB8");
+S_A2B_C45 *f45EB8(S_A2B_C45 *p, int a, int b, int c, int d, short e, short f, short g, short h)
+{
+    p->vt0 = D_80011FE4;
+    mb3(p, a, f, g, h, e);
+    p->vt0 = D_800129C4;
+    p->u1C = a;
+    p->u20 = h;
+    p->u24 = f;
+    p->u28 = g;
+    p->u2C = c;
+    p->u30 = b;
+    p->u34 = 0;
+    p->u38 = d;
+    return p;
+}
 
 EXTERN_C void func_80045F84(void *p, int flags)
 {
@@ -358,7 +396,23 @@ EXTERN_C void *func_800493E8(void *p, int a)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80049420);
+EXTERN_C int *func_80049420(int *p, int *q)
+{
+    int n = p[0];
+    p[0] = n + 1;
+    int k = n / 3;
+    int m = n - k * 3;
+    int c = q[2];
+    int a = q[0];
+    int b = q[1];
+    int e = q[3];
+    char *d = (char *)p + (m * 8 + k * 48);
+    AT(d, int, 0xC) = a;
+    AT(d, int, 0x24) = c;
+    AT(d, int, 0x10) = b;
+    AT(d, int, 0x28) = e;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80049488);
 
@@ -689,7 +743,49 @@ EXTERN_C S_Prim *func_8004ABEC(S_Prim *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8004AC04);
+// exe.h declares this with void * parameters; the byte-pointer type is needed to match.
+EXTERN_C int func_8004AC04_t(unsigned char *p, unsigned char *a, unsigned char *b, unsigned char *c, unsigned char *d) asm("func_8004AC04");
+EXTERN_C int func_8004AC04_t(unsigned char *p, unsigned char *a, unsigned char *b, unsigned char *c, unsigned char *d)
+{
+    unsigned x = p[0], y = p[4], z;
+    int i;
+    if (!(x - y > 1 && y - x > 1)) {
+        z = p[8];
+        if (!(y - z > 1 && z - y > 1) && !(z - x > 1 && x - z > 1))
+            return 0;
+    }
+    x = p[1]; y = p[5];
+    if (!(x - y > 1 && y - x > 1)) {
+        z = p[9];
+        if (!(y - z > 1 && z - y > 1) && !(z - x > 1 && x - z > 1))
+            return 0;
+    }
+    a[0] = p[0];
+    b[4] = p[4];
+    c[8] = p[8];
+    a[4] = b[0] = d[8] = (p[0] + p[4]) >> 1;
+    b[8] = c[4] = d[0] = (p[4] + p[8]) >> 1;
+    a[8] = c[0] = d[4] = (p[8] + p[0]) >> 1;
+    unsigned char *e = d;
+    a[1] = p[1];
+    b[5] = p[5];
+    c[9] = p[9];
+    a[5] = b[1] = e[9] = (p[1] + p[5]) >> 1;
+    b[9] = c[5] = e[1] = (p[5] + p[9]) >> 1;
+    a[9] = c[1] = e[5] = (p[9] + p[1]) >> 1;
+    i = 0;
+    while (i < 3) {
+        i++;
+        unsigned short u = *(unsigned short *)(p + 2);
+        p += 4;
+        *(unsigned short *)(a + 2) = u;
+        *(unsigned short *)(b + 2) = u;
+        *(unsigned short *)(c + 2) = u;
+        *(unsigned short *)(e + 2) = u;
+        e += 4; c += 4; b += 4; a += 4;
+    }
+    return 1;
+}
 
 EXTERN_C void func_8004AE24(void *d, void *s)
 {

@@ -241,9 +241,94 @@ C_8003D9FC::C_8003D9FC(int a, int b, char *s, S_A2B_V4 *src) : C_8001E40C(a, 2, 
     AT(this, short, 0x1A4) = 0;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003DC54);
+// exe.h declares the argument as void *; the typed struct is needed for the scheduling to match.
+struct S_A2B_DC54 {
+    void *vt; char pad4[0x8C - 4]; void *vt8C; char pad90[0x134 - 0x90]; void *p134; void *p138; void *p13C;
+    char pad140[0x1B4 - 0x140]; void *p1B4; void *p1B8; char pad1BC[0x1D4 - 0x1BC]; void *p1D4; short s1D8;
+};
+EXTERN_C void func_8003DC54_t(S_A2B_DC54 *p, int a) asm("func_8003DC54");
+EXTERN_C void func_8003DC54_t(S_A2B_DC54 *p, int a)
+{
+    p->vt8C = D_80012794;
+    p->vt = D_800127AC;
+    p->s1D8 = 0;
+    if (p->p1B8) {
+        void *v = AT(p->p1B8, void *, 0x68);
+        if (v)
+            ((A2VObj0 *)v)->v00(3);
+        if (p->p1B8) {
+            func_80039C88(D_800B4ED8 ? (char *)D_800B4ED8 + 0x50 : 0, p->p1B8);
+            S_A2B_Del12 *d1 = new S_A2B_Del12(4, p->p1B8);
+            char *g = D_800A4544;
+            func_8001D150(g, new S_A2_X1(d1));
+            D_800B4D28++;
+            p->p1B8 = 0;
+            D_800B4D30++;
+            if (p->p1B4) {
+                func_80039C88(D_800B4ED8 ? (char *)D_800B4ED8 + 0x50 : 0, p->p1B4);
+                S_A2B_Del12 *d2 = new S_A2B_Del12(4, p->p1B4);
+                func_8001D150(g, new S_A2_X1(d2));
+                p->p1B4 = 0;
+                D_800B4D28++;
+                D_800B4D30++;
+            }
+        }
+    }
+    if (p->p134) {
+        __builtin_vec_delete(p->p134);
+        p->p134 = 0;
+    }
+    p->p1D4 = 0;
+    p->p138 = 0;
+    p->p13C = 0;
+    func_8001E508(p, a);
+}
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003DEA8);
+// exe.h declares the argument as void *; the typed struct is needed for the scheduling to match.
+struct S_A2B_Dea8 {
+    char pad0[0x11A]; short s11A; char pad11C[0x138 - 0x11C]; void *p138; void *p13C;
+    char pad140[0x1B4 - 0x140]; void *p1B4; void *p1B8; char pad1BC[0x1D4 - 0x1BC]; void *p1D4; short s1D8;
+};
+EXTERN_C void func_8003DEA8_t(S_A2B_Dea8 *p) asm("func_8003DEA8");
+EXTERN_C void func_8003DEA8_t(S_A2B_Dea8 *p)
+{
+    void *s0 = p->p1D4;
+    void *s1;
+    p->s1D8 = 0;
+    p->s11A = -1;
+    s1 = f1A744(s0, s0);
+    while (s0 && s1) {
+        s1 = f1A744(s0, s0);
+        if (s0)
+            ((A2VObj0 *)s0)->v00(3);
+        s0 = s1;
+    }
+    if (p->p1B8) {
+        void *v = AT(p->p1B8, void *, 0x68);
+        if (v)
+            ((A2VObj0 *)v)->v00(3);
+        if (p->p1B8) {
+            func_80039C88(D_800B4ED8 ? (char *)D_800B4ED8 + 0x50 : 0, p->p1B8);
+            S_A2B_Del12 *d1 = new S_A2B_Del12(4, p->p1B8);
+            char *g = D_800A4544;
+            func_8001D150(g, new S_A2_X1(d1));
+            D_800B4D28++;
+            p->p1B8 = 0;
+            D_800B4D30++;
+            if (p->p1B4) {
+                func_80039C88(D_800B4ED8 ? (char *)D_800B4ED8 + 0x50 : 0, p->p1B4);
+                S_A2B_Del12 *d2 = new S_A2B_Del12(4, p->p1B4);
+                func_8001D150(g, new S_A2_X1(d2));
+                p->p1B4 = 0;
+                D_800B4D28++;
+                D_800B4D30++;
+            }
+            p->p1D4 = 0;
+            p->p138 = 0;
+            p->p13C = 0;
+        }
+    }
+}
 
 EXTERN_C void func_8003E124(void *p)
 {

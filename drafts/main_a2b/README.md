@@ -15,3 +15,14 @@ Round 3, batch 3:
 - func_80052E40 and func_80054708 are skipped: string literals / number formatting with locals that need dtors.
 - Ghidra-decompiled near misses: func_8003C764, func_8003FEF4, func_800540A8, func_8004BC14, func_80052FB8,
   func_800456F4, func_8004A89C (3 instructions: polarity of the last null test).
+
+Round 4, track B (Ghidra first). Landed: func_8004AC04, func_8003FAEC, func_80049420, func_800402E4, func_800404C8,
+func_80042EF0, func_80042838, func_8003DEA8, func_8003DC54, func_80045EB8. Drafts saved with their diff counts:
+- func_8003C5EC: 11 differing (retail computes `v = p8 - 8` before the base-ctor stores of the 0xC message).
+- func_80048C30: 36 differing, register allocation only (needs func_80049250 returning void * and the prototype with short d/e).
+- func_800451A8: 37 differing (guard + do-while is nearly retail; GCC cross-jumps the first call into the loop bottom).
+- func_8003F3DC: 53 differing, register allocation only (p=s0, s=s1, q=s2, i=s3 in retail).
+Tricks that mattered (also in the side-session notes): a typed struct for `p` changes alias decisions and scheduling;
+`while (a && b)` is rotated like retail, `while (a) { if (!b) break; }` is not; `short n = D + 1; D = D + 1;` was
+merged into one load but `p->f = (D + 1) * 5; D = D + 1;` gives retail's two loads; `switch` lists the case with the
+fall-through body first; hoist `char *g = D_800A4544;` after the allocation that precedes the message.

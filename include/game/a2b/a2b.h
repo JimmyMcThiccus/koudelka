@@ -56,7 +56,7 @@ struct C_8004B8F8 : C_800497FC { char pad10[8]; S_A2B_G3x2 m; C_8004B8F8() asm("
 // prelude
 EXTERN_C void *D_800B4D38;
 EXTERN_C void func_80044C7C(void *p, void *a);
-EXTERN_C void func_8003FAEC(void *p, void *o, int a, int b);
+EXTERN_C void func_8003FAEC(void *p, void *o, short a, short b);
 EXTERN_C void func_8004387C(void *p);
 struct C_80052100 { C_80052100(int a, void *b, int c) asm("func_80052100"); char pad[0x70]; };
 EXTERN_C void func_80052640(void *p, void *a);
@@ -125,4 +125,13 @@ EXTERN_C void *D_80013940[];
 struct S_A2B_C68 { S_A2B_VBp *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int i38; char pad3C[0x4]; void **vt40; int i44; char pad48[0xC]; int i54, i58, i5C, i60, i64; S_A2B_VObj vobj; };
 struct S_A2B_CpB2C { void *vtbl; int unk4; short unk8, unkA; S_A2B_Q16 arr[2]; };
 extern "C++" S_A2B_CpB2C *f53360(S_A2B_CpB2C *p) asm("func_80053360");
+EXTERN_C void *func_80049250(void *a, void *b, void *c);
+struct S_A2B_E2D0 : S_A2_X0 {
+    unsigned short u8; short uA; void *uC; int u10;
+    void init(int a, int b, void *c, int d) { vt = D_80010178; u4 = 0; vt = D_80010300; u8 = a; uA = b; u10 = d; uC = c; vt = D_800102D0; }
+};
+EXTERN_C S_A2_V4 func_8004463C(S_A2_V4 *a, S_A2_V4 *b);
+EXTERN_C short D_800B4D34;
+extern "C++" void *f1A744(void *p, void *a) asm("func_8001A744");
+struct S_A2B_Del12 { void *vt; int kind; void *obj; S_A2B_Del12(int k, void *o) { vt = D_800127E4; kind = k; obj = o; } };
 #endif /* GAME_A2B_A2B_H */
