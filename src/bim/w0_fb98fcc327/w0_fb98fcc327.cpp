@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DAE30);
 
 INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DAFE4);
 
-INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", bimf_dd77db6b);
+#include "../shared/bimf_dd77db6b.cpp"
 
 #include "../shared/bimf_131b36e3.cpp"
 
@@ -96,7 +96,22 @@ INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DB624);
 
 INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DB6EC);
 
-INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DB794);
+EXTERN_C int func_800DB794(void *p, unsigned *flags)
+{
+    int ok = 0;
+    if (func_800D84C8(p))
+        ok = func_800D8350(p, 2) != 0;
+    if (!ok) {
+        if (p || flags)
+            return 0;
+        else
+            return 0;
+    }
+    func_800D8E64(p, 2);
+    func_800D7D64(p, (void *)(ok = func_800D7E8C(p, (int)p)));
+    *flags &= ~2;
+    return 1;
+}
 
 INCLUDE_RODATA("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", D_800DA8B8);
 

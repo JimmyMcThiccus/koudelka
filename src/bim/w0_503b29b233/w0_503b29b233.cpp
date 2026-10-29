@@ -26,7 +26,29 @@ EXTERN_C void func_800DAFF4(BimM9 *p, int a, unsigned char b)
 
 INCLUDE_ASM("asm/bim/w0_503b29b233/nonmatchings/w0_503b29b233", func_800DB020);
 
-INCLUDE_ASM("asm/bim/w0_503b29b233/nonmatchings/w0_503b29b233", func_800DB188);
+EXTERN_C int func_800DB188(BimMon *p, unsigned *flags)
+{
+    if (*flags & 1) {
+        func_800D7914(p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 1, 0x121);
+        if (q) {
+            int r = 1;
+            func_800D7AC4(p, q, 0, 0);
+            p->f9F0 = r;
+            *flags &= ~1;
+            return r;
+        }
+        q = func_800D7A4C(p, 1, 0x21);
+        if (!q)
+            return 0;
+        func_800D7BB4(p, (int)q, 0, 0);
+        *flags &= ~1;
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C int func_800DB25C(void *p, unsigned *flags)
 {

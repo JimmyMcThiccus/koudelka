@@ -49,9 +49,42 @@ INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DAFE0);
 
 INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB0C4);
 
-INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB1DC);
+EXTERN_C int func_800DB1DC(void *p, unsigned *flags)
+{
+    if (*flags & 1) {
+        int ret;
+        func_800D7914((BimMon *)p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        void *q = func_800D7A4C(p, 2, 0x21);
+        if (q && func_800D7BB4(p, (int)q, 0, 0)) {
+            ret = 1;
+            ((BimMon *)p)->f9F0 = ret;
+            *flags &= ~1;
+            return ret;
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB288);
+EXTERN_C int func_800DB288(void *p, unsigned *flags)
+{
+    if (*flags & 1) {
+        func_800D7914((BimMon *)p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        if (!func_800D8064(p)) {
+            void *q = func_800D7A4C(p, 1, 0x21);
+            if (!q)
+                return 0;
+            if (!func_800D7AC4(p, q, 1, 0))
+                return 0;
+        }
+        *flags &= ~1;
+        return 1;
+    }
+    return 0;
+}
 
 EXTERN_C int func_800DB0C4(void *p, unsigned *flags);
 EXTERN_C int func_800DB1DC(void *p, unsigned *flags);
