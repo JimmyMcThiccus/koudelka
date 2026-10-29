@@ -210,6 +210,13 @@ input. Sessions with the DuckStation plugin get `mcp__` tools. Anyone else can u
 - **`trace` is expensive:** it logs every instruction to `%LOCALAPPDATA%/DuckStation/cpu_log.txt`, about 80 bytes
   per instruction, so keep traces short.
 
+## decomp.me: off limits to sessions
+
+decomp.me's FAQ asks people not to scrape the site, hook up an LLM, or make repeated automated requests. So no
+session or tool here fetches from it, creates scratches on it, or uses its API, including decomp-permuter's
+scratch import. Everything it would do for us runs locally: `try_compile.py`, `permute.py` and `twins.py`. If a
+near miss would benefit from human eyes, put it in your report; the user can post it there themselves.
+
 ## Brute-forcing a near miss
 
 For a draft a few instructions off on register allocation or instruction order, run
