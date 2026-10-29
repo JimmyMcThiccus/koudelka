@@ -88,7 +88,45 @@ EXTERN_C void func_8003CAD0(void *p)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CB50);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003C510", func_8003CC78);
+struct S_A2B_Lnk;
+struct S_A2B_Pad8 { int u0; S_A2B_Lnk *next; };
+struct S_A2B_Lnk : S_A2B_Pad8, A2VObj0 {};
+EXTERN_C void func_8003CC78(void *p, int a)
+{
+    int n;
+    if (AT(p, int, 0xC)) {
+        n = AT(p, int, 0xC);
+        A2VObj0 *o = AT(p, A2VObj0 *, 8);
+        while (--n >= 0) {
+            o->v09(a);
+            o = (A2VObj0 *)o->v02();
+        }
+    } else {
+        S_A2B_Lnk *it = 0;
+        if (AT(p, char *, 8))
+            it = (S_A2B_Lnk *)(AT(p, char *, 8) - 8);
+        if (it) {
+            do {
+                ((A2VObj0 *)it)->v09(a);
+                it = it->next;
+            } while (it);
+        }
+    }
+    {
+        A2VObj<4> *q = AT(p, A2VObj<4> *, 0x18);
+        if (q) {
+            unsigned f;
+            if (a == -1) {
+                f = q->v03();
+                f &= ~2u;
+            } else {
+                f = q->v03();
+                f |= 2;
+            }
+            AT(p, A2VObj<4> *, 0x18)->v04(f);
+        }
+    }
+}
 
 EXTERN_C void func_8003CE00(void *p, int a)
 {

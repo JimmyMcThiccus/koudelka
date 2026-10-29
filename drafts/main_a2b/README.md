@@ -26,3 +26,13 @@ Tricks that mattered (also in the side-session notes): a typed struct for `p` ch
 `while (a && b)` is rotated like retail, `while (a) { if (!b) break; }` is not; `short n = D + 1; D = D + 1;` was
 merged into one load but `p->f = (D + 1) * 5; D = D + 1;` gives retail's two loads; `switch` lists the case with the
 fall-through body first; hoist `char *g = D_800A4544;` after the allocation that precedes the message.
+
+Round 4, batch 2: landed func_8003CC78, func_800425A8. New drafts (diff counts): func_80044F18 (2), func_800459D4 (7),
+func_8003C5EC (11), func_80048C30 (36), func_800451A8 (37), func_80042140 (34, virtual-base dtor in recipe form),
+func_8005294C (44), func_8003F3DC (53), func_8003D3A0 (135).
+More tricks:
+- A polymorphic base at an offset: a real class (`struct Lnk : Pad8, A2VObj0`) and `((A2VObj0 *)lnk)->v09(a)` gives
+  retail's null-checked `lnk ? lnk + 8 : 0`, evaluated twice (vptr and this). Casting a char * by hand does not.
+- Wrap-up loop shapes: `if (x) do { ... x = next; } while (x);` rotated the walk in func_8003CC78.
+- Messages built inside a ctor that posts itself (`new X1(this)` before the final vptr store) look like a copy of the
+  object pointer in $v0; the draft in func_8003C5EC reproduces everything but the order of one load.
