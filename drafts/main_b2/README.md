@@ -51,3 +51,26 @@ Note for the integrator: `func_8006C95C`'s switch needs one `case` per jump-tabl
 | func_8006C4EC | 31 | structure and stack layout match (Ghidra: MATRIX + 2 VECTOR + 16-byte buffer + long[2]); only the `$s0`/`$s1` roles (param copy vs buffer pointer) and `$v0`/`$v1` temps swap. Permuter (10 min) best score 35 |
 | func_8006D768 | 70+ | dtor reaching a virtual base through `self->4 - 0x124`; skipped as virtual-base class code |
 | func_8006F8B4 | 90 | retail copies the by-value `V4_80085578` argument to a stack temp before each `func_8006FE6C` call; neither a ctor nor a copy ctor reproduces it |
+
+## Round 4 (track B)
+
+Landed: func_8006C65C, func_8008B30C, func_80084454, func_80084130, func_80089FD0, func_8007E8C0, func_8008586C,
+func_800722EC, func_80072130, func_80078A30, func_80071F6C, func_80074C90 (12, nine of them virtual-base ctors/dtors).
+
+| Function | Diff | What differs |
+|---|---|---|
+| func_8006BFE4 | 4 | vbase ctor: retail adds the e1 and e5 deltas before storing either (addu,addu,sh,sh); we emit addu,sh,...,addu,sh |
+| func_80068770 | 41 | vbase ctor: self lands in $s3 (retail $s5) and retail reloads the SV2C temp's y from the stack (`lhu a1,0x62(sp)`) |
+| func_80084D58 (/ func_80084F58 twin) | 19 | switch shapes match; the `func_8001CA10` result lands in $v0 (retail $a1, the arg register), k in $v1 for the 0x16 case |
+| func_8007C7B0 | 119 | retail keeps three full copies of the per-case tail and $s4 = const 1; we cross-jump (436 vs 500 bytes) |
+| func_8007D024 | 40 (not saved) | switch (r) with case -1 first and case 4 falling into default is 40 off: retail puts the shared `return -1` block before case 1 and jumps there from every early test, we put it at the end; its jtbl_80017078 sits in the unit mid-run rodata |
+
+Tricks learned this round:
+- A message object (vt D_80010178 then D_80010300 with no store between) needs `FIELD_AT(p, void * volatile, 0) = D_80010178;`
+  or GCC deletes the dead first store (func_8008586C).
+- An unrotated loop with a function-scope `n` rotates; declare `n` inside the loop body (func_8007E8C0).
+- An empty-looking `Z4() {a=b=c=d=0}` class passed as `const Z4 &` gives retail's "zero vector built after the allocator
+  call, passed by address" (func_80071F6C); a plain local + `&v` stores it before.
+- Virtual-base dtors that run in two phases (derived vtables, call, then base vtables with an unconditional stack copy)
+  are plain repetition of the recipe; the second phase has no `if (!in_chrg)`.
+- `switch (t) { case 8: ... case 2: ... case 0x16: ... }` gives the "t == 8, t < 9, t == 2, t == 0x16" test tree retail has.

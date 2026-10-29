@@ -167,7 +167,59 @@ EXTERN_C void func_80085820(Derived_80085820 *self)
     func_800CF2D0(FIELD_AT(D_800AF470.p, void *, 0x32C), FIELD_AT(self, signed char, 0x4BC) - 3);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_8008586C);
+EXTERN_C void func_8008586C(void *self, int a)
+{
+    if (FIELD_AT(self, signed char, 0x4BD) != 1) {
+        return;
+    }
+    int c = FIELD_AT(FIELD_AT(self, unsigned char *, 0x550), unsigned char, 0x1B);
+    switch (a) {
+    case -1:
+        func_80071D90(self, 0, 1);
+        FIELD_AT(self, signed char, 0x4F1) = 0;
+        FIELD_AT(self, short, 0x4F2) = a;
+        return;
+    case 0:
+        if (c != 0x4C) {
+            func_80071D90(self, 0, 1);
+            FIELD_AT(self, signed char, 0x4F1) = 0;
+        }
+        break;
+    case 1:
+        if (FIELD_AT(self, signed char, 0x4F1) == 0) {
+            char *p = (char *)func_8001CA10(0x14);
+            FIELD_AT(p, void * volatile, 0x0) = D_80010178;
+            FIELD_AT(p, void *, 0x0) = D_80010300;
+            FIELD_AT(p, short, 0x8) = 2;
+            FIELD_AT(p, short, 0xA) = 0xC;
+            FIELD_AT(p, int, 0x10) = 0x64;
+            FIELD_AT(p, int, 0x4) = 0;
+            FIELD_AT(p, int, 0xC) = 0;
+            FIELD_AT(p, void *, 0x0) = D_800102D0;
+            func_8001EFE4(self, p);
+            FIELD_AT(self, signed char, 0x4F1) = 1;
+        }
+        break;
+    case 2:
+        if (FIELD_AT(self, signed char, 0x4F1) == 0 || FIELD_AT(self, short, 0x4F2) != c) {
+            char *p = (char *)func_8001CA10(0x14);
+            FIELD_AT(p, void * volatile, 0x0) = D_80010178;
+            FIELD_AT(p, void *, 0x0) = D_80010300;
+            FIELD_AT(p, short, 0xA) = 0xC;
+            FIELD_AT(p, int, 0x10) = 0x64;
+            FIELD_AT(p, int, 0x4) = 0;
+            FIELD_AT(p, short, 0x8) = a;
+            FIELD_AT(p, int, 0xC) = 0;
+            FIELD_AT(p, void *, 0x0) = D_800102D0;
+            func_8001EFE4(self, p);
+            FIELD_AT(self, signed char, 0x4F1) = 1;
+        }
+        break;
+    default:
+        return;
+    }
+    FIELD_AT(self, short, 0x4F2) = c;
+}
 
 EXTERN_C void *func_80085A08(void *self, S8_80085A08 s, int d)
 {

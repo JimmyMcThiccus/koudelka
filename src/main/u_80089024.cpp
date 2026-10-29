@@ -319,7 +319,56 @@ EXTERN_C void func_80089FC8(void)
 {
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_80089FD0);
+EXTERN_C void *func_80089FD0(S_8008B30C *self, int in_chrg, int a2, short a3, int e, int *p, int f, int g)
+{
+    if (in_chrg) {
+        self->vb = (S_VBB *)((char *)self + 0x598);
+        S_VBobjB *v = (S_VBobjB *)self->vb;
+        v->vptr = D_80010178;
+        v->unk4 = 0;
+        v->vptr = D_800104A8;
+    }
+    func_80084130_8(self, 0, a2, a3, e, p, f, g);
+    self->vb->vt = (VEntB *)D_80017CCC.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80017CCC;
+        self->vb->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80017CCC.e[1].d + (adj = (char *)self - (full = (char *)self->vb - 0x598));
+        vt.e[6].d = D_80017CCC.e[6].d + adj;
+    }
+    self->vt8C = D_80017D4C;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_80017D2C;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_80017DFC;
+    self->vt4A8 = D_80017D1C;
+    self->vt0 = D_80017D64;
+    FIELD_AT(self, int, 0x544) = 0;
+    FIELD_AT(self, int, 0x54C) = 0;
+    FIELD_AT(self, int, 0x550) = 0;
+    FIELD_AT(self, int, 0x554) = 0;
+    FIELD_AT(self, int, 0x558) = 0;
+    FIELD_AT(self, int, 0x55C) = 0;
+    char *p1 = (char *)self + 0x560;
+    int i = 0xB;
+    do {
+        p1[0] = 0;
+        p1[1] = 0;
+        p1 += 2;
+        i -= 1;
+    } while (i != -1);
+    char *p2 = (char *)self + 0x578;
+    int j = 0xF;
+    do {
+        p2[0] = 0;
+        p2[1] = 0;
+        p2 += 2;
+        j -= 1;
+    } while (j != -1);
+    return self;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_8008A188);
 
@@ -536,7 +585,30 @@ EXTERN_C void *func_8008B258(void *self, int b, int c)
     return self;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_8008B30C);
+EXTERN_C void func_8008B30C(S_8008B30C *self, int in_chrg)
+{
+    self->vt8C = D_80017D4C;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_80017D2C;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_80017DFC;
+    self->vt4A8 = D_80017D1C;
+    self->vt0 = D_80017D64;
+    self->vb->vt = (VEntB *)D_80017CCC.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80017CCC;
+        self->vb->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80017CCC.e[1].d + (adj = (char *)self - (full = (char *)self->vb - 0x598));
+        vt.e[6].d = D_80017CCC.e[6].d + adj;
+    }
+    func_80084454(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb, 0);
+    if (in_chrg & 1)
+        __builtin_delete(self);
+}
 
 EXTERN_C int func_8008B444(int n)
 {
