@@ -240,11 +240,11 @@ EXTERN_C void *func_80069D1C(void *self, int a, int b)
 EXTERN_C void func_80069E60(void *self, int flags)
 {
     if (FIELD_AT(self, void *, 0x14) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x14));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x14));
     }
     FIELD_AT(self, void *, 0x14) = 0;
     if (FIELD_AT(self, void *, 0x1C) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x1C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x1C));
     }
     FIELD_AT(self, void *, 0x1C) = 0;
     if (flags & 1) {
@@ -261,13 +261,13 @@ EXTERN_C int func_80069ECC(void *self, int a, int b)
     }
     FIELD_AT(self, int, 0x18) = a;
     if (FIELD_AT(self, void *, 0x14) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x14));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x14));
     }
     FIELD_AT(self, void *, 0x14) = 0;
     if (b) {
         n = a == 4 ? 0x10 : 0x100;
         n *= 2;
-        p = func_800A0D2C(n);
+        p = __builtin_vec_new(n);
         FIELD_AT(self, void *, 0x14) = p;
         func_80025CE0(p, b, n);
     }
@@ -283,9 +283,9 @@ EXTERN_C int func_80069F74(void *self, int n, SV2_80069F74 s, void *src)
     FIELD_AT(self, SV2_80069F74, 0x20) = s;
     int sz = (s.w * s.h * m + 15) / 16;
     if (FIELD_AT(self, void *, 0x1C) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x1C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x1C));
     }
-    FIELD_AT(self, void *, 0x1C) = func_800A0D2C(sz * 2);
+    FIELD_AT(self, void *, 0x1C) = __builtin_vec_new(sz * 2);
     func_80025CE0(FIELD_AT(self, void *, 0x1C), (int)src, sz * 2);
 }
 
@@ -838,7 +838,7 @@ EXTERN_C int func_8006BA1C(void *self)
     void *p;
 
     func_8006BC98(self);
-    p = func_800A0D2C(FIELD_AT(self, int, 0x238));
+    p = __builtin_vec_new(FIELD_AT(self, int, 0x238));
     FIELD_AT(self, void *, 0x24C) = p;
     func_80025CE0(p, FIELD_AT(self, int, 0x234), FIELD_AT(self, int, 0x238));
     return 1;
@@ -917,7 +917,7 @@ EXTERN_C int func_8006BC98(void *self)
     }
     p = FIELD_AT(self, void *, 0x24C);
     if (p != 0) {
-        func_800A0D0C(p);
+        __builtin_vec_delete(p);
         FIELD_AT(self, void *, 0x24C) = 0;
     }
     return 1;

@@ -572,3 +572,11 @@ chkRC2wait = 0x800A3B98; // type:func
 _padInitSioMode = 0x800A28A4; // type:func
 _padLoadActInfo = 0x800A355C; // type:func
 _padCmdParaMode = 0x800A3AD0; // type:func
+// Named by tools/psyq_sigs.py, now also checking calls inside the object: CdFlush/CdSync/CdReady (wrappers of CD_*),
+// the C++ array new/delete (which `new T[n]` calls), and CdSyncCallback by module layout.
+CdFlush = 0x8009CA60; // type:func
+CdSync = 0x8009CA80; // type:func
+CdReady = 0x8009CAA0; // type:func
+CdSyncCallback = 0x8009CAC0; // type:func
+__builtin_vec_delete = 0x800A0D0C; // type:func
+__builtin_vec_new = 0x800A0D2C; // type:func

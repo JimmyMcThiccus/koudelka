@@ -465,7 +465,7 @@ EXTERN_C void func_80049AB4(char *p)
             q -= 0x44;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -518,7 +518,7 @@ EXTERN_C void func_80049F28(char *p)
             q -= 0x44;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -559,7 +559,7 @@ EXTERN_C void func_8004A384(char *p)
             q -= 0x68;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -728,7 +728,7 @@ EXTERN_C void func_8004AEBC(char *p)
             q -= 0x68;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -769,7 +769,7 @@ EXTERN_C void func_8004B370(char *p)
             q -= 0x68;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -836,7 +836,7 @@ EXTERN_C void func_8004B998(char *p)
             q -= 0x5C;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -884,7 +884,7 @@ EXTERN_C void func_8004BE38(char *p)
             q -= 0x58;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -956,7 +956,7 @@ EXTERN_C void func_8004C3FC(char *p)
             q -= 0x78;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1022,7 +1022,7 @@ EXTERN_C void func_8004C988(char *p)
             q -= 0x78;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1128,7 +1128,7 @@ EXTERN_C void func_8004D1CC(char *p)
             q -= 0x50;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1181,7 +1181,7 @@ EXTERN_C void func_8004D708(char *p)
             q -= 0x50;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1222,7 +1222,7 @@ EXTERN_C void func_8004DC1C(char *p)
             q -= 0x80;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1285,7 +1285,7 @@ EXTERN_C void func_8004E228(char *p)
             q -= 0x80;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1326,7 +1326,7 @@ EXTERN_C void func_8004E7AC(char *p)
             q -= 0x80;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1388,7 +1388,7 @@ EXTERN_C void func_8004EE9C(char *p)
             q -= 0x74;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1436,7 +1436,7 @@ EXTERN_C void func_8004F41C(char *p)
             q -= 0x68;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1508,7 +1508,7 @@ EXTERN_C void func_8004FACC(char *p)
             q -= 0x98;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1574,7 +1574,7 @@ EXTERN_C void func_8005016C(char *p)
             q -= 0x98;
             ((A2VObj0 *)q)->v00(2);
         }
-        func_800A0D0C(p - 8);
+        __builtin_vec_delete(p - 8);
     }
 }
 
@@ -1987,7 +1987,7 @@ EXTERN_C void func_80051F0C(void *p, void *a)
             D_800B4D4C = new C_80052100(1, p, (int)a);
     }
     if (p)
-        func_800A0D0C(p);
+        __builtin_vec_delete(p);
 }
 
 EXTERN_C void func_80051FB8(void *p)
@@ -2507,7 +2507,7 @@ EXTERN_C void func_80053964(void *p, int flags)
 {
     AT(p, void **, 0x18) = D_80013B20;
     if (AT(p, void *, 0x10))
-        func_800A0D0C(AT(p, void *, 0x10));
+        __builtin_vec_delete(AT(p, void *, 0x10));
     AT(p, void *, 0x10) = 0;
     if (flags & 1)
         operator delete(p);
@@ -2535,7 +2535,7 @@ EXTERN_C S_A2B_Str *func_800539D0(S_A2B_Str *s, S_A2B_Ch2 *c)
     d[s->len] = *c;
     s->len++;
     if (s->p)
-        func_800A0D0C(s->p);
+        __builtin_vec_delete(s->p);
     s->p = d;
     return s;
 }
@@ -2562,7 +2562,7 @@ EXTERN_C void func_80053B68(void *p)
     if (n)
         func_800544AC(p, s);
     if (s)
-        func_800A0D0C(s);
+        __builtin_vec_delete(s);
 }
 
 EXTERN_C int func_80053BB4(S_80053BB4 *p)
@@ -2578,7 +2578,7 @@ EXTERN_C int func_80053BC0(S_80053BB4 *p)
 EXTERN_C void func_80053BCC(void *p, void *q, int a)
 {
     if (AT(p, void *, 0x10))
-        func_800A0D0C(AT(p, void *, 0x10));
+        __builtin_vec_delete(AT(p, void *, 0x10));
     AT(p, void *, 0x10) = 0;
     if (a)
         AT(p, int, 0x14) = a;
@@ -2595,7 +2595,7 @@ EXTERN_C void func_80053C6C(void *p, void *q)
 {
     int r;
     if (AT(p, void *, 0x10))
-        func_800A0D0C(AT(p, void *, 0x10));
+        __builtin_vec_delete(AT(p, void *, 0x10));
     r = func_80053BB4((S_80053BB4 *)q);
     AT(p, int, 0x14) = r;
     AT(p, void *, 0x10) = 0;
@@ -2633,7 +2633,7 @@ EXTERN_C void func_80053DDC(S_A2B_Str *s, S_A2B_Str *o)
         d[j + s->len] = o->p[j];
     s->len += m;
     if (s->p)
-        func_800A0D0C(s->p);
+        __builtin_vec_delete(s->p);
     s->p = d;
 }
 
@@ -2710,7 +2710,7 @@ EXTERN_C void func_80054258(S_A2B_Str *s)
     if (!(s->len & 1))
         ((char *)d)[n * 2 - 1] = 0;
     if (s->p)
-        func_800A0D0C(s->p);
+        __builtin_vec_delete(s->p);
     s->len = n;
     s->p = d;
 }
@@ -2733,7 +2733,7 @@ EXTERN_C void *func_80054414(void *pv, void *qv)
     S_A2_543A0 *p = (S_A2_543A0 *)pv, *q = (S_A2_543A0 *)qv;
     int r;
     if (AT(p, void *, 0x10))
-        func_800A0D0C(AT(p, void *, 0x10));
+        __builtin_vec_delete(AT(p, void *, 0x10));
     AT(p, void *, 0x10) = 0;
     r = func_80053BB4((S_80053BB4 *)q);
     AT(p, int, 0x14) = r;

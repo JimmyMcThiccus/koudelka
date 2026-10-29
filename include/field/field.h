@@ -951,7 +951,7 @@ struct Unk_800C38E0 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -967,7 +967,7 @@ struct Unk_800CF11C { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -984,7 +984,7 @@ struct Unk_800C59D8 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -999,7 +999,7 @@ struct Unk_800CD6BC { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_800B9094;
@@ -1011,7 +1011,7 @@ struct Unk_800D80F0 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -1028,7 +1028,7 @@ struct Unk_800DB318 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -1044,7 +1044,7 @@ struct Unk_800E8144 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -1062,7 +1062,7 @@ struct Unk_800C94D4 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;
@@ -1079,7 +1079,7 @@ struct Unk_800E5CE8 { char pad0[0x18]; void* vt18; char pad1C[0x34]; Unk_VBase* 
 #define UNK_DESTROY_DEFINED
 struct Unk_EVb { char pad0[0x18]; virtual ~Unk_EVb(); };
 template <int N> struct Unk_EV : Unk_EVb { char pad1C[N - 0x1C]; };
-template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } func_800A0D0C((char*)p - 8); } }
+template <class T> inline void Unk_vecdel(T*& p) { if (p) { T* e = p + ((int*)p)[-2]; if (p != e) { do { --e; e->~T(); } while (p != e); } __builtin_vec_delete((char*)p - 8); } }
 template <class T> inline void Unk_destroy(T* a, int n) { if (a) { T* e = a + n; if (a != e) { T* b = a; do { --e; e->~T(); } while (b != e); } } }
 #endif
 EXTERN_C const Unk_VTbl10 D_80014E0C;

@@ -1165,8 +1165,8 @@ EXTERN_C void StUnSetRing(void);
 EXTERN_C int func_8009C9C0(void);
 EXTERN_C int func_8009C9D0(void);
 EXTERN_C int func_8009C9E0(void);
-EXTERN_C int func_8009CA80(int, void *);
-EXTERN_C void func_8009CAC0(int);
+EXTERN_C int CdSync(int, void *);
+EXTERN_C void CdSyncCallback(int);
 EXTERN_C void CdReadyCallback(int);
 EXTERN_C void CdDataCallback(int);
 EXTERN_C void func_8009DDC0(int);
@@ -1179,8 +1179,8 @@ EXTERN_C void (*func_8009F6D0(void (*f)(void)))(void);
 EXTERN_C unsigned long SpuSetPitchLFOVoice(long on_off, unsigned long voice_bit); /* SpuSetPitchLFOVoice */
 EXTERN_C void SpuSetReverbModeDepth(int, int);
 EXTERN_C void func_800A0A10(long *type); /* SpuGetReverbModeType */
-EXTERN_C void func_800A0D0C(void *);
-EXTERN_C void *func_800A0D2C(int);
+EXTERN_C void __builtin_vec_delete(void *);
+EXTERN_C void *__builtin_vec_new(int);
 EXTERN_C int func_800A1B9C(void);
 
 #endif /* SHARED_EXE_H */

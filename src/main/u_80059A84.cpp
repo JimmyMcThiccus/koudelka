@@ -238,15 +238,15 @@ EXTERN_C void func_8005B2F0(void *self, int b)
 {
     FIELD_AT(self, void *, 0x0) = D_80014548;
     if (FIELD_AT(self, void *, 0x1C) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x1C));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x1C));
     }
     FIELD_AT(self, void *, 0x1C) = 0;
     if (FIELD_AT(self, void *, 0x14) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x14));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x14));
     }
     FIELD_AT(self, void *, 0x14) = 0;
     if (FIELD_AT(self, void *, 0x10) != 0) {
-        func_800A0D0C(FIELD_AT(self, void *, 0x10));
+        __builtin_vec_delete(FIELD_AT(self, void *, 0x10));
     }
     FIELD_AT(self, void *, 0x10) = 0;
     func_8005F120(self, b);

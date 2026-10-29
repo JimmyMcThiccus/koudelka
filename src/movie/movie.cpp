@@ -72,7 +72,7 @@ EXTERN_C void func_800B914C(Unk800B93D8T* p) {
   p->x36 = 0;
   p->x35 = 0x15;
   *g = 0; // through the local pointer so the p->x3C load can move above it
-  if (p->x3C) func_800A0D0C(p->x3C);
+  if (p->x3C) __builtin_vec_delete(p->x3C);
   s->x44 = 0; s->x40 = 0; s->x3C = 0;
   s->x4->x4 = -1;
   StreamStat* st = s ? s->x4 : 0;
@@ -83,7 +83,7 @@ EXTERN_C void func_800B9208(void* a, u8 b) { Unk800B9208S* s = (Unk800B9208S*)D_
 
 EXTERN_C s32 func_800B92B8(Unk800B93D8T* p, s32 a, s32 b) { if (D_800B4D0C[0] || func_80035C30(func_8009C9C0_c())) return 0; p->x24 = a; p->x28 = b; p->x4->x0 = 0; p->x3A = 0x10; p->x30 = -1; p->x36 = 0; p->x35 = func_8009C9E0() != 9 ? 3 : 9; char* d = D_800A4544; if (func_8001D25C(d, p ? (char*)p + 8 : 0) == 0) { void* q = p ? (char*)p + 8 : 0; Unk800B92B8T* n = (Unk800B92B8T*)operator new(0x14); *(void* volatile*)&n->x0 = D_80010178; n->x0 = D_80010338; n->x4 = 0; n->x8 = q; n->xC = 0x80; n->x10 = 0; func_8001D150(d, n); } D_800B4D0C[0] = p; return 1; }
 
-EXTERN_C s32 func_800B93D8(void* a, s32 n, s32 c, s32 d) { Unk800B93D8T* s = D_800B4D0C[0]; if (s == a) { s->x3C = func_800A0D2C(n << 11); StSetRing(s->x3C, n); StSetStream(d, 0, -1, 0, 0); StClearRing(); func_8008CD1C(0x4400, 0x18); s->x30 = 0; s->x37 = c; s->x36 = 1; return 1; } return 0; }
+EXTERN_C s32 func_800B93D8(void* a, s32 n, s32 c, s32 d) { Unk800B93D8T* s = D_800B4D0C[0]; if (s == a) { s->x3C = __builtin_vec_new(n << 11); StSetRing(s->x3C, n); StSetStream(d, 0, -1, 0, 0); StClearRing(); func_8008CD1C(0x4400, 0x18); s->x30 = 0; s->x37 = c; s->x36 = 1; return 1; } return 0; }
 
 EXTERN_C void* func_800B9484(Unk800B93D8T* p) { void* r = p->x44; if (r || ((p ? p->x4 : 0)->x0 & 1)) { p->x44 = 0; } else if (StGetNext((unsigned long **)&r, (unsigned long **)&p->x40)) { r = 0; if (func_8009C9C0_c() & 0x15) p->v3(); } else { StreamHdr* h = p->x40; if (h->x8 >= p->x28 || h->x8 <= p->x48) p->v3(); else if (h->x8 == p->x28 - 3) func_8008CD1C(0, 0x18); p->x48 = h->x8; p->x4->x4 = 0; } return r; }
 
@@ -357,13 +357,13 @@ EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, U
   DecDCTvlcBuild(self->x58);
   switch (mode) {
   case 0:
-    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
-    self->x38 = (char*)func_800A0D2C(self->x50.y * 64);
+    if (buf == 0) self->x40 = (char*)__builtin_vec_new((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    self->x38 = (char*)__builtin_vec_new(self->x50.y * 64);
     self->x3C = self->x38 + self->x50.y * 32;
     break;
   case 1:
-    if (buf == 0) self->x40 = (char*)func_800A0D2C(self->x50.x * self->x50.y * 4); else self->x40 = (char*)buf;
-    self->x38 = (char*)func_800A0D2C(self->x50.y * 128);
+    if (buf == 0) self->x40 = (char*)__builtin_vec_new(self->x50.x * self->x50.y * 4); else self->x40 = (char*)buf;
+    self->x38 = (char*)__builtin_vec_new(self->x50.y * 128);
     self->x3C = self->x38 + self->x50.y * 64;
     break;
   case 3: {
@@ -371,7 +371,7 @@ EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, U
     self->x14[1] = r;
   }
   case 2:
-    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    if (buf == 0) self->x40 = (char*)__builtin_vec_new((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
     {
     Unk800BC714R r(D_800B4C54[0]->f4(self->x50), self->x50);
     self->x14[0] = r;
@@ -379,18 +379,18 @@ EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, U
     self->x3C = (self->x38 = self->x40) + self->x50.y * 32;
     break;
   case 4:
-    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
+    if (buf == 0) self->x40 = (char*)__builtin_vec_new((u32)(self->x50.x * self->x50.y) / 2 * 4); else self->x40 = (char*)buf;
     self->x3C = (self->x38 = self->x40) + self->x50.y * 32;
     break;
   case 5:
-    if (buf == 0) self->x40 = (char*)func_800A0D2C((u32)(self->x50.x * self->x50.y * 3) / 4 * 4); else self->x40 = (char*)buf;
+    if (buf == 0) self->x40 = (char*)__builtin_vec_new((u32)(self->x50.x * self->x50.y * 3) / 4 * 4); else self->x40 = (char*)buf;
     self->x3C = (self->x38 = self->x40) + self->x50.y * 48;
     break;
   }
   self->xC[0] = func_800CBA80(bs) + 0x20;
-  self->x4[0] = func_800A0D2C(self->xC[0] * 4);
+  self->x4[0] = __builtin_vec_new(self->xC[0] * 4);
   self->xC[1] = self->xC[0];
-  self->x4[1] = func_800A0D2C(self->xC[1] * 4);
+  self->x4[1] = __builtin_vec_new(self->xC[1] * 4);
   self->x44 = 0;
   self->x30 = 0;
   self->x2C = 1;
@@ -404,8 +404,8 @@ EXTERN_C Unk800BCCAC* func_800BC714(void* p, void* bs, u16 w, u16 h, s32 mode, U
 EXTERN_C void func_800BCB14(Unk800BC714* self, s32 f) {
   void* q;
   self->x0 = D_800B7644;
-  if (self->x4[0]) func_800A0D0C(self->x4[0]);
-  if (self->x4[1]) func_800A0D0C(self->x4[1]);
+  if (self->x4[0]) __builtin_vec_delete(self->x4[0]);
+  if (self->x4[1]) __builtin_vec_delete(self->x4[1]);
   switch (self->x4C) {
   case 0: case 1:
     q = self->x38;
@@ -415,7 +415,7 @@ EXTERN_C void func_800BCB14(Unk800BC714* self, s32 f) {
   case 4: case 5:
     q = self->x40;
   free:
-    if (q) func_800A0D0C(q);
+    if (q) __builtin_vec_delete(q);
   }
   func_800198AC((Unk800BE5F8T*)self, f);
 }
@@ -424,10 +424,10 @@ EXTERN_C s32 func_800BCCAC(Unk800BCCAC* p, void* bs) {
   if (p->x24[p->x2C] && DecDCTinSync(1)) return 0;
   p->x24[p->x2C] = 1;
   s32 n = func_800CBA80(bs) + 0x20;
-  if (p->xC[p->x2C] < n) { if (p->x4[p->x2C]) func_800A0D0C(p->x4[p->x2C]); p->xC[p->x2C] = n; p->x4[p->x2C] = func_800A0D2C(n * 4); }
+  if (p->xC[p->x2C] < n) { if (p->x4[p->x2C]) __builtin_vec_delete(p->x4[p->x2C]); p->xC[p->x2C] = n; p->x4[p->x2C] = __builtin_vec_new(n * 4); }
   p->x48 = DecDCTvlc2(bs, p->x4[p->x2C], p->x58);
-  if (p->x4C == 0) p->x40 = func_800A0D2C((u32)(p->x50 * p->x52) / 2 * 4);
-  if (p->x4C == 1) p->x40 = func_800A0D2C(p->x50 * p->x52 * 4);
+  if (p->x4C == 0) p->x40 = __builtin_vec_new((u32)(p->x50 * p->x52) / 2 * 4);
+  if (p->x4C == 1) p->x40 = __builtin_vec_new(p->x50 * p->x52 * 4);
   if (!p->x24[p->x2C ^ 1]) func_800BCEA0(p);
   p->x2C ^= 1;
   return 1;
@@ -549,14 +549,14 @@ EXTERN_C void func_800BDC88(Unk800BDC88* p, s32 f) {
   if (func_8001D25C(D_800A4544, p)) func_8001D324(D_800A4544, func_8001D25C(D_800A4544, p));
   if (p->x48) p->x48->v1(3);
   if (p->x44) p->x44->v5(3);
-  if (p->x50) func_800A0D0C(p->x50);
+  if (p->x50) __builtin_vec_delete(p->x50);
   Unk800BDC88M* t = &p->x30;
   t->x4 = D_800101C0; p->x30.x0 = D_800101B0;
   func_800198AC((Unk800BE5F8T*)t, 0);
   func_8001D024(p, f);
 }
 
-EXTERN_C void func_800BDDC8(void* vp, s32 a, s32 b) { Unk800BDDC8* p = (Unk800BDDC8*)vp; p->x20 = 0; p->x50 = func_800A0D2C(0x38400); func_800B93D8(p->x44, a, b, 1); func_8003546C(p->x44, p ? (char*)p + 8 : 0); }
+EXTERN_C void func_800BDDC8(void* vp, s32 a, s32 b) { Unk800BDDC8* p = (Unk800BDDC8*)vp; p->x20 = 0; p->x50 = __builtin_vec_new(0x38400); func_800B93D8(p->x44, a, b, 1); func_8003546C(p->x44, p ? (char*)p + 8 : 0); }
 
 EXTERN_C void func_800BDE40(Unk800BDE40* p) { p->x44->v3(); func_800BDADC(D_800CBA90[0], p->x48); func_8001AA68(p ? (char*)p + 0x30 : 0, 0); }
 
@@ -572,7 +572,7 @@ EXTERN_C s32 func_800BDFA8(Unk800BDFA8* p) {
     void* f;
     if (p->x48) {
         u32 t = D_800A4534.xC + p->x54;
-        if (p->x50) { func_800A0D0C(p->x50); p->x50 = 0; }
+        if (p->x50) { __builtin_vec_delete(p->x50); p->x50 = 0; }
         if (p->x4C) {
             if (func_800BCCAC(p->x48, p->x4C)) {
                 func_800B95A8(p->x44, p->x4C);
@@ -1430,7 +1430,7 @@ EXTERN_C void* func_800C2624(void* vp, s32 in_chrg, s32 size, s32 a, s32 b, cons
     EnableEvent(D_800CBA9C[0]); EnableEvent(D_800CBAA0[0]); EnableEvent(D_800CBAA4[0]); EnableEvent(D_800CBAA8[0]);
   }
   p->x58 = ((u32)size + 0x7F) / 128 * 128; s32* c = D_800CBA98; (*c)++;
-  p->x44 = (char*)func_800A0D2C(func_800C40B8(p));
+  p->x44 = (char*)__builtin_vec_new(func_800C40B8(p));
   p->x44[0] = 'S'; p->x44[1] = 'C'; p->x44[2] = p->x50 + 0x10;
   p->x44[3] = func_800C24C8(func_800C40B8(p));
   for (s32 i = 0; i < 0x1C; i++) p->x44[i + 0x44] = 0;
@@ -1452,7 +1452,7 @@ EXTERN_C Unk800C2848* func_800C2848(Unk800C2848* p, s32 f, Unk800C2848* o) {
   p->x8 = D_800B7CFC; p->x24 = D_800B7CD4; p->x0 = D_800B7D14;
   p->x30 = -1; p->x34 = -1; p->x38 = o->x38; p->x3C = o->x3C; p->x50 = o->x50; p->x40 = 0;
   func_800C3D90((Unk800C3D90*)p, (char*)o->x40);
-  void* b = func_800A0D2C(func_800C40B8(p)); p->x44 = b; void* s = o->x44;
+  void* b = __builtin_vec_new(func_800C40B8(p)); p->x44 = b; void* s = o->x44;
   func_80025CE0(b, s, func_800C40B8(p));
   p->x2C = 0; p->x48 = 0; p->x4C = 0; p->x54 = 0; p->x5C = 0;
   func_800C407C((Unk800C407C*)p);
@@ -1461,9 +1461,9 @@ EXTERN_C Unk800C2848* func_800C2848(Unk800C2848* p, s32 f, Unk800C2848* o) {
 
 EXTERN_C void func_800C29C0(Unk800C29C0* p, s32 f) {
     p->x8 = D_800B7CFC; p->x24 = D_800B7CD4; p->x0 = D_800B7D14;
-    if (p->x44) func_800A0D0C(p->x44);
+    if (p->x44) __builtin_vec_delete(p->x44);
     func_800C2CE4((Unk800C2CE4*)p);
-    if (p->x40) func_800A0D0C(p->x40);
+    if (p->x40) __builtin_vec_delete(p->x40);
     p->x40 = 0;
     s32* c = D_800CBA98;
     if (--*c == 0) {
@@ -1729,7 +1729,7 @@ EXTERN_C s32 func_800C3D50(Unk800C3D50* p) { return p->x38; }
 
 EXTERN_C int func_800C3D5C(Unk800C3D5C* p, s32 v) { if (p->x38 == v || p->x34 != -1) return 0; p->x38 = v; return 1; }
 
-EXTERN_C void func_800C3D90(Unk800C3D90* p, char* s) { s32 n = strlen(s); if (p->x40) func_800A0D0C(p->x40); p->x40 = (char*)func_800A0D2C(n + 1); func_80025CE0(p->x40, s, n); p->x40[n] = 0; }
+EXTERN_C void func_800C3D90(Unk800C3D90* p, char* s) { s32 n = strlen(s); if (p->x40) __builtin_vec_delete(p->x40); p->x40 = (char*)__builtin_vec_new(n + 1); func_80025CE0(p->x40, s, n); p->x40[n] = 0; }
 
 EXTERN_C void func_800C3E10(Unk800C3E10* p, void* b) { func_80025CE0(p->x54, b, p->x50 * 128); }
 

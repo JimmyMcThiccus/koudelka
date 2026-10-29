@@ -653,13 +653,13 @@ EXTERN_C int func_800B9AA0(S_800B9AA0 *p)
             p->f9C = 0;
             p->f84 = 0;
             CdIntToPos(p->f24, arg);
-            func_8009CAC0(D_80036090);
+            CdSyncCallback(D_80036090);
             err2 = 0;
             if (!CdControl(0x1B, arg, res) || (res[0] & 0x1D))
                 err2 = 1;
             if (!err2)
                 return 0;
-            func_8009CAC0(0);
+            CdSyncCallback(0);
         report:
             e = &p->vt[13];
             ((void (*)(void *, void *))e->pfn)((char *)p + e->delta, res);
@@ -778,12 +778,12 @@ S_800BA17C::S_800BA17C(int size, int bits, char *mem)
 {
     int n;
     if (!mem)
-        base = (char *)func_800A0D2C(size);
+        base = (char *)__builtin_vec_new(size);
     else
         base = mem;
     n = 1 << bits;
     value = (int)base;
-    buf = (int *)func_800A0D2C(n * 4);
+    buf = (int *)__builtin_vec_new(n * 4);
     mask = n - 1;
     rd = 0;
     wr = 0;
@@ -796,9 +796,9 @@ EXTERN_C void func_800B9FCC(void *self, int in_chrg)
 {
     void **p = (void **)self;
     if (p[0])
-        func_800A0D0C(p[0]);
+        __builtin_vec_delete(p[0]);
     if (p[1])
-        func_800A0D0C(p[1]);
+        __builtin_vec_delete(p[1]);
     if (in_chrg & 1)
         operator delete(p);
 }
@@ -1487,7 +1487,7 @@ EXTERN_C void func_800B7E0C(void *, int);
 C_800BDD00::C_800BDD00()
 {
     func_800B7C34(m, 0x1000, 0x60, 0x40);
-    buf = func_800A0D2C(0x3F00);
+    buf = __builtin_vec_new(0x3F00);
     func_800B758C(m, buf);
     func_800B7E0C(m, 0);
     f140 = 0;
@@ -1505,7 +1505,7 @@ EXTERN_C void func_800BDD90(char *p, int in_chrg)
     func_800B76E4(p + 0x10);
     func_800B7DFC((short *)(p + 0x10));
     if (*(void **)(p + 0x13C))
-        func_800A0D0C(*(void **)(p + 0x13C));
+        __builtin_vec_delete(*(void **)(p + 0x13C));
     if (in_chrg & 1)
         operator delete(p);
 }
@@ -2301,7 +2301,7 @@ C_800BF560::C_800BF560(short a, short n, char c)
     fA = n;
     f8 = a;
     fC = c;
-    f14 = f10 = (int *)func_800A0D2C(n * 4);
+    f14 = f10 = (int *)__builtin_vec_new(n * 4);
     f18 = 0;
     f1C = 0;
     f24 = 0;
@@ -2313,7 +2313,7 @@ EXTERN_C void func_800BF5D8(char *p, int in_chrg)
 {
     *(char **)p = D_800B7364;
     if (*(void **)(p + 0x10))
-        func_800A0D0C(*(void **)(p + 0x10));
+        __builtin_vec_delete(*(void **)(p + 0x10));
     func_8001A610(p, in_chrg);
 }
 
@@ -3547,7 +3547,7 @@ C_800C1E7C::C_800C1E7C(Desc_800C1E7C *d)
     f12 = d->e;
     n = d->n;
     f1C = 0;
-    list = func_800A0D2C(n * 8);
+    list = __builtin_vec_new(n * 8);
 }
 
 EXTERN_C char D_800B7434[];
@@ -3555,7 +3555,7 @@ EXTERN_C void func_800C1F18(char *p, int in_chrg)
 {
     *(char **)p = D_800B7434;
     if (*(void **)(p + 0x18))
-        func_800A0D0C(*(void **)(p + 0x18));
+        __builtin_vec_delete(*(void **)(p + 0x18));
     func_8001A610(p, in_chrg);
 }
 
