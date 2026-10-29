@@ -19,7 +19,7 @@ struct BimV {
 /* Virtual-base vtable (10 entries of 8 bytes, as in battle.h) and the destructor object. */
 struct BimVEntry { short delta; short index; void (*pfn)(void *); };
 struct BimVTable10 { BimVEntry e[10]; };
-struct BimVBase { BimVTable10 *vptr; };
+struct BimVBase { BimVTable10 *vptr; int f4; };
 struct BimDtor {
     void *vt0;
     char pad4[0x88];
@@ -36,6 +36,12 @@ struct BimDtor {
     void *vt4A8;
     char pad4AC[0x4D4];
     void *vt980;
+    char pad984[0x54];
+    int f9D8;
+    int f9DC;
+    char pad9E0[0x10C];
+    void *vtAEC;
+    int fAF0;
 };
 EXTERN_C char D_8001262C[], D_80017ADC[];
 struct BimTbl { char pad[0x9FC]; int w[60]; };

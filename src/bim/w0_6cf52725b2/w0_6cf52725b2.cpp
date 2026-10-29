@@ -1,6 +1,11 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/bim/w0_6cf52725b2/nonmatchings/w0_6cf52725b2", func_800DAA78);
+EXTERN_C void *func_800DAAF4(void *self, int in_chrg, int a, int b, int c, int d, int e);
+
+EXTERN_C void *func_800DAA78(int a, short b, int c, int d, int e)
+{
+    return func_800DAAF4(operator new(0xAF0), 1, a, b, c, d, e);
+}
 
 INCLUDE_ASM("asm/bim/w0_6cf52725b2/nonmatchings/w0_6cf52725b2", func_800DAAF4);
 
