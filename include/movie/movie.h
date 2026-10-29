@@ -283,7 +283,7 @@ struct Unk800B8FE0B : Unk800B8FE0 { char pad[0x35 - 4]; u8 x35; };
 EXTERN_C void func_80036674(void*);
 
 struct Unk800C3D90 { char pad[0x40]; char* x40; };
-EXTERN_C s32 func_80094FD0(char*);
+EXTERN_C s32 strlen(char*);
 EXTERN_C void func_800A0D0C(void*);
 
 struct Unk800C908C { char pad[0x20]; s32 x20; };
@@ -297,8 +297,8 @@ EXTERN_C void func_800BA438(Unk800BA438*, RECT*);
 EXTERN_C void func_800BA50C(Unk800BA50C*, RECT*);
 
 EXTERN_C s32 D_800CBA9C[], D_800CBAA0[], D_800CBAA4[], D_800CBAA8[];
-EXTERN_C void func_80094990();
-EXTERN_C void func_800949A0();
+EXTERN_C void EnterCriticalSection();
+EXTERN_C void ExitCriticalSection();
 EXTERN_C s32 CloseEvent(s32);
 
 struct Unk800C2DF4B { s32 x0, x4; };
@@ -1334,7 +1334,7 @@ inline Unk800BC554* Unk800BC554_fin(Unk800BC554* t) { t->x8C = D_800B75CC; t->xF
 
 /* func_800B914C */
 extern "C" void VSync(s32);
-extern "C" void func_8009A470();
+extern "C" void StUnSetRing();
 
 /* func_800C60E8 */
 struct Unk800C60E8DM { u32 tag; u32 code[2]; };

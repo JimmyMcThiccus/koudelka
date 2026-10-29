@@ -401,7 +401,7 @@ EXTERN_C void SpuSetIRQ(int);
 EXTERN_C void SpuSetIRQAddr(unsigned long);
 EXTERN_C unsigned long SpuGetIRQAddr(void);
 EXTERN_C void SpuSetVoiceLoopStartAddr(int, unsigned long);
-EXTERN_C int func_8009F2C0(void);
+EXTERN_C int SpuGetIRQ(void);
 EXTERN_C int func_800B8048(void)
 {
     char *o;
@@ -433,7 +433,7 @@ EXTERN_C int func_800B8048(void)
     *(char **)(o + 0x114) = b;
     SpuSetVoiceLoopStartAddr(*(short *)(o + 0xF4), (unsigned long)b);
     (*(int *)(o + 0x40))++;
-    o[0xA] = func_8009F2C0();
+    o[0xA] = SpuGetIRQ();
     *(unsigned long *)(o + 0xC) = SpuGetIRQAddr();
     return 0;
 }
@@ -627,9 +627,9 @@ EXTERN_C void SpuSetVoiceDR(int, unsigned short);
 EXTERN_C void SpuSetVoiceSL(int, unsigned short);
 EXTERN_C void SpuSetVoiceSRAttr(int, unsigned short, long);
 EXTERN_C void SpuSetVoiceRRAttr(int, unsigned short, long);
-EXTERN_C void func_8009F700(int, int);
-EXTERN_C void func_8009EBC0(int, int);
-EXTERN_C void func_8009F0E0(int, int);
+EXTERN_C void SpuSetPitchLFOVoice(int, int);
+EXTERN_C void SpuSetNoiseVoice(int, int);
+EXTERN_C void SpuSetReverbVoice(int, int);
 EXTERN_C void func_800B84E0(S_800B84E0 *p)
 {
     int v = p->voice;
@@ -644,7 +644,7 @@ EXTERN_C void func_800B84E0(S_800B84E0 *p)
     SpuSetVoiceSRAttr(v, p->sr, p->srMode);
     SpuSetVoiceRRAttr(v, p->rr, p->rrMode);
     mask = 1 << v;
-    func_8009F700(0, mask);
-    func_8009EBC0(0, mask);
-    func_8009F0E0(0, mask);
+    SpuSetPitchLFOVoice(0, mask);
+    SpuSetNoiseVoice(0, mask);
+    SpuSetReverbVoice(0, mask);
 }

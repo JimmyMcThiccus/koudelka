@@ -607,7 +607,7 @@ EXTERN_C void func_800B998C(VObject *p, unsigned char *in)
 }
 
 EXTERN_C char D_80035F80[];
-EXTERN_C void func_8009CAE0(void *);
+EXTERN_C void CdReadyCallback(void *);
 EXTERN_C void func_80036554(void *, int);
 EXTERN_C void func_800B9A0C(VObject *p, unsigned char a, int b)
 {
@@ -617,7 +617,7 @@ EXTERN_C void func_800B9A0C(VObject *p, unsigned char a, int b)
             if (s[0x35] == 10) {
                 s[0x34] = 5;
                 s[0x35] = 0;
-                func_8009CAE0(D_80035F80);
+                CdReadyCallback(D_80035F80);
             }
         } else
             func_80036554(p, 2);
@@ -3954,7 +3954,7 @@ struct S_800C25B0 {
 EXTERN_C void func_8002972C(void *, int, int, int, int);
 EXTERN_C void func_800198AC(void *, int);
 EXTERN_C void SetDrawMode(void *, int, int, short, void *);
-EXTERN_C void func_80098DC0(void *, int);
+EXTERN_C void SetSemiTrans(void *, int);
 EXTERN_C void func_800C2EE0(S_800C2D5C *p, char *q);
 EXTERN_C void func_800C2DB4(S_800C2D5C *p, char *q, short c);
 EXTERN_C void func_800C2A38(S_800C2D5C *p, short x, short y);
@@ -3986,11 +3986,11 @@ EXTERN_C S_800C25B0 *func_800C25B0(S_800C25B0 *p, Pt_800C25B0 xy, Pt_800C25B0 uv
     func_800C2E60((S_800C2D5C *)p, uv.x, uv.y);
     func_800C2C4C((S_800C2D5C *)p, (unsigned char *)&col);
     if (abr) {
-        func_80098DC0(&p->e[0], 1);
-        func_80098DC0(&p->e[1], 1);
+        SetSemiTrans(&p->e[0], 1);
+        SetSemiTrans(&p->e[1], 1);
     } else {
-        func_80098DC0(&p->e[0], 0);
-        func_80098DC0(&p->e[1], 0);
+        SetSemiTrans(&p->e[0], 0);
+        SetSemiTrans(&p->e[1], 0);
     }
     func_800C2B28((S_800C2D5C *)p);
     func_800198AC(&col, 2);

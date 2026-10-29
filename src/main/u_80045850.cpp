@@ -2273,8 +2273,8 @@ EXTERN_C void *func_80053250(void *p, int a, int b, short c)
     AT(p, short, 8) = 0;
     AT(p, short, 0xA) = c;
     AT(p, void **, 0) = D_80013AA8;
-    func_80098DF0((char *)p + 0xC);
-    func_80098DF0((char *)p + 0x1C);
+    SetTile((char *)p + 0xC);
+    SetTile((char *)p + 0x1C);
     func_80053658(p, a);
     func_800536F0(p, b);
     func_800534F8(p);

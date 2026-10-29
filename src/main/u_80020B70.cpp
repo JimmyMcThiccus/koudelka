@@ -370,7 +370,7 @@ EXTERN_C void func_80021764(S_21764 *p, void **ot, int n)
             {
                 void **e = (void **)((p->unkC->unk10 + p->unkC->unk14 * i) * 4 + (unsigned long)ot);
                 next = (void **)*e;
-                func_80098DA0(e);
+                TermPrim(e);
             }
             i--;
             DrawOTag((unsigned long *)cur);

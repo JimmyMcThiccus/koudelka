@@ -545,7 +545,7 @@ EXTERN_C void func_80035EB4(int a)
 EXTERN_C void func_80035F18()
 {
     func_800188D4(&D_800A451C);
-    func_8009D000(0);
+    CdDataCallback(0);
     if (D_800B4D0C)
         ((A2VObj0 *)D_800B4D0C)->v08();
     func_80018970(&D_800A451C);
@@ -557,7 +557,7 @@ EXTERN_C void func_80035F80(unsigned char a, int b)
     if (D_800B4D0C)
         ((A2VObj0 *)D_800B4D0C)->v09(a, b);
     else
-        func_8009CAE0(0);
+        CdReadyCallback(0);
     func_80018970(&D_800A451C);
 }
 
@@ -588,7 +588,7 @@ EXTERN_C void func_80036110(void *p, int a)
     int cur = D_800B4D0C;
     *q |= 1;
     if (cur == (int)p) {
-        func_8009CAE0(0);
+        CdReadyCallback(0);
         D_800B4D0C = 0;
         if (!(unsigned char)func_80035C30(a & 0xFF)) {
             List *l = &D_800AC854;
@@ -655,7 +655,7 @@ void f36364(S_A2_St *p, int t, unsigned char *buf)
             }
             if (pos + 1 == AT(p, unsigned, 0x24)) return;
             AT(p, signed char, 0x34) = 0xE;
-            func_8009CAE0(0);
+            CdReadyCallback(0);
             return;
         }
         p->v07(b0);
@@ -663,7 +663,7 @@ void f36364(S_A2_St *p, int t, unsigned char *buf)
     }
     case 5:
     fin:
-        func_8009CAE0(0);
+        CdReadyCallback(0);
         p->v12(buf);
         return;
     default:
@@ -693,7 +693,7 @@ EXTERN_C void func_80036554(A2VObj0 *p, unsigned char t, unsigned char *buf)
                 AT(p, char, 0x34) = 5;
                 AT(p, signed char, 0x35) = 0xB;
                 AT(p, short, 0x38) = ((unsigned)(AT(p, int, 0x28) - AT(p, int, 0x30)) >> 12) + 0x78;
-                func_8009CAE0((int)func_80035F80);
+                CdReadyCallback((int)func_80035F80);
             }
             break;
         }
@@ -815,7 +815,7 @@ EXTERN_C void func_800370D0(void *p)
         AT(p, char, 0x35) = 0x12;
         AT(p, char, 0x34) = 0;
         func_8009CAC0(0);
-        func_8009CAE0(0);
+        CdReadyCallback(0);
     }
     AT(AT(p, void *, 4), int, 4) = -1;
     if (AT(p, void *, 0x2C))

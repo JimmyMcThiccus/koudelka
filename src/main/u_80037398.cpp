@@ -17,7 +17,7 @@ EXTERN_C void func_80037398(void *p, int flags)
 
 EXTERN_C void func_800373F8(void *p)
 {
-    func_8009CAE0(0);
+    CdReadyCallback(0);
     *AT(p, unsigned short *, 4) |= 1;
     AT(p, char, 0x37) = 1;
 }

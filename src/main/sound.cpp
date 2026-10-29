@@ -49,7 +49,7 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     func_8008BFEC();
     func_8008C6F8();
     func_80093AEC();
-    func_80094990();
+    EnterCriticalSection();
     if (!(flags & 0x2000)) {
         FIELD_AT(s, long, 0x13C) = OpenEvent(0xF2000002, 2, 0x1000, (long (*)())func_8008FDE4);
         SetRCnt(0xF2000002, 0x44E8, 0x1000);
@@ -60,7 +60,7 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     SpuSetIRQ(0);
     SpuSetIRQ(3);
     SpuSetIRQCallback(func_8008CB84);
-    func_800949A0();
+    ExitCriticalSection();
     FIELD_AT(s, short, 0x178) = 0;
     FIELD_AT(s, short, 0x17A) = 0;
     FIELD_AT(s, int, 0x170) = 0xC;
@@ -102,7 +102,7 @@ EXTERN_C int func_8008B888(void)
         SpuSetVoiceRRAttr(i, 6, 3);
     }
     SpuSetKey(0, 0xFFFFFF);
-    func_800A0800(0, 0);
+    SpuSetReverbModeDepth(0, 0);
     D_800B18FC.unk003 = 0;
     D_800B18FC.unk004 = 0;
     return FIELD_AT(&D_800B18FC, int, 0x8);
@@ -733,7 +733,7 @@ EXTERN_C void func_8008C7B4(int a, int b, int c, int d, int e)
         while (n == 0) {
             n = func_8008C970();
         }
-        func_80094990();
+        EnterCriticalSection();
     }
     if (n == 0) {
         func_8009484C(0xE1, b);
@@ -758,7 +758,7 @@ EXTERN_C void func_8008C7B4(int a, int b, int c, int d, int e)
         FIELD_AT(p, char *, 0x18) = n;
     }
     if (!(flags & 0x30)) {
-        func_800949A0();
+        ExitCriticalSection();
     }
 }
 
@@ -837,7 +837,7 @@ EXTERN_C void func_8008CA50(void)
     case 0:
         break;
     case 1:
-        func_8009F5E0(FIELD_AT(cur, unsigned char *, 0x4), FIELD_AT(cur, unsigned long, 0xC));
+        SpuWrite(FIELD_AT(cur, unsigned char *, 0x4), FIELD_AT(cur, unsigned long, 0xC));
         break;
     case 2:
         SpuRead(FIELD_AT(cur, unsigned char *, 0x4), FIELD_AT(cur, unsigned long, 0xC));
@@ -895,7 +895,7 @@ EXTERN_C void func_8008CC20(int mode)
 
     FIELD_AT(s, unsigned char, 0x1A3) = mode;
     func_8008CFD4();
-    func_800A0800(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
+    SpuSetReverbModeDepth(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
     for (p = FIELD_AT(s, char *, 0x150); p != 0; p = FIELD_AT(p, char *, 0x4)) {
         func_80093A80(p, 4);
     }
@@ -1019,14 +1019,14 @@ EXTERN_C void func_8008CE18(int mode, int depth, int delay, int feedback)
     FIELD_AT(s, short, 0x19C) = depth;
     func_8008CFD4();
     if (realloc) {
-        func_800A0800(0, 0);
+        SpuSetReverbModeDepth(0, 0);
         SpuSetReverbModeType(mode);
         if (addr < D_800AFCFC[cur]) {
             addr = D_800AFCFC[cur];
         }
         func_8008D08C(0x80000 - addr, addr);
     } else {
-        func_800A0800(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
+        SpuSetReverbModeDepth(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
         SpuSetReverbModeDelayTime(delay);
         SpuSetReverbModeFeedback(feedback);
     }
@@ -1108,7 +1108,7 @@ EXTERN_C void func_8008D114(char *req)
         s = &D_800B18FC;
         func_8008BE08(FIELD_AT(s, char *, 0x24C));
         FIELD_AT(s, char *, 0x24C) = 0;
-        func_800A0800(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
+        SpuSetReverbModeDepth(FIELD_AT(s, short, 0x1BE), FIELD_AT(s, short, 0x1C0));
         SpuSetReverbModeDelayTime(FIELD_AT(s, unsigned char, 0x1C2));
         SpuSetReverbModeFeedback(FIELD_AT(s, unsigned char, 0x1C3));
         D_800B18FC.flags &= ~0x40;
@@ -5484,16 +5484,16 @@ EXTERN_C void func_80093FE0(void)
     }
     if (acc != 0) {
         if (acc & 0x1000) {
-            func_8009F700(1, m1);
-            func_8009F700(0, ~m1);
+            SpuSetPitchLFOVoice(1, m1);
+            SpuSetPitchLFOVoice(0, ~m1);
         }
         if (acc & 0x2000) {
-            func_8009EBC0(1, m2);
-            func_8009EBC0(0, ~m2);
+            SpuSetNoiseVoice(1, m2);
+            SpuSetNoiseVoice(0, ~m2);
         }
         if (acc & 0x4000) {
-            func_8009F0E0(1, m3);
-            func_8009F0E0(0, ~m3);
+            SpuSetReverbVoice(1, m3);
+            SpuSetReverbVoice(0, ~m3);
         }
     }
     s = &D_800B18FC;
