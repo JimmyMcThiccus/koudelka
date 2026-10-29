@@ -1,5 +1,8 @@
 # Game data: never committed
 Koudelka_Game_Data/
+Prototype/
+# Sony SDKs (PsyQ 4.4, Net Yaroze): never committed
+Playstation_SDK/
 extracted/
 *.bin
 *.cue
