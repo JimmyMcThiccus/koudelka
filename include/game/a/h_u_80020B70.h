@@ -14,9 +14,6 @@ inline void *operator new(unsigned int, void *p) { return p; }
 typedef void (*Fn_vi)(void *, int);
 typedef int (*Fn_i)(void *);
 typedef void (*Fn_v)(void *);
-EXTERN_C void *func_800A0D2C(int size);
-EXTERN_C void func_800A0D0C(void *p);
-EXTERN_C int *func_8001AA28(int *p, int n);
 EXTERN_C void *D_800B4C38;
 EXTERN_C void *D_800105DC[];
 EXTERN_C void *D_80010624[];
@@ -26,8 +23,6 @@ EXTERN_C void *D_800107F0[];
 EXTERN_C void *D_80010800[];
 EXTERN_C void *func_80021348(void *p, int a, int b);
 EXTERN_C void *func_8002466C(void *p, int a, int b);
-EXTERN_C int func_80023F50(void *p, int a);
-EXTERN_C void *func_8001FC38(void *p, int a, int b, int c);
 struct S_Obj178 {
     void **vtbl;
     int unk4;
@@ -92,10 +87,7 @@ struct S_80024870 {
     void **unk1C;
 };
 
-EXTERN_C void func_800215E8(void *list, void *p);
 EXTERN_C int PadInfoAct(int port, int term, int offs);
-EXTERN_C void func_80021F48(void *p, int a);
-EXTERN_C void func_80021ACC(void *p, int a);
 EXTERN_C void *D_800106A4[];
 EXTERN_C void *D_800106BC[];
 EXTERN_C void *D_80010694[];
@@ -137,8 +129,6 @@ struct S_Pad {
 
 EXTERN_C int GetTPage(int tp, int abr, int x, int y);
 EXTERN_C int PadSetAct(int port, unsigned char *data, int len);
-EXTERN_C int func_8001D25C(void *a, void *b);
-EXTERN_C void func_8001D324(void *a, int b);
 EXTERN_C char D_800A4544[];
 EXTERN_C void *D_8001079C[];
 EXTERN_C void *D_80010714[];
@@ -195,7 +185,6 @@ EXTERN_C void func_80024594(Holder *h);
 EXTERN_C void *D_800105B4[];
 EXTERN_C void func_800246C4(void *p, int flags);
 EXTERN_C char D_800A4558[];
-EXTERN_C int func_80019CFC(List *l, void *item);
 struct S_80021ACC_D {
     short v[16];
 };
@@ -268,7 +257,6 @@ struct S_80024CA0 {
     unsigned short unk1E;
 };
 
-EXTERN_C void func_8001D150(void *list, void *n);
 EXTERN_C void *D_8001075C[];
 EXTERN_C void *D_80010774[];
 EXTERN_C void *D_80010338[];
@@ -322,7 +310,6 @@ struct S_80022730 : S_B160 {
     S_80022730(int a, int b) : S_B160(b) { vtbl = D_8001060C; unk8 = a; }
 };
 
-EXTERN_C void func_80025CE0(void *dst, void *src, int n);
 EXTERN_C void *D_80010888[];
 EXTERN_C void *D_80010840[];
 EXTERN_C void *D_80010858[];
@@ -366,7 +353,6 @@ struct S_HTbl {
     unsigned int count;
 };
 
-EXTERN_C void func_80025714(void *list, void *p);
 EXTERN_C void *D_800108A0[];
 EXTERN_C void *D_80010118[];
 EXTERN_C S_80021274 *func_80021144(S_80021274 *p);
@@ -390,7 +376,6 @@ struct S_TexPool {
 };
 
 EXTERN_C int LoadImage(S_Rect8 *r, void *p);
-EXTERN_C int func_80019C24(List *l, void *item);
 struct S_VramV;
 struct S_VramV {
     virtual void f1();
@@ -423,14 +408,10 @@ struct S_PadLv {
     int unk18;
 };
 
-EXTERN_C void *func_8001A744(void *list, void *item);
 
 EXTERN_C void *func_80023450(void *p);
-EXTERN_C void func_8001EFE4(void *obj, void *e);
-EXTERN_C void *func_8001CA10(int size);
 EXTERN_C void *D_80010300[];
 EXTERN_C void *D_800102D0[];
-EXTERN_C void func_8001A864(void *a, void *b);
 struct S_Evt300b : S_Obj178 {
     unsigned short unk8;
     short unkA;
@@ -448,7 +429,6 @@ struct S_HNode734 : S_Obj178 {
 
 EXTERN_C int MoveImage(S_Rect8 *r, int x, int y);
 EXTERN_C void DrawOTag(void *ot);
-EXTERN_C int func_80098DA0(void *p);
 struct S_Scroll {
     short x;
     short y;

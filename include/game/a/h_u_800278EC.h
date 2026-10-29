@@ -25,7 +25,6 @@ struct S_80027DB0 { char pad0[0x14]; unsigned int unk14; unsigned int unk18; cha
 struct S_800280A8 { VEnt *vt; S_800280A8 *next; };
 struct S_800280F8 { int unk0; void *unk4; };
 struct S_800280F8b { char pad0[0x64]; void *unk64; };
-EXTERN_C void func_8001A864(void *a, void *b);
 struct S_80027DFC { void **vt; void **vt4; };
 
 EXTERN_C void *D_80011254[];
@@ -37,8 +36,6 @@ EXTERN_C char D_800112D4[];
 EXTERN_C char D_800A4554[];
 EXTERN_C char D_800A4544[];
 EXTERN_C void func_8001E03C(void *l, void *n);
-EXTERN_C void func_8001D150(void *self, void *b);
-EXTERN_C void func_80021ACC(void *p, void *q);
 struct S_XYs { short x, y; };
 EXTERN_C S_XYs D_800B4C64;
 EXTERN_C S_XYs D_800B4C68;
@@ -70,15 +67,8 @@ struct C_800279C0 {
     C_800279C0();
 };
 
-EXTERN_C void func_80035CF8();
-EXTERN_C int func_80036FC0(void *o, int a, int b);
-EXTERN_C void func_8003546C(void *o, void *p);
-EXTERN_C void func_8003714C(void *o);
-EXTERN_C void func_80035C28();
 EXTERN_C void func_8001B1C8(void *p);
 EXTERN_C void *func_8001B134(unsigned int size);
-EXTERN_C int func_8008B888();
-EXTERN_C void func_8009EAE0();
 EXTERN_C void _96_init();
 EXTERN_C long LoadExec(char *file, unsigned long sp, unsigned long size);
 EXTERN_C void start();

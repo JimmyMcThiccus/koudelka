@@ -13,7 +13,6 @@ struct S_80028F10e { short unk38; short unk3A; char pad[0x10]; };
 struct S_80028F10 { char pad0[8]; short unk8; char padA[0x2E]; S_80028F10e e[2]; };
 struct S_XYs { short x, y; };
 EXTERN_C S_XYs D_800B4C64;
-EXTERN_C void *func_8002860C(void *p, void *q, int a, int b, void *c);
 
 struct S_Sprt { int tag; unsigned char r0, g0, b0, code; short x0, y0; unsigned char u0, v0; unsigned short clut; short w, h; };
 struct S_DrMode { int tag; int code[2]; };
@@ -50,7 +49,6 @@ struct S_Spr2v { void *volatile vt; int unk4; short unk8; short unkA; void **vtC
 EXTERN_C void func_80028C80(S_Spr2 *p, void *r);
 EXTERN_C void func_80028DC4(void *p, int a);
 EXTERN_C void func_80028D10(S_Spr2 *p, void *c);
-EXTERN_C void func_80028A24(S_Spr2 *p);
 
 EXTERN_C char D_800B4C78[];
 EXTERN_C char D_800B4C80[];

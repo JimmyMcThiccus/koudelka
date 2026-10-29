@@ -691,26 +691,12 @@ EXTERN_C void *D_800103E0[];
 EXTERN_C void *D_800103F8[];
 EXTERN_C void *D_80011FE4[];
 
-EXTERN_C void func_800198AC(void *p, int a);
-EXTERN_C void func_8001A610(void *p, int a);
-EXTERN_C int func_8001A678(void *p, int a);
 EXTERN_C int func_8001A6A8(void *p, int a);
-EXTERN_C void func_8001D024(void *p, int a);
 EXTERN_C void func_8001DEB8(void *p, int a);
 EXTERN_C void func_80020DB0(void *p, int a);
 EXTERN_C void func_80026138(void *p, int a);
 EXTERN_C void func_80028DC4(void *p, int a);
 EXTERN_C int func_8002D8AC(void *p, void *it, int v);
-EXTERN_C void *func_8002DA94(void *p, void *it);
-EXTERN_C int func_8002DC34(void *p, int a, int b);
-EXTERN_C void func_8002DD34(void *p, int a);
-EXTERN_C void func_8002EE9C(void *p, int a);
-EXTERN_C void func_8002EEFC(void *p, int a);
-EXTERN_C void func_8003950C(void *p, int a);
-EXTERN_C void func_80039610(void *p, int a);
-EXTERN_C void func_80039710(void *p, int a);
-EXTERN_C void func_80039824(void *p, int a);
-EXTERN_C void func_8003BEC4(void *p, int a);
 
 /* A 4-byte value copied with lwl/lwr, so byte-aligned: an RGB+code colour, probably. */
 typedef struct S_Rgb {
@@ -949,9 +935,7 @@ EXTERN_C void *D_80011124[];
 EXTERN_C void *D_80011384[];
 EXTERN_C void *D_80011B5C[];
 EXTERN_C void *D_80013B00[];
-EXTERN_C void func_80019A6C(void *p, int a, int b);
 EXTERN_C void func_8001F094(void *p, int a);
-EXTERN_C void func_8003C320(void *p, int a);
 EXTERN_C void PadEnableCom(int a);
 EXTERN_C void PadStopCom();
 EXTERN_C void PadStartCom();
@@ -1024,8 +1008,6 @@ EXTERN_C void func_800188D4(Holder *h);
 EXTERN_C void func_80018970(Holder *h);
 EXTERN_C S_800A4534 *func_80019158(S_800A4534 *p);
 EXTERN_C void *func_80019648(void *p);
-EXTERN_C void func_80019920(List *l, int flags);
-EXTERN_C int func_80019C68(void *p, int a);
 EXTERN_C void *func_8001ACDC(void *p);
 EXTERN_C void *func_8001A8F0(void *p, int a, int b);
 EXTERN_C int func_8001B0C0(void *p, void *q);
@@ -1035,16 +1017,6 @@ EXTERN_C int func_80020948(char *p, void *item);
 EXTERN_C void *func_800252F8(void *p);
 EXTERN_C void *func_80028710(void *p, void *q);
 EXTERN_C bool func_8002A064(void *p, int a, int b);
-EXTERN_C void func_8002DB50(void *p, int a);
-EXTERN_C void func_80037688(void *p);
-EXTERN_C void func_8003C510(void *p);
-EXTERN_C short func_8003E658(void *p, int a);
-EXTERN_C void func_80040718(void *p);
-EXTERN_C void func_80043DF0(void *p);
-EXTERN_C void func_8004C314(void *p, char *q);
-EXTERN_C void func_8004F9E4(void *p, char *q);
-EXTERN_C void func_80053BCC(void *p, void *q, int a);
-EXTERN_C int func_800A1B9C();
 EXTERN_C S_Vobj *func_8001C2D0(S_Vobj *p);
 
 typedef struct S_80018E5C {

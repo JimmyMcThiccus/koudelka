@@ -43,7 +43,6 @@ struct S_Target {
 };
 typedef int (*Fn_ii)(void *, int);
 typedef void (*Fn_vi)(void *, int);
-EXTERN_C void *func_8001A744(void *list, void *item);
 EXTERN_C int rand();
 
 struct S_TargetI {
@@ -82,13 +81,10 @@ EXTERN_C void func_8001E6AC(void *p);
 EXTERN_C int func_8001EEC0(void *a, void *b);
 EXTERN_C void func_8001F3DC(void *p, int flags);
 EXTERN_C void func_80018E88(void *p, int flags);
-EXTERN_C void func_800186E8(Holder *h);
-EXTERN_C int func_80019CFC(List *l, void *item);
 EXTERN_C void func_8001F1A8(void *p);
 EXTERN_C char D_800B4C28[];
 EXTERN_C S_Scene *func_8001E758(S_Scene *s);
 
-EXTERN_C void func_800949B0(void *sp);
 EXTERN_C void func_80018EDC(void *p);
 EXTERN_C void *D_800B4C20;
 EXTERN_C void *D_80010388[];
@@ -97,7 +93,6 @@ EXTERN_C void *D_800103A0[];
 EXTERN_C void *D_800103B8[];
 EXTERN_C void *D_80010300[];
 EXTERN_C void *D_800102D0[];
-EXTERN_C void *func_8001CA10(int size);
 struct S_SceneV {
     virtual void f1();
     virtual void f2();
@@ -134,7 +129,6 @@ EXTERN_C S_80018E5C *func_80018E5C(S_80018E5C *p, int a);
 EXTERN_C void *func_8001F360(void *p, void *a, int b);
 EXTERN_C int func_8001E344();
 EXTERN_C void func_8001E840(S_8001E840 *p);
-EXTERN_C void func_8001A864(void *a, void *b);
 struct S_Evt408 : S_Evt300 {
     S_Evt408(void *c) : S_Evt300(2, 2, c, 0) { vtbl = D_80010408; }
 };
@@ -179,9 +173,7 @@ struct S_Task {
     int unkF4;
 };
 
-EXTERN_C void func_8001E508(char *p, int flags);
 EXTERN_C S_Node *func_8001E248(S_Node *n, void *id);
-EXTERN_C void func_8001EFE4(char *obj, void *e);
 
 EXTERN_C void func_8001F544(void *t, int delay, int a, int repeat, int b);
 EXTERN_C int func_8001F598(void *t);

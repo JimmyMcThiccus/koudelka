@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8003852C
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -107,10 +109,14 @@ EXTERN_C void func_800388FC(A2VObj0 *p, int a)
     p->v08(a);
 }
 
+// func_8002EADC and func_8002EAE8 take three arguments; retail passes one here and leaves $a1/$a2 as they are.
+EXTERN_C void func_8002EADC_1(void *p) asm("func_8002EADC");
+EXTERN_C void func_8002EAE8_1(void *p) asm("func_8002EAE8");
+
 EXTERN_C void func_80038938(void *p)
 {
     S_A2_VE *e;
-    func_8002EADC(p);
+    func_8002EADC_1(p);
     e = VENT(p, 0xA0);
     e->pfn((char *)p + e->delta);
 }
@@ -118,7 +124,7 @@ EXTERN_C void func_80038938(void *p)
 EXTERN_C void func_80038978(void *p)
 {
     S_A2_VE *e;
-    func_8002EAE8(p);
+    func_8002EAE8_1(p);
     e = VENT(p, 0xA0);
     e->pfn((char *)p + e->delta);
 }

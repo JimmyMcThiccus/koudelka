@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80045850
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -2331,6 +2333,9 @@ EXTERN_C int func_8005340C(void *self)
     return 1;
 }
 
+// func_80028184 takes one argument; retail calls it with none here and leaves $a0 as it is.
+EXTERN_C void func_80028184_0() asm("func_80028184");
+
 EXTERN_C void func_800534F8(void *p)
 {
     if (AT(p, short, 8)) {
@@ -2339,7 +2344,7 @@ EXTERN_C void func_800534F8(void *p)
         S_A2_V4 *s = (S_A2_V4 *)((char *)p + i * 16 + 0xC);
         *d = *s;
     }
-    func_80028184();
+    func_80028184_0();
 }
 
 EXTERN_C void func_80053568(S_A2B_Buf *p, int a, int b)

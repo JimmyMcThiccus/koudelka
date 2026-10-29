@@ -29,7 +29,6 @@ EXTERN_C void *D_800100E0[];
 EXTERN_C void *D_80010338[];
 EXTERN_C int D_800A4544[];
 EXTERN_C void *D_800A4578[];
-EXTERN_C void func_8001D150(void *self, void *b);
 EXTERN_C void func_8001B424();
 EXTERN_C void *func_8001B46C(void *p, int a, const S_Size &sz, int b, int c);
 EXTERN_C void func_8001E360(void *p);
@@ -78,13 +77,6 @@ EXTERN_C void *D_800B4C34 __attribute__((section(".data")));
 EXTERN_C S_8001F1BC *D_800B4C18_lui asm("D_800B4C18") __attribute__((section(".data")));
 EXTERN_C int D_800A457C[];
 EXTERN_C void func_8001DF58(void *p, int a);
-EXTERN_C void func_8008B6B0(void *p, int a, int b);
-EXTERN_C void func_8001E848(void *self, void *p);
-EXTERN_C void *func_80044BE4(void *p);
-EXTERN_C void *func_80051C3C(void *p, void *g);
-EXTERN_C void *func_8007E684(void *p, int a, void *g);
-EXTERN_C char *func_8006A82C(void *p, int a, void *g);
-EXTERN_C void *func_8005584C(void *p, void *g);
 static inline void own_dtor_800194A8(S_Own *m)
 {
     m->vt = D_80010328;

@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8001DDF4
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -170,7 +172,7 @@ EXTERN_C void func_8001E360(S_Scn *s)
         VCALL(s, 1, Fn_vi, 3);
 }
 
-EXTERN_C S_Task *func_8001E40C(S_Task *p, void *a, short b, int c, int d)
+EXTERN_C S_Task *func_8001E40C(S_Task *p, void *a, unsigned short b, int c, int d)
 {
     func_80018E5C((S_80018E5C *)p, c);
     new ((char *)p + 0x8C) S_Evt408(a);

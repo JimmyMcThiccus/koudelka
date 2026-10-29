@@ -1,11 +1,11 @@
 #include "common.h"
+#define EXE_H_IN_u_8003F7E8
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
 #include "game/a2/a2.h"
 #include "game/a2b/a2b.h"
-
-EXTERN_C void func_8003D358(); // defined in u_8003C510.cpp; func_8003FB88 calls it through a cast
 
 EXTERN_C void *func_8003F7E8(void *p, short a)
 {

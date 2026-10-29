@@ -16,14 +16,11 @@ EXTERN_C void *D_800101C0[];
 EXTERN_C void *D_800101B0[];
 EXTERN_C void *D_800101D8[];
 EXTERN_C int D_800A4578[];
-EXTERN_C void *func_800A0D2C(int size);
-EXTERN_C void func_800A0D0C(void *p);
 EXTERN_C int func_80019B2C(void *p, int v, int start);
 EXTERN_C void func_80019D5C(S_Array *a, int from, int to, int n);
 EXTERN_C void func_8001B910(int a);
 EXTERN_C void func_8001BBBC(int a);
 EXTERN_C void func_8001C9D0();
-EXTERN_C void func_8009DDC0(int a);
 EXTERN_C void ResetGraph(int mode);
 EXTERN_C void InitGeom();
 EXTERN_C void InitCARD(int a);
@@ -55,7 +52,6 @@ struct S_8001A138 {
 };
 EXTERN_C void *D_80010338[];
 EXTERN_C int D_800A4544[];
-EXTERN_C void func_8001D150(void *self, void *b);
 struct S_8001D684 {
     void **vt;
     int unk4;
@@ -109,8 +105,6 @@ struct S_8001AA68_N {
 };
 EXTERN_C void *D_80010300[];
 EXTERN_C void *D_800102D0[];
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *p, void *q);
 EXTERN_C void func_80018C1C(void *p);
 EXTERN_C void func_8001AD18(S_Heap *h, S_HeapE *b);
 EXTERN_C void func_8001AD68(S_Heap *h);
@@ -197,7 +191,6 @@ struct S_8001BBBC {
 };
 #define WV(p) ((S_WinV_986C *)((char *)(p) + 0x2C))
 EXTERN_C void func_8002CDC0(S_RectPS_986C *r);
-EXTERN_C void func_8002D24C(void *p, void *r);
 EXTERN_C void *func_8002900C(void *p, int a, int b, int c, int d, int e);
 inline S_Pt4_986C org0_986C() { return D_800B4CF4; }
 inline S_Pt4_986C org1_986C() { return D_800B4CF8; }
@@ -249,11 +242,9 @@ struct S_8001B46C {
     void v9(int x, int y) { VEnt_986C *e = &vt2C[9]; ((void (*)(void *, int, int))e->f)((char *)this + e->d, x, y); }
 };
 EXTERN_C void func_8002C2B8(void *p, int in_chrg);
-EXTERN_C void func_8001E40C(void *p, int in_chrg, int a, int b, int c);
 EXTERN_C void func_80022FB8(void *p, int a);
 EXTERN_C void SsUtReverbOff();
 EXTERN_C void PadInitDirect(void *a, void *b);
-EXTERN_C void func_80035BF8();
 struct S_Rect2_986C {
     short x, y, w, h;
     S_Rect2_986C(int aw, int ah) { w = aw; x = 0; y = 0; h = ah; }
@@ -265,8 +256,6 @@ struct S_8002900C_986C {
 };
 EXTERN_C void func_80026214(const S_Rect2_986C &r);
 EXTERN_C void func_80021300(S_RectPS_986C *r, int a);
-EXTERN_C void func_8002A400(void *p, void *q);
-EXTERN_C void func_8002A37C(void *p, void *q);
 EXTERN_C int func_8001E07C(void *p, int a);
 
 struct S_BE20_N {

@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8002ED44
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -71,7 +73,7 @@ EXTERN_C void func_8002EEFC(void *vp, int flags)
     S_8002F180 *p = (S_8002F180 *)vp;
     *(void ***)p = D_800118FC;
     if (p->unk10) {
-        func_80019CFC(&D_800AC820, p->unk10);
+        func_80019CFC((List *)&D_800AC820, p->unk10);
         func_8002CC60(p->unk10);
         p->unk10 = 0;
     }

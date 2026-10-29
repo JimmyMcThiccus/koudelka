@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_main_a
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -16,7 +18,7 @@ EXTERN_C void func_800186E8(Holder *h)
     if (++D_800B4BFC == 1) {
         func_80094990();
         for (int i = 0; i < count_of(h); i++)
-            func_80019F64(h, i)->run();
+            ((Item *)func_80019F64(h, i))->run();
     }
 }
 
@@ -44,7 +46,7 @@ EXTERN_C void func_800188D4(Holder *h)
 {
     if (++D_800B4BFC == 1) {
         for (int i = 0; i < count_of(h); i++)
-            func_80019F64(h, i)->run();
+            ((Item *)func_80019F64(h, i))->run();
     }
 }
 

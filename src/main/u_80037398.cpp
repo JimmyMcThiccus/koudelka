@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80037398
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/a/main_a.h"
 #include "game/a/decls_a.h"
@@ -51,10 +53,13 @@ EXTERN_C void func_80037554(void *p, unsigned char a)
     if (!AT(p, signed char, 0x37)) f3635C_alt(p, a);
 }
 
+// func_80036554 takes three arguments; retail passes two here and leaves $a2 as it is.
+EXTERN_C void func_80036554_2(void *p, unsigned char a) asm("func_80036554");
+
 EXTERN_C void func_80037584(void *p, unsigned char a)
 {
     if (!AT(p, signed char, 0x37))
-        func_80036554(p, a);
+        func_80036554_2(p, a);
 }
 
 EXTERN_C int func_800375B4(void *p)
