@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8006CBCC
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -714,9 +716,12 @@ EXTERN_C int func_80071250(void)
     return 0;
 }
 
+// func_8008022C takes three arguments; retail passes one here and leaves $a1/$a2 as they are.
+EXTERN_C void func_8008022C_1(void *p) asm("func_8008022C");
+
 EXTERN_C int func_80071258(void)
 {
-    func_8008022C((char *)D_800AF470.p + 0x4A0);
+    func_8008022C_1((char *)D_800AF470.p + 0x4A0);
     return 0;
 }
 

@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_sound
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -7,7 +9,6 @@
 #include "game/sound/sound.h"
 
 EXTERN_C void func_8008BBB0(char *p, int n);
-EXTERN_C void func_8009482C(int a, int b);
 EXTERN_C void func_8008BFEC(void);
 EXTERN_C void func_8008C6F8(void);
 EXTERN_C void func_80093AEC(void);
@@ -21,9 +22,7 @@ EXTERN_C long EnableEvent(unsigned long event);
 EXTERN_C void SpuSetIRQ(long on_off);
 EXTERN_C void SpuSetIRQCallback(void (*f)(void));
 EXTERN_C long SpuSetReverb(long on_off);
-EXTERN_C void func_8008CC20(int a);
 EXTERN_C void func_8008CC88(int a, int b);
-EXTERN_C void func_8008CD1C(int v, int dur);
 EXTERN_C void func_8008CDA8(int a);
 EXTERN_C void func_8008CD88(int a, int b);
 EXTERN_C void func_8008CE18(int a, int b, int c, int d);
@@ -88,13 +87,11 @@ EXTERN_C char *func_8008B6B0(char *p, int n, int mode)
     return p;
 }
 
-EXTERN_C void func_8009482C(int a, int b);
 EXTERN_C long StopRCnt(unsigned long spec);
 EXTERN_C long CloseEvent(unsigned long event);
 EXTERN_C void SpuSetIRQ(long on_off);
 EXTERN_C void SpuSetIRQCallback(void (*f)(void));
 EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
-EXTERN_C void func_800A0800(int a, int b);
 
 EXTERN_C int func_8008B888(void)
 {
@@ -225,7 +222,6 @@ struct Blk_8008BC0C {
     char *end;
     Blk_8008BC0C *next;
 };
-EXTERN_C void func_8008BF78(char *p, int n);
 
 EXTERN_C void *func_8008BC0C(int size)
 {
@@ -270,7 +266,6 @@ struct Blk_8008BD04 {
     char *end;
     Blk_8008BD04 *next;
 };
-EXTERN_C void func_8008BF78(char *p, int n);
 
 EXTERN_C void *func_8008BD04(int size)
 {
@@ -644,7 +639,6 @@ struct Rec_8008C52C {
     unsigned short id;
     short used;
 };
-EXTERN_C void func_8008BF78(char *p, int n);
 
 static inline void *alloc_8008C52C(int size)
 {
@@ -842,11 +836,9 @@ EXTERN_C void func_8008C9A8(void)
 typedef void (*Cb_8008CA50)(char *);
 EXTERN_C long SpuSetTransferMode(long mode);
 EXTERN_C unsigned long SpuSetTransferStartAddr(unsigned long addr);
-EXTERN_C unsigned long func_8009F5E0(unsigned char *addr, unsigned long size);
 EXTERN_C unsigned long SpuRead(unsigned char *addr, unsigned long size);
 EXTERN_C long SpuReadDecodedData(void *d_data, long flag);
 EXTERN_C void func_8008C9A8(void);
-EXTERN_C void func_8009482C(int a, int b);
 
 EXTERN_C void func_8008CA50(void)
 {
@@ -1007,11 +999,10 @@ EXTERN_C void func_8008CDA8(int v)
 }
 
 EXTERN_C int D_800AFCFC[];
-EXTERN_C void func_800A0A10(long *type); // SpuGetReverbModeType
+// SpuGetReverbModeType
 EXTERN_C long SpuSetReverbModeType(long mode);
 EXTERN_C void SpuSetReverbModeDelayTime(long delay);
 EXTERN_C void SpuSetReverbModeFeedback(long feedback);
-EXTERN_C int func_8008C3AC(int id);
 EXTERN_C int func_8008C27C(int size, int addr, unsigned short id);
 EXTERN_C void func_8008D08C(int a, int b);
 
@@ -1130,7 +1121,6 @@ struct Rv_8008D114 {
 };
 EXTERN_C void SpuSetReverbModeDelayTime(long delay);
 EXTERN_C void SpuSetReverbModeFeedback(long feedback);
-EXTERN_C void func_8008C724(int a, int b, int c, int d);
 
 EXTERN_C void func_8008D114(char *req)
 {
@@ -1189,8 +1179,6 @@ EXTERN_C int func_8008D450(char *hdr, int arg);
 EXTERN_C void *func_8008BD04(int size);
 EXTERN_C void func_8008BECC(char *dst, char *src, int n);
 EXTERN_C int *func_8008EA9C(unsigned char *p);
-EXTERN_C void func_8008C724(int a, int b, int c, int d);
-EXTERN_C int func_8008C3AC(int id);
 EXTERN_C void func_8009486C(void *self);
 
 EXTERN_C void *func_8008D1F4(void *hdr, int arg)
@@ -1283,7 +1271,6 @@ EXTERN_C void *func_8008D1F4(void *hdr, int arg)
     return b;
 }
 
-EXTERN_C int func_8008C060(int size, unsigned short id);
 EXTERN_C int func_8008C27C(int size, int addr, unsigned short id);
 
 EXTERN_C int func_8008D450(char *h, int addr)
@@ -1312,7 +1299,6 @@ struct Bank_8008D4C0 {
     char *extra;
     Bank_8008D4C0 *next;
 };
-EXTERN_C int func_8008C3AC(int id);
 
 EXTERN_C void func_8008D4C0(void *bank)
 {
@@ -2391,7 +2377,6 @@ EXTERN_C void func_8008ECB4(void *s)
 }
 
 EXTERN_C int func_800947C0(unsigned int *p, unsigned int v);
-EXTERN_C void func_8008FC38(unsigned short id);
 EXTERN_C int func_8008EE24(void *s);
 EXTERN_C void func_8008ED44(void *s)
 {
@@ -2656,7 +2641,6 @@ struct Track_8008F1DC {
 };
 EXTERN_C char *func_8008D5A8(unsigned short id);
 EXTERN_C void func_8008D5E8(void *v, void *song, short idx);
-EXTERN_C void func_8008FAB4(int id);
 EXTERN_C int func_8008F1DC(Req_8008EF64 *r, int vol, int pan)
 {
     char *song;
@@ -2772,7 +2756,6 @@ struct Drv_8008F4B0 {
     char pad10[0x1A];
     unsigned char ntrack;
 };
-EXTERN_C void func_8008FAB4(int id);
 EXTERN_C void func_8008F4B0(Req_8008EF64 *r)
 {
     Drv_8008F4B0 *drv = FIELD_AT(&D_800B18FC, Drv_8008F4B0 *, 0x154);
@@ -2906,7 +2889,6 @@ struct Drv_8008F618 {
 };
 EXTERN_C char *func_8008D5A8(unsigned short id);
 EXTERN_C void func_8008D5E8(void *v, void *song, short idx);
-EXTERN_C void func_8008FAB4(int id);
 EXTERN_C void *func_8008F618(int id, Ent_8008F618 *e, int vol, int pan)
 {
     char *song;
@@ -5484,9 +5466,9 @@ EXTERN_C void SpuSetVoiceARAttr(int voice, unsigned short ar, long mode);
 EXTERN_C void SpuSetVoiceDR(int voice, unsigned short dr);
 EXTERN_C void SpuSetVoiceSL(int voice, unsigned short sl);
 EXTERN_C void SpuSetVoiceSRAttr(int voice, unsigned short sr, long mode);
-EXTERN_C unsigned long func_8009F700(long on_off, unsigned long voice_bit); /* SpuSetPitchLFOVoice */
-EXTERN_C unsigned long func_8009EBC0(long on_off, unsigned long voice_bit); /* SpuSetNoiseVoice */
-EXTERN_C unsigned long func_8009F0E0(long on_off, unsigned long voice_bit); /* SpuSetReverbVoice */
+/* SpuSetPitchLFOVoice */
+/* SpuSetNoiseVoice */
+/* SpuSetReverbVoice */
 
 EXTERN_C void func_80093FE0(void)
 {

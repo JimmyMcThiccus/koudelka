@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80085168
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -58,9 +60,12 @@ EXTERN_C void func_800853D8(void *self, int a, int c)
     }
 }
 
+// func_8004377C takes an int; this caller narrows its argument to a short first.
+EXTERN_C void func_8004377C_s(void *p, short a) asm("func_8004377C");
+
 EXTERN_C void func_80085454(void *self, int b)
 {
-    func_8004377C(self, b);
+    func_8004377C_s(self, b);
 }
 
 EXTERN_C void func_80085478(void *self, int b)
@@ -68,10 +73,13 @@ EXTERN_C void func_80085478(void *self, int b)
     func_80043740(self, b);
 }
 
+// func_800437CC takes (short, char, short); this caller passes its ints without narrowing them.
+EXTERN_C void func_800437CC_i(void *p, int a, int b, int c) asm("func_800437CC");
+
 EXTERN_C void func_8008549C(void *self, short b, short c, short d)
 {
     func_800437A4(self, b);
-    func_800437CC(self, c, d, 0);
+    func_800437CC_i(self, c, d, 0);
 }
 
 struct V4_800854FC {

@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80067450
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"

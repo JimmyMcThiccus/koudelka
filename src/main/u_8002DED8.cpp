@@ -375,7 +375,7 @@ EXTERN_C int func_8002EC38()
     return 0;
 }
 
-EXTERN_C void func_8002EC40(S_8002EC40 *p)
+EXTERN_C void func_8002EC40(S_8002EC40 *p, void *)
 {
     if (func_8002A2D8(p->unk4))
         VCALL0(p, 4);

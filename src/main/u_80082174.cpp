@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80082174
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -124,9 +126,12 @@ EXTERN_C Obj_80082470 *func_80082470(Obj_80082470 *self)
     return self;
 }
 
+// func_800824C8 takes two arguments; retail passes one here and leaves $a1 as it is.
+EXTERN_C void func_800824C8_1(void *p) asm("func_800824C8");
+
 EXTERN_C void *func_800824A0(void *self)
 {
-    func_800824C8(self);
+    func_800824C8_1(self);
     return self;
 }
 

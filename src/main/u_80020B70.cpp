@@ -776,7 +776,7 @@ EXTERN_C void func_800230E8(char *p, int a)
     func_80020984(p, a);
 }
 
-EXTERN_C int func_800232A0(char *p)
+EXTERN_C int func_800232A0(char *p, void *)
 {
     void *t = 0;
     int r = func_800209F4(p);

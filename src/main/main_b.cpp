@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_main_b
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -159,10 +161,13 @@ EXTERN_C void func_80054FE0(void *self)
     }
 }
 
+// func_80053F28 takes its 4-byte struct by value as S_Rgb (defined in main_a2b); main_b passes the same two shorts as SV2C_80055020.
+EXTERN_C void func_80053F28_v(void *self, SV2C_80055020 v) asm("func_80053F28");
+
 EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
 {
     char *o;
-    func_80053F28(self, v);
+    func_80053F28_v(self, v);
     o = FIELD_AT(self, char *, 0x3C);
     if (o != 0) {
         ((VObj<8> *)(o + 0x50))->v02();
@@ -397,12 +402,15 @@ INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055A9C);
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055D78);
 
+// func_80019CFC takes two arguments; retail passes one here and leaves $a1 as it is.
+EXTERN_C int func_80019CFC_1(void *l) asm("func_80019CFC");
+
 EXTERN_C void func_80055F0C(void *self, void *x)
 {
     char *h = FIELD_AT(self, char *, 0x44F4);
     char *v = h ? h + 8 : 0;
     char *p;
-    func_80019CFC(v ? *(void **)v : 0);
+    func_80019CFC_1(v ? *(void **)v : 0);
     if (--FIELD_AT(self, int, 0x44F0) == 0) {
         p = FIELD_AT(self, char *, 0x44F4);
         if (p != 0) {

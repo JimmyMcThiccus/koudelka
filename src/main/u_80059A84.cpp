@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80059A84
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -109,7 +111,7 @@ EXTERN_C void func_8005A020(void *self, int x, int y)
         for (i = (FIELD_AT(self, char *, 0x30) ? *FIELD_AT(self, List **, 0x30) : 0)->count - 1; i >= 0; i--) {
             char *h = FIELD_AT(self, char *, 0x30);
             char *v = h ? h + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, i)->v10(dx, dy);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, i))->v10(dx, dy);
         }
     }
 }
@@ -178,7 +180,7 @@ EXTERN_C void func_8005A784(void *self, int b)
         VObj0 *o;
         func_8002972C(t1, k, k, k, 1);
         v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
-        func_80019F64(v ? *(void **)v : 0, 0)->v11(t1);
+        ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 0))->v11(t1);
         func_8002972C(t2, k * 2 - 1, k * 2 - 1, k * 2 - 1, 1);
         v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
         o = func_80019F64(v ? *(void **)v : 0, 1);
@@ -640,9 +642,12 @@ EXTERN_C S_CtorB38 *func_8005CB88(S_CtorB38 *p, int in_chrg, int a2, int a3)
     return p;
 }
 
+// func_80054054 takes one argument and returns an S_Rgb; retail passes none here and leaves $a0 as it is.
+EXTERN_C SV2_80055020 func_80054054_0() asm("func_80054054");
+
 EXTERN_C void func_8005CCB0(void *self, int b)
 {
-    FIELD_AT(self, SV2_80055020, 0xC) = func_80054054();
+    FIELD_AT(self, SV2_80055020, 0xC) = func_80054054_0();
     FIELD_AT(self, short, 0x10) = func_8005F87C((void *)b);
     if (func_80054074(b) == 1) {
         FIELD_AT(self, short, 0xC) -= 6;
@@ -660,7 +665,7 @@ EXTERN_C void func_8005CD5C(void *self, unsigned char c)
             char *v;
             func_8002972C(t, c, c, c, 1);
             v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, 0)->v11(t);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 0))->v11(t);
             func_800198AC(t, 2);
         }
     }

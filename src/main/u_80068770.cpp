@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80068770
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -186,6 +188,9 @@ EXTERN_C void func_80069958(void *self)
     func_80054FE0(self);
 }
 
+// func_80053F48 takes its 4-byte struct by value as S_A2_Pt (defined in main_a2b); main_b passes the same two shorts as SV2C_80055020.
+EXTERN_C void func_80053F48_v(void *self, SV2C_80055020 v) asm("func_80053F48");
+
 EXTERN_C void func_80069978(O_80069978 *self, SV2C_80055020 *pp, int dx, int dy, int step)
 {
     SV2C_80055020 p = *pp;
@@ -193,13 +198,13 @@ EXTERN_C void func_80069978(O_80069978 *self, SV2C_80055020 *pp, int dx, int dy,
     while (1) {
         if (!(i < 8)) break;
         func_8005457C(&self->a[i], 0);
-        func_80053F48(&self->a[i], p);
+        func_80053F48_v(&self->a[i], p);
         func_8005457C(&self->a[i + 1], 0);
-        func_80053F48(&self->a[i + 1], SV2C_80055020(p.x + dy, p.y));
+        func_80053F48_v(&self->a[i + 1], SV2C_80055020(p.x + dy, p.y));
         func_8005457C(&self->b[i], 0);
-        func_80053F48(&self->b[i], SV2C_80055020(p.x + dx, p.y));
+        func_80053F48_v(&self->b[i], SV2C_80055020(p.x + dx, p.y));
         func_8005457C(&self->b[i + 1], 0);
-        func_80053F48(&self->b[i + 1], SV2C_80055020(p.x + dx + dy, p.y));
+        func_80053F48_v(&self->b[i + 1], SV2C_80055020(p.x + dx + dy, p.y));
         p.y += step;
         i += 2;
     }
@@ -804,9 +809,12 @@ EXTERN_C void func_8006B8E8(void *self, int b, Blk_8006B8E8 *c)
     func_8006C3C8(self, b, c);
 }
 
+// func_8003B310 takes one argument and returns an S_A2_V4; retail passes none here and leaves $a1 as it is.
+EXTERN_C V_8006B928 func_8003B310_0() asm("func_8003B310");
+
 EXTERN_C void func_8006B928(void *self, int b)
 {
-    FIELD_AT(self, V_8006B928, 0x2C8) = func_8003B310();
+    FIELD_AT(self, V_8006B928, 0x2C8) = func_8003B310_0();
     func_8006C4EC(self, b);
 }
 

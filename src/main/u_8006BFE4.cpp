@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8006BFE4
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -110,6 +112,9 @@ EXTERN_C int func_8006C650(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006BFE4", func_8006C65C);
 
+// func_8002D780 takes its 4-byte point by value as S_Pt2 (defined in main_a); main_b2 passes SV2_80069F74.
+EXTERN_C void func_8002D780_v(void *self, SV2_80069F74 p) asm("func_8002D780");
+
 EXTERN_C void func_8006C77C(void *self)
 {
     SV2_80069F74 pos;
@@ -134,7 +139,7 @@ EXTERN_C void func_8006C77C(void *self)
         R8_658 *rp = (R8_658 *)((char *)self + 0x8);
         R8_658 rc = *rp;
         pos = rc.pos;
-        func_8002D780(FIELD_AT(self, void *, 0x10), pos);
+        func_8002D780_v(FIELD_AT(self, void *, 0x10), pos);
         func_8002D24C(FIELD_AT(self, void *, 0x10), rp);
     } else {
         func_8002DB50(FIELD_AT(self, void *, 0x10), 1);
@@ -152,9 +157,12 @@ EXTERN_C void *func_8006C8D8(void *self, void *b, int c)
     return self;
 }
 
+// func_8002EEFC takes two arguments; retail passes one here and leaves $a1 as it is.
+EXTERN_C void func_8002EEFC_1(void *p) asm("func_8002EEFC");
+
 EXTERN_C void func_8006C93C(void *self)
 {
-    func_8002EEFC(self);
+    func_8002EEFC_1(self);
 }
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_8006BFE4", D_80015C0C);

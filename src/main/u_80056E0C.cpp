@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80056E0C
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -423,7 +425,7 @@ EXTERN_C void func_80059300(void *self)
         char *h = FIELD_AT(self, char *, 0x30);
         if ((h ? FIELD_AT(h, List *, 0x0) : 0)->count > 0) {
             char *v = h ? h + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, 4)->v07(4, FIELD_AT(self, int, 0x40) * 2 + 8);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 4))->v07(4, FIELD_AT(self, int, 0x40) * 2 + 8);
         }
     }
 }

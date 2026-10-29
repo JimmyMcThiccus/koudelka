@@ -38,7 +38,7 @@ EXTERN_C void func_80029C34(void *p, int a)
     func_800198AC(p, a);
 }
 
-EXTERN_C S_W *func_80029C54(S_W *p, int in_chrg, short a)
+EXTERN_C S_W *func_80029C54(S_W *p, int in_chrg, unsigned short a)
 {
     if (in_chrg) {
         p->unk0 = (int)((char *)p + 0x30);

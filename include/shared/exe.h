@@ -78,12 +78,12 @@ EXTERN_C void func_8001D324(void *v, void *q);
 /* u_8001DDF4.cpp */
 EXTERN_C void func_8001E508(char *p, int flags);
 EXTERN_C int func_8001E848(char *cur, char *s);
-EXTERN_C void func_8001EFE4(char *obj, void *e);
 #ifndef EXE_H_IN_u_8001DDF4
 EXTERN_C void *func_8001E40C(void *p, void *a, unsigned short b, int c, int d);
 EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C void *func_8001EB60(char *obj, int a);
 EXTERN_C void *func_8001ED2C(char *s, int a, int b);
+EXTERN_C void func_8001EFE4(void *obj, void *e);
 #endif
 
 /* u_8001F1A8.cpp */
@@ -108,7 +108,7 @@ EXTERN_C void func_800215E8(void *q, void *x);
 EXTERN_C void func_80021ACC(void *p, int a);
 EXTERN_C void func_80021F48(void *p, int a);
 EXTERN_C void func_800230E8(char *p, int a);
-EXTERN_C int func_800232A0(char *p);
+EXTERN_C int func_800232A0(char *p, void *);
 EXTERN_C int func_80023F50(void *q, int a);
 EXTERN_C int func_80025444(void *, void *, int);
 EXTERN_C void func_80025714(void *q, void *r);
@@ -149,7 +149,7 @@ EXTERN_C void *func_8002972C(void *p, int a, int b, int c, int d);
 EXTERN_C void func_80029EC0(void);
 EXTERN_C void *func_8002A09C(void *p, int x, int y);
 #ifndef EXE_H_IN_u_80029BBC
-EXTERN_C void *func_80029C54(void *p, int in_chrg, short a);
+EXTERN_C void *func_80029C54(void *p, int in_chrg, unsigned short a);
 EXTERN_C void func_80029D74(void *p, int flags);
 EXTERN_C S_Rgb func_80029EC8(void *p);
 EXTERN_C S_Box2 func_80029F30(void *p);
@@ -209,7 +209,7 @@ EXTERN_C int func_8002EB68(void *p);
 EXTERN_C void *func_8002EBF0(void *p);
 EXTERN_C void *func_8002EC00(void *p);
 EXTERN_C void *func_8002EC18(void *p);
-EXTERN_C void func_8002EC40(void *p);
+EXTERN_C void func_8002EC40(void *p, void *);
 EXTERN_C void func_8002EC90(void *p, void *);
 #endif
 
@@ -218,7 +218,7 @@ EXTERN_C void func_8002EE9C(void *p, int a);
 EXTERN_C void func_8002EEFC(void *vp, int flags);
 EXTERN_C void *func_80030AA8(void *vp, void *vq, int *out);
 #ifndef EXE_H_IN_u_8002ED44
-EXTERN_C void func_8002EEC4(void *, void *);
+EXTERN_C void *func_8002EEC4(void *, void *);
 #endif
 
 /* u_80032264.cpp */

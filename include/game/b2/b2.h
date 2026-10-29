@@ -64,7 +64,6 @@ struct W3_B {
     int a, b, c;
 };
 
-EXTERN_C void func_80028184(void *self);
 
 EXTERN_C void func_800DE760_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int b1, int b2, int b3) asm("func_800DE760");
 
@@ -85,7 +84,6 @@ struct Rgb_B {
 
 EXTERN_C void func_8003D358_c(void *a, int b, Rgb_B c) asm("func_8003D358");
 
-EXTERN_C void func_800435E8(void *self);
 
 EXTERN_C short func_80073C04(void *self);
 
@@ -93,29 +91,19 @@ EXTERN_C void func_800DDFB0_c(void *self, int a, int b, int c, int d, int e, int
 
 EXTERN_C void *func_800550BC_r(void *self) asm("func_800550BC");
 
-EXTERN_C void func_80067ABC(void *self, void *b);
 
-EXTERN_C void func_800680A0(void *self);
 
-EXTERN_C int func_80058488(void *self, int b);
 
-EXTERN_C void func_80063340(void *self, void *m);
 
 static inline int xor_8006A6D4(int a, int b) { return a ^ b; }
 
 EXTERN_C short D_800B4EDC;
 
-EXTERN_C void func_8003FA50(void *self, void *a, int b, int c);
 
-EXTERN_C void func_8003E124(void *self);
 
-EXTERN_C short func_8003E170(void *self);
 
-EXTERN_C int func_8003ED90(void *out, void *self);
 
-EXTERN_C void func_8003ECFC(void *self, int a, int b);
 
-EXTERN_C void func_8003E198(void *self, int a, int b);
 
 EXTERN_C void func_80079918(void *a);
 
