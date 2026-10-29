@@ -358,7 +358,23 @@ EXTERN_C void *func_800493E8(void *p, int a)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80049420);
+EXTERN_C int *func_80049420(int *p, int *q)
+{
+    int n = p[0];
+    p[0] = n + 1;
+    int k = n / 3;
+    int m = n - k * 3;
+    int c = q[2];
+    int a = q[0];
+    int b = q[1];
+    int e = q[3];
+    char *d = (char *)p + (m * 8 + k * 48);
+    AT(d, int, 0xC) = a;
+    AT(d, int, 0x24) = c;
+    AT(d, int, 0x10) = b;
+    AT(d, int, 0x28) = e;
+    return p;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_80049488);
 
@@ -689,7 +705,49 @@ EXTERN_C S_Prim *func_8004ABEC(S_Prim *p)
     return p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8004AC04);
+// exe.h declares this with void * parameters; the byte-pointer type is needed to match.
+EXTERN_C int func_8004AC04_t(unsigned char *p, unsigned char *a, unsigned char *b, unsigned char *c, unsigned char *d) asm("func_8004AC04");
+EXTERN_C int func_8004AC04_t(unsigned char *p, unsigned char *a, unsigned char *b, unsigned char *c, unsigned char *d)
+{
+    unsigned x = p[0], y = p[4], z;
+    int i;
+    if (!(x - y > 1 && y - x > 1)) {
+        z = p[8];
+        if (!(y - z > 1 && z - y > 1) && !(z - x > 1 && x - z > 1))
+            return 0;
+    }
+    x = p[1]; y = p[5];
+    if (!(x - y > 1 && y - x > 1)) {
+        z = p[9];
+        if (!(y - z > 1 && z - y > 1) && !(z - x > 1 && x - z > 1))
+            return 0;
+    }
+    a[0] = p[0];
+    b[4] = p[4];
+    c[8] = p[8];
+    a[4] = b[0] = d[8] = (p[0] + p[4]) >> 1;
+    b[8] = c[4] = d[0] = (p[4] + p[8]) >> 1;
+    a[8] = c[0] = d[4] = (p[8] + p[0]) >> 1;
+    unsigned char *e = d;
+    a[1] = p[1];
+    b[5] = p[5];
+    c[9] = p[9];
+    a[5] = b[1] = e[9] = (p[1] + p[5]) >> 1;
+    b[9] = c[5] = e[1] = (p[5] + p[9]) >> 1;
+    a[9] = c[1] = e[5] = (p[9] + p[1]) >> 1;
+    i = 0;
+    while (i < 3) {
+        i++;
+        unsigned short u = *(unsigned short *)(p + 2);
+        p += 4;
+        *(unsigned short *)(a + 2) = u;
+        *(unsigned short *)(b + 2) = u;
+        *(unsigned short *)(c + 2) = u;
+        *(unsigned short *)(e + 2) = u;
+        e += 4; c += 4; b += 4; a += 4;
+    }
+    return 1;
+}
 
 EXTERN_C void func_8004AE24(void *d, void *s)
 {

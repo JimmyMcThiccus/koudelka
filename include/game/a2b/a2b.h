@@ -56,7 +56,7 @@ struct C_8004B8F8 : C_800497FC { char pad10[8]; S_A2B_G3x2 m; C_8004B8F8() asm("
 // prelude
 EXTERN_C void *D_800B4D38;
 EXTERN_C void func_80044C7C(void *p, void *a);
-EXTERN_C void func_8003FAEC(void *p, void *o, int a, int b);
+EXTERN_C void func_8003FAEC(void *p, void *o, short a, short b);
 EXTERN_C void func_8004387C(void *p);
 struct C_80052100 { C_80052100(int a, void *b, int c) asm("func_80052100"); char pad[0x70]; };
 EXTERN_C void func_80052640(void *p, void *a);

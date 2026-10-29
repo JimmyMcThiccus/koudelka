@@ -30,7 +30,18 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8003F8CC);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8003FA50);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_8003FAEC);
+EXTERN_C void func_8003FAEC(void *p, void *o, short a, short b)
+{
+    void *s = AT(p, void *, 0x138);
+    if (s) {
+        int ch = 0;
+        if (AT(s, short, 8) != a || AT(s, short, 0xA) != b)
+            ch = 1;
+        if (ch)
+            AT(p, void *, 0x138) = (void *)func_80044F18(o, a, b, 0, 1);
+    } else
+        AT(p, void *, 0x138) = (void *)func_80044F18(o, a, b, 0, 1);
+}
 
 EXTERN_C void func_8003FB88(void *p, int a, S_A2_RgbC c)
 {
