@@ -323,7 +323,50 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_80089FD0);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_8008A188);
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80089024", func_8008A2A0);
+#define self ((char *)vself)
+EXTERN_C int func_8008A2A0(void *vself)
+{
+    int n = 0;
+    int sa = 0;
+    int sb = 0;
+    int i;
+    for (i = 0; i < 3; i++) {
+        char *e = (char *)D_800AFA58[i];
+        if (e != 0) {
+            if (FIELD_AT(e, unsigned char, 0x948)) {
+                return 0;
+            }
+            VObj<0x9C> *o = (VObj<0x9C> *)(e + 0x400);
+            o->v01();
+            n++;
+            sa += FIELD_AT(e, unsigned char, 0x43E);
+            sb += FIELD_AT(e, unsigned char, 0x443);
+        }
+    }
+    if (n == 0) {
+        return 1;
+    }
+    sa = sa * rand() / n;
+    sb = sb * rand() / n;
+    n = 1;
+    ((VObj<0x9C> *)(self ? self + 0x400 : 0))->v01();
+    int ta = FIELD_AT(self, unsigned char, 0x43E);
+    int tb = FIELD_AT(self, unsigned char, 0x443);
+    for (int j = 0; j < 3; j++) {
+        char *e = (char *)D_800AFA64[j];
+        VObj<0x9C> *o = (VObj<0x9C> *)(e + 0x400);
+        if (e != 0) {
+            o->v01();
+            n++;
+            ta += FIELD_AT(e, unsigned char, 0x43E);
+            tb += FIELD_AT(e, unsigned char, 0x443);
+        }
+    }
+    ta = ta * rand() / n;
+    tb = tb * rand() / n;
+    return ta + tb > sa + sb;
+}
+#undef self
 
 EXTERN_C int func_8008A54C(void *self, int b)
 {

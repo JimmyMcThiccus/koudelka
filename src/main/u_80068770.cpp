@@ -582,7 +582,15 @@ EXTERN_C void func_8006B120(void *self, int b)
     FIELD_AT(self, int, 0x26C) = 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006B180);
+EXTERN_C void func_8006B180(void *self, int d)
+{
+    short s = FIELD_AT(self, unsigned short, 0x2A0);
+    short r = s + d;
+    s = r;
+    if (r > 0xF6E) s = 0xF6E;
+    if (s < 0xE42) s = 0xE42;
+    FIELD_AT(self, short, 0x2A0) = s;
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80068770", func_8006B1C8);
 

@@ -366,7 +366,11 @@ EXTERN_C void func_800861E8(void *self)
     }
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80085168", func_8008623C);
+struct MI_8008623C : VPad<0x400>, VObj<0x9C> {};
+EXTERN_C void func_8008623C(void *self, int b)
+{
+    ((MI_8008623C *)self)->v08(b);
+}
 
 EXTERN_C int func_80086288(void *self)
 {
