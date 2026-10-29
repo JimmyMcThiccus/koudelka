@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bim/shared.h"
 
 EXTERN_C void *func_800DAAFC(void *self, int in_chrg, int a, int b, int c, int d, int e);
 
@@ -13,7 +14,29 @@ INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DAAFC);
 
 INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DADF4);
 
-INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DAF88);
+EXTERN_C int func_800DAF88(char *p)
+{
+    int r = func_800D8E64_a(p);
+    switch (r) {
+    case 1:
+        func_80082670(p + 0x2A4, 0x10, 7);
+        func_80082670(p + 0x2A4, 0x11, 8);
+        break;
+    case 2:
+        func_80082670(p + 0x2A4, 0x10, 7);
+        func_80082670(p + 0x2A4, 0x11, 8);
+        break;
+    case 3:
+        func_80082670(p + 0x2A4, 0x10, 7);
+        func_80082670(p + 0x2A4, 0x11, 8);
+        break;
+    case 4:
+        func_80082670(p + 0x2A4, 0x10, 0xE);
+        func_80082670(p + 0x2A4, 0x11, 0xF);
+        break;
+    }
+    return r;
+}
 
 #include "../shared/bimf_1a38796b.cpp"
 

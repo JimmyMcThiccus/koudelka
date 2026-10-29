@@ -41,7 +41,30 @@ EXTERN_C void func_800DAD24(BimDtor *self, int in_chrg)
 
 INCLUDE_ASM("asm/bim/w0_4b54218ac8/nonmatchings/w0_4b54218ac8", func_800DAE68);
 
-INCLUDE_ASM("asm/bim/w0_4b54218ac8/nonmatchings/w0_4b54218ac8", func_800DAFE8);
+EXTERN_C int func_800DAFE8(char *p)
+{
+    int r = func_800D8E64_a(p);
+    switch (r) {
+    case 1:
+        func_80082670(p + 0x2A4, 0x10, 0x7);
+        func_80082670(p + 0x2A4, 0x11, 0x8);
+        break;
+    case 2:
+        func_80082670(p + 0x2A4, 0x10, 0x12);
+        func_80082670(p + 0x2A4, 0x11, 0x13);
+        break;
+    case 3:
+        func_80082670(p + 0x2A4, 0x10, 0x12);
+        func_80082670(p + 0x2A4, 0x11, 0x13);
+        break;
+    case 4:
+    case 5:
+        func_80082670(p + 0x2A4, 0x10, 0x10);
+        func_80082670(p + 0x2A4, 0x11, 0x11);
+        break;
+    }
+    return r;
+}
 
 #include "../shared/bimf_014cace9.cpp"
 

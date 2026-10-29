@@ -14,7 +14,28 @@ INCLUDE_ASM("asm/bim/w0_dcb8de8814/nonmatchings/w0_dcb8de8814", func_800DAB14);
 
 INCLUDE_ASM("asm/bim/w0_dcb8de8814/nonmatchings/w0_dcb8de8814", func_800DAE18);
 
-INCLUDE_ASM("asm/bim/w0_dcb8de8814/nonmatchings/w0_dcb8de8814", func_800DAFD4);
+EXTERN_C int func_800DAFD4(char *p)
+{
+    int r = func_800D8E64_a(p);
+    switch (r) {
+    case 1:
+        func_80082670(p + 0x2A4, 0x10, 0x10);
+        func_80082670(p + 0x2A4, 0x11, 0x11);
+        break;
+    case 5:
+        func_80082670(p + 0x2A4, 0x10, 0x10);
+        func_80082670(p + 0x2A4, 0x11, 0x11);
+        break;
+    case 2:
+    case 3:
+    case 4:
+    case 6:
+        func_80082670(p + 0x2A4, 0x10, 0x7);
+        func_80082670(p + 0x2A4, 0x11, 0x8);
+        break;
+    }
+    return r;
+}
 
 #include "../shared/bimf_1a38796b.cpp"
 
