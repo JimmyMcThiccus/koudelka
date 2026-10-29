@@ -1,4 +1,6 @@
 // func_800E44D4: 4 differing. Retail computes (a<<7) into a2 in the beqz delay slot, loads fd/buf, then does `sw p, D_800EA7B0` AFTER the loads and before the `unk50<<7` shift; the build stores the global earlier. Sibling func_800E4448 (landed) takes the offset from func_800E5554.
+#include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 struct Unk_800E44D4_s { short unk0; short pad2; int unk4; };

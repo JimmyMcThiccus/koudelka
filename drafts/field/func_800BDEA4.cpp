@@ -1,4 +1,6 @@
 // func_800BDEA4: 5 differing: o and the ushort are in swapped s1/s0. Needs asm alias for the header declaration.
+#include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 struct Unk_BDEA4_e { unsigned short a; };

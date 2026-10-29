@@ -1,4 +1,6 @@
 // func_800E2C08: 4 bytes short: retail keeps the loaded value in v0 (lw v0,0x14C(v0); addu s3,v0,zero; sll v0,v0,24).
+#include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 struct Unk_hcG { char pad0[0x78]; int unk78; char pad7C[0xC]; void* unk88; char pad8C[0x6C]; char unkF8[4]; char pad_FC[0x18]; char unk114[0x1C]; char unk130[0x28]; int unk158; int unk15C; char pad160[0x2D9C]; signed char unk2EFC; };

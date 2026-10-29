@@ -840,7 +840,55 @@ EXTERN_C Unk_800BD3E0* func_800BE200(Unk_800BF204* p, int id) {
     return n;
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800BE264);
+#define p ((He_E_p*)vp)
+EXTERN_C void func_800BE264(void* vp, Unk_Short2 v) {
+    signed char last = -1;
+    signed char c10 = last;
+    signed char c18;
+    He_E_ent* e = 0;
+    He_E_Y* y = (He_E_Y*)e;
+    short cnt;
+    int a0, b0;
+    He_E_n1* n = p->unk414;
+    for (short i = p->unk3D8; i != 0; i--) {
+        if (v.x == n->unk8) {
+            e = n->unk18;
+            c10 = n->unk10;
+            c18 = n->unk11;
+            cnt = n->unk14;
+            break;
+        }
+        n = next(n);
+    }
+    if (e) {
+        He_E_n2* m = p->unk454;
+        for (int i = func_8001A6E8(m); i != 0; i--) {
+            if (v.y == m->unk2C) {
+                y = &m->unkC;
+                break;
+            }
+            m = next(m);
+        }
+        if (y) {
+            y->unk4 = 0;
+            for (; cnt != 0; cnt--) {
+                if (last != e->c0) {
+                    last = e->c0;
+                    a0 = func_800BDE08((Unk_800BF204*)p, e->c0);
+                    b0 = func_800BDD8C((Unk_800BDD8C*)p, c10);
+                    func_80024FEC((void*)a0, (void*)b0);
+                }
+                void* o = at_BE264(y, cnt - 1);
+                func_800BB1BC((Unk_800BB1BC*)o, (Unk_800BB1BC_arg*)b0);
+                func_800BB068(o, a0, c18);
+                func_800BB128((Unk_Sprt16_24*)o, e->c1, e->c2);
+                ((VAt0*)o)->vf07(e->s4 + p->unk48C, e->s6 + p->unk490);
+                e++;
+            }
+        }
+    }
+}
+#undef p
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800BE470);
 

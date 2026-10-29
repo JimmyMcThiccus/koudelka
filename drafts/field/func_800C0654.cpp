@@ -1,4 +1,6 @@
 // func_800C0654: 4 differing: stack slot of the Unk_Short2 temporary (retail sp+0x214, build sp+0x218).
+#include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 struct Unk_C0654_s { void* vtbl; int unk4; void* vtbl8; void* unkC; Unk_Short2 unk10; short unk14; short unk16; int unk18; unsigned short unk1C; short unk1E; };
