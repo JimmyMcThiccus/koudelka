@@ -1878,7 +1878,71 @@ EXTERN_C void *func_800787B4(void)
     return D_800AF470.p;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800787C4);
+EXTERN_C void *func_800787C4_d(char *self, int in_chrg, void *a2, unsigned short a3, int e)
+{
+    if (in_chrg) {
+        FIELD_AT(self, void *, 0xF8) = self + 0x430;
+        S_VBobjB *vo = (S_VBobjB *)(self + 0x430);
+        vo->vptr = D_80010178;
+        vo->unk4 = 0;
+        vo->vptr = D_800104A8;
+    }
+    func_8001E40C(self, a2, a3, e, 0);
+    S_SubB *m = (S_SubB *)(self + 0xF8);
+    VTabB50 vt1;
+    m->vb->vt = (VEntB *)D_80010538.e;
+    vt1 = D_80010538;
+    m->vb->vt = vt1.e;
+    char *q;
+    int adj1;
+    vt1.e[1].d = D_80010538.e[1].d + (adj1 = (char *)m - (q = (char *)m->vb - 8));
+    vt1.e[6].d = D_80010538.e[6].d + adj1;
+    m->vptr = D_80010508;
+    FIELD_AT(self, void **, 0x100) = D_800118DC;
+    FIELD_AT(self, S_VBB *, 0xF8)->vt = (VEntB *)D_80017210.e;
+    if (!in_chrg) {
+        VTabB50 vt = D_80017210;
+        FIELD_AT(self, S_VBB *, 0xF8)->vt = vt.e;
+        char *full;
+        int adj;
+        vt.e[1].d = D_80017210.e[1].d + (adj = (char *)self - (full = FIELD_AT(self, char *, 0xF8) - 0x430));
+        vt.e[6].d = D_80017210.e[6].d + adj;
+    }
+    FIELD_AT(self, void **, 0x8C) = D_80017280;
+    FIELD_AT(self, void **, 0xFC) = D_800171E0;
+    FIELD_AT(self, void **, 0x100) = D_80017260;
+    FIELD_AT(self, void **, 0x0) = D_80017298;
+    FIELD_AT(self, int, 0x368) = -1;
+    FIELD_AT(self, int, 0x36C) = -1;
+    FIELD_AT(self, int, 0x370) = -1;
+    FIELD_AT(self, int, 0x374) = -1;
+    FIELD_AT(self, int, 0x378) = 0;
+    FIELD_AT(self, int, 0x37C) = 0;
+    FIELD_AT(self, int, 0x380) = 0;
+    FIELD_AT(self, int, 0x384) = 0;
+    FIELD_AT(self, int, 0x388) = 0;
+    FIELD_AT(self, int, 0x38C) = 0;
+    FIELD_AT(self, int, 0x390) = 0;
+    FIELD_AT(self, int, 0x394) = 0;
+    FIELD_AT(self, int, 0x398) = 0;
+    FIELD_AT(self, int, 0x39C) = 0;
+    FIELD_AT(self, int, 0x3A4) = 0;
+    FIELD_AT(self, int, 0x3A8) = 0;
+    FIELD_AT(self, int, 0x33C) = 0;
+    void *n = func_8007C55C(__builtin_new(0x244), self);
+    FIELD_AT(self, void *, 0x328) = n;
+    FIELD_AT(self, int, 0x32C) = 0;
+    FIELD_AT(self, int, 0x330) = 0;
+    FIELD_AT(self, int, 0x344) = 0;
+    FIELD_AT(self, int, 0x348) = 0;
+    FIELD_AT(D_800A4534_s.p44, short, 0x1A4) = 10;
+    FIELD_AT(D_800A4534_s.p44, short, 0x1A6) = 10;
+    func_800230E8(D_800A4534_s.p44 + 0x154, (int)self);
+    char *r = self;
+    FIELD_AT(r, void *, 0x108) = &D_800AF414;
+    FIELD_AT(r, char, 0x360) = 0;
+    return r;
+}
 
 EXTERN_C void func_80078A30_d(char *self, int in_chrg)
 {
