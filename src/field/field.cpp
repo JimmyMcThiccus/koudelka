@@ -6813,7 +6813,49 @@ EXTERN_C void func_800D9B44(Unk_800D9B44* p, void* a) {
     }
 }
 
-INCLUDE_ASM("asm/field/nonmatchings/field", func_800D9C84);
+struct Unk_800D9C84 { char pad0[0x38]; VAt0* unk38; void* unk3C; };
+EXTERN_C void func_800D9C84(void* vp, int n) {
+    Unk_800D9C84* p = (Unk_800D9C84*)vp;
+    void* h = func_8005F238(operator new(8));
+    func_8005F298(h, (n - 1) * 0x11 + 0x1427C, 0x8800);
+    int a = func_8005F28C(h);
+    a += 0x10;
+    Hg_E9650_o1* o = (Hg_E9650_o1*)operator new(0x2C);
+    o->vtbl = D_80010178;
+    o->unk4 = 0;
+    o->vtbl = D_800106EC;
+    o->unk8 = 0;
+    o->unkA = 0;
+    o->vtbl = D_80010654;
+    func_80021ACC(o, a);
+    VAt<0x10>* g = (VAt<0x10>*)D_800B4C38[0];
+    p->unk3C = o;
+    g->vf00(o);
+    a += 0x20;
+    Hg_E9650_o2* q = (Hg_E9650_o2*)operator new(0x20);
+    void* pp = p->unk3C;
+    q->vtbl = D_80010178;
+    q->unk4 = 0;
+    q->vtbl2 = D_80010888;
+    q->vtbl = D_800108A0;
+    q->unkC = pp;
+    Hg_L L;
+    L.h.a = -1;
+    L.h.b = -1;
+    q->unk10 = L.h;
+    q->unk14 = 0;
+    q->unk16 = 0;
+    q->unk18 = 0;
+    q->unk1E = 0;
+    func_80024BF0(q, a, 0x100, 0x100);
+    p->unk38 = (VAt0*)q;
+    func_80025444(D_800B4C48, q, 0);
+    p->unk38->vf02();
+    func_8005F3E0(h);
+    if (h) {
+        func_8005F248(h, 3);
+    }
+}
 
 EXTERN_C void func_800D9E4C(Unk_800D9E4C* p) {
     if (p->unk38) {
