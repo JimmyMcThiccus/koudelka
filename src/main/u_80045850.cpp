@@ -451,7 +451,24 @@ EXTERN_C int func_8004991C(void *p, short a)
     return 0x400;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_800499D0);
+// shared/exe.h declares func_800499D0(void *, void *) returning void (callers' view); the body takes a third
+// (int *out) argument and returns src + 0x10, so it is defined through this alias.
+extern "C++" void *f499D0(char *p, char *src, int *out) asm("func_800499D0");
+void *f499D0(char *p, char *src, int *out)
+{
+    int i = 0;
+    char *pp = p;
+    char *sr = src;
+    short *s = (short *)sr;
+    *out = ((signed char *)sr)[1];
+    *(S_A2_Sv *)(pp + 4) = *(S_A2_Sv *)(sr + 8);
+    do {
+        *(int *)(pp + 0xC) = D_800B4D04->v01(s[1]);
+        s++; i++;
+        pp += 4;
+    } while (i < 3);
+    return sr + 0x10;
+}
 
 EXTERN_C int func_80049A7C(void *p, int i)
 {
@@ -1119,7 +1136,23 @@ EXTERN_C int func_8004D040(void *p, short a)
     return 0x400;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80045850", func_8004D0F4);
+// Same shape as func_800499D0 (4 entries, src + 0x14); exe.h's two-argument void prototype is the callers' view.
+extern "C++" void *fD0F4(char *p, char *src, int *out) asm("func_8004D0F4");
+void *fD0F4(char *p, char *src, int *out)
+{
+    int i = 0;
+    char *pp = p;
+    char *sr = src;
+    short *s = (short *)sr;
+    *out = ((signed char *)sr)[1];
+    *(S_A2_Sv *)(pp + 4) = *(S_A2_Sv *)(sr + 0xC);
+    do {
+        *(int *)(pp + 0xC) = D_800B4D04->v01(s[2]);
+        s++; i++;
+        pp += 4;
+    } while (i < 4);
+    return sr + 0x14;
+}
 
 EXTERN_C int func_8004D1A0(void *p, int a)
 {

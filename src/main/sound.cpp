@@ -1468,7 +1468,21 @@ EXTERN_C int func_8008D950(void *self)
     return 1;
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/sound", func_8008D97C);
+EXTERN_C int func_8008D97C(unsigned char *h)
+{
+    unsigned char *p = h;
+    int a;
+    int b;
+    if (FIELD_AT(h, int, 0x0) != 0x6D646D73) {
+        return -1;
+    }
+    b = 0;
+    a = h[0x16] * 0x160;
+    if (h[0x17] != 0) {
+        b = h[0x17] * 4 + 0x10;
+    }
+    return p[0x18] * 0xE4 + (a + (b + 0xE0)) + 0x50;
+}
 
 EXTERN_C void func_8008DA00(char *t, int v, int dur)
 {

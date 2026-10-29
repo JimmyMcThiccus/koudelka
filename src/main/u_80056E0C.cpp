@@ -58,7 +58,21 @@ EXTERN_C void func_80057150(void *self)
     func_80056FE0(self);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_8005717C);
+EXTERN_C void func_8005717C(void *self, int a, int b)
+{
+    FIELD_AT(self, int, 0x9C) = a / 2;
+    FIELD_AT(self, int, 0xA8) = b;
+    FIELD_AT(self, int, 0xA4) = 0;
+    if (FIELD_AT(self, int, 0x8) == 0) {
+        func_8002B174(D_800A4578.p, self, -1);
+        ((VObj<0x2C> *)self)->v27();
+        func_8002A210(self);
+        void *q = (char *)self + 0x5C;
+        int c = 0xFF;
+        if (FIELD_AT(self, int, 0xA0)) c = 0;
+        func_8005D9D4(q, c);
+    }
+}
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057214);
 

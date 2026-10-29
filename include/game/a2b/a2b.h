@@ -129,4 +129,5 @@ extern "C++" S_A2B_CpB2C *f53360(S_A2B_CpB2C *p) asm("func_80053360");
 inline void *a2b_base(void *x) { return x ? (char *)x - 8 : 0; }
 inline void a2b_set4(void *o, void *v) { if (AT(o, void *, 4) && v) func_8001A864(v, AT(o, void *, 4)); AT(o, void *, 4) = v; }
 struct C_8003C5A8 { C_8003C5A8(void *a, int b, int c) asm("func_8003C5A8"); char pad[0x1C]; };
+EXTERN_C A2VObj<4> *D_800B4D04;
 #endif /* GAME_A2B_A2B_H */
