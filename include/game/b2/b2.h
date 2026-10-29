@@ -90,8 +90,6 @@ EXTERN_C short func_80073C04(void *self);
 
 EXTERN_C void func_800DDFB0_c(void *self, int a, int b, int c, int d, int e, int f, int g, B16_B s, int h) asm("func_800DDFB0");
 
-// func_800550BC returns func_80019F64's result (a tail call) but is defined void.
-EXTERN_C void *func_800550BC_r(void *self) asm("func_800550BC");
 
 
 

@@ -175,12 +175,12 @@ EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
     }
 }
 
-EXTERN_C void func_800550BC(void *self)
+EXTERN_C void *func_800550BC(void *self)
 {
     char *h = (char *)self + 0x1C;
     char *g = h ? (char *)self + 0x24 : 0;
     int n = FIELD_AT(h, int, 0x4);
-    func_80019F64(g ? FIELD_AT(g, List *, 0x0) : 0, n);
+    return func_80019F64(g ? FIELD_AT(g, List *, 0x0) : 0, n);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_800550FC);
