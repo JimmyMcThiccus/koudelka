@@ -6,13 +6,59 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D6198);
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D6328);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D6584);
+EXTERN_C BimMon *func_800D6584() {
+    BimMon *list[4];
+    short w[4];
+    int cnt = 0;
+    int i;
+    w[0] = 2; w[1] = 1; w[2] = 1;
+    for (i = 3; i >= 0; i--) list[i] = 0;
+    for (i = 0; i < 3; i++) {
+        BimMon *m = D_800AFA64[i];
+        if (m && m->s410 > 0) {
+            int c = m->b4BC;
+            for (int j = 0; j < w[c]; j++) list[cnt++] = m;
+        }
+    }
+    BimMon *r = 0;
+    if (cnt) r = list[rand() % cnt];
+    return r;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D66B0);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D6740);
+EXTERN_C void func_800D6740(BimEnts *p, unsigned flags) {
+    for (int i = 0; i < 5; i++) {
+        if (p->e[i]) {
+            func_800D6D08((BimCtl *)p->e[i]);
+            delete p->e[i];
+        }
+    }
+    if (flags & 1) delete p;
+}
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D67EC);
+EXTERN_C void func_800D67EC(BimEnts *p, short s, int a, int b, BimT *t) {
+    if (s < 0) {
+        if (t) {
+            if (t->b4BC >= 3) {
+                if (t->b404 < 0xA4) {
+                    signed char v = D_800DA7C8[t->b404];
+                    if (v != -1) { s = v; goto done; }
+                }
+            } else {
+                int v = t->f550[0x8A] & 0xF;
+                if (v < 0xB) {
+                    if (v >= 9) { s = 2; goto done; }
+                }
+            }
+        }
+        s = rand() & 3;
+    }
+done:
+    void **sl = (void **)((char *)p + s * 4);
+    func_800D6C1C(sl[1], a, b);
+    *(void **)((char *)p + 0x18) = sl[1];
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D68EC);
 
@@ -74,7 +120,17 @@ EXTERN_C void func_800D7A20() { func_800CC110(D_800AF470[0]->f32C); }
 
 EXTERN_C void func_800D7A4C(void *p, int a, unsigned short b) { func_800CC298(D_800AF470[0]->f32C, a, b); }
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7A78);
+EXTERN_C unsigned short func_800D7A78(void *, BimFlags *p) {
+    unsigned short r = 0;
+    if (p) {
+        unsigned short f = p->h8;
+        r = bim_not(bim_not(f & 2));
+        if (f & 0x20) r |= 2;
+        if (f & 0x100) r |= 4;
+        if (f & 0x400) r |= 0x10;
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7AC4);
 

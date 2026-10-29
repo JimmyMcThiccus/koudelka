@@ -49,7 +49,10 @@ struct BimMon {
     BimSlot slots[8];
     char pad948[0x40];
     int f988;
-    char pad98C[0x18];
+    char pad98C[0x4];
+    int f990;
+    short s994;
+    char pad996[0xE];
     int f9A4;
     char pad9A8[0x20];
     int f9C8;
@@ -96,11 +99,19 @@ EXTERN_C BimClock D_800A4534;
 EXTERN_C void *D_800B4C18[];
 EXTERN_C void func_800D6D08(BimCtl *p);
 
+struct BimFlags { char pad[8]; unsigned short h8; };
+struct BimEnt { virtual ~BimEnt(); };
+struct BimEnts { void *pad0; BimEnt *e[5]; };
+struct BimT { char pad[0x404]; unsigned char b404; char pad405[0xB7]; signed char b4BC; char pad4BD[0x92]; char *f550; };
+EXTERN_C signed char D_800DA7C8[];
+EXTERN_C void func_800D6C1C(void *, int, int);
+inline int bim_not(int a) { return !a; }
+
 struct BimPos { short x, y; };
 EXTERN_C void func_800D6DF4(void *p, void *a, void *b);
 EXTERN_C void func_80086EF0(void *p);
 EXTERN_C unsigned func_80089D28(void *p);
-EXTERN_C int func_800D7914(void *p, int a);
+EXTERN_C int func_800D7914(BimMon *p, unsigned a);
 EXTERN_C void *func_800D69B4(void *p, void *a, void *b);
 EXTERN_C void func_80082670(void *p, int a, int b);
 EXTERN_C int func_800D8E38(BimMon *p, int n);
