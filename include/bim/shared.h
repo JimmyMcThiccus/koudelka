@@ -16,12 +16,37 @@ struct BimV {
     virtual void v19(int a); virtual void v20(int a);
 };
 
+/* Virtual-base vtable (10 entries of 8 bytes, as in battle.h) and the destructor object. */
+struct BimVEntry { short delta; short index; void (*pfn)(void *); };
+struct BimVTable10 { BimVEntry e[10]; };
+struct BimVBase { BimVTable10 *vptr; };
+struct BimDtor {
+    void *vt0;
+    char pad4[0x88];
+    void *vt8C;
+    char pad90[0x14C];
+    BimVBase *vb1DC;
+    void *vt1E0;
+    void *vt1E4;
+    char pad1E8[0x214];
+    void *vt3FC;
+    char pad400[0x9C];
+    void *vt49C;
+    char pad4A0[8];
+    void *vt4A8;
+    char pad4AC[0x4D4];
+    void *vt980;
+};
+EXTERN_C char D_8001262C[], D_80017ADC[];
+EXTERN_C void func_800D76C8(void *p, int a);
+
 /* bim_base */
 EXTERN_C int func_800D8E64(void *p, int a);
 EXTERN_C int func_800D7D64(void *p, void *q);
+EXTERN_C int func_800D7C7C_i(void *p, int a, int b) asm("func_800D7C7C");
 EXTERN_C unsigned short func_800D7A78(void *p, void *q);
 EXTERN_C void func_800D7A20(void *p, int a);
 EXTERN_C void *func_800D7A4C(void *p, int a, int b);
-EXTERN_C void func_800D7AC4(void *p, void *q, int a, int b);
+EXTERN_C int func_800D7AC4(void *p, void *q, int a, int b);
 
 #endif

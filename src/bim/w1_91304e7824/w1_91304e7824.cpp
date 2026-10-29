@@ -4,7 +4,7 @@ INCLUDE_ASM("asm/bim/w1_91304e7824/nonmatchings/w1_91304e7824", func_800DBDE0);
 
 INCLUDE_ASM("asm/bim/w1_91304e7824/nonmatchings/w1_91304e7824", func_800DBE5C);
 
-INCLUDE_ASM("asm/bim/w1_91304e7824/nonmatchings/w1_91304e7824", bimf_ff339051);
+#include "../shared/bimf_ff339051.cpp"
 
 INCLUDE_ASM("asm/bim/w1_91304e7824/nonmatchings/w1_91304e7824", bimf_57410de5);
 
