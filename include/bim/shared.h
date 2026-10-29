@@ -38,6 +38,8 @@ struct BimDtor {
     void *vt980;
 };
 EXTERN_C char D_8001262C[], D_80017ADC[];
+struct BimTbl { char pad[0x9FC]; int w[60]; };
+EXTERN_C char *D_800B4D38[];
 EXTERN_C void func_800D76C8(void *p, int a);
 
 /* bim_base */
@@ -48,7 +50,7 @@ EXTERN_C int func_800D8064(void *p);
 struct BimCnt { char pad[0x9C8]; int f9C8; int f9CC; char pad9D0[0x118]; int fAE8; int fAEC; };
 EXTERN_C void func_800D7818(void *p, int a, int b, int c, int d, int e, int f, int g, int h);
 EXTERN_C int func_800D7C7C_i(void *p, int a, int b) asm("func_800D7C7C");
-EXTERN_C unsigned short func_800D7A78(void *p, void *q);
+EXTERN_C int func_800D7A78(void *p, void *q);
 EXTERN_C void func_800D7A20(void *p, int a);
 EXTERN_C void *func_800D7A4C(void *p, int a, int b);
 EXTERN_C int func_800D7AC4(void *p, void *q, int a, int b);
