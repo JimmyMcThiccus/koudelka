@@ -1,5 +1,6 @@
 // func_800BDEDC: 4 differing instructions: the SVec2C(-1,-1) temp lands at sp+0x218 (BLK temp 8-aligned after buf[0x204]); retail has it at sp+0x214
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 //@ func_800BDEDC base
 EXTERN_C void func_800BDEDC(T_BDEDC *p, void *a, int b, int c) {

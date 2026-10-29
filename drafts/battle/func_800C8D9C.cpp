@@ -1,5 +1,6 @@
 // 3 differing: in next() retail materializes empty() (sltiu v0,v1,1; bnez v0) and has `addiu t0,a0,4` in the delay slot of the exit bnez; ours folds to beqz v1 / nop
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 struct T_LNode { T_LNode *next; T_LNode *prev; };
 struct T_LIter {

@@ -291,7 +291,7 @@ EXTERN_C void func_800BA2F4(S_800BA418 *p);
 EXTERN_C void func_800D044C(T_D0404 *p);
 EXTERN_C T_D0404 *func_800D0404(T_D0404 *p);
 EXTERN_C void func_800D0440(T_D0404 *p, int a, int b);
-EXTERN_C void func_800C8D9C(void *p, int a, int *b, int *c);
+EXTERN_C int func_800C8D9C(void *p, int a, int *b, int *c);
 EXTERN_C void func_800D4518(void *p);
 EXTERN_C void func_800C78EC(void *p, int a);
 
@@ -464,6 +464,12 @@ struct T_D59AC : T_D2598_b { int f1C; int f20; char pad24[0x18]; T_D59AC_f *f3C;
 struct T_4DD0f { char pad[0x1F4]; short s1F4; };
 struct T_CFB08_q { char pad[0x1B8]; void *f1B8; char pad1BC[0x30A]; short h4C6; short pad4C8; short h4CA; };
 struct T_CFB08 { char pad[0xA0]; T_CFB08_q *fA0; };
+struct V666C { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(int a, int b); };
+struct T_C666C_o : V666C { char pad[0x410 - 4]; short s410; char pad412[0xDE]; signed char b4F0; char pad4F1[0x1B]; short s50C; signed char b50E; char pad50F; short s510; signed char b512; signed char b513; char pad514[0x1C]; char f2A0_dummy; };
+struct T_C666C_o2 { char pad[0x2A0]; char f2A0[1]; };
+EXTERN_C T_C666C_o *D_800AFA58o[] __asm__("D_800AFA58");
+EXTERN_C void func_800CF2D0(T_CF2D0 *p, int a);
+EXTERN_C void func_800CFB08(T_CFB08 *p, T_CFB08_q *q);
 EXTERN_C VTable D_800104A8[];
 struct T_D3ED0_vb { VTable *vptr; int f4; };
 struct T_D3ED0 { T_VBase *vb0; char pad4[0x28]; VTable *vt2C; char pad30[8]; char f38[8]; VTable *vt40; int f44; int f48; int f4C; char b50; char pad51; SVec4 s52; char pad5A[2]; T_D3ED0_vb v5C; };
@@ -764,6 +770,17 @@ struct T_CCB98 { SVec2 f0; int pad4; int pad8; int fC; int f10; int f14; };
 EXTERN_C char D_800B75F0[], D_800B7620[];
 struct T_C757C { char pad[0x2C4]; int f2C4; };
 struct T_C9284 { char pad[0x410]; short s410; char pad412[0xAB]; signed char b4BD; char pad4BE[7]; signed char b4C5; short s4C6; short s4C8; short s4CA; char pad4CC[0x47E]; unsigned char b94A; };
+struct T_C8D9C_n { T_C8D9C_n *next; T_C8D9C_n *prev; };
+struct T_C8D9C_it {
+    T_C8D9C_n *head; T_C8D9C_n *cur; int f8; int fC;
+    T_C8D9C_it *first() { cur = head; return this; }
+    bool empty() { return head == 0; }
+    bool last() { if (empty()) return false; return head->prev == cur; }
+    bool is_last() { if (head == 0) return false; return head->prev == cur; }
+    void next() { if (!empty()) { if (!last()) cur = cur->next; } }
+};
+struct T_C8D9C { int pad0; T_C8D9C_it it; };
+inline T_C9284 *c8d9c_obj(T_C8D9C_n *n) { return n ? (T_C9284 *)((char *)n - 0x4A0) : 0; }
 struct T_L2EC {
     SVec2 f0[0x23]; int f8C; int f90;
     void reset() { f8C = 0; f90 = 0; }

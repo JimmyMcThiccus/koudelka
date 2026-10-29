@@ -1,5 +1,6 @@
 // func_800C666C: NOT MATCHING. 4 instructions differ: retail keeps (st==1)<<3 in a0 and copies it to a2 in the bne delay slot (ori a2,a0,0x10), with 'sb zero,0x50E' in the lh load-delay slot; ours coalesces both into a2 and schedules the sb later.
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 struct V666C { virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(int a, int b); };
 struct T_C666C_o : V666C { char pad[0x410 - 4]; short s410; char pad412[0xDE]; signed char b4F0; char pad4F1[0x1B]; short s50C; signed char b50E; char pad50F; short s510; signed char b512; signed char b513; char pad514[0x1C]; char f2A0_dummy; };

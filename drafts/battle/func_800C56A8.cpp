@@ -1,5 +1,6 @@
 // 2 differing: sw fA0 / sw f2C4 order swapped (source order F,M gives 4 diffs: memset a2 hoist differs)
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 //@ func_800C56A8 best
 EXTERN_C T_C56A8 *func_800C56A8(T_C56A8 *p, int a) {
