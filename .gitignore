@@ -9,6 +9,9 @@ extracted/
 # Generated (asm/ holds bytes derived from the game)
 asm/
 build/
+# tools/recomp output: C translated from the game's asm, derived from the game like asm/ (never commit)
+build/recomp/
+build/recomp-test/
 build.ninja
 .ninja_*
 bin/
