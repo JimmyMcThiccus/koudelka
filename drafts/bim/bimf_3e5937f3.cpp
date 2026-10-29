@@ -1,7 +1,8 @@
+// Shared by 3 BIM.AR modules: fill the 60-word table at +0x9FC and register it at slot (short)a1 of the table behind D_800B4D38.
 #include "common.h"
 #include "bim/shared.h"
 
-EXTERN_C void bimf_3e5937f3(BimTbl *p, short slot)
+EXTERN_C void bimf_3e5937f3(BimTbl *p, int slot)
 {
     int *q = (int *)p;
     q[639] = 0x18CE7;
@@ -34,5 +35,5 @@ EXTERN_C void bimf_3e5937f3(BimTbl *p, short slot)
     q[696] = 0x4800;
     q[697] = 0x18D3F;
     q[698] = 0x800;
-    ((int **)(D_800B4D38[0] + 0xF8))[slot] = p->w;
+    ((int **)(D_800B4D38[0] + 0xF8))[(short)slot] = p->w;
 }
