@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/bim/w1_f9e2e146cc/nonmatchings/w1_f9e2e146cc", bimf_0579c15a);
 
 INCLUDE_ASM("asm/bim/w1_f9e2e146cc/nonmatchings/w1_f9e2e146cc", bimf_29503d9b);
 
-INCLUDE_ASM("asm/bim/w1_f9e2e146cc/nonmatchings/w1_f9e2e146cc", bimf_dd77db6b);
+#include "../shared/bimf_dd77db6b.cpp"
 
 #include "../shared/bimf_131b36e3.cpp"
 

@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DAE34);
 
 INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DAFD8);
 
-INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", bimf_dd77db6b);
+#include "../shared/bimf_dd77db6b.cpp"
 
 EXTERN_C int func_800DB244(void *p, unsigned *flags)
 {
