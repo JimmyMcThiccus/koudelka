@@ -30,7 +30,6 @@ struct ObjSlot {
     VObject *obj;
 };
 
-EXTERN_C void func_800198E0(void *, int, int);
 
 struct IntPair {
     int a, b;
@@ -397,5 +396,15 @@ struct S_800C1814 {
     E_800C1814 e[3];
     Vec3 out[1];
 };
+
+/* EXE functions that capture calls with another prototype than include/shared/exe.h. */
+// func_8009C9C0 (PsyQ, not yet named) returns int to main_a2; capture was matched reading an unsigned char.
+EXTERN_C unsigned char func_8009C9C0_c(void) asm("func_8009C9C0");
+// SetDrawMode takes tpage as an int; capture narrows it to a short.
+EXTERN_C void SetDrawMode_s(void *, int, int, short, void *) asm("SetDrawMode");
+// Takes two arguments; capture passes one and leaves $a1 as it is.
+EXTERN_C void func_80035B98_1(void *) asm("func_80035B98");
+// Takes three arguments; capture passes two and leaves $a2 as it is.
+EXTERN_C void func_80036554_2(void *, int) asm("func_80036554");
 
 #endif

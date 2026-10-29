@@ -50,7 +50,7 @@ EXTERN_C void func_80019A6C(void *p, int v, int i);
 EXTERN_C int func_80019C68(void *p, int i);
 EXTERN_C void func_8001A610(void *v, int flags);
 EXTERN_C int func_8001A678(void *v, int a);
-EXTERN_C void func_8001B2D8(void *p);
+EXTERN_C int func_8001B2D8(void *p);
 #ifndef EXE_H_IN_u_8001986C
 EXTERN_C void func_80019920(List *l, int flags);
 EXTERN_C int func_80019A18(void *p, int v);
@@ -584,7 +584,7 @@ EXTERN_C void func_80064884(void *s, int a, int b);
 #endif
 
 /* u_800658E0.cpp */
-EXTERN_C void func_80065D20(void *self, int i, short a, short b, short c, int d, int e, int f);
+EXTERN_C void func_80065D20(void *self, int i, int a, int b, int c, int d, int e, int f);
 EXTERN_C void func_80065E10(void *self, int i);
 EXTERN_C void *func_800663EC(void *, int, void *, int, int, int);
 EXTERN_C int func_800665C8(void *self);

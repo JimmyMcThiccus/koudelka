@@ -1405,7 +1405,7 @@ EXTERN_C void *func_80085AD4_s(void *p, short x, short y) asm("func_80085AD4");
 EXTERN_C int func_800600A4_i(void *p, int a) asm("func_800600A4");
 // Battle passes an object that converts to its base T_B9480_B (and the item as an int).
 EXTERN_C void func_80039BEC_b(T_B9480_B *p, int a) asm("func_80039BEC");
-// Battle passes an object that converts to its base T_BA024_B, and ints where the definition takes shorts.
+// Battle passes an object that converts to its base T_BA024_B.
 EXTERN_C void func_80065D20_b(T_BA024_B *g, int i, int x, int y, int z, int r, int gg, int b) asm("func_80065D20");
 // Battle passes an object that converts to its base T_BA024_B.
 EXTERN_C void func_80065E10_b(T_BA024_B *g, int i) asm("func_80065E10");

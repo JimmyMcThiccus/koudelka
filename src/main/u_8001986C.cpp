@@ -810,9 +810,9 @@ EXTERN_C void *func_8001B26C(unsigned int size)
     return r;
 }
 
-EXTERN_C void func_8001B2D8(void *p)
+EXTERN_C int func_8001B2D8(void *p)
 {
-    func_8001B0C0(D_800B4C04, p);
+    return func_8001B0C0(D_800B4C04, p);
 }
 
 EXTERN_C int func_8001B300(char *a, char *b)

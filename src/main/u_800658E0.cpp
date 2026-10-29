@@ -104,7 +104,7 @@ EXTERN_C void func_80065C64_def(void *self, int b)
     SetTransMatrix(mp);
 }
 
-EXTERN_C void func_80065D20(void *self, int i, short a, short b, short c, int d, int e, int f)
+EXTERN_C void func_80065D20(void *self, int i, int a, int b, int c, int d, int e, int f)
 {
     V_8006B928 t;
     SV3_80065E10 *r = (SV3_80065E10 *)((char *)self + 0x78);
