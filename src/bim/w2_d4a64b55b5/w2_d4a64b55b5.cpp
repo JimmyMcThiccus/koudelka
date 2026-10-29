@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bim/shared.h"
 
 EXTERN_C void *func_800DD12C(void *self, int in_chrg, int a, int b, int c, int d, int e);
 
@@ -9,7 +10,34 @@ EXTERN_C void *func_800DD0B0(int a, short b, int c, int d, int e)
 
 INCLUDE_ASM("asm/bim/w2_d4a64b55b5/nonmatchings/w2_d4a64b55b5", func_800DD12C);
 
-INCLUDE_ASM("asm/bim/w2_d4a64b55b5/nonmatchings/w2_d4a64b55b5", func_800DD2E8);
+EXTERN_C const BimVTable10 D_800DCEB8;
+EXTERN_C char D_800DCF08[], D_800DCF20[], D_800DCF30[], D_800DCFC8[], D_800DCFE8[], D_800DD000[];
+
+EXTERN_C void func_800DD2E8(BimDtor *self, int in_chrg)
+{
+    self->vt8C = D_800DCFE8;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_800DCFC8;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_800DCF30;
+    self->vt4A8 = D_800DCF20;
+    self->vt980 = D_800DCF08;
+    self->vt0 = D_800DD000;
+    self->vb1DC->vptr = (BimVTable10 *)&D_800DCEB8;
+    if (!in_chrg) {
+        BimVTable10 vt = D_800DCEB8;
+        self->vb1DC->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800DCEB8.e[1].delta + (adj = (char *)self - (full = (char *)self->vb1DC - 0xAE8));
+        vt.e[6].delta = D_800DCEB8.e[6].delta + adj;
+    }
+    func_800D76C8(self, 0);
+    if (in_chrg & 2)
+        func_8001A610(self->vb1DC, 0);
+    if (in_chrg & 1)
+        operator delete(self);
+}
 
 INCLUDE_ASM("asm/bim/w2_d4a64b55b5/nonmatchings/w2_d4a64b55b5", func_800DD42C);
 
