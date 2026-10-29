@@ -76,14 +76,14 @@ EXTERN_C void func_8001D324(void *v, void *q);
 #endif
 
 /* u_8001DDF4.cpp */
-EXTERN_C void func_8001E508(char *p, int flags);
-EXTERN_C int func_8001E848(char *cur, char *s);
-EXTERN_C void func_8001EFE4(char *obj, void *e);
 #ifndef EXE_H_IN_u_8001DDF4
 EXTERN_C void *func_8001E40C(void *p, void *a, unsigned short b, int c, int d);
+EXTERN_C void func_8001E508(void *p, int flags);
+EXTERN_C int func_8001E848(void *cur, void *s);
 EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C void *func_8001EB60(char *obj, int a);
 EXTERN_C void *func_8001ED2C(char *s, int a, int b);
+EXTERN_C void func_8001EFE4(void *obj, void *e);
 #endif
 
 /* u_8001F1A8.cpp */
@@ -108,7 +108,7 @@ EXTERN_C void func_800215E8(void *q, void *x);
 EXTERN_C void func_80021ACC(void *p, int a);
 EXTERN_C void func_80021F48(void *p, int a);
 EXTERN_C void func_800230E8(char *p, int a);
-EXTERN_C int func_800232A0(char *p);
+EXTERN_C int func_800232A0(char *p, void *);
 EXTERN_C int func_80023F50(void *q, int a);
 EXTERN_C int func_80025444(void *, void *, int);
 EXTERN_C void func_80025714(void *q, void *r);
@@ -149,7 +149,7 @@ EXTERN_C void *func_8002972C(void *p, int a, int b, int c, int d);
 EXTERN_C void func_80029EC0(void);
 EXTERN_C void *func_8002A09C(void *p, int x, int y);
 #ifndef EXE_H_IN_u_80029BBC
-EXTERN_C void *func_80029C54(void *p, int in_chrg, short a);
+EXTERN_C void *func_80029C54(void *p, int in_chrg, unsigned short a);
 EXTERN_C void func_80029D74(void *p, int flags);
 EXTERN_C S_Rgb func_80029EC8(void *p);
 EXTERN_C S_Box2 func_80029F30(void *p);
@@ -209,7 +209,7 @@ EXTERN_C int func_8002EB68(void *p);
 EXTERN_C void *func_8002EBF0(void *p);
 EXTERN_C void *func_8002EC00(void *p);
 EXTERN_C void *func_8002EC18(void *p);
-EXTERN_C void func_8002EC40(void *p);
+EXTERN_C void func_8002EC40(void *p, void *);
 EXTERN_C void func_8002EC90(void *p, void *);
 #endif
 
@@ -218,7 +218,7 @@ EXTERN_C void func_8002EE9C(void *p, int a);
 EXTERN_C void func_8002EEFC(void *vp, int flags);
 EXTERN_C void *func_80030AA8(void *vp, void *vq, int *out);
 #ifndef EXE_H_IN_u_8002ED44
-EXTERN_C void func_8002EEC4(void *, void *);
+EXTERN_C void *func_8002EEC4(void *, void *);
 #endif
 
 /* u_80032264.cpp */
@@ -454,7 +454,7 @@ EXTERN_C void func_80054F5C(void *self);
 EXTERN_C void func_80054FC0(void *self);
 EXTERN_C void func_80054FE0(void *self);
 EXTERN_C void func_80055020(void *self, SV2C_80055020 v);
-EXTERN_C void func_800550BC(void *self);
+EXTERN_C void *func_800550BC(void *self);
 EXTERN_C void func_800550FC(void *, int);
 EXTERN_C void func_80055330(int a);
 EXTERN_C void func_800553D8(int a);
@@ -465,9 +465,6 @@ EXTERN_C int func_800557A0(void);
 EXTERN_C void func_800557C8(void *self, int b, int c);
 EXTERN_C void *func_8005584C(void *self, int b);
 EXTERN_C int func_8005618C(void *p);
-EXTERN_C void *func_80056198(void *, int, int, int, int);
-EXTERN_C void *func_80056364(void *, int, int, int);
-EXTERN_C void func_8005652C(void *, int);
 EXTERN_C void func_800566E4(void *);
 EXTERN_C void func_80056874(void *);
 EXTERN_C void func_80056B3C(void);
@@ -476,6 +473,9 @@ EXTERN_C void func_80056D60(void *self, int b);
 EXTERN_C int func_80056D9C(void);
 #ifndef EXE_H_IN_main_b
 EXTERN_C void func_80054F30(void *self, int a, void *v, int d);
+EXTERN_C void *func_80056198(void *, int, int, int, int);
+EXTERN_C void *func_80056364(void *, int, int, int);
+EXTERN_C void func_8005652C(void *, int);
 EXTERN_C int func_80056BA8(void *self, void *b);
 #endif
 
@@ -485,7 +485,6 @@ EXTERN_C void func_80056F9C(void *self, int a, int b);
 EXTERN_C void func_80056FBC(void *self, int a, int b);
 EXTERN_C void func_80056FE0(void *self);
 EXTERN_C void *func_80057368(void *, int);
-EXTERN_C void func_80057558(void *, int);
 EXTERN_C void func_8005783C(short v);
 EXTERN_C void func_80057F20(void *, unsigned short);
 EXTERN_C void func_8005800C(void *self, void *b);
@@ -494,9 +493,11 @@ EXTERN_C int func_80058270(void *, int);
 EXTERN_C int func_80058404(void *self, int b);
 EXTERN_C int func_80058488(void *self, int b);
 EXTERN_C void func_800588C8(void *self);
+#ifndef EXE_H_IN_u_80056E0C
+EXTERN_C void func_80057558(void *, int);
+#endif
 
 /* u_80059A84.cpp */
-EXTERN_C void func_8005BDA4(void *, int);
 EXTERN_C void func_8005BF04(void *self, int a, int b);
 EXTERN_C void func_8005BF50(void *self);
 EXTERN_C void func_8005BFA4(void *self);
@@ -509,9 +510,10 @@ EXTERN_C int func_8005F1B4(void *self);
 EXTERN_C void func_8005F1D8(void *self);
 #ifndef EXE_H_IN_u_80059A84
 EXTERN_C void *func_8005BC84(void *p, int in_chrg, int a2, int a3);
+EXTERN_C void func_8005BDA4(void *, int);
 EXTERN_C void func_8005C238(void *self);
 EXTERN_C void *func_8005D8C4(void *p, int in_chrg, int a2);
-EXTERN_C void func_8005F148(void *self, short *v);
+EXTERN_C void func_8005F148(void *self, void *v);
 #endif
 
 /* u_8005F238.cpp */
@@ -534,7 +536,6 @@ EXTERN_C void func_80061758(void *, void *);
 EXTERN_C int func_80061A20(void *, void *);
 EXTERN_C void *func_80062118(void *self);
 EXTERN_C void *func_80062158(void *self);
-EXTERN_C void func_80062160(unsigned int *out);
 EXTERN_C void func_80062188(void *self);
 EXTERN_C void *func_800621F8(void *self);
 EXTERN_C int func_80062280(void *self, int b);
@@ -549,6 +550,7 @@ EXTERN_C int func_800619F4(void *self);
 EXTERN_C void func_80061AAC(void *self, int i, int j);
 EXTERN_C void func_80061F80(void *self, int i);
 EXTERN_C void func_80062120(void *self, void *src);
+EXTERN_C void func_80062160(void *out);
 EXTERN_C void func_80062214(void *self);
 #endif
 
@@ -565,11 +567,7 @@ EXTERN_C void func_80063340(void *, void *);
 EXTERN_C void func_800635FC(void *, void *);
 EXTERN_C void func_80063714(void *self, unsigned int b);
 EXTERN_C int func_80063744(void *self, int b);
-EXTERN_C void *func_800638A8(void *, int);
-EXTERN_C void func_80063B14(void *self, short *v, unsigned short c);
 EXTERN_C void func_80063BE4(void *);
-EXTERN_C void *func_800646FC(void *, int, short *, int);
-EXTERN_C void func_80064884(int *s, int a, int b);
 EXTERN_C void func_800648E8(void *, int);
 #ifndef EXE_H_IN_u_80062610
 EXTERN_C void func_800627E8(void *out, int i);
@@ -579,6 +577,10 @@ EXTERN_C void *func_80062C3C(void *p, int in_chrg, int a2, int a3, int e);
 EXTERN_C void *func_80062D60(void *p, int in_chrg);
 EXTERN_C void *func_80062FA4(void *p, int in_chrg, int a2, int a3);
 EXTERN_C void *func_800630BC(void *p, int in_chrg, int a2);
+EXTERN_C void *func_800638A8(void *, int);
+EXTERN_C void func_80063B14(void *self, void *v, unsigned short c);
+EXTERN_C void *func_800646FC(void *, int, void *, int);
+EXTERN_C void func_80064884(void *s, int a, int b);
 #endif
 
 /* u_800658E0.cpp */
@@ -588,8 +590,10 @@ EXTERN_C void *func_800663EC(void *, int, void *, int, int, int);
 EXTERN_C int func_800665C8(void *self);
 EXTERN_C void *func_80066DA4(void *self, int b, int c, int d, int e);
 EXTERN_C int func_80066E04(void *self);
-EXTERN_C void *func_80066FB0(void *, void *, int, int, int);
 EXTERN_C int func_800670A4(void *self);
+#ifndef EXE_H_IN_u_800658E0
+EXTERN_C void *func_80066FB0(void *self, void *owner, int b, int c, int d);
+#endif
 
 /* u_80067450.cpp */
 EXTERN_C void *func_8006753C(void *, int);
@@ -600,14 +604,14 @@ EXTERN_C int func_80068660(int *, int *, void *);
 /* u_80068770.cpp */
 EXTERN_C void func_80068770(void *, int);
 EXTERN_C void func_8006897C(void *self, int b, int c);
-EXTERN_C void func_800689E0(void *self);
+EXTERN_C void *func_800689E0(void *self);
 EXTERN_C int func_80068A5C(void *self);
 EXTERN_C void func_80068B14(void *);
 EXTERN_C void func_80068E60(void *self);
 EXTERN_C int func_80068F3C(void *self, void *m);
 EXTERN_C int func_800690C8(void *self, void *b);
 EXTERN_C void func_80069264(void *, int);
-EXTERN_C void func_800694BC(void *, int, int, int);
+EXTERN_C void *func_800694BC(void *, int, int, int);
 EXTERN_C void func_800697A4(void *);
 EXTERN_C void func_80069958(void *self);
 EXTERN_C void func_80069B2C(void *, int);
@@ -851,7 +855,6 @@ EXTERN_C int func_8007E658(void *self);
 
 /* u_80082174.cpp */
 EXTERN_C void func_800824C8(void *, int);
-EXTERN_C void func_800825FC(short *self, int b);
 EXTERN_C void *func_80082690(void *self);
 EXTERN_C void *func_80082768(void *self);
 EXTERN_C void *func_80082798(void *self, int b, int c);
@@ -864,6 +867,7 @@ EXTERN_C void func_80083310(void *self);
 EXTERN_C int func_800833F8(void *);
 #ifndef EXE_H_IN_u_80082174
 EXTERN_C void *func_80082470(void *self);
+EXTERN_C void func_800825FC(void *self, int b);
 EXTERN_C void *func_80082714(void *self, int b, int c, int d, int e, int f, int g);
 EXTERN_C void func_80082C68(void *self, short b, int c, int d, unsigned short e);
 EXTERN_C void func_80082D44(void *self, short b, int c, int d, int e);
@@ -950,13 +954,13 @@ EXTERN_C signed char *func_80089E14(signed char *a, signed char *b);
 EXTERN_C SBytes8_80089F10 func_80089F10(signed char *src, int d);
 EXTERN_C int func_8008A2A0(void *);
 EXTERN_C int func_8008A54C(void *self, int b);
-EXTERN_C int func_8008A5C8(char *self, char *b, char *c);
 EXTERN_C int func_8008B130(void *self, int b);
 EXTERN_C void func_8008B150(void *, void *, int, int, int);
 EXTERN_C int func_8008B444(int n);
 #ifndef EXE_H_IN_u_80089024
 EXTERN_C void func_800894AC(char *self, char *b, int c, void *d);
 EXTERN_C void *func_800899AC(void *out, void *a, signed char *b);
+EXTERN_C int func_8008A5C8(void *self, void *b, void *c);
 EXTERN_C int func_8008B4E8(void *p, int b);
 EXTERN_C void func_8008B5B4(void *d, void *s);
 EXTERN_C void *func_8008B630(void *s, void *d);
@@ -1000,6 +1004,132 @@ EXTERN_C void func_80093D8C(void *s);
 EXTERN_C void func_80093E80(void *s);
 #endif
 
+/* PsyQ library functions named in config/symbols/main.txt, as the PsyQ 4.4 headers declare them (the game
+   links 4.6; the prototypes are the same). Pointers to the SDK's structs (MATRIX, VECTOR, SVECTOR, RECT,
+   DRAWENV, DISPENV, DR_MODE, CdlLOC, DIRENTRY, SpuCommonAttr, ...) are void *, like the area types above;
+   u_char/u_short/u_long are spelled out. */
+#ifndef EXE_H_IN_u_8001986C   /* both are empty stubs in this game, defined there */
+EXTERN_C int printf(char *fmt, ...);
+EXTERN_C void puts(char *);
+#endif
+EXTERN_C long LoadExec(char *, unsigned long, unsigned long);
+EXTERN_C void _bu_init(void);
+EXTERN_C void _96_init(void);
+EXTERN_C long OpenEvent(unsigned long, long, long, long (*func)());
+EXTERN_C long CloseEvent(long);
+EXTERN_C long TestEvent(long);
+EXTERN_C long EnableEvent(long);
+EXTERN_C long DisableEvent(long);
+EXTERN_C long open(char *, unsigned long);
+EXTERN_C long read(long, void *, long);
+EXTERN_C long write(long, void *, long);
+EXTERN_C long close(long);
+EXTERN_C void *nextfile(void *);
+EXTERN_C long erase(char *);
+EXTERN_C long SetRCnt(unsigned long, unsigned short, long);
+EXTERN_C long GetRCnt(unsigned long);
+EXTERN_C long StartRCnt(unsigned long);
+EXTERN_C long StopRCnt(unsigned long);
+EXTERN_C long ResetRCnt(unsigned long);
+EXTERN_C void *firstfile(char *, void *);
+EXTERN_C void *memset(void *p, int c, unsigned int n);
+EXTERN_C int rand(void);
+EXTERN_C char *strcpy(char *dst, const char *src);
+EXTERN_C int strncmp(char *, char *, int);
+EXTERN_C void exit(int code);
+EXTERN_C long _card_info(long chan);
+EXTERN_C long _card_load(long chan);
+EXTERN_C long _card_clear(long chan);
+EXTERN_C void InitCARD(long val);
+EXTERN_C long StartCARD(void);
+EXTERN_C long _card_format(long chan);
+EXTERN_C int ResetGraph(int mode);
+EXTERN_C unsigned long DrawSyncCallback(void (*func)());
+EXTERN_C void SetDispMask(int mask);
+EXTERN_C int DrawSync(int mode);
+EXTERN_C int LoadImage(void *rect, unsigned long *p);
+EXTERN_C int MoveImage(void *rect, int x, int y);
+EXTERN_C unsigned long *ClearOTagR(unsigned long *ot, int n);
+EXTERN_C void DrawOTag(unsigned long *p);
+EXTERN_C void *PutDrawEnv(void *env);
+EXTERN_C void *PutDispEnv(void *env);
+EXTERN_C void SetDrawOffset(void *p, unsigned short *ofs);
+EXTERN_C int LoadImage2(void *rect, unsigned long *p);
+EXTERN_C void *SetDefDrawEnv(void *env, int x, int y, int w, int h);
+EXTERN_C void *SetDefDispEnv(void *env, int x, int y, int w, int h);
+EXTERN_C unsigned short GetTPage(int tp, int abr, int x, int y);
+EXTERN_C void SetDrawMove(void *p, void *rect, int x, int y);
+EXTERN_C void SetDrawMode(void *p, int dfe, int dtd, int tpage, void *tw);
+EXTERN_C void InitGeom(void);
+EXTERN_C long SquareRoot0(long a);
+EXTERN_C long VectorNormal(void *v0, void *v1);
+EXTERN_C void *MulMatrix0(void *m0, void *m1, void *m2);
+EXTERN_C void *CompMatrix(void *m0, void *m1, void *m2);
+EXTERN_C void *ApplyMatrixLV(void *m, void *v0, void *v1);
+EXTERN_C void *ApplyRotMatrix(void *v0, void *v1);
+EXTERN_C void *MulMatrix(void *m0, void *m1);
+EXTERN_C void *ScaleMatrix(void *m, void *v);
+EXTERN_C void SetRotMatrix(void *m);
+EXTERN_C void SetLightMatrix(void *m);
+EXTERN_C void SetColorMatrix(void *m);
+EXTERN_C void SetTransMatrix(void *m);
+EXTERN_C void SetBackColor(long rbk, long gbk, long bbk);
+EXTERN_C long RotTransPers(void *v0, long *sxy, long *p, long *flag);
+EXTERN_C void RotTrans(void *v0, void *v1, long *flag);
+EXTERN_C long ratan2(long y, long x);
+EXTERN_C void TransRot_32(void *v0, void *v1, long *flag);
+EXTERN_C void StSetRing(unsigned long *ring_addr, unsigned long ring_size);
+EXTERN_C int CdInit(void);
+EXTERN_C int CdPosToInt(void *p);
+EXTERN_C int CdRead2(long mode);
+EXTERN_C void StClearRing(void);
+EXTERN_C void StSetStream(unsigned long mode, unsigned long start_frame, unsigned long end_frame, void (*func1)(), void (*func2)());
+EXTERN_C unsigned long StFreeRing(unsigned long *base);
+EXTERN_C unsigned long StGetNext(unsigned long **addr, unsigned long **header);
+EXTERN_C void StCdInterrupt(void);
+EXTERN_C void *CdIntToPos(int i, void *p);
+EXTERN_C int CdControl(unsigned char com, unsigned char *param, unsigned char *result);
+EXTERN_C int CdMix(void *vol);
+EXTERN_C int CdGetSector(void *madr, int size);
+EXTERN_C int VSync(int mode);
+EXTERN_C int VSyncCallback(void (*f)());
+EXTERN_C int StopCallback(void);
+EXTERN_C void SsUtReverbOff(void);
+EXTERN_C long SpuInitMalloc(long num, char *top);
+EXTERN_C long SpuSetNoiseClock(long n_clock);
+EXTERN_C long SpuSetReverb(long on_off);
+EXTERN_C long SpuReadDecodedData(void *d_data, long flag);
+EXTERN_C long SpuSetIRQ(long on_off);
+EXTERN_C unsigned long SpuSetIRQAddr(unsigned long);
+EXTERN_C unsigned long SpuGetIRQAddr(void);
+EXTERN_C void (*SpuSetIRQCallback(void (*func)(void)))(void);
+EXTERN_C void SpuSetKey(long on_off, unsigned long voice_bit);
+EXTERN_C unsigned long SpuRead(unsigned char *addr, unsigned long size);
+EXTERN_C unsigned long SpuSetTransferStartAddr(unsigned long addr);
+EXTERN_C long SpuSetTransferMode(long mode);
+EXTERN_C void SpuSetVoiceVolume(int vNum, short volL, short volR);
+EXTERN_C void SpuSetVoicePitch(int vNum, unsigned short pitch);
+EXTERN_C void SpuSetVoiceStartAddr(int vNum, unsigned long startAddr);
+EXTERN_C void SpuSetVoiceLoopStartAddr(int vNum, unsigned long lsa);
+EXTERN_C void SpuSetVoiceDR(int vNum, unsigned short DR);
+EXTERN_C void SpuSetVoiceSL(int vNum, unsigned short SL);
+EXTERN_C void SpuSetVoiceARAttr(int vNum, unsigned short AR, long ARmode);
+EXTERN_C void SpuSetVoiceSRAttr(int vNum, unsigned short SR, long SRmode);
+EXTERN_C void SpuSetVoiceRRAttr(int vNum, unsigned short RR, long RRmode);
+EXTERN_C void SpuSetCommonAttr(void *attr);
+EXTERN_C long SpuSetReverbModeType(long mode);
+EXTERN_C void SpuSetReverbModeDelayTime(long delay);
+EXTERN_C void SpuSetReverbModeFeedback(long feedback);
+EXTERN_C void start(void);
+EXTERN_C void __builtin_delete(void *p);
+EXTERN_C void *__builtin_new(int size);
+EXTERN_C void PadSetAct(int, unsigned char *, int);
+EXTERN_C int PadInfoAct(int, int, int);
+EXTERN_C void PadStartCom(void);
+EXTERN_C void PadStopCom(void);
+EXTERN_C unsigned PadEnableCom(unsigned);
+EXTERN_C void PadInitDirect(unsigned char *, unsigned char *);
+
 /* PsyQ library functions without a name (0x80094910-0x800B5000) */
 EXTERN_C void func_80094990(void);
 EXTERN_C void func_800949A0(void);
@@ -1023,14 +1153,14 @@ EXTERN_C void func_8009CAE0(int);
 EXTERN_C void func_8009D000(int);
 EXTERN_C void func_8009DDC0(int);
 EXTERN_C void func_8009EAE0(void);
-EXTERN_C void func_8009EBC0(int, int);
-EXTERN_C void func_8009F0E0(int, int);
+EXTERN_C unsigned long func_8009EBC0(long on_off, unsigned long voice_bit); /* SpuSetNoiseVoice */
+EXTERN_C unsigned long func_8009F0E0(long on_off, unsigned long voice_bit); /* SpuSetReverbVoice */
 EXTERN_C int func_8009F2C0(void);
 EXTERN_C unsigned long func_8009F5E0(unsigned char *, unsigned long);
 EXTERN_C void (*func_8009F6D0(void (*f)(void)))(void);
-EXTERN_C void func_8009F700(int, int);
+EXTERN_C unsigned long func_8009F700(long on_off, unsigned long voice_bit); /* SpuSetPitchLFOVoice */
 EXTERN_C void func_800A0800(int, int);
-EXTERN_C void func_800A0A10(long *);
+EXTERN_C void func_800A0A10(long *type); /* SpuGetReverbModeType */
 EXTERN_C void func_800A0D0C(void *);
 EXTERN_C void *func_800A0D2C(int);
 EXTERN_C int func_800A1B9C(void);

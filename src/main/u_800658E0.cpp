@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_800658E0
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -56,10 +58,13 @@ EXTERN_C void *func_80065A00(void *self)
     return self;
 }
 
+// func_80039A88 takes two arguments; retail passes one here and leaves $a1 as it is.
+EXTERN_C void func_80039A88_1(void *p) asm("func_80039A88");
+
 EXTERN_C void func_80065AA0(void *self)
 {
     FIELD_AT(self, void *, 0x0) = D_80015384;
-    func_80039A88(self);
+    func_80039A88_1(self);
 }
 
 EXTERN_C void func_80065AC8(void)
@@ -330,7 +335,7 @@ EXTERN_C void func_80066690_def(void *self)
             if (FIELD_AT(self, int, 0x48) != 0) {
                 o = FIELD_AT(self, char *, 0x48) - 0x124;
             }
-            func_8006B988_v(o);
+            func_8006B988(o);
         }
         break;
     case 6:
@@ -479,9 +484,12 @@ EXTERN_C int func_80066E04(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_800658E0", func_80066E7C);
 
+// func_8008C928 returns unsigned char; these callers were matched treating the result as a short.
+EXTERN_C short func_8008C928_s(int flags) asm("func_8008C928");
+
 EXTERN_C int func_80066F8C(void)
 {
-    return func_8008C928(0) == 0;
+    return func_8008C928_s(0) == 0;
 }
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154B4);
@@ -490,7 +498,7 @@ INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154D4);
 
 INCLUDE_RODATA("asm/main/nonmatchings/u_800658E0", D_800154EC);
 
-EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d)
+EXTERN_C void *func_80066FB0(void *self, int a, int b, int c, int d)
 {
     FIELD_AT(self, void *, 0x0) = D_800154EC;
     FIELD_AT(self, int, 0x8) = a;
@@ -508,7 +516,7 @@ EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d)
         FIELD_AT(self, int, 0x4) = 0xFF;
         break;
     case 0x6F:
-        func_8008E70C_v(FIELD_AT((char *)D_800B4ED8, void *, 0x248), 0xF0);
+        func_8008E70C(FIELD_AT((char *)D_800B4ED8, void *, 0x248), 0xF0);
     case 0x66:
     case 0x69:
     case 0x6A:
@@ -518,8 +526,8 @@ EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d)
         break;
     }
     char *g = (char *)D_800B4ED8;
-    func_8006A4E4_v(FIELD_AT(g, void *, 0x250), FIELD_AT(self, unsigned char, 0x4));
-    func_8006BD34_v(g);
+    func_8006A4E4(FIELD_AT(g, void *, 0x250), FIELD_AT(self, unsigned char, 0x4));
+    func_8006BD34(g);
     return self;
 }
 

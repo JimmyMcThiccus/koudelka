@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80071A74
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -95,7 +97,7 @@ EXTERN_C void func_80071C78(void *self, void *b)
         func_80048D54(buf);
         while (func_80046658(buf, FIELD_AT(FIELD_AT(self, char *, 0x550), int, 0x30), FIELD_AT(FIELD_AT(self, char *, 0x550), int, 0x34), b) != 1) {
         }
-        r = *func_80049398(buf);
+        r = *(int *)func_80049398(buf);
         if (r != 0) {
             FIELD_AT(self, int, 0x298) = r;
             func_80071E90(self);
@@ -248,6 +250,9 @@ EXTERN_C void func_80072970(void *self)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80071A74", func_800729E8);
 
+// func_8003E170 returns int; this caller was matched treating the result as a short.
+EXTERN_C short func_8003E170_s(void *p) asm("func_8003E170");
+
 EXTERN_C void func_80072B84(void *self, int a)
 {
     char buf[64];
@@ -266,7 +271,7 @@ EXTERN_C void func_80072B84(void *self, int a)
             if (FIELD_AT(self, unsigned char, 0x120) != 0) {
                 func_8003E198(self, FIELD_AT(self, int, 0x13C), (FIELD_AT(self, short, 0x1BC) << 25) >> 16);
             } else {
-                int r = func_8003E170(self);
+                int r = func_8003E170_s(self);
                 func_8003ED90(buf, self);
                 if ((short)r != 0) {
                     FIELD_AT(self, short, 0x11E) = 1;
@@ -1952,13 +1957,7 @@ EXTERN_C int func_80079F48(void *self)
 
 EXTERN_C void *func_800DBFC4(void *p, int a, void *b, int c, int d);
 EXTERN_C void *func_800D9EE0(void *p, int a, void *b, int c, int d);
-EXTERN_C void func_800894AC(void *out, void *a, int b, int c);
 EXTERN_C void func_800DA204(void *self, void *b);
-EXTERN_C void *func_80062610(void *self);
-EXTERN_C void func_800627E8(Entry_800627E8 *out, int i);
-EXTERN_C void *func_80062834(void *self);
-EXTERN_C int func_8006283C(void);
-EXTERN_C void func_80062764(void *self, int flags);
 EXTERN_C void func_8007CE64(void *self);
 EXTERN_C int func_80079F6C(void *self, int k)
 {
@@ -2504,9 +2503,6 @@ EXTERN_C void func_8007C070(void *self, int b)
     }
 }
 
-EXTERN_C int func_8007B1FC(void *self, int x, int kind);
-EXTERN_C void func_80085C00(void *self);
-EXTERN_C void func_80085E14(void *self);
 EXTERN_C void func_8007BF84(void *self);
 EXTERN_C void func_8008478C(void *self);
 
@@ -3599,7 +3595,7 @@ EXTERN_C int func_800801D0(void *self, int b, int c)
     return r;
 }
 
-EXTERN_C void func_8008022C_def(void *self, int a, int b)
+EXTERN_C void func_8008022C(void *self, int a, int b)
 {
     unsigned tk = D_800A4534.ticks;
     char *p = (char *)__builtin_new(0x10);
@@ -3744,6 +3740,9 @@ EXTERN_C void func_800806EC(void)
 {
 }
 
+// func_8008C928 returns unsigned char; these callers were matched treating the result as a short.
+EXTERN_C short func_8008C928_s(int flags) asm("func_8008C928");
+
 EXTERN_C void func_800806F4(void *self)
 {
     if (FIELD_AT(self, int, 0x38) != 0) {
@@ -3773,7 +3772,7 @@ EXTERN_C void func_800806F4(void *self)
         func_8007EF90(g);
     }
     if (FIELD_AT(self, int, 0xC) != 0) {
-        if (func_8008C928(0) != 0) {
+        if (func_8008C928_s(0) != 0) {
             return;
         }
         FIELD_AT(self, int, 0x10) = 1;
@@ -3810,7 +3809,7 @@ EXTERN_C void func_800808AC(void *self)
         FIELD_AT(self, int, 0x14) = 0;
     }
     if (FIELD_AT(self, int, 0xC) != 0) {
-        func_8008C928(0x10);
+        func_8008C928_s(0x10);
         FIELD_AT(self, int, 0x10) = 1;
         FIELD_AT(self, int, 0xC) = 0;
     }
@@ -3841,7 +3840,7 @@ EXTERN_C void func_80080990(void *self, int a, int b, int c)
     FIELD_AT(self, int, 0x30) = func_8008D1F4(a, 0);
     FIELD_AT(self, int, 0x34) = b;
     func_8008ECB4(b);
-    func_8008C928(0x10);
+    func_8008C928_s(0x10);
     if (a != 0) {
         func_800A0D0C((void *)a);
     }

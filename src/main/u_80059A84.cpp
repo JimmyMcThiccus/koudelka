@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80059A84
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -109,7 +111,7 @@ EXTERN_C void func_8005A020(void *self, int x, int y)
         for (i = (FIELD_AT(self, char *, 0x30) ? *FIELD_AT(self, List **, 0x30) : 0)->count - 1; i >= 0; i--) {
             char *h = FIELD_AT(self, char *, 0x30);
             char *v = h ? h + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, i)->v10(dx, dy);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, i))->v10(dx, dy);
         }
     }
 }
@@ -149,7 +151,7 @@ EXTERN_C S_CtorB38 *func_8005A62C(S_CtorB38 *p, int in_chrg, Pt4q a, Pt4q b, uns
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, c, 0x10);
+    func_8005BC84(p, 0, c, 0x10);
     p->vb->vt = (VEntB *)D_80014400.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -178,7 +180,7 @@ EXTERN_C void func_8005A784(void *self, int b)
         VObj0 *o;
         func_8002972C(t1, k, k, k, 1);
         v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
-        func_80019F64(v ? *(void **)v : 0, 0)->v11(t1);
+        ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 0))->v11(t1);
         func_8002972C(t2, k * 2 - 1, k * 2 - 1, k * 2 - 1, 1);
         v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
         o = func_80019F64(v ? *(void **)v : 0, 1);
@@ -400,7 +402,7 @@ EXTERN_C S_CtorB38 *func_8005BC84(S_CtorB38 *p, int in_chrg, int a2, int a3)
     return p;
 }
 
-EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags)
+EXTERN_C void func_8005BDA4(S_DtorB *p, int flags)
 {
     p->vt2C = D_80014658;
     p->vb->vt = (VEntB *)D_80014750.e;
@@ -622,7 +624,7 @@ EXTERN_C S_CtorB38 *func_8005CB88(S_CtorB38 *p, int in_chrg, int a2, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a3, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a3, 0x10);
     p->vb->vt = (VEntB *)D_80014808.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -640,9 +642,12 @@ EXTERN_C S_CtorB38 *func_8005CB88(S_CtorB38 *p, int in_chrg, int a2, int a3)
     return p;
 }
 
+// func_80054054 takes one argument and returns an S_Rgb; retail passes none here and leaves $a0 as it is.
+EXTERN_C SV2_80055020 func_80054054_0() asm("func_80054054");
+
 EXTERN_C void func_8005CCB0(void *self, int b)
 {
-    FIELD_AT(self, SV2_80055020, 0xC) = func_80054054();
+    FIELD_AT(self, SV2_80055020, 0xC) = func_80054054_0();
     FIELD_AT(self, short, 0x10) = func_8005F87C((void *)b);
     if (func_80054074(b) == 1) {
         FIELD_AT(self, short, 0xC) -= 6;
@@ -660,7 +665,7 @@ EXTERN_C void func_8005CD5C(void *self, unsigned char c)
             char *v;
             func_8002972C(t, c, c, c, 1);
             v = FIELD_AT(self, char *, 0x30) ? FIELD_AT(self, char *, 0x30) + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, 0)->v11(t);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 0))->v11(t);
             func_800198AC(t, 2);
         }
     }
@@ -846,7 +851,7 @@ EXTERN_C S_CtorB38 *func_8005D8C4(S_CtorB38 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a2, 0x10);
     p->vb->vt = (VEntB *)D_800149B8.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -942,7 +947,7 @@ EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d)
     int i;
     int off;
     char *q;
-    func_8005F0E4_v(p, d);
+    func_8005F0E4(p, d);
     FIELD_AT(p, void *, 0) = D_80014B00;
     FIELD_AT(p, unsigned char, 0x2B) = 3;
     FIELD_AT(p, unsigned char, 0x2F) = 0x60;

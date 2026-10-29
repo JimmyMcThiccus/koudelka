@@ -87,7 +87,6 @@ struct S_80024870 {
     void **unk1C;
 };
 
-EXTERN_C int PadInfoAct(int port, int term, int offs);
 EXTERN_C void *D_800106A4[];
 EXTERN_C void *D_800106BC[];
 EXTERN_C void *D_80010694[];
@@ -127,8 +126,6 @@ struct S_Pad {
     int unk18;
 };
 
-EXTERN_C int GetTPage(int tp, int abr, int x, int y);
-EXTERN_C int PadSetAct(int port, unsigned char *data, int len);
 EXTERN_C char D_800A4544[];
 EXTERN_C void *D_8001079C[];
 EXTERN_C void *D_80010714[];
@@ -180,7 +177,6 @@ struct S_IntVec {
     void **vtbl;
 };
 
-EXTERN_C void *memset(void *p, int c, int n);
 EXTERN_C void func_80024594(Holder *h);
 EXTERN_C void *D_800105B4[];
 EXTERN_C void func_800246C4(void *p, int flags);
@@ -375,7 +371,6 @@ struct S_TexPool {
     void **unk10;
 };
 
-EXTERN_C int LoadImage(S_Rect8 *r, void *p);
 struct S_VramV;
 struct S_VramV {
     virtual void f1();
@@ -427,8 +422,6 @@ struct S_HNode734 : S_Obj178 {
     S_HNode734(void *k) { vtbl = D_80010734; unk8 = k; }
 };
 
-EXTERN_C int MoveImage(S_Rect8 *r, int x, int y);
-EXTERN_C void DrawOTag(void *ot);
 struct S_Scroll {
     short x;
     short y;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 
 EXTERN_C void func_800CF764(T_CF764_q *pp) { T_CF764 *q = (T_CF764 *)pp->fA0; int n = q->f550[0x8A] - 1; q->b4BD = 1; func_800824C8(q->f2A4, 1); func_800825FC(q->f2A4, n); func_8008299C(q->f2A0, 0x29, 0, 0, 0, 0, 0); func_8008299C(q->f2A0, 0, 2, 0, 0, 0, 0); func_80085E74(q, 0); func_8008299C(q->f2A0, 0x2A, 0, 0, 0, 0, 0); func_80082E14(q->f2A0, 0); }
@@ -172,7 +173,7 @@ EXTERN_C void *func_800D0D1C(T_D0D1C *self, int in_chrg, int a)
         v->f4 = 0;
         v->vptr = D_800104A8;
     }
-    f630BC_d(self, 0, 4);
+    func_800630BC(self, 0, 4);
     self->vb50->vptr = (T_VTable10 *)&D_800B7884;
     T_VTable10 vt;
     if (!in_chrg) {
@@ -186,7 +187,7 @@ EXTERN_C void *func_800D0D1C(T_D0D1C *self, int in_chrg, int a)
     self->vt54 = D_800B78F4;
     self->vt58 = D_800B78D4;
     self->vt18 = D_800B7924;
-    f630BC_d((char *)self + 0x68, 1, 1);
+    func_800630BC((char *)self + 0x68, 1, 1);
     char *e = (char *)self + 0xD8;
     int i = 2;
     do {
@@ -209,7 +210,7 @@ EXTERN_C void *func_800D0D1C(T_D0D1C *self, int in_chrg, int a)
     char *p5664 = (char *)self + 0x5664;
     f62848_d(p5664, 1, D_800B783C, D_800B4D60[0], 7, 0);
     char *p56dc = (char *)self + 0x56DC;
-    f630BC_d(p56dc, 1, 4);
+    func_800630BC(p56dc, 1, 4);
     *(int *)((char *)self + 0x5754) = 3;
     *(int *)((char *)self + 0x5750) = 0;
     *(int *)((char *)self + 0x574C) = a;
@@ -418,15 +419,15 @@ EXTERN_C T_D2778 *func_800D2778(T_D2778 *p)
     p->f154 = 0;
     fm(p, 0, S4m(0, 0, 0, 0), 0);
     func_80054EB4(p, 0xE0, 0x12);
-    func_80053F48(p->f80, SVec2C(0x45, 0));
-    func_80053F48(p->f9C, SVec2C(0xA6, 0));
-    func_80053F48(p->fB8, SVec2C(0x76, 0));
-    func_80053F48(p->f60, SVec2C(6, 0));
+    func_80053F48_b(p->f80, SVec2C(0x45, 0));
+    func_80053F48_b(p->f9C, SVec2C(0xA6, 0));
+    func_80053F48_b(p->fB8, SVec2C(0x76, 0));
+    func_80053F48_b(p->f60, SVec2C(6, 0));
     func_8005408C(p->fD4, 2);
-    func_80053F48(p->fD4, SVec2C(0x76, 0));
-    func_80053F48(p->fFC, SVec2C(0x80, 0));
+    func_80053F48_b(p->fD4, SVec2C(0x76, 0));
+    func_80053F48_b(p->fFC, SVec2C(0x80, 0));
     func_8005408C(p->f124, 2);
-    func_80053F48(p->f124, SVec2C(0xD8, 0));
+    func_80053F48_b(p->f124, SVec2C(0xD8, 0));
     func_80054E18(p, p->f80);
     func_80054E18(p, p->f9C);
     func_80054E18(p, p->fB8);
@@ -527,9 +528,9 @@ EXTERN_C T_D3044 *func_800D3044(T_D3044 *self, int in_chrg)
     self->f388 = 0;
     self->f38C = 0;
     self->f390 = 0;
-    func_80055020(self->f68, SVec2C(0x41, 0x94));
+    func_80055020_b(self->f68, SVec2C(0x41, 0x94));
     func_80054EB4(self->f68, 0xF8, 0x48);
-    func_80055020(self->f334, SVec2C(0x41, 0x94));
+    func_80055020_b(self->f334, SVec2C(0x41, 0x94));
     return self;
 }
 
@@ -638,7 +639,7 @@ EXTERN_C T_D3ED0n *func_800D3ED0(T_D3ED0n *self, int in_chrg, unsigned short x)
         v->f4 = 0;
         v->vptr = D_800104A8;
     }
-    f5BC84_4(self, 0, x, 1);
+    func_8005BC84(self, 0, x, 1);
     func_800537C0(self->f38);
     self->vb0->vptr = (T_VTable10 *)&D_800B7C1C;
     T_VTable10 vt;
@@ -716,7 +717,7 @@ EXTERN_C void *func_800D43B0(void *vp, int a1) {
     p->s[i].x = 0x78;
     p->s[i].y = 4;
     p->s[i].h = 8;
-    p->s[i].clut = func_800600A4(D_800AE640, 0x40);
+    p->s[i].clut = func_800600A4_i(D_800AE640, 0x40);
     f4518_2(p, 4);
     register T_D43B0n *r asm("$2") = p;
     T_D43B0n_s *a = &r->s[i];
@@ -778,9 +779,9 @@ EXTERN_C T_D4BFC *func_800D4BFC(T_D4BFC *self, int in_chrg, int a)
     func_8006897C(self, 1, 1);
     { S4 v; short z = 2; v.x = -2; v.y = 0; v.z = z; v.w = 0; func_80054F30(self->f2284, 5, (SVec4 *)&v, 2); }
     func_80054EB4(self->f2284, 0xE0, 0x14);
-    func_80055020(self->f2284, SVec2C(8, 0x51));
+    func_80055020_b(self->f2284, SVec2C(8, 0x51));
     func_8005408C(self->f22F0, 2);
-    func_80053F48(self->f22F0, SVec2C(0xD6, 3));
+    func_80053F48_b(self->f22F0, SVec2C(0xD6, 3));
     func_80054E18(self->f2284, self->f22D4);
     func_80054E18(self->f2284, self->f22F0);
     return self;
@@ -893,7 +894,7 @@ EXTERN_C int func_800D5740(T_D5740 *p) { return (p->b6C[p->f20] << 16) | 0x10DC;
 EXTERN_C void func_800D5760(T_D5760 *p)
 {
     p->f5C = 1;
-    func_80053F48(p, SVec2C(8, 0xD7));
+    func_80053F48_b(p, SVec2C(8, 0xD7));
     T_D2C50_D *d = ((T_D2C50_G *)func_800787B4())->f328;
     int n = (int)D_800B4D5C[0];
     T_D2C50_B *b = d;

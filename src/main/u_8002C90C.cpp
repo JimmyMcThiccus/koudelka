@@ -155,15 +155,15 @@ EXTERN_C void func_8002D780(void *vp, S_Pt2 pos)
         y = pp->y + D_800B4CF4[0].b;
         ofs.x = x;
         ofs.y = y;
-        SetDrawOffset(p->d4C, &ofs);
+        SetDrawOffset(p->d4C, (unsigned short *)&ofs);
         x = pp->x + D_800B4CF4[1].a;
         y = pp->y + D_800B4CF4[1].b;
         ofs.x = x;
         ofs.y = y;
-        SetDrawOffset(p->d58, &ofs);
+        SetDrawOffset(p->d58, (unsigned short *)&ofs);
     } else {
-        SetDrawOffset(p->d4C, pp);
-        SetDrawOffset(p->d58, pp);
+        SetDrawOffset(p->d4C, (unsigned short *)pp);
+        SetDrawOffset(p->d58, (unsigned short *)pp);
     }
 }
 

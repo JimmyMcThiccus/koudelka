@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80067450
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -83,41 +85,40 @@ EXTERN_C int func_80068310(VObj<0x18> *self, void *b)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80067450", func_80068380);
 
-EXTERN_C int func_80068660_def(int *a, int *b, void *c) asm("func_80068660");
-EXTERN_C int func_80068660_def(int *a, int *b, void *c)
+EXTERN_C int func_80068660(int *a, int *b, void *c)
 {
     char tmp[32];
     int v = *a;
     if (!((unsigned)(v - 0x4F) < 8) && v != 0x31 && v != 0x32) {
         return 0;
     }
-    func_80054708_v(c, *b);
+    func_80054708(c, *b);
     switch (*a) {
     case 0x54:
-        func_800538CC_v(tmp, D_800B4E60, 3);
-        func_80053DDC_v(c, tmp);
+        func_800538CC(tmp, D_800B4E60, 3);
+        func_80053DDC(c, tmp);
         func_80053964(tmp, 2);
         return 1;
     case 0x51:
-        func_800538CC_v(tmp, D_800B4E68, 3);
-        func_80053DDC_v(c, tmp);
+        func_800538CC(tmp, D_800B4E68, 3);
+        func_80053DDC(c, tmp);
         func_80053964(tmp, 2);
         return 1;
     case 0x53:
     case 0x55:
-        func_800538CC_v(tmp, D_800B4E70, 2);
-        func_80053DDC_v(c, tmp);
+        func_800538CC(tmp, D_800B4E70, 2);
+        func_80053DDC(c, tmp);
         func_80053964(tmp, 2);
         return 1;
     case 0x31:
     case 0x32:
-        func_800538CC_v(tmp, D_800B4E78, 2);
-        func_80053DDC_v(c, tmp);
+        func_800538CC(tmp, D_800B4E78, 2);
+        func_80053DDC(c, tmp);
         func_80053964(tmp, 2);
         return 1;
     default:
-        func_800538CC_v(tmp, D_800B4E80, 2);
-        func_80053DDC_v(c, tmp);
+        func_800538CC(tmp, D_800B4E80, 2);
+        func_80053DDC(c, tmp);
         func_80053964(tmp, 2);
         return 1;
     }

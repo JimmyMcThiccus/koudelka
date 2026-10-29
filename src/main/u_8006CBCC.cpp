@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_8006CBCC
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -164,9 +166,8 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006E8E4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EACC);
 
-EXTERN_C void func_8006EBB0_def(void *self, void *m) asm("func_8006EBB0");
 
-EXTERN_C void func_8006EBB0_def(void *self, void *m)
+EXTERN_C void func_8006EBB0(void *self, void *m)
 {
     if (FIELD_AT(self, short, 8) == 1) {
         func_8006EF84(self);
@@ -182,9 +183,8 @@ EXTERN_C void func_8006EBB0_def(void *self, void *m)
     FIELD_AT(self, short, 8) = 2;
 }
 
-EXTERN_C void func_8006EC70_def(void *self, void *m) asm("func_8006EC70");
 
-EXTERN_C void func_8006EC70_def(void *self, void *m)
+EXTERN_C void func_8006EC70(void *self, void *m)
 {
     if (FIELD_AT(self, short, 8) == 1) {
         func_8006EF84(self);
@@ -714,9 +714,12 @@ EXTERN_C int func_80071250(void)
     return 0;
 }
 
+// func_8008022C takes three arguments; retail passes one here and leaves $a1/$a2 as they are.
+EXTERN_C void func_8008022C_1(void *p) asm("func_8008022C");
+
 EXTERN_C int func_80071258(void)
 {
-    func_8008022C((char *)D_800AF470.p + 0x4A0);
+    func_8008022C_1((char *)D_800AF470.p + 0x4A0);
     return 0;
 }
 

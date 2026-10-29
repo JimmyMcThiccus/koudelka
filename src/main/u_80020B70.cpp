@@ -373,13 +373,13 @@ EXTERN_C void func_80021764(S_21764 *p, void **ot, int n)
                 func_80098DA0(e);
             }
             i--;
-            DrawOTag(cur);
+            DrawOTag((unsigned long *)cur);
             r.y -= p->unkA;
             cur = next;
         }
         MoveImage(&r, p->unkC->x, p->unkC->y);
     }
-    DrawOTag(cur);
+    DrawOTag((unsigned long *)cur);
 }
 
 EXTERN_C void func_800218B4(int a)
@@ -776,7 +776,7 @@ EXTERN_C void func_800230E8(char *p, int a)
     func_80020984(p, a);
 }
 
-EXTERN_C int func_800232A0(char *p)
+EXTERN_C int func_800232A0(char *p, void *)
 {
     void *t = 0;
     int r = func_800209F4(p);

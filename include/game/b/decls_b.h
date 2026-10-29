@@ -4,7 +4,6 @@
 /* Generated once by tools/hoist_decls.py from the units' inline declarations; edit freely. */
 
 /* from main_b.cpp */
-EXTERN_C void func_80053964(void *self, int b);
 
 /* from main_b.cpp */
 EXTERN_C void func_80058830(void *self, void *b);
@@ -13,22 +12,16 @@ EXTERN_C void func_80058830(void *self, void *b);
 EXTERN_C void func_800581E0(void *self);
 
 /* from main_b.cpp */
-EXTERN_C void func_80057F20(void *self, unsigned short b);
 
 /* from main_b.cpp */
-EXTERN_C int func_80053880(void *self);
 
 /* from main_b.cpp */
-EXTERN_C void func_8005800C(void *self, void *b);
 
 /* from main_b.cpp */
-EXTERN_C void func_80019D40(List *l);
 
 /* from main_b.cpp */
-EXTERN_C void func_80019A6C(List *l, int b, int c);
 
 /* from main_b.cpp */
-EXTERN_C int func_80054048(void *self);
 
 /* from main_b.cpp */
 struct SV_80054F30 {
@@ -47,7 +40,6 @@ struct Obj_80054F30 {
 EXTERN_C void func_8005854C(void *self, int a, void *v, int d);
 
 /* from main_b.cpp */
-EXTERN_C void func_800550FC(void *self, int b);
 
 /* from main_b.cpp */
 struct Heap_800A4578 {
@@ -55,14 +47,11 @@ struct Heap_800A4578 {
     int pad[2];
 };
 EXTERN_C Heap_800A4578 D_800A4578;
-EXTERN_C void func_8002B27C(void *heap, void *p);
 
 /* from main_b.cpp */
 EXTERN_C void *D_800B4D84;
-EXTERN_C int func_8001A6E8(void *self);
 
 /* from main_b.cpp */
-EXTERN_C void func_80053BCC(void *self, void *b, int c);
 
 /* from main_b.cpp */
 struct Rec_800557C8 {
@@ -80,13 +69,11 @@ struct Pair_800557C8 {
 /* from main_b.cpp */
 EXTERN_C char D_80013BA0[];
 EXTERN_C char D_80013BB8[];
-EXTERN_C void func_8001E508(void *self, int flags);
 
 /* from main_b.cpp */
 EXTERN_C int D_800B4D98;
 
 /* from main_b.cpp */
-EXTERN_C void func_8001FC78(void *p, int b, int c);
 
 /* from main_b.cpp */
 struct Str_800AE620 {
@@ -96,21 +83,15 @@ struct Str_800AE620 {
     int buf[0x20];
 };
 EXTERN_C Str_800AE620 D_800AE620;
-EXTERN_C void func_80019920(void *a, int b);
 
 /* from u_80056E0C.cpp */
 EXTERN_C void func_8005717C(void *self, int a, int b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005388C(void *self, int b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8002A210(void *self);
-EXTERN_C void func_80056FE0(void *self);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void *func_8002EEC4(void *self, void *b);
-EXTERN_C void func_8002BA94(void *self);
 
 /* from u_80056E0C.cpp */
 EXTERN_C short D_800B4DA8;
@@ -135,7 +116,6 @@ EXTERN_C void func_80059EF8(void *self, int b);
 EXTERN_C void func_80058F08(VObj<0x2C> *self, int b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_80027FEC(void *self, void *b);
 
 /* from u_80056E0C.cpp */
 struct V_80059584 {
@@ -149,7 +129,6 @@ struct Obj_80059584 {
 };
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8001A610(void *self, int flags);
 
 /* from u_80056E0C.cpp */
 struct C4_8005AF70 {
@@ -200,13 +179,11 @@ struct Obj_8005B560 {
 
 /* from u_80056E0C.cpp */
 EXTERN_C void *func_8005C26C(void *self, void *b, int c);
-EXTERN_C void func_8002A110(void *self);
 
 /* from u_80056E0C.cpp */
 EXTERN_C void func_8005C1E8(void *self);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005C088(void *self, int b, int c);
 
 /* from u_80056E0C.cpp */
 struct V_8005C238 {
@@ -249,10 +226,8 @@ struct V_8005C344 {
 };
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F120(void *self, int flags);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F1D8(void *self);
 
 /* from u_80056E0C.cpp */
 struct VEnt_8005D334 {
@@ -265,10 +240,8 @@ struct VEnt_8005D334 {
 EXTERN_C void *func_8005D754(void *self, void *b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F120(void *self, int flags);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F1D8(void *self);
 
 /* from u_80056E0C.cpp */
 struct Entry_8005DF10 {
@@ -291,13 +264,11 @@ struct VEnt_8005DF98 {
 };
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F120(void *self, int flags);
 
 /* from u_80056E0C.cpp */
 EXTERN_C void *func_8005EF58(void *self, void *b);
 
 /* from u_80056E0C.cpp */
-EXTERN_C void func_8005F120(void *self, int flags);
 
 /* from u_80056E0C.cpp */
 struct Snd_800AE640 {
@@ -318,11 +289,8 @@ EXTERN_C void func_8005FB04(Snd_800AE640 *self, int b);
 EXTERN_C void func_8005F8EC(Snd_800AE640 *self);
 
 /* from u_8005F238.cpp */
-EXTERN_C void func_8005F3E0(void *self);
-EXTERN_C void __builtin_delete(void *p);
 
 /* from u_8005F238.cpp */
-EXTERN_C void func_80036D8C(void *p);
 
 /* from u_8005F238.cpp */
 EXTERN_C int D_800B4DC8;
@@ -344,8 +312,6 @@ EXTERN_C signed char D_800AE66C[0x100];
 EXTERN_C signed char D_800AE76C[0x100];
 
 /* from u_8005F238.cpp */
-EXTERN_C unsigned int func_80053BB4(void *self);
-EXTERN_C void *func_80053AE4(void *out, void *self, int i);
 EXTERN_C int func_8005F834(signed char *p);
 
 /* from u_8005F238.cpp */
@@ -387,7 +353,6 @@ struct Obj_80061114 {
 };
 
 /* from u_8005F238.cpp */
-EXTERN_C void func_8008CC20(int b);
 
 /* from u_8005F238.cpp */
 struct Ent_80061164 {
@@ -444,7 +409,6 @@ struct Clock_800A4534 {
 EXTERN_C Clock_800A4534 D_800A4534;
 
 /* from u_8005F238.cpp */
-EXTERN_C void func_80062160(unsigned int *out);
 
 /* from u_8005F238.cpp */
 struct Obj_80062214 {
@@ -460,7 +424,6 @@ struct Ent_800AE86C : VObj<0x18> {
 EXTERN_C Ent_800AE86C D_800AE86C[10];
 
 /* from u_8005F238.cpp */
-EXTERN_C void func_80053928(void *self);
 
 /* from u_80062610.cpp */
 struct Entry_800627E8 {
@@ -474,21 +437,15 @@ EXTERN_C Entry_800627E8 *D_800B4E30;
 EXTERN_C int D_800B4E34;
 
 /* from u_80062610.cpp */
-EXTERN_C void func_800566E4(void *self);
-EXTERN_C void func_80056874(void *self);
 
 /* from u_80062610.cpp */
-EXTERN_C void func_8008EF40(int b);
 
 /* from u_80062610.cpp */
-EXTERN_C void func_80054FE0(void *self);
-EXTERN_C void func_8008EF40(int b);
 
 /* from u_80062610.cpp */
 EXTERN_C void func_800588EC(void *self, unsigned int b);
 
 /* from u_80062610.cpp */
-EXTERN_C int func_80058270(void *self, int b);
 
 /* from u_80062610.cpp */
 struct Entry_800643DC {
@@ -505,11 +462,9 @@ struct VEnt_80064428 {
 };
 
 /* from u_80062610.cpp */
-EXTERN_C void func_8005F120(void *self, int flags);
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_80015384[];
-EXTERN_C void func_80039A88(void *self);
 
 /* from u_800658E0.cpp */
 EXTERN_C void func_80066054(void *self, int b, int c);
@@ -557,7 +512,6 @@ EXTERN_C char D_800154B4[];
 EXTERN_C char D_800154D4[];
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8001D024(void *self, int b);
 
 /* from u_800658E0.cpp */
 struct Mgr_800A4544 {
@@ -565,21 +519,16 @@ struct Mgr_800A4544 {
 };
 EXTERN_C Mgr_800A4544 D_800A4544;
 EXTERN_C char D_80010338[];
-EXTERN_C void func_8001D150(void *self, void *b);
 
 /* from u_800658E0.cpp */
-EXTERN_C short func_8008C928(int b);
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_800154EC[];
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80054094(void *self, int b);
 EXTERN_C void func_80067B1C(void *self, int b, void *c, void *d, int e);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006323C(void *self);
-EXTERN_C void func_80053CD8(void *self);
 
 /* from u_800658E0.cpp */
 struct E28_80068EE8 {
@@ -610,13 +559,10 @@ struct Obj_800691EC {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80054FC0(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80054FE0(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_800A0D0C(void *p);
 
 /* from u_800658E0.cpp */
 struct Word_8006A04C {
@@ -634,38 +580,22 @@ struct Obj_8006A04C {
 EXTERN_C char D_800159C4[];
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B3D0(void *self, void *b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B058(void *self, int b);
-EXTERN_C void func_8006B180(void *self, int b);
-EXTERN_C void func_8006B0C0(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B08C(void *self, int b);
-EXTERN_C void func_8006B1C8(void *self, int b);
-EXTERN_C void func_8006B120(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B3D0(void *self, void *b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006BB04(void *self);
-EXTERN_C void *func_8006D344(void *self, void *b, int c, int d, int e);
-EXTERN_C int func_8006D8EC(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006DA60(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void *func_8006C95C(void *self, void *b, int c);
-EXTERN_C int func_8006CA80(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B618(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006B690(void *self, int b);
 
 /* from u_800658E0.cpp */
 EXTERN_C void func_800BE09C(void *a);
@@ -678,7 +608,6 @@ struct Tmp_8006B850 {
 
 /* from u_800658E0.cpp */
 struct Blk_8006B8E8;
-EXTERN_C void func_8006C3C8(void *self, int b, Blk_8006B8E8 *c);
 
 /* from u_800658E0.cpp */
 struct Blk_8006B8E8 {
@@ -686,7 +615,6 @@ struct Blk_8006B8E8 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006C4EC(void *self, int b);
 
 /* from u_800658E0.cpp */
 struct V_8006B928 {
@@ -694,22 +622,14 @@ struct V_8006B928 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C V_8006B928 func_8003B310(void);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_8006BC98(void *self);
-EXTERN_C void *func_800A0D2C(int size);
-EXTERN_C void func_80025CE0(void *p, int b, int c);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8008D4C0(void *p);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8002DC34(void *self, int b, int c);
 
 /* from u_800658E0.cpp */
-EXTERN_C void *func_80066FB0(void *self, void *b, int c, int d, int e);
-EXTERN_C int func_800670A4(void *self);
 
 /* from u_800658E0.cpp */
 struct Blk_8006BEA0 {
@@ -725,8 +645,6 @@ EXTERN_C int D_800B4ED4;
 EXTERN_C int D_800B4ED0;
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8002BD34(void *self);
-EXTERN_C void func_8003944C(void *self, void *b);
 
 /* from u_800658E0.cpp */
 struct Data_800B4D1C {
@@ -737,7 +655,6 @@ struct Data_800B4D1C {
 EXTERN_C Data_800B4D1C D_800B4D1C;
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8002B518(void *self, int b, int c);
 
 /* from u_800658E0.cpp */
 struct Vec_8006C61C {
@@ -746,8 +663,6 @@ struct Vec_8006C61C {
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_80015DBC[];
-EXTERN_C void func_8002EC90(void *self, void *b);
-EXTERN_C void func_8002EC40(void *self, void *b);
 
 /* from u_800658E0.cpp */
 struct Data_800B4C78 {
@@ -764,7 +679,6 @@ EXTERN_C Data_800B4C78 D_800B4C78;
 EXTERN_C Data_800B4C98 D_800B4C98;
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8002EEFC(void *self);
 
 /* from u_800658E0.cpp */
 EXTERN_C char D_80015EB8[];
@@ -781,7 +695,6 @@ struct Obj_8006FDD8 {
     Sub_8006FDD8 sub;
     int d;
 };
-EXTERN_C Obj_8006FDD8 *func_8006FDD8(Obj_8006FDD8 *self);
 struct Flag_800AF408 {
     int v;
     int pad[2];
@@ -808,10 +721,8 @@ struct VEnt_8006F268 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006F194(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006F10C(void *self);
 
 /* from u_800658E0.cpp */
 struct Obj_8006F31C {
@@ -832,7 +743,6 @@ struct VEnt_8006F35C {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006F268(void *self);
 
 /* from u_800658E0.cpp */
 struct Four_8006FE6C {
@@ -865,8 +775,6 @@ struct Obj_8006FEA4 {
 /* from u_800658E0.cpp */
 EXTERN_C char D_80016280[];
 EXTERN_C char D_80016298[];
-EXTERN_C void *func_8007778C(void *self);
-EXTERN_C void *func_800756F8(void *self);
 
 /* from u_800658E0.cpp */
 struct Obj_8006FEEC {
@@ -875,9 +783,6 @@ struct Obj_8006FEEC {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_80077854(void *self, int b, int c);
-EXTERN_C void func_80077210(void *self, void *b);
-EXTERN_C void func_800766D8(void *self);
 
 /* from u_800658E0.cpp */
 struct V_80070440 {
@@ -895,49 +800,35 @@ struct V_800704F8 {
 };
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007AD14(void *self, int b, int c, int d, int e, int f, int g);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_8007ADCC(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007D744(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8006F3DC(void *self, int b, int c, int d, int e, int f);
 
 /* from u_800658E0.cpp */
 EXTERN_C void func_800DE3B8(void *self, int b, int c, int d, int e, int f, int g);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007D6D0(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007FB30(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8008022C(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_800802E0(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_8007FE4C(void *self, int b, int c);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007FF58(void *self, int b, int c, int d);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_80080110(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_80080130(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_80080180(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C int func_800801D0(void *self, int b, int c);
 
 /* from u_800658E0.cpp */
 EXTERN_C void func_800DF758(void *self, int b, int c, int d);
@@ -952,10 +843,8 @@ EXTERN_C void func_800DF9A8(void *self);
 EXTERN_C void func_800DFB10(void *p);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007E214(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_8007E30C(void *self);
 
 /* from u_800658E0.cpp */
 struct V_800714BC {
@@ -978,26 +867,18 @@ EXTERN_C void func_800DEE50(void *self);
 EXTERN_C void func_800DEED4(void *self);
 
 /* from u_800658E0.cpp */
-EXTERN_C void *func_8006FEEC(void *self);
-EXTERN_C void func_8006FF50(void *self, int b, int c, void *d);
 
 /* from u_800658E0.cpp */
-EXTERN_C void func_80076EF8(void *self, int b);
 
 /* from u_800658E0.cpp */
-EXTERN_C void *func_80076EA8(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800751AC(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007505C(void *self, void *node);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80074F78(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_80074E28(void *self);
 EXTERN_C char D_80016270[];
 
 /* from u_80071A74.cpp */
@@ -1007,27 +888,18 @@ struct Obj_80071BDC {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80074E44(void *self, int flags);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800777E8(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_8003912C(void *self, int b);
-EXTERN_C void func_80039BEC(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80039C88(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80072B84(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80074564(void *self);
-EXTERN_C void func_80073960(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800232A0(void *self, void *b);
 
 /* from u_80071A74.cpp */
 struct Tgt_80072970 {
@@ -1045,8 +917,6 @@ struct View_80072970 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80044590(void *self);
-EXTERN_C void func_80073960(void *self);
 
 /* from u_80071A74.cpp */
 struct Vec_8007460C {
@@ -1056,12 +926,8 @@ struct Vec_8007460C {
 /* from u_80071A74.cpp */
 EXTERN_C char D_80010300[];
 EXTERN_C char D_800102D0[];
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *self, void *p);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *self, void *p);
 
 /* from u_80071A74.cpp */
 struct D_80074744 : VPad<0x1DC>, virtual VObj0 {
@@ -1103,7 +969,6 @@ struct Node_80074EE8 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80074E78(Node_80074E78 *a, Node_80074E78 *b);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800166B8[];
@@ -1121,7 +986,6 @@ struct List_80074FAC {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_80074EE8(Node_80074EE8 *a);
 
 /* from u_80071A74.cpp */
 struct List_80075004 {
@@ -1131,10 +995,8 @@ struct List_80075004 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C Node_80074EA4 *func_80074EA4(Node_80074EA4 *head);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800752B8(void *self);
 
 /* from u_80071A74.cpp */
 struct Node_800753F8 {
@@ -1165,87 +1027,62 @@ struct Obj_80075744 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007589C(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80075EC8(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8003546C(void *a, void *b);
-EXTERN_C void func_8003714C(void *a);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80076370(void *self);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80016878[];
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80016868[];
-EXTERN_C void *func_80074F58(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80076E60(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800752B8(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800785DC(void *self);
-EXTERN_C void *func_80076DC4(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_80075448(void *self, void *b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80078564(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800773B0(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800774D0(void *self, int b);
-EXTERN_C void *func_80077478(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_800751AC(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007505C(void *self, void *node);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80016BD0[];
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800A0D0C(void *p);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_80077C68(void *self);
-EXTERN_C int func_80077EA8(void *self);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80016BC0[];
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800786A0(void *self);
-EXTERN_C void func_80074F78(void *self, int b);
 
 /* from u_80071A74.cpp */
 EXTERN_C void func_800CB174(void *self, int b, int c);
 
 /* from u_80071A74.cpp */
 EXTERN_C void func_800CB8EC(void *p);
-EXTERN_C void func_8001FC78(void *p, int b, int c);
 
 /* from u_80071A74.cpp */
 struct D_80079104 : VPad<0xF8>, virtual VObj0 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007A1F4(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007B538(void *p, int b, int c, int d, int e, int f);
 
 /* from u_80071A74.cpp */
 struct Base0_80079824 {
@@ -1262,26 +1099,20 @@ struct Derived_80079824 : Base0_80079824, Base1_80079824 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007E5B0(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007EDAC(void *self, int b, int c);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007A1F4(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_80079F6C(void *self, int k);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80017370[];
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007AF04(void *self);
 
 /* from u_80071A74.cpp */
 struct List_8007AB78;
-EXTERN_C void *func_8007A9DC(List_8007AB78 *l, int x);
 
 /* from u_80071A74.cpp */
 struct Set_8007AFD0 {
@@ -1308,7 +1139,6 @@ struct Obj_8007B058 {
 EXTERN_C void func_800BFABC(void *self, void *b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80019D40(List *l);
 
 /* from u_80071A74.cpp */
 struct Global_800B4C18 {
@@ -1316,27 +1146,18 @@ struct Global_800B4C18 {
     int pad[2];
 };
 EXTERN_C Global_800B4C18 D_800B4C18;
-EXTERN_C void *func_800758F8(void *self, int b, void *c, void *d);
-EXTERN_C void func_8001E848(void *self, void *b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800766F8(void *self, int b, int c, int d, int e);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80076848(void *self, int a1, int a2, int a3);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007698C(void *self, int b, int c, int d);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8007669C(void *self, int b, int c);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800766D8(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80042430(void *a, void *b, int c, int d);
-EXTERN_C void func_8007C070(void *self, int b);
 
 /* from u_80071A74.cpp */
 struct Obj_8007BFA8 {
@@ -1348,21 +1169,15 @@ struct Obj_8007BFA8 {
 EXTERN_C void func_800CF080(void *a, void *b, int c);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8007C0A8(void *self, int i);
-EXTERN_C int func_8007C3C8(void *p, int i);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800172E8[];
 EXTERN_C char D_800172B0[];
 EXTERN_C char D_800172F8[];
-EXTERN_C void func_8007A994(void *self, int b);
-EXTERN_C void func_8006F0B0(void *self, int flags);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007DEE8(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007DEE8(void *self, int b);
 
 /* from u_80071A74.cpp */
 struct Global_800B4D40 {
@@ -1370,16 +1185,12 @@ struct Global_800B4D40 {
     int pad[2];
 };
 EXTERN_C Global_800B4D40 D_800B4D40;
-EXTERN_C void func_8007A400(void *self, int b);
-EXTERN_C void func_800518A8(void *a, int b, int c, int d);
 
 /* from u_80071A74.cpp */
 EXTERN_C void func_800CEE18(void *a);
 EXTERN_C void func_800CEFE8(void *a);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007B0C8(void *p);
-EXTERN_C void func_8007BB48(void *p, int b, int c);
 
 /* from u_80071A74.cpp */
 struct Base0_8007CC14 {
@@ -1396,27 +1207,20 @@ struct Derived_8007CC14 : Base0_8007CC14, Base1_8007CC14 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8007CAA8(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007CC60(void *self, int b, int c, int d);
 
 /* from u_80071A74.cpp */
 struct Blk_8007D6D0 {
     int v[4];
 };
-EXTERN_C void func_8006FAC0(void *self, void *a, void *b, void *c, void *d, void *e, void *f, Blk_8007D6D0 g, int h);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80084B78(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007FE1C(void *self, int b);
 EXTERN_C void func_800DE97C(void *self, int b);
-EXTERN_C void func_8007DE74(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80084674(void *self);
 
 /* from u_80071A74.cpp */
 struct Base0_8007DE74 {
@@ -1449,22 +1253,16 @@ struct Obj_8007E658 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007D994(void *p);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8006F52C(void *self, int *a, int *b);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8006F5B4(void *self, int *a, int *b, int *c);
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8006F570(void *self, int *a, int *b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007DDCC(char *p);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8007A1F4(void *self, int b);
 
 /* from u_80071A74.cpp */
 struct Base0_8007FB30 {
@@ -1483,10 +1281,8 @@ struct Derived_8007FB30 : Base0_8007FB30, Base1_8007FB30 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C int func_8007FE4C(void *self, int b, int c);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8001A744(void *self, void *p);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800171B0[];
@@ -1496,7 +1292,6 @@ EXTERN_C void func_800DF6F0(void *self);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80017190[];
-EXTERN_C void *func_800756F8(void *self);
 
 /* from u_80071A74.cpp */
 struct Obj_80080468 {
@@ -1507,22 +1302,14 @@ struct Obj_80080468 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80080828(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800808AC(void *self);
-EXTERN_C int func_8008D1F4(int a, int b);
-EXTERN_C void func_800806F4(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8008ECB4(int a);
-EXTERN_C void func_8007EF90(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800852DC(void *self, int b);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8008316C(void *self);
 
 /* from u_80071A74.cpp */
 EXTERN_C void func_800DFB10(void *p);
@@ -1552,16 +1339,13 @@ struct Derived_80080D74 : Base0_80080D74, Base1_80080D74 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_80080828(void *self);
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8001A610(void *self, int flags);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800171C0[];
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_8001A610(void *self, int flags);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_800171D0[];
@@ -1644,7 +1428,6 @@ struct Obj_800813BC {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void *memset(void *dst, int c, unsigned int n);
 
 /* from u_80071A74.cpp */
 struct Obj_800815B4 {
@@ -1672,7 +1455,6 @@ EXTERN_C char D_80017380[];
 EXTERN_C char D_800173C0[];
 
 /* from u_80071A74.cpp */
-EXTERN_C void func_800817C8(void *self);
 
 /* from u_80071A74.cpp */
 EXTERN_C char D_80017390[];
@@ -1682,7 +1464,6 @@ struct Global_800AFA88 {
     int pad[2];
 };
 EXTERN_C Global_800AFA88 D_800AFA88;
-EXTERN_C void *func_8001E40C(void *self, int b, int c, int d, int e);
 
 /* from u_80071A74.cpp */
 struct Obj_80081FF8 {
@@ -1692,28 +1473,20 @@ struct Obj_80081FF8 {
 };
 
 /* from u_80071A74.cpp */
-EXTERN_C void *func_80081748(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081DCC(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081CB8(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081BA4(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081A74(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C int func_80081970(void *self, void *x);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80081820(Global_800AFA74 *p, int a, int b, int c, int d, int e);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800817C8(void *self);
 
 /* from u_80082174.cpp */
 struct Obj_80082470 {
@@ -1723,7 +1496,6 @@ struct Obj_80082470 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800824C8(void *self);
 
 /* from u_80082174.cpp */
 EXTERN_C unsigned short D_800173E0[][10][16];
@@ -1761,23 +1533,16 @@ struct Obj_80082714 {
 EXTERN_C char D_80017748[];
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C int func_80083F40(void *self, int id);
-EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80083310(void *self);
 
 /* from u_80082174.cpp */
-EXTERN_C int func_800833F8(void *self);
 
 /* from u_80082174.cpp */
 struct Obj_80083EB4 {
@@ -1798,7 +1563,6 @@ struct Obj_80084090 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_8001A610(void *self, int flags);
 
 /* from u_80082174.cpp */
 struct Obj_800840F8 {
@@ -1806,38 +1570,24 @@ struct Obj_800840F8 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800846EC(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_8003D68C(void *a, int b, void *c, int d, int e);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_8008299C(void *p, int b, int c, int d, int e, int f, int g);
-EXTERN_C void func_80082E14(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80042838(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80085168(void *self, int b);
-EXTERN_C void func_80084F58(void *self, int b);
-EXTERN_C void func_80084D58(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_8004377C(void *self, short b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80043740(void *self, short b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800437A4(void *self, int b);
-EXTERN_C void func_800437CC(void *self, int b, int c, int d);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80039DD8(void *p);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800435AC(void *self, int b, int c);
 
 /* from u_80082174.cpp */
 EXTERN_C void func_800CDAC8(void *self, int b);
@@ -1846,7 +1596,6 @@ EXTERN_C void func_800CDAC8(void *self, int b);
 EXTERN_C void func_800CDAE8(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800832F0(void *self);
 EXTERN_C void func_800CF2D0(void *p, int b);
 
 /* from u_80082174.cpp */
@@ -1886,16 +1635,11 @@ struct S4_80085B28 {
 EXTERN_C char D_80017B94[];
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80074F78(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Derived_80085D7C;
-EXTERN_C void func_80085D7C(Derived_80085D7C *self);
-EXTERN_C void func_80085DC0(void *self);
-EXTERN_C void func_80085C60(void *self, int b);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_8008299C(void *p, int b, int c, int d, int e, int f, int g);
 
 /* from u_80082174.cpp */
 struct Base0_80085D7C {
@@ -1927,9 +1671,6 @@ struct Derived_80085DC0 : Base0_80085DC0, Base1_80085DC0 {
 
 /* from u_80082174.cpp */
 struct Derived_80085F90;
-EXTERN_C void func_80085F90(Derived_80085F90 *self);
-EXTERN_C void func_80085FD4(void *self);
-EXTERN_C void func_80085E74(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Base0_80085F90 {
@@ -1961,9 +1702,6 @@ struct Derived_80085FD4 : Base0_80085FD4, Base1_80085FD4 {
 
 /* from u_80082174.cpp */
 struct Derived_800861A4;
-EXTERN_C void func_800861A4(Derived_800861A4 *self);
-EXTERN_C void func_800861E8(void *self);
-EXTERN_C void func_80086088(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Base0_800861A4 {
@@ -2026,7 +1764,6 @@ struct Obj_8008647C {
 
 /* from u_80082174.cpp */
 EXTERN_C char D_80017C00[];
-EXTERN_C void func_8001AA28(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Vec_80086670 {
@@ -2047,7 +1784,6 @@ struct Snap_800867B0 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C Vec_80086670 func_80086670(Vec_80086670 &a, void *b);
 
 /* from u_80082174.cpp */
 struct Obj_80086DB4 {
@@ -2062,14 +1798,9 @@ struct Obj_80086DB4 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_800898F0(void *self);
-EXTERN_C void func_8008655C(short *p);
 struct Obj_80086DB4;
-EXTERN_C void func_80086DB4(Obj_80086DB4 *self);
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80089178(void *self, int b);
-EXTERN_C void func_80087880(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Hist_80089024 {
@@ -2087,7 +1818,6 @@ struct Bytes4_800890B4 {
 };
 
 /* from u_80082174.cpp */
-EXTERN_C void *func_8008672C(char *p);
 EXTERN_C void func_800D9218(void *self, int b);
 
 /* from u_80082174.cpp */
@@ -2095,30 +1825,24 @@ union Col_800899AC {
     unsigned char c[8];
     int w[2];
 };
-EXTERN_C unsigned char *func_800898FC(unsigned char *a, signed char *b);
 
 /* from u_80082174.cpp */
-EXTERN_C unsigned char *func_80089954(unsigned char *a, signed char *b);
 
 /* from u_80082174.cpp */
 // Eight bytes divided by d, returned by value. Needs maspsx --expand-div (the ASPSX zero checks).
 struct Bytes8_80089A4C { unsigned char b[8]; int align[0]; };
 
 /* from u_80082174.cpp */
-EXTERN_C int rand(void);
 
 /* from u_80082174.cpp */
-EXTERN_C signed char *func_80089DB8(signed char *a, signed char *b);
 
 /* from u_80082174.cpp */
-EXTERN_C signed char *func_80089E14(signed char *a, signed char *b);
 
 /* from u_80082174.cpp */
 // Signed twin of func_80089A4C.
 struct SBytes8_80089F10 { signed char b[8]; int align[0]; };
 
 /* from u_80082174.cpp */
-EXTERN_C void func_80023F50(void *self, int b);
 
 /* from u_80082174.cpp */
 struct Base0_80089F84 {
@@ -2136,10 +1860,8 @@ struct Derived_80089F84 : Base0_80089F84, Base1_80089F84 {
 
 /* from u_80082174.cpp */
 struct W20_80089658;
-EXTERN_C int func_800870E4(char *self, void *b, W20_80089658 *c, int d);
 
 /* from u_80082174.cpp */
-EXTERN_C int func_8008B444(int n);
 
 /* from u_80082174.cpp */
 struct Hdr_8008B5B4 {
@@ -2171,17 +1893,12 @@ EXTERN_C Col_80065870 D_800B4E40;
 EXTERN_C Col_80065870 D_800B4E48;
 EXTERN_C Col_80065870 D_800B4E50;
 EXTERN_C char D_80014C38[];
-EXTERN_C void func_8008E504(void *p);
 EXTERN_C char D_80013B70[];
 
-EXTERN_C void func_80019CFC(void *l);
-EXTERN_C void func_8005BFA4(void *self);
 EXTERN_C void func_80059A84(void *self);
 EXTERN_C short D_800B4DA6;
 EXTERN_C char D_80014548[];
 EXTERN_C char D_800145B0[];
-EXTERN_C int func_8002EB68(void *self);
-EXTERN_C void func_800386B8(void *self, int b);
 EXTERN_C void func_80060378(void *self);
 
 struct E16_80059800 {
@@ -2211,18 +1928,12 @@ struct SV2_80055020 {
     short x, y;
 };
 
-EXTERN_C void func_800198E0(void *a, int b, int c);
 EXTERN_C unsigned short D_800B4D7C;
-EXTERN_C void func_8002B174(void *heap, void *p, int c);
-EXTERN_C void func_8005D9D4(void *self, int b);
 EXTERN_C void func_8005A020(void *self, int b, int c);
 EXTERN_C int func_80059E90(VObj<0x2C> *self, int b);
 EXTERN_C int func_80059F00(void *self);
 EXTERN_C void func_80058A80(void *self);
-EXTERN_C VObj0 *func_80019F64(void *l, int i);
-EXTERN_C void *__builtin_new(int size);
 EXTERN_C void *func_8005D080(void *self, void *b, int c, int d);
-EXTERN_C void func_8002DA94(void *self, void *b);
 EXTERN_C short D_800B4E2C;
 
 struct MATRIX_B {
@@ -2237,24 +1948,8 @@ struct V3s_B {
     short x, y, z;
 };
 
-EXTERN_C void func_80039A14(void *self);
-EXTERN_C void func_8003A754(void *self, int b);
-EXTERN_C void func_8003AD78(void *self, void *b);
-EXTERN_C void func_8003B2F0(void *self, void *b);
-EXTERN_C void func_8003BC10(MATRIX_B *m, void *b);
-EXTERN_C void SetColorMatrix(MATRIX_B *m);
-EXTERN_C void SetBackColor(int r, int g, int b);
 EXTERN_C void func_800C0920(void);
-EXTERN_C int func_8005409C(void *self);
-EXTERN_C void func_800631D4(void *self);
-EXTERN_C void func_80099C80(int a);
-EXTERN_C int func_8006BCF4(void *self);
-EXTERN_C int SquareRoot0(int a);
-EXTERN_C int func_80080CC8(void *self, int b);
-EXTERN_C void func_8007164C(void *self, void *b);
-EXTERN_C int func_80077234(void *self, void *b);
 
-EXTERN_C void func_80063714(void *self, unsigned int b);
 
 struct LNode_B {
     LNode_B *next;
@@ -2274,9 +1969,6 @@ EXTERN_C char D_8001211C[];
 EXTERN_C char D_80012104[];
 EXTERN_C char D_800101C0[];
 EXTERN_C char D_800101B0[];
-EXTERN_C void func_800198AC(void *self, int b);
-EXTERN_C void *func_80077254(void *self);
-EXTERN_C void func_8001A678(void *self, void *b);
 EXTERN_C void func_800C68D8(void *self, int b);
 EXTERN_C void func_800C6DF4(void *self, int b);
 EXTERN_C void func_800C7158(void *self, int b);
@@ -2332,10 +2024,6 @@ struct B4_80081260 {
     char a, b, c, d;
 };
 
-EXTERN_C void func_8008FC38(int a);
-EXTERN_C void func_8008ED44(void *p);
-EXTERN_C int func_80043700(void *self, int a, void *b, int c);
-EXTERN_C void func_80042D3C(void *self);
 
 struct B32_B {
     int w[8];
@@ -2351,25 +2039,7 @@ struct SV4_B {
 };
 
 EXTERN_C char D_80014278[];
-EXTERN_C void func_8002DD34(void *self, void *b, int c);
-EXTERN_C SV2_80055020 func_80054054(void);
-EXTERN_C int func_80054074(int b);
-EXTERN_C void func_8002972C(void *self, int a, int b, int c, int d);
-EXTERN_C B8_B *func_80053BC0(void *p);
 EXTERN_C void func_80063F3C(void *self);
-EXTERN_C void func_8003B35C(MATRIX_B *m, void *b, int c);
-EXTERN_C void SetLightMatrix(MATRIX_B *m);
-EXTERN_C void func_8003B3EC(MATRIX_B *m, void *b, int c);
-EXTERN_C MATRIX_B *ScaleMatrix(MATRIX_B *m, void *v);
-EXTERN_C void SetRotMatrix(MATRIX_B *m);
-EXTERN_C void SetTransMatrix(MATRIX_B *m);
-EXTERN_C void *func_8001D25C(void *self, void *b);
-EXTERN_C void func_8001D324(void *self, void *b);
-EXTERN_C void func_8001A864(void *self, void *b);
-EXTERN_C int ratan2(int y, int x);
-EXTERN_C void func_80071C78(void *self, void *b);
-EXTERN_C void func_80071D90(void *self, void *b, int c);
-EXTERN_C void func_800230E8(void *self, void *b);
 
 struct Iter_B {
     List *l;
@@ -2389,11 +2059,6 @@ struct Sub_80055330 {
 
 EXTERN_C void func_80059F0C(void *self, int b);
 EXTERN_C void func_8005A784(void *self, int b);
-EXTERN_C void func_80055624(void *self, int b);
-EXTERN_C int func_80053874(void *self);
-EXTERN_C void func_80053848(void *self);
-EXTERN_C void func_8005BF04(void *self, int b, int c);
-EXTERN_C void func_80098E10(void *self);
 EXTERN_C void func_80059800(void *self, int a, int b, int c, int d);
 EXTERN_C void func_80059888(void *self, unsigned char *b);
 EXTERN_C void func_80059790(void *self);
@@ -2432,10 +2097,7 @@ EXTERN_C C20_80060260 D_80014C50;
 EXTERN_C C16_80060260 D_80014C68;
 EXTERN_C C14_80060260 D_80014C7C;
 EXTERN_C short D_800B4DAA;
-EXTERN_C int func_8005618C(void *p);
 
-EXTERN_C void func_8005549C(int a, void *b, void *c, int d);
-EXTERN_C int func_80053830(void *self);
 
 struct E94_80061AAC {
     int w[37];
@@ -2452,26 +2114,15 @@ struct C690_80062610 {
     char c[0x690];
 };
 
-EXTERN_C void *func_8005F238(void *self);
-EXTERN_C void func_8005F298(void *self, int b, int c);
-EXTERN_C int func_8005F28C(void *self);
-EXTERN_C void func_8005F248(void *self, int flags);
 
-EXTERN_C int func_80043700(void *self, int a, void *b, int c);
 
-EXTERN_C void func_80055330(int a);
-EXTERN_C int func_80043700(void *self, int a, void *b, int c);
 
 EXTERN_C void func_80055A9C(void *self);
-EXTERN_C void *func_8001EB60(void *self, int b);
-EXTERN_C void *func_8001ED2C(void *self, void *b, int c);
 EXTERN_C void *D_800B4D80;
 EXTERN_C void func_80055D78(void *self);
 EXTERN_C int func_80055F98(char *x);
-EXTERN_C void func_80038654(void *self, void *b, int c);
 
 EXTERN_C void func_8005DEA4(void *self, int b);
-EXTERN_C void func_800536F0(void *self, void *b);
 
 struct Ent_8007AB78 {
     LNode_B *next;
@@ -2520,28 +2171,6 @@ struct Bits_8007FE4C {
     int len;
 };
 
-EXTERN_C void func_80078658(void *self);
-EXTERN_C void func_8003DEA8(void *p);
-EXTERN_C void func_80080530(void *self, int a, int b, int c);
-EXTERN_C void func_80080AE8(void *self, int b);
-EXTERN_C void func_80080B60(void *self, int b);
-EXTERN_C void func_8007BDB4(void *self, int a, int b, int c);
-EXTERN_C void *func_8007AB78(List_8007AB78 *l, int x);
-EXTERN_C void *func_8007AC38(List_8007AB78 *l, int x);
-EXTERN_C void func_8007F434(void *self);
-EXTERN_C int func_800785A8(void *self);
-EXTERN_C void func_80077444(void *self, int b);
-EXTERN_C void *func_80077538(void *self, int b);
-EXTERN_C void func_80076DF8(void *self, int flags);
-EXTERN_C void func_80078610(void *self, int b);
-EXTERN_C void *func_8006F04C(void *self);
-EXTERN_C void *func_8007A960(void *self);
-EXTERN_C void func_8007AF5C(void *self);
-EXTERN_C short func_800729E8(void *self, int b);
-EXTERN_C void func_80044990(void *p, int a, int b, int c, int d, int e);
-EXTERN_C void func_80035EB4(void *p);
-EXTERN_C void func_80075828(void *self, int flags);
-EXTERN_C void func_80035304(void *self, int b);
 EXTERN_C char D_800167C8[];
 EXTERN_C char D_80016740[];
 EXTERN_C char D_80016758[];
@@ -2549,23 +2178,9 @@ EXTERN_C char D_80016708[];
 EXTERN_C char D_800167E0[];
 EXTERN_C char D_80012294[];
 EXTERN_C char D_80012224[];
-EXTERN_C void func_8007CAB4(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_B s, int a12);
-EXTERN_C void func_8007D24C(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_B s, int a12);
-EXTERN_C void func_8007589C(void *self);
-EXTERN_C void *func_800775F0(void *self);
-EXTERN_C int func_800771D4(void *self);
-EXTERN_C int func_80076FD8(void *self);
 EXTERN_C char D_80016878[];
 EXTERN_C void func_800DF604(void *n, V4_80085578 s, int e);
 EXTERN_C void *func_800DF37C(void *p, int k, V4_80085578 s, int e);
-EXTERN_C void func_80048D54(void *buf);
-EXTERN_C int func_80046658(void *buf, int a, int b, void *c);
-EXTERN_C int *func_80049398(void *buf);
-EXTERN_C void func_80048D2C(void *buf, int f);
-EXTERN_C void func_80071E90(void *self);
-EXTERN_C int func_8006F630(void);
-EXTERN_C void func_80043DC0(void *p);
-EXTERN_C void func_80072970(void *self);
 
 static inline int empty_8007768C(void *self)
 {
@@ -2585,71 +2200,37 @@ static inline bool idle_800770B4(void *self)
     return FIELD_AT(self, int, 0x20) == 0 && FIELD_AT(self, int, 0x24) == 0 && FIELD_AT(self, int, 0x10) == 0;
 }
 
-EXTERN_C void func_80087764(void *self, void *b, int c);
-EXTERN_C void func_80086B70(void *self, int c);
-EXTERN_C void func_800890F0(void *self, void *b, int c);
-EXTERN_C void func_800874C4(void *self, void *b, int c);
 EXTERN_C void func_800D96F8(void *self, void *b, int c);
-EXTERN_C void func_8008816C(void *self, void *b, int c);
-EXTERN_C void func_80086CAC(void *self, int c);
-EXTERN_C void func_80087620(void *self, void *b, int c);
-EXTERN_C void func_800873A8(void *self, void *b, int c);
-EXTERN_C void func_80087C2C(void *self, void *b, int c, int d);
-EXTERN_C void *func_8003CEB4(void *self, void *b);
-EXTERN_C Col_800899AC *func_800899AC(Col_800899AC *out, Col_800899AC *a, signed char *b);
-EXTERN_C void func_80089D80(unsigned char *p, int n);
-EXTERN_C void func_800867B0(void *self, Snap_800867B0 *s);
 
 struct U16_8008B4E8 {
     unsigned short v;
     int hi() { return v >> 10; }
 } __attribute__((packed));
 
-EXTERN_C void *func_8001FC38(void *self, int b, void *c, int d);
-EXTERN_C void func_8008687C(char *self, int b);
 static inline int muldiv2_80086EF0(int a, int b, unsigned char c) { return (long long)a * b / c; }
-EXTERN_C void *func_80082798(void *self, int b, int c);
 
 EXTERN_C char D_80017CB4[];
 EXTERN_C char D_80010118[];
 struct S_8008B084 { char pad[0x20]; unsigned char a; char p; short b; int c; short d[12]; short e[16]; };
 struct D_8008B084 { char pad[0x477]; unsigned char a; char p[0x54A - 0x478]; short b; int c; char q[0x560 - 0x550]; short d[12]; short e[16]; };
-EXTERN_C Snap_800867B0 *func_80086814(void *self, Snap_800867B0 *s);
 
-EXTERN_C void func_800827C4(void *self, int flags);
 EXTERN_C char D_80017690[];
 
-EXTERN_C Obj_80082714 *func_80082714(Obj_80082714 *self, int b, int c, int d, int e, int f, int g);
-EXTERN_C void func_8008B5B4(Unpacked_8008B5B4 *d, Packed_8008B5B4 *s);
 struct H_80082D44 { char pad[0xDA]; short h[32][2]; };
 struct W20_80089658 { int w[5]; };
 struct C20_80089658 { char c[20]; };
 
-EXTERN_C Packed_8008B5B4 *func_8008B630(Unpacked_8008B5B4 *s, Packed_8008B5B4 *d);
-EXTERN_C int func_80086F94(char *self, void *b, int c);
 EXTERN_C int func_800D9048(void *self, int b, int c);
-EXTERN_C int func_8008A54C(void *self, int b);
-EXTERN_C int func_8008B4E8(U16_8008B4E8 *p, int b);
 struct T_8008A858 { char pad[0x560]; U16_8008B4E8 d[12]; U16_8008B4E8 e[16]; };
 
-EXTERN_C unsigned char *func_80089AC0(unsigned char *a, unsigned char *b, unsigned char *c, unsigned int d, unsigned int e, unsigned int f);
-EXTERN_C signed char *func_80089B44(signed char *a, signed char *b, signed char *c);
-EXTERN_C Vec_80086670 *func_80086578(Vec_80086670 *a, void *b);
-EXTERN_C Obj_80082470 *func_80082470(Obj_80082470 *self);
-EXTERN_C void *func_80082690(void *self);
-EXTERN_C void *func_80082768(void *self);
-EXTERN_C void func_80083EB4(Obj_80083EB4 *self);
 struct O_800827EC { char pad[0x46]; short d[4]; short e; short f[2]; };
 
 /* defined later in the units, called earlier */
 EXTERN_C int func_800560E4(int a);
-EXTERN_C void *func_800787B4(void);
 EXTERN_C void func_8005D228(void *self, int b);
-EXTERN_C int func_8005F87C(void *self);
 EXTERN_C Ent_800620D8 *func_800620D8(void *self, unsigned int i);
 
 EXTERN_C void func_80065AD0(void *self);
-EXTERN_C void func_80099C60(int a, int b);
 struct GW_800B4D00 { int v; int pad[2]; };
 EXTERN_C GW_800B4D00 D_800B4D00;
 EXTERN_C char D_800153FC[];
@@ -2657,14 +2238,8 @@ EXTERN_C char D_800153C4[];
 EXTERN_C char D_80015414[];
 EXTERN_C char D_80012294[];
 EXTERN_C char D_80012224[];
-EXTERN_C void func_80035EB4(void *p);
-EXTERN_C void func_80035304(void *self, int b);
-EXTERN_C int func_80036FC0(void *self, int a, int b);
-EXTERN_C void func_80035DE0(void *p);
 EXTERN_C void *func_80066D2C(void *self, int b);
 EXTERN_C Vec_80066220 *func_80066220(Vec_80066220 *out, Vec_80066220 *a, Vec_80066220 *b);
-EXTERN_C void func_8003A7FC(void *m, void *b);
-EXTERN_C void func_8003B450(void *out, void *m, void *v);
 struct SV3_80065E10 { short x, y, z; };
 struct SV2_80069F74 { short w, h; };
 
@@ -2690,33 +2265,11 @@ struct SV2C_80055020 {
     short x, y;
     SV2C_80055020(short a, short b) : x(a), y(b) {}
 };
-EXTERN_C void func_80055020(void *self, SV2C_80055020 v);
-EXTERN_C void *func_80054F28(void *self);
-EXTERN_C void func_8005457C(void *self, int b);
-EXTERN_C void func_80053F48(void *self, SV2C_80055020 v);
-EXTERN_C void func_80053F28(void *self, SV2C_80055020 v);
-EXTERN_C void SetDrawMode(void *p, int a, int b, int c, int d);
-EXTERN_C void func_80098DC0(void *p, int b);
-EXTERN_C void func_8006EACC(void *self, int a, short b);
-EXTERN_C void func_8006EBB0(void *self, int a);
-EXTERN_C void func_8006EC70(void *self, int a);
-EXTERN_C void func_8006EDD8(void *self, void *b);
-EXTERN_C void func_8006EE94(void *self);
-EXTERN_C void *func_800787B4(void);
-EXTERN_C void *func_8008E360(void *p);
-EXTERN_C void func_8008E590(void *p, int a, int b);
-EXTERN_C void *func_800663EC(void *self, int vb, void *a, int b, int c, int d);
-EXTERN_C int func_800665C8(void *self);
 struct Obj_8006E73C { void *vt; int f4; short f8, fA; char pad[0x68]; int f74; };
 struct A_80069978 { char b[0x1C]; };
 struct B_80069978 { char b[0x28]; };
 struct O_80069978 { char pad[0x64]; B_80069978 b[8]; char pad2[0x1A4 - 0x64 - 0x140]; A_80069978 a[8]; };
 
-EXTERN_C void func_8006B350(void *self, int b);
-EXTERN_C void func_8006B390(void *self, int b);
-EXTERN_C void func_8006B2F8(void *self, int b);
-EXTERN_C void func_8006B258(void *self, int b);
-EXTERN_C void func_800770B4(void *self, int a1, int a2);
 static inline void *copy_80071B24(void *self, void *src)
 {
     int *v;
@@ -2751,17 +2304,11 @@ EXTERN_C char D_80012034[];
 
 EXTERN_C char D_80011FE4[];
 
-EXTERN_C void func_8006A3C0(VObj0 *self, void *b);
 
-EXTERN_C void func_8006A588(VObj0 *self, void *b);
 
-EXTERN_C void func_8006A440(void *self, void *b);
 
-EXTERN_C void func_80098DF0(void *p);
 
-EXTERN_C void func_8006A608(void *self, int b);
 
-EXTERN_C void func_8006A6D4(void *self);
 
 struct Sub_8007192C { int a, b, c; void *vt; };
 
@@ -2786,19 +2333,13 @@ struct SV4_658 { short x, y, z, w; };
 
 struct V3_658 { int x, y, z; };
 
-EXTERN_C int func_80069F74(void *self, int n, SV2_80069F74 s, void *src);
 
-EXTERN_C void func_8002E714(void *self, int b);
 
 EXTERN_C char D_800117A4[];
 
-EXTERN_C void func_8002D780(void *self, SV2_80069F74 p);
 
-EXTERN_C void func_8002D24C(void *self, void *r);
 
-EXTERN_C void func_8002DB50(void *self, int b);
 
-EXTERN_C void ApplyMatrixLV(MATRIX_B *m, void *v, void *out);
 
 struct S_80061F80 {
     char pad[8];
@@ -2808,7 +2349,6 @@ struct S_80061F80 {
     E94_80061AAC e[8];
 };
 
-EXTERN_C void func_800614BC(S_80061AAC *self, int i);
 struct S_800615B4 {
     char pad[0x224];
     E94_80061AAC e[48];
@@ -2887,17 +2427,11 @@ static inline void del3_80081CB8(List_8007AB78 *l, int x)
 
 EXTERN_C char D_800D5DAC[];
 
-EXTERN_C void func_8007BE44(void *self);
 
-EXTERN_C void func_8007BEA8(void *self, int b, int c, int d, int e);
 
-EXTERN_C void func_8007BF48(void *self, int b, int c, int d);
 
-EXTERN_C int func_8007E658(Obj_8007E658 *self);
 
-EXTERN_C void *func_80075788(void *p, int a, int b, int c, int d);
 
-EXTERN_C void func_80075894(void *self, int b);
 
 EXTERN_C char D_800100F8[];
 
@@ -2905,7 +2439,6 @@ EXTERN_C char D_80010198[];
 
 EXTERN_C char D_80010348[];
 
-EXTERN_C void *func_8007570C(void *self);
 
 struct E8_8007B5F8 {
     int a;
@@ -2925,13 +2458,9 @@ struct S_800758F8 {
 
 EXTERN_C GlobalWord D_800B4DD0;
 
-EXTERN_C int func_8008FD94(int a);
 
-EXTERN_C void func_80080BC4(void *self, int b);
 
-EXTERN_C void func_80086990(void *self, int n, signed char *first, ...);
 
-EXTERN_C void func_80089804(char *out, char *src, int idx, int lo, int hi);
 
 struct P4_8008B150 { char *p[4]; };
 
@@ -2939,7 +2468,6 @@ struct E8C_8008A188 { char pad[0x20]; char sub[0x6C]; };
 
 EXTERN_C E8C_8008A188 D_800AEBD4[];
 
-EXTERN_C int func_800872B8(char *self, char *b, int c);
 
 struct C70_800873A8 { char pad[0x70]; signed char v[5]; };
 
@@ -2947,25 +2475,17 @@ struct V4_658 { int v[4]; };
 
 struct Vx_658 { int x, y, z, w; };
 
-EXTERN_C int func_80058404(void *self, int b);
 
-EXTERN_C void TransRot_32(void *v0, void *v1, int *flag);
 
-EXTERN_C void func_8006AE68(void *self);
 
-EXTERN_C int func_8006BA1C(void *self);
 
-EXTERN_C int func_8006BA64(void *self);
 
-EXTERN_C void func_8006AF94(void *self);
 
-EXTERN_C int func_80069ECC(void *self, int a, int b);
 
 extern int f69F74_658(void *self, int n, SV2C_80055020 s, void *src) __asm__("func_80069F74");
 
 static inline void setm_658(MATRIX_B *m) { SetRotMatrix(m); SetTransMatrix(m); }
 
-EXTERN_C int func_800619F4(Obj_800619F4 *self);
 
 static inline void *h8_80064B3C(char *h)
 {
@@ -2975,13 +2495,10 @@ static inline void *h8_80064B3C(char *h)
 
 struct H6_80086B70 { char pad[0x6]; short h[5]; };
 
-EXTERN_C SBytes8_80089F10 func_80089F10(signed char *src, int d);
 
 struct Q_80088DEC { char pad[0x6]; short a[5]; char p2[6]; short b[5]; };
 
-EXTERN_C void func_8008691C(void *self);
 
-EXTERN_C unsigned short func_800891C0(void *a, void *b, void *c);
 
 struct S6C_800894AC { int w[0x1B]; };
 
@@ -2989,36 +2506,24 @@ struct R_800894AC { unsigned short a; unsigned char b; char pad; unsigned short 
 
 // Matches only if the header prototype is changed to: int func_80086F94(char *self, void *b, int c)
 // (currently decls_b.h has void func_80086F94(void *self, int b, int c); verified with a #define-rename test, scratch_c/ag_u_80082174/_proto_86F94.cpp)
-EXTERN_C void func_8008691C(void *self);
 
-EXTERN_C void func_8006F67C(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, V4_80085578 v, int a12);
 
-EXTERN_C void func_8003FC48(void *self);
 
 EXTERN_C void func_800D6740(void *p, int b);
 
-EXTERN_C void func_80084824(void *p, int b);
 
-EXTERN_C void func_80094908(void);
 
-EXTERN_C void func_800798EC(void *self, int b);
 
 static inline int any2_80072CFC(void *self)
 {
     return FIELD_AT(FIELD_AT(self, char *, 0x13C), unsigned char, 0x12) != 0 || FIELD_AT(FIELD_AT(self, char *, 0x13C), unsigned char, 0x13) != 0;
 }
 
-EXTERN_C void func_8006F0E4(void *self, int b);
 
-EXTERN_C void func_8006F0F4(void *self, int b, int c, int d, int e);
 
-EXTERN_C void func_8006F8B4(void *self, int a1, int a2, int a3, int a4, int a5, int a6, V4_80085578 v, int a11);
 
-EXTERN_C void func_8006FCC0(void *self, int a1, int a2, int a3);
 
-EXTERN_C void func_8007B08C(void *self);
 
-EXTERN_C void func_8007F138(void *self);
 
 EXTERN_C void func_800BCBE8(void *p, int *out);
 
@@ -3028,13 +2533,9 @@ EXTERN_C void func_800BCC30(void *p, void *out);
 
 EXTERN_C void func_800BCC18(void *p, void *out);
 
-EXTERN_C void func_80080990(void *self, int a, int b, int c);
 
-EXTERN_C void func_800715B0(void *self, int a, int b, int c);
 
-EXTERN_C void func_8007F0A8(void *self, int a, int b, int c, int d);
 
-EXTERN_C int func_8007D024(void *self, int a, int b, int c);
 
 static inline void shift_8007F138(Arr_8007F434 *self)
 {
@@ -3049,8 +2550,6 @@ static inline void shift_8007F138(Arr_8007F434 *self)
 // Types used here (List_8007AB78, V4_80085578, ...) are already in include/game/b/decls_b.h.
 
 EXTERN_C void *func_8005F50C(Pool_8005F50C *self, int a, int b, unsigned int n);
-EXTERN_C void func_80078520(void *self, void *p);
-EXTERN_C void func_800825FC(short *self, int b);
 
 EXTERN_C int D_800B4CF0_w asm("D_800B4CF0");
 struct Q16 { int a, b, c, d; };
@@ -3075,14 +2574,12 @@ struct S_OtB {
     }
 };
 EXTERN_C S_OtB *D_800B4CFC;
-EXTERN_C int func_8005F1B4(void *self);
 
 struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
 
 struct V4_B { int x, y, z, w; };
 
 EXTERN_C int func_80060118_i(void *self, int b) asm("func_80060118");
-EXTERN_C int func_800600A4_i(void *self, int b) asm("func_800600A4");
 
 struct Rc8 { short x, y, w, h; };
 struct Pt4w { short x, y; };
@@ -3105,10 +2602,6 @@ EXTERN_C void *D_800150BC[];
 EXTERN_C const VTabB50 D_80014400;
 EXTERN_C void *D_80014450[];
 
-EXTERN_C void func_800537DC(void *self, int b);
-EXTERN_C void func_80063BE4(void *self);
-EXTERN_C void func_80057558(void *self, int b);
-EXTERN_C void func_8005BDA4(void *self, int b);
 EXTERN_C const VTabB50 D_800142B8;
 EXTERN_C void *D_80014308[];
 EXTERN_C const VTabB50 D_8001521C;
@@ -3119,7 +2612,6 @@ EXTERN_C void *D_8001504C[];
 EXTERN_C void *D_80014EEC[];
 
 struct S_Dtor50 { char pad[0x50]; S_VBB *vb; };
-EXTERN_C void func_8005652C(void *self, int b);
 EXTERN_C void *D_80013BD0[];
 EXTERN_C void *D_80014DAC[];
 EXTERN_C void *D_80014DCC[];
@@ -3135,7 +2627,6 @@ struct S_CtorB64 { S_VBB *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int
 struct Pt4q { short x, y; };
 EXTERN_C char D_800104A8[];
 EXTERN_C short D_800B4D9E;
-EXTERN_C void *func_8005BC84_v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
 EXTERN_C const VTabB50 D_80014750;
 EXTERN_C void *D_80014658[];
 EXTERN_C const VTabB50 D_800149B8;
@@ -3146,14 +2637,10 @@ EXTERN_C const VTabB50 D_800142B8;
 EXTERN_C void *D_80014308[];
 EXTERN_C const VTabB50 D_80014400;
 EXTERN_C void *D_80014450[];
-EXTERN_C void func_8002A4C8(void *p, int a, int b);
 
 struct S_C50_64 { char pad0[0x50]; S_VBB *vb; char pad54[0x10]; S_VBobjB vobj; };
 struct S_C50_68 { char pad0[0x50]; S_VBB *vb; char pad54[0x14]; S_VBobjB vobj; };
 struct S_C50_70 { char pad0[0x50]; S_VBB *vb; char pad54[0x1C]; S_VBobjB vobj; };
-EXTERN_C void *func_80056364(void *p, int in_chrg, int a, int b);
-EXTERN_C void *func_80056198(void *p, int in_chrg, int a, int b, int c);
-EXTERN_C void *func_80062C3C_v(void *p, int in_chrg, int a, int b, int c) asm("func_80062C3C");
 EXTERN_C const VTabB50 D_80014D5C;
 EXTERN_C void *D_80013BD0[];
 EXTERN_C void *D_80014DAC[];
@@ -3166,17 +2653,12 @@ EXTERN_C const VTabB50 D_80014CAC;
 EXTERN_C void *D_80014CFC[];
 EXTERN_C void *D_80014D1C[];
 
-EXTERN_C int func_80029FC0(void *p);
-EXTERN_C void func_80029D74(void *p, int a);
 EXTERN_C const VTabB50 D_80014750;
 EXTERN_C void *D_80014658[];
-EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags) asm("func_8005BDA4");
 
 EXTERN_C const VTabB50 D_80013F40;
 EXTERN_C void *D_80013F90[];
 EXTERN_C void *D_80013E30[];
-EXTERN_C void func_8002AFEC(void *p, int a);
-EXTERN_C void func_80057558_def(S_DtorB *p, int flags) asm("func_80057558");
 
 struct S_ArrB { void **items; int count; };
 struct S_CollB {
@@ -3187,10 +2669,6 @@ struct S_CollB {
 };
 struct S_WB { char pad0[0x30]; S_CollB coll; };
 
-EXTERN_C void func_8006A4E4_v(void *a, int b) asm("func_8006A4E4");
-EXTERN_C void func_8006BD34_v(void *a) asm("func_8006BD34");
-EXTERN_C void func_8008E70C_v(void *a, int b) asm("func_8008E70C");
-EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d) asm("func_80066FB0");
 
 struct S_SubB { S_VBB *vb; void *vptr; };
 EXTERN_C const VTabB50 D_80010538;
@@ -3199,22 +2677,14 @@ EXTERN_C void *D_800118DC[];
 EXTERN_C const VTabB50 D_80013C00;
 EXTERN_C void *D_80013C50[];
 EXTERN_C void *D_80013C70[];
-EXTERN_C void *func_80054AF0_v(void *p, int b) asm("func_80054AF0");
 EXTERN_C void *func_80054A4C_v(void *p, int b, int c) asm("func_80054A4C");
-EXTERN_C void *func_80054094_v(void *p, int b) asm("func_80054094");
 
+// func_800205D4 is defined taking an int; this caller passes a pointer.
 EXTERN_C void func_800205D4_v(void *p) asm("func_800205D4");
-EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
-EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
-EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
 
 struct S_Ct3C { S_VBB *vb; char pad4[0x38]; S_VBobjB vobj; };
 struct S_Ct50 { S_VBB *vb; char pad4[0x4C]; S_VBobjB vobj; };
 struct S_Ct5C { S_VBB *vb; char pad4[0x58]; S_VBobjB vobj; };
-EXTERN_C void *func_8005BC84_v2(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
-EXTERN_C void func_800537C0(void *p);
-EXTERN_C void *func_80057368_v(void *p, int in_chrg) asm("func_80057368");
-EXTERN_C void *func_80064884_v(void *p, int a, int b) asm("func_80064884");
 EXTERN_C const VTabB50 D_8001506C;
 EXTERN_C void *D_800150BC[];
 EXTERN_C const VTabB50 D_8001521C;
@@ -3244,7 +2714,9 @@ struct S_CpE0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; W3q 
 EXTERN_C char D_80014950[];
 EXTERN_C char D_80014B68[];
 
-EXTERN_C void func_8005F0E4_v(void *p, int b) asm("func_8005F0E4");
+// func_800600A4 returns unsigned short; this caller was matched reading an int.
+EXTERN_C int func_800600A4_i(void *self, int b) asm("func_800600A4");
+// func_80060154 returns unsigned short; this caller masks an unsigned result with 0xFFFF itself.
 EXTERN_C unsigned func_80060154_v(void *p, int b) asm("func_80060154");
 EXTERN_C void func_8005DF54_v(void *p, void *b) asm("func_8005DF54");
 EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d) asm("func_8005DD4C");
@@ -3254,9 +2726,6 @@ EXTERN_C char D_800B4E68[];
 EXTERN_C char D_800B4E70[];
 EXTERN_C char D_800B4E78[];
 EXTERN_C char D_800B4E80[];
-EXTERN_C void func_80054708_v(void *p, int a) asm("func_80054708");
-EXTERN_C void func_800538CC_v(void *p, char *s, int n) asm("func_800538CC");
-EXTERN_C void func_80053DDC_v(void *p, void *q) asm("func_80053DDC");
 
 EXTERN_C int func_800667C8_i(void *p) asm("func_800667C8");
 EXTERN_C int func_8006692C_i(void *p) asm("func_8006692C");
@@ -3267,6 +2736,5 @@ EXTERN_C void func_800BCA58_v(void *p) asm("func_800BCA58");
 EXTERN_C void func_800BCA88_v(void *p) asm("func_800BCA88");
 EXTERN_C void func_800BF018_v(void *p) asm("func_800BF018");
 EXTERN_C void func_800B92B0_v(void *p) asm("func_800B92B0");
-EXTERN_C void func_8006B988_v(void *p) asm("func_8006B988");
 
 #endif /* GAME_B_DECLS_B_H */

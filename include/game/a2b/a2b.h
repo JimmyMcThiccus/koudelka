@@ -111,7 +111,6 @@ struct C_80054AF0 { C_80054AF0(int a) asm("func_80054AF0"); char pad[0x50]; };
 struct C_80054584b : C_80053928 { int u1c, u20, u24; C_80054584b(int a) asm("func_80054584"); };
 EXTERN_C void func_800530B8(void *p, void *a);
 EXTERN_C void *D_800A4578_a[] asm("D_800A4578");
-EXTERN_C void ApplyRotMatrix(SVECTOR *v0, S_A2_V4 *v1);
 // These callers hold the second argument (a pointer) as an int.
 extern "C++" void f538CC(void *p, int a, int b) asm("func_800538CC");
 extern "C++" void f53BCC(void *p, int a, int b) asm("func_80053BCC");

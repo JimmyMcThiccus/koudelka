@@ -156,7 +156,6 @@ struct C_8001D7B0 : B_8001E40C {
 };
 
 EXTERN_C unsigned int func_80018E10(int *count);
-EXTERN_C int GetRCnt(int spec);
 EXTERN_C char *D_800A4578_p asm("D_800A4578") __attribute__((section(".data")));
 
 struct VEnt_C38C { short d; short i; void *f; };

@@ -83,10 +83,8 @@ struct S_Mid34 { char pad[0x34 - 0x18]; };
 struct S_Base34 { int x; };
 struct S_Obj34 : S_Obj14, S_Mid34, S_Base34 { };
 
-EXTERN_C int ratan2(int y, int x);
 struct S_Rect8s { short x, y, w, h; };
 
-EXTERN_C void SetDispMask(int mask);
 EXTERN_C void func_8002F028(void *p);
 EXTERN_C int func_8002A3C0(void *p);
 EXTERN_C void *D_800117A4[];

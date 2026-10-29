@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 
 EXTERN_C int func_800C1E44(T_C1E44 *p, int *out) {
@@ -50,7 +51,7 @@ EXTERN_C int func_800C2ECC(S2ECC *self, S2ECC *other) {
         func_8008299C(base_of(self), 0x18, 0x15, 0, 0, 0, 0);
         func_8008299C(base_of(self), 0, 2, 0, 0, 0, 0);
     }
-    if (other->s50C != 1) func_80082C68(base_of(self), 0x21, D_AF470_2ECC[0], 0x2035, 2);
+    if (other->s50C != 1) func_80082C68_b(base_of(self), 0x21, D_AF470_2ECC[0], 0x2035, 2);
     else func_80082D44(base_of(self), 0x22, base_of(other), 0, 0);
     func_80082E14(base_of(self), 0);
     if (self->s504) self->h508++;
@@ -269,7 +270,7 @@ EXTERN_C void func_800C4B70(T_C4510 *p, int a, int flags) {
         PR(i).len = 3;
         PR(i).code = 0x74;
     }
-    int tp = func_800600A4(D_800AE640, 0x40);
+    int tp = func_800600A4_i(D_800AE640, 0x40);
     for (unsigned int i = 0; i < p->f34; i += 2) {
         int k = i + D_800B4CF0[0];
         PR(k).r = c->r;
@@ -312,7 +313,7 @@ EXTERN_C void func_800C4EC4(T_C4510 *p) {
         ((T_C4EC4_s *)p->f38)[i].len = 3;
         ((T_C4EC4_s *)p->f38)[i].code = 0x74;
     }
-    int tp = func_800600A4(D_800AE640, 0x40);
+    int tp = func_800600A4_i(D_800AE640, 0x40);
     for (unsigned int i = 0; i < p->f34; i += 2) {
         int h = i >> 1;
         int k = i + D_800B4CF0[0];
@@ -339,7 +340,7 @@ EXTERN_C void *func_800C5020(void *pv, char *str, int n) {
     func_8005388C(p, n);
     func_80053FB0(p->fC, 1, 0x130);
     func_80054E18(p->f28, p->fC);
-    func_80055020(p->f28, SVec2C(0xC, 0xA));
+    func_80055020_b(p->f28, SVec2C(0xC, 0xA));
     func_80054EB4(p->f28, 0x130, 0x10);
     SVec4 v;
     v.x = 0;
@@ -363,7 +364,7 @@ EXTERN_C char *func_800C5474(T_C5474 *p) {
     p->f4 = x;
     if (x->f10 <= p->f12C) {
         int r = x->f14;
-        S_800D00B8 *n = func_800752B8(p, x);
+        S_800D00B8 *n = func_800752B8_2(p, x);
         n->prev = n;
         n->next = n;
         n->fC = 0;
@@ -378,7 +379,7 @@ EXTERN_C int func_800C54D8(void *vp, void *vk) {
     if (it->empty()) return 0;
     goto start;
 found:
-    { S_800D00B8 *n = f752B8_1(it); n->prev = n; n->next = n; n->fC = 0; return key; }
+    { S_800D00B8 *n = func_800752B8(it); n->prev = n; n->next = n; n->fC = 0; return key; }
 start:
     it->cur = it->head;
     while (1) {
@@ -470,7 +471,7 @@ EXTERN_C int func_800C5B4C(T_C5E1C *p, int team, int x, int y, int a, int b) {
         pp->y = a;
         pp->z = y;
         pp->w = 0;
-        func_80085A08(q, pos, b);
+        func_80085A08_b(q, pos, b);
         T_VEC v;
         int f = q->b4BD == 1;
         v.x = (x - 2) * 0x960;
@@ -492,7 +493,7 @@ EXTERN_C int func_800C5CC4(T_C5E1C *p, int a, int x, int y) {
     if (!q) return 0;
     p->f14[q->s4CA][q->s4C6] = 0;
     p->f14[y][x] = (T_C1340 *)q;
-    func_80085A60(q, SVec2C(x, y));
+    func_80085A60_b(q, SVec2C(x, y));
     return 1;
 }
 
@@ -566,7 +567,7 @@ start:
         }
         {
             int r; char *s0;
-            if (c->b4BC < 3) cf_538B4(c->b4BC);
+            if (c->b4BC < 3) func_800538B4(c->b4BC);
             c->v15();
             cf_CA7D4(p, 0, 0, 0, 0);
             if (c->b4AD) {
@@ -579,10 +580,10 @@ start:
             if (!r) return;
             c->b4AE = 0;
             c->b4AD = 0;
-            cf_85E14(c);
+            func_80085E14(c);
             s0 = (char *)c + 0x2A0;
-            cf_8299C(s0, 0x1A, 0, 0, 0, 0, 0);
-            if (c->b4BD == 1) cf_8299C(s0, 0, 1, 0, 0, 0, 0);
+            func_8008299C(s0, 0x1A, 0, 0, 0, 0, 0);
+            if (c->b4BD == 1) func_8008299C(s0, 0, 1, 0, 0, 0, 0);
             func_80082E14(s0, 0);
             cf_65C8(p, c->f4B4);
             continue;
@@ -597,9 +598,9 @@ start:
                 cf_CBA80(p, ((T_C6194_x *)p)->f7D8, c->f4B0, s);
                 return;
             }
-            cf_8299C((char *)c + 0x2A0, 0x29, 0, 0, 0, 0, 0);
+            func_8008299C((char *)c + 0x2A0, 0x29, 0, 0, 0, 0, 0);
             c->v16(&c->f4B0);
-            cf_8299C((char *)c + 0x2A0, 0x2A, 0, 0, 0, 0, 0);
+            func_8008299C((char *)c + 0x2A0, 0x2A, 0, 0, 0, 0, 0);
             func_80082E14((char *)c + 0x2A0, 0);
             if (c->b4AD) {
                 c->f4B0 |= 2;
@@ -649,7 +650,7 @@ EXTERN_C void func_800C6DF4(T_6DF4 *self, int st) {
                 if (o->s410 == 0) o->s410 = 1;
                 self->f820++;
                 func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
-                func_80082C68(&o->b2A0, 0x21, D_6DF4_70[0], 0x202A, 2);
+                func_80082C68_b(&o->b2A0, 0x21, D_6DF4_70[0], 0x202A, 2);
                 func_80082E14(&o->b2A0, 0);
                 d->b1C[i] = -1;
                 func_800C5D84(self, i + 3);
@@ -666,7 +667,7 @@ EXTERN_C void func_800C6DF4(T_6DF4 *self, int st) {
                     self->f820++;
                     func_8008299C(&o->b2A0, 0x2C, 0x14, 0, 0, 0, 0);
                     func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
-                    func_80082C68(&o->b2A0, 0x21, D_6DF4_70[0], 0x202A, 2);
+                    func_80082C68_b(&o->b2A0, 0x21, D_6DF4_70[0], 0x202A, 2);
                     func_80082E14(&o->b2A0, 0);
                     { signed char *q = d->b1C + 3; q[i] = -1; }
                 }
@@ -680,12 +681,12 @@ EXTERN_C void func_800C6DF4(T_6DF4 *self, int st) {
             self->f82C = 0;
             for (int i = 0; i < 3; i++) { int t = i;
                 o = D_6DF4_64[i];
-                if (o) func_8007B2E4(d, o);
+                if (o) func_8007B2E4_b(d, o);
             }
             for (int i = 0; i < 3; i++) { int t = i;
                 o = D_6DF4_58[i];
                 if (o) {
-                    func_8007B2E4(d, o);
+                    func_8007B2E4_b(d, o);
                     func_80043808(o);
                     self->f82C++;
                 }
@@ -705,7 +706,7 @@ EXTERN_C void func_800C7158(T_7158 *self, int st) {
         {
         B2A0 *b = &self->fA0->b2A0;
         func_8008299C(b, 0x19, 0x17, 0, 0, 0, 0);
-        func_80082C68(b, 0x21, D_7158_70[0], 0x202C, 2);
+        func_80082C68_b(b, 0x21, D_7158_70[0], 0x202C, 2);
         func_80082E14(b, 0);
         }
         break;
@@ -722,7 +723,7 @@ EXTERN_C void func_800C7158(T_7158 *self, int st) {
                 self->f820++;
                 func_8008299C(&o->b2A0, 0x2C, 0x14, 0, 0, 0, 0);
                 func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
-                func_80082C68(&o->b2A0, 0x21, D_7158_70[0], 0x202D, 2);
+                func_80082C68_b(&o->b2A0, 0x21, D_7158_70[0], 0x202D, 2);
                 func_80082E14(&o->b2A0, 0);
                 d->b1C[i] = -1;
                 func_800C5D84(self, i);
@@ -757,7 +758,7 @@ EXTERN_C void func_800C7158(T_7158 *self, int st) {
                 if (o->f1B8) {
                     self->f820++;
                     func_8008299C(&o->b2A0, 0x2F, 1, 0, 0, 0, 0);
-                    func_80082C68(&o->b2A0, 0x21, D_7158_70[0], 0x2030, 2);
+                    func_80082C68_b(&o->b2A0, 0x21, D_7158_70[0], 0x2030, 2);
                     func_80082E14(&o->b2A0, 0);
                     { signed char *q = d->b1C + 3; q[i] = -1; }
                 }
@@ -795,8 +796,8 @@ EXTERN_C int func_800C7528() {
 EXTERN_C int func_800C757C(void *pp, int a) {
     T_C757C *p = (T_C757C *)pp;
     if (p->f2C4 >= 0) {
-        if (a) { void *d = D_800AF470[0]; p->f2C4++; func_80078C38(d, D_800B75F0, p->f2C4, 0, 0, 0, 0, 0, 0, 0, 0); }
-        else { void *d = D_800AF470[0]; p->f2C4--; func_80078C38(d, D_800B7620, p->f2C4, 0, 0, 0, 0, 0, 0, 0, 0); }
+        if (a) { void *d = D_800AF470[0]; p->f2C4++; func_80078C38_v(d, D_800B75F0, p->f2C4, 0, 0, 0, 0, 0, 0, 0, 0); }
+        else { void *d = D_800AF470[0]; p->f2C4--; func_80078C38_v(d, D_800B7620, p->f2C4, 0, 0, 0, 0, 0, 0, 0, 0); }
     }
 }
 
@@ -837,7 +838,7 @@ EXTERN_C void func_800C7A28(T_C9A4C *p, void *l, int x, int y) {
     if (p->b2C8[y][x] >= 0 && !p->f14[y][x]) {
         p->f844 = 0x7FFFFFFF;
         func_800C7B5C((P7B5C *)p, 0, l, x, y);
-        func_80075004(l, func_80085AD4(operator new(0x10), x, y));
+        func_80075004(l, func_80085AD4_s(operator new(0x10), x, y));
     }
 }
 
@@ -862,7 +863,7 @@ EXTERN_C bool func_800C7B5C(P7B5C *p, int a, void *l, int x, int y) {
         if (v < 0 || !(v < c)) continue;
         int d = func_800C9EF4(p, p->f834, p->f838, p->f83C, p->f840, x * 100, y * 100);
         if (!func_800C7B5C_b(p, a + SquareRoot0(d), l, x, y)) continue;
-        last = func_80085AD4(operator new(16), x, y);
+        last = func_80085AD4_s(operator new(16), x, y);
         func_80075004(l, last);
     }
     return last != 0;
@@ -1186,8 +1187,8 @@ EXTERN_C void func_800CADDC(T_CADDC *p, int st) {
         break;
     }
     case 5: {
-        if (p->fA0->b4BD == 2) cf_8FB80(0x17, 0x60);
-        else if (p->fA0->s50C == 2) cf_8FB80(0x18, 0x60);
+        if (p->fA0->b4BD == 2) func_8008FB80(0x17, 0x60);
+        else if (p->fA0->s50C == 2) func_8008FB80(0x18, 0x60);
         for (int i = 0; i < p->f848; i++) {
             if (i == 0) cf_DAE98(p->f914, cf_DABA8(p->f914, p->f918[0]), (void *)p->f918[i]->f0, p->f918[i]->f4, 1);
             else cf_DAE98(p->f914, cf_DAC88(p->f914, p->f918[i]), (void *)p->f918[i]->f0, p->f918[i]->f4, 0);
@@ -1473,7 +1474,7 @@ EXTERN_C void func_800CD354(T_C9A4C *p, void *l, int x, int y, int e) {
     if (p->b2C8[y][x] >= 0 && !p->f14[y][x]) {
         p->f844 = 0x7FFFFFFF;
         func_800C7B5C((P7B5C *)p, 0, l, x, y);
-        func_80075004(l, func_80085AD4(operator new(0x10), x, y));
+        func_80075004(l, func_80085AD4_s(operator new(0x10), x, y));
     }
 }
 

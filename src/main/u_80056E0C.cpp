@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80056E0C
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -62,7 +64,7 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057214);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057368);
 
-EXTERN_C void func_80057558_def(S_DtorB *p, int flags)
+EXTERN_C void func_80057558(S_DtorB *p, int flags)
 {
     FIELD_AT(p, void **, 0x58) = D_80013F90;
     p->vt2C = D_80013E30;
@@ -378,7 +380,7 @@ EXTERN_C S_Ct44 *func_80058D98_def(S_Ct44 *p, int in_chrg, U8bw *r, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a3, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a3, 0x10);
     p->vb->vt = (VEntB *)D_80014130.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -423,7 +425,7 @@ EXTERN_C void func_80059300(void *self)
         char *h = FIELD_AT(self, char *, 0x30);
         if ((h ? FIELD_AT(h, List *, 0x0) : 0)->count > 0) {
             char *v = h ? h + 8 : 0;
-            func_80019F64(v ? *(void **)v : 0, 4)->v07(4, FIELD_AT(self, int, 0x40) * 2 + 8);
+            ((VObj0 *)func_80019F64(v ? *(void **)v : 0, 4))->v07(4, FIELD_AT(self, int, 0x40) * 2 + 8);
         }
     }
 }
@@ -562,7 +564,7 @@ EXTERN_C S_CtorB64 *func_80059958(S_CtorB64 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a2, 0x10);
     p->vb->vt = (VEntB *)D_800142B8.e;
     VTabB50 tmp;
     if (!in_chrg) {

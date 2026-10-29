@@ -82,8 +82,6 @@ struct DISPENV { char b[0x14]; };
 struct DRAWENV { char b[0x5C]; };
 EXTERN_C DISPENV D_800AC7F8[];
 EXTERN_C DRAWENV D_800AC740[];
-EXTERN_C void PutDispEnv(DISPENV *env);
-EXTERN_C void PutDrawEnv(DRAWENV *env);
 struct P_TAG { unsigned addr : 24; unsigned len : 8; };
 struct S_Prim12 { P_TAG tag; int code[2]; };
 struct S_Node8 { VtE *vt; S_Node8 *next; };
@@ -107,7 +105,6 @@ struct S_8002D94C {
     }
 };
 
-EXTERN_C void SetDrawOffset(void *env, void *ofs);
 struct S_Pt2s { short x, y; void set(short ax, short ay) { x = ax; y = ay; } };
 struct S_D780 {
     char pad[0x18];
@@ -121,8 +118,6 @@ struct S_D780 {
     char d58[0xC];
 };
 
-EXTERN_C void SetDefDrawEnv(DRAWENV *env, int x, int y, int w, int h);
-EXTERN_C void SetDefDispEnv(DISPENV *env, int x, int y, int w, int h);
 struct S_Pt2c { short x, y; S_Pt2c(short ax, short ay) { x = ax; y = ay; } };
 struct S_Rect2c {
     S_Pt2c pos;

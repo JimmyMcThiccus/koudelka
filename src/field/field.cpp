@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "field/field.h"
 
 EXTERN_C Unk_800BA800* func_800BA800(Unk_800BA800* p, Unk_Short2 xy, Unk_800BA800_uv uv, Unk_800BB1BC_arg* q, int a, short b, short c, int, int d) {
@@ -382,7 +383,7 @@ EXTERN_C int func_800BC500(Unk_800BC500* p, int n) {
         if (!o) {
             break;
         }
-        func_80019CFC(first2(&p->unk5E0), o);
+        func_80019CFC((List *)first2(&p->unk5E0), o);
         delete o;
     }
     return i;
@@ -479,7 +480,7 @@ EXTERN_C int func_800BCA20(Unk_800BF204* p, short id) {
     return 0xFF;
 }
 
-EXTERN_C void func_800BCA58() { func_8007F5B8(func_800787B4(), 0, 0); }
+EXTERN_C void func_800BCA58() { func_8007F5B8_3(func_800787B4_t(), 0, 0); }
 
 EXTERN_C void func_800BCA88(void* p) {
     Unk_800BCA88* o = (Unk_800BCA88*)func_8001CA10(0x14);
@@ -648,7 +649,7 @@ EXTERN_C Unk_800BCFD0* func_800BCFD0(Unk_800BCFD0* p, int a) {
 
 EXTERN_C void func_800BCFE8(Unk_800BA9CC* p) {
     p->vtbl = D_800B6ECC;
-    func_8001D024(p);
+    func_8001D024_1(p);
 }
 
 EXTERN_C int func_800BD010(void* p) {
@@ -867,9 +868,9 @@ EXTERN_C void func_800BEB2C(void* vp) {
     int n = Q->s28C;
     int m = 3 - n;
     for (int i = 0; i < n; i++)
-        func_80065D20(Q->f278, i, Q->n32C[i].x, Q->n32C[i].y, Q->n32C[i].z, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
+        func_80065D20_i(Q->f278, i, Q->n32C[i].x, Q->n32C[i].y, Q->n32C[i].z, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
     for (int j = 0; j < m; j++)
-        func_80065E10(Q->f278, 2 - j);
+        func_80065E10_b(Q->f278, 2 - j);
 }
 #undef Q
 
@@ -896,19 +897,19 @@ EXTERN_C int func_800BEDF8(void* vp, HK_VEC* w) {
             int dist = SquareRoot0(d.x * d.x + d.z * d.z);
             int lim = 0x6400 - c * 100;
             if (lim < dist) {
-                func_80065D20(Q->f278, i, 0, 0, 0, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
+                func_80065D20_i(Q->f278, i, 0, 0, 0, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
             } else {
                 t.x = 0; t.y = 0; t.z = 0;
                 t.x = Q->n32C[i].x - dist * Q->n32C[i].x / lim;
                 t.y = Q->n32C[i].y - dist * Q->n32C[i].y / lim;
                 t.z = Q->n32C[i].z - dist * Q->n32C[i].z / lim;
-                func_80065D20(Q->f278, i, t.x, t.y, t.z, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
+                func_80065D20_i(Q->f278, i, t.x, t.y, t.z, Q->e2D4[i].b0, Q->e2D4[i].b1, Q->e2D4[i].b2);
             }
         }
     }
     int m = 3 - Q->s28C;
     for (int j = 0; j < m; j++)
-        func_80065E10(Q->f278, 2 - j);
+        func_80065E10_b(Q->f278, 2 - j);
     ((HK_G2*)Q->f278)->f94 = 1;
     return 1;
 }
@@ -1058,7 +1059,7 @@ EXTERN_C Unk_800BF624* func_800BF624(Unk_800BF624* p, void* a, int b, short c) {
 
 EXTERN_C void func_800BF644(Unk_800BA9CC* p) {
     p->vtbl = D_800B6F74;
-    func_8001D024(p);
+    func_8001D024_1(p);
 }
 
 EXTERN_C int func_800BF66C(void* p) {
@@ -1172,7 +1173,7 @@ EXTERN_C int func_800BFABC(Unk_800BF9BC* p, int a) {
 }
 
 EXTERN_C Unk_800BFC58_r* func_800BFAF8(Unk_800BFB84* p, int a) {
-    Unk_800BFC58_r* r = (Unk_800BFC58_r*)func_80019F64(first2(&p->unk610), a);
+    Unk_800BFC58_r* r = (Unk_800BFC58_r*)func_80019F64((List *)first2(&p->unk610), a);
     p->unk630 = r;
     if (r) {
         if (!r->unk1B8) return 0;
@@ -1185,7 +1186,7 @@ EXTERN_C int func_800BFB64(Unk_800BF9BC* p) { return first(&p->unk610)->unk4; }
 
 EXTERN_C int func_800BFB84(Unk_800BFB84* p, int a, Unk_W4* out) {
     Unk_800BFC58_r* r;
-    p->unk630 = r = (Unk_800BFC58_r*)func_80019F64(first2(&p->unk610), a);
+    p->unk630 = r = (Unk_800BFC58_r*)func_80019F64((List *)first2(&p->unk610), a);
     if (r && r->unk1B8) {
         *out = get_800BFB84(&r->unk1B8->unk34);
         return 1;
@@ -1195,7 +1196,7 @@ EXTERN_C int func_800BFB84(Unk_800BFB84* p, int a, Unk_W4* out) {
 
 EXTERN_C int func_800BFC58(Unk_800BFC58* p, int a, Unk_W4* out) {
     Unk_800BFC58_r* r;
-    p->unk630 = r = (Unk_800BFC58_r*)func_80019F64(first(&p->unk610), a);
+    p->unk630 = r = (Unk_800BFC58_r*)func_80019F64((List *)first(&p->unk610), a);
     if (r && r->unk1B8) {
         *out = r->unk1B8->unk34;
         return 1;
@@ -1205,7 +1206,7 @@ EXTERN_C int func_800BFC58(Unk_800BFC58* p, int a, Unk_W4* out) {
 
 EXTERN_C int func_800BFCEC(Unk_800BFCEC* p, int a, Unk_W4* in) {
     Unk_800BFCEC_r* r;
-    p->unk630 = r = (Unk_800BFCEC_r*)func_80019F64(first(&p->unk610), a);
+    p->unk630 = r = (Unk_800BFCEC_r*)func_80019F64((List *)first(&p->unk610), a);
     if (r) {
         Unk_800BFC58_s* s = r->unk1B8;
         if (s) {
@@ -1220,7 +1221,7 @@ EXTERN_C int func_800BFCEC(Unk_800BFCEC* p, int a, Unk_W4* in) {
 
 EXTERN_C int func_800BFD88(Unk_800BFD88* p, int a, short* out) {
     Unk_800BFD88_r* r;
-    p->unk630 = r = (Unk_800BFD88_r*)func_80019F64(first(&p->unk610), a);
+    p->unk630 = r = (Unk_800BFD88_r*)func_80019F64((List *)first(&p->unk610), a);
     if (r && r->unk1B8) {
         *out = r->unk1BC;
         return 1;
@@ -1316,7 +1317,7 @@ EXTERN_C Unk_800C0198* func_800C0198(Unk_800C0198* p, void* a, int b, void* c, i
 
 EXTERN_C void func_800C01D0(Unk_800BA9CC* p) {
     p->vtbl = D_800B70E4;
-    func_8001D024(p);
+    func_8001D024_1(p);
 }
 
 EXTERN_C int func_800C01F8(void* p) {
@@ -1401,7 +1402,7 @@ EXTERN_C void func_800C04A0(void* q) {
     int n;
     while ((n = first(l)->unk4) != 0) {
         n--;
-        delete (Unk_Deletable*)func_80019F64(first(l), n);
+        delete (Unk_Deletable*)func_80019F64((List *)first(l), n);
         func_80019C68(first(l), n);
     }
 }
@@ -1604,7 +1605,7 @@ EXTERN_C void func_800C1000(Unk_800C0814* q) {
         func_8002B27C(D_800A4578[0], p->unk70A0);
         p->unk70A0 = 0;
         for (i = first((Unk_800BFB64_list*)&p->unk23C)->unk4 - 1; i >= 0; i--) {
-            delete (Unk_Deletable18*)func_80019F64(first2(&p->unk23C), i);
+            delete (Unk_Deletable18*)func_80019F64((List *)first2(&p->unk23C), i);
         }
         func_80019D40(first((Unk_800BFB64_list*)&p->unk23C));
         func_800CF830();
@@ -1615,7 +1616,7 @@ EXTERN_C void func_800C1000(Unk_800C0814* q) {
 }
 
 EXTERN_C void func_800C1120(char* p) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_800C1120_e* e = (Unk_800C1120_e*)base(o)->unk8[k];
     if (D_800EA0B4[0] != 0) {
@@ -1632,7 +1633,7 @@ EXTERN_C void func_800C13E4(Unk_800C13E4* p) {
     func_80056874(p);
     func_80055330(0);
     p->unk68 -= 0x10;
-    func_800BB7C4(func_800787B4()->unk380);
+    func_800BB7C4(func_800787B4_t()->unk380);
 }
 
 EXTERN_C void func_800C1430(int, Unk_Short2) {}
@@ -1778,10 +1779,10 @@ EXTERN_C void func_800C1C80(char* p) {
     Unk_800C1C80_e* f;
     func_80055330(0);
     k = func_800CEC9C((Unk_800CEC9C*)(p + 0x25C));
-    o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     j = D_800B4D5C[0];
     e = (Unk_800C1C80_e*)base(o)->unk8[j];
-    f = (Unk_800C1C80_e*)base(((Unk_EntOwner*)func_800787B4())->unk328)->unk8[k];
+    f = (Unk_800C1C80_e*)base(((Unk_EntOwner*)func_800787B4_t())->unk328)->unk8[k];
     e->vf09(0);
     e->vf03(f, 1);
     func_8005549C(5, p, 0, -1);
@@ -1849,7 +1850,7 @@ EXTERN_C void func_800C20B0(void* q, int a) {
             p->unk60 = 3;
             func_800C206C((Unk_800C206C*)p, 0x80);
         }
-        func_8005388C(p, 0x10);
+        func_8005388C_b(p, 0x10);
     }
 }
 
@@ -1864,15 +1865,15 @@ EXTERN_C int func_800C2184(Unk_800C20B0* p) {
         }
         break;
     case 1:
-        if (func_80053874(p) >= 6) {
-            func_8005D9D4((char*)p + 0x68, (0x16 - func_80053874(p)) << 4);
+        if (func_80053874_b(p) >= 6) {
+            func_8005D9D4((char*)p + 0x68, (0x16 - func_80053874_b(p)) << 4);
         } else {
-            if (func_80053874(p) == 5) {
+            if (func_80053874_b(p) == 5) {
                 func_800CF32C();
                 func_800CFF6C();
             }
         }
-        if (func_80053830(p) == 0) {
+        if (func_80053830_b(p) == 0) {
             p->unk64 = 0;
             ((VWith<Unk_800C20B0_h>*)p)->vf02();
             func_80055624((char*)p + 0x50, 0);
@@ -1905,19 +1906,19 @@ EXTERN_C int func_800C2184(Unk_800C20B0* p) {
                 ((VAt<0x2C>*)p->unkA8)->vf03();
             }
         }
-        func_800C206C((Unk_800C206C*)p, -0x80 - (func_80053874(p) << 3));
-        if (func_80053830(p) == 0) {
+        func_800C206C((Unk_800C206C*)p, -0x80 - (func_80053874_b(p) << 3));
+        if (func_80053830_b(p) == 0) {
             p->unk60 = 0;
             if (p->unk5C != 1) p->unk64 = 0;
         }
         break;
     default:
-        func_800C206C((Unk_800C206C*)p, func_80053874(p) << 3);
-        if (func_80053830(p) == 0) {
+        func_800C206C((Unk_800C206C*)p, func_80053874_b(p) << 3);
+        if (func_80053830_b(p) == 0) {
             func_8002B27C(p, p->unkA8);
             p->unkA8 = 0;
             p->unk60 = 2;
-            func_8005388C(p, 0x10);
+            func_8005388C_b(p, 0x10);
         }
         break;
     }
@@ -1927,7 +1928,7 @@ EXTERN_C int func_800C2184(Unk_800C20B0* p) {
 EXTERN_C void func_800C259C(Unk_800C259C* p) {
     func_8002A210(p);
     p->unk60 = 1;
-    func_8005388C(p, 0x16);
+    func_8005388C_b(p, 0x16);
 }
 
 INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B713C);
@@ -1954,7 +1955,7 @@ EXTERN_C void func_800C2A0C(Unk_800C2A0C* p) {
 }
 
 EXTERN_C void func_800C2A6C(void* vp, int v) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_800C2A6C_e* e = (Unk_800C2A6C_e*)base(o)->unk8[k];
     Unk_W4 a;
@@ -1965,8 +1966,8 @@ EXTERN_C void func_800C2A6C(void* vp, int v) {
     int* ap = idx + (int*)&a;
     int saved = *ap;
     *ap = v;
-    func_8008B150(e, a);
-    func_8008687C(e, 0);
+    func_8008B150_f(e, a);
+    func_8008687C_b(e, 0);
     for (unsigned int i = 0; i < 8; i++) {
         int c = *(D_80015904[i] + e->unk43C);
         if (func_800549D8(&((Unk_800C2A6C*)vp)->unk1B4[i]) < c) {
@@ -1979,12 +1980,12 @@ EXTERN_C void func_800C2A6C(void* vp, int v) {
         func_80054708(&((Unk_800C2A6C*)vp)->unk4F4[i], c);
     }
     ((int*)&a)[idx] = saved;
-    func_8008B150(e, a);
+    func_8008B150_f(e, a);
     func_800697A4(((Unk_800C2A6C*)vp)->unk150);
 }
 
 EXTERN_C void func_800C2C3C(Unk_hcB* p) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_hcB_e* e = (Unk_hcB_e*)base(o)->unk8[k];
     int* q = e->unk550;
@@ -2003,7 +2004,7 @@ EXTERN_C void func_800C2C3C(Unk_hcB* p) {
 }
 
 EXTERN_C void func_800C2D40(Unk_800C2D40* p) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_Ent400* e = (Unk_Ent400*)base(o)->unk8[k];
     p->unk68 = e->unk410;
@@ -2021,7 +2022,7 @@ EXTERN_C void func_800C2D40(Unk_800C2D40* p) {
         func_80054F30(p->unk74, 7, &v, 0);
         func_80054FC0(p->unk74);
     }
-    func_80069978(p->unk150, Unk_PtS(8, 0xE), 0x36, 0x72, 0x10);
+    func_80069978_f(p->unk150, Unk_PtS(8, 0xE), 0x36, 0x72, 0x10);
     func_80069914(p->unk150);
     func_800C0814(0, 0);
     func_800C0890(0);
@@ -2032,10 +2033,10 @@ EXTERN_C void func_800C2D40(Unk_800C2D40* p) {
 }
 
 EXTERN_C void func_800C2EB8(Unk_800C2EB8* p) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_Ent400s* e = (Unk_Ent400s*)base(o)->unk8[k];
-    func_8008687C(e, 0);
+    func_8008687C_b(e, 0);
     e->unk410 = (e->unk412 < p->unk68) ? e->unk412 : p->unk68;
     e->unk420 = (e->unk422 < p->unk6A) ? e->unk422 : p->unk6A;
     func_8005783C(0);
@@ -2090,7 +2091,7 @@ EXTERN_C Unk_800C375C* func_800C375C(Unk_800C375C* self, int in_chrg) {
     self->unkD8 = 0;
     func_800C3AAC((Unk_800C3AAC*)self);
     self->unkDC = 0;
-    func_80055020(self->unk6C, Unk_Pt(8, 0xC));
+    func_80055020_f(self->unk6C, Unk_Pt(8, 0xC));
     func_80054EB4(self->unk6C, 0x130, 0x10);
     func_80054E18(self->unk6C, self->unkBC);
     return self;
@@ -2269,7 +2270,7 @@ EXTERN_C void func_800C402C(Unk_800C402C* self, int in_chrg) {
     {
         int i;
         for (i = first(&self->unk30)->unk4 - 1; i >= 0; i--) {
-            void** o = (void**)func_80019F64(first2(&self->unk30), i);
+            void** o = (void**)func_80019F64((List *)first2(&self->unk30), i);
             if (o) {
                 ((VAt0*)*o)->vf00(3);
             }
@@ -2343,8 +2344,8 @@ EXTERN_C Unk_800C44C4* func_800C44C4_i(Unk_800C44C4* self, int in_chrg, unsigned
     self->unk4C = 0;
     self->unk48 = a;
     struct { signed char a, b; } c;
-    c.a = ent_800C47B0(((Unk_EntOwner*)func_800787B4())->unk328, self->unk48)->unk54A;
-    c.b = ent_800C47B0(((Unk_EntOwner*)func_800787B4())->unk328, self->unk48)->unk54B - 4;
+    c.a = ent_800C47B0(((Unk_EntOwner*)func_800787B4_t())->unk328, self->unk48)->unk54A;
+    c.b = ent_800C47B0(((Unk_EntOwner*)func_800787B4_t())->unk328, self->unk48)->unk54B - 4;
     self->unk44 = c.a + c.b * 5;
     Unk_Short2 t;
     int xx = c.b * 23 + 0xF7;
@@ -2361,26 +2362,26 @@ EXTERN_C void func_800C46F0(void* vp, unsigned char a) {
     if (p->unk8 && ((Unk_800BFB64_node*)(p->unk30 ? p->unk30->Unk_800BFB64_list::head : 0))->unk4 > 0) {
         Unk_W2 t;
         func_8002972C(&t, a, a, a, 1);
-        ((VAt0*)func_80019F64(first2(p->unk30), 0))->vf11(&t);
+        ((VAt0*)func_80019F64((List *)first2(p->unk30), 0))->vf11(&t);
         func_800198AC(&t, 2);
     }
 }
 #undef p
 
 EXTERN_C void func_800C47B0(Unk_800C47B0* p, int a, int b) {
-    ent_800C47B0(((Unk_EntOwner*)func_800787B4())->unk328, p->unk48)->unk54A += a;
-    ent_800C47B0(((Unk_EntOwner*)func_800787B4())->unk328, p->unk48)->unk54B += b;
+    ent_800C47B0(((Unk_EntOwner*)func_800787B4_t())->unk328, p->unk48)->unk54A += a;
+    ent_800C47B0(((Unk_EntOwner*)func_800787B4_t())->unk328, p->unk48)->unk54B += b;
     p->unk4A = b * 22 - a * 29;
     p->unk4C = -a * 9 - b * 11;
     p->unk44 += a + b * 5;
-    func_8005388C(p, 6);
+    func_8005388C_b(p, 6);
 }
 
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800C48C4);
 
 EXTERN_C void func_800C497C(Unk_800C497C* p) {
     if (p->unk8 && first((Unk_800BFB64_list*)p->unk30)->unk4 > 0) {
-        VAt0* o = (VAt0*)func_80019F64(first2(p->unk30), 0);
+        VAt0* o = (VAt0*)func_80019F64((List *)first2(p->unk30), 0);
         o->vf07(p->unkC, p->unkE - 0x40);
     }
 }
@@ -2464,11 +2465,11 @@ EXTERN_C void func_800C52A0(Unk_800C52A0* p, unsigned char mode) {
     t = D_800AE640;
     SetDrawMode(p->unk10, 0, 0, func_80060154(t, k), 0);
     SetDrawMode(p->unk1C, 0, 0, func_80060154(t, k), 0);
-    p->unk28[b].u0 = func_80060188(t, k).x;
-    p->unk28[b].v0 = func_80060188(t, k).y;
+    p->unk28[b].u0 = func_80060188_f(t, k).x;
+    p->unk28[b].v0 = func_80060188_f(t, k).y;
     p->unk28[b].clut = func_800600A4(t, k);
-    p->unk50[b].u0 = func_80060188(t, 2).x;
-    p->unk50[b].v0 = func_80060188(t, 2).y;
+    p->unk50[b].u0 = func_80060188_f(t, 2).x;
+    p->unk50[b].v0 = func_80060188_f(t, 2).y;
     p->unk50[b].clut = func_800600A4(t, 2);
 }
 
@@ -2578,7 +2579,7 @@ EXTERN_C void func_800C56B8(void* p) {
 EXTERN_C void func_800C5734(char* p) {
     unsigned int i;
     for (i = 0; i < 4; i++) {
-        func_8006897C(p + 0xD8, i + 1, 0);
+        func_8006897C_s(p + 0xD8, i + 1, 0);
         func_80054094(&((Unk_800C5734*)p)->unk68[i], func_80068A5C(p + 0xD8) != 0);
     }
     func_800631D4(p);
@@ -2600,7 +2601,7 @@ EXTERN_C int func_800C57C4(Unk_800C57C4* p, Unk_FlagArg* q) {
         p->unk20 = ((int (*)(void*, int))func_80058270)(p->unk3C, 1);
     } else if (f & 0x2000) {
         if (func_8005409C(func_800550BC(p))) {
-            func_8006897C(p->unkD8, *(volatile int*)&p->unk20 + 1, 0);
+            func_8006897C_s(p->unkD8, *(volatile int*)&p->unk20 + 1, 0);
             func_800C5F68(p->unkD8);
             return 1;
         }
@@ -2620,7 +2621,7 @@ EXTERN_C void func_800C5928(char* p, int a) {
     if (a == 1) {
         unsigned int i;
         for (i = 0; i < 4; i++) {
-            func_8006897C(p + 0xD8, i + 1, 0);
+            func_8006897C_s(p + 0xD8, i + 1, 0);
             func_80054094(&((Unk_800C5734*)p)->unk68[i], func_80068A5C(p + 0xD8) != 0);
         }
         func_80054CE4(p);
@@ -2700,7 +2701,7 @@ EXTERN_C Unk_800C5BE8* func_800C5BE8(Unk_800C5BE8* self, int in_chrg) {
     self->unk32D4 = 0;
     func_800C5EE0((Unk_800C5EE0*)self);
     self->unk60 = 2;
-    func_80055020(SUB(0x227C), Unk_Pt(8, 0xC));
+    func_80055020_f(SUB(0x227C), Unk_Pt(8, 0xC));
     func_80054EB4(SUB(0x227C), 0x130, 0x10);
     func_80054E18(SUB(0x227C), SUB(0x22CC));
     *(int*)SUB(0x2508) = 2;
@@ -2772,11 +2773,11 @@ EXTERN_C void func_800C66D4(Unk_800C66D4* p, int i, int j) {
     Unk_Elem40* d = &((Unk_Elem40*)((char*)p + 0x1548))[j];
     func_80053C6C(c, d);
     func_8005457C(c, 0);
-    func_80053F48(c, q);
+    func_80053F48_f(c, q);
     q = ((Unk_Pt (*)(void*))func_80054054)(d);
     func_80053C6C(d, &t);
     func_8005457C(d, 0);
-    func_80053F48(d, q);
+    func_80053F48_f(d, q);
     func_80054CE4(p);
     func_80053964(&t, 2);
 }
@@ -2811,7 +2812,7 @@ EXTERN_C Unk_800C6B44* func_800C6B44(Unk_800C6B44* self, int in_chrg) {
     func_800C6CCC((Unk_800C6CCC*)self);
     self->unkD0 = 0;
     self->unkD4 = 0;
-    func_80055020(self->unk64, Unk_Pt(8, 0xC));
+    func_80055020_f(self->unk64, Unk_Pt(8, 0xC));
     func_80054EB4(self->unk64, 0x130, 0x10);
     func_80054E18(self->unk64, self->unkB4);
     return self;
@@ -3049,7 +3050,7 @@ EXTERN_C Unk_800C7230* func_800C7230_i(Unk_800C7230* self, int in_chrg, unsigned
     D_800EA0BC[90] = 89;
     D_800EA0BC[91] = 90;
     D_800EA0BC[92] = 91;
-    unsigned k = D_800EA0BC[((Unk_800C7230_p*)func_800787B4())->unk328->unk14C];
+    unsigned k = D_800EA0BC[((Unk_800C7230_p*)func_800787B4_t())->unk328->unk14C];
     if (k < 0x12) self->unk44 = 0;
     else if (k < 0x41) self->unk44 = c1;
     else if (k < 0x55) self->unk44 = c2;
@@ -3077,7 +3078,7 @@ EXTERN_C void func_800C7740(Unk_800C7740* self, int in_chrg) {
         vt.e[7].delta = (*(const Unk_VTbl10*)&D_800B7B9C).e[7].delta + adj;
         vt.e[9].delta = (*(const Unk_VTbl10*)&D_800B7B9C).e[9].delta + adj;
     }
-    func_80053848(self);
+    func_80053848_b(self);
     func_80055624((char*)self + 0x38, 0);
     func_800D3534();
     func_800537DC((char*)self + 0x38, 0);
@@ -3097,7 +3098,7 @@ EXTERN_C void func_800C7890(void* q) {
     p->unk44 = (p->unk44 + 1) % n;
     if (p->unk8) {
         ((VAt<8>*)((char*)Unk_800E9820_at(first2(p->unk30), 0) + 0x10))->vf02();
-        func_8005388C(p, 0x11);
+        func_8005388C_b(p, 0x11);
     }
 }
 
@@ -3108,16 +3109,16 @@ EXTERN_C void func_800C7984(void* q) {
     p->unk44 = (p->unk44 + n - 1) % n;
     if (p->unk8) {
         ((VAt<8>*)((char*)Unk_800E9820_at(first2(p->unk30), 0) + 0x10))->vf02();
-        func_8005388C(p, 0x11);
+        func_8005388C_b(p, 0x11);
     }
 }
 
 EXTERN_C int func_800C7A7C(Unk_800C7A7C* p) {
     if (p->unk8) {
-        if (func_80053874(p) >= 12) {
+        if (func_80053874_b(p) >= 12) {
             ((VAt0*)at0((Unk_Tbl*)first2(p->unk30)))->vf10(0, p->unk48);
-            ((VAt<0x2C>*)p)->vf28((func_80053874(p) - 12) * 16 & 0xF0);
-        } else if (func_80053874(p) == 10) {
+            ((VAt<0x2C>*)p)->vf28((func_80053874_b(p) - 12) * 16 & 0xF0);
+        } else if (func_80053874_b(p) == 10) {
             if (p->unk4C) {
                 ((VAt<8>*)(Unk_Base*)p)->vf02();
                 func_800D3534();
@@ -3132,18 +3133,18 @@ EXTERN_C int func_800C7A7C(Unk_800C7A7C* p) {
                 void* mem = operator new(0x738);
                 Unk_Pt pt(*(unsigned short*)&p->unkC[0], *(unsigned short*)&p->unkC[2] - p->unk48 * 7);
                 VAt0* o = func_800D35F8(mem, &pt, (void*)p->unk44, p->unk1C);
-                func_800D3B28(o, ((Unk_C7A7C_o*)func_800787B4())->unk328->unk14C);
+                func_800D3B28(o, ((Unk_C7A7C_o*)func_800787B4_t())->unk328->unk14C);
                 o->vf11(D_800B4C98);
                 Unk_800BFB64_node* n = first((Unk_800BFB64_list*)p->unk30);
                 func_80019A6C(n, (int)o, n->unk4);
                 func_8002DA94(s2, p->unk30);
             }
-        } else if (func_80053874(p) < 8) {
+        } else if (func_80053874_b(p) < 8) {
             ((VAt0*)at0((Unk_Tbl*)first2(p->unk30)))->vf10(0, p->unk48);
-            ((VAt<0x2C>*)p)->vf28((8 - func_80053874(p)) * 16 & 0xF0);
+            ((VAt<0x2C>*)p)->vf28((8 - func_80053874_b(p)) * 16 & 0xF0);
         }
     }
-    if (func_80053830(p)) return 1;
+    if (func_80053830_b(p)) return 1;
     func_8005549C(1, p, 0, -1);
     return 0;
 }
@@ -3175,7 +3176,7 @@ EXTERN_C void func_800C7EC8(Unk_800C7EC8* p, void* a) {
 EXTERN_C void func_800C7F80(Unk_800C7F80* p) {
     func_8002A210(p);
     if (p->unk8) {
-        func_8005388C(p, 0xC);
+        func_8005388C_b(p, 0xC);
     }
 }
 
@@ -3183,7 +3184,7 @@ EXTERN_C void func_800C7FC8(Unk_800C7FC8* p) {
     if (p->unk8) {
         ((VAt<8>*)((char*)at0((Unk_Tbl*)first2(p->unk30)) + 0x10))->vf02();
         p->unk4C = 1;
-        func_8005388C(p, 0x13);
+        func_8005388C_b(p, 0x13);
     }
 }
 
@@ -3407,7 +3408,7 @@ EXTERN_C void func_800C9424(Unk_800C9424p* p) {
         k = 1;
         o = t;
     }
-    func_80054054(&v, &((Unk_800C9424*)p)->unk70[idx]);
+    func_80054054_f(&v, &((Unk_800C9424*)p)->unk70[idx]);
     v.x -= 4;
     v.y += 4;
     func_80063BE4(o);
@@ -3611,7 +3612,7 @@ EXTERN_C void func_800C9FAC(void* q) {
     if (p->unk64 && func_80053880(p->unk64->unk50)) {
         p->unk64->vf27();
         func_800CA9C4((Unk_800CA9C4*)p->unk64);
-        func_800538B4(func_800CAD68(p->unk64));
+        func_800538B4_c(func_800CAD68(p->unk64));
         func_8008EF40(2);
     }
 }
@@ -3621,7 +3622,7 @@ EXTERN_C void func_800CA038(void* q) {
     if (p->unk64 && func_80053880(p->unk64->unk50)) {
         p->unk64->vf27();
         func_800CAA4C((Unk_800CA9C4*)p->unk64);
-        func_800538B4(func_800CAD68(p->unk64));
+        func_800538B4_c(func_800CAD68(p->unk64));
         func_8008EF40(2);
     }
 }
@@ -3667,7 +3668,7 @@ EXTERN_C void func_800CA5A4(Unk_800CA5A4* self, int in_chrg) {
     {
         int i;
         for (i = first(&self->unk84)->unk4 - 1; i >= 0; i--) {
-            void** o = (void**)func_80019F64(first2(&self->unk84), i);
+            void** o = (void**)func_80019F64((List *)first2(&self->unk84), i);
             if (o) {
                 ((VAt0*)*o)->vf00(3);
             }
@@ -3678,7 +3679,7 @@ EXTERN_C void func_800CA5A4(Unk_800CA5A4* self, int in_chrg) {
     func_800198AC(self->unkB4, 2);
     func_800198AC(self->unkAC, 2);
     func_800198AC(self->unkA4, 2);
-    func_80019920(self->unk84.Unk_800BFB64_list::head, 0);
+    func_80019920((List *)self->unk84.Unk_800BFB64_list::head, 0);
     func_80057558(self, 0);
     if (in_chrg & 2) {
         func_8001A610(self->vb, 0);
@@ -3694,7 +3695,7 @@ EXTERN_C void func_800CA9C4(Unk_800CA9C4* p) {
     if (p->unk64 == 0 && first(&p->unk84)->unk4 >= 3) {
         p->unk5C = func_800CAF84((Unk_800CAF84*)p, p->unk5C - 1);
         p->unk60 = 12;
-        func_8005388C(p, 12);
+        func_8005388C_b(p, 12);
         p->unk64 = 2;
     }
 }
@@ -3703,7 +3704,7 @@ EXTERN_C void func_800CAA4C(Unk_800CA9C4* p) {
     if (p->unk64 == 0 && first(&p->unk84)->unk4 >= 3) {
         p->unk5C = func_800CAF84((Unk_800CAF84*)p, p->unk5C + 1);
         p->unk60 = 12;
-        func_8005388C(p, 12);
+        func_8005388C_b(p, 12);
         p->unk64 = 3;
     }
 }
@@ -3711,7 +3712,7 @@ EXTERN_C void func_800CAA4C(Unk_800CA9C4* p) {
 EXTERN_C void func_800CAAD4(void* vp, int a) {
 #define p ((Unk_800CAAD4*)vp)
     if (a == 0) {
-        func_8005388C(p, 0x14);
+        func_8005388C_b(p, 0x14);
         p->unk64 = 4;
         p->unk80 = 1;
         return;
@@ -3736,7 +3737,7 @@ EXTERN_C unsigned char func_800CAD68_i(Unk_800CAD68* p) {
 }
 
 EXTERN_C int func_800CADB0(Unk_800CA9C4* p) {
-    int r = func_80053830(p);
+    int r = func_80053830_b(p);
     if (r) {
         switch (p->unk64) {
         case 1:
@@ -3762,14 +3763,14 @@ EXTERN_C int func_800CADB0(Unk_800CA9C4* p) {
 }
 
 EXTERN_C void func_800CAEA4(Unk_Derived50* p) {
-    func_80053848(p);
+    func_80053848_b(p);
     func_800CAAD4(p, 1);
 }
 
 EXTERN_C void func_800CAEE4(Unk_800CAEE4* p) {
     unsigned int i;
     for (i = 0; i < first((Unk_800BFB64_list*)&p->unk84)->unk4; i++) {
-        VAt<0x2C>* o = (VAt<0x2C>*)func_80019F64(first2(&p->unk84), i);
+        VAt<0x2C>* o = (VAt<0x2C>*)func_80019F64((List *)first2(&p->unk84), i);
         o->vf04();
     }
 }
@@ -3783,7 +3784,7 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800CAFE0);
 
 EXTERN_C void func_800CB418(void* vp) {
 #define p ((Unk_800CB418*)vp)
-    int n = func_80053874(p);
+    int n = func_80053874_b(p);
     if (p->unk80) {
         int d = n * 2;
         if (p->unk60 < d) {
@@ -3836,7 +3837,7 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800CB74C);
 EXTERN_C void func_800CBA70(void* vp) {
     int x0 = ((Unk_800CBA70*)vp)->unkBC;
     int y0 = ((Unk_800CBA70*)vp)->unkC0;
-    int n = func_80053874((Unk_800CBA70*)vp);
+    int n = func_80053874_b((Unk_800CBA70*)vp);
     if (n == 0x13 && first(&((Unk_800CBA70*)vp)->unk84)->unk4 >= 3) {
         at_800CBA70(&((Unk_800CBA70*)vp)->unk84, func_800CAF84((Unk_800CAF84*)vp, ((Unk_800CBA70*)vp)->unk5C + 1))->vf04();
         if (first(&((Unk_800CBA70*)vp)->unk84)->unk4 >= 4) {
@@ -4053,8 +4054,8 @@ EXTERN_C Unk_800CCD24* func_800CCD24(Unk_800CCD24* self, int in_chrg) {
     func_80054EB4(self, 0x6E, 0x21);
     func_8005457C(self, 1);
     func_80063270(self, Unk_Pt(0x5F, 0x3F));
-    func_80053F48(self->unk68, Unk_Pt(9, 2));
-    func_80053F48(self->unk84, Unk_Pt(9, 0xF));
+    func_80053F48_f(self->unk68, Unk_Pt(9, 2));
+    func_80053F48_f(self->unk84, Unk_Pt(9, 0xF));
     func_80054E18(self, self->unk68);
     func_80054E18(self, self->unk84);
     return self;
@@ -4159,7 +4160,7 @@ EXTERN_C Unk_800CD224* func_800CD224(Unk_800CD224* self, int in_chrg) {
     }
     self->unk514 = 0;
     func_800CD3C8((Unk_800CD3C8*)self);
-    func_80055020(self->unk68, Unk_Pt(8, 0xC));
+    func_80055020_f(self->unk68, Unk_Pt(8, 0xC));
     func_80054EB4(self->unk68, 0x130, 0x10);
     func_80054E18(self->unk68, self->unkB8);
     return self;
@@ -4180,7 +4181,7 @@ EXTERN_C void func_800CD554(Unk_800CD554* p) {
     p->vf04();
     func_80054EB4(p, 0xE0, first((Unk_800BFB64_list*)it)->unk4 * 13 + 8);
     func_8005457C(p, 1);
-    p->vf03(Unk_Pt(8, func_80054F28(p)->y + 0x52));
+    p->vf03(Unk_Pt(8, ((Unk_Short2 *)func_80054F28(p))->y + 0x52));
     func_80063714(p, -1);
     Unk_Short4 v(0, 1);
     v.z = 0;
@@ -4371,8 +4372,8 @@ EXTERN_C void func_800CDE70(Unk_800CDE70* p, int a) {
 
 #define p ((Unk_800CDEEC*)vp)
 EXTERN_C void func_800CDEEC(void* vp) {
-    Unk_800CDEEC_p* e = ent_800CDEEC(((Unk_EntOwner*)func_800787B4())->unk328, p->unk50);
-    func_8008687C(e ? &e->unk400 : 0, 0);
+    Unk_800CDEEC_p* e = ent_800CDEEC(((Unk_EntOwner*)func_800787B4_t())->unk328, p->unk50);
+    func_8008687C_b(e ? &e->unk400 : 0, 0);
     p->unk54 = e->unk410;
     p->unk56 = e->unk420;
 }
@@ -4382,10 +4383,10 @@ EXTERN_C void func_800CDF68(Unk_800CDF68* p) {
     if (!p->unk140) {
         return;
     }
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = p->unk50;
     Unk_Ent400s* e = (Unk_Ent400s*)base(o)->unk8[k];
-    func_8008687C(e, 0);
+    func_8008687C_b(e, 0);
     if (e->unk410 < p->unk54) {
         e->unk410 = p->unk54;
     } else if (p->unk54 < e->unk410) {
@@ -4413,14 +4414,14 @@ EXTERN_C void func_800CDF68(Unk_800CDF68* p) {
 }
 
 EXTERN_C void func_800CE154(Unk_800CE154* p) {
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = p->unk50;
     Unk_800CE154_e* e = (Unk_800CE154_e*)base(o)->unk8[k];
     func_80054708(p->unkC8, e->unk477);
     func_80054708(p->unkF0, e->unk410);
     func_80054708(p->unk118, e->unk420);
     func_80054FC0(p);
-    func_8008687C(e, 0);
+    func_8008687C_b(e, 0);
     if (!p->unk140) {
         p->unk140 = ((void* (*)(void*, int, const Unk_R_800D72B8&, int))func_800646FC)(operator new(0x58), 1, Unk_R_800D72B8(0x16, 0x1D, 0x2C, 4), 2);
         func_8005800C(p->unk3C, p->unk140);
@@ -4465,32 +4466,32 @@ EXTERN_C Unk_800CE3BC* func_800CE3BC(Unk_800CE3BC* self) {
     func_800538CC(self->unk128, D_800B8660, 1);
     func_800538CC(self->unk144, D_800B8660, 1);
     func_80054EB4(self, 0x6E, 0x10);
-    func_80053F48(self, Unk_Pt(8, 0xD0));
-    func_80053F48(self->unk10C, Unk_Pt(6, 0));
+    func_80053F48_f(self, Unk_Pt(8, 0xD0));
+    func_80053F48_f(self->unk10C, Unk_Pt(6, 0));
     func_80054E18(self, self->unk10C);
     func_8005408C(self->unk5C, 2);
-    func_80053F48(self->unk5C, Unk_Pt(0x66, 0));
+    func_80053F48_f(self->unk5C, Unk_Pt(0x66, 0));
     func_80054E18(self, self->unk5C);
-    func_80053F48(self->unkD4, Unk_Pt(0x56, 0));
+    func_80053F48_f(self->unkD4, Unk_Pt(0x56, 0));
     func_80054E18(self, self->unkD4);
-    func_80053F48(self->unk128, Unk_Pt(0x52, 0));
+    func_80053F48_f(self->unk128, Unk_Pt(0x52, 0));
     func_80054E18(self, self->unk128);
     func_8005408C(self->unk84, 2);
-    func_80053F48(self->unk84, Unk_Pt(0x52, 0));
+    func_80053F48_f(self->unk84, Unk_Pt(0x52, 0));
     func_80054E18(self, self->unk84);
-    func_80053F48(self->unkF0, Unk_Pt(0x42, 0));
+    func_80053F48_f(self->unkF0, Unk_Pt(0x42, 0));
     func_80054E18(self, self->unkF0);
-    func_80053F48(self->unk144, Unk_Pt(0x3E, 0));
+    func_80053F48_f(self->unk144, Unk_Pt(0x3E, 0));
     func_80054E18(self, self->unk144);
     func_8005408C(self->unkAC, 2);
-    func_80053F48(self->unkAC, Unk_Pt(0x3E, 0));
+    func_80053F48_f(self->unkAC, Unk_Pt(0x3E, 0));
     func_80054E18(self, self->unkAC);
     return self;
 }
 
 EXTERN_C int func_800CE6B8(VAt<0x18>* p) {
     unsigned int t = ((volatile Unk_800A4534*)&D_800A4534)->unkC;
-    unsigned int r = func_80062158(D_800B4DD0[0])->unk0;
+    unsigned int r = ((Unk_800CE6B8_r *)func_80062158(D_800B4DD0[0]))->unk0;
     if (t / 60 != r) {
         func_80062188(D_800B4DD0[0]);
         func_800CE820((Unk_800CE820*)p);
@@ -4502,7 +4503,7 @@ EXTERN_C int func_800CE6B8(VAt<0x18>* p) {
 EXTERN_C void func_800CE758(Unk_Derived50* p) {
     func_80062188(D_800B4DD0[0]);
     func_800CE820((Unk_800CE820*)p);
-    func_8005388C(p, -1);
+    func_8005388C_b(p, -1);
     func_80054FC0(p);
 }
 
@@ -4587,10 +4588,10 @@ EXTERN_C Unk_800CEA30* func_800CEA30(Unk_800CEA30* self, int in_chrg, int a, int
         unsigned int i;
         for (i = 0; i < 3; i++) {
             self->unk68[i].unk5C = 2;
-            func_80053F48(&self->unk68[i], Unk_Pt(0xC, i * 0xD + 0x11));
+            func_80053F48_f(&self->unk68[i], Unk_Pt(0xC, i * 0xD + 0x11));
         }
     }
-    func_80053F48(self->unk1AC, Unk_Pt(8, 4));
+    func_80053F48_f(self->unk1AC, Unk_Pt(8, 4));
     return self;
 }
 
@@ -4600,8 +4601,8 @@ EXTERN_C int func_800CEC9C(Unk_800CEC9C* p) { return p->unk20; }
 
 EXTERN_C void func_800CECA8(Unk_800CEC60* p) {
     for (unsigned int i = 0; i < D_800B4DD0[0]->unk1FB; i++) {
-        Unk_800CECA8_e* e = (Unk_800CECA8_e*)base(((Unk_EntOwner*)func_800787B4())->unk328)->unk8[i];
-        func_8008687C(e, 0);
+        Unk_800CECA8_e* e = (Unk_800CECA8_e*)base(((Unk_EntOwner*)func_800787B4_t())->unk328)->unk8[i];
+        func_8008687C_b(e, 0);
         func_80054094(&p->unk68[i], e->unk410 == e->unk412);
     }
 }
@@ -4610,7 +4611,7 @@ EXTERN_C void func_800CED70(Unk_800CEC60* p, Unk_800CED70_q* q) {
     unsigned int i;
     if ((unsigned int)(q->unk1B - 12) < 4) {
         for (i = 0; i < D_800B4DD0[0]->unk1FB; i++) {
-            void* e = base(((Unk_EntOwner*)func_800787B4())->unk328)->unk8[i];
+            void* e = base(((Unk_EntOwner*)func_800787B4_t())->unk328)->unk8[i];
             func_80054094(&p->unk68[i], func_8008A5C8(e, e, q) == 0);
         }
     } else {
@@ -4840,7 +4841,7 @@ EXTERN_C Unk_800D03B0* func_800D03B0(Unk_800D03B0* self, int in_chrg, int b, uns
 
 EXTERN_C void func_800D04E4(Unk_800D04E4* p, int a, int x, int y) {
     if (p->unk8 && first((Unk_800BFB64_list*)p->unk30)->unk4 > 0) {
-        VAt0* o = (VAt0*)func_80019F64(first2(p->unk30), 0);
+        VAt0* o = (VAt0*)func_80019F64((List *)first2(p->unk30), 0);
         o->vf08(p->unk10, p->unk12);
         o->vf07(p->unkC - x, p->unkE - y);
         func_800CC534(o, a);
@@ -4856,7 +4857,7 @@ EXTERN_C void func_800D0608(Unk_800D0704* p, Unk_Short2 a, Unk_Short2 b, int c) 
         p->vf07(a.x, a.y);
         p->vf08(b.x, b.y);
         p->vf03();
-        ((VAt0*)func_80019F64(first2(p->unk30), 0))->vf11(c);
+        ((VAt0*)func_80019F64((List *)first2(p->unk30), 0))->vf11(c);
     }
 }
 
@@ -4864,7 +4865,7 @@ EXTERN_C void func_800D0704(Unk_800D0704* p, int a) {
     if (p->unk8) {
         p->vf04();
         p->vf03();
-        ((VAt0*)func_80019F64(first2(p->unk30), 0))->vf11(a);
+        ((VAt0*)func_80019F64((List *)first2(p->unk30), 0))->vf11(a);
     }
 }
 
@@ -4873,7 +4874,7 @@ EXTERN_C void func_800D07B8(void* vp, unsigned char a) {
     if (p->unk8 && ((Unk_800BFB64_node*)(p->unk30 ? p->unk30->Unk_800BFB64_list::head : 0))->unk4 > 0) {
         Unk_W2 t;
         func_8002972C(&t, a, a, a, 1);
-        ((VAt0*)func_80019F64(first2(p->unk30), 0))->vf11(&t);
+        ((VAt0*)func_80019F64((List *)first2(p->unk30), 0))->vf11(&t);
         func_800198AC(&t, 2);
     }
 }
@@ -4883,7 +4884,7 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800D0878);
 
 EXTERN_C void func_800D09E8(Unk_800D09E8* p) {
     if (p->unk8 && first((Unk_800BFB64_list*)p->unk30)->unk4 > 0) {
-        VAt0* o = (VAt0*)func_80019F64(first2(p->unk30), 0);
+        VAt0* o = (VAt0*)func_80019F64((List *)first2(p->unk30), 0);
         o->vf07(p->unkC, p->unkE);
         o->vf08(p->unk10, p->unk12);
     }
@@ -5021,7 +5022,7 @@ EXTERN_C void func_800D1078(void* p) { func_800557C8(p, 1, 11); }
 EXTERN_C void func_800D109C(Unk_800D109C* p) {
     p->unk6C = 1;
     if (p->unk68) {
-        func_80053F48(p, Unk_Pt(8, 0x5C));
+        func_80053F48_f(p, Unk_Pt(8, 0x5C));
         func_800566E4(p);
         func_800D1490(p);
         func_8008EF40(0xC);
@@ -5590,13 +5591,13 @@ EXTERN_C void func_800D3AC8(Unk_800D3AC8* p, int a) {
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D3B28);
 
 EXTERN_C int func_800D3C50(Unk_800D3C50* p) {
-    int a = func_80053874(p);
-    int v = a * (0x1F - func_80053874(p));
+    int a = func_80053874_b(p);
+    int v = a * (0x1F - func_80053874_b(p));
     p->unk110[p->unk1C + D_800B4CF0[0]].unkC = v;
     p->unk110[p->unk1C + D_800B4CF0[0]].unkD = v / 4;
     p->unk110[p->unk1C + D_800B4CF0[0]].unkE = v / 4;
-    if (!func_80053830(p)) {
-        func_8005388C(p, 0x1F);
+    if (!func_80053830_b(p)) {
+        func_8005388C_b(p, 0x1F);
     }
     func_8005F1D8(p);
     return 1;
@@ -5604,7 +5605,7 @@ EXTERN_C int func_800D3C50(Unk_800D3C50* p) {
 
 EXTERN_C void func_800D3D54(Unk_800D3D54* p) {
     func_80055624((char*)p + 0x10, 0);
-    func_80053848(p);
+    func_80053848_b(p);
     if (p->unk1C >= 0) {
         p->unk110[p->unk1C + D_800B4CF0[0]].unkD = 0;
         p->unk110[p->unk1C + D_800B4CF0[0]].unkE = 0;
@@ -5942,7 +5943,7 @@ INCLUDE_RODATA("asm/field/nonmatchings/field", D_800B8F2C);
 INCLUDE_ASM("asm/field/nonmatchings/field", func_800D5890);
 
 EXTERN_C int func_800D5C60(void* p, Unk_800D5C60_arg* q) {
-    if (!func_800557A0(p)) {
+    if (!func_800557A0_1(p)) {
         int f = ~q->unk1A;
         int k;
         if (f & 0x10) {
@@ -6243,30 +6244,30 @@ EXTERN_C void func_800D7B6C(Unk_800D7B6C* p) {
     p->unk10C = new Unk_800D7B6C_a[2];
     func_80053BCC(p->unk10C, (int)D_800B9078, 4);
     func_80053BCC(&p->unk10C[1], (int)D_800B9084, 4);
-    func_80053F48(&p->unk10C[0], Unk_Pt(0x18, 0x40));
-    func_80053F48(&p->unk10C[1], Unk_Pt(0x98, 0x40));
+    func_80053F48_f(&p->unk10C[0], Unk_Pt(0x18, 0x40));
+    func_80053F48_f(&p->unk10C[1], Unk_Pt(0x98, 0x40));
     func_80054E18(p->unkD8, &p->unk10C[0]);
     func_80054E18(p->unkD8, &p->unk10C[1]);
     p->unk110 = new Unk_800D7B6C_b[10];
     p->unk114 = new Unk_800D7B6C_b[8];
     func_800549EC(&p->unk110[8], 1000000);
-    func_80053F48(&p->unk110[8], Unk_Pt(0x3C, 0x40));
+    func_80053F48_f(&p->unk110[8], Unk_Pt(0x3C, 0x40));
     func_80054E18(p->unkD8, &p->unk110[8]);
     func_800549EC(&p->unk110[9], 1000000);
-    func_80053F48(&p->unk110[9], Unk_Pt(0xBC, 0x40));
+    func_80053F48_f(&p->unk110[9], Unk_Pt(0xBC, 0x40));
     func_80054E18(p->unkD8, &p->unk110[9]);
     for (i = 0; i < 8; i++) {
         int x = (i & 1) << 7;
         int y = (i >> 1) * 13 + 10;
         func_8005408C(&p->unk110[i], 2);
-        func_80053F48(&p->unk110[i], Unk_Pt(x + 0x48, y));
+        func_80053F48_f(&p->unk110[i], Unk_Pt(x + 0x48, y));
         func_80054E18(p->unkD8, &p->unk110[i]);
         func_8005408C(&p->unk114[i], 2);
         func_800549E4(&p->unk114[i], 1);
-        func_80053F48(&p->unk114[i], Unk_Pt(x + 0x68, y));
+        func_80053F48_f(&p->unk114[i], Unk_Pt(x + 0x68, y));
         func_80054E18(p->unkD8, &p->unk114[i]);
     }
-    func_80069978(p->unkD8, Unk_PtS(0x18, 0xA), 0x6C, 0x80, 0xD);
+    func_80069978_f(p->unkD8, Unk_PtS(0x18, 0xA), 0x6C, 0x80, 0xD);
 }
 
 EXTERN_C void func_800D7F10(Unk_800D7F10* p) {
@@ -6664,8 +6665,8 @@ EXTERN_C void func_800D9778(Unk_800D9778* p, unsigned char mode) {
     t = D_800AE640;
     SetDrawMode(p->unk10, 0, 0, func_80060154(t, k), 0);
     SetDrawMode(p->unk1C, 0, 0, func_80060154(t, k), 0);
-    p->unk28[b].u0 = func_80060188(t, k).x;
-    p->unk28[b].v0 = func_80060188(t, k).y;
+    p->unk28[b].u0 = func_80060188_f(t, k).x;
+    p->unk28[b].v0 = func_80060188_f(t, k).y;
     p->unk28[b].clut = func_800600A4(t, k);
 }
 
@@ -6738,9 +6739,9 @@ EXTERN_C void func_800D9B44(Unk_800D9B44* p, void* a) {
     if (p->unk8) {
         func_8005C088(p, a, 1);
         Unk_800BFB64_node* m = first(p->unk30);
-        func_80019A6C(m, (int)func_80053250(operator new(0x2C), Unk_RectP(0, 0x22, 0x140, 0xBE), D_800B4C98, p->unk1C), m->unk4);
+        func_80019A6C(m, (int)func_80053250_f(operator new(0x2C), Unk_RectP(0, 0x22, 0x140, 0xBE), D_800B4C98, p->unk1C), m->unk4);
         Unk_800BFB64_node* n = first(p->unk30);
-        func_80019A6C(n, (int)func_8002860C(operator new(0x50), Unk_RectP(0x20, 0x22, 0x100, 0xBE), p->unk38, p->unk1C, D_800B4C74), n->unk4);
+        func_80019A6C(n, (int)func_8002860C_f(operator new(0x50), Unk_RectP(0x20, 0x22, 0x100, 0xBE), p->unk38, p->unk1C, D_800B4C74), n->unk4);
         func_8002DA94(a, p->unk30);
     }
 }
@@ -6796,7 +6797,7 @@ EXTERN_C Unk_800D9EE0* func_800D9EE0(Unk_800D9EE0* self, int in_chrg, int a2, in
     *(int*)SUB(0x2484) = 0;
     *(int*)SUB(0x24E4) = 1;
     func_80054EB4(SUB(0x2488), 0x50, 0x22);
-    func_80053F48(SUB(0x2488), Unk_Pt(0x98, 0x80));
+    func_80053F48_f(SUB(0x2488), Unk_Pt(0x98, 0x80));
     func_80054E18(SUB(0x2488), SUB(0x2564));
     func_80054E18(SUB(0x2488), SUB(0x24F8));
     self->unk227C = a2;
@@ -6805,7 +6806,7 @@ EXTERN_C Unk_800D9EE0* func_800D9EE0(Unk_800D9EE0* self, int in_chrg, int a2, in
     for (unsigned i = 0; i < 3; i++) ((int*)SUB(0x2470))[i] = 0;
     func_80053FB0(SUB(0x22D4), 0, 0x130);
     func_80054E18(SUB(0x2284), SUB(0x22D4));
-    func_80055020(SUB(0x2284), Unk_Pt(8, 0xC));
+    func_80055020_f(SUB(0x2284), Unk_Pt(8, 0xC));
     func_80054EB4(SUB(0x2284), 0x130, 0x10);
     {
         Unk_Short4 v(0, 1);
@@ -6901,15 +6902,15 @@ EXTERN_C int func_800DA6A4(Unk_800DA6A4* p, Unk_DA6A4_q* q) {
     }
     if (q->unk18 & 0x2000) {
         int idx = p->unk1C.unk20;
-        int a = (unsigned char)func_80061188(D_800B4DD0[0], idx)[0x1A];
-        int s = ((unsigned char)func_80061188(D_800B4DD0[0], idx)[0x8B] >> 7) == 1 || a || func_800DB7E8((Unk_800DB7E8*)p->unk22F0, (Unk_800DB7E8_a*)func_80061188(D_800B4DD0[0], idx));
+        int a = (unsigned char)((char *)func_80061188(D_800B4DD0[0], idx))[0x1A];
+        int s = ((unsigned char)((char *)func_80061188(D_800B4DD0[0], idx))[0x8B] >> 7) == 1 || a || func_800DB7E8((Unk_800DB7E8*)p->unk22F0, (Unk_800DB7E8_a*)func_80061188(D_800B4DD0[0], idx));
         if (s) {
             func_800DADD4((Unk_800DADD4*)p, a ? a : -1);
             p->unk247C->vf04();
             func_8008EF40(0xE);
             return 1;
         }
-        if (func_8005409C(func_80019F64(first2(&p->unk1C), idx))) {
+        if (func_8005409C(func_80019F64((List *)first2(&p->unk1C), idx))) {
             func_800691EC(p, idx, 1);
             p->unk2468++;
             p->unk23A8[idx] = 0;
@@ -6968,7 +6969,7 @@ EXTERN_C void func_800DABA8(Unk_800DABA8* p, int a) {
                 func_8008EF40(0xC);
                 p->unk247C = (VAt<0x18>*)func_80054AF0(operator new(0x50), 2);
                 func_80054EB4(p->unk247C, 0xE0, 0x13);
-                func_80053F48(p->unk247C, Unk_Pt(8, 0x40));
+                func_80053F48_f(p->unk247C, Unk_Pt(8, 0x40));
                 p->unk2480 = func_80053928(operator new(0x1C));
                 func_80054E18(p->unk247C, p->unk2480);
                 p->unk2484 = func_8005464C(operator new(0x28));
@@ -7271,7 +7272,7 @@ INCLUDE_ASM("asm/field/nonmatchings/field", func_800DBFC4);
 
 EXTERN_C void func_800DC978(He_H_p* p) {
     p->unk2C4 = 0;
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     He_H_e* e = (He_H_e*)base(o)->unk8[k];
     unsigned i = 0;
@@ -7289,7 +7290,7 @@ EXTERN_C void func_800DC978(He_H_p* p) {
     func_80054708(p->unk3FC + 0x140, e->unk54C);
     func_80054708(p->unk3FC + 0x168, func_8008B130(e, e->unk477));
     func_80054708(p->unk4AC, e->unk477);
-    func_8008687C(e, 0);
+    func_8008687C_b(e, 0);
     e->unk410 = e->unk412;
     e->unk420 = e->unk422;
     func_80054708(p->unk4FC, e->unk412);
@@ -7313,7 +7314,7 @@ EXTERN_C void func_800DCB4C(Unk_800DCB4C* p) {
     func_8002B174(D_800A4578[0], p->unk3E8, -1);
     p->unk3E8->vf27();
     p->unk3E8->vf03();
-    func_800538B4(0);
+    func_800538B4_c(0);
     func_8006BDE0(D_800B4ED8[0]);
 }
 
@@ -7328,7 +7329,7 @@ EXTERN_C void func_800DCC0C(Unk_800DCC0C* p) {
     func_8002B27C(D_800A4578[0], p->unk3EC);
     p->unk3EC = 0;
     func_80054FE0(p->unk320);
-    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4())->unk328;
+    Unk_EntTabObj* o = ((Unk_EntOwner*)func_800787B4_t())->unk328;
     int k = D_800B4D5C[0];
     Unk_800DCC0C_e* e = (Unk_800DCC0C_e*)base(o)->unk8[k];
     char* c = (char*)e + 0x424;
@@ -7368,7 +7369,7 @@ EXTERN_C int func_800DDDF8() {
     switch (D_800AF410[0]) {
     case 1:
     case 3:
-        func_8006F154();
+        func_8006F154_0();
         return 1;
     case 2:
     case 4:

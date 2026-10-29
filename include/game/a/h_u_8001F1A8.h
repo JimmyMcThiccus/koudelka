@@ -9,7 +9,6 @@ EXTERN_C void *D_800100F8[];
 EXTERN_C void *D_80010470[];
 EXTERN_C void *D_80010480[];
 EXTERN_C void *D_800104F8[];
-EXTERN_C int VSyncCallback(void (*f)());
 EXTERN_C void func_8001F9C0();
 struct S_8001F930 {
     void **vtbl;

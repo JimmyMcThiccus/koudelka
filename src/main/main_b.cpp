@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_main_b
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -159,10 +161,13 @@ EXTERN_C void func_80054FE0(void *self)
     }
 }
 
+// func_80053F28 takes its 4-byte struct by value as S_Rgb (defined in main_a2b); main_b passes the same two shorts as SV2C_80055020.
+EXTERN_C void func_80053F28_v(void *self, SV2C_80055020 v) asm("func_80053F28");
+
 EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
 {
     char *o;
-    func_80053F28(self, v);
+    func_80053F28_v(self, v);
     o = FIELD_AT(self, char *, 0x3C);
     if (o != 0) {
         ((VObj<8> *)(o + 0x50))->v02();
@@ -170,12 +175,12 @@ EXTERN_C void func_80055020(void *self, SV2C_80055020 v)
     }
 }
 
-EXTERN_C void func_800550BC(void *self)
+EXTERN_C void *func_800550BC(void *self)
 {
     char *h = (char *)self + 0x1C;
     char *g = h ? (char *)self + 0x24 : 0;
     int n = FIELD_AT(h, int, 0x4);
-    func_80019F64(g ? FIELD_AT(g, List *, 0x0) : 0, n);
+    return func_80019F64(g ? FIELD_AT(g, List *, 0x0) : 0, n);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_800550FC);
@@ -397,12 +402,15 @@ INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055A9C);
 
 INCLUDE_ASM("asm/main/nonmatchings/main_b", func_80055D78);
 
+// func_80019CFC takes two arguments; retail passes one here and leaves $a1 as it is.
+EXTERN_C int func_80019CFC_1(void *l) asm("func_80019CFC");
+
 EXTERN_C void func_80055F0C(void *self, void *x)
 {
     char *h = FIELD_AT(self, char *, 0x44F4);
     char *v = h ? h + 8 : 0;
     char *p;
-    func_80019CFC(v ? *(void **)v : 0);
+    func_80019CFC_1(v ? *(void **)v : 0);
     if (--FIELD_AT(self, int, 0x44F0) == 0) {
         p = FIELD_AT(self, char *, 0x44F4);
         if (p != 0) {
@@ -435,8 +443,7 @@ EXTERN_C int func_8005618C(void *p)
     return D_800B4D98 == 0;
 }
 
-EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, int e) asm("func_80056198");
-EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, int e)
+EXTERN_C S_C50_64 *func_80056198(S_C50_64 *p, int in_chrg, int a2, int a3, int e)
 {
     VTabB50 tmp1;
     VTabB50 tmp;
@@ -474,12 +481,11 @@ EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, i
     FIELD_AT(p, void **, 0x18) = D_80013C70;
     FIELD_AT(p, int, 0x5C) = 1;
     FIELD_AT(p, int, 0x60) = 1;
-    func_80054094_v(p, a3);
+    func_80054094(p, a3);
     return p;
 }
 
-EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3) asm("func_80056364");
-EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
+EXTERN_C S_C50_64 *func_80056364(S_C50_64 *p, int in_chrg, int a2, int a3)
 {
     VTabB50 tmp1;
     VTabB50 tmp;
@@ -490,7 +496,7 @@ EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_80054AF0_v(p, a3);
+    func_80054AF0(p, a3);
     {
         S_SubB *m = (S_SubB *)((char *)p + 0x50);
         char *q;
@@ -517,11 +523,11 @@ EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
     FIELD_AT(p, void **, 0x18) = D_80013C70;
     FIELD_AT(p, int, 0x5C) = 1;
     FIELD_AT(p, int, 0x60) = 1;
-    func_80054094_v(p, a2);
+    func_80054094(p, a2);
     return p;
 }
 
-EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
+EXTERN_C void func_8005652C(S_Dtor50 *p, int flags)
 {
     FIELD_AT(p, void **, 0x54) = D_80013BD0;
     FIELD_AT(p, void **, 0x58) = D_80013C50;
@@ -536,7 +542,7 @@ EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
         tmp.e[6].d = D_80013C00.e[6].d + adj;
     }
     func_800205D4_v(p ? (char *)p + 0x58 : 0);
-    func_8002EE9C_v((char *)p + 0x58, 0);
+    func_8002EE9C((char *)p + 0x58, 0);
     {
         S_SubB *m = (S_SubB *)((char *)p + 0x50);
         VTabB50 tmp;
@@ -549,7 +555,7 @@ EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
         tmp.e[1].d = D_80010538.e[1].d + (adj = (char *)m - (q = (char *)m->vb - 8));
         tmp.e[6].d = D_80010538.e[6].d + adj;
     }
-    func_80054C34_v(p, 0);
+    func_80054C34(p, 0);
     if (flags & 2)
         func_8001A610(p->vb, 0);
     if (flags & 1)

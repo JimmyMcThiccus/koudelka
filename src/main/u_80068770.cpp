@@ -1,4 +1,6 @@
 #include "common.h"
+#define EXE_H_IN_u_80068770
+#include "shared/exe.h"
 #include "shared/vbase.h"
 #include "game/b/field.h"
 #include "game/b/globals.h"
@@ -23,14 +25,14 @@ EXTERN_C void func_8006897C(void *self, int b, int c)
     FIELD_AT(self, int, 0x1CFC) = c;
 }
 
-EXTERN_C void func_800689E0(void *self)
+EXTERN_C void *func_800689E0(void *self)
 {
     int i = FIELD_AT(self, int, 0x20);
     if (i < FIELD_AT(self, unsigned short, 0x1CF0)) {
-        func_80061188((Obj_80061188 *)D_800B4DD0_w, FIELD_AT((char *)self + i, signed char, 0x68));
+        return func_80061188((Obj_80061188 *)D_800B4DD0_w, FIELD_AT((char *)self + i, signed char, 0x68));
     } else {
         int j = FIELD_AT(self, unsigned short, 0x1D00);
-        func_80061164(D_800B4DD0_w, j ? j - 1 : 0);
+        return func_80061164(D_800B4DD0_w, j ? j - 1 : 0);
     }
 }
 
@@ -100,7 +102,7 @@ EXTERN_C int func_80068F3C(void *self, void *m)
         if (!func_80053880(t ? t + 0x50 : 0)) {
             return 1;
         }
-        void *p = func_800550BC_r(self);
+        void *p = func_800550BC(self);
         if (func_8005409C(p)) {
             FIELD_AT(self, int, 0x1D04) = 1;
             ((VObj<0x18> *)p)->v01();
@@ -186,6 +188,9 @@ EXTERN_C void func_80069958(void *self)
     func_80054FE0(self);
 }
 
+// func_80053F48 takes its 4-byte struct by value as S_A2_Pt (defined in main_a2b); main_b passes the same two shorts as SV2C_80055020.
+EXTERN_C void func_80053F48_v(void *self, SV2C_80055020 v) asm("func_80053F48");
+
 EXTERN_C void func_80069978(O_80069978 *self, SV2C_80055020 *pp, int dx, int dy, int step)
 {
     SV2C_80055020 p = *pp;
@@ -193,13 +198,13 @@ EXTERN_C void func_80069978(O_80069978 *self, SV2C_80055020 *pp, int dx, int dy,
     while (1) {
         if (!(i < 8)) break;
         func_8005457C(&self->a[i], 0);
-        func_80053F48(&self->a[i], p);
+        func_80053F48_v(&self->a[i], p);
         func_8005457C(&self->a[i + 1], 0);
-        func_80053F48(&self->a[i + 1], SV2C_80055020(p.x + dy, p.y));
+        func_80053F48_v(&self->a[i + 1], SV2C_80055020(p.x + dy, p.y));
         func_8005457C(&self->b[i], 0);
-        func_80053F48(&self->b[i], SV2C_80055020(p.x + dx, p.y));
+        func_80053F48_v(&self->b[i], SV2C_80055020(p.x + dx, p.y));
         func_8005457C(&self->b[i + 1], 0);
-        func_80053F48(&self->b[i + 1], SV2C_80055020(p.x + dx + dy, p.y));
+        func_80053F48_v(&self->b[i + 1], SV2C_80055020(p.x + dx + dy, p.y));
         p.y += step;
         i += 2;
     }
@@ -804,9 +809,12 @@ EXTERN_C void func_8006B8E8(void *self, int b, Blk_8006B8E8 *c)
     func_8006C3C8(self, b, c);
 }
 
+// func_8003B310 takes one argument and returns an S_A2_V4; retail passes none here and leaves $a1 as it is.
+EXTERN_C V_8006B928 func_8003B310_0() asm("func_8003B310");
+
 EXTERN_C void func_8006B928(void *self, int b)
 {
-    FIELD_AT(self, V_8006B928, 0x2C8) = func_8003B310();
+    FIELD_AT(self, V_8006B928, 0x2C8) = func_8003B310_0();
     func_8006C4EC(self, b);
 }
 
