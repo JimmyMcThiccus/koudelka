@@ -1,3 +1,4 @@
+// r4c: still 4. The 0x204 buf's slot rounds to 0x208 (BLKmode temp, 8-aligned), so nothing can sit at sp+0x214 after it: even an int temp lands at 0x218. Retail must have buf <= 0x200 plus another 4-byte slot at 0x210, or an inline-function frame. Same issue as FIELD func_800C0654.
 // func_800BDEDC: 4 differing instructions: the SVec2C(-1,-1) temp lands at sp+0x218 (BLK temp 8-aligned after buf[0x204]); retail has it at sp+0x214
 #include "common.h"
 #include "shared/exe.h"

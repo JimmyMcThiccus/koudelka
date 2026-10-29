@@ -1,3 +1,4 @@
+// r4c: still 1 insn short. Retail loads into a temp, copies it to s3 and sign-extends the temp. Tried: o-pointer local, assignment chains, an inline accessor returning int, a member get(), char/uchar types, the cast inside the loop.
 // func_800E2C08: 4 bytes short: retail keeps the loaded value in v0 (lw v0,0x14C(v0); addu s3,v0,zero; sll v0,v0,24).
 #include "common.h"
 #include "shared/exe.h"

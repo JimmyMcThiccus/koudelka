@@ -1,3 +1,4 @@
+// r4c: still 4. Retail hoists &p->unk5E0 (first()'s null test) out of BOTH loops; ours only out of the inner one. Tried: 25 decl orders with an explicit q=&p->unk5E0 (11+), for/while/goto/break outer-loop shapes. The permuter can't parse it (undefined struct in C mode).
 // func_800BC394: 4 differing: retail schedules addiu s6,s5,0x5E0 before lw s2,4(s0); the build puts it after the beqz s4. Needs asm alias for the (void*) header declaration.
 #include "common.h"
 #include "shared/exe.h"

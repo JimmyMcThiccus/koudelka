@@ -1,3 +1,4 @@
+// r4c: same stack-slot problem as BATTLE func_800BDEDC (see its draft): a temp after a 0x204-byte buf can't land at sp+0x214.
 // func_800C0654: 4 differing: stack slot of the Unk_Short2 temporary (retail sp+0x214, build sp+0x218).
 #include "common.h"
 #include "shared/exe.h"
