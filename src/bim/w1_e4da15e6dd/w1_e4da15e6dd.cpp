@@ -1,4 +1,5 @@
 #include "common.h"
+#include "bim/shared.h"
 
 EXTERN_C void *func_800DBE54(void *self, int in_chrg, int a, int b, int c, int d, int e);
 
@@ -35,7 +36,53 @@ INCLUDE_ASM("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", bimf_050d93e7);
 
 #include "../shared/bimf_a1b3cda8.cpp"
 
-INCLUDE_ASM("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", func_800DC704);
+EXTERN_C int bimf_050d93e7_c(void *p, unsigned *flags) asm("bimf_050d93e7");
+EXTERN_C int bimf_af99c5b3_c(void *p, unsigned *flags) asm("bimf_af99c5b3");
+EXTERN_C int bimf_af99c5b3_1_c(void *p, unsigned *flags) asm("bimf_af99c5b3_1");
+EXTERN_C int bimf_af99c5b3_2_c(void *p, unsigned *flags) asm("bimf_af99c5b3_2");
+EXTERN_C int bimf_a1b3cda8_c(void *p, unsigned *flags) asm("bimf_a1b3cda8");
+
+EXTERN_C int func_800DC704(BimMon *p, unsigned *flags)
+{
+    if ((*flags & 3) == 3) {
+        p->f9F0 = 0;
+        return 0;
+    }
+    switch (p->f9F0) {
+    case 1:
+        if (!bimf_050d93e7_c(p, flags))
+            return 0;
+        p->f9F0 = 0;
+        *flags &= ~2;
+        return 1;
+    case 2:
+        if (!bimf_af99c5b3_c(p, flags))
+            return 0;
+        p->f9F0 = 0;
+        *flags &= ~2;
+        return 1;
+    case 4:
+        if (!bimf_af99c5b3_1_c(p, flags))
+            return 0;
+        p->f9F0 = 0;
+        *flags &= ~2;
+        return 1;
+    case 8:
+        if (!bimf_af99c5b3_2_c(p, flags))
+            return 0;
+        p->f9F0 = 0;
+        *flags &= ~1;
+        return 1;
+    case 16:
+        if (!bimf_a1b3cda8_c(p, flags))
+            return 0;
+        p->f9F0 = 0;
+        return 1;
+    }
+    if (p->f9F0)
+        p->f9F0 = 0;
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", bimf_9421c4d7);
 
