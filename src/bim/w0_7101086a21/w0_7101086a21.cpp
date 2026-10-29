@@ -90,7 +90,21 @@ EXTERN_C int func_800DB33C(BimMon *p, unsigned *flags)
 
 INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB464);
 
-INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB624);
+EXTERN_C int func_800DB624(void *p, unsigned *flags)
+{
+    int ret;
+    if (*flags & 1) {
+        func_800D7914((BimMon *)p, -1);
+        func_800D7A20(p, 5);
+        func_800D7A20(p, 0);
+        if (!func_800D8064(p))
+            return 0;
+        ret = 1;
+        *flags &= ~1;
+        return ret;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB6A8);
 

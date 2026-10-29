@@ -79,7 +79,28 @@ INCLUDE_ASM("asm/bim/w1_57bab1279a/nonmatchings/w1_57bab1279a", func_800DC824);
 
 #include "../shared/bimf_814d219a.cpp"
 
-INCLUDE_ASM("asm/bim/w1_57bab1279a/nonmatchings/w1_57bab1279a", func_800DCA98);
+EXTERN_C int func_800DCA98(char *p)
+{
+    int r = func_800D8E64_a(p);
+    switch (r) {
+    case 1:
+        func_80082670(p + 0x2A4, 0x10, 0x10);
+        func_80082670(p + 0x2A4, 0x11, 0x11);
+        break;
+    case 4:
+        func_80082670(p + 0x2A4, 0x10, 0x12);
+        func_80082670(p + 0x2A4, 0x11, 0x13);
+        break;
+    case 2:
+    case 3:
+    case 5:
+    case 6:
+        func_80082670(p + 0x2A4, 0x10, 0x7);
+        func_80082670(p + 0x2A4, 0x11, 0x8);
+        break;
+    }
+    return r;
+}
 
 INCLUDE_RODATA("asm/bim/w1_57bab1279a/nonmatchings/w1_57bab1279a", D_800DBBB0);
 

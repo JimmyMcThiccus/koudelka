@@ -13,7 +13,7 @@ struct BimV {
     virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
     virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
     virtual void v16(); virtual void v17(); virtual void v18(int a);
-    virtual void v19(int a); virtual void v20(int a); virtual int v21(int a);
+    virtual void v19(int a); virtual void v20(int a); virtual int v21(int a); virtual int v22(int a);
 };
 
 /* Virtual-base vtable (10 entries of 8 bytes, as in battle.h) and the destructor object. */

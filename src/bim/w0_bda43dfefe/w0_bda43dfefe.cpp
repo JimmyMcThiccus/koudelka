@@ -41,7 +41,25 @@ EXTERN_C void func_800DAD0C(BimDtor *self, int in_chrg)
 
 INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DAE50);
 
-INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DB018);
+EXTERN_C int func_800DB018(char *p)
+{
+    int r = func_800D8E64_a(p);
+    switch (r) {
+    case 1:
+        func_80082670(p + 0x2A4, 0x10, 0xD);
+        func_80082670(p + 0x2A4, 0x11, 0xE);
+        break;
+    case 2:
+        func_80082670(p + 0x2A4, 0x10, 7);
+        func_80082670(p + 0x2A4, 0x11, 8);
+        break;
+    case 3:
+        func_80082670(p + 0x2A4, 0x10, 7);
+        func_80082670(p + 0x2A4, 0x11, 8);
+        break;
+    }
+    return r;
+}
 
 #include "../shared/bimf_1a38796b.cpp"
 
@@ -67,7 +85,54 @@ INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DB448);
 
 INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DB584);
 
-INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DB634);
+EXTERN_C int bimf_af99c5b3_c(void *p, unsigned *flags) asm("bimf_af99c5b3");
+EXTERN_C int bimf_af99c5b3_1_c(void *p, unsigned *flags) asm("bimf_af99c5b3_1");
+EXTERN_C int bimf_af99c5b3_2_c(void *p, unsigned *flags) asm("bimf_af99c5b3_2");
+EXTERN_C int bimf_af99c5b3_3_c(void *p, unsigned *flags) asm("bimf_af99c5b3_3");
+EXTERN_C int func_800DB584_c(void *p, unsigned *flags) asm("func_800DB584");
+
+EXTERN_C int func_800DB634(BimMon *p, unsigned *flags)
+{
+    switch (p->f9F0) {
+    case 1:
+        if (bimf_af99c5b3_c(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 2:
+        if (bimf_af99c5b3_1_c(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 4:
+        if (bimf_af99c5b3_2_c(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 8:
+        if (bimf_af99c5b3_3_c(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~1;
+            return 1;
+        }
+        break;
+    case 16:
+        if (func_800DB584_c(p, flags)) {
+            p->f9F0 = 0;
+            return 1;
+        }
+        break;
+    }
+    if (p->f9F0)
+        p->f9F0 = 0;
+    return 0;
+}
 
 #include "../shared/bimf_db5f4bc4.cpp"
 
