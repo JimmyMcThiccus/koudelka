@@ -87,10 +87,11 @@ struct BimCtl {
     int f24;
 };
 struct BimGlobal { char pad[0x26C]; int f26C; char pad270[8]; int f278; };
+struct BimG2 { char pad[0x268]; int f268; char pad26C[0x4C]; int f2B8; int f2BC; int f2C0; int pad2C4; int v2C8[4]; };
 EXTERN_C char D_80010178[], D_80010338[], D_800D5DC8[], D_800D5DB0[];
 EXTERN_C char D_800A4544[];
 EXTERN_C BimGlobal *D_800B4ED8[];
-EXTERN_C void func_800D731C(BimCtl *p);
+EXTERN_C int func_800D731C(BimCtl *p);
 
 struct BimF18 { char pad[0x18]; void *f18; };
 struct BimClock { char pad[0xC]; unsigned fC; };
@@ -105,6 +106,12 @@ struct BimEnts { void *pad0; BimEnt *e[5]; };
 struct BimT { char pad[0x404]; unsigned char b404; char pad405[0xB7]; signed char b4BC; char pad4BD[0x92]; char *f550; };
 EXTERN_C signed char D_800DA7C8[];
 EXTERN_C void func_800D6C1C(void *, int, int);
+EXTERN_C int func_800D8AE4_a(void *) asm("func_800D8AE4");
+EXTERN_C int func_800D7BB4(void *, int, int, int);
+EXTERN_C int func_800D7ECC(void *, int);
+EXTERN_C int func_800D89B8_a(void *) asm("func_800D89B8");
+EXTERN_C int func_800CD790(void *, void *);
+EXTERN_C void func_800C5CC4(void *, int, int, int);
 inline int bim_not(int a) { return !a; }
 
 struct BimPos { short x, y; };
@@ -119,14 +126,18 @@ EXTERN_C bool func_800D8E38_b(BimMon *p, int n) asm("func_800D8E38");
 EXTERN_C int func_800D7E8C(void *p, int a);
 struct BimGrp { void *vtbl; void *e[5]; int f18; };
 struct BimGrpDesc { char pad[8]; short s8; char padA[2]; char data[1]; };
+struct BimPosV { short x, y; BimPosV() { x = 0; y = 0; } };
 struct BimSub2 {
     char pad[0x15C];
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
     virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-    virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+    virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(void *a);
     virtual void v12(); virtual void v13(); virtual void v14();
     virtual void v15(int a, int b);
+    virtual void v16(BimPosV v);
 };
+struct BimPad2A0 { char pad[0x2A0]; };
+struct BimMonSub : BimPad2A0, BimSub2 {};
 struct BimChar {
     int f0;
     char pad4[0xC];
@@ -150,7 +161,7 @@ struct BimChar {
     char pad84[0x18];
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
     virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-    virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+    virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(void *a);
     virtual void v12(); virtual void v13(); virtual void v14();
     virtual void v15(int a);
     virtual void v16();
@@ -169,7 +180,7 @@ EXTERN_C void func_800CC298(void *p, int a, unsigned short b);
 EXTERN_C int func_800D8A50();
 EXTERN_C int func_800C8D9C(void *p, int a, int *b, int *c);
 EXTERN_C void func_800D7C7C(void *p, int a, int b);
-EXTERN_C void func_800D8AE4();
+EXTERN_C int func_800D8AE4();
 EXTERN_C void func_800CFC50(void *p);
 EXTERN_C void func_800CDA8C(void *p);
 EXTERN_C void func_800CDA94(void *p, int a);

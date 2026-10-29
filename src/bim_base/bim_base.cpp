@@ -397,11 +397,51 @@ EXTERN_C int func_800D8AB8(BimMon *p) { return func_800D8A50() - p->s4CA; }
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8AE4);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8C0C);
+EXTERN_C int func_800D8C0C(BimMon *p) {
+    if (!p->f9D8) return 0;
+    goto start;
+found:
+    p->f9D8 = 0;
+    return 1;
+start:
+    if (func_800D89B8_a(p) < 3) {
+        for (int i = 0; i < 3; i++) {
+            BimMon *q = D_800AFA58[i];
+            if (q && q->s410 && q != p && q->f9D8) goto found;
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8CC0);
+EXTERN_C int func_800D8CC0(BimMon *p, unsigned *q) {
+    int a, r;
+    if (p->f9D8 == 0) {
+        a = func_800D8AE4();
+        a = func_800D7ECC(p, a);
+        r = func_800D7BB4(p, a, 0, 0);
+    } else {
+        a = func_800D8AE4_a(p);
+        a = func_800D7ECC(p, a);
+        r = func_800D7BB4(p, a, 1, 0);
+    }
+    if (r) {
+        *q &= ~1;
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8D64);
+EXTERN_C void func_800D8D64(BimMon *p, int a, int b, int c, int d, int e, int f, int g, int h) {
+    p->f9F4 = 0;
+    if (a) p->f9F4 = 1;
+    if (b) p->f9F4 |= 2;
+    if (c) p->f9F4 |= 4;
+    if (d) p->f9F4 |= 8;
+    if (e) p->f9F4 |= 0x10;
+    if (f) p->f9F4 |= 0x20;
+    if (g) p->f9F4 |= 0x40;
+    if (h) p->f9F4 |= 0x80;
+}
 
 EXTERN_C int func_800D8E38(BimMon *p, int n) {
     if ((unsigned)(n - 1) >= 8) return 0;
@@ -487,7 +527,17 @@ EXTERN_C void func_800D96F0() {}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D96F8);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D98E0);
+EXTERN_C void func_800D98E0(BimChar *p, BimMon *m) {
+    p->b6D |= 8;
+    int i = 0;
+    if (*((signed char *)m + 0x475) > 0) {
+        do {
+            p->v11(m);
+            i++;
+        } while (i < *((signed char *)m + 0x475));
+    }
+    func_8008816C(p, m, 0x1005);
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D9970);
 
