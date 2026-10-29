@@ -145,4 +145,14 @@ EXTERN_C void func_80086740_c(void *self) asm("func_80086740");
 
 EXTERN_C void *func_80084130_8(void *self, int in_chrg, int a2, int a3, int e, int *p, int f, int g) asm("func_80084130");
 
+EXTERN_C const VTabB50 D_800170F0;
+EXTERN_C void *D_80017160[];
+EXTERN_C void *D_800171E0[];
+EXTERN_C void *D_80017140[];
+EXTERN_C void *D_80017178[];
+EXTERN_C void func_800DF4F4(void *self, int flags);
+EXTERN_C void func_800804D8(void *self, int flags);
+EXTERN_C void func_80080418(void *self, int flags);
+EXTERN_C void func_80078A30(void *self, int flags);
+
 #endif /* GAME_B2_B2_H */
