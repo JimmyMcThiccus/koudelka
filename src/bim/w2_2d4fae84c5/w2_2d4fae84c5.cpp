@@ -66,7 +66,30 @@ EXTERN_C int func_800DD968(BimMon *p, unsigned *flags)
 
 #include "../shared/bimf_6eb48601.cpp"
 
-INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_06b4d1a5);
+EXTERN_C BimMon *func_800D8464();
+EXTERN_C int bimf_af99c5b3_1_c(void *p, int a) asm("bimf_af99c5b3_1");
+
+EXTERN_C int bimf_06b4d1a5(BimMon *p, int a)
+{
+    BimMon *o = func_800D8464();
+    if (o && o != p) {
+        if (rand() & 1) {
+            if (!p->f9E4)
+                return 0;
+            if (!bimf_af99c5b3_1_c(p, a)) {
+                if (p)
+                    return 0;
+                else
+                    return 0;
+            }
+            return 1;
+        }
+        return 0;
+    }
+    if (p->f9E8 && (rand() & 7) == 7)
+        p->f9EC = 1;
+    return 0;
+}
 
 #define bimf_af99c5b3 bimf_af99c5b3_1
 #include "../shared/bimf_af99c5b3.cpp"

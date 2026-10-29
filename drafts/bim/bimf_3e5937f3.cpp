@@ -1,6 +1,5 @@
 #include "common.h"
 EXTERN_C char *D_scalar asm("D_800B4D38");
-EXTERN_C char *D_arr[] asm("D_800B4D38");
 EXTERN_C void bimf_3e5937f3(char *p, int slot)
 {
     int *q = (int *)p;
@@ -34,5 +33,5 @@ EXTERN_C void bimf_3e5937f3(char *p, int slot)
     *(int *)(p + 2784) = 0x4800;
     *(int *)(p + 2788) = 0x18D3F;
     *(int *)(p + 2792) = 0x800;
-    ((int **)(D_arr[0] + 0xF8))[(short)slot] = q + 639;
+    ((int **)(D_scalar + 0xF8))[(short)slot] = q + 639;
 }
