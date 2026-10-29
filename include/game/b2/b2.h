@@ -171,4 +171,18 @@ EXTERN_C void *D_80017260[];
 EXTERN_C void *D_80017298[];
 EXTERN_C void func_80078A30_d(char *self, int in_chrg) asm("func_80078A30");
 
+struct Z4_B2 {
+    int a, b, c, d;
+    Z4_B2() { a = 0; b = 0; c = 0; d = 0; }
+};
+EXTERN_C void *func_80089FD0_p(void *self, int in_chrg, int a2, int a3, int e, const Z4_B2 &p, int f, int g) asm("func_80089FD0");
+
+EXTERN_C const VTabB50 D_800164C8;
+EXTERN_C void *D_800165E0[];
+EXTERN_C void *D_800165C0[];
+EXTERN_C void *D_80016528[];
+EXTERN_C void *D_80016518[];
+EXTERN_C void *D_800165F8[];
+EXTERN_C void *func_800D9F88(void *self, int in_chrg, int a2, int a3, int e, int f, int g, int h);
+
 #endif /* GAME_B2_B2_H */
