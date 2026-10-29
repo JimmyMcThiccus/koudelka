@@ -29,10 +29,15 @@ PY = sys.executable
 # Native path: CreateProcess (ninja on Windows) can't launch "bin/..." relative paths.
 BINUTILS = str(ROOT / "bin" / "binutils" / "mips-ps2-decompals-")
 TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect", "bim_base"]
+# The BIM.AR monster modules: one generated config per distinct module (tools/gen_bim_targets.py).
+BIM_MODULES = sorted("bim/" + p.stem for p in ROOT.glob("config/bim/*.yaml"))
+TARGETS += BIM_MODULES
 # Images whose symbols an overlay links against in functional mode.
 DEPENDS = {t: ["slus_010.51"] for t in TARGETS[1:]}
 DEPENDS["effect"] = ["slus_010.51", "battle"]  # EFFECT loads directly after BATTLE
 DEPENDS["bim_base"] = ["slus_010.51", "battle"]  # BIM.AR modules load in EFFECT's place
+for _m in BIM_MODULES:
+    DEPENDS[_m] = ["slus_010.51", "bim_base"]  # each module calls only the EXE and the shared base
 
 AS_FLAGS = "-EL -march=r3000 -mtune=r3000 -mabi=32 -no-pad-sections -G0 -Iinclude"
 LD_FLAGS = "-EL --no-check-sections -nostdlib"
@@ -69,7 +74,7 @@ def split(target):
     # Overlays list the EXE's symbols too; splat warns that they fall outside the
     # overlay's segments, which is expected. Keep the log for real errors.
     log = ROOT / "build" / f"split.{target}.log"
-    log.parent.mkdir(exist_ok=True)
+    log.parent.mkdir(parents=True, exist_ok=True)
     with open(log, "w") as f:
         subprocess.run([PY, "-m", "splat", "split", f"config/{target}.yaml"], cwd=ROOT, check=True,
                        stdout=f, stderr=subprocess.STDOUT)
@@ -159,9 +164,11 @@ def main():
     os.chdir(ROOT)
     extract_bim()
     if not args.no_split:
-        for t in TARGETS:
-            print(f"split {t}")
-            split(t)
+        # splat runs are independent processes with separate outputs, so split in parallel.
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=os.cpu_count() or 4) as pool:
+            for t in pool.map(lambda t: (split(t), t)[1], TARGETS):
+                print(f"split {t}")
     write_ninja(args.mode)
     if not args.no_build:
         ninja = Path(PY).parent / "ninja.exe"

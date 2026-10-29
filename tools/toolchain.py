@@ -16,6 +16,8 @@ with open(ROOT / "config" / "toolchain.toml", "rb") as f:
 def settings(src):
     """The merged settings dict for a source path like "src/main/sound.cpp"."""
     o = COMPILER.get("overrides", {}).get(src, {})
+    if not o and src.startswith("src/bim/"):  # the BIM.AR monster modules: built like the overlays
+        o = {"cflags": "-O2 -G8", "as_G": 0}
     if isinstance(o, str):
         o = {"cflags": o}
     s = {k: COMPILER[k] for k in ("psyq", "aspsx", "cflags") if k in COMPILER}
@@ -44,4 +46,7 @@ def target_of(src):
         return "asm/main", "extracted/disc1/SLUS_010.51"
     if area == "bim_base":
         return "asm/bim_base", "extracted/bim/bim_base.bin"
+    if area == "bim":
+        name = Path(src).parts[2]
+        return f"asm/bim/{name}", f"extracted/bim/{name}.bin"
     return f"asm/{area}", f"extracted/disc1/BIN/{area.upper()}.BIN"

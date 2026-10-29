@@ -58,6 +58,11 @@ def main():
         if not dst.exists():
             shutil.copy2(src, dst)
     print(f"{len(TARGET_FILES)} retail target files: copied")
+    # The BIM.AR modules and manifest (tools/bim_ar.py --extract), for the config/bim/ targets.
+    bim = main_root / "extracted" / "bim"
+    if bim.exists() and not (here / "extracted" / "bim" / "manifest.json").exists():
+        shutil.copytree(bim, here / "extracted" / "bim", dirs_exist_ok=True)
+        print("extracted/bim: copied")
 
     if a.configure:
         py = here / ".venv" / "Scripts" / "python.exe"

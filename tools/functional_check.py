@@ -18,8 +18,10 @@ import subprocess
 import sys
 
 import yaml
+from pathlib import Path
 
 TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect", "bim_base"]
+TARGETS += sorted("bim/" + p.stem for p in Path("config/bim").glob("*.yaml"))  # BIM.AR monster modules
 OVERLAY_SLOT = 0x800B6DF0
 
 
