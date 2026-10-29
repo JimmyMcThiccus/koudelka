@@ -76,10 +76,10 @@ EXTERN_C void func_8001D324(void *v, void *q);
 #endif
 
 /* u_8001DDF4.cpp */
-EXTERN_C int func_8001E848(char *cur, char *s);
 #ifndef EXE_H_IN_u_8001DDF4
 EXTERN_C void *func_8001E40C(void *p, void *a, unsigned short b, int c, int d);
 EXTERN_C void func_8001E508(void *p, int flags);
+EXTERN_C int func_8001E848(void *cur, void *s);
 EXTERN_C void func_8001EAAC(void *s);
 EXTERN_C void *func_8001EB60(char *obj, int a);
 EXTERN_C void *func_8001ED2C(char *s, int a, int b);
@@ -855,7 +855,6 @@ EXTERN_C int func_8007E658(void *self);
 
 /* u_80082174.cpp */
 EXTERN_C void func_800824C8(void *, int);
-EXTERN_C void func_800825FC(short *self, int b);
 EXTERN_C void *func_80082690(void *self);
 EXTERN_C void *func_80082768(void *self);
 EXTERN_C void *func_80082798(void *self, int b, int c);
@@ -868,6 +867,7 @@ EXTERN_C void func_80083310(void *self);
 EXTERN_C int func_800833F8(void *);
 #ifndef EXE_H_IN_u_80082174
 EXTERN_C void *func_80082470(void *self);
+EXTERN_C void func_800825FC(void *self, int b);
 EXTERN_C void *func_80082714(void *self, int b, int c, int d, int e, int f, int g);
 EXTERN_C void func_80082C68(void *self, short b, int c, int d, unsigned short e);
 EXTERN_C void func_80082D44(void *self, short b, int c, int d, int e);

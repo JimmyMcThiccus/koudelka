@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "battle/battle.h"
 
 EXTERN_C T_B7FFC *func_800B7FFC(T_B7FFC *p, short a, short b, UVB *c, unsigned short *d, unsigned short *e, unsigned short f, unsigned short g) {
@@ -123,7 +124,7 @@ EXTERN_C void func_800B8FF4(T_B8FF4 *p) {
     link_B8FF4(&p->m408, p->f55C);
     for (T_B9480_n *n = p->m408.head; n; n = n->next) {
         int v = n->f10;
-        func_80039BEC((T_B9480_g *)p->f278, v);
+        func_80039BEC_b((T_B9480_g *)p->f278, v);
     }
 }
 
@@ -131,7 +132,7 @@ EXTERN_C int func_800B9268(T_B9268 *p, int *t) { func_800BB118(p->f554, t); retu
 
 EXTERN_C int func_800B928C(T_B9268 *p, int *t) { func_800BBC04(p->f558, t); return 1; }
 
-EXTERN_C void func_800B92B0() { func_8007F5B8(func_800787B4(), 0, 0); }
+EXTERN_C void func_800B92B0() { func_8007F5B8_3(func_800787B4(), 0, 0); }
 
 EXTERN_C void func_800B92E0(T_B92E0 *p) {
     if (p->f508 || p->f50C) return;
@@ -164,7 +165,7 @@ EXTERN_C void func_800B9530(T_B9530 *p) {
         void *o = lv_back(lv_of(&p->x4E8));
         if (!o) continue;
         func_8002DC34(g, o, 0);
-        func_80019CFC(lv_of(&p->x4E8), o);
+        func_80019CFC((List *)lv_of(&p->x4E8), o);
         LV *l = lv_ofx(&p->x530);
         func_80019A6C((List *)l, (int)o, l->count);
     }
@@ -176,7 +177,7 @@ EXTERN_C int func_800B9654(void *q) {
     while (lv_count(&((T_B9654 *)q)->x510)) {
         T_B9654_o *o = (T_B9654_o *)lv_back(lv_of(&((T_B9654 *)q)->x510));
         o->v7(0);
-        func_80019CFC(lv_of(&((T_B9654 *)q)->x510), o);
+        func_80019CFC((List *)lv_of(&((T_B9654 *)q)->x510), o);
         delete o;
     }
     return 1;
@@ -185,7 +186,7 @@ EXTERN_C int func_800B9654(void *q) {
 EXTERN_C int func_800B9758(void *q) {
     while (lv_count(&((T_B9758 *)q)->x530)) {
         T_Obj0 *o = (T_Obj0 *)lv_back(lv_of(&((T_B9758 *)q)->x530));
-        func_80019CFC(lv_of(&((T_B9758 *)q)->x530), o);
+        func_80019CFC((List *)lv_of(&((T_B9758 *)q)->x530), o);
         delete o;
     }
     return 1;
@@ -288,9 +289,9 @@ EXTERN_C int func_800BA024(S_800BA418 *p) {
     int n = p->s28C;
     int m = 3 - n;
     for (int i = 0; i < n; i++)
-        func_80065D20(Q->f278, i, Q->n32C[i].x, Q->n32C[i].y, Q->n32C[i].z, Q->e2B4[i].b0, Q->e2B4[i].b1, Q->e2B4[i].b2);
+        func_80065D20_b(Q->f278, i, Q->n32C[i].x, Q->n32C[i].y, Q->n32C[i].z, Q->e2B4[i].b0, Q->e2B4[i].b1, Q->e2B4[i].b2);
     for (int j = 0; j < m; j++)
-        func_80065E10(Q->f278, 2 - j);
+        func_80065E10_b(Q->f278, 2 - j);
     return 1;
 }
 #undef Q
@@ -583,7 +584,7 @@ EXTERN_C int func_800BC644(T_BC3B4 *p, int i, short *out) {
     return 0;
 }
 
-EXTERN_C void func_800BC6C8(T_BC420 *p) { func_80019D40(&p->h4C0); }
+EXTERN_C void func_800BC6C8(T_BC420 *p) { func_80019D40_l(&p->h4C0); }
 
 EXTERN_C Holder *func_800BC6FC(T_BC420 *p) { return &p->h4C0; }
 
@@ -779,7 +780,7 @@ EXTERN_C T_BE0F8 *func_800BE18C(T_BE0F8 *p, void *x) {
 EXTERN_C T_BE0F8 *func_800BE1F8(T_BE0F8 *p, int *out) { *out = p->f4; return p; }
 
 EXTERN_C T_BE0F8 *func_800BE208(T_BE0F8 *p, T_BE208 *out) {
-    *out = *func_80062118(D_800B4DD0[0]);
+    *out = *(T_BE208 *)func_80062118(D_800B4DD0[0]);
     return p;
 }
 
@@ -987,11 +988,11 @@ EXTERN_C void func_800BF8B4(T_BF968 *p, int mode, short x, short y) {
     SVec2C v(x, y);
     if (p->b4E4 == 0) {
         switch (mode) {
-        case 0: func_80043460(p, v, 0, 0); break;
-        case 1: func_80043460(p, v, 0, 1); break;
+        case 0: func_80043460_b(p, v, 0, 0); break;
+        case 1: func_80043460_b(p, v, 0, 1); break;
         }
     } else {
-        func_80043540(p, v, 0x14);
+        func_80043540_b(p, v, 0x14);
     }
 }
 
@@ -1005,7 +1006,7 @@ EXTERN_C void func_800BF9DC(T_C1158 *p, int a, int b) {
     int sn = -func_800260A4(d) * a;
     int dx = c / 4096;
     int dz = sn / 4096;
-    func_80043540(p, SVec2C(pos.x + dx, pos.z + dz), b);
+    func_80043540_b(p, SVec2C(pos.x + dx, pos.z + dz), b);
 }
 
 EXTERN_C void func_800BFB18(T_BFB18 *p, int a, int b) { T_BFB18_t t; func_8003A150(&t, func_8003912C(p->f1B8, 9), 0); func_800C3FF4(operator new(0x60), 1, &t, a, b); }
@@ -1072,8 +1073,8 @@ EXTERN_C int func_800C0EB8(T_C0EB8 *p) {
             else D_800B4D38[0]->f[p->s144] = p->f4E8;
             T_C0EB8_e *e = (T_C0EB8_e *)(t->f814 * 8 + (int)t->f818);
             int e0 = e->a, e1 = e->b;
-            f7FF58((char *)D_800AF470g[0] + 0x498, 0x3C0, 0x20, e0);
-            f7FF58((char *)D_800AF470g[0] + 0x498, 0x3E0, 0x20, e1);
+            func_8007FF58((char *)D_800AF470g[0] + 0x498, 0x3C0, 0x20, e0);
+            func_8007FF58((char *)D_800AF470g[0] + 0x498, 0x3E0, 0x20, e1);
         }
     } else {
         func_8008299C(p ? p->f2A0 : 0, 0x16, 0, 0, 0, 0, 0);
