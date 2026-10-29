@@ -196,6 +196,20 @@ adjustments and struct offsets are easier to read there than in the asm.
 - **Read only.** All seven sessions share one Ghidra instance, so don't rename, retype, create or save anything
   in it. Its C is a reading aid: it compiles to different code, so write the matching source yourself.
 
+## DuckStation (runtime)
+
+The DuckStation fork at https://github.com/sadnescity/duckstation runs the game with an MCP server on
+`localhost:2346`: 95 tools covering registers, memory, breakpoints, stepping, GTE, GPU/SPU state, save states and
+input. Sessions with the DuckStation plugin get `mcp__` tools. Anyone else can use
+`tools/duckstation.py <tool> '<json args>'` (for example `read_memory '{"address": "0x80018B88", "size": 32}'`).
+
+- **Ground truth:** the EXE in its RAM matches our build byte for byte, and the overlay slot (0x800B6DF0) holds
+  the loaded overlay's id word (FIELD 4, BATTLE 5, MOVIE 6, CAPTURE 7, GAMEEND 8).
+- **Stepping and breakpoints pause the emulator the user may be playing in.** Ask before using them, and leave it
+  running.
+- **`trace` is expensive:** it logs every instruction to `%LOCALAPPDATA%/DuckStation/cpu_log.txt`, about 80 bytes
+  per instruction, so keep traces short.
+
 ## Brute-forcing a near miss
 
 For a draft a few instructions off on register allocation or instruction order, run
