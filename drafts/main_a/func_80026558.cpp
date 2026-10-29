@@ -1,3 +1,4 @@
+// r4c: still 2. Also tried `r = &p->r` inside the call argument / assignment-in-argument / after the call, and copies of p/sz into locals.
 // Pass 5 (permuter, ~130 variants: placement of `r = &p->r`, inverted if/else, inline call wrappers, local for sz.x,
 // statement order): still 2. It's scheduler priority: s1 = &p->r feeds the call through a1, so it outranks the a0 move.
 // Note func_80026420 is now landed with an S_Rect16 * second parameter; declare it that way here.
