@@ -42,7 +42,11 @@ EXTERN_C void func_800D76C8(void *p, int a);
 
 /* bim_base */
 EXTERN_C int func_800D8E64(void *p, int a);
+EXTERN_C int func_800D8E64_a(void *p) asm("func_800D8E64");
 EXTERN_C int func_800D7D64(void *p, void *q);
+EXTERN_C int func_800D8064(void *p);
+struct BimCnt { char pad[0x9C8]; int f9C8; int f9CC; char pad9D0[0x118]; int fAE8; int fAEC; };
+EXTERN_C void func_800D7818(void *p, int a, int b, int c, int d, int e, int f, int g, int h);
 EXTERN_C int func_800D7C7C_i(void *p, int a, int b) asm("func_800D7C7C");
 EXTERN_C unsigned short func_800D7A78(void *p, void *q);
 EXTERN_C void func_800D7A20(void *p, int a);

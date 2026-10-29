@@ -16,7 +16,7 @@ INCLUDE_ASM("asm/bim/w1_76d502a584/nonmatchings/w1_76d502a584", bimf_85fa9335);
 
 #include "../shared/bimf_af99c5b3.cpp"
 
-INCLUDE_ASM("asm/bim/w1_76d502a584/nonmatchings/w1_76d502a584", bimf_cba85eee);
+#include "../shared/bimf_cba85eee.cpp"
 
 #define bimf_af99c5b3 bimf_af99c5b3_1
 #include "../shared/bimf_af99c5b3.cpp"

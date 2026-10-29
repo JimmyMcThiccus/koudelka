@@ -14,11 +14,11 @@ INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_3e5937f3);
 
 INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_227ce542);
 
-INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_bafe7335);
+#include "../shared/bimf_bafe7335.cpp"
 
 #include "../shared/bimf_af99c5b3.cpp"
 
-INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_9905b8de);
+#include "../shared/bimf_9905b8de.cpp"
 
 INCLUDE_RODATA("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", D_800DCEAC);
 

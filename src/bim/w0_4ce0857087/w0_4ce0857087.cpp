@@ -30,7 +30,7 @@ INCLUDE_ASM("asm/bim/w0_4ce0857087/nonmatchings/w0_4ce0857087", func_800DB15C);
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_4ce0857087/nonmatchings/w0_4ce0857087", bimf_9905b8de);
+#include "../shared/bimf_9905b8de.cpp"
 
 INCLUDE_RODATA("asm/bim/w0_4ce0857087/nonmatchings/w0_4ce0857087", D_800DA86C);
 
