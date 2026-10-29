@@ -18,7 +18,7 @@ raw 2336-byte sectors (subheader + data), so no audio or video data is lost.
 
 The goal is a **functionally identical** build: one that behaves like retail, not one that matches it byte for
 byte. The build splits each target with splat, compiles the game code from `src/` with the original compiler
-(PsyQ 4.4), assembles the rest, relinks with GNU binutils and extracts a flat binary. Today all seven targets also
+(PsyQ 4.4), assembles the rest, relinks with GNU binutils and extracts a flat binary. Today all eight targets also
 come out byte-identical.
 
 Two modes (`configure.py --mode`):
@@ -147,6 +147,7 @@ The build uses `bin/psyq4.4`; the other versions are only for compiler compariso
 | `BIN/CAPTURE.BIN` | 0xC42C | `0x800B6DF0` | overlay id 7 |
 | `BIN/GAMEEND.BIN` | 0xCB0 | `0x800B6DF0` | overlay id 8 |
 | `BIN/EFFECT.BIN` | 0xFAA0 | `0x800D5DAC` | overlay id 9; loads directly after BATTLE |
+| `MONSTER/BIM.AR` shared base | 0x4AC0 | `0x800D5DAC` | target `bim_base`: the first 0x4AC0 bytes of every monster overlay image, in EFFECT's place (`docs/BIM_AR.md`); `tools/bim_ar.py` cuts it to `extracted/bim/bim_base.bin` |
 
 Each overlay is laid out as `.rodata` (id word, entry table, jump tables, strings), then `.text` (starting at the
 first prologue), then a little `.data`; the exact offsets are in `config/<overlay>.yaml`.

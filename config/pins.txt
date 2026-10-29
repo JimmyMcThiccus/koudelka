@@ -143,3 +143,11 @@ movie DecDCTinSync 0x800cb174  # main
 # not pinned: main references D_800EA8A8 at 0x800ea8a8; no overlay symbol starts there (code/data from another module, or past an overlay's end); stays absolute
 # not pinned: main references D_A000DF80 at 0xa000df80; no overlay symbol starts there (code/data from another module, or past an overlay's end); stays absolute
 # not pinned: main references D_A000DFAC at 0xa000dfac; no overlay symbol starts there (code/data from another module, or past an overlay's end); stays absolute
+# BIM.AR shared base: the entry points BATTLE calls (docs/BIM_AR.md)
+bim_base func_800D6328 0x800d6328  # battle
+bim_base func_800D68EC 0x800d68ec  # battle
+bim_base func_800D7048 0x800d7048  # battle
+bim_base func_800D8F98 0x800d8f98  # battle
+bim_base func_800D8FF8 0x800d8ff8  # battle
+bim_base func_800D94F4 0x800d94f4  # battle
+bim_base func_800DA400 0x800da400  # battle

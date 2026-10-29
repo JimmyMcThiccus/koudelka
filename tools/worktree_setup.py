@@ -18,7 +18,8 @@ import tomllib
 from pathlib import Path
 
 TARGET_FILES = ["extracted/disc1/SLUS_010.51"] + [
-    f"extracted/disc1/BIN/{n}.BIN" for n in ["FIELD", "BATTLE", "MOVIE", "CAPTURE", "GAMEEND", "EFFECT"]]
+    f"extracted/disc1/BIN/{n}.BIN" for n in ["FIELD", "BATTLE", "MOVIE", "CAPTURE", "GAMEEND", "EFFECT"]] + [
+    "extracted/bim/bim_base.bin"]  # cut from MONSTER/BIM.AR by tools/bim_ar.py
 
 
 def git(*args, cwd):

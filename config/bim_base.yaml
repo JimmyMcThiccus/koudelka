@@ -1,0 +1,56 @@
+name: BIM.AR shared base
+# The first 0x4AC0 bytes of every monster overlay image in MONSTER/BIM.AR (identical in all 332 blocks), which
+# loads at 0x800D5DAC in place of EFFECT.BIN. tools/bim_ar.py --extract writes it; configure.py runs that when
+# the file is missing. See docs/BIM_AR.md.
+sha1: b47b3f6bf85ff62a3382240bf6dc8adec0fe1b7d
+options:
+  basename: bim_base
+  target_path: extracted/bim/bim_base.bin
+  elf_path: build/bim_base.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm/bim_base
+  src_path: src/bim_base
+  build_path: build
+  ld_script_path: build/linkers/bim_base.ld
+  symbol_addrs_path:
+    - config/symbols/main.txt
+    - config/symbols/main_a.txt
+    - config/symbols/main_a2.txt
+    - config/symbols/main_a2b.txt
+    - config/symbols/main_b.txt
+    - config/symbols/main_b2.txt
+    - config/symbols/sound.txt
+    - config/symbols/bim_base.txt
+  undefined_funcs_auto_path: build/linkers/undefined_funcs_auto.bim_base.txt
+  undefined_syms_auto_path: build/linkers/undefined_syms_auto.bim_base.txt
+
+  find_file_boundaries: true
+  gp_value: 0x800B4BFC
+  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
+  use_legacy_include_asm: false
+  asm_jtbl_label_macro: jlabel
+  create_c_files: true # only creates missing files; never overwrites src/
+  auto_decompile_empty_functions: false # keep them INCLUDE_ASM: a .cpp body would mangle the name
+  disassemble_all: true # decompiled functions keep a reference .s in asm/<target>/matchings/
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  subalign: 4
+  ld_align_section_vram_end: false
+  ld_align_segment_vram_end: false
+
+segments:
+  - name: bim_base
+    type: code
+    start: 0x0
+    vram: 0x800D5DAC
+    subsegments:
+      - [0x0, rodata] # overlay id 0x0A, entry table and vtables (34 pointers into the code), reached by symbol
+      - [0x3EC, cpp, bim_base]
+      - [0x4A1C, data] # to the end of the shared prefix; each monster's own tail follows it
+
+  - [0x4AC0]

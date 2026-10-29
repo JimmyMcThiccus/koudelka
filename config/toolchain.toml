@@ -33,6 +33,7 @@ cflags = "-O2 -G8"        # $gp is used for statics (func_800186E8); some files 
 "src/effect/effect.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 # Further overlay files, split where the jump tables' alignment changes (tools/jtbl_classes.py)
 "src/effect/effect_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
+"src/bim_base/bim_base.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/field/field_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/battle/battle_b.cpp" = { cflags = "-O2 -G8", as_G = 0 }
 "src/battle/battle_c.cpp" = { cflags = "-O2 -G8", as_G = 0 }

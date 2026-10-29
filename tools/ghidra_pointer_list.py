@@ -19,7 +19,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SPACES = {"main": "ram", "field": "FIELD", "battle": "BATTLE", "movie": "MOVIE", "capture": "CAPTURE",
-          "gameend": "GAMEEND", "effect": "EFFECT"}
+          "gameend": "GAMEEND", "effect": "EFFECT",
+          "bim_base": "BIMBASE"}
 LABEL = re.compile(r"^\s*(?:glabel|dlabel|jlabel)\s+(\S+)\s*\n\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ", re.M)
 WORD = re.compile(r"/\* [0-9A-F]+ ([0-9A-F]{8}) ([0-9A-F]{8}) \*/\s+\.word\s+([A-Za-z_.$][\w.$]*)")
 SLOT, EFFECT_BASE = 0x800B6DF0, 0x800D5DAC
@@ -38,7 +39,7 @@ def main():
             for m in WORD.finditer(text):
                 value = struct.unpack("<I", bytes.fromhex(m.group(2)))[0]
                 words.append((space, int(m.group(1), 16), value, m.group(3)))
-    ranges = {"BATTLE": (SLOT, EFFECT_BASE), "EFFECT": (EFFECT_BASE, 0x800E584C)}
+    ranges = {"BATTLE": (SLOT, EFFECT_BASE), "EFFECT": (EFFECT_BASE, 0x800E584C), "BIMBASE": (EFFECT_BASE, 0x800DA86C)}
 
     def space_of(src, value, sym):
         if value < SLOT:
@@ -46,8 +47,9 @@ def main():
         if src != "ram":
             if sym in labels[src] or src not in ranges or ranges[src][0] <= value < ranges[src][1]:
                 return src
-            other = "EFFECT" if src == "BATTLE" else "BATTLE"
-            return other if sym in labels[other] else None
+            if src == "BATTLE":  # EFFECT and the BIM.AR modules load in the same place after BATTLE
+                return next((o for o in ("EFFECT", "BIMBASE") if sym in labels[o]), None)
+            return "BATTLE" if sym in labels["BATTLE"] else None
         owners = [sp for sp, names in labels.items() if sp != "ram" and names.get(sym) == value]
         return owners[0] if len(owners) == 1 else None
 

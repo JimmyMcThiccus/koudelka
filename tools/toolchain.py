@@ -42,4 +42,6 @@ def target_of(src):
     area = Path(src).parts[1]
     if area == "main":
         return "asm/main", "extracted/disc1/SLUS_010.51"
+    if area == "bim_base":
+        return "asm/bim_base", "extracted/bim/bim_base.bin"
     return f"asm/{area}", f"extracted/disc1/BIN/{area.upper()}.BIN"

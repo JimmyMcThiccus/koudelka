@@ -10,7 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SPACES = {"main": "ram", "field": "FIELD", "battle": "BATTLE", "movie": "MOVIE", "capture": "CAPTURE",
-          "gameend": "GAMEEND", "effect": "EFFECT"}
+          "gameend": "GAMEEND", "effect": "EFFECT",
+          "bim_base": "BIMBASE"}
 GLABEL = re.compile(r"glabel (\S+)\n\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ")
 
 

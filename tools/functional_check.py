@@ -19,7 +19,7 @@ import sys
 
 import yaml
 
-TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect"]
+TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect", "bim_base"]
 OVERLAY_SLOT = 0x800B6DF0
 
 

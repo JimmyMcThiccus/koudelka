@@ -1,0 +1,1 @@
+// BIM.AR shared base symbols (config/bim_base.yaml). The 7 functions BATTLE calls directly are pinned in config/pins.txt.

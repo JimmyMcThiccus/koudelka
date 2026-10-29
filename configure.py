@@ -28,10 +28,11 @@ ROOT = Path(__file__).resolve().parent
 PY = sys.executable
 # Native path: CreateProcess (ninja on Windows) can't launch "bin/..." relative paths.
 BINUTILS = str(ROOT / "bin" / "binutils" / "mips-ps2-decompals-")
-TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect"]
+TARGETS = ["slus_010.51", "field", "battle", "movie", "capture", "gameend", "effect", "bim_base"]
 # Images whose symbols an overlay links against in functional mode.
 DEPENDS = {t: ["slus_010.51"] for t in TARGETS[1:]}
 DEPENDS["effect"] = ["slus_010.51", "battle"]  # EFFECT loads directly after BATTLE
+DEPENDS["bim_base"] = ["slus_010.51", "battle"]  # BIM.AR modules load in EFFECT's place
 
 AS_FLAGS = "-EL -march=r3000 -mtune=r3000 -mabi=32 -no-pad-sections -G0 -Iinclude"
 LD_FLAGS = "-EL --no-check-sections -nostdlib"
@@ -47,6 +48,16 @@ def cc_args(src):
 def load(target):
     with open(ROOT / "config" / f"{target}.yaml") as f:
         return yaml.safe_load(f)
+
+
+def extract_bim():
+    """The BIM.AR shared base is cut from MONSTER/BIM.AR, not a file on the disc (docs/BIM_AR.md)."""
+    if (ROOT / "extracted" / "bim" / "bim_base.bin").exists():
+        return
+    if not (ROOT / "extracted" / "disc1" / "MONSTER" / "BIM.AR").exists():
+        sys.exit("configure: extracted/bim/bim_base.bin is missing and so is extracted/disc1/MONSTER/BIM.AR")
+    subprocess.run([PY, "tools/bim_ar.py", "--disc", "extracted/disc1", "--out", "extracted/bim", "--extract"],
+                   cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
 
 
 def split(target):
@@ -146,6 +157,7 @@ def main():
     ap.add_argument("--no-build", action="store_true")
     args = ap.parse_args()
     os.chdir(ROOT)
+    extract_bim()
     if not args.no_split:
         for t in TARGETS:
             print(f"split {t}")

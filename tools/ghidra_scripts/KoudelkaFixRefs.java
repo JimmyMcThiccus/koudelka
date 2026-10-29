@@ -65,9 +65,9 @@ public class KoudelkaFixRefs extends GhidraScript {
 			String srcName = src == null ? null : src.isOverlay() ? src.getName() : "ram";
 			String dst = null;
 			if ("BATTLE".equals(srcName) && x >= EFFECT_BASE) {
-				if (labelSpaces.getOrDefault(x, Collections.emptyList()).contains("EFFECT")) {
-					dst = "EFFECT";
-				}
+				// EFFECT or a BIM.AR module (its shared base is the BIMBASE block), whichever has a label there
+				List<String> c = labelSpaces.getOrDefault(x, Collections.emptyList());
+				dst = c.contains("EFFECT") ? "EFFECT" : c.contains("BIMBASE") ? "BIMBASE" : null;
 			} else if ("EFFECT".equals(srcName) && x < EFFECT_BASE) {
 				dst = "BATTLE";
 			} else if ("ram".equals(srcName)) {
@@ -101,7 +101,8 @@ public class KoudelkaFixRefs extends GhidraScript {
 			}
 			for (Reference r : rm.getReferencesTo(to)) {
 				MemoryBlock b = currentProgram.getMemory().getBlock(r.getFromAddress());
-				if (b != null && b.getName().equals("BATTLE") && r.getReferenceType().isCall()) {
+				if (b != null && b.getName().equals("BATTLE") && r.getReferenceType().isCall()
+						&& !labelSpaces.getOrDefault(to.getOffset(), Collections.emptyList()).contains("BIMBASE")) {
 					wrong.add(r);
 				}
 			}

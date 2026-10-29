@@ -144,7 +144,9 @@ Not done yet. Order and shape:
    `w1_<hash>.bin`, `w2_<hash>.bin` and `manifest.json` (name, vram, size, sha1, how many blocks use it, SECT ids).
    Run it from `configure.py` before generating the ninja file, like `extract_iso.py`. It needs
    `extracted/disc1/MONSTER/BIM.AR` and `BIN/SECT.DAT`, so BIM targets are skipped when absent.
-2. **Target 1: `bim_base`.** Splat yaml with `target_path: build/bim_ar/bim_base.bin`, `vram: 0x800D5DAC`, 19,136
+2. **Target 1: `bim_base`. Done (2026-10-29):** `config/bim_base.yaml`, byte-identical in both modes, 101
+   functions, its 7 BATTLE-called entry points pinned, and a `BIMBASE` block in Ghidra. The file lives in
+   `extracted/bim/`, not `build/`, so a clean build doesn't delete it. The proposal was: Splat yaml with `target_path: build/bim_ar/bim_base.bin`, `vram: 0x800D5DAC`, 19,136
    bytes: `rodata` for the header and vtables to 0x3EC, then cpp from 0x3EC. `DEPENDS = ["slus_010.51", "battle"]`
    (the base calls both and BATTLE's methods are in its vtables), and treat its 7 BATTLE-called entry points as
    `config/pins.txt` entries so a functional build keeps them in place. Its symbol file,
