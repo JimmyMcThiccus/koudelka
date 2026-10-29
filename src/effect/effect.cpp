@@ -1,7 +1,7 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "effect/effect.h"
 
-EXTERN_C void func_8001A610(IdNode *self, int flags);
 
 EXTERN_C void func_800D67CC(IdNode *self, int flags)
 {
@@ -417,8 +417,6 @@ struct Obj_800D75D4 : Head_800D75D4, Tex_800D75D4 {
 
 EXTERN_C int D_800B4CF0[];
 EXTERN_C OT_800DF0C4 *D_800B4D00[];
-EXTERN_C int func_800260A4(int a);
-EXTERN_C int func_80026014(int a);
 
 inline int add_800D75D4(unsigned int o, OT_800DF0C4 *d, FT4_800D75D4 *p)
 {
@@ -486,7 +484,6 @@ EXTERN_C int D_80011D04[];
 EXTERN_C int D_80011D6C[];
 EXTERN_C int D_80011AAC[];
 EXTERN_C int D_80011B14[];
-EXTERN_C void func_800198AC(void *, int);
 
 EXTERN_C void func_800D7970(void *self, int flags)
 {
@@ -511,7 +508,6 @@ EXTERN_C char *func_800D7A14(RandVal *self, char *src)
     return src + 1;
 }
 
-EXTERN_C int rand(void);
 
 EXTERN_C void func_800D7A4C(RandVal *self, short *base, short *phase)
 {
@@ -532,7 +528,6 @@ EXTERN_C void func_800D7B64(RandVal *self)
     self->phase = 0;
 }
 
-EXTERN_C int rand(void);
 
 EXTERN_C int func_800D7B6C(RandVal *self)
 {
@@ -566,10 +561,6 @@ EXTERN_C char *func_800D7C84(Key *self, char *src)
     return src + 0x1C;
 }
 
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
-EXTERN_C int rand(void);
 
 struct Mat_800D7CB0 {
     int m[8];
@@ -622,10 +613,6 @@ EXTERN_C char *func_800D8078(KeyVec *self, char *src)
 
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C int SquareRoot0(int a);
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
 
 struct Mat_800D80D8 {
     int m[8];
@@ -664,14 +651,12 @@ EXTERN_C void func_800D8354(KeyInt *self, int flags)
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C Vec4 func_8003A150(int h, int n);
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800D837C(KeyInt *self, Vec4 *p)
 {
     Vec4 z;
     vec4_zero(&z);
-    Vec4 t = func_8003A150(self->value, (int)&z);
+    Vec4 t = func_8003A150_v(self->value, (int)&z);
     Vec4 d;
     int len;
     d = func_800D9658(p, &t);
@@ -694,14 +679,12 @@ EXTERN_C void func_800D85AC(KeyInt *self, int flags)
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C Vec4 func_8003A150(int h, int n);
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800D85D4(KeyInt *self, Vec4 *p)
 {
     Vec4 z;
     vec4_zero(&z);
-    Vec4 t = func_8003A150(self->value, (int)&z);
+    Vec4 t = func_8003A150_v(self->value, (int)&z);
     Vec4 d;
     int len;
     d = func_800D9658(p, &t);
@@ -724,7 +707,6 @@ EXTERN_C void func_800D8804(KeyInt *self, int flags)
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800D882C(KeyInt *self, Vec4 *p)
 {
@@ -752,7 +734,6 @@ EXTERN_C void func_800D8A44(KeyInt *self, int flags)
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800D8A6C(KeyInt *self, Vec4 *p)
 {
@@ -782,7 +763,6 @@ EXTERN_C void func_800D8DC0(KeyInt *self, int flags)
 EXTERN_C Vec4 func_800D9658(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
 EXTERN_C Vec4 func_800D7CB0(Key *self, Vec4 *v);
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800D8DE8(KeyInt *self, Vec4 *p)
 {
@@ -806,11 +786,6 @@ EXTERN_C void func_800D8FF0(KeyVec *self, int flags)
 }
 
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
-EXTERN_C int SquareRoot0(int a);
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
-EXTERN_C int rand(void);
 
 struct Mat_800D9018 {
     int m[8];
@@ -854,11 +829,6 @@ EXTERN_C void func_800D9324(KeyVec *self, int flags)
 }
 
 EXTERN_C Vec4 func_800D9698(Vec4 *a, Vec4 *b);
-EXTERN_C int SquareRoot0(int a);
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
-EXTERN_C int rand(void);
 
 struct Mat_800D934C {
     int m[8];
@@ -999,9 +969,6 @@ EXTERN_C Key *func_800D9908(Key *self, short id)
     return self;
 }
 
-EXTERN_C void func_8001E40C(void *self, void *a, int b, int c, int d);
-EXTERN_C void func_80051564(void *self);
-EXTERN_C void func_800756F8(void *self);
 EXTERN_C void *func_800E4298(void *self);
 EXTERN_C int D_800D6228[];
 EXTERN_C int D_800D6240[];
@@ -1054,8 +1021,6 @@ EXTERN_C void *func_800D9928(void *self, void *a)
 }
 
 EXTERN_C void func_800D9B28(void *self);
-EXTERN_C void func_800515A4(void *p, int arg);
-EXTERN_C void func_8001E508(void *self, int flags);
 EXTERN_C void func_800E42B0(void *self, int flags);
 EXTERN_C int D_800D6228[];
 EXTERN_C int D_800D6240[];
@@ -1128,7 +1093,7 @@ EXTERN_C void func_800D9C48(void *self)
     while (1) {
         if (!n)
             break;
-        n = static_cast<SubNode *>(func_8001A744(FIELD_AT(self, SubNode *, 0x104), n));
+        n = static_cast<SubNode *>(func_8001A744_l(FIELD_AT(self, SubNode *, 0x104), n));
         FIELD_AT(self, SubNode *, 0x104) = n;
     }
 }
@@ -1139,7 +1104,7 @@ EXTERN_C void func_800D9CA8(void *self)
     while (1) {
         if (!n)
             break;
-        n = static_cast<SubNode *>(func_8001A744(FIELD_AT(self, SubNode *, 0x10C), n));
+        n = static_cast<SubNode *>(func_8001A744_l(FIELD_AT(self, SubNode *, 0x10C), n));
         FIELD_AT(self, SubNode *, 0x10C) = n;
     }
 }
@@ -1150,7 +1115,7 @@ EXTERN_C void func_800D9D08(void *self)
     while (1) {
         if (!n)
             break;
-        n = static_cast<SubNode *>(func_8001A744(FIELD_AT(self, SubNode *, 0x108), n));
+        n = static_cast<SubNode *>(func_8001A744_l(FIELD_AT(self, SubNode *, 0x108), n));
         FIELD_AT(self, SubNode *, 0x108) = n;
     }
 }
@@ -1257,9 +1222,6 @@ EXTERN_C int func_800DA584(SlotSet *self)
 INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DA5B8);
 
 EXTERN_C void *D_800B4C18[];
-EXTERN_C void *func_800758F8(void *self, int b, void *c, void *d);
-EXTERN_C void func_8001E848(void *self, void *b);
-EXTERN_C int func_8007669C(void *self, int b, int c);
 
 EXTERN_C void func_800DA84C(void *self, int a, int b)
 {
@@ -1278,15 +1240,8 @@ EXTERN_C void func_800DA84C(void *self, int a, int b)
 EXTERN_C void *D_800B4C18[];
 EXTERN_C int D_80010300[];
 EXTERN_C int D_800102D0[];
-EXTERN_C void *func_800758F8(void *self, int b, void *c, void *d);
-EXTERN_C void func_8001E848(void *self, void *b);
-EXTERN_C int func_8007669C(void *self, int b, int c);
-EXTERN_C void func_800766D8(void *self);
 EXTERN_C char *func_800E42F4(void *self, char *data);
 EXTERN_C char *func_800E4354(void *self, char *data);
-EXTERN_C void *func_800787B4(void);
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *self, void *obj);
 
 typedef void (*Fn_800DA8E8)(void *, char *, void *, int);
 
@@ -1467,7 +1422,7 @@ EXTERN_C int func_800DAD80(SlotSet *self)
 EXTERN_C void func_800DADF8(void *self, SubNode *node)
 {
     if (FIELD_AT(self, SubNode *, 0x104))
-        func_8001A678(FIELD_AT(self, SubNode *, 0x104), node);
+        func_8001A678_l(FIELD_AT(self, SubNode *, 0x104), node);
     else
         FIELD_AT(self, SubNode *, 0x104) = node;
 }
@@ -1475,13 +1430,11 @@ EXTERN_C void func_800DADF8(void *self, SubNode *node)
 EXTERN_C void func_800DAE48(void *self, SubNode *node)
 {
     if (FIELD_AT(self, SubNode *, 0x10C))
-        func_8001A678(FIELD_AT(self, SubNode *, 0x10C), node);
+        func_8001A678_l(FIELD_AT(self, SubNode *, 0x10C), node);
     else
         FIELD_AT(self, SubNode *, 0x10C) = node;
 }
 
-EXTERN_C int func_8003912C(void *p, int n);
-EXTERN_C Vec4 func_8003A150(int h, int n);
 EXTERN_C void func_800DBEDC(void *self, void *a, void *b);
 
 EXTERN_C void func_800DAE98(void *self, void *obj, void *b, void *a, int flag)
@@ -1493,14 +1446,14 @@ EXTERN_C void func_800DAE98(void *self, void *obj, void *b, void *a, int flag)
     if (a) {
         int h = func_8003912C(FIELD_AT(a, void *, 0x1B8), 5);
         if (h) {
-            v = func_8003A150(h, 0);
+            v = func_8003A150_v(h, 0);
             FIELD_AT(obj, Vec4, 0x4C) = v;
         }
     }
     if (b) {
         int h = func_8003912C(FIELD_AT(b, void *, 0x1B8), 5);
         if (h) {
-            v = func_8003A150(h, 0);
+            v = func_8003A150_v(h, 0);
             FIELD_AT(obj, Vec4, 0x5C) = v;
         }
     }
@@ -1562,12 +1515,6 @@ EXTERN_C void func_800DB054(void *self)
 }
 
 EXTERN_C Vec4 func_800DBD5C(Vec4 *a, Vec4 *b);
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C int ratan2(int y, int x);
-EXTERN_C int SquareRoot0(int a);
-EXTERN_C void ApplyMatrixLV(void *m, Vec4 *v, Vec4 *out);
-EXTERN_C void func_80099C80(int a);
 
 struct Mat_800DB0FC {
     int m[8];
@@ -1632,7 +1579,6 @@ EXTERN_C void func_800DB0FC(void *pv)
     ((Fn_800DB0FC)vt[34].pfn)((char *)p + vt[34].delta, &ang, &w);
 }
 
-EXTERN_C void func_80099C80(int a);
 EXTERN_C void func_800DB788(SlotSet *self, SVec4 *ang, Vec4 *pos);
 
 typedef void (*Fn_800DB4BC)(void *, SVec4 *, Vec4 *);
@@ -1865,8 +1811,6 @@ EXTERN_C void func_800DBDA8(void *self, int on)
 
 EXTERN_C int D_80010300[];
 EXTERN_C int D_800102D0[];
-EXTERN_C void *func_8001CA10(int size);
-EXTERN_C void func_8001EFE4(void *self, void *obj);
 
 EXTERN_C void func_800DBDC0(void *self)
 {
@@ -1930,8 +1874,6 @@ INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6268);
 
 INCLUDE_RODATA("asm/effect/nonmatchings/effect", D_800D6280);
 
-EXTERN_C int func_8003912C(void *p, int n);
-EXTERN_C Vec4 func_8003A150(int h, int n);
 
 EXTERN_C void func_800DBEDC(void *self, void *a, void *b)
 {
@@ -1944,19 +1886,19 @@ EXTERN_C void func_800DBEDC(void *self, void *a, void *b)
     case 4:
         h = func_8003912C(FIELD_AT(a, void *, 0x1B8), 5);
         if (h)
-            FIELD_AT(self, Vec4, 0x4) = func_8003A150(h, 0);
+            FIELD_AT(self, Vec4, 0x4) = func_8003A150_v(h, 0);
         h = func_8003912C(FIELD_AT(b, void *, 0x1B8), 5);
         if (h)
-            FIELD_AT(self, Vec4, 0x14) = func_8003A150(h, 0);
+            FIELD_AT(self, Vec4, 0x14) = func_8003A150_v(h, 0);
         break;
     case 2:
     case 5:
         h = func_8003912C(FIELD_AT(b, void *, 0x1B8), 5);
         if (h)
-            FIELD_AT(self, Vec4, 0x4) = func_8003A150(h, 0);
+            FIELD_AT(self, Vec4, 0x4) = func_8003A150_v(h, 0);
         h = func_8003912C(FIELD_AT(a, void *, 0x1B8), 5);
         if (h)
-            FIELD_AT(self, Vec4, 0x14) = func_8003A150(h, 0);
+            FIELD_AT(self, Vec4, 0x14) = func_8003A150_v(h, 0);
         break;
     }
     if (a == b) {
@@ -2035,9 +1977,6 @@ INCLUDE_ASM("asm/effect/nonmatchings/effect", func_800DC264);
 
 inline void *operator new[](unsigned int, void *p) { return p; }
 
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C void func_8003B2F0(void *m, Vec4 *t);
 
 struct Mat_800DC670 {
     int m[8];
@@ -2238,8 +2177,6 @@ EXTERN_C void func_800DCE5C(void *self, int flags)
 #define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
 
 
-EXTERN_C int ratan2(int y, int x);
-EXTERN_C int SquareRoot0(int a);
 
 struct SV_800DCE84 {
     short x, y, z, w;
@@ -2349,7 +2286,6 @@ EXTERN_C int func_800DD1B4(void)
 EXTERN_C int D_800D63A0[];
 EXTERN_C char D_80010338[];
 EXTERN_C char D_800A4544[];
-EXTERN_C void func_8001D150(void *, void *);
 
 struct S_800DD1C4 {
     void *vptr;
@@ -2379,11 +2315,10 @@ EXTERN_C void *func_800DD1C4(void *self, int a, int b)
     return self;
 }
 
-EXTERN_C void func_8001D024(void *self);
 
 EXTERN_C void func_800DD260(void *self)
 {
-    func_8001D024(self);
+    func_8001D024_1(self);
 }
 
 EXTERN_C int func_800DD280(void)
@@ -2394,7 +2329,6 @@ EXTERN_C int func_800DD280(void)
 EXTERN_C int D_800D63B8[];
 EXTERN_C char D_80010338[];
 EXTERN_C char D_800A4544[];
-EXTERN_C void func_8001D150(void *, void *);
 
 struct S_800DD290 {
     void *vptr;
@@ -2426,7 +2360,7 @@ EXTERN_C void *func_800DD290(void *self, int a, int b)
 
 EXTERN_C void func_800DD32C(void *self)
 {
-    func_8001D024(self);
+    func_8001D024_1(self);
 }
 
 EXTERN_C int D_800D63D0[];
@@ -2461,11 +2395,8 @@ C_800DD34C::C_800DD34C(int a, int b, short *c, int d)
 
 EXTERN_C int D_800D63D0[];
 EXTERN_C int D_800E583C[];
-EXTERN_C Color *func_8003D37C(void *p);
 EXTERN_C void *func_800E1C5C(void *src, int a, void *b);
 EXTERN_C void *func_800DEBEC(void *arg);
-EXTERN_C void *func_8003BEF8(void *p);
-EXTERN_C void func_80039BEC(void *self, int b);
 
 inline Color *color_800DD440(void *p)
 {
@@ -2554,8 +2485,6 @@ EXTERN_C char *func_800DF4EC(void *self, char *src, void *arg);
 EXTERN_C void *func_800E4010(void *self);
 EXTERN_C void func_800E3FB8(void *self, void *other);
 EXTERN_C void func_800DF4CC(void *self, int flags);
-EXTERN_C void *func_8003BEF8(void *p);
-EXTERN_C void func_80039BEC(void *self, int b);
 
 EXTERN_C char *func_800DD6F8(void *self, char *src)
 {
@@ -2609,7 +2538,6 @@ EXTERN_C void func_800DD878(void *self)
     }
 }
 
-EXTERN_C Color *func_8003D37C(void *p);
 EXTERN_C void func_800E1B60(void *self, void *arg);
 
 inline Color *color_800DD8D8(void *p)
@@ -2708,9 +2636,10 @@ struct Col_800DDC98 {
     unsigned char r, g, b, a;
     Col_800DDC98() {}
 };
-EXTERN_C void func_8003FB88(void *self, int mode, Col_800DDC98 c);
 
-EXTERN_C Color *func_8003D37C(void *p);
+// Takes its colour by value as S_A2_RgbC (main_a2b); effect passes Col_800DDC98.
+EXTERN_C void func_8003FB88_e(void *self, int mode, Col_800DDC98 c) asm("func_8003FB88");
+
 EXTERN_C void func_800DDA4C(void *self);
 EXTERN_C void func_800E22E0(void *self);
 EXTERN_C void func_800DDC98(void *self, int on);
@@ -2737,14 +2666,13 @@ EXTERN_C void func_800DDB58(SubNode *self, int n)
         c = *color_800DDB58(FIELD_AT(self, void *, 0x2C));
         c.r += 8;
         c.g += 8;
-        func_8003FB88(FIELD_AT(self, void *, 0x2C), 1, c);
+        func_8003FB88_e(FIELD_AT(self, void *, 0x2C), 1, c);
         if (FIELD_AT(self, short, 0x3C) == 0)
             func_800DDC98(self, 0);
     }
 }
 
 
-EXTERN_C void func_8003FB88(void *self, int mode, Col_800DDC98 c);
 
 EXTERN_C void func_800DDC98(void *self, int on)
 {
@@ -2754,11 +2682,11 @@ EXTERN_C void func_800DDC98(void *self, int on)
             c.r = 0xD7;
             c.g = 0xD7;
             c.b = 0;
-            func_8003FB88(FIELD_AT(self, void *, 0x2C), 1, c);
+            func_8003FB88_e(FIELD_AT(self, void *, 0x2C), 1, c);
             FIELD_AT(self, short, 0x3C) = 5;
         }
     } else if (FIELD_AT(self, void *, 0x30)) {
-        func_8003FB88(FIELD_AT(self, void *, 0x2C), FIELD_AT(self, int, 0x34), FIELD_AT(self, Col_800DDC98, 0x38));
+        func_8003FB88_e(FIELD_AT(self, void *, 0x2C), FIELD_AT(self, int, 0x34), FIELD_AT(self, Col_800DDC98, 0x38));
     }
 }
 
@@ -2769,7 +2697,7 @@ EXTERN_C int func_800DDD84(void *self)
 
 EXTERN_C SubNode *func_800DDD90(SubNode *a, SubNode *b)
 {
-    return static_cast<SubNode *>(func_8001A744(a, b));
+    return static_cast<SubNode *>(func_8001A744_l(a, b));
 }
 
 EXTERN_C SubNode *func_800DDDD8(SubNode *self)
@@ -2780,7 +2708,7 @@ EXTERN_C SubNode *func_800DDDD8(SubNode *self)
 
 EXTERN_C void func_800DDE00(SubNode *a, SubNode *b)
 {
-    func_8001A678(a, b);
+    func_8001A678_l(a, b);
 }
 
 EXTERN_C int func_800DDE3C(void *self)
@@ -2818,7 +2746,6 @@ EXTERN_C void func_800DDEFC(void *self)
     FIELD_AT(self, char, 0x7C) = 1;
 }
 
-EXTERN_C void func_80039DD8(void *obj);
 
 EXTERN_C void func_800DDF08(void *self, Vec4 v)
 {
@@ -2955,11 +2882,6 @@ EXTERN_C char D_800108A0[];
 EXTERN_C char D_800B4C48[];
 EXTERN_C void *D_800B4C18[];
 EXTERN_C Poly *D_800B4C38[];
-EXTERN_C void *memset(void *p, int c, unsigned n);
-EXTERN_C void func_80021F48(void *, void *);
-EXTERN_C void func_80024CA0(void *self, void *buf, int w, int h);
-EXTERN_C void func_80025444(void *a, void *b, int c);
-EXTERN_C void func_8001ED2C(void *self, int a, int b);
 
 struct Pal_800DE3BC {
     char *vptr;
@@ -3224,8 +3146,6 @@ struct UVX_800DE8CC {
     UVX_800DE8CC(int au, int av) : u(au), v(av) {}
 };
 
-EXTERN_C void *func_8003BEF8(void *p);
-EXTERN_C void func_80039BEC(void *self, int b);
 EXTERN_C void func_800DF1DC(void *self, UV_800DF1DC *base);
 EXTERN_C void func_800DF27C(void *self, unsigned char *rgb);
 
@@ -3271,7 +3191,6 @@ EXTERN_C void func_800DE8CC(void *self, short i)
 EXTERN_C int D_800D63A0[];
 EXTERN_C char D_80010338[];
 EXTERN_C char D_800A4544[];
-EXTERN_C void func_8001D150(void *, void *);
 
 struct L_800DEA54 {
     void *vptr;
@@ -3691,7 +3610,6 @@ EXTERN_C int D_80011D04[];
 EXTERN_C int D_80011D6C[];
 EXTERN_C int D_80011AAC[];
 EXTERN_C int D_80011B14[];
-EXTERN_C void func_800198AC(void *, int);
 
 EXTERN_C void func_800DF3F4(void *self, int flags)
 {

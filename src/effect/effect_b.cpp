@@ -1,4 +1,5 @@
 #include "common.h"
+#include "shared/exe.h"
 #include "effect/effect.h"
 
 EXTERN_C void *func_800E0188(void *self, int n)
@@ -461,7 +462,7 @@ EXTERN_C void *func_800E0DAC(void *self, void *arg, void *p)
     void *next;
     func_800E343C(p, (Poly *)arg);
     next = FIELD_AT(p, void *, 0x4);
-    FIELD_AT(self, Link *, 0x4C) = func_8001A744(FIELD_AT(self, Link *, 0x4C), (Link *)p);
+    FIELD_AT(self, Link *, 0x4C) = func_8001A744_l(FIELD_AT(self, Link *, 0x4C), (Link *)p);
     if (p) {
         Poly *o = (Poly *)p;
         o->vptr[1].pfn((char *)o + o->vptr[1].delta, 3);
@@ -492,7 +493,7 @@ EXTERN_C void func_800E0FDC(void *self, Poly *p)
         o = func_800E3518(operator new(0x70));
     ((void (*)(void *, int))p->vptr[5].pfn)((char *)p + p->vptr[5].delta, FIELD_AT(o, int, 0xC));
     if (FIELD_AT(self, Link *, 0x4C))
-        func_8001A678(FIELD_AT(self, Link *, 0x4C), (Link *)o);
+        func_8001A678_l(FIELD_AT(self, Link *, 0x4C), (Link *)o);
     else
         FIELD_AT(self, Link *, 0x4C) = (Link *)o;
 }
@@ -673,7 +674,7 @@ EXTERN_C void func_800E1604(void *self, void *arg)
 EXTERN_C void func_800E1AE4(void *self, Link *link)
 {
     if (FIELD_AT(self, Link *, 0x58))
-        func_8001A678(FIELD_AT(self, Link *, 0x58), link);
+        func_8001A678_l(FIELD_AT(self, Link *, 0x58), link);
     else
         FIELD_AT(self, Link *, 0x58) = link;
 }
@@ -687,7 +688,6 @@ EXTERN_C void *func_800E1B24(void *self)
 
 EXTERN_C void func_800E49D8(void *self, void *arg);
 EXTERN_C void func_800E4B88(void *self, void *arg);
-EXTERN_C int func_8003912C(void *p, int n);
 
 EXTERN_C void func_800E1B60(void *self, void *arg)
 {
@@ -723,7 +723,6 @@ EXTERN_C void *func_800E5254(void *self, short id);
 EXTERN_C void *func_800E5450(void *self, short id);
 EXTERN_C void func_800E49D8(void *self, void *arg);
 EXTERN_C void func_800E4B88(void *self, void *arg);
-EXTERN_C int func_8003912C(void *p, int n);
 EXTERN_C void *func_800E01B0(short kind, short b, void *owner);
 
 EXTERN_C void *func_800E1C5C(void *src, int a, void *b)
@@ -845,7 +844,7 @@ EXTERN_C void *func_800E1C5C(void *src, int a, void *b)
     if (((C_800E0468 *)src)->w58)
         n->w58 = (int)func_800E1C5C((void *)((C_800E0468 *)src)->w58, (int)n, b);
     if (((C_800E0468 *)src)->next)
-        func_8001A678((Link *)n, (Link *)func_800E1C5C((void *)((C_800E0468 *)src)->next, a, b));
+        func_8001A678_l((Link *)n, (Link *)func_800E1C5C((void *)((C_800E0468 *)src)->next, a, b));
     return n;
 }
 
@@ -889,7 +888,6 @@ EXTERN_C void func_800E22E0(void *self)
 }
 
 EXTERN_C char D_800B4C48[];
-EXTERN_C void func_80025444(void *a, void *b, int c);
 
 EXTERN_C void func_800E2348(void *self)
 {
@@ -930,7 +928,7 @@ EXTERN_C int func_800E2458(void *self)
 
 EXTERN_C Link *func_800E2464(Link *a, Link *b)
 {
-    return func_8001A744(a, b);
+    return func_8001A744_l(a, b);
 }
 
 EXTERN_C int func_800E2484(void *self)
@@ -1182,7 +1180,6 @@ inline SVec4 nextv_800E2944(Iter_800E2944 *it, int step)
 }
 
 EXTERN_C void func_800D7A4C(RandVal *self, short *base, short *phase);
-EXTERN_C int rand(void);
 
 struct UV_800E2944 {
     unsigned char u, v;
@@ -1377,7 +1374,6 @@ EXTERN_C int func_800E31B0(void *self, void *owner)
 EXTERN_C int D_800D63B8[];
 EXTERN_C char D_80010338[];
 EXTERN_C char D_800A4544[];
-EXTERN_C void func_8001D150(void *, void *);
 
 struct S_800E343C {
     void *vptr;
@@ -1440,7 +1436,6 @@ EXTERN_C void func_800E3550(IdNode *self, int flags)
 #define gte_stmac2(r0) __asm__ volatile("swc2 $26, 0(%0)" : : "r"(r0) : "memory")
 #define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
 
-EXTERN_C int SquareRoot0(int a);
 EXTERN_C Vec4 func_800E3DC4(Vec4 *a, Vec4 *b);
 
 EXTERN_C Vec4 func_800E3578(void *self)
@@ -1506,7 +1501,6 @@ EXTERN_C void func_800E382C(IdNode *self, int flags)
 #define gte_stmac2(r0) __asm__ volatile("swc2 $26, 0(%0)" : : "r"(r0) : "memory")
 #define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
 
-EXTERN_C int SquareRoot0(int a);
 EXTERN_C Vec4 func_800E3DC4(Vec4 *a, Vec4 *b);
 
 EXTERN_C Vec4 func_800E3854(void *self)
@@ -1554,7 +1548,6 @@ EXTERN_C Vec4 func_800E3A4C(void *self)
 #define gte_stmac2(r0) __asm__ volatile("swc2 $26, 0(%0)" : : "r"(r0) : "memory")
 #define gte_stmac3(r0) __asm__ volatile("swc2 $27, 0(%0)" : : "r"(r0) : "memory")
 
-EXTERN_C int SquareRoot0(int a);
 
 EXTERN_C Vec4 func_800E3AA4(void *self, Vec4 *v)
 {
@@ -1764,7 +1757,6 @@ EXTERN_C void *func_800E41B8(void *self, void *other)
     return self;
 }
 
-EXTERN_C void func_8008EF64(int arg, int a, int b);
 
 EXTERN_C void func_800E41FC(void *self)
 {
@@ -1773,7 +1765,6 @@ EXTERN_C void func_800E41FC(void *self)
         func_8008EF64((FIELD_AT(*p, unsigned short, 0x14) << 16) + FIELD_AT(self, signed char, 0x1), 0x60, 0x40);
 }
 
-EXTERN_C void func_8008FAB4(int arg);
 
 EXTERN_C void func_800E424C(void *self)
 {
@@ -1799,7 +1790,6 @@ EXTERN_C void func_800E42B0(void *self, int flags)
         operator delete(self);
 }
 
-EXTERN_C void func_8008ECB4(void *p);
 
 EXTERN_C char *func_800E42F4(void *self, char *data)
 {
@@ -1809,8 +1799,6 @@ EXTERN_C char *func_800E42F4(void *self, char *data)
     return data + FIELD_AT(data, int, 0x8);
 }
 
-EXTERN_C void *func_8008D1F4(void *data, int arg);
-EXTERN_C void func_8008C928(int arg);
 
 EXTERN_C char *func_800E4354(void *self, char *data)
 {
@@ -1819,8 +1807,6 @@ EXTERN_C char *func_800E4354(void *self, char *data)
     return data + FIELD_AT(data, int, 0x8);
 }
 
-EXTERN_C void func_8008ED44(void *p);
-EXTERN_C void func_8008D4C0(void *p);
 
 EXTERN_C void func_800E43A0(void *self)
 {
@@ -1937,12 +1923,11 @@ EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off)
         vec4_zero(&base);
     vec4_zero(&t);
     if (FIELD_AT(self, void *, 0x3C))
-        t = func_8003A150(FIELD_AT(self, int, 0x3C), (int)&t);
+        t = func_8003A150_v(FIELD_AT(self, int, 0x3C), (int)&t);
     add3_800E4674(&base, func_800E5798(&func_800E5798(&t, &FIELD_AT(self, Vec4, 0x2C)), &FIELD_AT(self, Vec4, 0xC)));
     return base;
 }
 
-EXTERN_C int SquareRoot0(int a);
 EXTERN_C Vec4 func_800E5758(Vec4 *a, Vec4 *b);
 
 EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v)
@@ -1969,7 +1954,6 @@ INCLUDE_RODATA("asm/effect/nonmatchings/effect_b", D_800D6644);
 
 INCLUDE_RODATA("asm/effect/nonmatchings/effect_b", D_800D6674);
 
-EXTERN_C int func_8003912C(void *p, int n);
 
 EXTERN_C void func_800E49D8(void *self, void *argp)
 {
@@ -2027,7 +2011,6 @@ EXTERN_C void func_800E49D8(void *self, void *argp)
     }
 }
 
-EXTERN_C int func_8003912C(void *p, int n);
 
 EXTERN_C void func_800E4B88(void *self, void *argp)
 {
@@ -2105,9 +2088,6 @@ struct Mat_800E4D10 {
     int m[8];
 };
 
-EXTERN_C int rand(void);
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
 EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
 EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
 
@@ -2190,9 +2170,6 @@ EXTERN_C void func_800E506C(IdNode *self, int flags)
     "swc2 $27, 8(%0)" \
     : : "r"(r0) : "memory")
 
-EXTERN_C void func_8003A754(void *m, int scale);
-EXTERN_C void func_8003A7FC(void *m, SVec4 *rot);
-EXTERN_C int rand(void);
 EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
 EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
 
@@ -2256,7 +2233,6 @@ EXTERN_C void func_800E5290(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-EXTERN_C int rand(void);
 EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
 EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
 
@@ -2316,7 +2292,6 @@ EXTERN_C void func_800E548C(IdNode *self, int flags)
     func_800E44E0(self, flags);
 }
 
-EXTERN_C int rand(void);
 EXTERN_C Vec4 func_800E4674(void *self, Vec4 *off);
 EXTERN_C Vec4 func_800E47AC(void *self, Vec4 *v);
 
