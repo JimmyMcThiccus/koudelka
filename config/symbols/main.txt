@@ -568,3 +568,7 @@ _padSendAtLoadInfo = 0x800A3230; // type:func
 _padRecvAtLoadInfo = 0x800A32B4; // type:func
 _padGetActSize = 0x800A3524; // type:func
 chkRC2wait = 0x800A3B98; // type:func
+// Named by tools/psyq_sigs.py from the module layout: siblings of a uniquely matched function in the same object.
+_padInitSioMode = 0x800A28A4; // type:func
+_padLoadActInfo = 0x800A355C; // type:func
+_padCmdParaMode = 0x800A3AD0; // type:func

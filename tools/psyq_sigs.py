@@ -169,7 +169,7 @@ def signatures(obj):
         words = [struct.unpack_from("<I", text, p)[0] for p in range(off, end - 3, 4)]
         mask = [masks.get(p, 0xFFFFFFFF) for p in range(off, end - 3, 4)]
         call = {(p - off) // 4: calls[p] for p in range(off, end - 3, 4) if p in calls}
-        out.append((name, words, mask, call, obj.name))
+        out.append((name, words, mask, call, (str(obj), off)))
     return out
 
 
@@ -211,6 +211,7 @@ def main():
     length = {s: (e - s) // 4 for s, e in zip(starts, starts[1:])}
     name_at = splat_functions(0x80010000, 0x800B5000)
     found = {}  # address -> {name: {callee address: callee name}}
+    placed = {}  # address -> {(object, offset)} of the matches there
     for name, w, m, call, src in sigs:
         while w and w[-1] == 0:  # the library object's own trailing padding
             w, m = w[:-1], m[:-1]
@@ -235,9 +236,10 @@ def main():
                     callees[target] = sym
             if ok:
                 found.setdefault(addr, {})[name] = callees
+                placed.setdefault(addr, set()).add(src)
 
     new = {}  # address -> name
-    stats = {"right": 0, "new": 0, "callee": 0, "conflict": 0, "ambiguous": 0, "none": 0}
+    stats = {"right": 0, "new": 0, "callee": 0, "layout": 0, "conflict": 0, "ambiguous": 0, "none": 0}
 
     def name_new(addr, name, how):
         if addr in new:
@@ -268,6 +270,27 @@ def main():
         # A unique match also names the unnamed functions it calls.
         for target, callee in names[cur if cur in names else next(iter(names))].items():
             name_new(target, callee, "callee")
+    # Module layout: the linker keeps each object's .text in one piece, so once one of its functions is placed
+    # uniquely, its siblings sit at the same distances from it. Name the unnamed ones whose code also matches.
+    by_obj = {}
+    for name, w, m, call, (obj, off) in sigs:
+        by_obj.setdefault(obj, []).append((off, name, w, m))
+    for addr, cur in sorted(funcs.items()):
+        names = found.get(addr, {})
+        if len(names) != 1 or not (cur in names or new.get(addr) in names):
+            continue
+        for obj, off in placed[addr]:
+            if any(n == next(iter(names)) for o, n, _, _ in by_obj[obj] if o == off):
+                for o2, n2, w2, m2 in by_obj[obj]:
+                    t2 = addr + (o2 - off)
+                    if t2 == addr or not funcs.get(t2, "").startswith("func_") or t2 in new:
+                        continue
+                    i2 = (t2 - 0x80010000) // 4
+                    while w2 and w2[-1] == 0:
+                        w2, m2 = w2[:-1], m2[:-1]
+                    if w2 and all((words[i2 + k] & m2[k]) == (w2[k] & m2[k]) for k in range(len(w2))):
+                        name_new(t2, n2, "layout")
+    stats.setdefault("layout", 0)
     print(f"# {len(funcs)} functions in range; " + ", ".join(f"{k} {v}" for k, v in stats.items()))
     if a.write and new:
         with open(ROOT / "config" / "symbols" / "main.txt", "a") as f:
