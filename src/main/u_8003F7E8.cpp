@@ -580,7 +580,79 @@ EXTERN_C void func_8004252C(void *p, int a, short b)
     func_8001EFE4(p, o);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/u_8003F7E8", func_800425A8);
+EXTERN_C void func_8003EBC4(void *p, int a);
+EXTERN_C void func_80046844(void *q, int a, void *p);
+EXTERN_C void func_8004616C(void *q, int a, void *p);
+EXTERN_C void func_800460E4(void *q, int a, void *p);
+EXTERN_C void func_80046078(void *q, int a, int b, void *p);
+EXTERN_C void func_8004600C(void *q, int a, int b, void *p);
+EXTERN_C void *func_80050E58(void *o, int a, int b, void *p);
+struct S_A2B_25A8 : A2VObj0 {
+    char pad4[0x108 - 4]; int i108; char pad10C[0x144 - 0x10C]; short s144; char pad146[0x190 - 0x146]; S_A2B_V4 v190;
+    char pad1A0[0x1B4 - 0x1A0]; void *p1B4; void *p1B8; char pad1BC[0x1D8 - 0x1BC]; short s1D8; char pad1DA[0x1F0 - 0x1DA];
+    int i1F0, i1F4, i1F8; char pad1FC[0x222 - 0x1FC]; short s222;
+};
+struct S_A2B_25A8r { char pad[0x24]; unsigned short s24, s26; };
+// exe.h declares the argument as void *; the typed struct is needed for the scheduling to match.
+EXTERN_C void func_800425A8_t(S_A2B_25A8 *p) asm("func_800425A8");
+EXTERN_C void func_800425A8_t(S_A2B_25A8 *p)
+{
+    void *q = func_80048D54(operator new(0x28));
+    S_A2B_25A8r *r;
+    if (p->s222 == 0) {
+        func_8003EBC4(p, 0);
+        p->s1D8 = 0;
+        p->v08();
+        if (q)
+            func_80048D2C(q, 3);
+        return;
+    }
+    if (p->s222 == 1) {
+        func_80046844(q, p->i1F0, p);
+    } else if (p->s222 == 2) {
+        func_8004616C(q, p->s144, p);
+    } else {
+        if (p->s222 == 3) {
+            func_800460E4(q, p->s144, p);
+            p->p1B4 = 0;
+        } else {
+            if (p->s222 == 4) {
+                func_80046078(q, p->i1F4, p->i1F8, p);
+                goto L;
+            }
+            if (p->s222 != 5)
+                goto L;
+            func_8004600C(q, p->i1F4, p->i1F8, p);
+            p->p1B4 = 0;
+        }
+        p->s1D8 = 0;
+    }
+L:
+    r = (S_A2B_25A8r *)func_80049398(q);
+    func_8003EBC4(p, *(int *)r);
+    if (q)
+        func_80048D2C(q, 3);
+    if (p->s222 != 3 && p->s222 != 5) {
+        void *o = operator new(1);
+        p->p1B4 = func_80050E58(o, r->s24, r->s26, p);
+        operator delete(o);
+        {
+            char *h = (char *)p->p1B8;
+            *(S_A2B_V4 *)(h + 0x34) = p->v190;
+            func_80039DD8(h);
+        }
+        if (p->p1B4) {
+            char *h = (char *)p->p1B4;
+            *(S_A2B_V4 *)(h + 0x34) = p->v190;
+            func_80039DD8(h);
+        }
+        p->i108 = p->v190.b;
+        AT(p->p1B8, void *, 0x68) = func_8003CEB4(operator new(0x30), p->p1B8);
+        p->s1D8 = 1;
+        p->v11();
+        p->v12();
+    }
+}
 
 EXTERN_C void func_80042818()
 {
