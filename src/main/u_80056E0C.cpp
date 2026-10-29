@@ -64,7 +64,7 @@ INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057214);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_80056E0C", func_80057368);
 
-EXTERN_C void func_80057558_def(S_DtorB *p, int flags)
+EXTERN_C void func_80057558(S_DtorB *p, int flags)
 {
     FIELD_AT(p, void **, 0x58) = D_80013F90;
     p->vt2C = D_80013E30;
@@ -380,7 +380,7 @@ EXTERN_C S_Ct44 *func_80058D98_def(S_Ct44 *p, int in_chrg, U8bw *r, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a3, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a3, 0x10);
     p->vb->vt = (VEntB *)D_80014130.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -564,7 +564,7 @@ EXTERN_C S_CtorB64 *func_80059958(S_CtorB64 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a2, 0x10);
     p->vb->vt = (VEntB *)D_800142B8.e;
     VTabB50 tmp;
     if (!in_chrg) {

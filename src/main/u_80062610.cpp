@@ -71,7 +71,7 @@ EXTERN_C S_C50_70 *func_80062848(S_C50_70 *p, int in_chrg, int a2, int a3, int e
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_80062C3C_v(p, 0, a2, -1, f);
+    func_80062C3C(p, 0, a2, -1, f);
     p->vb->vt = (VEntB *)D_80014CAC.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -336,8 +336,7 @@ EXTERN_C void func_800637A0(S_Dtor50 *p, int flags)
         operator delete(p);
 }
 
-EXTERN_C S_Ct5C *func_800638A8_def(S_Ct5C *p, int in_chrg) asm("func_800638A8");
-EXTERN_C S_Ct5C *func_800638A8_def(S_Ct5C *p, int in_chrg)
+EXTERN_C S_Ct5C *func_800638A8(S_Ct5C *p, int in_chrg)
 {
     if (in_chrg) {
         p->vb = (S_VBB *)&p->vobj;
@@ -346,7 +345,7 @@ EXTERN_C S_Ct5C *func_800638A8_def(S_Ct5C *p, int in_chrg)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_80057368_v(p, 0);
+    func_80057368(p, 0);
     p->vb->vt = (VEntB *)D_80014FFC.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -398,8 +397,7 @@ EXTERN_C void func_80063B14(void *self, short *v, unsigned short c)
     ((VObj<0x2C> *)self)->v27();
 }
 
-EXTERN_C void func_80063BE4_def(void *self) asm("func_80063BE4");
-EXTERN_C void func_80063BE4_def(void *self)
+EXTERN_C void func_80063BE4(void *self)
 {
     char *m = (char *)self + 0x30;
     int i;
@@ -448,7 +446,7 @@ EXTERN_C S_Ct3C *func_80063E18_def(S_Ct3C *p, int in_chrg, int a2, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v2(p, 0, (unsigned short)a3, 1);
+    func_8005BC84(p, 0, (unsigned short)a3, 1);
     p->vb->vt = (VEntB *)D_8001506C.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -610,8 +608,7 @@ EXTERN_C void func_800646DC(void *self, int flags)
     func_8005F120(self, flags);
 }
 
-EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3) asm("func_800646FC");
-EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3)
+EXTERN_C S_Ct50 *func_800646FC(S_Ct50 *p, int in_chrg, short *r, int a3)
 {
     if (in_chrg) {
         p->vb = (S_VBB *)&p->vobj;
@@ -620,7 +617,7 @@ EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v2(p, 0, (unsigned short)a3, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a3, 0x10);
     func_800537C0((char *)p + 0x38);
     p->vb->vt = (VEntB *)D_8001521C.e;
     VTabB50 tmp;
@@ -641,7 +638,7 @@ EXTERN_C S_Ct50 *func_800646FC_def(S_Ct50 *p, int in_chrg, short *r, int a3)
     FIELD_AT(p, int, 0x4C) = 0;
     ((VObj<0x2C> *)p)->v07(r[0], r[1]);
     ((VObj<0x2C> *)p)->v08(r[2], r[3]);
-    func_80064884_v(p, 1, 0);
+    func_80064884((int *)p, 1, 0);
     return p;
 }
 

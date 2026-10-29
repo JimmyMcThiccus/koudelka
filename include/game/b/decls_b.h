@@ -2595,7 +2595,6 @@ struct VE_B { short delta; short index; void (*pfn)(void *, int, int); };
 struct V4_B { int x, y, z, w; };
 
 EXTERN_C int func_80060118_i(void *self, int b) asm("func_80060118");
-EXTERN_C int func_800600A4_i(void *self, int b) asm("func_800600A4");
 
 struct Rc8 { short x, y, w, h; };
 struct Pt4w { short x, y; };
@@ -2643,7 +2642,6 @@ struct S_CtorB64 { S_VBB *vb; char pad4[0x28]; void **vt2C; char pad30[0x8]; int
 struct Pt4q { short x, y; };
 EXTERN_C char D_800104A8[];
 EXTERN_C short D_800B4D9E;
-EXTERN_C void *func_8005BC84_v(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
 EXTERN_C const VTabB50 D_80014750;
 EXTERN_C void *D_80014658[];
 EXTERN_C const VTabB50 D_800149B8;
@@ -2658,7 +2656,6 @@ EXTERN_C void *D_80014450[];
 struct S_C50_64 { char pad0[0x50]; S_VBB *vb; char pad54[0x10]; S_VBobjB vobj; };
 struct S_C50_68 { char pad0[0x50]; S_VBB *vb; char pad54[0x14]; S_VBobjB vobj; };
 struct S_C50_70 { char pad0[0x50]; S_VBB *vb; char pad54[0x1C]; S_VBobjB vobj; };
-EXTERN_C void *func_80062C3C_v(void *p, int in_chrg, int a, int b, int c) asm("func_80062C3C");
 EXTERN_C const VTabB50 D_80014D5C;
 EXTERN_C void *D_80013BD0[];
 EXTERN_C void *D_80014DAC[];
@@ -2673,12 +2670,10 @@ EXTERN_C void *D_80014D1C[];
 
 EXTERN_C const VTabB50 D_80014750;
 EXTERN_C void *D_80014658[];
-EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags) asm("func_8005BDA4");
 
 EXTERN_C const VTabB50 D_80013F40;
 EXTERN_C void *D_80013F90[];
 EXTERN_C void *D_80013E30[];
-EXTERN_C void func_80057558_def(S_DtorB *p, int flags) asm("func_80057558");
 
 struct S_ArrB { void **items; int count; };
 struct S_CollB {
@@ -2689,10 +2684,6 @@ struct S_CollB {
 };
 struct S_WB { char pad0[0x30]; S_CollB coll; };
 
-EXTERN_C void func_8006A4E4_v(void *a, int b) asm("func_8006A4E4");
-EXTERN_C void func_8006BD34_v(void *a) asm("func_8006BD34");
-EXTERN_C void func_8008E70C_v(void *a, int b) asm("func_8008E70C");
-EXTERN_C void *func_80066FB0_def(void *self, int a, int b, int c, int d) asm("func_80066FB0");
 
 struct S_SubB { S_VBB *vb; void *vptr; };
 EXTERN_C const VTabB50 D_80010538;
@@ -2701,21 +2692,14 @@ EXTERN_C void *D_800118DC[];
 EXTERN_C const VTabB50 D_80013C00;
 EXTERN_C void *D_80013C50[];
 EXTERN_C void *D_80013C70[];
-EXTERN_C void *func_80054AF0_v(void *p, int b) asm("func_80054AF0");
 EXTERN_C void *func_80054A4C_v(void *p, int b, int c) asm("func_80054A4C");
-EXTERN_C void *func_80054094_v(void *p, int b) asm("func_80054094");
 
+// func_800205D4 is defined taking an int; this caller passes a pointer.
 EXTERN_C void func_800205D4_v(void *p) asm("func_800205D4");
-EXTERN_C void func_8002EE9C_v(void *p, int a) asm("func_8002EE9C");
-EXTERN_C void func_80054C34_v(void *p, int a) asm("func_80054C34");
-EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags) asm("func_8005652C");
 
 struct S_Ct3C { S_VBB *vb; char pad4[0x38]; S_VBobjB vobj; };
 struct S_Ct50 { S_VBB *vb; char pad4[0x4C]; S_VBobjB vobj; };
 struct S_Ct5C { S_VBB *vb; char pad4[0x58]; S_VBobjB vobj; };
-EXTERN_C void *func_8005BC84_v2(void *p, int in_chrg, int a, int c) asm("func_8005BC84");
-EXTERN_C void *func_80057368_v(void *p, int in_chrg) asm("func_80057368");
-EXTERN_C void *func_80064884_v(void *p, int a, int b) asm("func_80064884");
 EXTERN_C const VTabB50 D_8001506C;
 EXTERN_C void *D_800150BC[];
 EXTERN_C const VTabB50 D_8001521C;
@@ -2745,7 +2729,9 @@ struct S_CpE0 { void *vtbl; int unk4; short unk8, unkA; int unkC; W3q a[2]; W3q 
 EXTERN_C char D_80014950[];
 EXTERN_C char D_80014B68[];
 
-EXTERN_C void func_8005F0E4_v(void *p, int b) asm("func_8005F0E4");
+// func_800600A4 returns unsigned short; this caller was matched reading an int.
+EXTERN_C int func_800600A4_i(void *self, int b) asm("func_800600A4");
+// func_80060154 returns unsigned short; this caller masks an unsigned result with 0xFFFF itself.
 EXTERN_C unsigned func_80060154_v(void *p, int b) asm("func_80060154");
 EXTERN_C void func_8005DF54_v(void *p, void *b) asm("func_8005DF54");
 EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d) asm("func_8005DD4C");
@@ -2755,9 +2741,6 @@ EXTERN_C char D_800B4E68[];
 EXTERN_C char D_800B4E70[];
 EXTERN_C char D_800B4E78[];
 EXTERN_C char D_800B4E80[];
-EXTERN_C void func_80054708_v(void *p, int a) asm("func_80054708");
-EXTERN_C void func_800538CC_v(void *p, char *s, int n) asm("func_800538CC");
-EXTERN_C void func_80053DDC_v(void *p, void *q) asm("func_80053DDC");
 
 EXTERN_C int func_800667C8_i(void *p) asm("func_800667C8");
 EXTERN_C int func_8006692C_i(void *p) asm("func_8006692C");
@@ -2768,6 +2751,5 @@ EXTERN_C void func_800BCA58_v(void *p) asm("func_800BCA58");
 EXTERN_C void func_800BCA88_v(void *p) asm("func_800BCA88");
 EXTERN_C void func_800BF018_v(void *p) asm("func_800BF018");
 EXTERN_C void func_800B92B0_v(void *p) asm("func_800B92B0");
-EXTERN_C void func_8006B988_v(void *p) asm("func_8006B988");
 
 #endif /* GAME_B_DECLS_B_H */

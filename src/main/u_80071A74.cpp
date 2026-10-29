@@ -3595,7 +3595,7 @@ EXTERN_C int func_800801D0(void *self, int b, int c)
     return r;
 }
 
-EXTERN_C void func_8008022C_def(void *self, int a, int b)
+EXTERN_C void func_8008022C(void *self, int a, int b)
 {
     unsigned tk = D_800A4534.ticks;
     char *p = (char *)__builtin_new(0x10);

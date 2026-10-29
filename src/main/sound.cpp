@@ -999,7 +999,6 @@ EXTERN_C void func_8008CDA8(int v)
 }
 
 EXTERN_C int D_800AFCFC[];
-// SpuGetReverbModeType
 EXTERN_C long SpuSetReverbModeType(long mode);
 EXTERN_C void SpuSetReverbModeDelayTime(long delay);
 EXTERN_C void SpuSetReverbModeFeedback(long feedback);
@@ -5466,9 +5465,6 @@ EXTERN_C void SpuSetVoiceARAttr(int voice, unsigned short ar, long mode);
 EXTERN_C void SpuSetVoiceDR(int voice, unsigned short dr);
 EXTERN_C void SpuSetVoiceSL(int voice, unsigned short sl);
 EXTERN_C void SpuSetVoiceSRAttr(int voice, unsigned short sr, long mode);
-/* SpuSetPitchLFOVoice */
-/* SpuSetNoiseVoice */
-/* SpuSetReverbVoice */
 
 EXTERN_C void func_80093FE0(void)
 {

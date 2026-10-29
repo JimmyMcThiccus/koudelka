@@ -166,9 +166,8 @@ INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006E8E4);
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8006CBCC", func_8006EACC);
 
-EXTERN_C void func_8006EBB0_def(void *self, void *m) asm("func_8006EBB0");
 
-EXTERN_C void func_8006EBB0_def(void *self, void *m)
+EXTERN_C void func_8006EBB0(void *self, void *m)
 {
     if (FIELD_AT(self, short, 8) == 1) {
         func_8006EF84(self);
@@ -184,9 +183,8 @@ EXTERN_C void func_8006EBB0_def(void *self, void *m)
     FIELD_AT(self, short, 8) = 2;
 }
 
-EXTERN_C void func_8006EC70_def(void *self, void *m) asm("func_8006EC70");
 
-EXTERN_C void func_8006EC70_def(void *self, void *m)
+EXTERN_C void func_8006EC70(void *self, void *m)
 {
     if (FIELD_AT(self, short, 8) == 1) {
         func_8006EF84(self);

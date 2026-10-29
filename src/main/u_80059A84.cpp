@@ -151,7 +151,7 @@ EXTERN_C S_CtorB38 *func_8005A62C(S_CtorB38 *p, int in_chrg, Pt4q a, Pt4q b, uns
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, c, 0x10);
+    func_8005BC84(p, 0, c, 0x10);
     p->vb->vt = (VEntB *)D_80014400.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -402,7 +402,7 @@ EXTERN_C S_CtorB38 *func_8005BC84(S_CtorB38 *p, int in_chrg, int a2, int a3)
     return p;
 }
 
-EXTERN_C void func_8005BDA4_def(S_DtorB *p, int flags)
+EXTERN_C void func_8005BDA4(S_DtorB *p, int flags)
 {
     p->vt2C = D_80014658;
     p->vb->vt = (VEntB *)D_80014750.e;
@@ -624,7 +624,7 @@ EXTERN_C S_CtorB38 *func_8005CB88(S_CtorB38 *p, int in_chrg, int a2, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a3, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a3, 0x10);
     p->vb->vt = (VEntB *)D_80014808.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -851,7 +851,7 @@ EXTERN_C S_CtorB38 *func_8005D8C4(S_CtorB38 *p, int in_chrg, int a2)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_8005BC84_v(p, 0, (unsigned short)a2, 0x10);
+    func_8005BC84(p, 0, (unsigned short)a2, 0x10);
     p->vb->vt = (VEntB *)D_800149B8.e;
     VTabB50 tmp;
     if (!in_chrg) {
@@ -947,7 +947,7 @@ EXTERN_C void *func_8005DD4C_def(void *p, Rc8 r, int c, int d)
     int i;
     int off;
     char *q;
-    func_8005F0E4_v(p, d);
+    func_8005F0E4(p, d);
     FIELD_AT(p, void *, 0) = D_80014B00;
     FIELD_AT(p, unsigned char, 0x2B) = 3;
     FIELD_AT(p, unsigned char, 0x2F) = 0x60;

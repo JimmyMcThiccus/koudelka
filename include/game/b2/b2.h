@@ -24,6 +24,7 @@ struct B16_C {
     }
 };
 
+// main_b2 passes its 16-byte block by value as B16_C; exe.h uses main_b's B16_B.
 EXTERN_C void func_8007D24C_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int a12) asm("func_8007D24C");
 
 EXTERN_C void func_8007CAB4_c(void *self, int a1, int a2, int a3, int a4, int a5, int a6, int a7, B16_C s, int a12) asm("func_8007CAB4");
@@ -36,7 +37,6 @@ static inline char *nx_80080350(char *p) { return FIELD_AT(p, char *, 4); }
 
 EXTERN_C char D_800173D0[];
 
-EXTERN_C void func_8008022C_def(void *self, int a, int b) asm("func_8008022C");
 
 EXTERN_C void *D_800B4D38_w asm("D_800B4D38");
 
@@ -82,6 +82,7 @@ struct Rgb_B {
     Rgb_B() {}
 };
 
+// Passes its colour by value as Rgb_B; the definition (main_a2b) takes S_Rgb.
 EXTERN_C void func_8003D358_c(void *a, int b, Rgb_B c) asm("func_8003D358");
 
 
@@ -89,6 +90,7 @@ EXTERN_C short func_80073C04(void *self);
 
 EXTERN_C void func_800DDFB0_c(void *self, int a, int b, int c, int d, int e, int f, int g, B16_B s, int h) asm("func_800DDFB0");
 
+// func_800550BC returns func_80019F64's result (a tail call) but is defined void.
 EXTERN_C void *func_800550BC_r(void *self) asm("func_800550BC");
 
 

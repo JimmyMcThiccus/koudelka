@@ -443,8 +443,7 @@ EXTERN_C int func_8005618C(void *p)
     return D_800B4D98 == 0;
 }
 
-EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, int e) asm("func_80056198");
-EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, int e)
+EXTERN_C S_C50_64 *func_80056198(S_C50_64 *p, int in_chrg, int a2, int a3, int e)
 {
     VTabB50 tmp1;
     VTabB50 tmp;
@@ -482,12 +481,11 @@ EXTERN_C S_C50_64 *func_80056198_def(S_C50_64 *p, int in_chrg, int a2, int a3, i
     FIELD_AT(p, void **, 0x18) = D_80013C70;
     FIELD_AT(p, int, 0x5C) = 1;
     FIELD_AT(p, int, 0x60) = 1;
-    func_80054094_v(p, a3);
+    func_80054094(p, a3);
     return p;
 }
 
-EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3) asm("func_80056364");
-EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
+EXTERN_C S_C50_64 *func_80056364(S_C50_64 *p, int in_chrg, int a2, int a3)
 {
     VTabB50 tmp1;
     VTabB50 tmp;
@@ -498,7 +496,7 @@ EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
         v->unk4 = 0;
         v->vptr = D_800104A8;
     }
-    func_80054AF0_v(p, a3);
+    func_80054AF0(p, a3);
     {
         S_SubB *m = (S_SubB *)((char *)p + 0x50);
         char *q;
@@ -525,11 +523,11 @@ EXTERN_C S_C50_64 *func_80056364_def(S_C50_64 *p, int in_chrg, int a2, int a3)
     FIELD_AT(p, void **, 0x18) = D_80013C70;
     FIELD_AT(p, int, 0x5C) = 1;
     FIELD_AT(p, int, 0x60) = 1;
-    func_80054094_v(p, a2);
+    func_80054094(p, a2);
     return p;
 }
 
-EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
+EXTERN_C void func_8005652C(S_Dtor50 *p, int flags)
 {
     FIELD_AT(p, void **, 0x54) = D_80013BD0;
     FIELD_AT(p, void **, 0x58) = D_80013C50;
@@ -544,7 +542,7 @@ EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
         tmp.e[6].d = D_80013C00.e[6].d + adj;
     }
     func_800205D4_v(p ? (char *)p + 0x58 : 0);
-    func_8002EE9C_v((char *)p + 0x58, 0);
+    func_8002EE9C((char *)p + 0x58, 0);
     {
         S_SubB *m = (S_SubB *)((char *)p + 0x50);
         VTabB50 tmp;
@@ -557,7 +555,7 @@ EXTERN_C void func_8005652C_def(S_Dtor50 *p, int flags)
         tmp.e[1].d = D_80010538.e[1].d + (adj = (char *)m - (q = (char *)m->vb - 8));
         tmp.e[6].d = D_80010538.e[6].d + adj;
     }
-    func_80054C34_v(p, 0);
+    func_80054C34(p, 0);
     if (flags & 2)
         func_8001A610(p->vb, 0);
     if (flags & 1)
