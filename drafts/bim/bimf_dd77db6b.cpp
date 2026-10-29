@@ -7,7 +7,6 @@ EXTERN_C int bimf_dd77db6b(BimMon *p, unsigned *flags)
     func_800D7A20(p, 5);
     func_800D7A20(p, 0);
     unsigned f = *flags;
-    int ret;
     if (f & 2) {
         void *q = func_800D7A4C(p, 1, 0x421);
         if (!q)
@@ -19,16 +18,15 @@ EXTERN_C int bimf_dd77db6b(BimMon *p, unsigned *flags)
         void *q = func_800D7A4C(p, 1, 0x121);
         if (q) {
             func_800D7AC4(p, q, 0, 0);
-            int t = 1; ret = t; p->f9F0 = t;
+            p->f9F0 = 1;
         } else {
             q = func_800D7A4C(p, 1, 0x21);
             if (!q)
                 return 0;
             func_800D7BB4(p, (int)q, 0, 0);
-            ret = 1;
         }
         *flags &= ~1;
-        return ret;
+        return 1;
     }
     return 0;
 }

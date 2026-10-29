@@ -42,7 +42,7 @@ INCLUDE_ASM("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", bimf_06b4d1a5);
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", bimf_b4962b94);
+#include "../shared/bimf_b4962b94.cpp"
 
 INCLUDE_RODATA("asm/bim/w1_e4da15e6dd/nonmatchings/w1_e4da15e6dd", D_800DBBD8);
 
