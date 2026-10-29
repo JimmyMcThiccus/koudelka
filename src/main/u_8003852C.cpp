@@ -370,8 +370,7 @@ EXTERN_C void func_8003944C(void *h, void *o)
     func_80019A18(h ? AT(h, List *, 0) : 0, s);
 }
 
-extern "C++" void *func_8003950C_(S_A2_Iter *it, A2VObj0 *o) asm("func_8003950C");
-void *func_8003950C_(S_A2_Iter *it, A2VObj0 *o)
+EXTERN_C void *func_8003950C(S_A2_Iter *it, A2VObj0 *o)
 {
     void *r = 0;
     int s = func_80019A18(it ? (List *)it->arr : 0, 1);
@@ -387,8 +386,7 @@ void *func_8003950C_(S_A2_Iter *it, A2VObj0 *o)
     return r;
 }
 
-extern "C++" void *func_80039610_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039610");
-void *func_80039610_(S_A2_Iter *it, A2VObj0 *o)
+EXTERN_C void *func_80039610(S_A2_Iter *it, A2VObj0 *o)
 {
     void *r = 0;
     int s = func_80019A18(it ? (List *)it->arr : 0, 1);
@@ -403,8 +401,7 @@ void *func_80039610_(S_A2_Iter *it, A2VObj0 *o)
     return r;
 }
 
-extern "C++" void *func_80039710_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039710");
-void *func_80039710_(S_A2_Iter *it, A2VObj0 *o)
+EXTERN_C void *func_80039710(S_A2_Iter *it, A2VObj0 *o)
 {
     void *r;
     int s;
@@ -422,8 +419,7 @@ void *func_80039710_(S_A2_Iter *it, A2VObj0 *o)
     return r;
 }
 
-extern "C++" void *func_80039824_(S_A2_Iter *it, A2VObj0 *o) asm("func_80039824");
-void *func_80039824_(S_A2_Iter *it, A2VObj0 *o)
+EXTERN_C void *func_80039824(S_A2_Iter *it, A2VObj0 *o)
 {
     void *r;
     int s;
@@ -868,8 +864,7 @@ S_A2_Sv0 f3abec(MATRIX *m)
 
 INCLUDE_ASM("asm/main/nonmatchings/u_8003852C", func_8003AD78);
 
-extern "C++" S_A2_Sv0 f3b168(MATRIX *m) asm("func_8003B168");
-S_A2_Sv0 f3b168(MATRIX *m)
+EXTERN_C S_A2_Sv0 func_8003B168(MATRIX *m)
 {
     S_A2_Sv0 r;
     int a;
@@ -951,6 +946,8 @@ EXTERN_C MATRIX *func_8003B3EC(MATRIX *r, MATRIX *a, MATRIX *b)
     return r;
 }
 
+// Returns S_A2_V4z (S_A2_V4 with a zeroing constructor) and takes the matrix as an int; its caller in this
+// unit wants an S_A2_V4.
 extern "C++" S_A2_V4z f3b450(int a, void *b) asm("func_8003B450");
 S_A2_V4z f3b450(int a, void *b)
 {

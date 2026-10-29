@@ -7,8 +7,7 @@
 #include "game/a2/a2.h"
 #include "game/a2b/a2b.h"
 
-extern "C++" void *func_8003C510_(void *p) asm("func_8003C510");
-void *func_8003C510_(void *p)
+EXTERN_C void *func_8003C510(void *p)
 {
     AT(p, void **, 0) = D_80012714;
     return p;
