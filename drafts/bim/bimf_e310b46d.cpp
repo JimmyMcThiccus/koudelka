@@ -1,22 +1,5 @@
-// Shared by 20 BIM.AR modules: like bimf_dd77db6b, but falls back to clearing bit 1 / bit 0 of *flags when nothing started.
 #include "common.h"
 #include "bim/shared.h"
-
-static inline int bimf_e310b46d_tail(unsigned *flags)
-{
-    unsigned f = *flags;
-    int ret;
-    if (f & 2) {
-        *flags = f & ~2;
-        return 1;
-    }
-    ret = f & 1;
-    if (ret) {
-        *flags = f & ~1;
-        ret = 1;
-    }
-    return ret;
-}
 
 EXTERN_C int bimf_e310b46d(BimMon *p, unsigned *flags)
 {
@@ -47,5 +30,16 @@ EXTERN_C int bimf_e310b46d(BimMon *p, unsigned *flags)
             return 1;
         }
     }
-    return bimf_e310b46d_tail(flags);
+    unsigned f = *flags;
+    int ret;
+    if (f & 2) {
+        *flags = f & ~2;
+        return 1;
+    }
+    ret = f & 1;
+    if (ret) {
+        *flags = f & ~1;
+        ret = 1;
+    }
+    return ret;
 }
