@@ -46,9 +46,9 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7818);
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7914);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7A20);
+EXTERN_C void func_800D7A20() { func_800CC110(D_800AF470[0]->f32C); }
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7A4C);
+EXTERN_C void func_800D7A4C(void *p, int a, unsigned short b) { func_800CC298(D_800AF470[0]->f32C, a, b); }
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7A78);
 
@@ -100,7 +100,10 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8204);
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8260);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D82BC);
+EXTERN_C void func_800D82BC(BimMon *p) {
+    p->f9C8 = 0; p->f9CC = 0; p->f9D0 = -1; p->f9D4 = 0; p->f9D8 = 0; p->f9DC = 0;
+    p->f9E0 = 0; p->f9E4 = 0; p->f9E8 = 0; p->f9EC = 0; p->f9F0 = 0;
+}
 
 EXTERN_C void func_800D82F0() { func_800D8AE4(); }
 
@@ -134,9 +137,16 @@ EXTERN_C void func_800D8A0C(void *p, int a) { func_800D7C7C(p, a, 0); }
 
 EXTERN_C void func_800D8A2C(void *p, int a) { func_800D7C7C(p, -a, 0); }
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8A50);
+EXTERN_C int func_800D8A50() {
+    int m = 0;
+    for (int i = 0; i < 3; i++) {
+        BimMon *p = D_800AFA58[i];
+        if (p && p->s410 && p->s4CA >= m) m = p->s4CA;
+    }
+    return m;
+}
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8AB8);
+EXTERN_C int func_800D8AB8(BimMon *p) { return func_800D8A50() - p->s4CA; }
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8AE4);
 
@@ -146,7 +156,10 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8CC0);
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8D64);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8E38);
+EXTERN_C int func_800D8E38(BimMon *p, int n) {
+    if ((unsigned)(n - 1) >= 8) return 0;
+    return (p->f9F4 & (1 << (n - 1))) != 0;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8E64);
 
@@ -179,7 +192,13 @@ EXTERN_C unsigned short func_800D8FF8(BimMon *p) {
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D9048);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D9170);
+EXTERN_C int func_800D9170(BimMon *p, unsigned char *q) {
+    int t = p->b7E - 0x32;
+    int v = q[0x11] - t;
+    if (v < 0) v = 0;
+    else if (v > 100) v = 100;
+    return v;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D91A4);
 
