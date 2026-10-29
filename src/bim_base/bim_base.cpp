@@ -58,17 +58,31 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7BB4);
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7C7C);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7D64);
+EXTERN_C int func_800D7D64(BimMon *p, int a) {
+    int r;
+    if ((unsigned)(p->f988 - 1) < 8) { int t = p->f9A4; p->f9A4 = 1; r = func_800C02C8(p, a, p->f988 - 1, t); }
+    else r = 0;
+    return r;
+}
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7DB4);
+EXTERN_C void func_800D7DB4(char *p, unsigned *q) {
+    func_800D8FF8(p ? (BimMon *)(p + 0x400) : 0);
+    *q &= ~3;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7DFC);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7E8C);
+EXTERN_C int func_800D7E8C(void *p, int a) { if (a == 0) return 0; return func_800CC220(D_800AF470[0]->f32C); }
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7ECC);
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D7F3C);
+EXTERN_C void func_800D7F3C(BimMon *p) {
+    void *c = D_800AF470[0]->f32C;
+    BimPos pos;
+    short y = p->s4CA, x = p->s4C6;
+    pos.y = y; pos.x = x;
+    func_800CC3DC(c, pos, 5, 1);
+}
 
 EXTERN_C int func_800D7F90(void *p, int a, int b) { return func_8007FE4C((char *)D_800AF470[0] + 0x498, a, b); }
 
@@ -84,7 +98,7 @@ INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8064);
 
 EXTERN_C void func_800D8118(void *p) { func_80085E74(p, 0); }
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8138);
+EXTERN_C void func_800D8138(char *p) { func_8008299C(p ? p + 0x2A0 : 0, 4, 2, 0, 0, 0, 0); }
 
 EXTERN_C void func_800D817C(BimMon *p, char v) { p->b4E4 = v; }
 
@@ -107,7 +121,10 @@ EXTERN_C void func_800D82BC(BimMon *p) {
 
 EXTERN_C void func_800D82F0() { func_800D8AE4(); }
 
-INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8310);
+EXTERN_C void func_800D8310(BimMon *p) {
+    if (func_800D83D4_a(p)) p->f9C8++;
+    p->f9CC = 0;
+}
 
 INCLUDE_ASM("asm/bim_base/nonmatchings/bim_base", func_800D8350);
 

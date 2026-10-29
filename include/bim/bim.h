@@ -27,7 +27,9 @@ struct BimMon {
     short s410;
     char pad412[0xAA];
     signed char b4BC;
-    char pad4BD[0xD];
+    char pad4BD[0x9];
+    short s4C6;
+    char pad4C8[0x2];
     short s4CA;
     char pad4CC[0x18];
     char b4E4;
@@ -36,7 +38,9 @@ struct BimMon {
     char pad4E7[0x1];
     int f4E8;
     int f4EC;
-    char pad4F0[0x4B4];
+    char pad4F0[0x498];
+    int f988;
+    char pad98C[0x18];
     int f9A4;
     char pad9A8[0x20];
     int f9C8;
@@ -57,7 +61,14 @@ struct BimVec4 { int x, y, z, w; };
 
 EXTERN_C BimBattle *D_800AF470[];
 
+struct BimPos { short x, y; };
 EXTERN_C BimMon *D_800AFA58[];
+/* func_800D83D4 as called with only the object in $a0 */
+EXTERN_C int func_800D83D4_a(void *) asm("func_800D83D4");
+EXTERN_C int func_800CC220(void *p);
+EXTERN_C void func_800CC3DC(void *p, BimPos pos, int a, int b);
+EXTERN_C int func_800C02C8(void *p, int a, int b, int c);
+EXTERN_C unsigned short func_800D8FF8(BimMon *p);
 EXTERN_C void func_800CC110(void *p);
 EXTERN_C void func_800CC298(void *p, int a, unsigned short b);
 EXTERN_C int func_800D8A50();
