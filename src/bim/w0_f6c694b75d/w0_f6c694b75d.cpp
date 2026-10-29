@@ -10,7 +10,7 @@ INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DADF4);
 
 INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DAF88);
 
-INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", bimf_1a38796b);
+#include "../shared/bimf_1a38796b.cpp"
 
 #include "../shared/bimf_7434482e.cpp"
 
@@ -20,11 +20,11 @@ INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DB1E8);
 
 #include "../shared/bimf_af99c5b3.cpp"
 
-INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", bimf_0d32b1e3);
+#include "../shared/bimf_0d32b1e3.cpp"
 
 INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DB398);
 
-INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", bimf_05e090a7);
+#include "../shared/bimf_05e090a7.cpp"
 
 INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DB4D4);
 
