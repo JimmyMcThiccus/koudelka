@@ -53,7 +53,38 @@ INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB1DC);
 
 INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB288);
 
-INCLUDE_ASM("asm/bim/w0_7101086a21/nonmatchings/w0_7101086a21", func_800DB33C);
+EXTERN_C int func_800DB0C4(void *p, unsigned *flags);
+EXTERN_C int func_800DB1DC(void *p, unsigned *flags);
+EXTERN_C int func_800DB288(void *p, unsigned *flags);
+
+EXTERN_C int func_800DB33C(BimMon *p, unsigned *flags)
+{
+    switch (p->f9F0) {
+    case 1:
+        if (func_800DB0C4(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 8:
+        if (func_800DB1DC(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~1;
+            return 1;
+        }
+        break;
+    case 16:
+        if (func_800DB288(p, flags)) {
+            p->f9F0 = 0;
+            return 1;
+        }
+        break;
+    }
+    if (p->f9F0)
+        p->f9F0 = 0;
+    return 0;
+}
 
 #include "../shared/bimf_05e090a7.cpp"
 
