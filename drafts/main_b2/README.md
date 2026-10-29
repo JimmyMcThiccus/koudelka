@@ -63,7 +63,7 @@ func_800722EC, func_80072130, func_80078A30, func_80071F6C, func_80074C90 (12, n
 | func_80068770 | 41 | vbase ctor: self lands in $s3 (retail $s5) and retail reloads the SV2C temp's y from the stack (`lhu a1,0x62(sp)`) |
 | func_80084D58 (/ func_80084F58 twin) | 19 | switch shapes match; the `func_8001CA10` result lands in $v0 (retail $a1, the arg register), k in $v1 for the 0x16 case |
 | func_8007C7B0 | 119 | retail keeps three full copies of the per-case tail and $s4 = const 1; we cross-jump (436 vs 500 bytes) |
-| func_8007D024 | 40-113 | return -1 block placement (see header of drafts/main_b2/func_8007D024.cpp is not saved; form: switch(r) case -1 first, case 4 falls into default) |
+| func_8007D024 | 40 (not saved) | switch (r) with case -1 first and case 4 falling into default is 40 off: retail puts the shared `return -1` block before case 1 and jumps there from every early test, we put it at the end; its jtbl_80017078 sits in the unit mid-run rodata |
 
 Tricks learned this round:
 - A message object (vt D_80010178 then D_80010300 with no store between) needs `FIELD_AT(p, void * volatile, 0) = D_80010178;`
