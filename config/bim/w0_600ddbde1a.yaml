@@ -49,7 +49,8 @@ segments:
     start: 0x0
     vram: 0x800DA86C
     subsegments:
-      - [0x0, .rodata, w0_600ddbde1a] # id word, pointer table (part of it a jump table), data
+      - [0x0, rodata] # id word and the entry pointer
+      - [0xC, .rodata, w0_600ddbde1a] # from the first jump table (aligned to 8): tables, data
       - [0x254, cpp, w0_600ddbde1a]
 
   - [0xF3C]

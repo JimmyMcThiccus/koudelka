@@ -35,8 +35,6 @@ INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB260);
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB2B0);
 
-INCLUDE_RODATA("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", D_800DA86C);
-
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB350);
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB468);

@@ -25,8 +25,6 @@ INCLUDE_ASM("asm/bim/w1_5bab5b7862/nonmatchings/w1_5bab5b7862", bimf_227ce542);
 
 #include "../shared/bimf_9905b8de.cpp"
 
-INCLUDE_RODATA("asm/bim/w1_5bab5b7862/nonmatchings/w1_5bab5b7862", D_800DBB8C);
-
 INCLUDE_ASM("asm/bim/w1_5bab5b7862/nonmatchings/w1_5bab5b7862", func_800DC648);
 
 #include "../shared/bimf_6eb48601.cpp"

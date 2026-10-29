@@ -63,8 +63,6 @@ EXTERN_C int func_800DB2A0(BimMon *p, unsigned *flags)
 
 INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DB3C8);
 
-INCLUDE_RODATA("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", D_800DA86C);
-
 INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DB5F0);
 
 INCLUDE_RODATA("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", D_800DA890);

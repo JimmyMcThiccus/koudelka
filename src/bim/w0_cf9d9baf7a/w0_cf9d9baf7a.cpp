@@ -88,8 +88,6 @@ EXTERN_C int func_800DB2C4(BimMon *p, unsigned *flags)
 
 #include "../shared/bimf_05e090a7.cpp"
 
-INCLUDE_RODATA("asm/bim/w0_cf9d9baf7a/nonmatchings/w0_cf9d9baf7a", D_800DA86C);
-
 INCLUDE_ASM("asm/bim/w0_cf9d9baf7a/nonmatchings/w0_cf9d9baf7a", func_800DB3EC);
 
 INCLUDE_RODATA("asm/bim/w0_cf9d9baf7a/nonmatchings/w0_cf9d9baf7a", D_800DA8A8);

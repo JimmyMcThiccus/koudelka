@@ -61,8 +61,6 @@ INCLUDE_ASM("asm/bim/w2_2dcfb29798/nonmatchings/w2_2dcfb29798", bimf_fddfe66d);
 
 INCLUDE_ASM("asm/bim/w2_2dcfb29798/nonmatchings/w2_2dcfb29798", bimf_d408bc6f);
 
-INCLUDE_RODATA("asm/bim/w2_2dcfb29798/nonmatchings/w2_2dcfb29798", D_800DCEAC);
-
 INCLUDE_ASM("asm/bim/w2_2dcfb29798/nonmatchings/w2_2dcfb29798", func_800DDE94);
 
 INCLUDE_RODATA("asm/bim/w2_2dcfb29798/nonmatchings/w2_2dcfb29798", D_800DCED0);

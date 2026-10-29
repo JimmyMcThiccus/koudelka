@@ -37,8 +37,6 @@ INCLUDE_ASM("asm/bim/w1_76d502a584/nonmatchings/w1_76d502a584", bimf_85fa9335);
 
 #include "../shared/bimf_4379dd60.cpp"
 
-INCLUDE_RODATA("asm/bim/w1_76d502a584/nonmatchings/w1_76d502a584", D_800DBB8C);
-
 INCLUDE_ASM("asm/bim/w1_76d502a584/nonmatchings/w1_76d502a584", func_800DC604);
 
 #include "../shared/bimf_6eb48601.cpp"

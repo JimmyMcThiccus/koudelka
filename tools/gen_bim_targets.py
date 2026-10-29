@@ -14,6 +14,7 @@ bim_ar.py changes; it overwrites config/bim/ and never touches src/.
   python tools/gen_bim_targets.py
 """
 import json
+import re
 import struct
 from pathlib import Path
 
@@ -30,6 +31,14 @@ def code_start(data, vram):
     if first >> 16 != 0x27BD or not first & 0x8000:
         raise ValueError(f"no prologue at {start:#x}")
     return start
+
+
+def first_jtbl(name, vram):
+    """Offset of the module's first jump table, from a previous split's asm (None if it has none)."""
+    found = []
+    for s in (ROOT / "asm" / "bim" / name).rglob("*.s"):
+        found += [int(m, 16) for m in re.findall(r"^(?:dlabel|glabel) jtbl_([0-9A-F]{8})", s.read_text(), re.M)]
+    return min(found) - vram if found else None
 
 
 def main():
@@ -58,6 +67,14 @@ def main():
              # the functions it shares with other modules, named once for all of them (tools/bim_shared.py)
              .replace("    - config/symbols/bim_base.txt\n",
                       f"    - config/symbols/bim_base.txt\n    - config/symbols/bim/{name}.txt\n"))
+        # GCC aligns a jump table to 8 relative to its unit's rodata, and modules load at 4 mod 8. So where a module
+        # has jump tables (all at +0xC, after the 12-byte id/pointer block), its unit's rodata starts at the first.
+        jt = first_jtbl(name, e["vram"])
+        if jt:
+            rodata_rows = (f"      - [0x0, rodata] # id word and the entry pointer\n"
+                           f"      - [{jt:#X}, .rodata, {name}] # from the first jump table (aligned to 8): tables, data\n")
+        else:
+            rodata_rows = f"      - [0x0, .rodata, {name}] # id word, pointer table, data\n"
         uses = f"{e['blocks']} block{'s' if e['blocks'] != 1 else ''}"
         ids = f", SECT.DAT ids {e['sect_ids']}" if e.get("sect_ids") else ""
         text = (f"name: BIM.AR module {name}\n"
@@ -65,8 +82,7 @@ def main():
                 f"# A monster overlay module ({uses}{ids}); see docs/BIM_AR.md.\n"
                 f"sha1: {e['sha1']}\n" + o +
                 f"segments:\n  - name: {name}\n    type: code\n    start: 0x0\n    vram: {e['vram']:#X}\n"
-                f"    subsegments:\n"
-                f"      - [0x0, .rodata, {name}] # id word, pointer table (part of it a jump table), data\n"
+                f"    subsegments:\n" + rodata_rows +
                 f"      - [{start:#X}, cpp, {name}]\n\n  - [{len(data):#X}]\n").replace("0X", "0x")
         (out / f"{name}.yaml").write_text(text)
         names.append(name)

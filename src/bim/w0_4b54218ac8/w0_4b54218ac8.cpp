@@ -41,8 +41,6 @@ EXTERN_C void func_800DAD24(BimDtor *self, int in_chrg)
 
 INCLUDE_ASM("asm/bim/w0_4b54218ac8/nonmatchings/w0_4b54218ac8", func_800DAE68);
 
-INCLUDE_RODATA("asm/bim/w0_4b54218ac8/nonmatchings/w0_4b54218ac8", D_800DA86C);
-
 INCLUDE_ASM("asm/bim/w0_4b54218ac8/nonmatchings/w0_4b54218ac8", func_800DAFE8);
 
 #include "../shared/bimf_014cace9.cpp"
