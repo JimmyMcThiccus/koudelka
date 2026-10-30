@@ -139,7 +139,29 @@ EXTERN_C int func_800DD668(BimMon *p, unsigned *flags)
     return 1;
 }
 
-INCLUDE_ASM("asm/bim/w2_708faf292d/nonmatchings/w2_708faf292d", func_800DD7F0);
+EXTERN_C int func_800D8854_t(void *p) asm("func_800D8854");
+
+EXTERN_C int func_800DD7F0(void *p, unsigned *flags)
+{
+    if (!(*flags & 2))
+        return 0;
+    func_800D8E64(p, 1);
+    int a = func_800D8854_t(p);
+    if (a == -1)
+        return 0;
+    void *s = (void *)func_800D7ECC(p, a);
+    if (!s)
+        return 0;
+    if (!(func_800D7A78(p, s) & 0x10)) {
+        if (p || flags)
+            return 0;
+        else
+            return 0;
+    }
+    func_800D7D64(p, s);
+    *flags &= ~2;
+    return 1;
+}
 
 #include "../shared/bimf_af99c5b3.cpp"
 

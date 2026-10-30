@@ -60,7 +60,7 @@ EXTERN_C BimDtor *func_800DBE5C(BimDtor *self, int in_chrg, int a, short b, int 
 
 #include "../shared/bimf_73046ab9.cpp"
 
-INCLUDE_ASM("asm/bim/w1_806bdb9952/nonmatchings/w1_806bdb9952", bimf_54e42f42);
+#include "../shared/bimf_54e42f42.cpp"
 
 #include "../shared/bimf_063a8822.cpp"
 
@@ -129,7 +129,7 @@ EXTERN_C int func_800DC738(BimMon *p, unsigned *flags)
     return 0;
 }
 
-INCLUDE_ASM("asm/bim/w1_806bdb9952/nonmatchings/w1_806bdb9952", bimf_584a2d1f);
+#include "../shared/bimf_584a2d1f.cpp"
 
 EXTERN_C BimMon *func_800D8464();
 EXTERN_C int bimf_af99c5b3_3_c(void *p, int a) asm("bimf_af99c5b3_3");
@@ -164,7 +164,7 @@ EXTERN_C int bimf_06b4d1a5(BimMon *p, int a)
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w1_806bdb9952/nonmatchings/w1_806bdb9952", bimf_38dc0e9d);
+#include "../shared/bimf_38dc0e9d.cpp"
 
 INCLUDE_RODATA("asm/bim/w1_806bdb9952/nonmatchings/w1_806bdb9952", D_800DBBD8);
 

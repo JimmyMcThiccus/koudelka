@@ -125,7 +125,23 @@ EXTERN_C int func_800DAF88(char *p)
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DB134);
+EXTERN_C int func_800D8CC0(void *p, unsigned *flags);
+EXTERN_C void func_800D8C0C(void *p);
+EXTERN_C int func_800DB4D4_c(void *p, unsigned *flags) asm("func_800DB4D4");
+EXTERN_C int bimf_05e090a7_c(void *p, unsigned *flags) asm("bimf_05e090a7");
+
+EXTERN_C int func_800DB134(BimMon *p, unsigned *flags)
+{
+    func_800D7818(p, 300, 300, 200, 200, 0, 0, 0, 0);
+    if (((BimV *)p)->v22((int)flags))
+        return 1;
+    if (func_800D84C8(p))
+        func_800D8350(p, 3);
+    if (func_800DB4D4_c(p, flags))
+        return 1;
+    bimf_05e090a7_c(p, flags);
+    return 1;
+}
 
 INCLUDE_ASM("asm/bim/w0_f6c694b75d/nonmatchings/w0_f6c694b75d", func_800DB1E8);
 

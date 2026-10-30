@@ -117,7 +117,7 @@ EXTERN_C void func_800DD42C(char *p, int slot)
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w2_d4a64b55b5/nonmatchings/w2_d4a64b55b5", bimf_227b9b39);
+#include "../shared/bimf_227b9b39.cpp"
 
 #include "../shared/bimf_db5f4bc4.cpp"
 

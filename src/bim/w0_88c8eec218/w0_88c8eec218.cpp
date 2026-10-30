@@ -216,9 +216,72 @@ EXTERN_C int func_800DB458(BimMon *p, unsigned *flags)
     return 0;
 }
 
-INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB588);
+// No final return, as in bimf_e310b46d: with neither bit set it returns the f & 1 test's 0 left in $v0.
+EXTERN_C int func_800DB588(BimMon *p, unsigned *flags)
+{
+    func_800D7818(p, 600, 300, 100, 0, 0, 0, 0, 0);
+    func_800D8E64(p, -1);
+    func_800D7A20(p, 5);
+    func_800D7A20(p, 0);
+    if (*flags & 2) {
+        void *q = func_800D7A4C(p, 1, 0x421);
+        if (q) {
+            func_800D7D64(p, q);
+            *flags &= ~2;
+            return 1;
+        }
+    }
+    if (*flags & 1) {
+        void *q = func_800D7A4C(p, 1, 0x121);
+        if (q) {
+            int r = 1;
+            func_800D7AC4(p, q, 1, 0);
+            p->f9F0 = r;
+            *flags &= ~1;
+            return r;
+        }
+        q = func_800D7A4C(p, 1, 0x21);
+        if (q) {
+            func_800D7BB4(p, (int)q, 1, 0);
+            *flags &= ~1;
+            return 1;
+        }
+    }
+    unsigned f = *flags;
+    if (f & 2) {
+        *flags = f & ~2;
+        return 1;
+    }
+    if (f & 1) {
+        *flags = f & ~1;
+        return 1;
+    }
+}
 
-INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB700);
+EXTERN_C int func_800DB7B0_t(void *p, int a) asm("func_800DB7B0");
+EXTERN_C BimMon *func_800D8464_t() asm("func_800D8464");
+
+EXTERN_C int func_800DB700(BimMon *p, int a)
+{
+    BimMon *o = func_800D8464_t();
+    if (o && o != p) {
+        if (rand() & 1) {
+            if (!p->f9E4)
+                return 0;
+            if (!func_800DB7B0_t(p, a)) {
+                if (p)
+                    return 0;
+                else
+                    return 0;
+            }
+            return 1;
+        }
+        return 0;
+    }
+    if (p->f9E8 && (rand() & 7) == 7)
+        p->f9EC = 1;
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB7B0);
 
@@ -226,7 +289,27 @@ INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB7B0);
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB86C);
+EXTERN_C int func_800DB86C(void *p, unsigned *flags)
+{
+    if (!(*flags & 2))
+        return 0;
+    func_800D7818(p, 600, 400, 0, 0, 0, 0, 0, 0);
+    int r = func_800D8E64(p, -1);
+    if (r == 3)
+        return 0;
+    void *s = (void *)func_800D7ECC(p, func_800D8AE4_a(p));
+    if (s) {
+        int u = func_800D7A78(p, s);
+        if (r >= 2)
+            return 0;
+        if (r >= 0 && (u & 0x10)) {
+            func_800D7D64(p, s);
+            *flags &= ~2;
+            return 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_88c8eec218/nonmatchings/w0_88c8eec218", func_800DB968);
 
