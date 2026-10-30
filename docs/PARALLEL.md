@@ -173,6 +173,21 @@ A function in only one module, or one that reads its module's own data, stays a 
 `.cpp`, as usual. Don't edit `config/bim/` or `config/symbols/bim/`: both are generated, by `gen_bim_targets.py`
 and `bim_shared.py`.
 
+## Three tricks that each landed a family
+
+From the BIM.AR module work. Each one fixed dozens of functions at once, and they aren't specific to BIM.
+- **Retail moves `this` into `$v0` before the last stores** (`move v0, s0`, then stores through `v0`). Pin the
+  return value: `register T *r asm("$2") = self;`, then do the final field stores through `r` and `return r;`.
+  This fixed 85 constructors.
+- **The `lui` of a global is hoisted away from its `lw`.** Declare the global as an incomplete array
+  (`char *D_X[];`, used as `D_X[0]`) instead of a plain pointer, so GCC splits the address into its two halves
+  and can schedule them apart. Load table pointers into locals in the order retail does. This fixed 85 table
+  initialisers.
+- **Retail has two identical tails that ours merges** (the end of the function is `beqz v0, END; nop` with
+  no `v0 = 0`). Leave out the final `return`. The function falls off the end with the last test's result
+  still in `$v0`, and GCC's late jump pass no longer merges the tails. This fixed 34 copies. Use it only where
+  that leftover value is what retail returns.
+
 ## Virtual-base constructors and destructors
 
 These are no longer skipped. Write them out by hand: the explicit form matches, real `virtual` inheritance
