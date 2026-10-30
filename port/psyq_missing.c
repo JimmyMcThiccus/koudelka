@@ -26,14 +26,7 @@ void *CdReadCallback(void *func);
    feasibility item 6: Win32 fibers). */
 void func_800949B0(void *sp) { port_log_once("psyq", "SetSp (func_800949B0) (skipped: the main task stays on the host stack)"); }
 
-/* ---- libcd ---- */
-void CdFlush(void) { SKIP("CdFlush"); }
-int CdMix(void *vol) { SKIP("CdMix"); return 1; }
-int CdReset(int mode) { SKIP("CdReset"); return 1; }
-int func_8009C9C0(void) { SKIP("CdStatus (func_8009C9C0)"); return 0; }
-int func_8009C9D0(void) { SKIP("CdLastCom? (func_8009C9D0)"); return 0; }
-int func_8009C9E0(void) { SKIP("CdMode? (func_8009C9E0)"); return 0; }
-void *func_8009D030(void *f) { PORT("CdReadCallback (func_8009D030)"); return CdReadCallback(f); }
+/* ---- libcd (the rest: port/cd.cpp) ---- */
 void func_8009DDC0(int x) { SKIP("func_8009DDC0 (unidentified)"); }
 
 /* ---- libspu / libsnd ---- */
@@ -47,7 +40,6 @@ void SpuSetVoiceSRAttr(int v, unsigned short sr, long srm) { SKIP("SpuSetVoiceSR
 void SpuSetVoiceRRAttr(int v, unsigned short rr, long rrm) { SKIP("SpuSetVoiceRRAttr"); }
 void SpuSetVoiceLoopStartAddr(int v, unsigned long addr) { SKIP("SpuSetVoiceLoopStartAddr"); }
 void SsUtReverbOff(void) { SKIP("SsUtReverbOff"); }
-void *func_8009F6D0(void *f) { SKIP("func_8009F6D0 (unidentified SPU callback setter)"); return 0; }
 void func_800A0A10(long *type) { SKIP("SpuGetReverbModeType (func_800A0A10)"); if (type) *type = 0; }
 int func_800A1B9C(void) { SKIP("func_800A1B9C (unidentified)"); return 0; }
 

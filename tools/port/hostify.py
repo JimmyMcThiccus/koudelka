@@ -323,6 +323,34 @@ def rewrite_definitions(text, stats, header_aliases):
     return "".join(pieces)
 
 
+# ---------------------------------------------------------------- busy-wait loops
+WHILE_RE = re.compile(r"\bwhile\s*\(")
+
+
+def busy_loops(text, stats):
+    """`while (c) {}` and `while (c);` (not the end of a do-while): on the PS1 only an interrupt ends them.
+    On the host the interrupts arrive at interrupt points, so the empty body becomes one (port_interrupts)."""
+    out, pos = [], 0
+    for m in WHILE_RE.finditer(text):
+        if m.start() < pos:
+            continue
+        i, depth = m.end(), 1
+        while i < len(text) and depth:
+            depth += text[i] == "("
+            depth -= text[i] == ")"
+            i += 1
+        rest = text[i:]
+        body = re.match(r"\s*\{\s*\}", rest) or re.match(r"\s*;", rest)
+        if not body or (body.group(0).strip() == ";" and text[:m.start()].rstrip().endswith("}")):
+            continue
+        out.append(text[pos:i])
+        out.append(" { port_interrupts(); /* port: busy-wait */ }")
+        pos = i + body.end()
+        stats["busy_loops"] += 1
+    out.append(text[pos:])
+    return "".join(out)
+
+
 # ---------------------------------------------------------------- per-site fixups
 # The few places the rules above cannot cover. Each is a spot where src/ would need a change to compile on a
 # modern compiler; the rewrite only adds a cast GCC 2.8 applied implicitly. (file, old, new, why)
@@ -723,7 +751,7 @@ def main():
     out = Path(a.out)
     stats = {k: 0 for k in ("labels", "pins", "cdecl_members", "set_blocks", "asm_macros", "permissive_decls",
                             "definitions", "named_returns", "implicit_decls", "fixups", "thiscall_thunks",
-                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped", "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors")}
+                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped", "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors", "busy_loops")}
     aliases = []
     header_aliases = {}
     texts = {}
@@ -748,6 +776,7 @@ def main():
         t = permissive_decls(t, stats)
         t = rewrite_definitions(t, stats, header_aliases)
         t = apply_fixups(p.name, t, stats)
+        t = busy_loops(t, stats)
         dst = out / "hsrc" / "main" / p.name
         texts[dst] = t
         srcs.append(dst)

@@ -30,6 +30,10 @@ SDL2 = DEPS / "sdl2"
 OPENAL = DEPS / "openal"
 CLANG = str(hostcc.CLANG)
 COMMON = " ".join(hostcc.COMMON_FLAGS) + " -g -fno-omit-frame-pointer"
+# PsyCross functions the port replaces: compiled as psyx_<name> so the port's own take the game's calls
+PSYX_RENAMED = ["VSyncCallback", "VSync", "CdInit", "CdControl", "CdControlB", "CdControlF", "CdSync", "CdReady",
+                "CdSyncCallback", "CdReadyCallback", "CdGetSector", "CdDataCallback", "CdReadCallback",
+                "SpuWrite", "SpuRead", "SpuSetTransferCallback"]
 LIBS = [SDL2 / "lib" / "x86" / "SDL2.lib", OPENAL / "libs" / "Win32" / "OpenAL32.lib", "-ldbghelp", "-luser32",
         "-lgdi32", "-lshell32", "-lwinmm", "-lopengl32", "-ladvapi32"]
 
@@ -114,12 +118,13 @@ def main():
     inc_game = f"-I port/include -I {rel(B / 'hinc')}"
     inc_pc = " ".join(f"-I {rel(x)}" for x in [PSYCROSS / "include", PSYCROSS / "include" / "psx", PSYCROSS / "src",
                                                SDL2 / "include", OPENAL / "include"])
+    # PsyCross functions port/ replaces (port/intr.cpp, port/cd.cpp) are renamed psyx_*.
     # VSyncCallback/VSync renamed: port/intr.cpp takes the game's calls and runs its callback on the game thread.
     # USE_EXTENDED_PRIM_POINTERS=0: PsyCross keeps the PS1 packet layout (P_TAG addr:24), the layout the game's
     # own primitives and OT code use. That works unchanged because the exe is linked at a fixed base below
     # 16 MB (link_base), so every game prim and OT entry (game heap in port_ram, main-thread stack) has a
     # 24-bit host address. main.cpp checks it at start-up.
-    pc_flags = "-DVSyncCallback=psyx_VSyncCallback -DVSync=psyx_VSync -DUSE_EXTENDED_PRIM_POINTERS=0 -D_WINDOWS -D_DEBUG -D_ITERATOR_DEBUG_LEVEL=0 -D__PRFCHWINTRIN_H -include stdarg.h -Wno-c++11-narrowing -w"
+    pc_flags = " ".join(f"-D{n}=psyx_{n}" for n in PSYX_RENAMED) + " -DUSE_EXTENDED_PRIM_POINTERS=0 -D_WINDOWS -D_DEBUG -D_ITERATOR_DEBUG_LEVEL=0 -D__PRFCHWINTRIN_H -include stdarg.h -Wno-c++11-narrowing -w"
     q = f'"{CLANG}"'
     n.rule("cxx_game", f"{q} {COMMON} -O2 {inc_game} {' '.join(GAME_FLAGS)} -MD -MF $out.d -c $in -o $out",
            depfile="$out.d", deps="gcc", description="game $in")

@@ -20,6 +20,10 @@
 #define EXTERN_C extern
 #endif
 
+/* An interrupt point (port/intr.cpp): pending VSync, CD and SPU callbacks run here. tools/port/hostify.py puts
+   one in each empty busy-wait loop, which on the PS1 only an interrupt can end. */
+EXTERN_C void port_interrupts(void);
+
 #include "port_args.h"
 #include "port_gte.h"
 

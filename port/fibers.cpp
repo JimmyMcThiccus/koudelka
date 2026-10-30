@@ -22,6 +22,7 @@ void *__builtin_vec_new(unsigned int size);
 void func_8001E9A8(void *task);     /* ends the current task: next task, then func_800190A0 */
 void func_80018788(void *holder);   /* leave the critical section */
 void port_interrupts(void);         /* pending VSync callbacks (port/intr.cpp) */
+extern unsigned port_stat_switches;
 extern unsigned char D_800A451C[];  /* the critical-section holder */
 }
 
@@ -157,6 +158,7 @@ extern "C" int func_80018F0C(void *cur, void *s)
 extern "C" void func_80018FA8(void *a, void *b)
 {
     trace("switch", a, b);
+    port_stat_switches++;
     running(a);
     port_interrupts();
     resume(b);

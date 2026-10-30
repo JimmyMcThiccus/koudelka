@@ -90,11 +90,15 @@ def main():
     end = time.time() + a.timeout
     dumped = False  # the first access violation, first chance or not, gets a stack dump
     hits = 0
+    main_tid = pi.tid
     while True:
         if not k32.WaitForDebugEvent(ctypes.byref(ev), 1000):
             if time.time() > end:
-                print("catch: timeout, terminating")
+                print("catch: timeout: the game thread is at")
+                k32.SuspendThread(k32.OpenThread(0x1FFFFF, False, main_tid))
+                dump(main_tid, hproc, sym)
                 k32.TerminateProcess(hproc, 1)
+                end = float("inf")
             continue
         cont = DBG_CONTINUE
         if ev.code == EXCEPTION_DEBUG_EVENT:
@@ -119,6 +123,7 @@ def main():
                     dumped = True
         elif ev.code == CREATE_PROCESS_DEBUG_EVENT:
             k32.CloseHandle(ctypes.c_void_p.from_buffer_copy(bytes(ev.u)[:8]).value)
+            main_tid = ev.tid
             if a.watch is not None:
                 watch(ev.tid, a.watch)
         elif ev.code == LOAD_DLL_DEBUG_EVENT:

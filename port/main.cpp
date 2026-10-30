@@ -24,6 +24,7 @@ extern void (*D_80010000[])(void);       /* .ctors: one _GLOBAL_$I$ per C++ unit
 void func_80018B88(void);                /* heap init, called by `start` */
 void port_fibers_init(void);
 void port_interrupts_init(void);
+void port_cd_open(const char *path);
 }
 int game_main();                         /* src/main/u_8001949C.cpp `main`, renamed by -Dmain=game_main */
 
@@ -330,6 +331,7 @@ int main(int argc, char **argv)
     if (cd && *cd) {
         port_log("CD image: %s\n", cd);
         PsyX_CDFS_Init(cd, 0, 0);
+        port_cd_open(cd);
     } else {
         port_log("no CD image (--cd or KOUDELKA_CD)\n");
     }

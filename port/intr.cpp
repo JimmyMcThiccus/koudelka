@@ -16,6 +16,10 @@ extern "C" __declspec(dllimport) unsigned long __stdcall GetCurrentThreadId(void
 extern "C" {
 int psyx_VSyncCallback(void (*f)(void));
 int psyx_VSync(int mode);
+void port_cd_poll(void);
+void port_spu_poll(void);
+void port_observe(void);
+extern unsigned port_stat_vblanks;
 }
 
 static void (*g_vsync)(void);       /* the game's callback */
@@ -32,14 +36,17 @@ extern "C" void port_interrupts(void)
 {
     if (g_masked || g_in_irq || GetCurrentThreadId() != g_game_thread)
         return;
+    g_in_irq = true;
     while (__atomic_load_n(&g_pending, __ATOMIC_SEQ_CST) > 0) {
         __atomic_sub_fetch(&g_pending, 1, __ATOMIC_SEQ_CST);
-        if (!g_vsync)
-            continue;
-        g_in_irq = true;
-        g_vsync();
-        g_in_irq = false;
+        port_stat_vblanks++;
+        if (g_vsync)
+            g_vsync();
     }
+    port_cd_poll();  /* CD command completions and sectors (port/cd.cpp) */
+    port_spu_poll(); /* SPU transfer completions (port/spu.cpp) */
+    g_in_irq = false;
+    port_observe();
 }
 
 extern "C" void port_interrupts_init(void)
