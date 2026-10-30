@@ -36,8 +36,11 @@ from tools.recomp import hostcc  # noqa: E402
 from tools.port import overlays as ovl  # noqa: E402
 
 # Flags for the game's C++ on the host (docs/RECOMP.md "Toolchain", plus GCC 2.8's &Type(args)).
+# -fno-strict-return: the matching C often lets an int function fall off its end on some paths (GCC 2.8 just
+# returns whatever $v0 holds); clang -O2 would otherwise treat those paths as unreachable and fold the
+# conditions away (func_8007C0A8 took its `return v02()` whatever the switch said).
 GAME_FLAGS = ["-x", "c++", "-w", "-Wno-error=address-of-temporary", "-Dmain=game_main", "-fno-finite-loops",
-              "-fno-exceptions", "-fno-rtti"]
+              "-fno-exceptions", "-fno-rtti", "-fno-strict-return"]
 # Game names that clash with the host C runtime. The game defines its own no-op printf (u_8001986C.cpp); the
 # UCRT's is an inline definition in every object that uses it. The recompiled code gets -Dprintf=game_printf.
 RENAMES = {"printf": "game_printf"}

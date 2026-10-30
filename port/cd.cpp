@@ -57,13 +57,25 @@ extern "C" void port_cd_open(const char *path)
         port_log("cd: cannot open %s\n", path);
 }
 
-/* KOUDELKA_TRACE_CD=1: log where each read starts */
+/* KOUDELKA_TRACE_CD=1: log where each read starts. KOUDELKA_CD_STOP=<lba>: stop (with the stack) when a read
+   starts there. */
 static bool trace(void)
 {
     static int t = -1;
     if (t < 0)
         t = getenv("KOUDELKA_TRACE_CD") != 0;
     return t;
+}
+
+static void stop_at(int lba)
+{
+    static int at = -2;
+    if (at == -2) {
+        const char *e = getenv("KOUDELKA_CD_STOP");
+        at = e ? atoi(e) : -1;
+    }
+    if (lba == at)
+        port_stop("cd", "read from LBA %d (KOUDELKA_CD_STOP)", lba);
 }
 
 static void command(unsigned char com, const unsigned char *param, unsigned char *result)
@@ -83,6 +95,7 @@ static void command(unsigned char com, const unsigned char *param, unsigned char
         g_reading = 1;
         if (trace())
             port_log("cd: read from LBA %d\n", g_loc);
+        stop_at(g_loc);
         g_read_sectors = 0;
         {
             LARGE_INTEGER t;
