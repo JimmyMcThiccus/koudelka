@@ -47,6 +47,7 @@ void ring_press(void)
     k = g_ring.presses;
     z = &g_ring.zone[k];
     g_ring.mark[k] = a;
+    g_ring.mark_vs[k] = g_ring.last_vs;
     g_ring.presses++;
     if (a < z->start || a > z->end) {
         g_ring.missed = 1;
@@ -88,6 +89,7 @@ void ring_tick(void)
             if (g_ring.presses == 0) {
                 g_ring.missed = 1;  // never pressed: one miss
                 g_ring.mark[0] = 360;
+                g_ring.mark_vs[0] = now;
                 g_ring.mark_kind[0] = 0;
                 g_ring.presses = 1;
             }

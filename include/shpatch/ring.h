@@ -27,6 +27,7 @@ struct ShRing {
     int presses, hits, strikes, missed;
     int mark[SH_RING_MAX_ZONES];       // needle angle at each press, -1 = none
     int mark_kind[SH_RING_MAX_ZONES];  // 0 miss, 1 hit, 2 strike
+    int mark_vs[SH_RING_MAX_ZONES];    // VSync count at each press, for the labels
     int timer, last_vs;
     int result;            // last scale, Q8
 };

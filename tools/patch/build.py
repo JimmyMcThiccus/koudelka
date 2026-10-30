@@ -9,7 +9,9 @@ Layered on the matching build: the retail EXE and BATTLE.BIN stay byte for byte,
              trampolines (the two displaced instructions, then `j function+8`) where the patch calls the original
 
 Everything links against the matching ELFs' symbols, so run a matching build first (configure.py --mode matching).
-BATTLE.BIN keeps its size; only its detours change.
+BATTLE.BIN's only code changes are its detours. When build/shpatch/shring.bin exists (the ring textures, made by
+tools/patch/sh_ring_tex.py from the user's Shadow Hearts disc), it is appended to BATTLE.BIN, which then reaches into
+the EFFECT/BIM slot; the EXE's two BATTLE size words follow.
 
   python tools/patch/build.py              writes build/shpatch/SLUS_010.51 and build/shpatch/BATTLE.BIN
   python tools/patch/build.py --inject     also writes the patch into a running DuckStation (pause it in a battle
@@ -35,9 +37,13 @@ BATTLE_VRAM = 0x800B6DF0
 # (EXE, the overlays, EFFECT, bim_base, the 85 module images) and none in src/, include/, config/ or asm/.
 REGIONS = [(0x80033F9C, 0x80034710), (0x80032334, 0x80032A10), (0x80040C10, 0x800410F4), (0x80081034, 0x800814E8),
            (0x80025874, 0x80025CE0), (0x80022518, 0x800228A0), (0x8003A318, 0x8003A654), (0x8002AD0C, 0x8002AFEC),
-           (0x80082174, 0x80082450), (0x80086288, 0x8008655C), (0x8004EB28, 0x8004EDCC)]
+           (0x80082174, 0x80082450), (0x80086288, 0x8008655C), (0x8004EB28, 0x8004EDCC), (0x8004FEA0, 0x80050144),
+           (0x800504E0, 0x80050784), (0x8004E4FC, 0x8004E784), (0x8004DF84, 0x8004E200)]
 # (0x8002DED8..0x8002E600, 1,832 B, is also unreferenced but shares a file with the OT submit the patch hooks: left alone)
-OLD_POCKET = (0x800E5850, 0x800EA8A0)  # where earlier builds put BATTLE code; --inject still cleans up after them
+OLD_POCKET = (0x800E5850, 0x800EA8A0)
+BATTLE_SIZE, BATTLE_SECTORS_MAX = 0x1EFBC, 200  # retail; LBA 1400, and EFFECT.BIN is at LBA 1600
+SIZE_WORDS = [(0x800137A8 + 2 * 4, BATTLE_SIZE, lambda n: n),                  # bytes read
+              (0x800AE5F8 + 5 * 4, 0x1F000, lambda n: (n + 0x7FF) & ~0x7FF)]   # overlay table: bytes on disc  # where earlier builds put BATTLE code; --inject still cleans up after them
 SYMBOL = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 PACKED = (".text", ".rodata", ".data", ".sdata", ".sbss", ".bss")
 
@@ -228,13 +234,25 @@ def main():
         writes[img].append((retail_syms[img][func], struct.pack("<2I", 0x08000000 | ((target >> 2) & 0x3FFFFFF), 0)))
 
     images = {"exe": bytearray(retail["exe"]), "battle": bytearray(retail["battle"])}
+    tex = OUT / "shring.bin"
+    if tex.exists():  # the ring textures ride at the end of BATTLE.BIN, i.e. at the start of the EFFECT/BIM slot
+        images["battle"] += tex.read_bytes()
+        images["battle"] += bytes(-len(images["battle"]) % 4)
+        if (len(images["battle"]) + 0x7FF) // 0x800 > BATTLE_SECTORS_MAX:
+            sys.exit("build.py: BATTLE.BIN would overrun EFFECT.BIN on the disc")
+        for addr, old, f in SIZE_WORDS:
+            o = addr - file_base["exe"]
+            if struct.unpack_from("<I", images["exe"], o)[0] != old:
+                sys.exit(f"build.py: EXE word {addr:#x} is not the retail {old:#x}")
+            writes["exe"].append((addr, struct.pack("<I", f(len(images["battle"])))))
     for img in images:
         for addr, data in writes[img]:
             o = addr - file_base[img]
             images[img][o:o + len(data)] = data
     (OUT / "SLUS_010.51").write_bytes(images["exe"])
     (OUT / "BATTLE.BIN").write_bytes(images["battle"])
-    print(f"build/shpatch/SLUS_010.51, build/shpatch/BATTLE.BIN (sizes unchanged); {len(detours)} detours")
+    print(f"build/shpatch/SLUS_010.51, build/shpatch/BATTLE.BIN ({len(images['battle']):#x} bytes"
+          f"{', with ring textures' if tex.exists() else ''}); {len(detours)} detours")
 
     if a.inject:
         import duckstation as d
@@ -266,6 +284,15 @@ def main():
         for addr, data in order:
             d.call("write_memory", address=hex(addr), data=data.hex())
         print(f"injected {len(order)} writes into DuckStation")
+        if tex.exists():  # in a running battle the BIM block already covers the blob: write the textures to VRAM directly
+            blob = tex.read_bytes()
+            for i in range(struct.unpack_from("<H", blob, 4)[0]):
+                x, y, w, h, off = struct.unpack_from("<hhhhI", blob, 8 + 12 * i)
+                f = OUT / f"vram_{i}.bin"
+                f.write_bytes(blob[off:off + w * h * 2])
+                d.call("write_vram_region", x=x, y=y, width=w, height=h, input_path=str(f))
+            d.call("write_memory", address=hex(linked["g_shRingTex"]), data="01000000")
+            print("ring textures written to VRAM")
 
 
 if __name__ == "__main__":

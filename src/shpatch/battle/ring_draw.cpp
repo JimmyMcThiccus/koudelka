@@ -6,6 +6,7 @@
 #include "common.h"
 #include "shpatch/ring.h"
 #include "shpatch/ring_gfx.h"
+#include "shpatch/ring_tex.h"
 
 void ring_draw(void *otp)
 {
@@ -27,8 +28,9 @@ void ring_draw(void *otp)
     }
     gfx_matrix(ry, scale);
 
-    // back to front: ring band (50%), zones (additive), trail (additive), needle, marks; then restore the mode
+    // back to front: shadow, ring art, light (success), zones, trail, needle, marks, labels; then restore the mode
     draw_mode(SH_RING_Z, ABR_HALF);
+    if (g_shRingTex) ring_labels(SH_RING_Z);
     for (k = 0; k < SH_RING_MAX_ZONES; k++) {
         if (g_ring.mark[k] >= 0) mark(SH_RING_Z + 1, g_ring.mark[k], g_ring.mark_kind[k]);
     }
@@ -40,7 +42,11 @@ void ring_draw(void *otp)
     draw_mode(SH_RING_Z + 3, ABR_ADD);
     for (k = 0; k < g_ring.nzones; k++) zone(SH_RING_Z + 4, &g_ring.zone[k], 96 * grow * alpha >> 11);
     draw_mode(SH_RING_Z + 4, ABR_ADD);
-    // the ring art (textured in SH: TEXTURE/BT/BTLDATA.BIN rasters 0..3); until then a translucent green band
-    for (i = 0; i < 360; i += 10) band(SH_RING_Z + 5, i, i + 10, R16(104), R16(124), rgb(0x18 * alpha >> 7, 0x70 * alpha >> 7, 0x40 * alpha >> 7, 0));
-    draw_mode(SH_RING_Z + 5, ABR_HALF);
+    // the ring art: SH's own layers when the textures are in VRAM (ring_tex.cpp), otherwise a translucent green band
+    if (g_shRingTex) {
+        ring_tex_layers(SH_RING_Z + 5, alpha, g_ring.phase == SH_RING_OUTRO && !g_ring.missed ? alpha : 0);
+    } else {
+        for (i = 0; i < 360; i += 10) band(SH_RING_Z + 5, i, i + 10, R16(104), R16(124), rgb(0x18 * alpha >> 7, 0x70 * alpha >> 7, 0x40 * alpha >> 7, 0));
+        draw_mode(SH_RING_Z + 5, ABR_HALF);
+    }
 }

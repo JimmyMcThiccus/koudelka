@@ -129,9 +129,24 @@ for the full-screen fade. Its draw method adds that frame's primitives with `add
     50 % afterwards.
   - **Code.** Split across `ring_gfx.cpp` (transform, primitives), `ring_zone.cpp`, `ring_needle.cpp`,
     `ring_parts.cpp` (band, trail, marks) and `ring_draw.cpp` (the frame), so each object fits a dead-code run.
-  - **Still to do:** SH's textured ring art (TEXTURE/BT/BTLDATA.BIN rasters 0..3, plus the shadow and light layers)
-    and the "Good!!" / "Perfect!!" labels (cels from entry 7). They need the SH disc's PKB archive extracted. The
-    ring would go in empty VRAM (x 640.., y 256..).
+  - **Textures (done).** SH's ring art, shadow, glow and hit labels, from the user's own disc:
+    - `tools/patch/sh_assets.py` reads PKFINFO.TBL (the master file table: packed base-40 names, directories are
+      the PKB archives), pulls TEXTURE/BT/BTLDATA.BIN out of TEXTURE.PKB, undoes SH's DPX (LZ77) compression and
+      decodes its GRA rasters and GRS cel sheets.
+    - `tools/patch/sh_ring_tex.py` halves every image (Koudelka's ring is half SH's size). It makes 4 bpp PS1 textures
+      with 15-bit CLUTs (ring additive x0.75, shadow subtractive x7/8, glow additive) and seven label cels (Miss,
+      Good, Great, Nice, Cool, Perfect, Hit). The result is build/shpatch/shring.bin, 36 KB.
+    - `build.py` appends the blob to BATTLE.BIN (0x27CA8 bytes, 80 sectors; the two EXE size words follow), so the
+      overlay load leaves it at the start of the EFFECT/BIM slot.
+    - A detour on the battle manager's constructor (`func_800C56A8`) uploads it with `LoadImage` and waits
+      (`DrawSync`) before the BIM block lands on top.
+    - VRAM: two 4 bpp pages at x 640 and 704, y 256; CLUTs on row 511.
+    - Each layer is one textured quad through the ring transform, which is affine and so maps exactly. Labels rise
+      off each press as in SH: Miss, Good, then Nice / Cool / Perfect for the 1st / 2nd / 3rd strike.
+    - Tested by injection: `--inject` writes the textures to VRAM directly, because in a running battle the BIM block
+      already covers the blob. Not yet tested: the upload path on a rebuilt disc (phase 4 step 6).
+    - The assets and the blob are SH game data: they stay under build/ and are never committed. The disc patch will
+      carry them, which is the user's call (see Notes).
 - **Sound:** `func_8008EF40(id)`, the call the menus use. v1 reuses the menu cursor and confirm sounds for a hit or strike
   and the buzz `0xE` for a miss.
 
