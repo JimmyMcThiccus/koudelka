@@ -286,7 +286,14 @@ flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_80
      1,132 + 904 + 828 = 8,984 bytes; 6.1 KB used). `build.py` packs object files into them largest first. The ring's
      primitives are on the heap, allocated by `ring_start` and freed by the turn driver. BATTLE.BIN keeps its retail
      size, and its only changes are two detours.
-   - **Still to check:** that a monster's effect action no longer breaks anything with the relocated build.
+   - **Full battle with the relocated build (slot 10, driven by script).** Six ringed attacks, first with the SA
+     Pistol and then, once it was empty (0/6), with the Normal Knife. One landed press did half damage (21 with the
+     gun, 29 with the knife), three did full damage (83, 66, 57). The last one killed the monster, and the victory
+     path and FIELD results screen ran normally with the EXE patch resident.
+   - **Effect actions.** A Heal cast went through the whole sequencer: EFFECT loaded, the BIM image came back and the
+     menu returned. So effect actions no longer touch the patch.
+   - **Magic targeting is `f3D0` 7** (attack targeting is 4; spell animation 9), so spells and items don't get a ring
+     yet. That is the hook point for the magic ring (2.2's power rule).
    - **Texture (next).** The user suggested using Shadow Hearts' own ring art. Video memory right of x=640 below
      y=256 was empty in battle, so the patch can upload the SH ring texture there at ring start and draw textured
      quads in place of the flat ones.
