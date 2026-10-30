@@ -340,8 +340,11 @@ effective stats** = clamp(base + equip + mod, 1..0xB3) (`func_8008687C`); `+0x44
 0x40, 0x20 timed with counters at `+0x78..+0x7A`; 0x08 reflect in progress; 0x02 cannot be healed; 0x01 cannot die);
 `+0x70` s8[5] status-change queue; `+0x75/+0x76` hit count / index; `+0x7E/+0x7F` evade (BIM resolver / EXE resolver);
 **`+0x80` s16 action wait**; `+0x84` 20-byte attack record; `+0x98` timing bytes pointer; `+0x9C` vptr.
-Effective-stat roles: `[1]` HP, `[2]` speed (divides the wait), `[4]` MP and the defence term, `[5]` hit-roll count, `[6]`
-attack base, `[7]` attack spread and luck. `[0]` and `[3]` are unused by the resolvers read; the eight stats could not be named.
+**Stat names** (from the eight `ffFortify*` spell records in the EXE at 0x800AEC88.., 0x8C bytes apart, each with a
+single `+3` at one index of its 8-byte delta vector): **`[0]` STR, `[1]` VIT, `[2]` AGL, `[3]` DEX, `[4]` PIE, `[5]` MND,
+`[6]` INT, `[7]` LUC**. Roles: VIT -> HP (max HP = VIT^2), AGL -> speed (divides the wait), PIE -> MP and the defence term,
+MND -> hit-roll count, INT -> attack base, LUC -> attack spread and luck. STR and DEX are unused by the resolvers read.
+Live check (section 11): Koudelka 18/13/13/16/15/13/16/11 gives HP 169 = 13^2, MP 22 = 15^2/10, wait 19 = 256/13.
 
 Attack record (20 bytes at `+0x84`, copied attacker -> defender by `func_80089804` for spells): `[0..7]` s8 stat delta
 vector, `[8]` s16 HP power, `[0xA]` s16 MP power, `[0xC]` u16 element/type mask, `[0x11]` accuracy, `[0x13]` effect kind.
@@ -450,7 +453,7 @@ treat them as fixed. They need:
   `func_800BC704` ctor, `func_800BCCEC` positions, `func_800BC878` draw with `prims[2]` indexed by `D_800B4CF0`), anchor in screen space
   (no GTE). Simplest existing C-only drawable to clone: `T_BC704` with `func_800B92E0` / `func_800B9530` (create two, push into
   the holder `x4E8`, `func_8002DA94(scene->f254, holder)`).
-- **Free VRAM and the OT length of the battle layer are unknown** (section 11); a ring can avoid textures entirely.
+- **Free VRAM** at menu time: x 640-1023, y 256-511 (section 11.1). The OT length of the battle layer is unknown; a ring can avoid textures entirely.
 
 ## 9. Memory budget
 
@@ -486,7 +489,7 @@ treat them as fixed. They need:
   image or EFFECT is resident must be in BATTLE, EXE or the pocket, never in the slot.
 - **Heap users in battle** (measured from `operator new`): command menu 0x5760 (22,368), floating bars 0x64 x 3, banners 0x78,
   popups 0x60 + 0x3C, cell highlights 0xA4 x 2 + 0x18 + 0xBC, stream objects 0x1C8, EFFECT controller 0x188, monsters ~0xAF0
-  each. The live heap use was not measured; stack location unknown.
+  each. Live: about 670 KB of the heap in use with one monster, stack near 0x801FB000 inside the heap (section 11.1).
 
 ## 10. Where Shadow Hearts' systems would plug in
 
@@ -597,7 +600,36 @@ item/magic converge on `func_800CADDC`, and so does the monster AI.
 
 ## 11. Unconfirmed at runtime and open questions
 
-Needed from the port or a DuckStation session later (none checked live after the integrator's stop):
+### 11.1 Live probe (DuckStation, first battle of disc 1: Koudelka alone vs one monster)
+
+Read from RAM at Koudelka's first menu (frame 52582) and through one monster move. Save state: slot 10.
+- **Residency at menu time (Q1, partly):** overlay id at 0x800B6DF0 is 5 (BATTLE). The slot at 0x800D5DAC holds a BIM image,
+  not EFFECT: `bim_base` byte-identical, plus module **`w0_411c2c52ef`** (SECT.DAT id 20) at 0x800DA86C. The monster's vptrs
+  (`+0` 0x800DAA00, `+0x49C` 0x800DA930) point into that module. Residency during an action was **not observed** (below).
+- **Turn order (Q4):** confirmed `delay = h480 = 256 / AGL`, truncated: Koudelka AGL 13 -> 19, monster AGL 12 -> 21. Timeline
+  at the first menu: clock `f12C` 19, nodes (19, Koudelka), (21, monster); preview ring entries `{team, due}` in that order;
+  `fA0` = Koudelka. After her turn ended without an action she was re-inserted at +19 (her `h480`). The monster moved two
+  cells (`s4CA` 1 -> 3) and its `h480` became 42 = 2 * 256 / 12 (`func_800D8F98`, move cost per cell), so it was re-inserted
+  at 21 + 42 = 63. Koudelka came up again at clock 38. Ticks are **not** frames: `func_800C65C8` advances the clock in a
+  tight loop to the next due actor, so a turn costs no frames; real time is spent only in the menus and animations.
+- **Fighters:** party `D_800AFA64[0]` 0x801D0FB8 (`b4BC` 0, `b4BD` 1, grid (2,6), move range 3), monster `D_800AFA58[0]`
+  0x801CB8A8 (`b4BC` 3, `b4BD` 2, grid (2,1), move range 2, HP 256 = 16^2, MP 6). Monster AI weights: `f990` 1000,
+  `s994` = {1000, 0, ...} (one skill). Game state object `*D_800B4DD0` = 0x801D92CC, party size `+0x1FB` 1.
+- **mgr** `scene+0x32C` = 0x80171E18 (scene 0x801F1590, mode 2); `f900` 0, `f904` -1 at the menu; menu holder `+0x908` 0x801965DC.
+- **Stat names (Q8):** solved from the EXE, section 6.2.
+- **Memory (Q6):** heap free list (`D_800B4EE8`) has 11 free blocks, 449,168 bytes in total. The largest, 0x6ABA0, starts at
+  the heap base 0x800EA8A0, so about 670 KB of the 1.1 MB heap is in use with one monster. `$sp` was 0x801FB124, inside a
+  heap allocation just below the small-block pool `D_800B4C04` (0x801FBFF8). The stack lives near the top of RAM, in the heap.
+  VRAM: framebuffers at (0,0) and (320,0), 320x240 each. Entirely zero at menu time: **x 640-1023, y 256-511** (384x256,
+  six 64-wide texture pages) and x 960-1023, y 96-239. EFFECT was not loaded at that moment, so effects may claim part of it.
+- **Battle menu:** root list Action / Move / Wait / Status. With no target in reach, the Action submenu offers only Escape.
+- **Not done:** an attack, so residency during `func_800CADDC` states 2/3, the ring hook timing, and Q2/Q3/Q5/Q7. Driving
+  the menus through `press_button` stalled (the Escape window kept focus and Circle had no effect), and `frame_step` loops
+  hung the client, so the rest needs a human at the pad while a read-only logger polls memory.
+
+### 11.2 Open questions
+
+Needed from the port or a DuckStation session later (11.1 answers Q4, Q8 and parts of Q1 and Q6):
 1. **Is the BIM image or EFFECT resident at each moment of an action, and where is BIM read back?** `func_800CADDC` states 2 and 3
    overwrite the slot; the monster-defender hit code (`func_800D9970`, `func_800D9CB0`, `func_800D96F8`) lives in the BIM base. The reload
    point was not found (candidates: `func_8007DEE8`, `func_800CF408`, `func_8007B5F8`). Late reads of 0x800DE1CC and 0x800D6B98 returned
@@ -606,11 +638,11 @@ Needed from the port or a DuckStation session later (none checked live after the
    EXP/money reward path; the code-to-mode table in `func_800792C8`.
 3. The receiver of menu codes 0x106E, 0x10D3, 0x119A, 0x11FE, 0x10DC, 0x10E6/0x10E7, 0x10F0 (`func_80078C50`/`func_800CBBB4` handle it,
    but the mapping of codes 6, 7, 9, 10 to labels is inferred); the receiver of messages 0x2035/0x2036; who calls `v03`/`v04` at the hit frame.
-4. The turn order at battle start and the timing constants in practice (tick length versus frames, wait values per speed).
+4. ~~The turn order at battle start and the timing constants~~ (confirmed, 11.1). Still open: action costs (`v03`/`v04` record values).
 5. The encounter timer constants (`+0x5CE`, 0x2F0..0x42B, item 0x87).
 6. The battle layer's ordering-table length (depth 0x1FFF is used, so it exceeds that), free VRAM rows, contents of texture id 0x40, stack
    location, live heap use.
 7. Whether critical hits exist (none found in the physical or spell resolvers; three other virtuals were not read).
-8. The eight stat names (`stat[0]`, `stat[3]` unused by the resolvers read); which `D_800B4DD0` slots hold the per-character save records.
+8. ~~The eight stat names~~ (solved, section 6.2); which `D_800B4DD0` slots hold the per-character save records.
 9. How skill weights (`f990`, `s994[]`) and the module tables are loaded (`func_800DA400`, `func_800DA5E0`, asm, not read).
 10. Ghidra cross-references were not used (no instance running); the function list comes from source and asm only.
