@@ -8,7 +8,8 @@ battle start the patch LoadImage()s it from the EFFECT/BIM slot, before the BIM 
 Layout (texels in two 4 bpp texture pages at y 256; CLUTs on row 511), mirrored in include/shpatch/ring_tex.h:
   page x 640: ring3 144x144 @ (0,0), ring1 112x112 @ (144,0), ring0 72x72 @ (144,112), shadow 80x80 @ (0,144)
   page x 704: ring2 128x128 @ (0,0), light 72x72 @ (128,0), labels 60x12 @ (128, 72 + 12 i)
-  CLUTs: ring (additive, x0.75) x 640, shadow (subtractive, x7/8) x 656, light (additive) x 672, labels x 688
+  CLUTs: ring (additive, x0.75) x 640, shadow (subtractive, x7/8) x 656, light (additive) x 672,
+         labels red x 688, blue x 704, cyan x 720
 
 The output is game data: it stays under build/ and is never committed.
 
@@ -24,7 +25,11 @@ PAGE_A, PAGE_B, TEX_Y, CLUT_Y = 640, 704, 256, 511
 LAYERS = [  # (asset, page x, texel x, texel y, clut x)
     ("00_ring0", PAGE_A, 144, 112), ("01_ring1", PAGE_A, 144, 0), ("02_ring2", PAGE_B, 0, 0),
     ("03_ring3", PAGE_A, 0, 0), ("04_shadow", PAGE_A, 0, 144), ("05_light", PAGE_B, 128, 0)]
-LABELS = [0x21, 0x20, 0x1C, 0x1E, 0x1D, 0x1F, 0x23]  # Miss!! Good!! Great!! Nice!! Cool!! Perfect!! Hit!!
+LABELS = [0x21, 0x20, 0x1C, 0x1E, 0x1D, 0x1F, 0x23, 0x22]  # Miss Good Great Nice Cool Perfect Hit Strike
+# The label sheet's CLUT has one 16-colour row per colour (0 red, 1 blue, 2 yellow, 3 cyan, 4 grey, 5 green) and SH picks
+# the row when it draws (CCircle::MakeSprite's third argument -> TEX0 CSA). As seen in game (user): Miss is red, the
+# ratings (Good, Great, Nice, Cool, Perfect) blue, Strike cyan. Each row is uploaded as its own CLUT.
+LABEL_ROWS = [(688, 0), (704, 1), (720, 3)]  # (CLUT x on row 511, CLUT row): red, blue, cyan
 LABEL_X, LABEL_Y, LABEL_W, LABEL_H = 128, 72, 60, 12
 
 
@@ -82,8 +87,10 @@ def main():
     # labels: 2x2 average in RGB, then the nearest of the cel's own 16 colours
     lab = m["entries"][7]
     lclut = (d / lab["clut"]).read_bytes()
-    pal = [tuple(lclut[i * 4:i * 4 + 4]) for i in range(16)]
-    rects.append((688, CLUT_Y, 16, 1, clut16([0] + [c15(r, g, b, 1) for r, g, b, _ in pal[1:]])))
+    pal = [tuple(lclut[i * 4:i * 4 + 4]) for i in range(16)]  # row 0; the rows share one dark-to-white layout
+    for x, row in LABEL_ROWS:
+        cols = [tuple(lclut[(row * 16 + i) * 4:(row * 16 + i) * 4 + 3]) for i in range(16)]
+        rects.append((x, CLUT_Y, 16, 1, clut16([0] + [c15(r, g, b, 1) for r, g, b in cols[1:]])))
     for i, cel in enumerate(LABELS):
         c = lab["cels"][cel]
         w, h = c["width"], c["height"]

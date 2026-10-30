@@ -23,7 +23,7 @@ void ring_labels(int z)
 {
     int k;
     for (k = 0; k < SH_RING_MAX_ZONES; k++) {
-        int age, rise, c, x, y, v;
+        int age, rise, c, x, y, v, lbl, cx;
         unsigned int at, *p;
         if (g_ring.mark[k] < 0) continue;
         age = g_ring.last_vs - g_ring.mark_vs[k];
@@ -33,11 +33,13 @@ void ring_labels(int z)
         at = polar(g_ring.mark[k], R16(80));
         x = (short)(at & 0xFFFF) - SH_LABEL_W / 2;
         y = (short)(at >> 16) - SH_LABEL_H / 2 - rise * 4 / 15 - 4;  // 8 SH buffer lines = about 4 px
-        v = SH_LABEL_V + SH_LABEL_H * label_of(k);
+        lbl = label_of(k);
+        v = SH_LABEL_V + SH_LABEL_H * lbl;
+        cx = lbl == SH_LBL_MISS ? SH_CLUT_LABEL_RED : lbl == SH_LBL_STRIKE ? SH_CLUT_LABEL_CYAN : SH_CLUT_LABEL_BLUE;
         p = prim(10, z);
         if (!p) return;
         p[1] = rgb(c, c, c, 0x2C);  // POLY_FT4, opaque
-        p[2] = (y << 16) | (x & 0xFFFF);                                   p[3] = clut(SH_CLUT_LABEL) << 16 | v << 8 | SH_LABEL_U;
+        p[2] = (y << 16) | (x & 0xFFFF);                                   p[3] = clut(cx) << 16 | v << 8 | SH_LABEL_U;
         p[4] = (y << 16) | ((x + SH_LABEL_W) & 0xFFFF);                    p[5] = tpage(1, 0) << 16 | v << 8 | (SH_LABEL_U + SH_LABEL_W - 1);
         p[6] = ((y + SH_LABEL_H) << 16) | (x & 0xFFFF);                    p[7] = (v + SH_LABEL_H - 1) << 8 | SH_LABEL_U;
         p[8] = ((y + SH_LABEL_H) << 16) | ((x + SH_LABEL_W) & 0xFFFF);     p[9] = (v + SH_LABEL_H - 1) << 8 | (SH_LABEL_U + SH_LABEL_W - 1);
