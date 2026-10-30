@@ -98,6 +98,8 @@ class Program:
             for m in inc_re.finditer(src.read_text(encoding="utf-8", errors="replace")):
                 folder, name = m.group(1), m.group(2)
                 t = folder.split("/")[1]
+                if t not in self.funcs:  # e.g. the BIM.AR modules (asm/bim), not a recompiler target
+                    continue
                 path = self.root / folder / (name + ".s")
                 af = asmfile.parse_file(path)
                 fn = next(f for f in af.functions if f.name == name)
