@@ -521,3 +521,18 @@ method), 27 thunks. PS1 build 93× `check: OK`.
    choice may differ too), then the map files (`MDT/HAB/HAB00001.MDT` on the PS1).
 2. EFFECT (and BATTLE) linked when the game reaches them; the remaining GCC-name stubs in FIELD.
 3. vptr placement against DuckStation.
+
+**The field stall, traced so far (DuckStation and port side by side).** The CD read that never stops is not
+the problem: a reader's done handler (`func_80036110`) only starts the next queued reader, the Pause comes
+from that reader's start-up, and with nothing queued after `OMO_01.BGM` the drive keeps reading on the PS1 as
+well. The PS1's next load is MOVIE.BIN (the opening movie): FIELD gets message 6, which sets its "movie
+pending" flag (+0x638) and starts a screen transition (`func_80066FB0` code 0x69); when that finishes,
+`func_80067134` calls `func_8007A410` and the game object asks the overlay loader for MOVIE
+(`func_8007A1F4(self, 3)` → `func_80051930(loader, …, 0)`). In the port FIELD's messages stop after 0xD
+(BGM loaded): the 0x67 action posts 0x1002 to the game object, the party object handles it and Koudelka's
+character gets kind 8 / 0xA, and nothing sends FIELD its 6. Next: find which step after the character's 0xA
+differs (a DuckStation breakpoint on FIELD's message-6 case, 0x800BBD80, shows the sender).
+
+Also: `D_FAA0`, an absolute linker symbol (EFFECT's size, used by the overlay loader's copy), is emitted as
+an absolute symbol instead of a function stub (gen_stubs `absolute`). `KOUDELKA_TRACE_CD=1` now logs the
+command, mode, the reader object, pauses, and the reader's state for the first sectors of each read.

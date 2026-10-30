@@ -17,6 +17,7 @@
 #include "port_rt.h"
 
 extern "C" unsigned port_stat_cd_commands, port_stat_cd_sectors;
+extern "C" unsigned char *D_800B4D0C[];  /* the reader the game's ready callback feeds (func_80035F80) */
 
 typedef void (*CdCB)(unsigned char intr, unsigned char *result);
 
@@ -93,8 +94,11 @@ static void command(unsigned char com, const unsigned char *param, unsigned char
             g_loc = loc_to_lba(param);
         g_next = g_loc;
         g_reading = 1;
-        if (trace())
-            port_log("cd: read from LBA %d\n", g_loc);
+        if (trace()) {
+            unsigned char *rd = D_800B4D0C[0];
+            port_log("cd: %s from LBA %d, mode %02X, reader %p (vt %p)\n", com == CdlReadS ? "ReadS" : "ReadN", g_loc,
+                     g_mode, rd, rd ? *(void **)rd : 0);
+        }
         stop_at(g_loc);
         g_read_sectors = 0;
         {
@@ -105,6 +109,8 @@ static void command(unsigned char com, const unsigned char *param, unsigned char
         break;
     case CdlPause:
     case CdlStop:
+        if (trace() && g_reading)
+            port_log("cd: %s after %d sectors (at LBA %d)\n", com == CdlPause ? "Pause" : "Stop", g_read_sectors, g_next);
         g_reading = 0;
         break;
     case CdlInit:
@@ -242,6 +248,13 @@ extern "C" void port_cd_poll(void)
         port_stat_cd_sectors++;
         g_read_sectors++;
         unsigned char r[8] = {(unsigned char)status()};
+        if (trace() && (g_read_sectors <= 3 || g_read_sectors % 64 == 0)) {
+            unsigned char *rd = D_800B4D0C[0];
+            if (rd)  /* the reader (func_80036364): +24 next LBA, +28 size, +2C buffer, +30 done, +34 state */
+                port_log("cd: sector %d (LBA %d): reader state %d next %d done %X/%X buf %08X\n", g_read_sectors,
+                         g_next - 1, (signed char)rd[0x34], *(int *)(rd + 0x24), *(int *)(rd + 0x30),
+                         *(int *)(rd + 0x28), *(unsigned *)(rd + 0x2C));
+        }
         g_last_dst = 0;
         if (g_ready_cb)
             g_ready_cb(CdlDataReady, r);

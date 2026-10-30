@@ -64,6 +64,8 @@ static void trace(const char *what, void *a, void *b)
         /* every task (the scheduler's array D_800AC688): vtable, state (+F4: 0 running, 1 ready, 2 waiting),
            wait value (+A0), first pending event with its type (+8) and kind (+A) */
         extern unsigned char D_800AC688[];  /* a Holder: its first word points at the array (S_Array) */
+        extern unsigned char *D_800B4D0C[];  /* the CD reader the ready callback feeds (port/cd.cpp) */
+        port_log("current CD reader %p\n", D_800B4D0C[0]);
         unsigned char *arr = *(unsigned char **)D_800AC688;
         void **data = arr ? *(void ***)arr : 0;
         int count = arr ? *(int *)(arr + 4) : 0;

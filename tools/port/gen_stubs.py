@@ -99,6 +99,7 @@ def main():
 
     alt, funcs, datas, thunks = [], [], [], []  # (from, to) / (name, kind, label) / (name, why) / (name, n, target)
     rthunks = []                                # (cdecl name, n, thiscall definition)
+    absolutes = []                              # (name, value)
     thiscall_defs = {}
     for d in defined:
         m = re.fullmatch(r"_port_thiscall(\d+)_(.+)", d)
@@ -149,7 +150,11 @@ def main():
             continue
         c = n[1:]
         m = re.fullmatch(r"(func|D)_([0-9A-F]{8})\w*", c)
-        if m and m.group(1) == "D":
+        ma = re.fullmatch(r"D_([0-9A-F]{1,7})", c)
+        if ma:  # an absolute symbol (a size: the overlay loader copies EFFECT with D_FAA0 = 64160 bytes)
+            absolutes.append((n, int(ma.group(1), 16)))
+            report["absolute"].append(f"{c} = 0x{ma.group(1)}")
+        elif m and m.group(1) == "D":
             datas.append((n, c))
             report["data"].append(c)
         elif m:
@@ -201,6 +206,8 @@ def main():
         s += [f"    pushl {12 + off}(%ebp)" for off in range(nbytes - 4, -4, -4)]
         s += ["    movl 8(%ebp), %ecx", f'    calll "{d}"', "    movl %ebp, %esp", "    popl %ebp", "    retl"]
     s += strs
+    for n, v in absolutes:
+        s += [f'    .globl "{n}"', f'    .set "{n}", 0x{v:X}']
     s.append("    .data")
     for n, _ in datas:
         s += ["    .p2align 4", f'    .globl "{n}"', f'"{n}":', "    .space 64"]
