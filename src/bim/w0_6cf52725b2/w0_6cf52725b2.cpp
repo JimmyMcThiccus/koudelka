@@ -66,7 +66,7 @@ INCLUDE_ASM("asm/bim/w0_6cf52725b2/nonmatchings/w0_6cf52725b2", bimf_35f30ee4);
 
 #include "../shared/bimf_0d32b1e3.cpp"
 
-INCLUDE_ASM("asm/bim/w0_6cf52725b2/nonmatchings/w0_6cf52725b2", bimf_4cfb86f6);
+#include "../shared/bimf_4cfb86f6.cpp"
 
 #include "../shared/bimf_05e090a7.cpp"
 

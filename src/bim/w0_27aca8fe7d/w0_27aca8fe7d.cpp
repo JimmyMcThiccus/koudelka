@@ -100,7 +100,39 @@ EXTERN_C void func_800DAE0C(char *p, int slot)
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_27aca8fe7d/nonmatchings/w0_27aca8fe7d", func_800DAFF4);
+EXTERN_C int func_800D8CC0(void *p, unsigned *flags);
+EXTERN_C void func_800D8C0C(void *p);
+EXTERN_C int func_800DB5F0_c(void *p, unsigned *flags) asm("func_800DB5F0");
+EXTERN_C int bimf_cba85eee_c(void *p, unsigned *flags) asm("bimf_cba85eee");
+EXTERN_C int func_800DB204_c(void *p, unsigned *flags) asm("func_800DB204");
+EXTERN_C int func_800DB3C8_c(void *p, unsigned *flags) asm("func_800DB3C8");
+EXTERN_C int bimf_db5f4bc4_c(void *p, unsigned *flags) asm("bimf_db5f4bc4");
+
+EXTERN_C int func_800DAFF4(BimMon *p, unsigned *flags)
+{
+    func_800D7818(p, 500, 100, 100, 100, 100, 0, 0, 0);
+    if (!(p->f9C8 > 0) && (*flags & 1) && func_800D8CC0(p, flags))
+        return 1;
+    func_800D8C0C(p);
+    if (func_800DB5F0_c(p, flags))
+        return 1;
+    if (((BimV *)p)->v21((int)flags))
+        return 1;
+    if (func_800D84C8(p)) {
+        if (func_800D8350(p, 3)) {
+            if ((*flags & 2) && bimf_cba85eee_c(p, flags) && !p->f9F0) {
+                p->f9F0 = 0x10;
+                return 1;
+            }
+            if ((*flags & 1) && func_800DB204_c(p, flags))
+                return 1;
+        }
+    }
+    if (func_800DB3C8_c(p, flags))
+        return 1;
+    bimf_db5f4bc4_c(p, flags);
+    return 1;
+}
 
 #include "../shared/bimf_cba85eee.cpp"
 
