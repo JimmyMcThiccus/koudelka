@@ -36,6 +36,10 @@ void ring_start(void *mgr, int pad, int arg);
 void ring_press(void);
 void ring_tick(void);
 void ring_draw(void *ot);
+void ring_alloc_prims(void);
+void ring_free_prims(void);  // the turn driver calls it once the action has resolved
+int ring_sin(int deg);       // Q12
+int ring_cos(int deg);
 void ring_replay(void *mgr, int pad, int arg);  // input.cpp: the original func_800CB174
 
 #endif

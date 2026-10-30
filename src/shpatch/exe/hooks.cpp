@@ -8,8 +8,6 @@
 ShRingCtx g_shRing;
 void (*g_shFrameHook)(void);
 void (*g_shDrawHook)(void *ot);
-int g_shTrace[SH_TRACE_N];
-int g_shCount[16];
 
 #define S16(p, o) (*(short *)((char *)(p) + (o)))
 #define U16(p, o) (*(unsigned short *)((char *)(p) + (o)))

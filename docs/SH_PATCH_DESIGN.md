@@ -280,11 +280,16 @@ flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_80
      ring ends.
    - **Targets.** `mgr+0x848` holds a fighter pointer, not a target count, so the hooks now scale changes on the side
      opposite the caster instead of reading a target list.
-   - **Blocker: the pocket is not free.** During a monster turn, after its effect action, 0x800E5850.. held loaded data.
-     The detours then jumped into it and the game hung, so the pocket is used by effect resources. The fix is to move
-     all patch code into EXE dead code, which is always resident: contiguous runs of 1,908, 1,756, 1,252, 1,204 and
-     1,132 bytes, linked per object file. The ring's primitives move to the heap, and BATTLE.BIN then needs no growth
-     and no size words.
+   - **The pocket is not free.** During a monster turn, after its effect action, 0x800E5850.. held loaded data. The
+     detours then jumped into it and the game hung.
+   - **Relocated (done).** All patch code now lives in seven runs of dead EXE code (1,908 + 1,756 + 1,252 + 1,204 +
+     1,132 + 904 + 828 = 8,984 bytes; 6.1 KB used). `build.py` packs object files into them largest first. The ring's
+     primitives are on the heap, allocated by `ring_start` and freed by the turn driver. BATTLE.BIN keeps its retail
+     size, and its only changes are two detours.
+   - **Still to check:** that a monster's effect action no longer breaks anything with the relocated build.
+   - **Texture (next).** The user suggested using Shadow Hearts' own ring art. Video memory right of x=640 below
+     y=256 was empty in battle, so the patch can upload the SH ring texture there at ring start and draw textured
+     quads in place of the flat ones.
 
 3. **Scale:** `.shexe` hooks, the double-apply and popup checks (2.5), refunds.
 4. **Ring tables** from SH data.
