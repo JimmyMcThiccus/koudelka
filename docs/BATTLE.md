@@ -622,6 +622,9 @@ Read from RAM at Koudelka's first menu (frame 52582) and through one monster mov
   heap allocation just below the small-block pool `D_800B4C04` (0x801FBFF8). The stack lives near the top of RAM, in the heap.
   VRAM: framebuffers at (0,0) and (320,0), 320x240 each. Entirely zero at menu time: **x 640-1023, y 256-511** (384x256,
   six 64-wide texture pages) and x 960-1023, y 96-239. EFFECT was not loaded at that moment, so effects may claim part of it.
+- **Ordering table (Q6):** `D_800B4CFC[0]` in battle has `len` 0x2000 (`tbl` 0x801DF578) and is reverse linked
+  (`tbl[i]` -> `tbl[i-1]`, ClearOTagR style), so index 0x1FFF draws first and 0 last. At the menu, prims sat at 5202..5717
+  (3D scene) and 8181..8191 (backdrop). In FIELD it is a different 5-entry table.
 - **Battle menu and pad (US disc):** root list Action / Move / Wait / Status; **Cross confirms, Triangle cancels, Circle
   opens the Escape window** from anywhere in the root menu (Cross on Escape tries to flee; a failure ends the turn and
   costs `h480`). Action's submenu: Attack / Magic / Items / Weapon, with Attack hidden until a target is in reach. The pad

@@ -27,7 +27,8 @@ Koudelka's BATTLE overlay.
 2. **Map Koudelka's battle system** (in parallel with 1, in this repo). Map the turn order and initiative, action
    selection and resolution, damage, the grid and movement, how BIM modules hook in, the battle UI and its
    primitives, and the memory budget. Done means `docs/BATTLE.md` names each function that the replacement touches.
-3. **Design the replacement,** fitting Shadow Hearts' rules into Koudelka:
+3. **Design the replacement** ([SH_PATCH_DESIGN.md](SH_PATCH_DESIGN.md); the ring is designed, and turn flow waits on
+   SH's turn-order write-up), fitting Shadow Hearts' rules into Koudelka:
    - how the ring is drawn with PS1 GPU primitives
    - how SH turn flow coexists with the grid and the monster AI
    - what has to move to fit memory
