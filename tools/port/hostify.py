@@ -33,6 +33,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from tools.recomp import hostcc  # noqa: E402
+from tools.port import overlays as ovl  # noqa: E402
 
 # Flags for the game's C++ on the host (docs/RECOMP.md "Toolchain", plus GCC 2.8's &Type(args)).
 GAME_FLAGS = ["-x", "c++", "-w", "-Wno-error=address-of-temporary", "-Dmain=game_main", "-fno-finite-loops",
@@ -179,9 +180,12 @@ def balanced(s):
     return d == 0
 
 
-def permissive_proto(ret, name, params):
-    newp = ", ".join(permissive_param(p) for p in split_params(params))
-    return f"EXTERN_C {permissive_ret(ret)} {name}({newp})"
+def permissive_proto(ret, name, params, names=True):
+    """names=False drops the parameter names: an inserted declaration may land after a `#define p ...`."""
+    ps = [permissive_param(p) for p in split_params(params)]
+    if not names:
+        ps = [p if p in ("", "void", "...") else split_param_name(p, 0)[0] for p in ps]
+    return f"EXTERN_C {permissive_ret(ret)} {name}({', '.join(ps)})"
 
 
 def permissive_decls(text, stats):
@@ -311,7 +315,7 @@ def rewrite_definitions(text, stats, header_aliases):
             continue  # its asm-labelled declaration serves the calls
         u = re.search(r"\b%s\b" % re.escape(name), text[:m.start()])
         at = max((s for s in starts if s <= (u.start() if u else m.start())), default=0)
-        inserts.setdefault(at, []).append(permissive_proto(ret, name, params) + "; /* port */")
+        inserts.setdefault(at, []).append(permissive_proto(ret, name, params, names=False) + "; /* port */")
     points = edits + [(at, at, "\n".join(ls) + "\n") for at, ls in inserts.items()]
     points.sort(key=lambda x: (x[0], x[1] != x[0]))
     pieces, pos = [], 0
@@ -321,6 +325,54 @@ def rewrite_definitions(text, stats, header_aliases):
         pos = e
     pieces.append(text[pos:])
     return "".join(pieces)
+
+
+def drop_empty_decls(texts, stats):
+    """`EXTERN_C T f();` in a header while a source defines f with parameters: GCC 2.8 let the two disagree;
+    C++ linkage rules do not. The declaration goes; the definition's own prototype (rewrite_definitions)
+    serves the calls."""
+    with_params = set()
+    for t in texts.values():
+        for m in PORT_DECL_RE.finditer(t):
+            if not re.search(r"\(\s*(void)?\s*\)$", m.group(1)):
+                with_params.add(m.group(2))
+    out = {}
+    for f, t in texts.items():
+        def sub(m):
+            if m.group(1) not in with_params:
+                return m.group(0)
+            stats["empty_decls"] += 1
+            return f"/* port: {m.group(0).strip()} dropped: defined with parameters */"
+        out[f] = re.sub(r"^EXTERN_C [^;()]*\b(\w+)\(\s*\)\s*;", sub, t, flags=re.M)
+    return out
+
+
+# ---------------------------------------------------------------- busy-wait loops
+WHILE_RE = re.compile(r"\bwhile\s*\(")
+
+
+def busy_loops(text, stats):
+    """`while (c) {}` and `while (c);` (not the end of a do-while): on the PS1 only an interrupt ends them.
+    On the host the interrupts arrive at interrupt points, so the empty body becomes one (port_interrupts)."""
+    out, pos = [], 0
+    for m in WHILE_RE.finditer(text):
+        if m.start() < pos:
+            continue
+        i, depth = m.end(), 1
+        while i < len(text) and depth:
+            depth += text[i] == "("
+            depth -= text[i] == ")"
+            i += 1
+        rest = text[i:]
+        body = re.match(r"\s*\{\s*\}", rest) or re.match(r"\s*;", rest)
+        if not body or (body.group(0).strip() == ";" and text[:m.start()].rstrip().endswith("}")):
+            continue
+        out.append(text[pos:i])
+        out.append(" { port_interrupts(); /* port: busy-wait */ }")
+        pos = i + body.end()
+        stats["busy_loops"] += 1
+    out.append(text[pos:])
+    return "".join(out)
 
 
 # ---------------------------------------------------------------- per-site fixups
@@ -333,6 +385,11 @@ FIXUPS = [
      "int return assigned to void *"),
     ("u_80029BBC.cpp", "int r = 0;\n    if (p->unk4) {", "int r = 0;\n    if (p->port_vb->unk4) {",
      "C_VD reads its virtual base C_VB's member unk4 (GCC 2.x virtual base pointer)"),
+    # Calls cast to take no arguments so GCC 2.8 leaves the caller's $a0 in place: the callee does read it.
+    ("u_8001DDF4.cpp", "func_80018FA8(s, ((void *(*)())func_8001E758)());", "func_80018FA8(s, func_8001E758(s));",
+     "func_8001E758 gets s through $a0 (an argument-less call)"),
+    ("u_8001F1A8.cpp", "((void (*)())func_8001F514)();", "func_8001F514(t);",
+     "func_8001F514 gets t through $a0 (an argument-less call), twice"),
 ]
 
 
@@ -351,24 +408,38 @@ def apply_fixups(fname, text, stats):
 UNDECL_RE = re.compile(r"^(.*?):(\d+):(\d+): error: use of undeclared identifier '(\w+)'", re.M)
 
 
-def syntax_errors(path, hinc):
-    cmd = hostcc.compile_cmd(path, "NUL", includes=[PORT_INCLUDE, hinc], extra=GAME_FLAGS + ["-fsyntax-only",
-                             "-ferror-limit=0"], opt="-O0")
+def syntax_errors(path, inc_args):
+    cmd = hostcc.compile_cmd(path, "NUL", extra=inc_args + GAME_FLAGS + ["-fsyntax-only", "-ferror-limit=0"],
+                             opt="-O0")
     cmd.remove("-c")
     cmd = cmd[:cmd.index("-o")]
     return subprocess.run(cmd, capture_output=True, text=True).stderr
 
 
-def add_implicit_decls(paths, hinc, stats, jobs=8):
+PORT_DECL_RE = re.compile(r"^(EXTERN_C .*?\b(\w+)\(.*\)); /\* port \*/$", re.M)
+
+
+def add_implicit_decls(paths, inc_args, stats, jobs=8):
+    """A function used with no declaration: in a source, `EXTERN_C port_pret f(...);` after common.h (functions
+    the file defines itself are declared by rewrite_definitions); in an overlay's own header (hinc_<name>),
+    the prototype of its definition in the target's sources, just before the line that uses it."""
+    known = {}  # name -> permissive prototype from the target's definitions
+    for p in paths:
+        for m in PORT_DECL_RE.finditer(p.read_text(encoding="utf-8")):
+            known.setdefault(m.group(2), m.group(1))
     with ThreadPoolExecutor(jobs) as ex:
-        errs = list(ex.map(lambda p: syntax_errors(p, hinc), paths))
+        errs = list(ex.map(lambda p: syntax_errors(p, inc_args), paths))
+    header_edits = {}  # header path -> {line: [names]}
     for p, err in zip(paths, errs):
         lines = p.read_text(encoding="utf-8").split("\n")
         names = []
         for m in UNDECL_RE.finditer(err):
-            if Path(m.group(1)).resolve() != p.resolve():
-                continue
             line, col, name = int(m.group(2)), int(m.group(3)), m.group(4)
+            where = Path(m.group(1)).resolve()
+            if where != p.resolve():
+                if any(part.startswith("hinc_") for part in where.parts) and name in known:
+                    header_edits.setdefault(where, {}).setdefault(line, set()).add(name)
+                continue
             after = lines[line - 1][col - 1 + len(name):].lstrip()
             if after.startswith("(") and name not in names:
                 names.append(name)
@@ -378,6 +449,12 @@ def add_implicit_decls(paths, hinc, stats, jobs=8):
         lines[i + 1:i + 1] = [f"EXTERN_C port_pret {n}(...); /* port: implicit declaration */" for n in names]
         stats["implicit_decls"] += len(names)
         p.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    for h, by_line in header_edits.items():
+        lines = h.read_text(encoding="utf-8").split("\n")
+        for line in sorted(by_line, reverse=True):
+            lines[line - 1:line - 1] = [known[n] + "; /* port: implicit declaration */" for n in sorted(by_line[line])]
+            stats["implicit_decls"] += len(by_line[line])
+        h.write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 # ---------------------------------------------------------------- GCC 2.x virtual functions
@@ -503,11 +580,14 @@ def dispatcher(ret, name, params, const, slot, stats):
     return f"{head} {{ {pre}{body} }} /* port: GCC 2.x vtable slot {slot} */"
 
 
+SLOTS_RE = re.compile(r"^\s*\w*SLOTS\s*$", re.M)  # a class body that is one slot macro
+
+
 def vcall_slots(text, stats):
     """include/game/b/vcall.h: the 64 varargs placeholder slots v00..v63 (slot k = entry k+1) become variadic
     templates calling through the GCC vtable (port_vslot_call), plus PORT_VCALL_SLOTS_FWD, the forwarders
     a class with VObj0 as its virtual base gets."""
-    if "VCALL_SLOTS_10" not in text:
+    if "virtual int v##a##0(...)" not in text:  # include/game/b/vcall.h, include/game/a2/vcall.h
         return text
     disp = ("template <class... A_> int v##a##{d}(A_... x_) {{ return port_vslot_call(this->port_vptr, this, "
             "1##a##{d} - 99, port_promote(x_)...); }}")
@@ -541,7 +621,7 @@ def virtual_bases(texts, stats):
             if name not in own or (not own[name] and fs):
                 own[name] = [x for x in fs if x and x[0] != "~"]
                 bases_of[name] = [b for b, v in bases if not v]
-            if "VCALL_SLOTS" in t[bs:be]:
+            if SLOTS_RE.search(t[bs:be]):
                 slots_macro.add(name)
 
     def vfuncs(name, seen=()):
@@ -595,6 +675,11 @@ def virtual_bases(texts, stats):
                            lambda mm: f"{mm.group(1)}port_parg<{b}> {mm.group(2)}_p_){mm.group(3)}{{ "
                                       f"{b} *{mm.group(2)} = {mm.group(2)}_p_.p;", t)
             stats["vbase_inits"] += n
+            # C-style casts (B *)operand: GCC converts a derived pointer to its virtual base there
+            operand = r"(&?\s*[\w.\->\[\]]+(?:\((?:[^()]|\([^()]*\))*\))?(?:(?:->|\.)[\w]+)*)"
+            t, n = re.subn(r"\(\s*%s\s*\*\s*\)\s*%s" % (re.escape(b), operand),
+                           lambda mm: f"port_vb_conv<{b}>(({mm.group(1)}), 0)", t)
+            stats["vbase_casts"] += n
             # later assignments to a B * local, within the function that declares it: name = expr;
             starts = item_starts(t) + [len(t)]
             pieces = [t[:starts[0]]]
@@ -661,7 +746,7 @@ def devirtualize(texts, stats):
         edits = []
         for name, bases, bs, be in class_bodies(t):
             defs = [x for x in classes[name] if x[0] == f and x[3] == bs]
-            if re.search(r"^\s*VCALL_SLOTS\s*$", t[bs:be], re.M):  # vcall.h's VObj<N>, VObj0: own vptr
+            if SLOTS_RE.search(t[bs:be]):  # the vcall.h placeholders VObj<N>, VObj0, A2VObj<N>, A2VObj0: own vptr
                 edits.append((be, be, " void *port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
                 stats["vptr_members"] += 1
                 continue
@@ -674,7 +759,13 @@ def devirtualize(texts, stats):
                     continue
                 _, ret, mname, params, const = pv
                 if k == "~":
-                    rep = f"/* port: virtual destructor {mname}, GCC 2.x vtable slot {slots['~']} */"
+                    # `delete p` runs the game's destructor through the vtable with flags 3 (destroy and free,
+                    # as GCC 2.x does); the C++ destructor stays trivial, so automatic objects are untouched
+                    k = slots["~"]
+                    rep = (f"static void operator delete(void *p_) {{ if (p_) {{ port_vt_entry *e_ = (port_vt_entry *)"
+                           f"(({name} *)p_)->port_vptr + {k}; ((void (*)(void *, int))e_->pfn)((char *)p_ + e_->delta, "
+                           f"3); }} }} /* port: virtual destructor {mname}, GCC 2.x vtable slot {k} */")
+                    stats["virtual_dtors"] += 1
                 else:
                     rep = dispatcher(ret, mname, params, const, slots[k], stats)
                     if rep is None:
@@ -700,11 +791,28 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default=str(ROOT / "build" / "port"))
     ap.add_argument("--no-implicit", action="store_true", help="skip the clang pass for implicit declarations")
+    ap.add_argument("--overlays", default="", help="comma-separated overlays to hostify too (e.g. movie)")
     a = ap.parse_args()
     out = Path(a.out)
+    overlays = [o for o in a.overlays.split(",") if o]
     stats = {k: 0 for k in ("labels", "pins", "cdecl_members", "set_blocks", "asm_macros", "permissive_decls",
                             "definitions", "named_returns", "implicit_decls", "fixups", "thiscall_thunks",
-                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped", "vbase_inits", "vcall_slots")}
+                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped",
+                            "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors", "busy_loops", "empty_decls")}
+    # an overlay's own functions get its prefix (tools/port/overlays.py): in its sources and own header as text
+    # (asm labels included), elsewhere through a force-included names header
+    maps = {o: ovl.rename_map(o) for o in overlays}
+    for o, m in maps.items():
+        write(out / "ovl" / f"{o}_names.h", f"/* {o}'s functions under their host names (tools/port/hostify.py) */\n" +
+              "".join(f"#define {k} {v}\n" for k, v in sorted(m.items())))
+
+    def front(text):
+        t = renames(text)
+        t = drop_sets(t, aliases, stats)
+        t = drop_asm_macros(t, stats)
+        t = fix_labels(t, stats)
+        return permissive_decls(t, stats)
+
     aliases = []
     header_aliases = {}
     texts = {}
@@ -712,32 +820,41 @@ def main():
         rel = p.relative_to(ROOT / "include")
         if rel.as_posix() in ("common.h", "include_asm.h"):
             continue
-        t = renames(p.read_text(encoding="utf-8"))
-        t = drop_sets(t, aliases, stats)
-        t = drop_asm_macros(t, stats)
-        t = fix_labels(t, stats)
-        t = permissive_decls(t, stats)
-        t = vcall_slots(t, stats)
+        raw = p.read_text(encoding="utf-8")
+        t = vcall_slots(front(raw), stats)
         header_aliases.update(asm_aliases(t))
         texts[out / "hinc" / rel] = t
-    srcs = []
-    for p in sorted((ROOT / "src" / "main").glob("*.cpp")):
-        t = renames(p.read_text(encoding="utf-8"))
-        t = drop_sets(t, aliases, stats)
-        t = drop_asm_macros(t, stats)
-        t = fix_labels(t, stats)
-        t = permissive_decls(t, stats)
-        t = rewrite_definitions(t, stats, header_aliases)
-        t = apply_fixups(p.name, t, stats)
-        dst = out / "hsrc" / "main" / p.name
-        texts[dst] = t
-        srcs.append(dst)
+        if rel.parts[0] in maps:  # the overlay's own header, renamed, first on its include path
+            texts[out / f"hinc_{rel.parts[0]}" / rel] = vcall_slots(front(ovl.rename_text(raw, maps[rel.parts[0]])),
+                                                                     stats)
+    srcs = {}
+    for target in ["main"] + overlays:
+        for p in sorted((ROOT / "src" / target).glob("*.cpp")):
+            raw = p.read_text(encoding="utf-8")
+            if target in maps:
+                raw = ovl.rename_text(raw, maps[target])
+            t = rewrite_definitions(front(raw), stats, header_aliases)
+            t = apply_fixups(p.name, t, stats)
+            t = busy_loops(t, stats)
+            dst = out / "hsrc" / target / p.name
+            texts[dst] = t
+            srcs.setdefault(target, []).append(dst)
+    texts = drop_empty_decls(texts, stats)
     for dst, t in devirtualize(virtual_bases(texts, stats), stats).items():
         write(dst, t)
     if not a.no_implicit:
-        add_implicit_decls(srcs, out / "hinc", stats)
+        for target, paths in srcs.items():
+            add_implicit_decls(paths, include_path(out, target), stats)
     write(out / "aliases.txt", "".join(f"{x} {y}\n" for x, y in aliases))
     print("hostify: " + ", ".join(f"{k} {v}" for k, v in stats.items()) + f", aliases {len(aliases)}")
+
+
+def include_path(out, target):
+    """-I/-include arguments for a target's host view (also used by port/configure_port.py)."""
+    args = ["-I", str(PORT_INCLUDE)]
+    if target != "main":
+        args += ["-I", str(Path(out) / f"hinc_{target}"), "-include", str(Path(out) / "ovl" / f"{target}_names.h")]
+    return args + ["-I", str(Path(out) / "hinc")]
 
 
 if __name__ == "__main__":

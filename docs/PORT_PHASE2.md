@@ -330,3 +330,85 @@ symbolised stack (DbgHelp, from `koudelka.pdb`); faults on PS1 addresses are nam
    status/reset, `func_8009DDC0`/`func_8009F6D0`/`func_800A1B9C` unidentified) are logged on first use.
 5. **Prototypes.** `tools/recomp --protos` from `exe.h` (struct-by-value and pair returns) is still open; no
    call on the boot path needed it.
+
+## Phase 2b: scheduler, interrupts, CD, first overlay
+
+After the phase 2 merge (`e5ef1e8`), the next three steps: fibers, the C++ ABI follow-ups, overlays.
+
+**Where it stops now.** The exe boots, runs the scheduler (up to 11 task fibers and several hundred task
+switches), plays the game's own CD loading, loads `MOVIE.BIN` from disc 1, installs MOVIE's host image and
+runs MOVIE's code (host-compiled, `movie_` prefixed) until the movie player starts the MDEC:
+
+```
+overlay: MOVIE loaded, host image installed (89272 bytes at 800B6DF0)
+STOP hardware: write of PS1 I/O/scratchpad address 1F801824 at ... movie_LIBPRESS_OBJ_2C0
+  <- movie_DecDCTReset <- movie_func_800BD8E8 (movie.cpp) <- movie_func_800BA5C4 <- task_main
+```
+
+That is the intro FMV: libpress driving the MDEC registers (feasibility item 11).
+
+**What was added, by step.**
+
+1. *Fibers* (`port/fibers.cpp`): `func_80018F0C`/`FA8`/`190A0` replaced (`port/configure_port.py` drops a
+   recompiled function that `port/` defines). A task is a fiber; `F0C` creates the new task's fiber, whose
+   entry does what the PS1's first return from `F0C` does (`$s0` clobbered to the new task, so
+   `func_8001E848` takes its `cur == s` branch: leave the critical section, run `f2`, end the task).
+   Getting the scheduler to run also needed:
+   - *interrupts on the game thread* (`port/intr.cpp`): PsyCross calls the VSync callback from its own
+     thread, in parallel with the game; now its thread only counts vblanks and the callback runs on the
+     game thread at interrupt points: `ExitCriticalSection`, `VSync`, task switches, and busy-wait loops.
+     `EnterCriticalSection`/`ExitCriticalSection` mask them.
+   - *two `$a0` fixups* (hostify `FIXUPS`): `func_8001E7C8` and `func_8001F598`/`F60C` call a function cast
+     to take no arguments, relying on `$a0` still holding the argument. These are places where `src/` needs
+     a change for any non-MIPS build.
+   - *busy-wait loops* (hostify `busy_loops`, 17): an empty `while (c) {}` gets `port_interrupts()` as its body.
+   - *a CD driver* (`port/cd.cpp`): PsyCross's libcd only streams with `CdlReadS`; the game drives `ReadN`,
+     `Setloc`, `Pause` and `Setmode` itself, with a ready callback per sector (in `CdlModeSize1`, header
+     first) and a sync callback per command. Implemented over the raw `.bin`, at 150 sectors/s.
+   - *SPU transfers* (`port/spu.cpp`): `func_8009F6D0` is `SpuSetTransferCallback` (phase 2 skipped it as
+     unidentified); the sound driver busy-waits on a flag its transfer-complete callback clears. The
+     callback is raised as an interrupt after `SpuWrite`/`SpuRead`.
+2. *C++ ABI*:
+   - virtual destructors now work: `delete p` runs the game's destructor through the GCC vtable with flags 3
+     (a class `operator delete` dispatcher, 35 classes). Without it, a `delete` of a list node freed the
+     node but skipped the destructor, leaving a stale event that the next frame called through.
+   - C-style casts to a virtual base (`(List *)&p->h`, 62) now go through `port_vb_conv`.
+   - the `game/a2` placeholder slots (`A2_SLOTS`) are dispatched like `VCALL_SLOTS`.
+   - empty-parameter declarations that disagree with the definition are dropped (`drop_empty_decls`).
+   - Not done: checking the vptr-placement rule against DuckStation. Nothing has contradicted it yet, but
+     that check needs the emulator paused, so I have not done it.
+   - Two `method` stubs remain: `~C_80010178` and `~Unk800BF51CO`, destructors referenced by a clang
+     vftable. Neither has been called.
+3. *Overlays* (`tools/port/overlays.py`, `port/overlays.cpp`, `--overlays` in `configure_port.py`, default
+   `movie`):
+   - an overlay's functions are compiled with its prefix (`movie_func_800BA5C4`): hostify renames them in
+     the overlay's source and own header, and a names header covers the shared ones; the recompiled
+     functions get the same header.
+   - its data becomes a host image of the PS1 bytes (`build/port/data/movie_image.s`): symbols relocated,
+     the 333 raw EXE function addresses in MOVIE's vtables turned into EXE symbols. All overlays' data
+     symbols are labels in `port_hiram`, since they share the slot as on the PS1.
+   - the overlay table (LBA, size, image per overlay): when the CD driver delivers the last sector of a
+     known overlay file into its load area, the host image replaces the raw bytes and the overlay becomes
+     current. An overlay that is not linked stops with `STOP overlay: <NAME> loaded ... not linked`.
+   - Not done: EXE calls into overlays by name (the 106 `overlay` stubs, mostly EFFECT) are still stubs. They
+     need a dispatcher on the current overlay once EFFECT or FIELD is linked.
+
+**Tools.** `tools/port/catch.py` runs the exe under a minimal Win32 debugger: it handles faults the exe cannot
+report itself (corrupt stack pointer, recursive SEH), dumps the game thread on a timeout (busy-waits), and
+`--watch ADDR` sets a hardware write watchpoint. It found the use-after-free and the SPU busy-wait.
+`KOUDELKA_TRACE=1` logs every task switch; `KOUDELKA_SHOT=<s>` writes `shot.bmp` and `vram.bmp`; the log
+has a heartbeat line every 5 s.
+
+**Counts.** EXE 42/42 game files, MOVIE 1/1; recompiled: EXE 354 (+3 replaced by fibers), MOVIE 35 (5
+recompiler stubs: four `$gp` wrappers, `BUILD_OBJ_AC`). Probe link: 199 undefined symbols: 175 stubs
+(overlay 106, PsyQ 65 including MOVIE's `St*` streaming, `CdRead2`, the memory-card BIOS calls
+`erase`/`firstfile`/`nextfile`; methods 2; GCC names 2), 24 thunks. hostify: 1,097 virtual dispatchers,
+210 vptr members, 35 virtual destructors, 62 virtual-base casts, 5 fixups.
+
+**Next steps.**
+1. *FMV* (item 11): either a software MDEC behind `DecDCT*` and the `St*` streaming calls, or a skip.
+   A skip could be stubbing `DecDCTReset`/`DecDCTin`/`DecDCTout` and ending the stream at its first
+   `StGetNext`; the movie loop's exit condition still has to be read to decide which.
+2. *Next overlays*: FIELD and EFFECT, after the movie, with the EXE→overlay dispatchers.
+3. *vptr placement*: check against DuckStation (needs the emulator paused).
+4. The rest of the PsyQ gaps (`St*`, memory card) as the game reaches them.
