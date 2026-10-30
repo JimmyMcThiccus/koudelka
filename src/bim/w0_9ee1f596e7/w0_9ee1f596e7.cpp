@@ -39,7 +39,7 @@ EXTERN_C void func_800DACE4(BimDtor *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/bim/w0_9ee1f596e7/nonmatchings/w0_9ee1f596e7", bimf_2f8bc8bf);
+#include "../shared/bimf_2f8bc8bf.cpp"
 
 #include "../shared/bimf_d3d03f70.cpp"
 

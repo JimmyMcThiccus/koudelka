@@ -12,7 +12,45 @@ INCLUDE_ASM("asm/bim/w0_b99421c0f0/nonmatchings/w0_b99421c0f0", func_800DAB3C);
 
 #include "../shared/bimf_a85220b1.cpp"
 
-INCLUDE_ASM("asm/bim/w0_b99421c0f0/nonmatchings/w0_b99421c0f0", func_800DAE30);
+EXTERN_C void func_800DAE30(char *p, int slot)
+{
+    int *q = (int *)p;
+    int s = (short)slot;
+    char **b = D_800B4D38;
+    *(int *)(p + 0x9FC) = 0x18F4D;
+    *(int *)(p + 0xA00) = 0x5000;
+    *(int *)(p + 0xA04) = 0x18F57;
+    *(int *)(p + 0xA08) = 0x6000;
+    *(int *)(p + 0xA0C) = 0x18F40;
+    *(int *)(p + 0xA10) = 0x6800;
+    *(int *)(p + 0xA14) = 0x18F63;
+    *(int *)(p + 0xA18) = 0x5000;
+    *(int *)(p + 0xA1C) = 0x18F6D;
+    *(int *)(p + 0xA20) = 0xA000;
+    *(int *)(p + 0xA24) = 0x18F81;
+    *(int *)(p + 0xA28) = 0x8000;
+    *(int *)(p + 0xA2C) = 0x18F91;
+    *(int *)(p + 0xA30) = 0x3800;
+    *(int *)(p + 0xA34) = 0x18F98;
+    *(int *)(p + 0xA38) = 0x1000;
+    *(int *)(p + 0xA3C) = 0x18F9A;
+    *(int *)(p + 0xA40) = 0x1000;
+    *(int *)(p + 0xA44) = 0x18F9C;
+    *(int *)(p + 0xA48) = 0x7800;
+    *(int *)(p + 0xA4C) = 0x18FAB;
+    *(int *)(p + 0xA50) = 0x9000;
+    *(int *)(p + 0xA54) = 0x18FBD;
+    *(int *)(p + 0xA58) = 0x9000;
+    *(int *)(p + 0xA5C) = 0x18F9C;
+    *(int *)(p + 0xA60) = 0x7800;
+    *(int *)(p + 0xADC) = 0x18FCF;
+    *(int *)(p + 0xAE0) = 0xB000;
+    *(int *)(p + 0xAE4) = 0x18FE5;
+    *(int *)(p + 0xAE8) = 0x800;
+    int *v = q + 639;
+    int **t = (int **)(*b + 0xF8);
+    t[s] = v;
+}
 
 #include "../shared/bimf_014cace9.cpp"
 

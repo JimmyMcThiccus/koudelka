@@ -39,7 +39,57 @@ EXTERN_C void func_800DAD0C(BimDtor *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/bim/w0_bda43dfefe/nonmatchings/w0_bda43dfefe", func_800DAE50);
+EXTERN_C void func_800DAE50(char *p, int slot)
+{
+    int *q = (int *)p;
+    int s = (short)slot;
+    char **b = D_800B4D38;
+    *(int *)(p + 0xA08) = 0x1A049;
+    *(int *)(p + 0xA0C) = 0x1800;
+    *(int *)(p + 0xA10) = 0x1A04C;
+    *(int *)(p + 0xA14) = 0x4800;
+    *(int *)(p + 0xA18) = 0x1A041;
+    *(int *)(p + 0xA1C) = 0x4000;
+    *(int *)(p + 0xA20) = 0x1A055;
+    *(int *)(p + 0xA24) = 0x2000;
+    *(int *)(p + 0xA28) = 0x1A059;
+    *(int *)(p + 0xA2C) = 0x5800;
+    *(int *)(p + 0xA30) = 0x1A064;
+    *(int *)(p + 0xA34) = 0x4000;
+    *(int *)(p + 0xA38) = 0x1A06C;
+    *(int *)(p + 0xA3C) = 0x1000;
+    *(int *)(p + 0xA40) = 0x1A06E;
+    *(int *)(p + 0xA44) = 0x1800;
+    *(int *)(p + 0xA48) = 0x1A071;
+    *(int *)(p + 0xA4C) = 0x800;
+    *(int *)(p + 0xA50) = 0x1A072;
+    *(int *)(p + 0xA54) = 0x1000;
+    *(int *)(p + 0xA58) = 0x1A083;
+    *(int *)(p + 0xA5C) = 0x5000;
+    *(int *)(p + 0xA60) = 0x1A074;
+    *(int *)(p + 0xA64) = 0x6800;
+    *(int *)(p + 0xA68) = 0x1A072;
+    *(int *)(p + 0xA6C) = 0x1000;
+    *(int *)(p + 0xA70) = 0x1A081;
+    *(int *)(p + 0xA74) = 0x800;
+    *(int *)(p + 0xA78) = 0x1A082;
+    *(int *)(p + 0xA7C) = 0x800;
+    *(int *)(p + 0xA80) = 0x1A08D;
+    *(int *)(p + 0xA84) = 0x1800;
+    *(int *)(p + 0xA88) = 0x1A090;
+    *(int *)(p + 0xA8C) = 0x2000;
+    *(int *)(p + 0xA90) = 0x1A090;
+    *(int *)(p + 0xA94) = 0x2000;
+    *(int *)(p + 0xA98) = 0x1A049;
+    *(int *)(p + 0xA9C) = 0x1800;
+    *(int *)(p + 0xAE8) = 0x1A098;
+    *(int *)(p + 0xAEC) = 0x6000;
+    *(int *)(p + 0xAF0) = 0x1A0A4;
+    *(int *)(p + 0xAF4) = 0x1000;
+    int *v = q + 642;
+    int **t = (int **)(*b + 0xF8);
+    t[s] = v;
+}
 
 EXTERN_C int func_800DB018(char *p)
 {

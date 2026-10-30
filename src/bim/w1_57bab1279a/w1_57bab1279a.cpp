@@ -39,7 +39,7 @@ EXTERN_C void func_800DC004(BimDtor *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/bim/w1_57bab1279a/nonmatchings/w1_57bab1279a", bimf_41634af0);
+#include "../shared/bimf_41634af0.cpp"
 
 #include "../shared/bimf_014cace9.cpp"
 

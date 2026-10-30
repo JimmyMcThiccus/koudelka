@@ -12,7 +12,7 @@ INCLUDE_ASM("asm/bim/w1_20c1e2c914/nonmatchings/w1_20c1e2c914", func_800DBE5C);
 
 #include "../shared/bimf_ff339051.cpp"
 
-INCLUDE_ASM("asm/bim/w1_20c1e2c914/nonmatchings/w1_20c1e2c914", bimf_19fd6024);
+#include "../shared/bimf_19fd6024.cpp"
 
 #include "../shared/bimf_014cace9.cpp"
 

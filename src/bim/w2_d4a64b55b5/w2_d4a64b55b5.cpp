@@ -39,7 +39,39 @@ EXTERN_C void func_800DD2E8(BimDtor *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/bim/w2_d4a64b55b5/nonmatchings/w2_d4a64b55b5", func_800DD42C);
+EXTERN_C void func_800DD42C(char *p, int slot)
+{
+    int *q = (int *)p;
+    int s = (short)slot;
+    char **b = D_800B4D38;
+    *(int *)(p + 0x9F8) = 0x198B0;
+    *(int *)(p + 0x9FC) = 0x800;
+    *(int *)(p + 0xA00) = 0x198B0;
+    *(int *)(p + 0xA04) = 0x800;
+    *(int *)(p + 0xA08) = 0x198B0;
+    *(int *)(p + 0xA0C) = 0x800;
+    *(int *)(p + 0xA10) = 0x198B1;
+    *(int *)(p + 0xA14) = 0x6000;
+    *(int *)(p + 0xA18) = 0x198BD;
+    *(int *)(p + 0xA1C) = 0x6000;
+    *(int *)(p + 0xA20) = 0x198BD;
+    *(int *)(p + 0xA24) = 0x6000;
+    *(int *)(p + 0xA28) = 0x198C9;
+    *(int *)(p + 0xA2C) = 0x800;
+    *(int *)(p + 0xA30) = 0x198CA;
+    *(int *)(p + 0xA34) = 0x800;
+    *(int *)(p + 0xA38) = 0x198CB;
+    *(int *)(p + 0xA3C) = 0x800;
+    *(int *)(p + 0xA40) = 0x198CC;
+    *(int *)(p + 0xA44) = 0x800;
+    *(int *)(p + 0xAD8) = 0x198CD;
+    *(int *)(p + 0xADC) = 0x6000;
+    *(int *)(p + 0xAE0) = 0x198D9;
+    *(int *)(p + 0xAE4) = 0x800;
+    int *v = q + 638;
+    int **t = (int **)(*b + 0xF8);
+    t[s] = v;
+}
 
 #include "../shared/bimf_014cace9.cpp"
 
