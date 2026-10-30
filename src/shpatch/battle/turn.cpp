@@ -1,5 +1,5 @@
 // Shadow Hearts patch: the per-turn driver (docs/SH_PATCH_DESIGN.md 2.5, 4.1). func_800C6194 detours here.
-// Phase 4 step 1: an unchanged copy of battle_b.cpp's func_800C6194 (the no-op patch).
+// A copy of battle_b.cpp's func_800C6194 that also ends the ring context; turn flow (section 4) goes here later.
 #include "common.h"
 #include "shared/exe.h"
 #include "battle/battle.h"
@@ -7,6 +7,9 @@
 
 EXTERN_C void func_800C6194_sh(T_C6194 *p) {
     g_shTrace[SH_TRACE_TURN]++;
+    // The ring's scale covers one action. Melee applies its damage inside the replayed confirm, and the driver runs
+    // again only once the action has finished, so the context ends here.
+    g_shRing.active = 0;
     if (empty_C6194(p)) return;
     if (cf_666C(p)) return;
     if (((T_C6194_x *)p)->s7DC == 0) { cf_68D8(p, -1); return; }

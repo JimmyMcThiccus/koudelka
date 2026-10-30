@@ -1,4 +1,4 @@
-// Shadow Hearts patch, EXE part (docs/SH_PATCH_DESIGN.md 2.5). Linked into the dead func_80040C10 region by
+// Shadow Hearts patch, EXE part (docs/SH_PATCH_DESIGN.md 2.5). Linked over dead EXE code (func_80033F9C..) by
 // tools/patch/build.py; func_80086B70 and func_80086CAC detour here (src/shpatch/detours.txt).
 //
 // Both are the u_80085168.cpp originals plus one step: while a Judgment Ring result is live, a change to one of
@@ -7,6 +7,7 @@
 
 ShRingCtx g_shRing;
 void (*g_shFrameHook)(void);
+void (*g_shDrawHook)(void *ot);
 int g_shTrace[SH_TRACE_N];
 int g_shCount[16];
 
@@ -15,15 +16,11 @@ int g_shCount[16];
 #define U8(p, o) (*(unsigned char *)((char *)(p) + (o)))
 #define S8(p, o) (*(signed char *)((char *)(p) + (o)))
 
+// The action's targets are the fighters on the other side from the caster (stat + 0xBD = fighter b4BD, 1 party /
+// 2 monsters). Counters and reflections land on the caster's side, so they stay unscaled.
 static int is_target(void *stat)
 {
-    int i;
-    for (i = 0; i < SH_MAX_TARGETS; i++) {
-        if (g_shRing.targets[i] == stat) {
-            return 1;
-        }
-    }
-    return 0;
+    return g_shRing.caster && U8(stat, 0xBD) != U8(g_shRing.caster, 0xBD);
 }
 
 static int ring_scale(void *stat, int v, int mp)
@@ -143,4 +140,15 @@ EXTERN_C void func_8002D1E0_sh()
     if (g_shFrameHook) {
         g_shFrameHook();
     }
+}
+
+// The OT submit (u_8002DED8.cpp): the patch's draw hook may add primitives to the table just before DrawOTag.
+EXTERN_C void func_8002E814_orig(void *ot);
+
+EXTERN_C void func_8002E814_sh(void *ot)
+{
+    if (g_shDrawHook) {
+        g_shDrawHook(ot);
+    }
+    func_8002E814_orig(ot);
 }

@@ -37,7 +37,7 @@ Short version:
 |---|---|---|
 | 0x800B6DF0-0x800D5DAC | BATTLE as retail, except 2-instruction detours at 4 entry points | retail bytes + patch |
 | 0x800D5DAC-0x800E584C | slot: zero padding in BATTLE.BIN, overwritten by the BIM block load at battle start | as today |
-| 0x800E5850-0x800EA8A0 | **`.shpatch`**: ring, turn flow, detour targets, tables (20,560 B available) | new, in BATTLE.BIN |
+| 0x800E5850-0x800EA8A0 | **`.shpatch`**: ring, turn flow, detour targets, tables (20,560 B available). **Not safe: effect actions load data here (phase 4 step 2); moving to EXE dead code** | new, in BATTLE.BIN |
 | 0x80040C10-0x800410F4 | **`.shexe`**: HP/MP hook copies + ring context (1,252 B, was dead `func_80040C10`) | EXE patch |
 
 - **BATTLE.BIN grows** from 0x1EFBC to 0x33AB0 bytes (62 -> 104 sectors). It sits at LBA 1400 and EFFECT at 1600, so it
@@ -268,8 +268,24 @@ flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_80
      attacks and monster turns with identical behaviour, and the counters confirmed each detour runs. DuckStation's
      recompiler picks up the writes.
    - Still to do: hash the pocket across a full fight.
-2. **Ring:** drawable and update with a fixed result first (always 3 hits), then input, then the result. Check timing
-   against SH's 1.6 s with a stopwatch from DuckStation's frame counter.
+2. **Ring (working for attacks, not yet shippable).** Built and tested by injection into a live battle (slot 10 state):
+   - **Drawing.** The ring draws through the `func_8002E814` hook into the 3D battle OT, at depth 2. Three OTs are
+     submitted per frame (the battle layer, 0x2000 entries, then two 5-entry tables), and `D_800B4CFC[0]` already
+     points at the last of them by then, so the hook picks the battle layer by its length.
+   - **Input and timing.** Targeting confirm arrives as an input event whose `h18` holds the new buttons: Up 0x10,
+     Cross 0x2000. The needle swept 105 degrees in 28 frames, which is SH's 1.6 s.
+   - **Results.** Three presses landed in the three zones gave scale 1.0 and a normal hit (113 -> 4 HP). One hit
+     followed by a miss gave scale 0.5 and half damage (167 -> 113 HP).
+   - **Replay.** The replayed confirm needs a copy of the input event, because the game reuses the original before the
+     ring ends.
+   - **Targets.** `mgr+0x848` holds a fighter pointer, not a target count, so the hooks now scale changes on the side
+     opposite the caster instead of reading a target list.
+   - **Blocker: the pocket is not free.** During a monster turn, after its effect action, 0x800E5850.. held loaded data.
+     The detours then jumped into it and the game hung, so the pocket is used by effect resources. The fix is to move
+     all patch code into EXE dead code, which is always resident: contiguous runs of 1,908, 1,756, 1,252, 1,204 and
+     1,132 bytes, linked per object file. The ring's primitives move to the heap, and BATTLE.BIN then needs no growth
+     and no size words.
+
 3. **Scale:** `.shexe` hooks, the double-apply and popup checks (2.5), refunds.
 4. **Ring tables** from SH data.
 5. **Turn flow** (section 4), once T28 lands.

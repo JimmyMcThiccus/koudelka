@@ -1,7 +1,7 @@
 """Build the Shadow Hearts battle patch (docs/SH_PATCH_DESIGN.md 1.2).
 
 Layered on the matching build: the retail EXE and BATTLE.BIN stay byte for byte, except for
-  - .shexe   src/shpatch/exe/*.cpp, linked into the dead func_80040C10 (1,252 bytes) of the EXE
+  - .shexe   src/shpatch/exe/*.cpp, linked over six dead EXE functions (func_80033F9C..0x80034710, 1,908 bytes)
   - .shpatch src/shpatch/battle/*.cpp, linked at 0x800E5850 (the pocket after the EFFECT/BIM slot); BATTLE.BIN
              grows to cover it, and the EXE's two BATTLE size words (D_800137A8[2], D_800AE5F8[5]) follow
   - detours  src/shpatch/detours.txt: `j replacement; nop` over each hooked function's first 8 bytes, plus
@@ -31,7 +31,7 @@ EXE_VRAM, EXE_HEADER = 0x80010000, 0x800
 BATTLE_VRAM, BATTLE_SIZE, BATTLE_SECTORS_MAX = 0x800B6DF0, 0x1EFBC, 200  # LBA 1400; EFFECT.BIN is at LBA 1600
 # image: (section, load address, bytes available, retail symbol the region replaces or None)
 REGIONS = {
-    "exe": (".shexe", 0x80040C10, 1252, "func_80040C10"),
+    "exe": (".shexe", 0x80033F9C, 0x80034710 - 0x80033F9C, "func_80033F9C"),  # 6 dead functions, 1,908 B
     "battle": (".shpatch", 0x800E5850, 0x800EA8A0 - 0x800E5850, None),
 }
 SIZE_WORDS = [(0x800137A8 + 2 * 4, BATTLE_SIZE, lambda n: n),                         # bytes read

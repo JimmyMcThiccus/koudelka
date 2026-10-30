@@ -8,5 +8,6 @@
 exe    func_80086B70 func_80086B70_sh
 exe    func_80086CAC func_80086CAC_sh
 exe    func_8002D1E0 func_8002D1E0_sh
+exe    func_8002E814 func_8002E814_sh func_8002E814_orig
 battle func_800C6194 func_800C6194_sh
 battle func_800CB174 func_800CB174_sh func_800CB174_orig
