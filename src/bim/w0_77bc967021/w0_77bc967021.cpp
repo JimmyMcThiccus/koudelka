@@ -1,14 +1,58 @@
 #include "common.h"
 #include "bim/shared.h"
 
-EXTERN_C void *func_800DAAF4(void *self, int in_chrg, int a, int b, int c, int d, int e);
+EXTERN_C BimDtor *func_800DAAF4(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e);
 
 EXTERN_C void *func_800DAA78(int a, short b, int c, int d, int e)
 {
-    return func_800DAAF4(operator new(0xB00), 1, a, b, c, d, e);
+    return func_800DAAF4((BimDtor *)operator new(0xB00), 1, a, b, c, d, e);
 }
 
-INCLUDE_ASM("asm/bim/w0_77bc967021/nonmatchings/w0_77bc967021", func_800DAAF4);
+EXTERN_C char D_80010178[], D_800104A8[];
+EXTERN_C char D_800DA8C8[], D_800DA8E0[], D_800DA8F0[], D_800DA988[], D_800DA9A8[], D_800DA9C0[];
+EXTERN_C const BimVTable10 D_800DA878;
+EXTERN_C void func_800D73E8_c(void *self, int a, int b, int c, int d, int e, int f) asm("func_800D73E8");
+EXTERN_C void func_800DAE04_c(void *self, int a) asm("func_800DAE04");
+EXTERN_C void func_800D8D64_c(void *self, int a, int b, int c, int d, int e, int f, int g, int h) asm("func_800D8D64");
+
+EXTERN_C BimDtor *func_800DAAF4(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e)
+{
+    if (in_chrg) {
+        BimVBase *vb = self->vb1DC = (BimVBase *)((char *)self + 0xAF8);
+        vb->vptr = (BimVTable10 *)D_80010178;
+        vb->f4 = 0;
+        vb->vptr = (BimVTable10 *)D_800104A8;
+    }
+    func_800D73E8_c(self, 0, a, b, c, d, e);
+    self->vb1DC->vptr = (BimVTable10 *)&D_800DA878;
+    if (!in_chrg) {
+        BimVTable10 vt = D_800DA878;
+        self->vb1DC->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800DA878.e[1].delta + (adj = (char *)self - (full = (char *)self->vb1DC - 0xAF8));
+        vt.e[6].delta = D_800DA878.e[6].delta + adj;
+    }
+    self->vt8C = D_800DA9A8;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_800DA988;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_800DA8F0;
+    self->vt4A8 = D_800DA8E0;
+    self->vt980 = D_800DA8C8;
+    self->vt0 = D_800DA9C0;
+    func_800DAE04_c(self, b);
+    func_800D8D64_c(self, 1, 1, 1, 0, 0, 0, 0, 0);
+    register BimDtor *r asm("$2") = self;
+    *(int *)((char *)r + 0x9D4) = 150;
+    r->f9DC = 0;
+    r->f9D8 = 0;
+    *(int *)((char *)r + 0x9F8) = 0;
+    *(int *)((char *)r + 0x9FC) = 4;
+    *(int *)((char *)r + 0xA00) = 0;
+    *(int *)((char *)r + 0xA04) = 0;
+    return r;
+}
 
 EXTERN_C const BimVTable10 D_800DA878;
 EXTERN_C char D_800DA8C8[], D_800DA8E0[], D_800DA8F0[], D_800DA988[], D_800DA9A8[], D_800DA9C0[];
