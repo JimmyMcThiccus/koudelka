@@ -13,8 +13,8 @@ Short version:
   through four entry-point detours, and every other byte of BATTLE stays as retail.
 - **Damage.** The ring's result reaches damage through one small hook in the EXE's HP and MP choke points, placed in dead
   EXE code.
-- **Ring.** The ring runs inside the action sequencer's frame-delay state. The BIM image is resident then, and no CD load
-  is in flight.
+- **Ring.** The ring runs between target confirmation and the action, ticked once per frame by a hook in the EXE's
+  buffer swap. The BIM image is resident then, and no CD load is in flight (2.1, revised in phase 4).
 
 ## 1. Where the code goes
 
@@ -58,27 +58,33 @@ Short version:
 
 ## 2. Judgment Ring
 
-### 2.1 Where it runs: the sequencer's frame-delay state
-Every action goes through `func_800CADDC(mgr, state)`: player attacks via `func_800CACD8`, items and magic via
-`func_800CAD5C`, and monsters through the same path. The probe showed these states:
-- state 0: setup
-- state 1: counts `f900` down, one per frame
-- states 2-3: request the EFFECT load (about 45 frames)
-- states 4-5: run the effect and the hit
-- after that, `func_800CF408` reloads the BIM image (about 44 frames)
+### 2.1 Where it runs: at target confirmation (revised in phase 4)
+The first version of this design put the ring in `func_800CADDC`'s frame-delay state, on the belief that every action
+goes through that sequencer. **Phase 4 step 1 disproved that.** With a counting detour on `func_800CADDC`, neither
+Koudelka's melee nor the monster's melee entered it: `f904` stayed -1 throughout. Only effect-driven actions do (the
+monster skill in BATTLE.md 11.1). For melee, the damage is applied **the moment the target is confirmed**. The
+monster's HP had changed 0.27 s after the press, before the swing animation. Then `f3D0` goes 4 (targeting) -> 5
+(animation) -> 1 (next menu).
 
-So the ring goes in **state 1**:
-- **State 0 (detour `func_800CADDC_sh`):** after the original state-0 work, if the actor is a player (`b4BC < 3`) and the
-  action is ringed (table in 2.4), create the ring and store it at `mgr->ring`.
-- **State 1:** while `mgr->ring` is running, do not decrement `f900`. Each call ticks the ring once
-  (`ring_update(ring, dt)`). When the ring finishes, publish its result to the ring context (2.5), destroy it, and let
-  `f900` count down as before into state 2.
+So the ring sits where SH puts it: **between target confirmation and the action**.
+- **Input shim (`func_800CB174_sh`).** Targeting's confirm press arrives through `func_8007908C` -> `func_800CB174`. When
+  `f3D0` is a targeting state (4 for Attack; magic and items TBD) and the press is confirm, the shim does not pass it on.
+  It starts the ring, keeps the pad word, and swallows further presses except the ring's own.
+- **Frame hook.** In battle the game logic is event driven: counting detours on 30 BATTLE entry points and scene methods
+  found none that runs every frame while a menu waits. The EXE's buffer swap `func_8002D1E0` runs once per game frame
+  (the game runs at 30 fps). Its `.shexe` copy calls `g_shFrameHook` when that is non-null. BATTLE sets it to
+  `ring_tick` while a ring is up and clears it when the ring ends. The hook runs in the main loop after the swap,
+  outside any list traversal.
+- **Finish.** When the ring ends, `ring_tick` publishes the result to the ring context (2.5), clears the frame hook and
+  replays the kept confirm press into `func_800CB174_orig`. The original then resolves the action exactly as it would
+  have, with the scale in force.
 
-Consequences, all confirmed live:
-- Nothing has touched the slot yet in state 1, so the BIM image is resident and monster virtuals stay callable throughout.
-- No CD request is in flight during the ring.
-- Player melee never loads EFFECT, so the whole hit also runs with the BIM image resident.
-- The delay before the EFFECT load is the only time added to an action.
+Consequences:
+- **Every player action type confirms through targeting,** so one hook covers attack, magic and items, whatever path
+  each takes afterwards.
+- **The ring runs before anything loads.** During it the BIM image is resident, no CD request is in flight, and the
+  target cursor stays on screen.
+- `func_800CADDC` needs no detour. The `func_800C6194` detour stays for clearing the context and for turn flow.
 
 ### 2.2 Rules, taken from SH (`CCircle`)
 
@@ -92,11 +98,8 @@ Consequences, all confirmed live:
 | Status / accessory changes to width and speed (`speedDiv` 0.5..2) | `GetRouDegSpd` | v1: none (constant period, unscaled widths). The hook is kept in `ring_setup()` for later |
 | Accel and analog modes, roulette item | `SetAccelRot`, TrigMode 3 | not ported (no SH battle caller traced) |
 
-Input: the ring reacts to the menu's confirm bit, pad 0x2000 in code (the bit `func_800D2598` tests; Cross on the US
-disc). That pad word reaches battle only through `func_8007908C(scene, pad)` -> `func_800CB174(mgr, pad, 1)`. So
-`func_800CB174` gets a shim (detour + trampoline): while `mgr->ring` is up, a newly pressed 0x2000 goes to
-`ring_press()` and the pad word is swallowed; otherwise the original runs. Swallowing the pad also stops the press
-reaching the menu code, whose `f3D0` state is idle after target confirm.
+Input: the ring reacts to the menu's confirm bit, pad 0x2000 in code (Cross on the US disc), received by the
+`func_800CB174` shim (2.1). The press is judged in the shim and consumed. All other pads are swallowed while the ring is up.
 
 ### 2.3 Drawing
 The ring is a drawable modelled on `T_BC704` (`func_800BC704` / `func_800BC878`). It is registered in a holder
@@ -208,9 +211,9 @@ state with the monster's targets.
 | Ring logic (setup, update, press, result, scale) | 1.5 KB | `.shpatch` |
 | Ring drawable (build prims, draw, sequence) | 1.2 KB | `.shpatch` |
 | Tables: sine 182 B, rings 12 x 12 + spells + item, about 0.6 KB | 0.8 KB | `.shpatch` |
-| `func_800CADDC_sh` (copy + ring states) | 0.9 KB | `.shpatch` |
+| `func_800CB174` shim (targeting confirm, ring input, replay) | 0.3 KB | `.shpatch` |
+| `func_8002D1E0_sh` frame hook | 0.05 KB | `.shexe` |
 | `func_800C6194_sh` (copy + context clear + turn flow, section 4) | 1.6 KB | `.shpatch` |
-| `func_800CB174` shim | 0.1 KB | `.shpatch` |
 | Turn-flow extras (round order, menu, auto-approach) | 2-3 KB | `.shpatch` |
 | **`.shpatch` total** | **about 9 KB of 20.5 KB** | |
 | `func_80086B70_sh`, `func_80086CAC_sh`, ring context | about 0.7 KB of 1.25 KB | `.shexe` |
@@ -253,10 +256,18 @@ Monster AI (`v16`) keeps moving on the grid with `f4B0 = 3`: rewriting 86 module
 flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_800C7158`.
 
 ## 5. Phase 4 order of work
-1. **Tooling:** `--mode shpatch`, the two linked sections, `tools/patch/apply.py`, the detour/trampoline writer with its
-   position-independence check, and a no-op patch (detours to unchanged copies). Check in DuckStation that a battle
-   still plays exactly as retail. Also hash the pocket at battle start and end over a full fight, to confirm nothing in
-   battle writes it.
+1. **Tooling (done).**
+   - `tools/patch/build.py` is a standalone step after a matching build, not a configure mode. It compiles and links
+     `.shexe` and `.shpatch` against the retail symbols and splat's extern files, then writes the detours and
+     trampolines from `src/shpatch/detours.txt`.
+   - Safety check: it refuses a detour whose displaced instructions branch or jump, or a function something branches into
+     at +4. It refused `func_800CEC68`, `func_800806EC` and `func_800814E8`.
+   - `@count n` detours count calls in `g_shCount[n]`, for finding which entry points run when.
+   - `--inject` writes the patch into a paused DuckStation and first restores any detour from an earlier injection.
+   - The no-op patch (copies of the five functions, with trace counters) was injected mid-battle. It ran through moves,
+     attacks and monster turns with identical behaviour, and the counters confirmed each detour runs. DuckStation's
+     recompiler picks up the writes.
+   - Still to do: hash the pocket across a full fight.
 2. **Ring:** drawable and update with a fixed result first (always 3 hits), then input, then the result. Check timing
    against SH's 1.6 s with a stopwatch from DuckStation's frame counter.
 3. **Scale:** `.shexe` hooks, the double-apply and popup checks (2.5), refunds.

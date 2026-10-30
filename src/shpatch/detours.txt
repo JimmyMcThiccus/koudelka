@@ -1,0 +1,12 @@
+# Shadow Hearts patch detours (docs/SH_PATCH_DESIGN.md 1.2), applied by tools/patch/build.py.
+# <image> <function> <replacement> [trampoline]
+#   image        exe or battle: the retail image that holds <function>
+#   replacement  the patch function that runs instead; `j replacement; nop` overwrites <function>'s first 8 bytes
+#   trampoline   optional name for a stub that runs <function>'s two displaced instructions and jumps to <function>+8,
+#                so the replacement can still call the original
+# <image> <function> @count <n>   diagnostics: count calls in g_shCount[n], then run the original
+exe    func_80086B70 func_80086B70_sh
+exe    func_80086CAC func_80086CAC_sh
+exe    func_8002D1E0 func_8002D1E0_sh
+battle func_800C6194 func_800C6194_sh
+battle func_800CB174 func_800CB174_sh func_800CB174_orig
