@@ -1,18 +1,58 @@
 #include "common.h"
 #include "bim/shared.h"
 
-EXTERN_C void *func_800DD17C(void *self, int in_chrg, int a, int b, int c, int d, int e);
+EXTERN_C BimDtor *func_800DD17C(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e);
 
 EXTERN_C void *func_800DD100(int a, short b, int c, int d, int e)
 {
-    return func_800DD17C(operator new(0xAF4), 1, a, b, c, d, e);
+    return func_800DD17C((BimDtor *)operator new(0xAF4), 1, a, b, c, d, e);
 }
 
-INCLUDE_ASM("asm/bim/w2_1586905d8e/nonmatchings/w2_1586905d8e", func_800DD17C);
+EXTERN_C char D_80010178[], D_800104A8[];
+EXTERN_C char D_800DCF48[], D_800DCF60[], D_800DCF70[], D_800DD008[], D_800DD028[], D_800DD040[];
+EXTERN_C const BimVTable10 D_800DCEF8;
+EXTERN_C void func_800D73E8_c(void *self, int a, int b, int c, int d, int e, int f) asm("func_800D73E8");
+EXTERN_C void bimf_17d53c09_c(void *self, int a) asm("bimf_17d53c09");
+EXTERN_C void func_800D8D64_c(void *self, int a, int b, int c, int d, int e, int f, int g, int h) asm("func_800D8D64");
+
+EXTERN_C BimDtor *func_800DD17C(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e)
+{
+    if (in_chrg) {
+        BimVBase *vb = self->vb1DC = (BimVBase *)(&self->vtAEC);
+        vb->vptr = (BimVTable10 *)D_80010178;
+        vb->f4 = 0;
+        vb->vptr = (BimVTable10 *)D_800104A8;
+    }
+    func_800D73E8_c(self, 0, a, b, c, d, e);
+    self->vb1DC->vptr = (BimVTable10 *)&D_800DCEF8;
+    if (!in_chrg) {
+        BimVTable10 vt = D_800DCEF8;
+        self->vb1DC->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800DCEF8.e[1].delta + (adj = (char *)self - (full = (char *)self->vb1DC - 0xAEC));
+        vt.e[6].delta = D_800DCEF8.e[6].delta + adj;
+    }
+    self->vt8C = D_800DD028;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_800DD008;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_800DCF70;
+    self->vt4A8 = D_800DCF60;
+    self->vt980 = D_800DCF48;
+    self->vt0 = D_800DD040;
+    bimf_17d53c09_c(self, b);
+    func_800D8D64_c(self, 1, 0, 0, 0, 0, 0, 0, 0);
+    register BimDtor *r asm("$2") = self;
+    r->f9DC = 0;
+    *(int *)((char *)r + 0x9D4) = 23;
+    r->f9D8 = 0;
+    return r;
+}
 
 #include "../shared/bimf_81250a8a.cpp"
 
-INCLUDE_ASM("asm/bim/w2_1586905d8e/nonmatchings/w2_1586905d8e", bimf_17d53c09);
+#include "../shared/bimf_17d53c09.cpp"
 
 #include "../shared/bimf_014cace9.cpp"
 
@@ -117,7 +157,7 @@ EXTERN_C int func_800DD9F4(BimMon *p, unsigned *flags)
     return 0;
 }
 
-INCLUDE_ASM("asm/bim/w2_1586905d8e/nonmatchings/w2_1586905d8e", bimf_9b3b5928);
+#include "../shared/bimf_9b3b5928.cpp"
 
 EXTERN_C BimMon *func_800D8464();
 EXTERN_C int bimf_af99c5b3_3_c(void *p, int a) asm("bimf_af99c5b3_3");

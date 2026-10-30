@@ -1,14 +1,59 @@
 #include "common.h"
 #include "bim/shared.h"
 
-EXTERN_C void *func_800DAB14(void *self, int in_chrg, int a, int b, int c, int d, int e);
+EXTERN_C BimDtor *func_800DAB14(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e);
 
 EXTERN_C void *func_800DAA98(int a, short b, int c, int d, int e)
 {
-    return func_800DAB14(operator new(0xAF0), 1, a, b, c, d, e);
+    return func_800DAB14((BimDtor *)operator new(0xAF0), 1, a, b, c, d, e);
 }
 
-INCLUDE_ASM("asm/bim/w0_486fb41932/nonmatchings/w0_486fb41932", func_800DAB14);
+EXTERN_C char D_80010178[], D_800104A8[];
+EXTERN_C char D_800DA8E0[], D_800DA8F8[], D_800DA908[], D_800DA9A0[], D_800DA9C0[], D_800DA9D8[];
+EXTERN_C const BimVTable10 D_800DA890;
+EXTERN_C void func_800D73E8_c(void *self, int a, int b, int c, int d, int e, int f) asm("func_800D73E8");
+EXTERN_C void func_800DAE2C_c(void *self, int a) asm("func_800DAE2C");
+EXTERN_C void func_800D8D64_c(void *self, int a, int b, int c, int d, int e, int f, int g, int h) asm("func_800D8D64");
+EXTERN_C void func_800D817C_c(void *self, int a) asm("func_800D817C");
+EXTERN_C void func_800D83E0_c(void *self) asm("func_800D83E0");
+
+EXTERN_C BimDtor *func_800DAB14(BimDtor *self, int in_chrg, int a, short b, int c, int d, int e)
+{
+    if (in_chrg) {
+        BimVBase *vb = self->vb1DC = (BimVBase *)((char *)self + 0xAE8);
+        vb->vptr = (BimVTable10 *)D_80010178;
+        vb->f4 = 0;
+        vb->vptr = (BimVTable10 *)D_800104A8;
+    }
+    func_800D73E8_c(self, 0, a, b, c, d, e);
+    self->vb1DC->vptr = (BimVTable10 *)&D_800DA890;
+    if (!in_chrg) {
+        BimVTable10 vt = D_800DA890;
+        self->vb1DC->vptr = &vt;
+        char *full;
+        int adj;
+        vt.e[1].delta = D_800DA890.e[1].delta + (adj = (char *)self - (full = (char *)self->vb1DC - 0xAE8));
+        vt.e[6].delta = D_800DA890.e[6].delta + adj;
+    }
+    self->vt8C = D_800DA9C0;
+    self->vt1E0 = D_8001262C;
+    self->vt1E4 = D_800DA9A0;
+    self->vt3FC = D_80017ADC;
+    self->vt49C = D_800DA908;
+    self->vt4A8 = D_800DA8F8;
+    self->vt980 = D_800DA8E0;
+    self->vt0 = D_800DA9D8;
+    func_800DAE2C_c(self, b);
+    func_800D8D64_c(self, 1, 1, 1, 1, 1, 1, 0, 0);
+    self->f9DC = 1;
+    *(int *)((char *)self + 0x9E8) = 1;
+    *(int *)((char *)self + 0x9D4) = 151;
+    self->f9D8 = 1;
+    func_800D817C_c(self, 1);
+    func_800D83E0_c(self);
+    register BimDtor *r asm("$2") = self;
+    return r;
+}
 
 EXTERN_C const BimVTable10 D_800DA890;
 EXTERN_C char D_800DA8E0[], D_800DA8F8[], D_800DA908[], D_800DA9A0[], D_800DA9C0[], D_800DA9D8[];
@@ -39,7 +84,59 @@ EXTERN_C void func_800DACE8(BimDtor *self, int in_chrg)
         operator delete(self);
 }
 
-INCLUDE_ASM("asm/bim/w0_486fb41932/nonmatchings/w0_486fb41932", func_800DAE2C);
+EXTERN_C void func_800DAE2C(char *p, int slot)
+{
+    int *q = (int *)p;
+    int s = (short)slot;
+    char **b = D_800B4D38;
+    *(int *)(p + 0x9F8) = 0x19D15;
+    *(int *)(p + 0x9FC) = 0x2000;
+    *(int *)(p + 0xA00) = 0x19D15;
+    *(int *)(p + 0xA04) = 0x2000;
+    *(int *)(p + 0xA08) = 0x19D15;
+    *(int *)(p + 0xA0C) = 0x2000;
+    *(int *)(p + 0xA10) = 0x19D19;
+    *(int *)(p + 0xA14) = 0x6000;
+    *(int *)(p + 0xA18) = 0x19D25;
+    *(int *)(p + 0xA1C) = 0x6000;
+    *(int *)(p + 0xA20) = 0x19D31;
+    *(int *)(p + 0xA24) = 0x6000;
+    *(int *)(p + 0xA28) = 0x19D3D;
+    *(int *)(p + 0xA2C) = 0x7000;
+    *(int *)(p + 0xA30) = 0x19D4B;
+    *(int *)(p + 0xA34) = 0x800;
+    *(int *)(p + 0xA38) = 0x19D4C;
+    *(int *)(p + 0xA3C) = 0x1800;
+    *(int *)(p + 0xA40) = 0x19D4F;
+    *(int *)(p + 0xA44) = 0x4800;
+    *(int *)(p + 0xA48) = 0x19D73;
+    *(int *)(p + 0xA4C) = 0x5800;
+    *(int *)(p + 0xA50) = 0x19D4F;
+    *(int *)(p + 0xA54) = 0x4800;
+    *(int *)(p + 0xA58) = 0x19D58;
+    *(int *)(p + 0xA5C) = 0x1800;
+    *(int *)(p + 0xA60) = 0x19D81;
+    *(int *)(p + 0xA64) = 0x5800;
+    *(int *)(p + 0xA68) = 0x19D5B;
+    *(int *)(p + 0xA6C) = 0x5000;
+    *(int *)(p + 0xA70) = 0x19D65;
+    *(int *)(p + 0xA74) = 0x5800;
+    *(int *)(p + 0xA78) = 0x19D70;
+    *(int *)(p + 0xA7C) = 0x800;
+    *(int *)(p + 0xA80) = 0x19D71;
+    *(int *)(p + 0xA84) = 0x1000;
+    *(int *)(p + 0xA88) = 0x19D7E;
+    *(int *)(p + 0xA8C) = 0x800;
+    *(int *)(p + 0xA90) = 0x19D7F;
+    *(int *)(p + 0xA94) = 0x1000;
+    *(int *)(p + 0xAD8) = 0x19D8C;
+    *(int *)(p + 0xADC) = 0x6000;
+    *(int *)(p + 0xAE0) = 0x19D98;
+    *(int *)(p + 0xAE4) = 0x800;
+    int *v = q + 638;
+    int **t = (int **)(*b + 0xF8);
+    t[s] = v;
+}
 
 #include "../shared/bimf_014cace9.cpp"
 
