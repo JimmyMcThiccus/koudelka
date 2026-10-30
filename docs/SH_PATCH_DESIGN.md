@@ -109,17 +109,29 @@ for the full-screen fade. Its draw method adds that frame's primitives with `add
 - **Depth.** The battle OT is reverse ordered, length 0x2000, read live: index 0x1FFF draws first and index 0 last. The
   scene uses 5202..5717 and the backdrop 8181..8191. The ring goes at z = 2..4, in front of the scene. Phase 4 checks it
   against the command windows.
-- **Geometry** (320 x 240 screen, top right, clear of the command windows at the bottom left and the status bar at the
-  bottom): centre (248, 64), track radii 26..36.
-  - 72 POLY_F4 track segments of 5 degrees
-  - zone bands drawn over the track in 2.5-degree steps: orange for the zone, red for the strike area
-  - the needle: a thin POLY_F4 from the centre to r = 38
-  - one small mark per press: white for a hit, red for a strike, grey for a miss
-- **Budget.** At most about 130 POLY_F4 (20 B each) x 2 buffers, about 5.2 KB on the heap from `operator new`; with one
-  monster there were 437 KB free in one block. No textures and no VRAM. Trig uses a 91-entry quarter-wave s16 sine table
-  (182 B) in `.shpatch`.
-- **Sequence** (cosmetic, from SH's `DoSequence`): 8-frame grow-in, the needle sweep, then 16 frames of ending: a green
-  flash on success, a white crack on a perfect ring (all hits and all strikes), a plain fade on a miss.
+- **Geometry, from SH's own code** (`CCircle::Draw`, `UpdateVertices`, `MakeZonePoly`, `MakeBarPoly`, `UpdateBarVertex`,
+  `MakeBlurPoly`, `MakeRenderMark`, `StartSequence`; read from the retail asm and Ghidra in the SH project).
+  - **Transform.** SH draws the ring in screen space with no perspective. A ring-local point (x = r sin a, y = -r cos a;
+    0 deg at the top, clockwise; ring radius 120) is rotated by RotX(-20) RotZ(30) RotY(ry). It is centred at
+    (480, 160) on SH's 640x448 display, which is (240, 86) on Koudelka's 320x240 (x / 2, y * 240 / 448). A
+    radius-120 ring comes out about 85 x 104 px, leaning right.
+  - **Parts, back to front.** The ring art (textured in SH; a translucent green band 104..124 until the texture
+    lands), then the zones, the trail, the needle and the press marks.
+    - Zones are additive Gouraud fans from the centre (alpha / 4) to radius 120.5, at 5-degree steps with feathered
+      ends. The strike area is at 2-degree steps, tapering by 0.5 + 0.5 cos. Orange E0,98,40, strike red FF,20,18.
+    - The needle is an opaque centre strip with additive soft edges, 3 units wide at the hub and about 6 at the tip.
+      It turns from white to 20,FF,80 as it grows.
+    - The trail is the last 8 needle positions, 0.01 s apart, at alpha 96 down to 12, additive.
+    - A press mark is a spoke to the rim with an arrow tip at 124.
+  - **Sequence.** A coin spin about Y (ry 69 -> 415 = 55) over 0.4 s, then the needle grows in over 0.3 s while the
+    zones fade up. A success swells to 1.5x while fading over 0.5 s; a miss just fades.
+  - **Blending.** E1 draw-mode primitives before each depth set additive or 50 % blending; one at depth 2 restores
+    50 % afterwards.
+  - **Code.** Split across `ring_gfx.cpp` (transform, primitives), `ring_zone.cpp`, `ring_needle.cpp`,
+    `ring_parts.cpp` (band, trail, marks) and `ring_draw.cpp` (the frame), so each object fits a dead-code run.
+  - **Still to do:** SH's textured ring art (TEXTURE/BT/BTLDATA.BIN rasters 0..3, plus the shadow and light layers)
+    and the "Good!!" / "Perfect!!" labels (cels from entry 7). They need the SH disc's PKB archive extracted. The
+    ring would go in empty VRAM (x 640.., y 256..).
 - **Sound:** `func_8008EF40(id)`, the call the menus use. v1 reuses the menu cursor and confirm sounds for a hit or strike
   and the buzz `0xE` for a miss.
 

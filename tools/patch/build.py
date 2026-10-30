@@ -34,7 +34,9 @@ BATTLE_VRAM = 0x800B6DF0
 # Runs of dead EXE functions, largest first (docs/SH_PATCH_DESIGN.md 1.1). Checked twice: no reference in any image
 # (EXE, the overlays, EFFECT, bim_base, the 85 module images) and none in src/, include/, config/ or asm/.
 REGIONS = [(0x80033F9C, 0x80034710), (0x80032334, 0x80032A10), (0x80040C10, 0x800410F4), (0x80081034, 0x800814E8),
-           (0x80025874, 0x80025CE0), (0x80022518, 0x800228A0), (0x8003A318, 0x8003A654)]
+           (0x80025874, 0x80025CE0), (0x80022518, 0x800228A0), (0x8003A318, 0x8003A654), (0x8002AD0C, 0x8002AFEC),
+           (0x80082174, 0x80082450), (0x80086288, 0x8008655C), (0x8004EB28, 0x8004EDCC)]
+# (0x8002DED8..0x8002E600, 1,832 B, is also unreferenced but shares a file with the OT submit the patch hooks: left alone)
 OLD_POCKET = (0x800E5850, 0x800EA8A0)  # where earlier builds put BATTLE code; --inject still cleans up after them
 SYMBOL = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 PACKED = (".text", ".rodata", ".data", ".sdata", ".sbss", ".bss")
@@ -160,15 +162,29 @@ def main():
         run([BIN / "mips-ps2-decompals-as.exe", "-EL", "-march=r3000", "-mabi=32", "-G0", "-o", o, s])
         objs.append(o)
 
-    # pack objects into the regions, largest first
+    # pack objects into the regions: an exact search, largest object first (a dozen objects, a dozen regions)
     sizes = {o: object_size(o) for o in objs}
     free = [[lo, hi - lo, []] for lo, hi in REGIONS]
-    for o in sorted(objs, key=lambda o: -sizes[o]):
-        r = next((r for r in free if r[1] >= sizes[o]), None)
-        if r is None:
-            sys.exit(f"build.py: {o.name} ({sizes[o]} bytes) fits no free region; split it or add a region")
-        r[1] -= sizes[o]
-        r[2].append(o)
+    order = sorted(objs, key=lambda o: -sizes[o])
+
+    def place(i):
+        if i == len(order):
+            return True
+        tried = set()
+        for r in sorted(free, key=lambda r: r[1]):
+            if r[1] < sizes[order[i]] or r[1] in tried:
+                continue
+            tried.add(r[1])
+            r[1] -= sizes[order[i]]
+            r[2].append(order[i])
+            if place(i + 1):
+                return True
+            r[1] += sizes[order[i]]
+            r[2].pop()
+        return False
+
+    if not place(0):
+        sys.exit(f"build.py: the objects ({sum(sizes.values())} bytes) do not fit the regions; split one or add a region")
 
     own = set()
     for o in objs:

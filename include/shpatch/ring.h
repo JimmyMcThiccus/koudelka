@@ -4,13 +4,13 @@
 
 #define SH_RING_MAX_ZONES 3
 #define SH_RING_PERIOD_VS 96  // one needle turn: SH's 1.6 s at 60 vsyncs/s
-#define SH_RING_INTRO_VS 16
-#define SH_RING_OUTRO_VS 24
-#define SH_RING_X 248         // centre, top right of the 320x240 screen
-#define SH_RING_Y 64
-#define SH_RING_R_IN 26
-#define SH_RING_R_OUT 36
-#define SH_RING_Z 2           // OT depth: the battle OT is reverse ordered, so low = in front (scene is at 5202..5717)
+#define SH_RING_SPIN_VS 24    // intro: the coin spin about Y (SH StartSequence 4: 0.4 s)
+#define SH_RING_GROW_VS 18    // then the needle grows in and the zones fade up (state 5: 0.3 s)
+#define SH_RING_INTRO_VS (SH_RING_SPIN_VS + SH_RING_GROW_VS)
+#define SH_RING_OUTRO_VS 30   // fade out, a success also swells to 1.5x (state 10: 0.5 s)
+#define SH_RING_X 240         // centre: SH's (480, 160) on its 640x448 display
+#define SH_RING_Y 86
+#define SH_RING_Z 2           // OT depths Z..Z+5: the battle OT is reverse ordered, so low = in front (scene 5202..5717)
 
 enum { SH_RING_OFF, SH_RING_INTRO, SH_RING_SWEEP, SH_RING_OUTRO };
 
@@ -35,6 +35,7 @@ EXTERN_C ShRing g_ring;
 void ring_start(void *mgr, int pad, int arg);
 void ring_press(void);
 void ring_tick(void);
+void ring_finish(void);    // ring_result.cpp: publish the scale, replay the confirm
 void ring_draw(void *ot);
 void ring_alloc_prims(void);
 void ring_free_prims(void);  // the turn driver calls it once the action has resolved
