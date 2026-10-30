@@ -35,6 +35,8 @@ static int g_loc, g_next, g_mode, g_last_com, g_reading, g_sync_pending;
 static unsigned char g_result[8];
 static unsigned char g_sector[RAW];
 static int g_cursor;          /* CdGetSector's position in g_sector */
+static void *g_last_dst;      /* where the last CdGetSector copied to (overlay loads, port/overlays.cpp) */
+extern "C" void port_overlay_sector(int lba, const void *dst);
 static long long g_read_t0;   /* QPC at the start of the current read */
 static int g_read_sectors;    /* sectors delivered since then */
 
@@ -142,6 +144,7 @@ extern "C" int CdGetSector(void *dst, int words)
     if (g_cursor + n > RAW)
         n = RAW - g_cursor;
     memcpy(dst, g_sector + g_cursor, n);
+    g_last_dst = dst;
     g_cursor += n;
     return 1;
 }
@@ -214,7 +217,10 @@ extern "C" void port_cd_poll(void)
         port_stat_cd_sectors++;
         g_read_sectors++;
         unsigned char r[8] = {(unsigned char)status()};
+        g_last_dst = 0;
         if (g_ready_cb)
             g_ready_cb(CdlDataReady, r);
+        if (g_last_dst)
+            port_overlay_sector(g_next - 1, g_last_dst);
     }
 }
