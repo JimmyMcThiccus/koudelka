@@ -232,7 +232,7 @@ adjustments and struct offsets are easier to read there than in the asm.
 ## DuckStation (runtime)
 
 The DuckStation fork at https://github.com/sadnescity/duckstation runs the game with an MCP server on
-`localhost:2346`: 95 tools covering registers, memory, breakpoints, stepping, GTE, GPU/SPU state, save states and
+`127.0.0.1:2346` (not `localhost`, which costs 2 s a call on Windows): 95 tools covering registers, memory, breakpoints, stepping, GTE, GPU/SPU state, save states and
 input. Sessions with the DuckStation plugin get `mcp__` tools. Anyone else can use
 `tools/duckstation.py <tool> '<json args>'` (for example `read_memory '{"address": "0x80018B88", "size": 32}'`).
 
@@ -240,6 +240,11 @@ input. Sessions with the DuckStation plugin get `mcp__` tools. Anyone else can u
   the loaded overlay's id word (FIELD 4, BATTLE 5, MOVIE 6, CAPTURE 7, GAMEEND 8).
 - **Stepping and breakpoints pause the emulator the user may be playing in.** Ask before using them, and leave it
   running.
+- **Driving the game:** use `press_button` with `duration_frames` while the game runs, one process talking to the
+  server at a time. Loops of `frame_step` hung the client. In battle, Cross confirms, Triangle cancels and Circle
+  opens the Escape window. Slot 10 holds a save state at Koudelka's first battle menu.
+- **Watch for a stuck loop:** if the same screenshot or the same memory comes back twice after an input, stop
+  sending inputs and report instead of retrying.
 - **`trace` is expensive:** it logs every instruction to `%LOCALAPPDATA%/DuckStation/cpu_log.txt`, about 80 bytes
   per instruction, so keep traces short.
 

@@ -622,14 +622,53 @@ Read from RAM at Koudelka's first menu (frame 52582) and through one monster mov
   heap allocation just below the small-block pool `D_800B4C04` (0x801FBFF8). The stack lives near the top of RAM, in the heap.
   VRAM: framebuffers at (0,0) and (320,0), 320x240 each. Entirely zero at menu time: **x 640-1023, y 256-511** (384x256,
   six 64-wide texture pages) and x 960-1023, y 96-239. EFFECT was not loaded at that moment, so effects may claim part of it.
-- **Battle menu:** root list Action / Move / Wait / Status. With no target in reach, the Action submenu offers only Escape.
-- **Not done:** an attack, so residency during `func_800CADDC` states 2/3, the ring hook timing, and Q2/Q3/Q5/Q7. Driving
-  the menus through `press_button` stalled (the Escape window kept focus and Circle had no effect), and `frame_step` loops
-  hung the client, so the rest needs a human at the pad while a read-only logger polls memory.
+- **Battle menu and pad (US disc):** root list Action / Move / Wait / Status; **Cross confirms, Triangle cancels, Circle
+  opens the Escape window** from anywhere in the root menu (Cross on Escape tries to flee; a failure ends the turn and
+  costs `h480`). Action's submenu: Attack / Magic / Items / Weapon, with Attack hidden until a target is in reach. The pad
+  bit names in section 3 come from code reading and may have Circle and Cross swapped relative to what players press.
+- **Action costs:** Koudelka's attack set `h480` to 59 = 3 * 256 / 13, and the monster's to 64 = 3 * 256 / 12, so a plain
+  attack is worth 3 units of 256/AGL. A turn's `f4B4` adds the move cost and the action cost (monster: 21 + 64 = 85).
+  Wait after an attack in the same turn re-inserted Koudelka at +59 (155 -> 214).
+- **One monster action, frame by frame (Q1).** Frame numbers are DuckStation's; the battle runs at 60 fps:
+
+  | Frame | `f904` (state) | slot 0x800D5DAC | Event |
+  |---|---|---|---|
+  | 98174 | -1 | BIM image (0x0A) | monster turn popped at clock 190, AI chose (`h480` 21 -> 64) |
+  | 98232 | 1 | BIM | `f900` = 3, counts down one per frame |
+  | 98264 | 3 | BIM | state 2 passed (`f938` = 1), EFFECT load requested |
+  | 98309 | 3 | **EFFECT (0x09)** | 45 frames to load EFFECT.BIN |
+  | 98325 | 4 | EFFECT | EFFECT controller `f914` = 0x801ADFC0 created |
+  | 98383 | 5 | EFFECT | animation and hit (about 380 frames) |
+  | 98763 | 5 | EFFECT | `f914` freed (`func_800CF408`, the post-action handler) |
+  | 98807 | 5 | **BIM image** | 44 frames to read the BIM block back |
+  | 98907 | 5 | BIM | Koudelka's turn popped at clock 214 |
+
+  So **EFFECT is resident during the whole hit**, and the BIM image is back before the next turn. The read-back comes
+  from `func_800CF408`: the same handler that clears `f914` ends with `func_8007DEE8(scene->f328, 0xB)` (a loader request on
+  the scene's stream holder). Not confirmed with a breakpoint (breakpoints during CD streaming hang the emulator).
+  **Koudelka's melee attack loaded no EFFECT at all:** the slot held the BIM image throughout, and the whole attack took
+  under 130 frames. So a ring that runs before state 2 always runs with the BIM image resident, and monster-defender
+  code in `bim_base` is callable during player melee.
+- **Victory (Q2):** at the killing blow monster HP 0 and Koudelka's EXP (`+0x54C`) 0 -> 62 at once; `f7DC` (monsters left)
+  1 -> 0 about 4 s later; then `f824` = **1**, the code `func_8007F8BC` sends to **`func_800C68D8`, so that is victory**
+  (and by elimination `func_800C6DF4` defeat, `func_800C7158` flee, matching `f824` 2 and 3). The mgr was freed 0.5 s
+  later, the scene mode `+0x364/+0x368` went 2 -> 1, and the overlay at 0x800B6DF0 changed id 5 -> 4 (FIELD.BIN). The
+  results screen ("You got items!", drops, "You learned the spell ...") is drawn by FIELD, not BATTLE.
+- **Character records (Q8, second half):** the party fighter at 0x801D0FB8 is the same object before and after the
+  battle, and its base-stat bytes occur nowhere else in RAM. At runtime the persistent character is the fighter object
+  itself; the 0x60-byte record (`func_8008AFE4`) is presumably only a save-file form.
+- **Still open:** Q3 (menu code receivers), Q5 (encounter timer), Q7 (criticals: two hits of 79 and 85 and one of 14, no
+  visible critical), the OT length, and a monster *spell* versus a monster melee attack (this monster's action loaded EFFECT,
+  so it may have been a skill).
+
+Tooling notes: `tools/duckstation.py` must use 127.0.0.1, not `localhost` (on Windows that cost 2 s per call; fixed).
+`frame_step` loops hung the client; `press_button` with `duration_frames` while the game runs works, with one process
+talking to the server at a time.
 
 ### 11.2 Open questions
 
-Needed from the port or a DuckStation session later (11.1 answers Q4, Q8 and parts of Q1 and Q6):
+Needed from the port or a DuckStation session later. 11.1 answers Q1 (residency and the read-back, by timing), the
+victory half of Q2, Q4, Q8 and most of Q6; the original text is kept below for reference.
 1. **Is the BIM image or EFFECT resident at each moment of an action, and where is BIM read back?** `func_800CADDC` states 2 and 3
    overwrite the slot; the monster-defender hit code (`func_800D9970`, `func_800D9CB0`, `func_800D96F8`) lives in the BIM base. The reload
    point was not found (candidates: `func_8007DEE8`, `func_800CF408`, `func_8007B5F8`). Late reads of 0x800DE1CC and 0x800D6B98 returned

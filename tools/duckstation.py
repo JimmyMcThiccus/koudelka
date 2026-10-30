@@ -16,7 +16,7 @@ import json
 import sys
 import urllib.request
 
-URL = "http://localhost:2346/mcp"
+URL = "http://127.0.0.1:2346/mcp"  # not "localhost": on Windows that tries ::1 first and costs 2 s per call
 _session = None
 
 
