@@ -333,6 +333,11 @@ FIXUPS = [
      "int return assigned to void *"),
     ("u_80029BBC.cpp", "int r = 0;\n    if (p->unk4) {", "int r = 0;\n    if (p->port_vb->unk4) {",
      "C_VD reads its virtual base C_VB's member unk4 (GCC 2.x virtual base pointer)"),
+    # Calls cast to take no arguments so GCC 2.8 leaves the caller's $a0 in place: the callee does read it.
+    ("u_8001DDF4.cpp", "func_80018FA8(s, ((void *(*)())func_8001E758)());", "func_80018FA8(s, func_8001E758(s));",
+     "func_8001E758 gets s through $a0 (an argument-less call)"),
+    ("u_8001F1A8.cpp", "((void (*)())func_8001F514)();", "func_8001F514(t);",
+     "func_8001F514 gets t through $a0 (an argument-less call), twice"),
 ]
 
 
@@ -503,11 +508,14 @@ def dispatcher(ret, name, params, const, slot, stats):
     return f"{head} {{ {pre}{body} }} /* port: GCC 2.x vtable slot {slot} */"
 
 
+SLOTS_RE = re.compile(r"^\s*\w*SLOTS\s*$", re.M)  # a class body that is one slot macro
+
+
 def vcall_slots(text, stats):
     """include/game/b/vcall.h: the 64 varargs placeholder slots v00..v63 (slot k = entry k+1) become variadic
     templates calling through the GCC vtable (port_vslot_call), plus PORT_VCALL_SLOTS_FWD, the forwarders
     a class with VObj0 as its virtual base gets."""
-    if "VCALL_SLOTS_10" not in text:
+    if "virtual int v##a##0(...)" not in text:  # include/game/b/vcall.h, include/game/a2/vcall.h
         return text
     disp = ("template <class... A_> int v##a##{d}(A_... x_) {{ return port_vslot_call(this->port_vptr, this, "
             "1##a##{d} - 99, port_promote(x_)...); }}")
@@ -541,7 +549,7 @@ def virtual_bases(texts, stats):
             if name not in own or (not own[name] and fs):
                 own[name] = [x for x in fs if x and x[0] != "~"]
                 bases_of[name] = [b for b, v in bases if not v]
-            if "VCALL_SLOTS" in t[bs:be]:
+            if SLOTS_RE.search(t[bs:be]):
                 slots_macro.add(name)
 
     def vfuncs(name, seen=()):
@@ -595,6 +603,11 @@ def virtual_bases(texts, stats):
                            lambda mm: f"{mm.group(1)}port_parg<{b}> {mm.group(2)}_p_){mm.group(3)}{{ "
                                       f"{b} *{mm.group(2)} = {mm.group(2)}_p_.p;", t)
             stats["vbase_inits"] += n
+            # C-style casts (B *)operand: GCC converts a derived pointer to its virtual base there
+            operand = r"(&?\s*[\w.\->\[\]]+(?:\((?:[^()]|\([^()]*\))*\))?(?:(?:->|\.)[\w]+)*)"
+            t, n = re.subn(r"\(\s*%s\s*\*\s*\)\s*%s" % (re.escape(b), operand),
+                           lambda mm: f"port_vb_conv<{b}>(({mm.group(1)}), 0)", t)
+            stats["vbase_casts"] += n
             # later assignments to a B * local, within the function that declares it: name = expr;
             starts = item_starts(t) + [len(t)]
             pieces = [t[:starts[0]]]
@@ -661,7 +674,7 @@ def devirtualize(texts, stats):
         edits = []
         for name, bases, bs, be in class_bodies(t):
             defs = [x for x in classes[name] if x[0] == f and x[3] == bs]
-            if re.search(r"^\s*VCALL_SLOTS\s*$", t[bs:be], re.M):  # vcall.h's VObj<N>, VObj0: own vptr
+            if SLOTS_RE.search(t[bs:be]):  # the vcall.h placeholders VObj<N>, VObj0, A2VObj<N>, A2VObj0: own vptr
                 edits.append((be, be, " void *port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
                 stats["vptr_members"] += 1
                 continue
@@ -674,7 +687,13 @@ def devirtualize(texts, stats):
                     continue
                 _, ret, mname, params, const = pv
                 if k == "~":
-                    rep = f"/* port: virtual destructor {mname}, GCC 2.x vtable slot {slots['~']} */"
+                    # `delete p` runs the game's destructor through the vtable with flags 3 (destroy and free,
+                    # as GCC 2.x does); the C++ destructor stays trivial, so automatic objects are untouched
+                    k = slots["~"]
+                    rep = (f"static void operator delete(void *p_) {{ if (p_) {{ port_vt_entry *e_ = (port_vt_entry *)"
+                           f"(({name} *)p_)->port_vptr + {k}; ((void (*)(void *, int))e_->pfn)((char *)p_ + e_->delta, "
+                           f"3); }} }} /* port: virtual destructor {mname}, GCC 2.x vtable slot {k} */")
+                    stats["virtual_dtors"] += 1
                 else:
                     rep = dispatcher(ret, mname, params, const, slots[k], stats)
                     if rep is None:
@@ -704,7 +723,7 @@ def main():
     out = Path(a.out)
     stats = {k: 0 for k in ("labels", "pins", "cdecl_members", "set_blocks", "asm_macros", "permissive_decls",
                             "definitions", "named_returns", "implicit_decls", "fixups", "thiscall_thunks",
-                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped", "vbase_inits", "vcall_slots")}
+                            "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped", "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors")}
     aliases = []
     header_aliases = {}
     texts = {}

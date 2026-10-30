@@ -9,6 +9,7 @@ build/port/koudelka.exe (+ .pdb, .map, koudelka-port.log after a run). Rerun aft
 Needs bin/port/ (tools/port/fetch_deps.py) and a configured PS1 build (configure.py: asm/ and build/*.elf).
 """
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -93,7 +94,16 @@ def main():
     (B / "ps1_syms.txt").write_text(ps1_syms())
 
     game = sorted((B / "hsrc" / "main").glob("*.cpp"))
-    recomp = sorted((ROOT / "build" / "recomp" / "main").glob("*.c"))
+    # a function port/ defines (the context switch in port/fibers.cpp, ...) replaces its recompiled twin
+    overrides = set()
+    for p in (ROOT / "port").glob("*.c*"):
+        overrides.update(re.findall(r"^[^\s#/][^;\n]*\b(func_[0-9A-F]{8})\s*\([^;\n]*\)\s*$",
+                                    p.read_text(encoding="utf-8"), re.M))
+    all_recomp = sorted((ROOT / "build" / "recomp" / "main").glob("*.c"))
+    recomp = [p for p in all_recomp if p.stem not in overrides]
+    replaced = sorted(p.stem for p in all_recomp if p.stem in overrides)
+    if replaced:
+        print("configure_port: port/ replaces " + ", ".join(replaced))
     pc_src = sorted(p for p in (PSYCROSS / "src").rglob("*") if p.suffix.lower() in (".c", ".cpp"))
     port_src = sorted(p for p in (ROOT / "port").glob("*") if p.suffix in (".c", ".cpp"))
 
@@ -104,11 +114,12 @@ def main():
     inc_game = f"-I port/include -I {rel(B / 'hinc')}"
     inc_pc = " ".join(f"-I {rel(x)}" for x in [PSYCROSS / "include", PSYCROSS / "include" / "psx", PSYCROSS / "src",
                                                SDL2 / "include", OPENAL / "include"])
+    # VSyncCallback/VSync renamed: port/intr.cpp takes the game's calls and runs its callback on the game thread.
     # USE_EXTENDED_PRIM_POINTERS=0: PsyCross keeps the PS1 packet layout (P_TAG addr:24), the layout the game's
     # own primitives and OT code use. That works unchanged because the exe is linked at a fixed base below
     # 16 MB (link_base), so every game prim and OT entry (game heap in port_ram, main-thread stack) has a
     # 24-bit host address. main.cpp checks it at start-up.
-    pc_flags = "-DUSE_EXTENDED_PRIM_POINTERS=0 -D_WINDOWS -D_DEBUG -D_ITERATOR_DEBUG_LEVEL=0 -D__PRFCHWINTRIN_H -include stdarg.h -Wno-c++11-narrowing -w"
+    pc_flags = "-DVSyncCallback=psyx_VSyncCallback -DVSync=psyx_VSync -DUSE_EXTENDED_PRIM_POINTERS=0 -D_WINDOWS -D_DEBUG -D_ITERATOR_DEBUG_LEVEL=0 -D__PRFCHWINTRIN_H -include stdarg.h -Wno-c++11-narrowing -w"
     q = f'"{CLANG}"'
     n.rule("cxx_game", f"{q} {COMMON} -O2 {inc_game} {' '.join(GAME_FLAGS)} -MD -MF $out.d -c $in -o $out",
            depfile="$out.d", deps="gcc", description="game $in")
@@ -118,7 +129,7 @@ def main():
            depfile="$out.d", deps="gcc", description="psycross $in")
     n.rule("cxx_pc", f"{q} {COMMON} -O2 -x c++ {pc_flags} {inc_pc} -MD -MF $out.d -c $in -o $out",
            depfile="$out.d", deps="gcc", description="psycross $in")
-    n.rule("cc_port", f"{q} {COMMON} -O1 -D_CRT_SECURE_NO_WARNINGS -I port -I {rel(B)} -MD -MF $out.d -c $in -o $out",
+    n.rule("cc_port", f"{q} {COMMON} -O1 -D_CRT_SECURE_NO_WARNINGS -I port -I port/include -I {rel(B)} -MD -MF $out.d -c $in -o $out",
            depfile="$out.d", deps="gcc", description="port $in")
     n.rule("as", f"{q} --target={hostcc.TARGET} -c $in -o $out", description="as $in")
     link_base = f"{q} --target={hostcc.TARGET} -fuse-ld=lld -g -Wl,/base:0x400000 -Wl,/dynamicbase:no " + " ".join(

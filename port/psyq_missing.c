@@ -20,8 +20,7 @@ void *CdReadCallback(void *func);
 #define PORT(name) port_log_once("psyq", name " (port implementation)")
 
 /* ---- kernel / libapi ---- */
-void EnterCriticalSection(void) { SKIP("EnterCriticalSection"); }
-void ExitCriticalSection(void) { SKIP("ExitCriticalSection"); }
+/* EnterCriticalSection / ExitCriticalSection: port/intr.cpp */
 /* SetSp: func_8001E360 moves the main task onto its own stack before running the scheduler. The host keeps
    running the main task on the host stack; the task stacks belong to the context switch (func_80018F0C etc.,
    feasibility item 6: Win32 fibers). */

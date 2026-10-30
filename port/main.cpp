@@ -22,6 +22,8 @@ extern unsigned int D_800B4C08;          /* RAM-size word the heap init reads (0
 extern unsigned char D_800EA8A0[];       /* heap start, inside port_ram */
 extern void (*D_80010000[])(void);       /* .ctors: one _GLOBAL_$I$ per C++ unit */
 void func_80018B88(void);                /* heap init, called by `start` */
+void port_fibers_init(void);
+void port_interrupts_init(void);
 }
 int game_main();                         /* src/main/u_8001949C.cpp `main`, renamed by -Dmain=game_main */
 
@@ -211,10 +213,70 @@ static LONG WINAPI on_crash(EXCEPTION_POINTERS *ep)
     }
     log_address("at ", pc);
     CONTEXT ctx = *ep->ContextRecord;
+    if (er->ExceptionCode == EXCEPTION_ACCESS_VIOLATION && er->ExceptionInformation[0] == 8 &&
+        er->ExceptionInformation[1] == pc && !IsBadReadPtr((void *)(size_t)ctx.Esp, 4)) {
+        /* a call to a bad address: the caller's return address is on top of the stack */
+        ctx.Eip = *(DWORD *)(size_t)ctx.Esp;
+        ctx.Esp += 4;
+        log_address("called from ", ctx.Eip);
+    }
     log_stack(&ctx);
     if (g_log)
         fclose(g_log);
     ExitProcess(2);
+}
+
+/* First-chance stack overflows: the unhandled-exception filter cannot run on an exhausted (fiber) stack,
+   so log the bare facts here, symbolised later with the map file. */
+static LONG WINAPI on_first_chance(EXCEPTION_POINTERS *ep)
+{
+    static int n;
+    static HANDLE raw = INVALID_HANDLE_VALUE;
+    DWORD code = ep->ExceptionRecord->ExceptionCode;
+    if (code == EXCEPTION_ACCESS_VIOLATION && n < 8) {
+        /* no CRT here: the C heap may be what broke */
+        if (raw == INVALID_HANDLE_VALUE) {
+            char path[MAX_PATH];
+            exe_dir_file(path, MAX_PATH, "koudelka-faults.txt");
+            raw = CreateFileA(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
+        }
+        char line[160];
+        DWORD w;
+        int len = wsprintfA(line, "first-chance AV #%d: eip %08X %s %08X esp %08X ret %08X thread %lu\r\n", n++,
+                            (unsigned)ep->ContextRecord->Eip,
+                            ep->ExceptionRecord->ExceptionInformation[0] ? "write/exec" : "read",
+                            (unsigned)ep->ExceptionRecord->ExceptionInformation[1],
+                            (unsigned)ep->ContextRecord->Esp, (unsigned)*(DWORD *)(size_t)ep->ContextRecord->Esp,
+                            GetCurrentThreadId());
+        WriteFile(raw, line, len, &w, NULL);
+    }
+    if (code == EXCEPTION_STACK_OVERFLOW && n++ < 1) {
+        port_log("STOP stack-overflow: at %08X, esp %08X (thread %lu, fiber %p); return addresses on the stack:",
+                 (unsigned)ep->ContextRecord->Eip, (unsigned)ep->ContextRecord->Esp, GetCurrentThreadId(),
+                 GetCurrentFiber());
+        DWORD *sp = (DWORD *)(size_t)ep->ContextRecord->Esp;
+        for (int i = 0, k = 0; i < 4096 && k < 24; i++)
+            if (sp[i] >= 0x00401000 && sp[i] < 0x00600000)
+                port_log(" %08X", (unsigned)sp[i]), k++;
+        port_log("\n");
+        if (g_log)
+            fflush(g_log);
+        TerminateProcess(GetCurrentProcess(), 4);
+    }
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
+/* exit() from anywhere (the game's exit calls, PsyCross closing the window): log it with the caller */
+static void on_exit(void)
+{
+    if (g_stopping++)
+        return;
+    port_log("STOP exit: exit() called\n");
+    CONTEXT ctx;
+    RtlCaptureContext(&ctx);
+    log_stack(&ctx);
+    if (g_log)
+        fflush(g_log);
 }
 
 /* ---- C runtime pieces the PS1 build got from PsyQ ---------------------------------------------------- */
@@ -238,6 +300,7 @@ int main(int argc, char **argv)
     exe_dir_file(path, MAX_PATH, "koudelka-port.log");
     g_log = fopen(path, "w");
     SetUnhandledExceptionFilter(on_crash);
+    AddVectoredExceptionHandler(1, on_first_chance);
     SymSetOptions(SYMOPT_LOAD_LINES | SYMOPT_UNDNAME | SYMOPT_DEFERRED_LOADS);
     SymInitialize(GetCurrentProcess(), NULL, TRUE);
 
@@ -281,6 +344,9 @@ int main(int argc, char **argv)
     func_80018B88();
     /* GCC's main() starts with a call to __main (the .ctors list). */
     __main();
+    atexit(on_exit);    /* after PsyX_Initialise's atexit, so it runs first */
+    port_interrupts_init();
+    port_fibers_init(); /* the main task runs on the thread's own fiber (port/fibers.cpp) */
     port_log("game main\n");
     int r = game_main();
     port_stop("returned", "main returned %d (the PS1 start routine executes break here)", r);
