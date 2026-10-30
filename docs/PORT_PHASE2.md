@@ -205,9 +205,128 @@ stack and exits with a distinct code. The log's last `STOP` line is the mileston
 
 ## 8. Running count
 
-Kept in the "Status" section below as the work goes: files compiling, recompiled files compiling, unresolved
-symbols by kind, stubs added, where it stops.
+Kept in the "Status" section below: files compiling, recompiled files compiling, unresolved symbols by kind,
+stubs added, where it stops.
+
+## Changes to the plan during implementation
+
+Sections 1-7 are the plan as committed first. Implementing it changed these points (the code is the
+reference; each rule is documented in the generator's docstring):
+
+- **Permissive prototypes everywhere, not per owner (section 2).** The owner-guard scheme left 24 errors:
+  calls inside the owning unit, and asm-label alias names. Now *every* one-line `EXTERN_C` declaration
+  (`exe.h`, other headers, unit-local) is permissive (`void *` returns only become `port_pret`), and every
+  `EXTERN_C` definition `T f(P) {` becomes `T port_def_f(P) asm("_f"); T port_def_f(P) {`: it still defines
+  `_f`, while all calls, in the unit too, go through the permissive declaration, inserted before the first
+  use. A definition of an asm-label alias name defines the label's symbol.
+- **Implicit declarations** of functions defined in other units (23) come from a `clang -fsyntax-only` pass
+  inside hostify: `EXTERN_C port_pret f(...);`. Non-const reference parameters become `const T &`
+  (GCC 2.8 bound temporaries to them). GCC named return values (`T f(P) return r {`, 5) become locals.
+- **Constructors with asm labels** (61) cannot be cdecl in the MSVC ABI (clang ignores the attribute:
+  `this` stays in ECX, callee pops). hostify points them at `_port_thiscall<N>_<sym>`, and gen_stubs writes
+  the thunks: thiscall→cdecl for constructors in asm or other units (14), cdecl→thiscall for constructors
+  defined in the game's C++ and called by their C name from asm (10). Other labelled members get
+  `__attribute__((cdecl))`.
+- **The game's `printf`** (a retail no-op in `u_8001986C.cpp`) clashes with the UCRT's inline one: renamed
+  `game_printf` (hostify for the C++, `-Dprintf=game_printf` for the recompiled code).
+- **Primitives keep the PS1 layout (feasibility item 4, for this build).** PsyCross is built with
+  `USE_EXTENDED_PRIM_POINTERS=0` (`P_TAG` `addr:24`, the game's own layout) and the exe is linked at a fixed
+  base `0x400000` without ASLR. Every game primitive and OT entry lives in port RAM (the game heap, inside
+  the exe image) or on the main-thread stack, so its host address fits in 24 bits and the game's
+  `& 0x00FFFFFF` OT code works unchanged. `main.cpp` checks it at start-up. (With the default extended
+  pointers, `DrawOTag` faulted on the game's first ordering table.) Limit: PGXP is off.
+- **The GCC 2.x C++ ABI (feasibility item 3) had to be started**, because the boot path uses it at once.
+  hostify (`devirtualize`, `virtual_bases`, `vcall_slots`):
+  - each class with virtual functions gets an explicit `void *port_vptr` where GCC 2.x puts it (after the
+    introducing class's own data members; MSVC puts it at offset 0), and each virtual function becomes an
+    inline non-virtual dispatcher through the GCC vtable: entry k = `vt + 8k` (`{short delta; short index;
+    pfn}`, entry 0 unused, base slots first, overrides reuse the slot), called as `pfn(this + delta, args)`,
+    with a hidden return-buffer pointer first for a class returned by value (as GCC 2.8 MIPS does). 799
+    functions, 150 vptr members. The `VObj<N>`/`VObj0` placeholder slots (varargs) become variadic templates
+    with C's default promotions.
+  - virtual bases (11 classes, `Holder : virtual List` above all): `struct X : A, virtual B { m }` becomes
+    `struct X : A { B *port_vb; m B port_vb_obj; }` (GCC 2.x: pointer after the non-virtual bases, subobject
+    at the end). Conversions to `B *` load `port_vb` (null check included) in permissive parameters,
+    `B *x = e;` initialisations, assignments to such locals, and inline helpers taking `B *`; derived
+    classes get forwarders for `B`'s virtual functions.
+  - Not done: virtual destructors keep their slot but are dropped (a `delete` frees without running the
+    game's destructor); data members of a virtual base read through the derived class need a fixup (1 file).
+- **`SetSp`** (`func_800949B0`) is a logged no-op: the main task keeps the host stack; task stacks belong to
+  the context switch (fibers, next steps).
+- **Data (section 4).** `.data`, `.sdata`, `.bss` and the overlay/heap area are one contiguous block,
+  `port_ram` (PS1 `0x800A4000–0x80200000`), so every address relation from `.data` through the heap holds.
+  Any `D_XXXXXXXX` that host code names gets a label at its offset even without a splat block (512).
+- **Fixups (`hostify.FIXUPS`): 3 sites** where only a cast or a member path the rules cannot infer is needed:
+  `u_8001986C.cpp` (`?:` of a `void *` and 0), `u_8003852C.cpp` (`int` return to `void *`), `u_80029BBC.cpp`
+  (`C_VD` reads `unk4` of its virtual base, 3 places). These are the places `src/` would need a change for a
+  modern compiler; nothing in `src/` was changed.
+- `tools/recomp` skipped `src/bim` (the BIM.AR modules are not a recompiler target; it crashed on them).
 
 ## Status
 
-(filled in as the implementation proceeds)
+**Milestone reached.** `build/port/koudelka.exe` (32-bit, clang 23 / lld, MSVC ABI) links against PsyCross
+`e56e4cd`, SDL2 2.30.12 and OpenAL Soft 1.23.1, opens the PsyCross window, mounts disc 1 and runs:
+
+1. host entry: log, crash handler, `PsyX_Initialise`, `PsyX_CDFS_Init`
+2. `start`: heap set-up (`func_80018B88`), the 27 `.ctors` (the game's static objects, `__main`)
+3. `game_main` (`u_8001949C.cpp`): `func_8001B424` init, the graphics system object (`func_8001B46C`:
+   `ResetGraph`, draw/display environments, the first ordering tables through `DrawOTag`, VRAM manager
+   virtual calls, `PadInitDirect`, `SsUtReverbOff`)
+4. `func_8001E360`: the scheduler's main task (`func_8001BE9C`, recompiled): `PadStartCom`, the interrupt
+   holder (`Holder`/`List` virtual base), critical sections, `VSyncCallback`, then the first task creation
+
+and stops with:
+
+```
+STOP unimplemented: func_80018F0C (recompiler stub: context switch (saves/restores the full register file incl. $sp/$gp/$k0/$k1))
+  func_80018F0C <- func_8001E848 (u_8001DDF4.cpp:361) <- func_8001DACC <- func_8001D3A8 <- func_8001BE9C <- func_8001E360 <- game_main
+```
+
+`func_80018F0C` is the coroutine scheduler's context set-up (feasibility §3: with `func_80018FA8` and
+`func_800190A0`, "needed by the scheduler from the first frame"). No overlay is loaded before it.
+
+Counts (`port/configure_port.py`, `build/port/stubs/stubs.txt`):
+
+| | Start of phase 2 | Now |
+|---|---:|---:|
+| `src/main/*.cpp` compiling on the host | 9 / 42 (269 errors) | **42 / 42** (0 errors, full `-O2` codegen) |
+| recompiled EXE functions compiling | – | **357 / 357** (352 translated, 5 recompiler stubs) |
+| PsyCross sources | – | 21 / 21 (`-D_WINDOWS -D__PRFCHWINTRIN_H`, `.C` as C++) |
+| undefined symbols after the probe link | – | **186**: 162 function stubs, 0 data stubs, 24 thunks |
+| | | stubs by kind: overlay 106, PsyQ 53 (library internals named only from PsyQ's own data, plus `start`), GCC names 2, method 1 (`~C_80010178`) |
+| PsyQ functions added in `port/psyq_missing.c` | – | 37 (23 skipped with a log line, 12 small real implementations, 2 stop) |
+| hostify rules applied | – | 401 asm labels, 1,834 permissive declarations, 2,858 definitions renamed, 23 implicit declarations, 61 labelled constructors, 799 virtual dispatchers, 11 virtual bases, 3 fixups |
+
+The PS1 build is unchanged: `configure.py --mode matching`, 93× `check: OK`.
+
+### Running it
+
+```bash
+.venv/Scripts/python.exe tools/port/fetch_deps.py
+.venv/Scripts/python.exe port/configure_port.py
+build/port/koudelka.exe
+```
+
+The log is `build/port/koudelka-port.log` (PsyCross writes its own `Koudelka.log` in the working
+directory). `--cd <bin>` or `KOUDELKA_CD` picks the disc image; the default is
+`Koudelka_Game_Data/Koudelka (USA) (Disc 1).bin` in the main checkout. `--no-window` skips PsyCross's
+initialisation (only useful for the start-up path). Every stop is one `STOP <kind>: <what>` line plus a
+symbolised stack (DbgHelp, from `koudelka.pdb`); faults on PS1 addresses are named from `ps1_syms.txt`.
+
+### Next steps
+
+1. **Context switch (feasibility item 6).** Replace the three recompiler stubs `func_80018F0C` (create:
+   allocates the task stack, `[a1+8]*4` bytes, at `jb+0x88`), `func_80018FA8` (switch) and `func_800190A0`
+   (start: a virtual call on the new stack) with Win32 fibers in `port/`, and exclude them from the
+   recompiled set. That is the next stop, before any frame is drawn.
+2. **Vtable/ABI follow-ups (item 3).** Virtual destructors (a dispatching `delete`); the one remaining
+   `method` stub (`~C_80010178`, from a clang vftable); constructors defined in the game's C++ that the asm
+   vtables name by GCC 2.8 mangled names (none hit yet; they will show as `gcc-name` stubs once overlays
+   link). Check the dispatcher's vptr-placement rule against the PCSX2/DuckStation oracle on the first few
+   classes with data and virtual functions.
+3. **Overlays (item 5).** The 106 `overlay` stubs are EXE calls into the overlay area at fixed addresses
+   (mostly EFFECT); the first overlay load will show as `STOP overlay` (an indirect call into `port_hiram`).
+4. **PsyQ (items 7-9).** The 23 skipped calls in `port/psyq_missing.c` (SPU envelopes and noise/LFO, CD
+   status/reset, `func_8009DDC0`/`func_8009F6D0`/`func_800A1B9C` unidentified) are logged on first use.
+5. **Prototypes.** `tools/recomp --protos` from `exe.h` (struct-by-value and pair returns) is still open; no
+   call on the boot path needed it.

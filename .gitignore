@@ -18,6 +18,8 @@ build/
 build/recomp/
 build/recomp-test/
 build.ninja
+# PC port build file (port/configure_port.py); its output is under build/port/
+build-port.ninja
 .ninja_*
 bin/
 __pycache__/
