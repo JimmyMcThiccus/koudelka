@@ -345,8 +345,16 @@ flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_80
 3. **Scale:** `.shexe` hooks, the double-apply and popup checks (2.5), refunds.
 4. **Ring tables** from SH data.
 5. **Turn flow** (section 4), once T28 lands.
-6. **Package:** the disc rebuild (BATTLE.BIN directory record size, EXE) and the xdelta against an unmodified disc 1.
-   Downloading xdelta3 needs your approval.
+6. **Package:**
+   - **Done:** `tools/patch/disc.py` writes the patched SLUS_010.51 and BATTLE.BIN into a copy of the user's
+     disc 1 BIN/CUE. It recomputes each written sector's EDC/ECC (checked against untouched original sectors) and
+     updates the ISO directory sizes. BATTLE.BIN is 80 sectors at LBA 1400; EFFECT.BIN at 1600 is untouched. Every
+     file was read back and compared.
+   - **Testing the disc:** `build.py --inject --exe-only` patches the EXE in RAM after a disc swap, so a save state
+     from the original disc can continue on the patched one.
+   - **Still to do:** a battle started from the patched disc. Walking for 200 s in the storeroom after the first
+     battle (slot 9) found no encounter.
+   - **Still to do:** the xdelta against an unmodified disc 1. Downloading xdelta3 needs the user's approval.
 
 ## 6. Risks
 - **Detour targets with delay-slot or `$gp` surprises.** All four are BATTLE C or asm functions with ordinary prologues.

@@ -106,6 +106,8 @@ def object_size(o):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--inject", action="store_true", help="write the patch into a running DuckStation")
+    ap.add_argument("--exe-only", action="store_true", help="with --inject, outside a battle: write only the EXE part "
+                    "(the patched disc supplies BATTLE.BIN when the next battle loads)")
     a = ap.parse_args()
 
     exe_elf, battle_elf = ROOT / "build" / "slus_010.51.elf", ROOT / "build" / "battle.elf"
@@ -258,13 +260,13 @@ def main():
         import duckstation as d
         if d.call("get_status").get("state") != "paused":
             sys.exit("build.py --inject: pause DuckStation first (in a battle, with no CD read in flight)")
-        if bytes.fromhex(d.call("read_memory", address=hex(BATTLE_VRAM), size=4)["data"]) != retail["battle"][:4]:
-            sys.exit("build.py --inject: BATTLE.BIN is not loaded")
+        if not a.exe_only and bytes.fromhex(d.call("read_memory", address=hex(BATTLE_VRAM), size=4)["data"]) != retail["battle"][:4]:
+            sys.exit("build.py --inject: BATTLE.BIN is not loaded (use --exe-only outside a battle)")
         # An earlier injection may have detoured functions this one does not: put their retail bytes back first, or
         # they would jump into the middle of the new code.
         spans = REGIONS + [OLD_POCKET]
         order = []
-        for img in ("battle", "exe"):
+        for img in (("exe",) if a.exe_only else ("battle", "exe")):
             data = retail[img][EXE_HEADER:] if img == "exe" else retail[img]
             start = EXE_VRAM if img == "exe" else BATTLE_VRAM
             dump = OUT / f"live_{img}.bin"  # large inline reads stall the server; a file read takes 0.4 s
@@ -280,11 +282,11 @@ def main():
                     order.append((addr, data[o:o + 8]))
         # code next, detours last, so no detour can reach code that is not there yet
         order += [w for w in writes["exe"] if any(w[0] == lo for lo, _ in REGIONS)]
-        order += [w for w in writes["battle"] + writes["exe"] if not any(w[0] == lo for lo, _ in REGIONS)]
+        order += [w for w in ([] if a.exe_only else writes["battle"]) + writes["exe"] if not any(w[0] == lo for lo, _ in REGIONS)]
         for addr, data in order:
             d.call("write_memory", address=hex(addr), data=data.hex())
         print(f"injected {len(order)} writes into DuckStation")
-        if tex.exists():
+        if tex.exists() and not a.exe_only:
             # Mid-battle, func_800C56A8 has run and the BIM block covers the blob, so do what its detour does: take a
             # heap block as the game's allocator would (func_80018C90: best fit over the free list D_800B4EE8, cut from
             # the top of the block, 8-byte {next, size} header) and put the blob in it. Rings re-upload from there, and
