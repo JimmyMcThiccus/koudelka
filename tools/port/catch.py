@@ -66,9 +66,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--timeout", type=float, default=60)
     ap.add_argument("--all", action="store_true")
-    ap.add_argument("--watch", type=lambda x: int(x, 16), help="hex address: log every write to that word "
-                    "(a hardware watchpoint on the game thread)")
+    ap.add_argument("--watch", type=lambda x: int(x, 16), action="append", default=[],
+                    help="hex address: log every write to that word (a hardware watchpoint on the game thread); "
+                    "up to four")
     ap.add_argument("--hits", type=int, default=40)
+    ap.add_argument("--reads", action="store_true", help="--watch also stops on reads")
     ap.add_argument("--ignore", type=lambda x: int(x, 16), action="append", default=[],
                     help="hex value: do not report writes that leave this value")
     ap.add_argument("args", nargs=argparse.REMAINDER)
@@ -81,8 +83,14 @@ def main():
 
     si, pi = STARTUPINFO(), PROCESS_INFORMATION()
     si.cb = ctypes.sizeof(si)
+    # the exe's own console output goes to NUL (its log file has it), so this script's lines stay whole
+    k32.CreateFileW.restype = W.HANDLE
+    sa = (ctypes.c_uint32 * 3)(12, 0, 1)  # SECURITY_ATTRIBUTES, inheritable
+    nul = k32.CreateFileW("NUL", 0x40000000, 3, ctypes.byref(sa), 3, 0, None)
+    si.x7 = 0x100  # STARTF_USESTDHANDLES
+    si.h0, si.h1, si.h2 = None, nul, nul
     cmd = " ".join([f'"{EXE}"'] + [x for x in a.args if x != "--"])
-    if not k32.CreateProcessW(None, ctypes.create_unicode_buffer(cmd), None, None, False, DEBUG_ONLY_THIS_PROCESS,
+    if not k32.CreateProcessW(None, ctypes.create_unicode_buffer(cmd), None, None, True, DEBUG_ONLY_THIS_PROCESS,
                               None, str(EXE.parent), ctypes.byref(si), ctypes.byref(pi)):
         sys.exit(f"catch: CreateProcess failed ({ctypes.get_last_error()})")
     hproc = pi.hProcess
@@ -104,12 +112,14 @@ def main():
         if ev.code == EXCEPTION_DEBUG_EVENT:
             er = EXCEPTION_RECORD.from_buffer_copy(bytes(ev.u)[:ctypes.sizeof(EXCEPTION_RECORD)])
             first = ctypes.c_uint32.from_buffer_copy(bytes(ev.u)[ctypes.sizeof(EXCEPTION_RECORD):][:4]).value
-            if er.code in (SINGLE_STEP, 0x4000001E) and a.watch is not None:  # WOW64 reports STATUS_WX86_SINGLE_STEP
+            if er.code in (SINGLE_STEP, 0x4000001E) and a.watch:  # WOW64 reports STATUS_WX86_SINGLE_STEP
+                which = hit_index(ev.tid)
+                addr = a.watch[which] if which < len(a.watch) else a.watch[0]
                 val = ctypes.c_uint32()
-                k32.ReadProcessMemory(hproc, ctypes.c_void_p(a.watch), ctypes.byref(val), 4, None)
+                k32.ReadProcessMemory(hproc, ctypes.c_void_p(addr), ctypes.byref(val), 4, None)
                 hits += val.value not in a.ignore
                 if hits <= a.hits and val.value not in a.ignore:
-                    print(f"catch: write #{hits} to {a.watch:08X}: now {val.value:08X}")
+                    print(f"catch: write #{hits} to {addr:08X}: now {val.value:08X}")
                     dump(ev.tid, hproc, sym, frames=6)
             elif er.code not in BENIGN:
                 cont = DBG_EXCEPTION_NOT_HANDLED
@@ -124,8 +134,8 @@ def main():
         elif ev.code == CREATE_PROCESS_DEBUG_EVENT:
             k32.CloseHandle(ctypes.c_void_p.from_buffer_copy(bytes(ev.u)[:8]).value)
             main_tid = ev.tid
-            if a.watch is not None:
-                watch(ev.tid, a.watch)
+            if a.watch:
+                watch(ev.tid, a.watch, a.reads)
         elif ev.code == LOAD_DLL_DEBUG_EVENT:
             k32.CloseHandle(ctypes.c_void_p.from_buffer_copy(bytes(ev.u)[:8]).value)
         elif ev.code == EXIT_PROCESS_DEBUG_EVENT:
@@ -136,17 +146,32 @@ def main():
         k32.ContinueDebugEvent(ev.pid, ev.tid, cont)
 
 
-def watch(tid, addr):
-    """DR0 = addr, write, 4 bytes, on the (32-bit) thread tid."""
+def watch(tid, addrs, reads=False):
+    """DR0..DR3 = addrs, write (or read/write), 4 bytes, on the (32-bit) thread tid."""
     ht = k32.OpenThread(0x1FFFFF, False, tid)
     ctx = (ctypes.c_uint32 * 179)()
-    ctx[0] = 0x10010  # WOW64_CONTEXT_DEBUG_REGISTERS
+    ctx[0] = 0x10010  # WOW64_CONTEXT_DEBUG_REGISTERS: Dr0-3 at dwords 1-4, Dr6 at 5, Dr7 at 6
     k32.Wow64GetThreadContext(ht, ctx)
-    ctx[1] = addr                                   # Dr0
-    ctx[6] = 0x1 | (0x1 << 16) | (0x3 << 18)        # Dr7: L0, R/W0 = write, LEN0 = 4 bytes
+    dr7 = 0
+    for i, addr in enumerate(addrs[:4]):
+        ctx[1 + i] = addr
+        dr7 |= (1 << (2 * i)) | ((0x3 if reads else 0x1) << (16 + 4 * i)) | (0x3 << (18 + 4 * i))
+    ctx[6] = dr7
     if not k32.Wow64SetThreadContext(ht, ctx):
         print(f"catch: Wow64SetThreadContext failed ({ctypes.get_last_error()})")
-    print(f"catch: watching writes to {addr:08X} on thread {tid}")
+    print("catch: watching writes to " + ", ".join(f"{x:08X}" for x in addrs[:4]) + f" on thread {tid}")
+
+
+def hit_index(tid):
+    """Which watchpoint fired (Dr6 bits 0-3)."""
+    ht = k32.OpenThread(0x1FFFFF, False, tid)
+    ctx = (ctypes.c_uint32 * 179)()
+    ctx[0] = 0x10010
+    k32.Wow64GetThreadContext(ht, ctx)
+    for i in range(4):
+        if ctx[5] & (1 << i):
+            return i
+    return 0
 
 
 def dump(tid, hproc, sym, frames=30):

@@ -34,7 +34,7 @@ COMMON = " ".join(hostcc.COMMON_FLAGS) + " -g -fno-omit-frame-pointer"
 # PsyCross functions the port replaces: compiled as psyx_<name> so the port's own take the game's calls
 PSYX_RENAMED = ["VSyncCallback", "VSync", "CdInit", "CdControl", "CdControlB", "CdControlF", "CdSync", "CdReady",
                 "CdSyncCallback", "CdReadyCallback", "CdGetSector", "CdDataCallback", "CdReadCallback",
-                "SpuWrite", "SpuRead", "SpuSetTransferCallback"]
+                "SpuWrite", "SpuRead", "SpuSetTransferCallback", "DrawOTag", "PutDispEnv", "PadInitDirect", "PadGetState"]
 LIBS = [SDL2 / "lib" / "x86" / "SDL2.lib", OPENAL / "libs" / "Win32" / "OpenAL32.lib", "-ldbghelp", "-luser32",
         "-lgdi32", "-lshell32", "-lwinmm", "-lopengl32", "-ladvapi32"]
 
@@ -108,17 +108,19 @@ def main():
     shutil.copy2(OPENAL / "bin" / "Win32" / "soft_oal.dll", B / "OpenAL32.dll")
     (B / "ps1_syms.txt").write_text(ps1_syms())
 
-    # a function port/ defines (the context switch in port/fibers.cpp, ...) replaces its recompiled twin
+    # a function port/ defines (the context switch in port/fibers.cpp, MOVIE's libpress in port/fmv.cpp, ...)
+    # replaces its recompiled twin; an overlay's under its host name (movie_DecDCTReset)
     overrides = set()
     for p in (ROOT / "port").glob("*.c*"):
-        overrides.update(re.findall(r"^[^\s#/][^;\n]*\b(func_[0-9A-F]{8})\s*\([^;\n]*\)\s*$",
+        overrides.update(re.findall(r"^[^\s#/][^;\n(]*\b(\w+)\s*\([^;\n]*\)\s*(?:\{.*)?$",
                                     p.read_text(encoding="utf-8"), re.M))
     game, recomp, replaced = {}, {}, []
     for t in targets:
         game[t] = sorted((B / "hsrc" / t).glob("*.cpp"))
         all_recomp = sorted((ROOT / "build" / "recomp" / t).glob("*.c"))
-        recomp[t] = [p for p in all_recomp if t != "main" or p.stem not in overrides]
-        replaced += [p.stem for p in all_recomp if t == "main" and p.stem in overrides]
+        host = (lambda s: s) if t == "main" else (lambda s, t=t: f"{t}_{s}")
+        recomp[t] = [p for p in all_recomp if host(p.stem) not in overrides]
+        replaced += [host(p.stem) for p in all_recomp if host(p.stem) in overrides]
     if replaced:
         print("configure_port: port/ replaces " + ", ".join(sorted(replaced)))
     pc_src = sorted(p for p in (PSYCROSS / "src").rglob("*") if p.suffix.lower() in (".c", ".cpp"))

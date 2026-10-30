@@ -68,6 +68,19 @@ struct port_vt_entry {
     void *pfn;
 };
 
+/* The vtable pointer hostify gives a class with virtual functions, where GCC 2.x put it. It behaves like a
+   C++ vptr: copying or assigning an object leaves the target's own (GCC: `*e = C_80010300(...)` keeps e's
+   vtable), and a class whose GCC vtable is known sets it in its constructors (hostify). */
+struct port_vptr_t {
+    void *p;
+    port_vptr_t() {}
+    port_vptr_t(const port_vptr_t &) {}
+    port_vptr_t &operator=(const port_vptr_t &) { return *this; }
+};
+
+/* The PS1 scratchpad (0x1F800000, 1 KB): hostify turns `(T *)0x1F8000xx` into `(T *)(port_scratchpad + xx)`. */
+extern "C" unsigned char port_scratchpad[] asm("_recomp_scratchpad");
+
 /* The game's placeholder polymorphic classes (include/game/b/vcall.h: VObj<N>, VObj0) declare 64 varargs
    slots. hostify turns each into a variadic template calling slot k through the GCC vtable, with C's
    default argument promotions so every argument fills a 4-byte stack slot as the callee expects. */

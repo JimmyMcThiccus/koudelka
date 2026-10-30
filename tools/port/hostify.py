@@ -375,6 +375,18 @@ def busy_loops(text, stats):
     return "".join(out)
 
 
+# ---------------------------------------------------------------- scratchpad addresses
+SCRATCH_RE = re.compile(r"(\*\s*\))\s*0x1F800([0-3][0-9A-Fa-f]{2})\b")
+
+
+def scratchpad(text, stats):
+    """`(T *)0x1F8000xx`: a pointer into the PS1 scratchpad, which on the host is the array the data symbols
+    D_1F80xxxx live in (tools/port/gen_data.py, recomp_scratchpad), declared in port_args.h."""
+    text, n = SCRATCH_RE.subn(lambda m: f"{m.group(1)}(port_scratchpad + 0x{m.group(2)})", text)
+    stats["scratchpad"] += n
+    return text
+
+
 # ---------------------------------------------------------------- per-site fixups
 # The few places the rules above cannot cover. Each is a spot where src/ would need a change to compile on a
 # modern compiler; the rewrite only adds a cast GCC 2.8 applied implicitly. (file, old, new, why)
@@ -391,6 +403,59 @@ FIXUPS = [
     ("u_8001F1A8.cpp", "((void (*)())func_8001F514)();", "func_8001F514(t);",
      "func_8001F514 gets t through $a0 (an argument-less call), twice"),
 ]
+
+
+# ---------------------------------------------------------------- arguments passed through in a register
+# Callees that read an argument register their callers (matching C) never set: on the PS1 it still holds
+# what the caller's own caller passed. (callee, arguments the C passes, register, why)
+PASSTHROUGH = [
+    ("func_80050EA4", 3, "a3", "func_800425A8 calls func_80050E58(o, a, b, p); func_80050E58 takes three and "
+     "calls func_80050EA4(p, a, b), which hands $a3 (the task) to func_80048D64 to wait for events as"),
+    ("func_8004D0F4", 2, "a2", "func_8004D0F4(p, src, out) stores to out; its callers (the +0x6C virtual "
+     "functions func_8004DEDC, ...) take (p, src) and leave the $a2 func_80050EA4 passed them"),
+]
+PORT_DEF_RE = re.compile(r"^[^\n;{}]*\bport_def_(\w+)\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*\n\{", re.M)
+
+
+def passthrough(texts, stats):
+    """For each PASSTHROUGH callee: a function that calls it with too few arguments gets the register as an
+    extra last parameter (its own callers set it on the PS1 too) and passes it on. That function then
+    becomes such a callee for its own callers (func_8004FDC8 -> func_8004F9E4 -> func_8004D0F4)."""
+    work = [(c, g, r) for c, g, r, _ in PASSTHROUGH]
+    widened = set()
+    while work:
+        callee, given, reg = work.pop(0)
+        for path, text in texts.items():
+            if "hsrc" not in path.parts or callee not in text:
+                continue
+            defs = [(d.group(1), d.end(), matching_brace(text, d.end() - 1)) for d in PORT_DEF_RE.finditer(text)]
+            widen, out, pos = set(), [], 0
+            for m in re.finditer(rf"(?<![\w.>]){callee}\(", text):
+                i, depth = m.end(), 1
+                while depth:
+                    depth += text[i] == "("
+                    depth -= text[i] == ")"
+                    i += 1
+                args = text[m.end():i - 1]
+                owner = [name for name, start, end in defs if start <= m.start() < end]
+                if len(split_params(args)) != given or not owner:
+                    continue
+                widen.add(owner[0])
+                out.append(text[pos:m.start()])
+                out.append(f"((port_pret (*)(...)){callee})({args}, port_{reg})")
+                pos = i
+                stats["passthrough"] += 1
+            out.append(text[pos:])
+            text = "".join(out)
+            for name in widen - {n for n, r in widened if r == reg}:
+                widened.add((name, reg))
+                m = re.search(rf"port_def_{name}\(([^()]*(?:\([^()]*\)[^()]*)*)\)", text)
+                ps = m.group(1).strip()
+                n = 0 if ps in ("", "void") else len(split_params(ps))
+                text = text.replace(m.group(0), f"port_def_{name}({ps + ', ' if n else ''}void *port_{reg})")
+                work.append((name, n, reg))
+            texts[path] = text
+    return texts
 
 
 def apply_fixups(fname, text, stats):
@@ -568,7 +633,7 @@ def dispatcher(ret, name, params, const, slot, stats):
     types = "".join(f", {t}" for t, _ in tn)
     args = "".join(f", {n}" for _, n in tn)
     head = f"{ret} {name}({sig}){' const' if const else ''}"
-    pre = (f"port_vt_entry *e_ = (port_vt_entry *)this->port_vptr + {slot}; "
+    pre = (f"port_vt_entry *e_ = (port_vt_entry *)this->port_vptr.p + {slot}; "
            f"void *s_ = (char *)this + e_->delta; ")
     if ret == "void":
         body = f"((void (*)(void *{types}))e_->pfn)(s_{args});"
@@ -589,12 +654,12 @@ def vcall_slots(text, stats):
     a class with VObj0 as its virtual base gets."""
     if "virtual int v##a##0(...)" not in text:  # include/game/b/vcall.h, include/game/a2/vcall.h
         return text
-    disp = ("template <class... A_> int v##a##{d}(A_... x_) {{ return port_vslot_call(this->port_vptr, this, "
+    disp = ("template <class... A_> int v##a##{d}(A_... x_) {{ return port_vslot_call(this->port_vptr.p, this, "
             "1##a##{d} - 99, port_promote(x_)...); }}")
     text, n = re.subn(r"virtual int v##a##(\d)\(\.\.\.\);", lambda m: disp.format(d=m.group(1)), text)
     stats["vcall_slots"] += n * 6
     text, n = re.subn(r"virtual int v(\d\d)\(\.\.\.\);", lambda m: (
-        f"template <class... A_> int v{m.group(1)}(A_... x_) {{ return port_vslot_call(this->port_vptr, this, "
+        f"template <class... A_> int v{m.group(1)}(A_... x_) {{ return port_vslot_call(this->port_vptr.p, this, "
         f"{int(m.group(1)) + 1}, port_promote(x_)...); }}"), text)
     stats["vcall_slots"] += n
     fwd = "template <class... A_> int v##a##{d}(A_... x_) {{ return port_vb->v##a##{d}(x_...); }}"
@@ -696,6 +761,44 @@ def virtual_bases(texts, stats):
     return out
 
 
+def vtable_ctors(texts, aliases, stats):
+    """Classes whose GCC vtable the headers name (`.set _vt.10C_80010300, D_80010300`) are constructed in C++
+    (inline constructors) and need their vtable as GCC's constructors set it: each constructor of such a class
+    (one is added if it has none) starts by storing the vtable into port_vptr. Base constructors run first,
+    so the most derived class's vtable stays, as in GCC."""
+    vt, dtors = {}, {}
+    for a, b in aliases:
+        m = re.fullmatch(r"_(vt\.|\._)(\d+)(\w+)", a)  # _vt.<len><name> (vtable), _._<len><name> (destructor)
+        if m and len(m.group(3)) == int(m.group(2)):
+            (vt if m.group(1) == "vt." else dtors)[m.group(3)] = b
+    out = {}
+    for f, t in texts.items():
+        edits = []
+        for name, _, bs, be in class_bodies(t):
+            if name not in vt:
+                continue
+            decl = f'extern "C" char port_vt_{name}[] asm("_{vt[name]}"); /* port: {name}\'s GCC vtable */\n'
+            body = t[bs:be]
+            dm = re.search(r"(?<!\w)~%s\s*\(\s*\)\s*;" % re.escape(name), body)
+            if dm and name in dtors:  # GCC's destructor is a known function: `~X()` runs it, flags 0 (no delete)
+                decl += f'extern "C" void port_dtor_{name}(void *, int) asm("_{dtors[name]}");\n'
+                edits.append((bs + dm.start(), bs + dm.end(), f"~{name}() {{ port_dtor_{name}(this, 0); }}"))
+            start = t.rfind("\n", 0, bs) + 1
+            edits.append((start, start, decl))
+            set_vt = f" port_vptr.p = port_vt_{name};"
+            found = False
+            for cm in re.finditer(r"(?<![~\w])%s\s*\([^()]*\)\s*(?::[^{;]*)?\{" % re.escape(name), body):
+                edits.append((bs + cm.end(), bs + cm.end(), set_vt))
+                found = True
+            if not found:
+                edits.append((bs, bs, f" {name}() {{{set_vt} }}"))
+            stats["vtable_ctors"] += 1
+        for s, e, r in sorted(edits, reverse=True):
+            t = t[:s] + r + t[e:]
+        out[f] = t
+    return out
+
+
 def devirtualize(texts, stats):
     """GCC 2.x virtual functions, for the MSVC ABI build (docs/PORT_PHASE2.md section 2).
 
@@ -747,7 +850,7 @@ def devirtualize(texts, stats):
         for name, bases, bs, be in class_bodies(t):
             defs = [x for x in classes[name] if x[0] == f and x[3] == bs]
             if SLOTS_RE.search(t[bs:be]):  # the vcall.h placeholders VObj<N>, VObj0, A2VObj<N>, A2VObj0: own vptr
-                edits.append((be, be, " void *port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
+                edits.append((be, be, " port_vptr_t port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
                 stats["vptr_members"] += 1
                 continue
             if not defs or not defs[0][2]:
@@ -763,7 +866,7 @@ def devirtualize(texts, stats):
                     # as GCC 2.x does); the C++ destructor stays trivial, so automatic objects are untouched
                     k = slots["~"]
                     rep = (f"static void operator delete(void *p_) {{ if (p_) {{ port_vt_entry *e_ = (port_vt_entry *)"
-                           f"(({name} *)p_)->port_vptr + {k}; ((void (*)(void *, int))e_->pfn)((char *)p_ + e_->delta, "
+                           f"(({name} *)p_)->port_vptr.p + {k}; ((void (*)(void *, int))e_->pfn)((char *)p_ + e_->delta, "
                            f"3); }} }} /* port: virtual destructor {mname}, GCC 2.x vtable slot {k} */")
                     stats["virtual_dtors"] += 1
                 else:
@@ -773,7 +876,7 @@ def devirtualize(texts, stats):
                 stats["virtual_dispatchers"] += 1
                 edits.append((s, e, rep))
             if own_vptr:
-                edits.append((be, be, " void *port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
+                edits.append((be, be, " port_vptr_t port_vptr; /* port: GCC 2.x vptr, after the class's own data */ "))
                 stats["vptr_members"] += 1
         for s, e, r in sorted(edits, reverse=True):
             t = t[:s] + r + t[e:]
@@ -798,7 +901,8 @@ def main():
     stats = {k: 0 for k in ("labels", "pins", "cdecl_members", "set_blocks", "asm_macros", "permissive_decls",
                             "definitions", "named_returns", "implicit_decls", "fixups", "thiscall_thunks",
                             "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped",
-                            "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors", "busy_loops", "empty_decls")}
+                            "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors", "busy_loops", "empty_decls",
+                            "vtable_ctors", "scratchpad", "passthrough")}
     # an overlay's own functions get its prefix (tools/port/overlays.py): in its sources and own header as text
     # (asm labels included), elsewhere through a force-included names header
     maps = {o: ovl.rename_map(o) for o in overlays}
@@ -836,11 +940,12 @@ def main():
             t = rewrite_definitions(front(raw), stats, header_aliases)
             t = apply_fixups(p.name, t, stats)
             t = busy_loops(t, stats)
+            t = scratchpad(t, stats)
             dst = out / "hsrc" / target / p.name
             texts[dst] = t
             srcs.setdefault(target, []).append(dst)
-    texts = drop_empty_decls(texts, stats)
-    for dst, t in devirtualize(virtual_bases(texts, stats), stats).items():
+    texts = drop_empty_decls(passthrough(texts, stats), stats)
+    for dst, t in vtable_ctors(devirtualize(virtual_bases(texts, stats), stats), aliases, stats).items():
         write(dst, t)
     if not a.no_implicit:
         for target, paths in srcs.items():

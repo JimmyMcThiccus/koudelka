@@ -1,16 +1,18 @@
 /* Seeing what a run does without a debugger: a heartbeat line in the log every 5 s (vblanks, task
-   switches, CD commands and sectors), and with KOUDELKA_SHOT=<seconds>, at that time, the window
-   (shot.bmp) and PsyCross's VRAM (vram.bmp, 1024x512) written next to the exe. Called from
+   switches, CD commands and sectors), and with KOUDELKA_SHOT=<seconds>[,<seconds>...], at those times, the
+   window (shot-<s>.bmp) and PsyCross's VRAM (vram-<s>.bmp, 1024x512) written next to the exe. Called from
    port_interrupts on the game thread. */
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "port_rt.h"
 
 extern unsigned short vram[1024 * 512];  /* PsyCross, PsyX_render.cpp */
 
 extern "C" {
-unsigned port_stat_vblanks, port_stat_switches, port_stat_cd_commands, port_stat_cd_sectors;
+unsigned port_stat_vblanks, port_stat_switches, port_stat_cd_commands, port_stat_cd_sectors, port_stat_frames,
+    port_stat_flips;
 }
 
 static void write_bmp(const char *name, int w, int h, const unsigned *rgb)
@@ -46,15 +48,17 @@ static BOOL CALLBACK find_window(HWND w, LPARAM out)
     return TRUE;
 }
 
-static void shots(void)
+static void shots(unsigned sec)
 {
+    char name[32];
     static unsigned px[1024 * 512];
     for (int i = 0; i < 1024 * 512; i++) {  /* PS1 15-bit BGR */
         unsigned v = vram[i];
         unsigned r = (v & 31) << 3, g = ((v >> 5) & 31) << 3, b = ((v >> 10) & 31) << 3;
         px[i] = r << 16 | g << 8 | b;
     }
-    write_bmp("vram.bmp", 1024, 512, px);
+    snprintf(name, sizeof name, "vram-%u.bmp", sec);
+    write_bmp(name, 1024, 512, px);
     HWND w = 0;
     EnumWindows(find_window, (LPARAM)&w);
     if (!w)
@@ -71,31 +75,48 @@ static void shots(void)
     bi.bmiHeader.biSize = sizeof bi.bmiHeader, bi.bmiHeader.biWidth = cw, bi.bmiHeader.biHeight = -ch;
     bi.bmiHeader.biPlanes = 1, bi.bmiHeader.biBitCount = 32;
     GetDIBits(mdc, bm, 0, ch, buf, &bi, DIB_RGB_COLORS);
-    write_bmp("shot.bmp", cw, ch, buf);
+    snprintf(name, sizeof name, "shot-%u.bmp", sec);
+    write_bmp(name, cw, ch, buf);
     free(buf);
     DeleteObject(bm);
     DeleteDC(mdc);
     ReleaseDC(w, wdc);
 }
 
+/* At a fault (port/main.cpp): the main loop's per-frame handler lists (func_8001D3A8 runs D_800A4544 and
+   D_800A4544+8; a node is {vtable, next, target, priority, owns}) with each target's vtable. */
+extern "C" void port_dump_state(void)
+{
+    extern unsigned char D_800A4544[];
+    for (int l = 0; l < 2; l++) {
+        unsigned char *n = *(unsigned char **)(D_800A4544 + 8 * l + 4);
+        port_log("per-frame list %d:", l);
+        for (int k = 0; n && k < 64; k++, n = *(unsigned char **)(n + 4)) {
+            unsigned char *t = *(unsigned char **)(n + 8);
+            port_log(" [node %p target %p vt %p]", n, t, t ? *(void **)t : 0);
+        }
+        port_log("\n");
+    }
+}
+
 extern "C" void port_observe(void)
 {
     static ULONGLONG t0, next = 5000;
-    static int shot_at = -2;
-    if (!t0)
+    static const char *shot_list;  /* the next of KOUDELKA_SHOT's times */
+    if (!t0) {
         t0 = GetTickCount64();
-    if (shot_at == -2) {
-        const char *e = getenv("KOUDELKA_SHOT");
-        shot_at = e ? atoi(e) * 1000 : -1;
+        shot_list = getenv("KOUDELKA_SHOT");
     }
     ULONGLONG t = GetTickCount64() - t0;
     if (t >= next) {
-        port_log("heartbeat %llus: vblanks %u, task switches %u, cd commands %u, cd sectors %u\n", t / 1000,
-                 port_stat_vblanks, port_stat_switches, port_stat_cd_commands, port_stat_cd_sectors);
+        port_log("heartbeat %llus: vblanks %u, task switches %u, ordering tables %u, flips %u, cd commands %u, "
+                 "cd sectors %u\n", t / 1000, port_stat_vblanks, port_stat_switches, port_stat_frames, port_stat_flips,
+                 port_stat_cd_commands, port_stat_cd_sectors);
         next += 5000;
     }
-    if (shot_at >= 0 && t >= (ULONGLONG)shot_at) {
-        shot_at = -1;
-        shots();
+    if (shot_list && *shot_list && t >= (ULONGLONG)atoi(shot_list) * 1000) {
+        shots((unsigned)atoi(shot_list));
+        shot_list = strchr(shot_list, ',');
+        shot_list = shot_list ? shot_list + 1 : 0;
     }
 }
