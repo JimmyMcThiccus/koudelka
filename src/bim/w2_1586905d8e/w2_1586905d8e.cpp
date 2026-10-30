@@ -157,7 +157,7 @@ EXTERN_C int func_800DD9F4(BimMon *p, unsigned *flags)
     return 0;
 }
 
-INCLUDE_ASM("asm/bim/w2_1586905d8e/nonmatchings/w2_1586905d8e", bimf_9b3b5928);
+#include "../shared/bimf_9b3b5928.cpp"
 
 EXTERN_C BimMon *func_800D8464();
 EXTERN_C int bimf_af99c5b3_3_c(void *p, int a) asm("bimf_af99c5b3_3");
