@@ -60,7 +60,7 @@ EXTERN_C BimDtor *func_800DAB3C(BimDtor *self, int in_chrg, int a, short b, int 
 
 #include "../shared/bimf_b4ba168f.cpp"
 
-INCLUDE_ASM("asm/bim/w0_dacb669c9e/nonmatchings/w0_dacb669c9e", bimf_8b808450);
+#include "../shared/bimf_8b808450.cpp"
 
 #include "../shared/bimf_72fa68c8.cpp"
 
@@ -139,7 +139,7 @@ EXTERN_C int func_800DB4DC(BimMon *p, unsigned *flags)
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_dacb669c9e/nonmatchings/w0_dacb669c9e", bimf_da437c5e);
+#include "../shared/bimf_da437c5e.cpp"
 
 INCLUDE_RODATA("asm/bim/w0_dacb669c9e/nonmatchings/w0_dacb669c9e", D_800DA8B8);
 

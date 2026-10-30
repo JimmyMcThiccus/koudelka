@@ -166,7 +166,7 @@ EXTERN_C int bimf_06b4d1a5(BimMon *p, int a)
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w1_04f19c3154/nonmatchings/w1_04f19c3154", bimf_05f10258);
+#include "../shared/bimf_05f10258.cpp"
 
 #include "../shared/bimf_0df9734b.cpp"
 

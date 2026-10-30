@@ -104,7 +104,7 @@ EXTERN_C int func_800DB270(BimMon *p, unsigned *flags)
 
 #include "../shared/bimf_6eb48601.cpp"
 
-INCLUDE_ASM("asm/bim/w0_7ed42bdb0b/nonmatchings/w0_7ed42bdb0b", bimf_51caf7a0);
+#include "../shared/bimf_51caf7a0.cpp"
 
 #include "../shared/bimf_ad7de1b4.cpp"
 

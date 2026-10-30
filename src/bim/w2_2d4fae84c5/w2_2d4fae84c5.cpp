@@ -138,7 +138,7 @@ EXTERN_C int bimf_06b4d1a5(BimMon *p, int a)
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", bimf_f35df0eb);
+#include "../shared/bimf_f35df0eb.cpp"
 
 INCLUDE_RODATA("asm/bim/w2_2d4fae84c5/nonmatchings/w2_2d4fae84c5", D_800DCEF8);
 
