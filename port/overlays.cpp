@@ -45,10 +45,15 @@ extern "C" void port_overlay_sector(int lba, const void *dst)
                       o->lba, o->base);
         unsigned char *slot = port_hiram + (o->base - PORT_HIRAM_PS1);
         memcpy(slot, o->image, o->image_end - o->image);
-        if (o->base == PORT_HIRAM_PS1)
+        if (o->base == PORT_HIRAM_PS1) {
             port_ovl_slot = i;
-        else
+            /* FIELD reaches past EFFECT's start: a slot overlay loaded over EFFECT's area overwrote it (the
+               EXE→overlay dispatchers, build/port/stubs/stubs.s, take a resident EFFECT before the slot) */
+            if (port_ovl_effect >= 0 && o->base + o->size > g_ovl[port_ovl_effect].base)
+                port_ovl_effect = -1;
+        } else {
             port_ovl_effect = i;
+        }
         port_log("overlay: %s loaded, host image installed (%u bytes at %08X)\n", o->name,
                  (unsigned)(o->image_end - o->image), o->base);
     }

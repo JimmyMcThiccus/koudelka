@@ -479,3 +479,45 @@ constructors. Runs: about 25 s from boot to the title screen (50 vblanks/s), NEW
    and on the overlay loader, after pressing START and NEW GAME on its title screen).
 2. FIELD and EFFECT (and BATTLE/BIM if the PS1 path goes there) with the EXE→overlay dispatchers.
 3. vptr placement against DuckStation.
+
+### Phase 2c, continued: the NEW GAME path checked against DuckStation, FIELD linked
+
+**Where it stops now.** After NEW GAME the port reads the same files as the PS1 (checked in DuckStation with a
+breakpoint on `CdControl`: PRTYTEST, ITMTBL, NAME.TBL twice, BBGM0000, SHAPE_KO, SHADOW, LBA 93469, 93476,
+FIELD.BIN), loads FIELD and runs it: FIELD's code (host-compiled, `field_` prefixed) reads four more files
+and `BGM/G1/OMO_01.BGM`, then the game keeps that read going (the CD command count stops, sectors keep
+coming) and the screen stays black. No STOP in a 60 s run.
+
+**What was added.**
+
+1. *`-fno-strict-return`* (hostify `GAME_FLAGS`). The battle-command detour after NEW GAME was not a game
+   path: `func_8007C0A8` ends `switch (x3C) { case 1: break; case 2: return v02(); }` and falls off the end
+   of an `int` function otherwise. clang treated that as unreachable and always took `v02()`. DuckStation
+   showed the PS1 running the same chain (0xB, 0xE, 0x2012, `func_8007C070`) without reaching
+   `func_8007DEE8`.
+2. *EXE→overlay dispatchers* (`tools/port/gen_stubs.py`): an EXE call into the overlay area jumps to
+   `<overlay>_func_X` of the resident overlay that defines it (`port_ovl_slot`, `port_ovl_effect`; EFFECT
+   first, and `port/overlays.cpp` forgets EFFECT when a slot overlay loads over it), with the caller's
+   arguments in place; it stops only when no resident overlay has it. 52 of the 106 overlay stubs dispatch
+   with MOVIE and FIELD linked.
+3. *FIELD in the build* (`--overlays` default `movie,field`): 2 source files, 117 recompiled functions.
+   hostify needed:
+   - permissive prototypes for declarations behind a forward declaration (`struct X; EXTERN_C ...`);
+   - virtual-base casts of a qualified member (`(List *)a.B::m`);
+   - `$gp` switches in FIELD's kernel event callbacks dropped;
+   - FIELD's own placeholder slots (`VSLOTS`, `vf00`..`vf49`) dispatched through the GCC vtable like
+     `vcall.h`'s, with `VAt<N>`'s vptr at offset N (they were real C++ virtuals: MSVC's vptr at 0);
+   - constructors called from asm by their GCC 2.x mangled names (`__10C_800BF2C0P16Unk_800BF2C0_src`) get
+     that name as a thiscall-thunk label (`gcc_ctor_labels`, 5).
+4. `VectorNormal` (libgte) in `port/psyq_missing.c`. `KOUDELKA_CD_STOP=<lba>` stops a run when a read starts
+   there.
+
+**Counts.** Recompiled: EXE 354, MOVIE 26, FIELD 117. Probe link: 202 undefined symbols: 174 stubs (overlay
+106, of which 52 dispatch; PsyQ 58; GCC names 9, mostly FIELD functions the recompiler did not emit; 1
+method), 27 thunks. PS1 build 93× `check: OK`.
+
+**Next steps.**
+1. The read that never stops after `OMO_01.BGM` (the PS1 played `OMO_05.BGM` in a coarse poll, so the BGM
+   choice may differ too), then the map files (`MDT/HAB/HAB00001.MDT` on the PS1).
+2. EFFECT (and BATTLE) linked when the game reaches them; the remaining GCC-name stubs in FIELD.
+3. vptr placement against DuckStation.
