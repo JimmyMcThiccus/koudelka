@@ -97,7 +97,29 @@ EXTERN_C void func_800DAE34(char *p, int slot)
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB028);
+EXTERN_C int func_800D8CC0(void *p, unsigned *flags);
+EXTERN_C void func_800D8C0C(void *p);
+EXTERN_C int func_800DB7B4_c(void *p, unsigned *flags) asm("func_800DB7B4");
+EXTERN_C int func_800DB5F4_c(void *p, unsigned *flags) asm("func_800DB5F4");
+EXTERN_C int func_800DB104_c(void *p, unsigned *flags) asm("func_800DB104");
+EXTERN_C int func_800DB468_c(void *p, unsigned *flags) asm("func_800DB468");
+
+EXTERN_C int func_800DB028(BimMon *p, unsigned *flags)
+{
+    func_800D7818(p, 150, 500, 50, 300, 0, 0, 0, 0);
+    if (func_800DB7B4_c(p, flags))
+        return 1;
+    if (((BimV *)p)->v21((int)flags))
+        return 1;
+    if (func_800D84C8(p))
+        func_800D8350(p, 3);
+    if (func_800DB5F4_c(p, flags))
+        return 1;
+    if (func_800DB104_c(p, flags))
+        return 1;
+    func_800DB468_c(p, flags);
+    return 1;
+}
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB104);
 
@@ -141,7 +163,52 @@ EXTERN_C int func_800DB2B0(void *p, unsigned *flags)
 }
 
 
-INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB350);
+EXTERN_C int func_800DB260_t(void *p, unsigned *flags) asm("func_800DB260");
+EXTERN_C int bimf_af99c5b3_t(void *p, unsigned *flags) asm("bimf_af99c5b3");
+EXTERN_C int bimf_af99c5b3_1_t(void *p, unsigned *flags) asm("bimf_af99c5b3_1");
+EXTERN_C int bimf_af99c5b3_2_t(void *p, unsigned *flags) asm("bimf_af99c5b3_2");
+EXTERN_C int func_800DB2B0_t(void *p, unsigned *flags) asm("func_800DB2B0");
+
+EXTERN_C int func_800DB350(BimMon *p, unsigned *flags)
+{
+    switch (p->f9F0) {
+    case 1:
+        if (func_800DB260_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 2:
+        if (bimf_af99c5b3_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 4:
+        if (bimf_af99c5b3_1_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 8:
+        if (bimf_af99c5b3_2_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~1;
+            return 1;
+        }
+        break;
+    case 16:
+        if (func_800DB2B0_t(p, flags)) {
+            p->f9F0 = 0;
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_ab498dac03/nonmatchings/w0_ab498dac03", func_800DB468);
 

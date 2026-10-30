@@ -154,7 +154,42 @@ EXTERN_C int func_800DB244(void *p, unsigned *flags)
 
 #include "../shared/bimf_a1b3cda8.cpp"
 
-INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DB36C);
+EXTERN_C int bimf_a1b3cda8_t(void *p, unsigned *flags) asm("bimf_a1b3cda8");
+EXTERN_C int func_800DB244_t(void *p, unsigned *flags) asm("func_800DB244");
+EXTERN_C int bimf_af99c5b3_t(void *p, unsigned *flags) asm("bimf_af99c5b3");
+
+EXTERN_C int func_800DB36C(BimMon *p, unsigned *flags)
+{
+    switch (p->f9F0) {
+    case 1:
+        if (func_800DB244_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~2;
+            return 1;
+        }
+        break;
+    case 2:
+    case 4:
+        p->f9F0 = 0;
+        break;
+    case 8:
+        if (bimf_af99c5b3_t(p, flags)) {
+            p->f9F0 = 0;
+            *flags &= ~1;
+            return 1;
+        }
+        break;
+    case 16:
+        if (bimf_a1b3cda8_t(p, flags)) {
+            p->f9F0 = 0;
+            return 1;
+        }
+        break;
+    }
+    if (p->f9F0)
+        p->f9F0 = 0;
+    return 0;
+}
 
 INCLUDE_ASM("asm/bim/w0_1dc69df650/nonmatchings/w0_1dc69df650", func_800DB454);
 

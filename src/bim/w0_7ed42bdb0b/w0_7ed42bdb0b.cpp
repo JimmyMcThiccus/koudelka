@@ -61,7 +61,7 @@ EXTERN_C BimDtor *func_800DAB34(BimDtor *self, int in_chrg, int a, short b, int 
 
 #include "../shared/bimf_7434482e.cpp"
 
-INCLUDE_ASM("asm/bim/w0_7ed42bdb0b/nonmatchings/w0_7ed42bdb0b", bimf_b1674f83);
+#include "../shared/bimf_b1674f83.cpp"
 
 #include "../shared/bimf_3655787d.cpp"
 

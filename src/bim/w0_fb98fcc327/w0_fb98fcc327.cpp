@@ -207,7 +207,25 @@ INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DB624);
 #include "../shared/bimf_af99c5b3.cpp"
 #undef bimf_af99c5b3
 
-INCLUDE_ASM("asm/bim/w0_fb98fcc327/nonmatchings/w0_fb98fcc327", func_800DB6EC);
+EXTERN_C int func_800DB6EC(void *p, unsigned *flags)
+{
+    if (!(*flags & 2))
+        return 0;
+    int a = func_800D8AE4_a(p);
+    void *s = (void *)func_800D7ECC(p, a);
+    if (!s)
+        return 0;
+    if (!(func_800D7A78(p, s) & 0x10)) {
+        if (p || flags)
+            return 0;
+        else
+            return 0;
+    }
+    func_800D8E64(p, -1);
+    func_800D7D64(p, s);
+    *flags &= ~2;
+    return 1;
+}
 
 EXTERN_C int func_800DB794(void *p, unsigned *flags)
 {
