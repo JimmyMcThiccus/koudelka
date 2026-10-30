@@ -6,6 +6,7 @@
 #include "common.h"
 #include "shpatch/shpatch.h"
 #include "shpatch/ring.h"
+#include "shpatch/ring_tex.h"
 
 EXTERN_C int VSync(int mode);
 EXTERN_C int func_8008EF40(int id);  // menu sound effect
@@ -14,16 +15,24 @@ ShRing g_ring;
 
 // Default attack ring until the per-weapon tables land (2.4): three zones with strike areas at their ends.
 static const ShZone s_attack[3] = {{50, 100, 6}, {160, 205, 5}, {265, 305, 4}};
+// Magic: one main zone, power rising from 40 % (40 + _NRing.param, param 0 here) at its start to 100 % five sixths of
+// the way to the strike area. Item: one wide zone, no strike. Defaults until per-spell and per-item tables land (2.4).
+static const ShZone s_magic = {60, 300, 10}, s_item = {45, 315, 0};
 
-void ring_start(void *mgr, int pad, int arg)
+void ring_start(void *mgr, int pad, int arg, int kind)
 {
     int i;
     g_ring.mgr = mgr;
     g_ring.pad = pad;
     for (i = 0; i < 8; i++) g_ring.ev[i] = ((int *)pad)[i];
     g_ring.arg = arg;
-    g_ring.nzones = 3;
+    g_ring.kind = kind;
+    g_ring.nzones = kind == SH_KIND_ATTACK ? 3 : 1;
     for (i = 0; i < 3; i++) g_ring.zone[i] = s_attack[i];
+    if (kind == SH_KIND_MAGIC) g_ring.zone[0] = s_magic;
+    if (kind == SH_KIND_ITEM) g_ring.zone[0] = s_item;
+    g_ring.power = 0;
+    g_shRing.active = 0;
     g_ring.angle16 = 0;
     g_ring.presses = 0;
     g_ring.hits = 0;
@@ -33,6 +42,7 @@ void ring_start(void *mgr, int pad, int arg)
     g_ring.timer = 0;
     g_ring.last_vs = VSync(-1);
     ring_alloc_prims();
+    ring_tex_upload();  // effects may have reused the VRAM since the last ring
     g_ring.phase = SH_RING_INTRO;
     g_shFrameHook = ring_tick;
     g_shDrawHook = ring_draw;
@@ -58,7 +68,13 @@ void ring_press(void)
         return;
     }
     g_ring.hits++;
+    if (g_ring.kind == SH_KIND_MAGIC) {  // MakeSprite: 40 + 60 (a - start) / ((end - start - strike) * 5/6), max 100
+        int w = (z->end - z->start - z->strike) * 5;
+        g_ring.power = 40 + 60 * 6 * (a - z->start) / (w > 0 ? w : 1);
+        if (g_ring.power > 100) g_ring.power = 100;
+    }
     if (z->strike && a >= z->end - z->strike) {
+        g_ring.power = 120;
         g_ring.strikes |= 1 << k;
         g_ring.mark_kind[k] = 2;
     } else {

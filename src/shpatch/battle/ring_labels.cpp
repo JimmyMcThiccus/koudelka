@@ -14,7 +14,8 @@ static int label_of(int k)
 {
     int n = 0, i;
     if (g_ring.mark_kind[k] == 0) return SH_LBL_MISS;
-    if (g_ring.mark_kind[k] == 1) return SH_LBL_GOOD;
+    if (g_ring.mark_kind[k] == 1) return g_ring.kind == SH_KIND_MAGIC && g_ring.power < 100 ? SH_LBL_HIT : SH_LBL_GOOD;
+    if (g_ring.kind != SH_KIND_ATTACK) return SH_LBL_PERFECT;
     for (i = 0; i <= k; i++) n += (g_ring.strikes >> i) & 1;
     return n >= 3 ? SH_LBL_PERFECT : n == 2 ? SH_LBL_COOL : SH_LBL_NICE;
 }

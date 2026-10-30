@@ -284,15 +284,33 @@ def main():
         for addr, data in order:
             d.call("write_memory", address=hex(addr), data=data.hex())
         print(f"injected {len(order)} writes into DuckStation")
-        if tex.exists():  # in a running battle the BIM block already covers the blob: write the textures to VRAM directly
+        if tex.exists():
+            # Mid-battle, func_800C56A8 has run and the BIM block covers the blob, so do what its detour does: take a
+            # heap block as the game's allocator would (func_80018C90: best fit over the free list D_800B4EE8, cut from
+            # the top of the block, 8-byte {next, size} header) and put the blob in it. Rings re-upload from there, and
+            # the patch frees it with operator delete when the battle ends.
             blob = tex.read_bytes()
-            for i in range(struct.unpack_from("<H", blob, 4)[0]):
-                x, y, w, h, off = struct.unpack_from("<hhhhI", blob, 8 + 12 * i)
-                f = OUT / f"vram_{i}.bin"
-                f.write_bytes(blob[off:off + w * h * 2])
-                d.call("write_vram_region", x=x, y=y, width=w, height=h, input_path=str(f))
+            need = (((len(blob) + 7) >> 3) + 1) << 3
+            w = lambda a: struct.unpack("<I", bytes.fromhex(d.call("read_memory", address=hex(a), size=4)["data"]))[0]
+            head = w(0x800B4EE8)
+            best, c = None, w(head)
+            while c:
+                if w(c + 4) >= need and (best is None or w(c + 4) < w(best + 4)):
+                    best = c
+                c = w(c)
+            if best is None or w(best + 4) == need:
+                best = head if w(head + 4) > need else None
+            if best is None:
+                sys.exit("build.py --inject: no heap block for the ring textures")
+            size = w(best + 4) - need
+            block = best + size
+            d.call("write_memory", address=hex(best + 4), data=struct.pack("<I", size).hex())
+            d.call("write_memory", address=hex(block), data=struct.pack("<II", 0, need).hex())
+            (OUT / "inject_blob.bin").write_bytes(blob)
+            d.call("write_memory", address=hex(block + 8), path=str(OUT / "inject_blob.bin"))
+            d.call("write_memory", address=hex(linked["g_shRingTexCopy"]), data=struct.pack("<I", block + 8).hex())
             d.call("write_memory", address=hex(linked["g_shRingTex"]), data="01000000")
-            print("ring textures written to VRAM")
+            print(f"ring textures: {need} bytes at {block + 8:#x} on the heap; rings upload them")
 
 
 if __name__ == "__main__":

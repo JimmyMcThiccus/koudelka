@@ -5,17 +5,16 @@
 #include "battle/battle.h"
 #include "shpatch/shpatch.h"
 #include "shpatch/ring.h"
+#include "shpatch/ring_tex.h"
 
 EXTERN_C void func_800C6194_sh(T_C6194 *p) {
     g_shTrace[SH_TRACE_TURN]++;
-    // The ring's scale covers one action. Melee applies its damage inside the replayed confirm, and the driver runs
-    // again only once the action has finished, so the context ends here.
-    g_shRing.active = 0;
+    ring_turn(p->fA0);  // ring_result.cpp: end the ring's context once the action is over
     if (g_ring.phase == SH_RING_OFF) ring_free_prims();
     if (empty_C6194(p)) return;
     if (cf_666C(p)) return;
-    if (((T_C6194_x *)p)->s7DC == 0) { cf_68D8(p, -1); return; }
-    if (cf_7528(p)) { cf_6DF4(p, 0); return; }
+    if (((T_C6194_x *)p)->s7DC == 0) { ring_tex_free(); cf_68D8(p, -1); return; }  // won: the ring art is done
+    if (cf_7528(p)) { ring_tex_free(); cf_6DF4(p, 0); return; }                  // lost
     goto start;
 neg:
     cf_65C8(p, -1);

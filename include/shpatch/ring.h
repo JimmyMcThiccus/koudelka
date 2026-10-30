@@ -13,11 +13,13 @@
 #define SH_RING_Z 2           // OT depths Z..Z+5: the battle OT is reverse ordered, so low = in front (scene 5202..5717)
 
 enum { SH_RING_OFF, SH_RING_INTRO, SH_RING_SWEEP, SH_RING_OUTRO };
+enum { SH_KIND_ATTACK, SH_KIND_MAGIC, SH_KIND_ITEM };  // SH StartCircle kinds 0, 2, 1
 
 struct ShZone { short start, end, strike; };  // degrees, absolute; strike area = [end - strike, end]
 
 struct ShRing {
     int phase;
+    int kind;              // SH_KIND_*
     void *mgr;
     int pad, arg;          // the targeting confirm, replayed into func_800CB174 when the ring ends
     int ev[8];             // a copy of the confirm's input event: the game reuses the original before the ring ends
@@ -29,14 +31,16 @@ struct ShRing {
     int mark_kind[SH_RING_MAX_ZONES];  // 0 miss, 1 hit, 2 strike
     int mark_vs[SH_RING_MAX_ZONES];    // VSync count at each press, for the labels
     int timer, last_vs;
+    int power;             // magic: SH's power percentage from the main-zone press (MakeSprite), 120 on a strike
     int result;            // last scale, Q8
 };
 EXTERN_C ShRing g_ring;
 
-void ring_start(void *mgr, int pad, int arg);
+void ring_start(void *mgr, int pad, int arg, int kind);
 void ring_press(void);
 void ring_tick(void);
 void ring_finish(void);    // ring_result.cpp: publish the scale, replay the confirm
+void ring_turn(void *actor);  // ring_result.cpp: the turn driver's hook, ends the context after the action
 void ring_draw(void *ot);
 void ring_alloc_prims(void);
 void ring_free_prims(void);  // the turn driver calls it once the action has resolved

@@ -14,11 +14,12 @@ void (*g_shDrawHook)(void *ot);
 #define U8(p, o) (*(unsigned char *)((char *)(p) + (o)))
 #define S8(p, o) (*(signed char *)((char *)(p) + (o)))
 
-// The action's targets are the fighters on the other side from the caster (stat + 0xBD = fighter b4BD, 1 party /
-// 2 monsters). Counters and reflections land on the caster's side, so they stay unscaled.
+// An attack's targets are the fighters on the other side from the caster (stat + 0xBD = fighter b4BD, 1 party /
+// 2 monsters), so counters and reflections stay unscaled. Magic and items scale every HP change (heals land on the
+// caster's side), and every MP change but the caster's own (the cost).
 static int is_target(void *stat)
 {
-    return g_shRing.caster && U8(stat, 0xBD) != U8(g_shRing.caster, 0xBD);
+    return g_shRing.caster && (g_shRing.any_side || U8(stat, 0xBD) != U8(g_shRing.caster, 0xBD));
 }
 
 static int ring_scale(void *stat, int v, int mp)

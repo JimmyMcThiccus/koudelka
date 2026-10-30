@@ -18,7 +18,9 @@ static void wedge(int z, int a0, int a1, unsigned int c0, unsigned int c1, unsig
 // One zone: main part at 5-degree steps with feathered ends, then the strike area at 2-degree steps tapering.
 void zone(int z, const ShZone *zn, int alpha)
 {
-    static const unsigned char main_rgb[3] = {0xE0, 0x98, 0x40}, strike_rgb[3] = {0xFF, 0x20, 0x18};
+    static const unsigned char kind_rgb[3][3] = {{0xE0, 0x98, 0x40}, {0x30, 0xFF, 0x04}, {0x20, 0xC8, 0xFA}};
+    static const unsigned char strike_rgb[3] = {0xFF, 0x20, 0x18};
+    const unsigned char *main_rgb = kind_rgb[g_ring.kind];
     int a[48], nk = 0, i, w = zn->end - zn->start - zn->strike, f = w / 5 < 5 ? w / 5 : 5;
     unsigned int col[48], centre;
     a[nk++] = zn->start;

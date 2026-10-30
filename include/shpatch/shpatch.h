@@ -9,7 +9,9 @@
 struct ShRingCtx {
     int active;                     // set when a ring finishes, cleared at the end of the action
     int scale;                      // Q8: 256 = 1.0
-    void *caster;                   // attacker's stat block (fighter + 0x400); targets are the other side
+    void *caster;                   // attacker's stat block (fighter + 0x400)
+    int any_side;                   // 0: attack, scale the other side only; 1: magic/item, scale every HP change
+    int refund_mp;                  // failed spell: the caster's MP before the cast, restored afterwards; else -1
 };
 EXTERN_C ShRingCtx g_shRing;
 // Called once per game frame from the EXE's buffer swap while non-null (src/shpatch/exe/hooks.cpp). BATTLE sets it

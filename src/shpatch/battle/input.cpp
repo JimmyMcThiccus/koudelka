@@ -12,7 +12,9 @@
 #define SH_PAD_CONFIRM 0x2000
 
 static int pressed(int ev) { return ev ? *(unsigned short *)(ev + 0x18) : 0; }
-#define SH_F3D0_TARGET 4      // mgr+0x3D0 while choosing an attack target (read live: menu 1, target 4, animation 5)
+// mgr+0x3D0 while choosing a target (func_800CB174's dispatch; 4 and 7 also read live): attack 4, magic 7, item 8.
+// Confirming moves to the animation states 5, 9 and 10.
+static int kind_of(int f3d0) { return f3d0 == 4 ? SH_KIND_ATTACK : f3d0 == 7 ? SH_KIND_MAGIC : f3d0 == 8 ? SH_KIND_ITEM : -1; }
 
 EXTERN_C int func_800CB174_orig(void *mgr, int pad, int a);  // pad: pointer to the input event
 
@@ -33,8 +35,8 @@ EXTERN_C int func_800CB174_sh(void *mgr, int pad, int a)
         return 1;
     }
     actor = *(char **)(m + 0xA0);
-    if ((pressed(pad) & SH_PAD_CONFIRM) && *(int *)(m + 0x3D0) == SH_F3D0_TARGET && actor && actor[0x4BC] < 3) {
-        ring_start(mgr, pad, a);
+    if ((pressed(pad) & SH_PAD_CONFIRM) && kind_of(*(int *)(m + 0x3D0)) >= 0 && actor && actor[0x4BC] < 3) {
+        ring_start(mgr, pad, a, kind_of(*(int *)(m + 0x3D0)));
         return 1;
     }
     return func_800CB174_orig(mgr, pad, a);

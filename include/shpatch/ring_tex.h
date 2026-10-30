@@ -21,6 +21,8 @@ enum { SH_LBL_MISS, SH_LBL_GOOD, SH_LBL_GREAT, SH_LBL_NICE, SH_LBL_COOL, SH_LBL_
 
 EXTERN_C int g_shRingTex;  // nonzero once the textures are in VRAM (otherwise the ring draws a flat band)
 void ring_tex_layers(int z, int alpha, int light);
+void ring_tex_upload(void);  // ring_tex.cpp: re-upload the textures (every ring start)
+void ring_tex_free(void);    // free the battle's copy (battle won or lost)
 void ring_labels(int z);
 
 #endif

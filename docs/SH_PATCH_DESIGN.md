@@ -138,13 +138,18 @@ for the full-screen fade. Its draw method adds that frame's primitives with `add
       Good, Great, Nice, Cool, Perfect, Hit). The result is build/shpatch/shring.bin, 36 KB.
     - `build.py` appends the blob to BATTLE.BIN (0x27CA8 bytes, 80 sectors; the two EXE size words follow), so the
       overlay load leaves it at the start of the EFFECT/BIM slot.
-    - A detour on the battle manager's constructor (`func_800C56A8`) uploads it with `LoadImage` and waits
-      (`DrawSync`) before the BIM block lands on top.
+    - A detour on the battle manager's constructor (`func_800C56A8`) copies the blob to the heap before the BIM block
+      lands on top, and uploads it with `LoadImage`.
+    - **Effects reuse that VRAM.** The target area is empty at a battle's first menu, but a Heal's effect overwrote all
+      of x 640..703, y 256..511. So the heap copy stays for the whole battle and every ring re-uploads it (no effect
+      runs during a ring). It is freed when the battle is won or lost, or else when the next battle starts (the heap is
+      set up once at boot).
     - VRAM: two 4 bpp pages at x 640 and 704, y 256; CLUTs on row 511.
     - Each layer is one textured quad through the ring transform, which is affine and so maps exactly. Labels rise
       off each press as in SH: Miss, Good, then Nice / Cool / Perfect for the 1st / 2nd / 3rd strike.
-    - Tested by injection: `--inject` writes the textures to VRAM directly, because in a running battle the BIM block
-      already covers the blob. Not yet tested: the upload path on a rebuilt disc (phase 4 step 6).
+    - Tested by injection. Mid-battle the constructor has already run, so `--inject` takes a heap block the way the
+      game's allocator does and puts the blob there. After a Heal had overwritten 412 rows, the next ring's re-upload
+      left 0 wrong. Not yet tested: the battle-start path on a rebuilt disc (phase 4 step 6).
     - The assets and the blob are SH game data: they stay under build/ and are never committed. The disc patch will
       carry them, which is the user's call (see Notes).
 - **Sound:** `func_8008EF40(id)`, the call the menus use. v1 reuses the menu cursor and confirm sounds for a hit or strike
@@ -321,6 +326,18 @@ flee are unchanged: `f824` 1/2/3 -> `func_800C68D8` / `func_800C6DF4` / `func_80
      menu returned. So effect actions no longer touch the patch.
    - **Magic targeting is `f3D0` 7** (attack targeting is 4; spell animation 9), so spells and items don't get a ring
      yet. That is the hook point for the magic ring (2.2's power rule).
+   - **Magic and item rings.** Every targeting state starts a ring: attack 4, magic 7, item 8 (`func_800CB174`'s
+     dispatch; 4 and 7 confirmed live).
+     - Magic has one main zone: power rises from 40 % at its start to 100 % five sixths of the way to the strike area,
+       120 % on a strike. The zone is green-yellow, as in SH.
+     - Items have one wide blue zone with no strike area; a hit is 100 %.
+     - Labels: Hit!! under 100 % power, Good!! at 100, Perfect!! on a strike.
+     - Magic and items scale every HP change (heals land on the caster's side) and every MP change except the caster's
+       cost. The scale lasts while the turn driver runs with the caster's action latch set.
+     - A failed spell still plays, at no effect, and its MP is refunded afterwards. SH spends nothing and loses the turn.
+     - Live: a Heal pressed at 105 degrees (54 %) showed the magic ring and "Hit!!".
+     - Not yet checked: the heal amount scaling (that heal was capped at max HP), the MP refund, a magic strike, and
+       item rings (Koudelka had no usable item).
    - **Texture (next).** The user suggested using Shadow Hearts' own ring art. Video memory right of x=640 below
      y=256 was empty in battle, so the patch can upload the SH ring texture there at ring start and draw textured
      quads in place of the flat ones.
