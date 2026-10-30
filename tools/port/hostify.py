@@ -36,8 +36,11 @@ from tools.recomp import hostcc  # noqa: E402
 from tools.port import overlays as ovl  # noqa: E402
 
 # Flags for the game's C++ on the host (docs/RECOMP.md "Toolchain", plus GCC 2.8's &Type(args)).
+# -fno-strict-return: the matching C often lets an int function fall off its end on some paths (GCC 2.8 just
+# returns whatever $v0 holds); clang -O2 would otherwise treat those paths as unreachable and fold the
+# conditions away (func_8007C0A8 took its `return v02()` whatever the switch said).
 GAME_FLAGS = ["-x", "c++", "-w", "-Wno-error=address-of-temporary", "-Dmain=game_main", "-fno-finite-loops",
-              "-fno-exceptions", "-fno-rtti"]
+              "-fno-exceptions", "-fno-rtti", "-fno-strict-return"]
 # Game names that clash with the host C runtime. The game defines its own no-op printf (u_8001986C.cpp); the
 # UCRT's is an inline definition in every object that uses it. The recompiled code gets -Dprintf=game_printf.
 RENAMES = {"printf": "game_printf"}
@@ -47,6 +50,7 @@ LABEL_RE = re.compile(r'\b(asm|__asm__)\s*\(\s*"([A-Za-z_.][\w.$]*)"\s*\)')
 PIN_RE = re.compile(r'\s*\b(asm|__asm__)\s*\(\s*"\$\w+"\s*\)')
 SET_RE = re.compile(r'__asm__\s*\(((?:\s*"[^"]*")+)\s*\)\s*;', re.S)
 ASM_MACRO_RE = re.compile(r'^#define\s+(\w+)\s*\([^)]*\)\s*__asm__\s+volatile\s*\(.*$', re.M)
+GP_ASM_RE = re.compile(r'__asm__\s+volatile\s*\(\s*"[^"]*\$gp[^"]*"[^;]*\);')
 
 INT_WORDS = {"int", "unsigned", "signed", "short", "long", "char", "u_char", "u_short", "u_int", "u_long",
              "uint", "ushort", "uchar", "s8", "u8", "s16", "u16", "s32", "u32"}
@@ -101,6 +105,55 @@ def fix_labels(text, stats):
     return LABEL_RE.sub(lab, text)
 
 
+GCC_BUILTIN = {"int": "i", "short": "s", "char": "c", "signed char": "Sc", "unsigned char": "Uc", "long": "l",
+               "unsigned short": "Us", "unsigned int": "Ui", "unsigned": "Ui", "unsigned long": "Ul", "float": "f",
+               "void": "v", "u8": "Uc", "s8": "Sc", "u16": "Us", "s16": "s", "u32": "Ul", "s32": "l"}
+
+
+def gcc_mangle_param(p):
+    """GCC 2.x encoding of one parameter type (a name may follow), or None."""
+    toks = re.findall(r"\w+|\*|&", p)
+    const = "const" in toks
+    toks = [t for t in toks if t != "const"]
+    ptr = "*" in toks
+    if ptr:
+        if toks.count("*") > 1 or "&" in toks:
+            return None
+        toks = toks[:toks.index("*")]
+    elif len(toks) > 1 and toks[-1] not in ("int", "short", "char", "long", "unsigned", "signed"):
+        toks = toks[:-1]  # the parameter name
+    base = " ".join(toks)
+    if base in GCC_BUILTIN:
+        code = GCC_BUILTIN[base]
+    elif re.fullmatch(r"\w+", base):
+        code = f"{len(base)}{base}"
+    else:
+        return None
+    return ("P" + ("C" if const else "") + code) if ptr else code
+
+
+def gcc_ctor_labels(text, prefix, stats):
+    """A constructor declared without an asm label is called by its GCC 2.x mangled name from asm
+    (`__10C_800BF2C0P16Unk_800BF2C0_src` in FIELD); give it that name as a thiscall-thunk label (fix_labels)."""
+    edits = []
+    for name, _, bs, be in class_bodies(text):
+        for m in re.finditer(r"(?<![\w~:])%s\s*\(([^()]*)\)\s*;" % re.escape(name), text[bs:be]):
+            before = text[bs:bs + m.start()].rstrip()
+            if before and before[-1] not in ";{}:":  # a declaration, not a call in an inline body
+                continue
+            ps = [p for p in split_params(m.group(1)) if p not in ("", "void")]
+            codes = [gcc_mangle_param(p) for p in ps]
+            if None in codes:
+                continue
+            label = f"_port_thiscall{4 * len(ps)}_{prefix}__{len(name)}{name}{''.join(codes)}"
+            s, e = bs + m.start(), bs + m.end()
+            edits.append((s, e, text[s:e - 1].rstrip() + f' asm("{label}");'))
+            stats["gcc_ctor_labels"] += 1
+    for s, e, r in sorted(edits, reverse=True):
+        text = text[:s] + r + text[e:]
+    return text
+
+
 def drop_sets(text, aliases, stats):
     def sub(m):
         body = "".join(re.findall(r'"([^"]*)"', m.group(1)))
@@ -120,11 +173,18 @@ def drop_asm_macros(text, stats):
     def sub(m):
         stats["asm_macros"] += 1
         return f"/* port: MIPS asm macro {m.group(1)} removed (port/include/port_gte.h) */"
+
+    def gp(m):
+        stats["asm_macros"] += 1
+        return "/* port: $gp switch removed */"
+    # FIELD's kernel event callbacks switch $gp to the kernel's (*(int **)0x110) and back; no $gp on the host
+    text = GP_ASM_RE.sub(gp, text)
     return ASM_MACRO_RE.sub(sub, text)
 
 
 # ---------------------------------------------------------------- permissive prototypes
 DECL_RE = re.compile(r"^EXTERN_C\s+(?P<ret>[^()]*?)\s*\b(?P<name>\w+)\s*\((?P<params>.*)\)\s*;(?P<tail>.*)$")
+FWD_RE = re.compile(r"^(?:(?:struct|class)\s+\w+\s*;\s*)+")
 
 
 def split_params(s):
@@ -192,9 +252,12 @@ def permissive_decls(text, stats):
     """Every one-line EXTERN_C function declaration (not an asm-label alias) becomes permissive."""
     out = []
     for line in text.split("\n"):
-        m = DECL_RE.match(line) if line.startswith("EXTERN_C") else None
+        # FIELD's headers put the parameter type's forward declaration first: `struct X; EXTERN_C ...`
+        fwd = FWD_RE.match(line)
+        pre, rest = (fwd.group(0), line[fwd.end():]) if fwd else ("", line)
+        m = DECL_RE.match(rest) if rest.startswith("EXTERN_C") else None
         if m and m.group("ret").strip() and balanced(m.group("params")) and "asm" not in line:
-            new = permissive_proto(m.group("ret"), m.group("name"), m.group("params")) + ";" + m.group("tail")
+            new = pre + permissive_proto(m.group("ret"), m.group("name"), m.group("params")) + ";" + m.group("tail")
             if new != line:
                 stats["permissive_decls"] += 1
                 line = new
@@ -651,7 +714,18 @@ SLOTS_RE = re.compile(r"^\s*\w*SLOTS\s*$", re.M)  # a class body that is one slo
 def vcall_slots(text, stats):
     """include/game/b/vcall.h: the 64 varargs placeholder slots v00..v63 (slot k = entry k+1) become variadic
     templates calling through the GCC vtable (port_vslot_call), plus PORT_VCALL_SLOTS_FWD, the forwarders
-    a class with VObj0 as its virtual base gets."""
+    a class with VObj0 as its virtual base gets.
+    include/field/field.h has the same placeholders as vf##a##N (VSLOTS, vf00..vf49) in VAt0, VWith<H> and
+    VAt<N>, whose vptr GCC puts after `char vpad[N]` (FIELD reads D_800B4C38's at +0x10 for VAt<0x10>)."""
+    if "virtual int vf##a##0(...)" in text:
+        text, n = re.subn(r"virtual int vf##a##(\d)\(\.\.\.\);", lambda m: (
+            f"template <class... A_> int vf##a##{m.group(1)}(A_... x_) {{ return port_vslot_call(this->port_vptr.p, "
+            f"this, 1##a##{m.group(1)} - 99, port_promote(x_)...); }}"), text)
+        stats["vcall_slots"] += n * 5
+        text = text.replace("template <int N> struct VAt { char vpad[N]; VSLOTS };",
+                            "template <int N> struct VAt { char vpad[N]; port_vptr_t port_vptr; "
+                            "/* port: GCC 2.x vptr, after vpad */ VSLOTS };")
+        return text
     if "virtual int v##a##0(...)" not in text:  # include/game/b/vcall.h, include/game/a2/vcall.h
         return text
     disp = ("template <class... A_> int v##a##{d}(A_... x_) {{ return port_vslot_call(this->port_vptr.p, this, "
@@ -741,7 +815,7 @@ def virtual_bases(texts, stats):
                                       f"{b} *{mm.group(2)} = {mm.group(2)}_p_.p;", t)
             stats["vbase_inits"] += n
             # C-style casts (B *)operand: GCC converts a derived pointer to its virtual base there
-            operand = r"(&?\s*[\w.\->\[\]]+(?:\((?:[^()]|\([^()]*\))*\))?(?:(?:->|\.)[\w]+)*)"
+            operand = r"(&?\s*[\w.\->\[\]]+(?:\((?:[^()]|\([^()]*\))*\))?(?:(?:->|\.|::)[\w]+)*)"  # a.B::m too
             t, n = re.subn(r"\(\s*%s\s*\*\s*\)\s*%s" % (re.escape(b), operand),
                            lambda mm: f"port_vb_conv<{b}>(({mm.group(1)}), 0)", t)
             stats["vbase_casts"] += n
@@ -902,7 +976,7 @@ def main():
                             "definitions", "named_returns", "implicit_decls", "fixups", "thiscall_thunks",
                             "virtual_dispatchers", "vptr_members", "virtual_skipped", "vbases", "vbase_skipped",
                             "vbase_inits", "vcall_slots", "vbase_casts", "virtual_dtors", "busy_loops", "empty_decls",
-                            "vtable_ctors", "scratchpad", "passthrough")}
+                            "vtable_ctors", "scratchpad", "passthrough", "gcc_ctor_labels")}
     # an overlay's own functions get its prefix (tools/port/overlays.py): in its sources and own header as text
     # (asm labels included), elsewhere through a force-included names header
     maps = {o: ovl.rename_map(o) for o in overlays}
@@ -929,8 +1003,8 @@ def main():
         header_aliases.update(asm_aliases(t))
         texts[out / "hinc" / rel] = t
         if rel.parts[0] in maps:  # the overlay's own header, renamed, first on its include path
-            texts[out / f"hinc_{rel.parts[0]}" / rel] = vcall_slots(front(ovl.rename_text(raw, maps[rel.parts[0]])),
-                                                                     stats)
+            t = vcall_slots(front(ovl.rename_text(raw, maps[rel.parts[0]])), stats)
+            texts[out / f"hinc_{rel.parts[0]}" / rel] = gcc_ctor_labels(t, f"{rel.parts[0]}_", stats)
     srcs = {}
     for target in ["main"] + overlays:
         for p in sorted((ROOT / "src" / target).glob("*.cpp")):

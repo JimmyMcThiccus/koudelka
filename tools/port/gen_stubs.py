@@ -11,7 +11,8 @@ gaps are left), then writes into --out:
               names, MSVC-mangled names of plain C globals
   stubs.txt   every stub and alias by kind, with counts: the "unresolved symbols" number
 
-Kinds: overlay (an EXE call to a function in the overlay area, >= 0x800B6DF0), psyq (a PsyQ library function
+Kinds: overlay (an EXE call to a function in the overlay area, >= 0x800B6DF0: it jumps to the function of
+whichever linked overlay is resident and defines it, and stops only when none does), psyq (a PsyQ library function
 neither PsyCross nor port/psyq_missing.c defines), method (an MSVC-mangled C++ function: a member still in
 asm, or reached only through GCC 2.8 names), gcc-name (a GCC 2.8 mangled or library-internal name from asm
 code or data), unimplemented (any other func_X), data.
@@ -26,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from tools.recomp import hostcc  # noqa: E402
+from tools.port import overlays as ovl  # noqa: E402
 
 LLVM_NM = hostcc.LLVM_BIN / "llvm-nm.exe"
 UNDNAME = hostcc.LLVM_BIN / "llvm-undname.exe"
@@ -97,6 +99,7 @@ def main():
 
     alt, funcs, datas, thunks = [], [], [], []  # (from, to) / (name, kind, label) / (name, why) / (name, n, target)
     rthunks = []                                # (cdecl name, n, thiscall definition)
+    absolutes = []                              # (name, value)
     thiscall_defs = {}
     for d in defined:
         m = re.fullmatch(r"_port_thiscall(\d+)_(.+)", d)
@@ -147,7 +150,11 @@ def main():
             continue
         c = n[1:]
         m = re.fullmatch(r"(func|D)_([0-9A-F]{8})\w*", c)
-        if m and m.group(1) == "D":
+        ma = re.fullmatch(r"D_([0-9A-F]{1,7})", c)
+        if ma:  # an absolute symbol (a size: the overlay loader copies EFFECT with D_FAA0 = 64160 bytes)
+            absolutes.append((n, int(ma.group(1), 16)))
+            report["absolute"].append(f"{c} = 0x{ma.group(1)}")
+        elif m and m.group(1) == "D":
             datas.append((n, c))
             report["data"].append(c)
         elif m:
@@ -173,8 +180,20 @@ def main():
             kinds[kind] = f"Lkind_{len(kinds)}"
             strs.append(f'{kinds[kind]}: .asciz "{kind}"')
         strs.append(f'Lname_{i}: .asciz "{label.replace(chr(34), "")}"')
-        s += [f'    .globl "{n}"', f'"{n}":', "    pushl (%esp)", f"    pushl $Lname_{i}", f"    pushl ${kinds[kind]}",
-              "    calll _port_stub_hit"]
+        s += [f'    .globl "{n}"', f'"{n}":']
+        if kind == "overlay":
+            # EXE -> overlay: jump to the function of the overlay that is resident (port/overlays.cpp keeps
+            # port_ovl_slot / port_ovl_effect), with the caller's arguments in place; none: stop as before
+            # EFFECT first: it shares addresses with FIELD's top, and port/overlays.cpp forgets it when a slot
+            # overlay loads over it, so a resident EFFECT is the newer one
+            order = sorted(enumerate(ovl.OVERLAYS), key=lambda ko: ovl.OVERLAYS[ko[1]][0] == HIRAM)
+            for k, o in order:
+                target = f"_{o}_{label}"
+                if target in defined:
+                    var = "_port_ovl_effect" if ovl.OVERLAYS[o][0] != HIRAM else "_port_ovl_slot"
+                    s += [f"    cmpl ${k}, {var}", f'    je "{target}"']
+                    report["overlay dispatch"].append(f"{label} -> {o}_{label}")
+        s += ["    pushl (%esp)", f"    pushl $Lname_{i}", f"    pushl ${kinds[kind]}", "    calll _port_stub_hit"]
     # thiscall (this in ECX, callee pops N bytes) -> cdecl f(this, args...); returns this, as MSVC constructors do
     for n, nbytes, target in thunks:
         s += [f'    .globl "{n}"', f'"{n}":', "    pushl %ebp", "    movl %esp, %ebp", "    pushl %ecx"]
@@ -187,6 +206,8 @@ def main():
         s += [f"    pushl {12 + off}(%ebp)" for off in range(nbytes - 4, -4, -4)]
         s += ["    movl 8(%ebp), %ecx", f'    calll "{d}"', "    movl %ebp, %esp", "    popl %ebp", "    retl"]
     s += strs
+    for n, v in absolutes:
+        s += [f'    .globl "{n}"', f'    .set "{n}", 0x{v:X}']
     s.append("    .data")
     for n, _ in datas:
         s += ["    .p2align 4", f'    .globl "{n}"', f'"{n}":', "    .space 64"]

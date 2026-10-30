@@ -88,6 +88,19 @@ long VectorNormalS(VECTOR *v0, SVECTOR *v1)
     return (long)s;
 }
 
+/* as VectorNormalS, into a VECTOR (1.0 = 4096) */
+long VectorNormal(VECTOR *v0, VECTOR *v1)
+{
+    PORT("VectorNormal");
+    double x = v0->vx, y = v0->vy, z = v0->vz, s = x * x + y * y + z * z;
+    double l = sqrt(s);
+    if (l == 0) l = 1;
+    v1->vx = (long)(x * 4096.0 / l);
+    v1->vy = (long)(y * 4096.0 / l);
+    v1->vz = (long)(z * 4096.0 / l);
+    return (long)s;
+}
+
 /* GTE control registers 8-12: the light matrix, two shorts per word */
 MATRIX *ReadLightMatrix(MATRIX *m)
 {

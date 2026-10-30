@@ -79,7 +79,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-build", action="store_true")
     ap.add_argument("--cd", help="default disc 1 image baked into the exe")
-    ap.add_argument("--overlays", default="movie",
+    ap.add_argument("--overlays", default="movie,field",
                     help="comma-separated overlays to link in (tools/port/overlays.py); '' for none")
     a = ap.parse_args()
     for d in (PSYCROSS, SDL2, OPENAL):
