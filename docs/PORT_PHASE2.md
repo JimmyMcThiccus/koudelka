@@ -412,3 +412,70 @@ recompiler stubs: four `$gp` wrappers, `BUILD_OBJ_AC`). Probe link: 199 undefine
 2. *Next overlays*: FIELD and EFFECT, after the movie, with the EXE→overlay dispatchers.
 3. *vptr placement*: check against DuckStation (needs the emulator paused).
 4. The rest of the PsyQ gaps (`St*`, memory card) as the game reaches them.
+
+## Phase 2c: past the movies, title screen, NEW GAME
+
+After the phase 2b merge (`55be1e2`), with the user's decisions: skip FMVs for now; DuckStation may be paused.
+
+**Where it stops now.** The exe boots, plays (skips) the intro movie, shows the logos and the title screen
+(drawn: the window now presents frames), cycles the attract movies, takes pad input, and with
+`KOUDELKA_PRESS=1300:start,1450:cross` opens the menu and starts NEW GAME. NEW GAME (MOVIE state 99,
+`movie_func_800C5B80`) loads the starting party (`MENU/PRTYTEST.BIN`), the item and name tables, a battle BGM
+and Koudelka's model, and then EXE code that drives battle commands (`func_8007DEE8`, mode 3) calls into the
+monster overlay slot without any overlay having been read:
+
+```
+STOP overlay: func_800D6198 (called from func_8007DEE8+0x319)
+  <- func_8007C9A4 <- func_8007C0A8 (u_80071A74.cpp) <- func_800792C8 <- func_80078C50 <- task_main
+```
+
+`func_800D6198` is in the BIM.AR shared base (0x800D5DAC slot, docs/BIM_AR.md); the same function calls
+`func_800CF0B0` (BATTLE) next. Whether the PS1 takes this path after NEW GAME too (and loads BATTLE and a
+monster image first), or the port took a wrong branch earlier, is open: checking it in DuckStation needs
+button presses on its title screen.
+
+**What was added.**
+
+1. *FMV skip* (`port/fmv.cpp`): the libpress streaming calls (`StSetRing`, `StGetNext`, ...) and MOVIE's
+   `DecDCT*` are port functions. `StGetNext` hands the player two blank frames: the first starts it, the
+   second has frame number 0x7FFF, past any movie's end, so the player stops itself through its normal end
+   path. The MDEC is black (`DecDCTout` clears, its callback is raised as an interrupt).
+2. *Zeroed allocations* (`port/cxx_rt.cpp`): `operator new`/`__builtin_new` zero what the game heap returns.
+   MOVIE's logo fades fade out child objects whose colour channels nothing set; on the PS1 those hold halves
+   of earlier heap pointers (0x801F/0xCxxx, negative as s16) and the fade ends at once, on the host the
+   halves are positive (0x006B/0x4EFC), the fade outlives the objects and the per-frame list calls into a
+   deleted one. Zero behaves like the PS1 values there.
+3. *Presenting frames* (`port/gpu.cpp`): PsyCross only shows a frame in `PsyX_EndScene`, which its libgpu
+   never calls in a frame; `PutDispEnv` (the game's flip, `func_8002D1E0`) now ends the scene. Before this the
+   window stayed black whatever the game drew.
+4. *Pads* (`port/pad.cpp`): port 1 reports a stable digital pad (PsyCross reports it disconnected), and
+   `func_800A1B9C` is libpad's `PadChkVsync` (phase 2 had it as unidentified, returning 0): the poller
+   (`func_80023450`) takes a frame's buttons only after a read. `KOUDELKA_PRESS=<vblank>:<button>,...`
+   scripts buttons for unattended runs.
+5. *Recompiler: jump tables whose base is set early* (`tools/recomp/analyze.py`, `table_by_dataflow`):
+   `func_80046998` keeps `jtbl_80012A34` in `$s6` from its prologue, so the `jr` was taken for a tail call.
+   The table is now found by following the `jr` register's data flow back to the `%lo(jtbl_*)`. Only
+   `func_80046998` changes in the EXE.
+6. *Scratchpad literals* (hostify `scratchpad`, 6): `(T *)0x1F8000xx` becomes `port_scratchpad + xx`, the
+   array the `D_1F80xxxx` symbols already live in.
+7. *Arguments passed through in a register* (hostify `PASSTHROUGH`): a callee reads an argument register
+   its matching C caller never sets, because on the PS1 it still holds what the caller's caller passed.
+   `func_80050E58(o, a, b)` leaves `$a3` (the task) for `func_80050EA4`; the `+0x6C` virtual functions
+   (`func_8004DEDC`, ...) leave `$a2` (an out pointer) for `func_8004D0F4`, which stores through it, so on the
+   host it wrote into a random stack slot and zeroed an object's vtable. The pass gives the caller the
+   register as an extra parameter, passes it on, and repeats for that caller's own callers
+   (`func_8004FDC8`). Like the `$a0` fixups, these are places `src/` would need a change for a non-MIPS build.
+8. *Observation*: `KOUDELKA_SHOT=<s>,<s>,...` writes `shot-<s>.bmp`/`vram-<s>.bmp`; the heartbeat counts
+   ordering tables and flips; `KOUDELKA_TRACE_CD=1` logs each read's LBA; `KOUDELKA_TRACE_AT=<s>` dumps every
+   task, then traces 40 switches; a fault logs the per-frame handler lists and the registers with their PS1
+   addresses. `catch.py` takes up to four `--watch` addresses (`--reads` for read watchpoints).
+
+**Counts.** EXE 42/42 game files, MOVIE 1/1; recompiled: EXE 354 (+3 replaced), MOVIE 26 (+9 `DecDCT*`
+replaced by `port/fmv.cpp`). hostify: 6 scratchpad rewrites, 7 passthrough calls, 5 fixups, 3 vtable
+constructors. Runs: about 25 s from boot to the title screen (50 vblanks/s), NEW GAME at about 30 s.
+
+**Next steps.**
+1. Find out whether the PS1 reaches `func_8007DEE8` mode 3 after NEW GAME (DuckStation: a breakpoint there
+   and on the overlay loader, after pressing START and NEW GAME on its title screen).
+2. FIELD and EFFECT (and BATTLE/BIM if the PS1 path goes there) with the EXE→overlay dispatchers.
+3. vptr placement against DuckStation.

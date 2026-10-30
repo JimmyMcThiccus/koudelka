@@ -41,7 +41,6 @@ void SpuSetVoiceRRAttr(int v, unsigned short rr, long rrm) { SKIP("SpuSetVoiceRR
 void SpuSetVoiceLoopStartAddr(int v, unsigned long addr) { SKIP("SpuSetVoiceLoopStartAddr"); }
 void SsUtReverbOff(void) { SKIP("SsUtReverbOff"); }
 void func_800A0A10(long *type) { SKIP("SpuGetReverbModeType (func_800A0A10)"); if (type) *type = 0; }
-int func_800A1B9C(void) { SKIP("func_800A1B9C (unidentified)"); return 0; }
 
 /* ---- libgpu: PS1 packet layout (tag word, then code word), as the game's own primitives use ---- */
 void SetDrawOffset(unsigned int *p, unsigned short *ofs)

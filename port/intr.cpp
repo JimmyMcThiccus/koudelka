@@ -19,6 +19,8 @@ int psyx_VSync(int mode);
 void port_cd_poll(void);
 void port_spu_poll(void);
 void port_observe(void);
+void port_fmv_poll(void);
+void port_pad_vblank(unsigned n);
 extern unsigned port_stat_vblanks;
 }
 
@@ -39,12 +41,13 @@ extern "C" void port_interrupts(void)
     g_in_irq = true;
     while (__atomic_load_n(&g_pending, __ATOMIC_SEQ_CST) > 0) {
         __atomic_sub_fetch(&g_pending, 1, __ATOMIC_SEQ_CST);
-        port_stat_vblanks++;
+        port_pad_vblank(++port_stat_vblanks); /* scripted buttons (port/pad.cpp) */
         if (g_vsync)
             g_vsync();
     }
     port_cd_poll();  /* CD command completions and sectors (port/cd.cpp) */
     port_spu_poll(); /* SPU transfer completions (port/spu.cpp) */
+    port_fmv_poll(); /* MDEC-out completions of the black movie decoder (port/fmv.cpp) */
     g_in_irq = false;
     port_observe();
 }

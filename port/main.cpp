@@ -25,6 +25,7 @@ void func_80018B88(void);                /* heap init, called by `start` */
 void port_fibers_init(void);
 void port_interrupts_init(void);
 void port_cd_open(const char *path);
+void port_dump_state(void);
 }
 int game_main();                         /* src/main/u_8001949C.cpp `main`, renamed by -Dmain=game_main */
 
@@ -213,7 +214,19 @@ static LONG WINAPI on_crash(EXCEPTION_POINTERS *ep)
         port_log("STOP fault: exception %08X at %08X\n", (unsigned)er->ExceptionCode, pc);
     }
     log_address("at ", pc);
+    port_dump_state();
     CONTEXT ctx = *ep->ContextRecord;
+    {   /* registers, with the PS1 address for those inside port RAM or the PS1 data image */
+        const char *rn[] = {"eax", "ebx", "ecx", "edx", "esi", "edi", "ebp"};
+        DWORD rv[] = {ctx.Eax, ctx.Ebx, ctx.Ecx, ctx.Edx, ctx.Esi, ctx.Edi, ctx.Ebp};
+        for (int i = 0; i < 7; i++) {
+            unsigned ps1 = port_host_to_ps1((void *)(size_t)rv[i]);
+            port_log("  %s %08X", rn[i], (unsigned)rv[i]);
+            if (ps1)
+                port_log(" = PS1 %08X %s", ps1, port_ps1_symbol(ps1, sym, sizeof sym));
+            port_log("\n");
+        }
+    }
     if (er->ExceptionCode == EXCEPTION_ACCESS_VIOLATION && er->ExceptionInformation[0] == 8 &&
         er->ExceptionInformation[1] == pc && !IsBadReadPtr((void *)(size_t)ctx.Esp, 4)) {
         /* a call to a bad address: the caller's return address is on top of the stack */

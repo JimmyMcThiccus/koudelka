@@ -301,12 +301,34 @@ def find_jump_tables(prog, fi):
                 break
             if p.op.has_delay:
                 break
+        if not found:
+            found = table_by_dataflow(fi, i, tables)
         if found:
             fi.jtables[i] = list(tables[found])
         elif tables and len(tables) == 1:
             fi.jtables[i] = list(next(iter(tables.values())))
             fi.notes.append(f"jr at 0x{ins.vaddr:08X} assumed to use {next(iter(tables))}")
         # else: indirect tail call
+
+
+def table_by_dataflow(fi, i, tables, limit=400):
+    """The table a jr's target is loaded from, when its base was put in a register long before (func_80046998
+    keeps jtbl_80012A34 in $s6 from the prologue): follow the registers the target is computed from back
+    through the preceding instructions to the one that loads a %lo(jtbl_*)."""
+    regs = {fi.insns[i].op.rs}
+    for j in range(i - 1, max(-1, i - limit), -1):
+        p = fi.insns[j]
+        u, d = uses_defs(p.op)
+        hit = regs & d
+        if not hit:
+            continue
+        if p.reloc and p.reloc[1] in tables:
+            return p.reloc[1]
+        regs -= hit
+        regs |= {r for r in u if isinstance(r, int) and r != ZERO}
+        if not regs:
+            return None
+    return None
 
 
 def build_succ(fi):

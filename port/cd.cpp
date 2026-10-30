@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
+#include <stdlib.h>
 #include "port_rt.h"
 
 extern "C" unsigned port_stat_cd_commands, port_stat_cd_sectors;
@@ -56,6 +57,15 @@ extern "C" void port_cd_open(const char *path)
         port_log("cd: cannot open %s\n", path);
 }
 
+/* KOUDELKA_TRACE_CD=1: log where each read starts */
+static bool trace(void)
+{
+    static int t = -1;
+    if (t < 0)
+        t = getenv("KOUDELKA_TRACE_CD") != 0;
+    return t;
+}
+
 static void command(unsigned char com, const unsigned char *param, unsigned char *result)
 {
     g_last_com = com;
@@ -71,6 +81,8 @@ static void command(unsigned char com, const unsigned char *param, unsigned char
             g_loc = loc_to_lba(param);
         g_next = g_loc;
         g_reading = 1;
+        if (trace())
+            port_log("cd: read from LBA %d\n", g_loc);
         g_read_sectors = 0;
         {
             LARGE_INTEGER t;

@@ -14,6 +14,7 @@
    does, and switches to it; its return means cur was resumed, so the caller takes the normal path. The game
    stack is still allocated (the task's destructor frees it) but unused. */
 #include <windows.h>
+#include <stdlib.h>
 #include "port_rt.h"
 #include "port_args.h"
 
@@ -40,15 +41,43 @@ static int g_nfibers, g_maxfibers;
 static int g_trace = -1;
 extern "C" void *D_800B4C18, *D_800B4C1C, *D_800B4C20;  /* current task, ready list, waiting list */
 
-/* KOUDELKA_TRACE=1: log every switch with the scheduler's lists */
+/* KOUDELKA_TRACE=1: log every switch with the scheduler's lists, and each task's vtable (symbolise it with
+   koudelka.exe.map). KOUDELKA_TRACE_AT=<s>: a dump of every task, then the 40 switches after <s> seconds. */
 static void trace(const char *what, void *a, void *b)
 {
+    static ULONGLONG t0, at;
+    static int left = 40;
     if (g_trace < 0) {
-        char v[8];
+        char v[16];
         g_trace = GetEnvironmentVariableA("KOUDELKA_TRACE", v, sizeof v) > 0 && v[0] != '0';
+        if (GetEnvironmentVariableA("KOUDELKA_TRACE_AT", v, sizeof v) > 0) {
+            g_trace = 2;
+            at = (ULONGLONG)atoi(v) * 1000;
+        }
+        t0 = GetTickCount64();
     }
     if (!g_trace)
         return;
+    if (g_trace == 2 && (GetTickCount64() - t0 < at || left-- <= 0))
+        return;
+    if (g_trace == 2 && left == 39) {
+        /* every task (the scheduler's array D_800AC688): vtable, state (+F4: 0 running, 1 ready, 2 waiting),
+           wait value (+A0), first pending event with its type (+8) and kind (+A) */
+        extern unsigned char D_800AC688[];  /* a Holder: its first word points at the array (S_Array) */
+        unsigned char *arr = *(unsigned char **)D_800AC688;
+        void **data = arr ? *(void ***)arr : 0;
+        int count = arr ? *(int *)(arr + 4) : 0;
+        for (int i = 0; i < count && data; i++) {
+            unsigned char *t = (unsigned char *)data[i];
+            unsigned char *e = *(unsigned char **)(t + 0x90);
+            port_log("task %p vt %p state %d wait %d prio %d event %p", t, *(void **)t, *(int *)(t + 0xF4),
+                     *(int *)(t + 0xA0), *(unsigned short *)(t + 0x94), e);
+            if (e)
+                port_log(" (vt %p type %d kind %d)", *(void **)e, *(unsigned short *)(e + 8), *(unsigned short *)(e + 0xA));
+            port_log("\n");
+        }
+    }
+    port_log("fiber: vt %p -> vt %p\n", a ? *(void **)a : 0, b ? *(void **)b : 0);
     void *ev = b ? *(void **)((char *)b + 0x8C + 4) : 0;  /* b's first pending event */
     unsigned *w = ev && (unsigned)(size_t)ev > 0x10000 ? (unsigned *)ev : 0;
     if (w)
@@ -146,7 +175,7 @@ extern "C" int func_80018F0C(void *cur, void *s)
         port_stop("fiber", "CreateFiberEx failed (%lu)", GetLastError());
     if (++g_nfibers > g_maxfibers) {
         g_maxfibers = g_nfibers;
-        port_log("fiber: task %p started (%d task fibers)\n", s, g_nfibers);
+        port_log("fiber: task %p (vtable %p) started (%d task fibers)\n", s, *(void **)s, g_nfibers);
     }
     bind(s, f);
     trace("new-fiber", f, s);
